@@ -1,0 +1,12 @@
+﻿@page
+@using Microsoft.Extensions.Options
+@model IndexModel
+@inject IOptions<Template.Web.TemplateWebConfig> Config
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>@Config.Value.Application</p>
+</div>

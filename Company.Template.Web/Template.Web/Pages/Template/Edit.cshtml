@@ -1,0 +1,53 @@
+﻿@page
+@model Template.Web.Pages.Template.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@ViewBag.Title</h1>
+<h4>Template</h4>
+<div class="">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Template.Id" />
+            <div class="form-group">
+                <label asp-for="Template.Code" class="control-label"></label>
+                <input asp-for="Template.Code" class="form-control" disabled />
+                <span asp-validation-for="Template.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Template.Name" class="control-label"></label>
+                <input asp-for="Template.Name" class="form-control" />
+                <span asp-validation-for="Template.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
