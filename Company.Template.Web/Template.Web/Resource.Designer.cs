@@ -70,6 +70,24 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Template.
+        /// </summary>
+        public static string LabelAddTemplate {
+            get {
+                return ResourceManager.GetString("LabelAddTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back To List.
+        /// </summary>
+        public static string LabelBackToList {
+            get {
+                return ResourceManager.GetString("LabelBackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code.
         /// </summary>
         public static string LabelCode {
@@ -88,6 +106,24 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Template.
+        /// </summary>
+        public static string LabelDeleteTemplate {
+            get {
+                return ResourceManager.GetString("LabelDeleteTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Details.
+        /// </summary>
+        public static string LabelDetailsTemplate {
+            get {
+                return ResourceManager.GetString("LabelDetailsTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string LabelEdit {
@@ -97,11 +133,29 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Template.
+        /// </summary>
+        public static string LabelEditTemplate {
+            get {
+                return ResourceManager.GetString("LabelEditTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string LabelName {
             get {
                 return ResourceManager.GetString("LabelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string LabelSave {
+            get {
+                return ResourceManager.GetString("LabelSave", resourceCulture);
             }
         }
         

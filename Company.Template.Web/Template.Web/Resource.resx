@@ -120,17 +120,35 @@
   <data name="LabelAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="LabelAddTemplate" xml:space="preserve">
+    <value>Add Template</value>
+  </data>
+  <data name="LabelBackToList" xml:space="preserve">
+    <value>Back To List</value>
+  </data>
   <data name="LabelCode" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="LabelDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="LabelDeleteTemplate" xml:space="preserve">
+    <value>Delete Template</value>
+  </data>
+  <data name="LabelDetailsTemplate" xml:space="preserve">
+    <value>Template Details</value>
+  </data>
   <data name="LabelEdit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="LabelEditTemplate" xml:space="preserve">
+    <value>Edit Template</value>
+  </data>
   <data name="LabelName" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="LabelSave" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="LabelTemplateList" xml:space="preserve">
     <value>Template List</value>

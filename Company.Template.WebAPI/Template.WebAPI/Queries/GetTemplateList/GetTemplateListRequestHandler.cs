@@ -25,7 +25,18 @@ namespace Template.WebAPI.Queries.GetTemplateList
         {
             var query = _context.Template.AsNoTracking();
             if (request.SearchKey != null) {
-                query = query.Where(l=>request.SearchKey.Contains(l.Code));
+                var searchWords = request.SearchKey.ToLower().Split(' ');
+                query = query.Where(i => i.Code.ToLower().Contains(searchWords[0])
+                                  || i.Name.ToLower().Contains(searchWords[0]));
+                if (searchWords.Length > 1)
+                {
+                    for (int x = 1; x < searchWords.Length; x++)
+                    {
+                        var search = searchWords[x];
+                        query = query.Where(i => i.Code.ToLower().Contains(search)
+                                  || i.Name.ToLower().Contains(search));
+                    }
+                }            
             }
             switch (request.SortBy) {
                 case "Code":
