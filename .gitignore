@@ -923,3 +923,7 @@ Company.Template.WebAPI/Template.Core/obj/Release/netcoreapp3.1/Template.Core.cs
 Company.Template.WebAPI/Template.Core/obj/Release/netcoreapp3.1/Template.Core.csprojAssemblyReference.cache
 Company.Template.WebAPI/Template.Core/obj/Release/netcoreapp3.1/Template.Core.dll
 Company.Template.WebAPI/Template.Core/obj/Release/netcoreapp3.1/Template.Core.pdb
+Company.Template.WebAPI/.vs/Company.Template.API/v16/Server/sqlite3/storage.ide-shm
+Company.Template.WebAPI/.vs/Company.Template.API/v16/Server/sqlite3/storage.ide-wal
+Company.Template.Web/.vs/Company.Template.Web/v16/Server/sqlite3/storage.ide-shm
+Company.Template.Web/.vs/Company.Template.Web/v16/Server/sqlite3/storage.ide-wal
