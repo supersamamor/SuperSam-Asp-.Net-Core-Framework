@@ -126,6 +126,12 @@
   <data name="LabelBackToList" xml:space="preserve">
     <value>Back To List</value>
   </data>
+  <data name="LabelCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="LabelClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="LabelCode" xml:space="preserve">
     <value>Code</value>
   </data>
@@ -147,6 +153,9 @@
   <data name="LabelName" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="LabelOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="LabelSave" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -164,6 +173,9 @@
   </data>
   <data name="PromptMessageDeleteSuccess" xml:space="preserve">
     <value>Delete success</value>
+  </data>
+  <data name="PromptMessageFieldIsRequired" xml:space="preserve">
+    <value>{0} is required.</value>
   </data>
   <data name="PromptMessageSaveSuccess" xml:space="preserve">
     <value>Save success</value>

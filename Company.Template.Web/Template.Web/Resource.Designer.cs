@@ -88,6 +88,24 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string LabelCancel {
+            get {
+                return ResourceManager.GetString("LabelCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string LabelClose {
+            get {
+                return ResourceManager.GetString("LabelClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code.
         /// </summary>
         public static string LabelCode {
@@ -151,6 +169,15 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string LabelOk {
+            get {
+                return ResourceManager.GetString("LabelOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string LabelSave {
@@ -201,6 +228,15 @@ namespace Template.Web {
         public static string PromptMessageDeleteSuccess {
             get {
                 return ResourceManager.GetString("PromptMessageDeleteSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is required..
+        /// </summary>
+        public static string PromptMessageFieldIsRequired {
+            get {
+                return ResourceManager.GetString("PromptMessageFieldIsRequired", resourceCulture);
             }
         }
         

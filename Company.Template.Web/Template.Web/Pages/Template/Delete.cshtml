@@ -46,6 +46,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Template.Id" />
+            <input type="hidden" asp-for="Template.Code" />
             <div class="form-group">
                 <label asp-for="Template.Code" class="control-label small"></label>
                 <input asp-for="Template.Code" class="form-control form-control-sm" disabled />
