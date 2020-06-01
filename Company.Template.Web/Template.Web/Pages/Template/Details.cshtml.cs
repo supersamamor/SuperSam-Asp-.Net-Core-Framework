@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Correlate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using Template.Web.Models.Template;
 
 namespace Template.Web.Pages.Template
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly TemplateAPIService _service;

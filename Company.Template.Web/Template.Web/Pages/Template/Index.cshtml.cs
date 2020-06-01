@@ -1,4 +1,5 @@
 ﻿using Correlate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,6 +14,7 @@ using X.PagedList;
 
 namespace Template.Web.Pages.Template
 {
+    [Authorize]
     public class IndexModel : BasePageModel
     {
         private readonly TemplateAPIService _service;
