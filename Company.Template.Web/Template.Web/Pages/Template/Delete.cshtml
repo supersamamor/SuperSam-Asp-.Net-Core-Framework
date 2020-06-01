@@ -1,6 +1,6 @@
 ﻿@page
 @model Template.Web.Pages.Template.DeleteModel
-
+@using Template.Web.Extensions;
 
 @{
     ViewData["Title"] = @Resource.LabelDeleteTemplate;
@@ -10,7 +10,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete" id="btnShowDeleteModal">
                     <a class="input-group-text custom-anchor-button">
                         <i class="fas fa-trash"></i>
                     </a>
@@ -65,5 +65,6 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @Html.PromptConfirmationModal("ConfirmDeleteModal", "btnShowDeleteModal", "btnDelete", Resource.PromptMessageDeleteConfirmation)
 }
 

@@ -223,6 +223,15 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete?.
+        /// </summary>
+        public static string PromptMessageDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("PromptMessageDeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete success.
         /// </summary>
         public static string PromptMessageDeleteSuccess {
@@ -237,6 +246,15 @@ namespace Template.Web {
         public static string PromptMessageFieldIsRequired {
             get {
                 return ResourceManager.GetString("PromptMessageFieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to save?.
+        /// </summary>
+        public static string PromptMessageSaveConfirmation {
+            get {
+                return ResourceManager.GetString("PromptMessageSaveConfirmation", resourceCulture);
             }
         }
         

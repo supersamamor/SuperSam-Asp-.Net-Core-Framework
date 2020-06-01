@@ -171,11 +171,17 @@
   <data name="PromptMessageDefaultError" xml:space="preserve">
     <value>An error has occured, please contact your system administrator</value>
   </data>
+  <data name="PromptMessageDeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
   <data name="PromptMessageDeleteSuccess" xml:space="preserve">
     <value>Delete success</value>
   </data>
   <data name="PromptMessageFieldIsRequired" xml:space="preserve">
     <value>{0} is required.</value>
+  </data>
+  <data name="PromptMessageSaveConfirmation" xml:space="preserve">
+    <value>Are you sure you want to save?</value>
   </data>
   <data name="PromptMessageSaveSuccess" xml:space="preserve">
     <value>Save success</value>

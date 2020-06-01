@@ -1,6 +1,6 @@
 ﻿@page
 @model Template.Web.Pages.Template.CreateModel
-
+@using Template.Web.Extensions;
 @{
     ViewData["Title"] = @Resource.LabelAddTemplate;
 }
@@ -8,7 +8,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" onclick="JSFunctionSaveConfirmationModal();">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowSaveModal">
                     <a class="input-group-text custom-anchor-button">
                         <i class="fas fa-save"></i>
                     </a>
@@ -60,48 +60,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal" style="position:fixed;top:20%;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h6 class="modal-title" style="font-weight:400;">Modal Heading</h6>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                Modal body..
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="@Resource.LabelOk" onclick="$('#btnSave').click();">
-                    <i class="fas fa-check"></i>
-                </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="tooltip" data-placement="top" title="@Resource.LabelClose">
-                    <i class="fas fa-times-circle"></i>
-                </button>               
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<style>
-
-</style>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-
+    @Html.PromptConfirmationModal("ConfirmSaveModal", "btnShowSaveModal", "btnSave", Resource.PromptMessageSaveConfirmation)
 }
-<script type="text/javascript">
-    function JSFunctionSaveConfirmationModal() {
-        var form = document.getElementById('formtemplate');
-        $(form).validate();
-
-        $("#myModal").modal('show');
-    }
-</script>

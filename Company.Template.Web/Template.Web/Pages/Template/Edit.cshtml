@@ -1,6 +1,6 @@
 ﻿@page
 @model Template.Web.Pages.Template.EditModel
-
+@using Template.Web.Extensions;
 @{
     ViewData["Title"] = @Resource.LabelEditTemplate;
 }
@@ -10,7 +10,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowUpdateModal">
                     <a class="input-group-text custom-anchor-button">
                         <i class="fas fa-save"></i>
                     </a>
@@ -57,12 +57,13 @@
                 <input asp-for="Template.Name" class="form-control form-control-sm" />
                 <span asp-validation-for="Template.Name" class="text-danger small"></span>
             </div>
-            <div class="form-group" style="display:block;">
-                <input type="submit" id="btnSave" value="Save" class="btn btn-primary" />
+            <div class="form-group" style="display:none;">
+                <input type="submit" id="btnUpdate" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @Html.PromptConfirmationModal("ConfirmUpdateModal", "btnShowUpdateModal", "btnUpdate", Resource.PromptMessageSaveConfirmation)
 }
