@@ -7,10 +7,14 @@
 @{
     ViewData["Title"] = @Resource.LabelTemplateList;
 }
-
-    <form method="get">       
+<style>
+    body x {
+           outline:1px solid red;
+    } 
+</style>
+    <form method="get">
         <div class="row toolbar-container">
-            <div class="btn-toolbar mb-1 col-12" role="toolbar">
+            <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
                 <div class="input-group input-group-sm">
                     <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
                         <a asp-page="Create" class="input-group-text custom-anchor-button">
@@ -19,19 +23,22 @@
                         </a>
                     </div>
                 </div>
-                <div class="vertical-divider"></div>
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend input-group-sm">
-                        <button type="submit" class="input-group-text">
-                            <i class="fas fa-search text-dark"
-                               aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <input asp-for="SearchKey" class="form-control" placeholder="Search" />
-                </div>
             </div>
-        </div>      
-    </form>  
+            <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
+                <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
+                    <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
+                        <div class="input-group-prepend input-group-sm">
+                            <button type="submit" class="input-group-text">
+                                <i class="fas fa-search text-dark"
+                                   aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <input asp-for="SearchKey" class="form-control" placeholder="Search"/>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </form>   
     <div class="" style="margin-top:5px;">
         @if (TempData["Error"] != null)
         {

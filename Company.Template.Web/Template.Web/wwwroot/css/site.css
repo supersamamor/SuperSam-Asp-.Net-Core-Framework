@@ -99,10 +99,11 @@ body {
 }
 .toolbar-container {
     border: 1px solid rgba(59,65,81,.3);
-    border-radius:5px;
+    border-radius: 5px;
     padding-top: 5px;
     background: rgba(0,0,0,.02);
-    margin-left:0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #web-title {
@@ -144,8 +145,19 @@ body {
 }
 
 .panel-container {
-    border: 1px solid rgba(0,0,0,.125);  
+    border: 1px solid rgba(0,0,0,.125);
     padding-top: 10px;
     background: rgba(0,0,0,.02);
     margin-left: 0px;
+    margin-right: 0px;
 }
+
+
+@media(max-width:575px) {
+    .toolbar-right-panel {     
+        width:70%;  
+    }
+    .toolbar-left-panel {      
+        width: 30%;
+    }
+}   
