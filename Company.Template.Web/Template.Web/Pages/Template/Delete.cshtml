@@ -48,12 +48,12 @@
             <input type="hidden" asp-for="Template.Id" />
             <input type="hidden" asp-for="Template.Code" />
             <div class="form-group">
-                <label asp-for="Template.Code" class="control-label small"></label>
+                @Html.DisplayLabelWithRequiredTag(model => Model.Template.Code, "control-label small")
                 <input asp-for="Template.Code" class="form-control form-control-sm" disabled />
                 <span asp-validation-for="Template.Code" class="text-danger small"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Template.Name" class="control-label small"></label>
+                @Html.DisplayLabelWithRequiredTag(model => Model.Template.Name, "control-label small")
                 <input asp-for="Template.Name" class="form-control form-control-sm" disabled />
                 <span asp-validation-for="Template.Name" class="text-danger small"></span>
             </div>

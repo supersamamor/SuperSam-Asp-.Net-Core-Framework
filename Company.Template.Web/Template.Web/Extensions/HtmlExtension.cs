@@ -44,7 +44,68 @@ namespace Template.Web.Extensions
             htmlstring += @"class=""page-sorter""> " + fieldDisplayName + "</a>";
             htmlstring += @"</th>";
             return new HtmlString(htmlstring); ;
-        }      
+        }
+        public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement, string message)
+        {
+            var htmlstring = @"<div class=""modal fade"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
+            htmlstring += @"<div class=""modal-dialog"">";
+            htmlstring += @"<div class=""modal-content"">";
+            htmlstring += @"<div class=""modal-header"">";
+            htmlstring += @"<h6 class=""modal-title"" style=""font-weight:400;"">Confirmation</h6>";
+            htmlstring += @" <button type=""button"" class=""close"" data-dismiss=""modal"">&times;</button>";
+            htmlstring += @"</div>";
+            htmlstring += @" <div class=""modal-body"">";
+            htmlstring += @" " + message + @"";
+            htmlstring += @" </div>";
+            htmlstring += @"<div class=""modal-footer"">";
+            htmlstring += @"<button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top""";
+            htmlstring += @"title=""Ok"" onclick=""$('#" + modalId + @"').modal('hide');$('#" + triggerActionElement + @"').click();"">";
+            htmlstring += @"<i class=""fas fa-check""></i>";
+            htmlstring += @"</button>";
+            htmlstring += @"<button type=""button"" class=""btn btn-danger"" data-dismiss=""modal"" data-toggle=""tooltip"" data-placement=""top"" title=""Close"">";
+            htmlstring += @"<i class=""fas fa-times-circle""></i>";
+            htmlstring += @"</button>";
+            htmlstring += @"</div>";
+            htmlstring += @"<div>";
+            htmlstring += @"</div>";
+            htmlstring += @"</div>";
+            htmlstring += @"<script type=""text/javascript"">";
+            htmlstring += @"function ShowModal" + modalId + @"() {";
+            htmlstring += @"$(""#" + modalId + @""").modal('show');";
+            htmlstring += @"}";
+            htmlstring += @"$( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
+            htmlstring += @"ShowModal" + modalId + @"();";
+            htmlstring += @"});";
+            htmlstring += @"";
+            htmlstring += @"$(document).ready(function() {";
+            htmlstring += @"$(window).keydown(function(event){";
+            htmlstring += @"if(event.keyCode == 13) {";
+            htmlstring += @"event.preventDefault();";
+            htmlstring += @"ShowModal" + modalId + @"();";
+            htmlstring += @"return false;";
+            htmlstring += @"}});});";
+            htmlstring += @"</script>";
+            return new HtmlString(htmlstring); ;
+        }
+        public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
+        {
+            var propertyGetExpression = expression.Body as MemberExpression;
+            var fieldOnClosureExpression = propertyGetExpression.Expression;
+            MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
+            var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+            var requiredAttribute = property.GetCustomAttribute(typeof(RequiredAttribute)) as RequiredAttribute;
+            string fieldDisplayName = "[Field Not Found]";
+            if (field != null)
+            {           
+                var _labelName = field.Name;
+                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), Assembly.GetExecutingAssembly());
+                fieldDisplayName = rm.GetString(_labelName);
+            }            
+            var htmlstring = @"<label class=""" + className + @""">" + fieldDisplayName;
+            if (requiredAttribute != null) { htmlstring += @"<span style=""color:red;""> *<span>"; }
+            htmlstring += @"</label>";
+            return new HtmlString(htmlstring); ;
+        }
         private static string CreateRoutes(object routes)
         {
             if (routes == null)
@@ -85,49 +146,6 @@ namespace Template.Web.Extensions
                 }            
             }
             return str;
-        }
-
-        public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement, string message)
-        {        
-            var htmlstring = @"<div class=""modal fade"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
-            htmlstring += @"<div class=""modal-dialog"">";
-            htmlstring += @"<div class=""modal-content"">";
-            htmlstring += @"<div class=""modal-header"">";
-            htmlstring += @"<h6 class=""modal-title"" style=""font-weight:400;"">Confirmation</h6>";
-            htmlstring += @" <button type=""button"" class=""close"" data-dismiss=""modal"">&times;</button>";
-            htmlstring += @"</div>";
-            htmlstring += @" <div class=""modal-body"">";
-            htmlstring += @" "+ message + @"";
-            htmlstring += @" </div>";
-            htmlstring += @"<div class=""modal-footer"">";
-            htmlstring += @"<button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top""";
-            htmlstring += @"title=""Ok"" onclick=""$('#" + modalId + @"').modal('hide');$('#" + triggerActionElement + @"').click();"">";
-            htmlstring += @"<i class=""fas fa-check""></i>";
-            htmlstring += @"</button>";
-            htmlstring += @"<button type=""button"" class=""btn btn-danger"" data-dismiss=""modal"" data-toggle=""tooltip"" data-placement=""top"" title=""Close"">";
-            htmlstring += @"<i class=""fas fa-times-circle""></i>";
-            htmlstring += @"</button>";
-            htmlstring += @"</div>";
-            htmlstring += @"<div>";
-            htmlstring += @"</div>";
-            htmlstring += @"</div>";
-            htmlstring += @"<script type=""text/javascript"">";
-            htmlstring += @"function ShowModal" + modalId + @"() {";       
-            htmlstring += @"$(""#" + modalId + @""").modal('show');";
-            htmlstring += @"}";
-            htmlstring += @"$( ""#"+ triggerShowElementId + @""" ).bind( ""click"", function() {";
-            htmlstring += @"ShowModal" + modalId + @"();";
-            htmlstring += @"});";
-            htmlstring += @"";
-            htmlstring += @"$(document).ready(function() {";
-            htmlstring += @"$(window).keydown(function(event){";
-            htmlstring += @"if(event.keyCode == 13) {";
-            htmlstring += @"event.preventDefault();";
-            htmlstring += @"ShowModal" + modalId + @"();";
-            htmlstring += @"return false;";
-            htmlstring += @"}});});";   
-            htmlstring += @"</script>";
-            return new HtmlString(htmlstring); ;
         }
     }
 }
