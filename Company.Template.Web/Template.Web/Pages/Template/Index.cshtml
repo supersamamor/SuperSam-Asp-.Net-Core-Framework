@@ -65,7 +65,7 @@
             {              
                 foreach (var item in Model.TemplateList)
                 {
-                    <tr>
+                    <tr  onclick="document.getElementById('btnEdit@(item.Id)').click();" style="cursor:pointer;">
                         <td>
                             @Html.DisplayFor(modelItem => item.Code)
                         </td>
@@ -73,7 +73,7 @@
                             <span style="float:left;">@Html.DisplayFor(modelItem => item.Name)</span>                         
                             <ul class="list-toolbar" style="float:right;">
                                 <li class="list-toolbar-button">
-                                    <a asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                                    <a Id="btnEdit@(item.Id)" asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
                                         <i class="fas fa-edit text-dark"
                                            aria-hidden="true"></i>
                                     </a>
