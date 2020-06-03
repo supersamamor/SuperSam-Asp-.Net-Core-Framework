@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 using System.Text;
 using Template.Web.AppException;
 using X.PagedList;
+using Template.SecurityData.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace Template.Web.ApiServices.Template
 {
     public class TemplateAPIService 
     {
         private HttpClient _client { get; set; }
-        public TemplateAPIService(HttpClient client) 
+        private AppUser _user { get; set; }
+        public TemplateAPIService(HttpClient client, UserManager<AppUser> userManager, IHttpContextAccessor httpContext) 
         {
             _client = client;
+            _user = (userManager.GetUserAsync(httpContext.HttpContext.User).Result);
+            _client.DefaultRequestHeaders.Add("UserName", _user.UserName);
         }
 
         public async Task<IPagedList<TemplateModel>> GetTemplateListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize, CancellationToken token)

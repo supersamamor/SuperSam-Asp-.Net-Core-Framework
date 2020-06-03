@@ -966,3 +966,4 @@ Company.Template.Web/Template.Web/obj/Debug/netcoreapp3.1/Razor/Areas/Identity/P
 Company.Template.Web/Template.Web/obj/Debug/netcoreapp3.1/Razor/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml.g.cs
 Company.Template.Web/Template.Web/obj/Debug/netcoreapp3.1/Razor/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml.g.cs
 Company.Template.Web/Template.SecurityData/obj/Debug/netcoreapp3.1/Template.SecurityData.csprojAssemblyReference.cache
+Company.Template.WebAPI/.vs/Company.Template.API/v16/.suo
