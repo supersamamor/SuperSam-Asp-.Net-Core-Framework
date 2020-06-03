@@ -9,7 +9,6 @@ using Template.WebAPI.Commands.UpdateTemplate;
 using Template.WebAPI.Models;
 using Template.WebAPI.Queries.GetTemplateItem;
 using Template.WebAPI.Queries.GetTemplateList;
-
 namespace Template.WebAPI.Controllers
 {
     [Route("TemplateAPI/v1/[controller]")]
@@ -19,7 +18,6 @@ namespace Template.WebAPI.Controllers
     {      
         private readonly IMediator _mediator;
         private readonly ILogger _logger;
-
         public TemplateController(IMediator mediator, ILogger<TemplateController> logger)
         {        
             _mediator = mediator;
