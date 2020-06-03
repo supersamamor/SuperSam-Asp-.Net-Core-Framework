@@ -22,7 +22,7 @@ namespace Template.Web.Pages.Template
         private readonly ICorrelationContextAccessor _correlationContext;
 
         public IndexModel(TemplateAPIService service, IOptions<TemplateWebConfig> appSetting, 
-            ILogger<EditModel> logger, ICorrelationContextAccessor correlationContext) : base(appSetting.Value.PageSize)
+            ILogger<IndexModel> logger, ICorrelationContextAccessor correlationContext) : base(appSetting.Value.PageSize)
         {
             _service = service;
             _logger = logger;

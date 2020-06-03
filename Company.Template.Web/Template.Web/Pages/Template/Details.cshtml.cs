@@ -19,7 +19,7 @@ namespace Template.Web.Pages.Template
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public DetailsModel(TemplateAPIService service, ILogger<EditModel> logger, ICorrelationContextAccessor correlationContext)
+        public DetailsModel(TemplateAPIService service, ILogger<DetailsModel> logger, ICorrelationContextAccessor correlationContext)
         {
             _service = service;
             _logger = logger;

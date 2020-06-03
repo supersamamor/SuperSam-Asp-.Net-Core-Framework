@@ -36,7 +36,7 @@ namespace Template.Web.Pages.Template
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostAsync), Template);
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync), Template);
             }          
             return Page();
         }
