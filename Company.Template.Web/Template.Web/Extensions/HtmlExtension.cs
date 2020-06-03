@@ -116,7 +116,7 @@ namespace Template.Web.Extensions
             foreach (PropertyInfo prp in props)
             {                
                 if (prp.PropertyType.IsPrimitive || prp.PropertyType == typeof(Decimal) || prp.PropertyType == typeof(String) 
-                    || prp.PropertyType == typeof(DateTime))
+                    || prp.PropertyType == typeof(DateTime)|| prp.PropertyType == typeof(DateTime?))
                 {
                     object value = prp.GetValue(routes, new object[] { });                   
                     if (prp.Name == "SortBy")
