@@ -36,8 +36,8 @@ steps:
     arguments: 'update --configfile nuget-org.config --global dotnet-ef --version 3.1.2'
 - task: efcore-migration-script-generator-task@0
   inputs:
-    projectpath: '$(Build.SourcesDirectory)/MRS.Security.Data/MRS.Security.Data.csproj'
-    databasecontexts: 'ApplicationDbContext'
-    startupprojectpath: '$(Build.SourcesDirectory)/MRS.Web/MRS.Web.csproj'
+    projectpath: '$(Build.SourcesDirectory)/Template.SecurityData/Template.SecurityData.csproj'
+    databasecontexts: 'TemplateContext'
+    startupprojectpath: '$(Build.SourcesDirectory)/Template.Web/Template.Web.csproj'
     targetfolder: '$(build.artifactstagingdirectory)/migrations'    
 - task: PublishBuildArtifacts@1

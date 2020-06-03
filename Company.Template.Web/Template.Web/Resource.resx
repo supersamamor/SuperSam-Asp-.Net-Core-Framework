@@ -150,6 +150,9 @@
   <data name="LabelEditTemplate" xml:space="preserve">
     <value>Edit Template</value>
   </data>
+  <data name="LabelFullName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
   <data name="LabelName" xml:space="preserve">
     <value>Name</value>
   </data>

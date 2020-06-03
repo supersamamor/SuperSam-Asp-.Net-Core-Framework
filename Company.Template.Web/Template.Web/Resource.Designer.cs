@@ -160,6 +160,15 @@ namespace Template.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full Name.
+        /// </summary>
+        public static string LabelFullName {
+            get {
+                return ResourceManager.GetString("LabelFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string LabelName {
