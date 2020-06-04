@@ -13,7 +13,7 @@ namespace Template.Web.Extensions
         private static string _orderBy { get; set; }
         private static string _fieldName { get; set; }
         private static string _pageName { get; set; }
-        public static IHtmlContent PageSorter<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression)
+        public static IHtmlContent PageSorter<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, int? maxwidth = null)
         {
             var propertyGetExpression = expression.Body as MemberExpression;
             var fieldOnClosureExpression = propertyGetExpression.Expression;
@@ -37,13 +37,14 @@ namespace Template.Web.Extensions
                     sortIcon = "fas fa-sort-up";
                 }
             }
-            var htmlstring = @"<th>";
+            string maxwidthsytle = maxwidth != null ? @"style=""max-width:" + maxwidth + @"px;width:" + maxwidth + @"px;""" : "";
+            var htmlstring = @"<th " + maxwidthsytle + @">";
             htmlstring += @"<i class=""" + sortIcon + @"""></i>";
             htmlstring += @"<a href=""" + _pageName + @"?";
             htmlstring += @"" + routes + @"""";
             htmlstring += @"class=""page-sorter""> " + fieldDisplayName + "</a>";
             htmlstring += @"</th>";
-            return new HtmlString(htmlstring); ;
+            return new HtmlString(htmlstring);
         }
         public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement, string message)
         {
