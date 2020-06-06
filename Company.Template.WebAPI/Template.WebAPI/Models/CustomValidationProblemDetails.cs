@@ -23,7 +23,7 @@ namespace Template.WebAPI.Models
                     Match match = regex.Match(sqlException.Message);
                     if (match.Success)
                     {
-                        this.Detail = string.Format("There are duplicate records in the file.  {0}", match.Value);
+                        this.Detail = string.Format("The record already exists.  {0}", match.Value);
                     }
                     else
                     {
