@@ -9,7 +9,7 @@
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowSaveModal">
-                    <a class="input-group-text custom-anchor-button">
+                    <a class="input-group-text custom-anchor-button"  href="#">
                         <i class="fas fa-save"></i>
                     </a>
                 </div>
@@ -25,7 +25,7 @@
         </div>
     </div>
 </form>
-<div class="" style="margin-top:5px;">
+<div class="" id="PromptContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -41,7 +41,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-6">
-        <form method="post" id="formtemplate">
+        <form method="post" id="FormAdd">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 @Html.DisplayLabelWithRequiredTag(model => Model.Template.Code,"control-label small")             
@@ -62,5 +62,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @Html.PromptConfirmationModal("ConfirmSaveModal", "btnShowSaveModal", "btnSave", Resource.PromptMessageSaveConfirmation)
+    @Html.PromptConfirmationModal("ConfirmSaveModal", "btnShowSaveModal","FormAdd","PromptContainer", "btnSave", Resource.PromptMessageSaveConfirmation)
 }

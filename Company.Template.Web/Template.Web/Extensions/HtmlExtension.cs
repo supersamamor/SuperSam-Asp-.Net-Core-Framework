@@ -46,7 +46,8 @@ namespace Template.Web.Extensions
             htmlstring += @"</th>";
             return new HtmlString(htmlstring);
         }
-        public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement, string message)
+        public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement,
+              string formId, string promptMessageContainerId, string message)
         {
             var htmlstring = @"<div class=""modal fade"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
             htmlstring += @"<div class=""modal-dialog"">";
@@ -71,9 +72,25 @@ namespace Template.Web.Extensions
             htmlstring += @"</div>";
             htmlstring += @"</div>";
             htmlstring += @"<script type=""text/javascript"">";
-            htmlstring += @"function ShowModal" + modalId + @"() {";
-            htmlstring += @"$(""#" + modalId + @""").modal('show');";
-            htmlstring += @"}";
+            if (formId == "")
+            {
+                htmlstring += @"function ShowModal" + modalId + @"() {";
+                htmlstring += @"$(""#" + modalId + @""").modal('show');";
+                htmlstring += @"}";
+            }
+            else
+            {
+                htmlstring += @"function ShowModal" + modalId + @"() {";
+                htmlstring += @"var form = $('#" + formId + @"');";
+                htmlstring += @" if ($(form).valid()) {";
+                htmlstring += @"$(""#" + modalId + @""").modal('show');";
+                htmlstring += @"}";
+                htmlstring += @"else";
+                htmlstring += @"{";
+                htmlstring += @"$('#" + promptMessageContainerId + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>');";
+                htmlstring += @"}";
+                htmlstring += @"}";
+            }
             htmlstring += @"$( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
             htmlstring += @"ShowModal" + modalId + @"();";
             htmlstring += @"});";
@@ -86,7 +103,7 @@ namespace Template.Web.Extensions
             htmlstring += @"return false;";
             htmlstring += @"}});});";
             htmlstring += @"</script>";
-            return new HtmlString(htmlstring); ;
+            return new HtmlString(htmlstring);
         }
         public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
         {

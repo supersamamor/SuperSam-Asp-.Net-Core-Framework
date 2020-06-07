@@ -11,7 +11,7 @@
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowUpdateModal">
-                    <a class="input-group-text custom-anchor-button">
+                    <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-save"></i>
                     </a>
                 </div>
@@ -27,7 +27,7 @@
         </div>
     </div>
 </form>
-<div class="" style="margin-top:5px;">
+<div class=""  id="PromptContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -43,7 +43,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-6">
-        <form method="post">
+        <form method="post" id="FormEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Template.Id" />
             <input type="hidden" asp-for="Template.Code" />
@@ -65,5 +65,5 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @Html.PromptConfirmationModal("ConfirmUpdateModal", "btnShowUpdateModal", "btnUpdate", Resource.PromptMessageSaveConfirmation)
+    @Html.PromptConfirmationModal("ConfirmUpdateModal", "btnShowUpdateModal","FormEdit","PromptContainer", "btnUpdate", Resource.PromptMessageSaveConfirmation)
 }
