@@ -65,6 +65,6 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @Html.PromptConfirmationModal("ConfirmDeleteModal", "btnShowDeleteModal","","", "btnDelete", Resource.PromptMessageDeleteConfirmation)
+    @Html.PromptConfirmationModal("ConfirmDeleteModal", "btnShowDeleteModal","btnDelete","","", Resource.PromptMessageDeleteConfirmation)
 }
 
