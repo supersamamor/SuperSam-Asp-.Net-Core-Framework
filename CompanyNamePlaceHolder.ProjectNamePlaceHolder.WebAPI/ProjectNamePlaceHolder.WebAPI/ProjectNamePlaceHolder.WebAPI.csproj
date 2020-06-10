@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MainModulePlaceHolder.Data\ProjectNamePlaceHolder.Data.csproj" />
+    <ProjectReference Include="..\ProjectNamePlaceHolder.Data\ProjectNamePlaceHolder.Data.csproj" />
   </ItemGroup>
 
 

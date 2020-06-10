@@ -11,7 +11,7 @@ using ProjectNamePlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderItem;
 using ProjectNamePlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderList;
 namespace ProjectNamePlaceHolder.WebAPI.Controllers
 {
-    [Route("MainModulePlaceHolderAPI/v1/[controller]")]
+    [Route("ProjectNamePlaceHolderAPI/v1/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class MainModulePlaceHolderController : ControllerBase
