@@ -1,0 +1,70 @@
+@page
+@model ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder.DeleteModel
+@using ProjectNamePlaceHolder.Web.Extensions;
+
+@{
+    ViewData["Title"] = @Resource.LabelDeleteMainModulePlaceHolder;
+}
+
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-12" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete" id="btnShowDeleteModal">
+                    <a class="input-group-text custom-anchor-button" href="#">
+                        <i class="fas fa-trash"></i><span class="btn-label"> @Resource.LabelDelete</span>
+                    </a>
+                </div>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
+                    <a asp-page="./Index" class="input-group-text custom-anchor-button">
+                        <i class="fas fa-backspace"></i><span class="btn-label"> @Resource.LabelBack</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="" style="margin-top:5px;">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info small alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<div class="row panel-container">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MainModulePlaceHolder.Id" />
+            <input type="hidden" asp-for="MainModulePlaceHolder.Code" />
+            <div class="form-group">
+                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Code, "control-label small")
+                <input asp-for="MainModulePlaceHolder.Code" class="form-control form-control-sm" disabled />
+                <span asp-validation-for="MainModulePlaceHolder.Code" class="text-danger small"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Name, "control-label small")
+                <input asp-for="MainModulePlaceHolder.Name" class="form-control form-control-sm" disabled />
+                <span asp-validation-for="MainModulePlaceHolder.Name" class="text-danger small"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <input type="submit" id="btnDelete" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @Html.PromptConfirmationModal("ConfirmDeleteModal", "btnShowDeleteModal","btnDelete","","", Resource.PromptMessageDeleteConfirmation)
+}
+

@@ -1,0 +1,43 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: restore
+    restoreSolution: '$(Parameters.solution)'
+    feedsToUse: 'config'
+    nugetConfigPath: 'nuget.config'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'custom'
+    custom: 'tool'
+    arguments: 'update --configfile nuget-org.config --global dotnet-ef --version 3.1.2'
+- task: efcore-migration-script-generator-task@0
+  inputs:
+    projectpath: '$(Build.SourcesDirectory)/ProjectNamePlaceHolder.SecurityData/ProjectNamePlaceHolder.SecurityData.csproj'
+    databasecontexts: 'ProjectNamePlaceHolderContext'
+    startupprojectpath: '$(Build.SourcesDirectory)/ProjectNamePlaceHolder.Web/ProjectNamePlaceHolder.Web.csproj'
+    targetfolder: '$(build.artifactstagingdirectory)/migrations'    
+- task: PublishBuildArtifacts@1
