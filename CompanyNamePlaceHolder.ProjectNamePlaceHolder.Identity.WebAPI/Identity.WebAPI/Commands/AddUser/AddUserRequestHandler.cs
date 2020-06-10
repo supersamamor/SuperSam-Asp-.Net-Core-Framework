@@ -26,7 +26,7 @@ namespace Identity.WebAPI.Commands.AddUser
             templateCore.SetCreatedInformation(request.Username);
             var template = await _repository.SaveAsync(templateCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.User, UserModel>(template); ;
+            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(template); ;
         }
     }
 }

@@ -9,9 +9,5 @@ namespace Identity.Data.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
-        public string CreatedByUsername { get; set; }
-        public string UpdatedByUsername { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
 {
     public class MainModulePlaceHolderAPIService  : BaseApiService
     {
-        public MainModulePlaceHolderAPIService(HttpClient client, UserManager<AppUser> userManager, IHttpContextAccessor httpContext) 
+        public MainModulePlaceHolderAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
             : base(client, userManager, httpContext)
         {          
         }

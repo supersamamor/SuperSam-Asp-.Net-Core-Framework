@@ -11,8 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using ProjectNamePlaceHolder.SecurityData;
-using ProjectNamePlaceHolder.SecurityData.Models;
 using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -35,7 +35,7 @@ namespace ProjectNamePlaceHolder.Web
             services.AddDbContext<ProjectNamePlaceHolderContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ProjectNamePlaceHolderContext>();
          
             #region Api Services

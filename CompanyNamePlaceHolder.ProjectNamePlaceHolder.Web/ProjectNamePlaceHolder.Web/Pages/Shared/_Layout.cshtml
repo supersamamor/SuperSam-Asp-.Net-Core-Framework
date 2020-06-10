@@ -1,6 +1,6 @@
 ﻿@using Microsoft.Extensions.Options
-@inject SignInManager<ProjectNamePlaceHolder.SecurityData.Models.AppUser> SignInManager
-@inject UserManager<ProjectNamePlaceHolder.SecurityData.Models.AppUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @inject IOptions<ProjectNamePlaceHolder.Web.MainModulePlaceHolderWebConfig> Config
 <!DOCTYPE html>
 <html lang="en">

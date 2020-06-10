@@ -15,11 +15,11 @@ namespace Identity.Data.Repositories
             _mapper = mapperConfig.CreateMapper();
         }    
 
-        public async Task<Data.Models.User> SaveAsync(Core.Models.User templateCore) {
-            var template = _mapper.Map<Core.Models.User, Models.User>(templateCore);
-            if (template.Id == null)
+        public async Task<Data.Models.ProjectNamePlaceHolderUser> SaveAsync(Core.Models.User templateCore) {
+            var template = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(templateCore);
+            if (template.Id == 0)
             {
-                await _context.User.AddAsync(template);
+                await _context.ProjectNamePlaceHolderUser.AddAsync(template);
             }
             else {
                 _context.Entry(template).State = EntityState.Modified;
@@ -29,13 +29,13 @@ namespace Identity.Data.Repositories
 
         public void Delete(Core.Models.User templateCore)
         {
-            var template = _mapper.Map<Core.Models.User, Models.User>(templateCore);
-            _context.User.Remove(template);
+            var template = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(templateCore);
+            _context.ProjectNamePlaceHolderUser.Remove(template);
         }
 
-        public async Task<Core.Models.User> GetItemAsync(string id)
+        public async Task<Core.Models.User> GetItemAsync(int id)
         {        
-            return _mapper.Map<Models.User, Core.Models.User>(await _context.User.Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
+            return _mapper.Map<Models.ProjectNamePlaceHolderUser, Core.Models.User>(await _context.ProjectNamePlaceHolderUser.Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
         }       
     }     
 }

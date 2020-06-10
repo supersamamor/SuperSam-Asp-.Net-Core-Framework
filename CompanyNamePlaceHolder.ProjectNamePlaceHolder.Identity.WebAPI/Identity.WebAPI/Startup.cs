@@ -51,8 +51,8 @@ namespace Identity.WebAPI
             });
             services.AddSingleton(new MapperConfiguration(cfg =>
                 {
-                    cfg.CreateMap<Data.Models.User, UserModel>().ReverseMap();
-                    cfg.CreateMap<Data.Models.User, Core.Models.User>().ReverseMap();
+                    cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
+                    cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, Core.Models.User>().ReverseMap();
                     cfg.CreateMap<Core.Models.User, UserModel>().ReverseMap();
                 }
             ));

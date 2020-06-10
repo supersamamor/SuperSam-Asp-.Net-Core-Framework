@@ -1,3 +1,5 @@
+using Identity.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -14,7 +16,7 @@ namespace Identity.Data
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
-        {           
+        {
             #region Disable Cascade Delete
             var cascadeFKs = builder.Model.GetEntityTypes()
            .SelectMany(t => t.GetForeignKeys())
@@ -23,9 +25,10 @@ namespace Identity.Data
             {
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
             }
-            #endregion   
+            #endregion
             base.OnModelCreating(builder);
         }
-        public virtual DbSet<Models.User> User { get; set; }     
+        public DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
+
     }
 }

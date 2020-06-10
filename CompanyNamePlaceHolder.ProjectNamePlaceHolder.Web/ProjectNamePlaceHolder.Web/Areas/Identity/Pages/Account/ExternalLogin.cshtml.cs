@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ProjectNamePlaceHolder.SecurityData;
 using ProjectNamePlaceHolder.SecurityData.Models;
 
 namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account
@@ -17,21 +18,23 @@ namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
-
+        private readonly ProjectNamePlaceHolderContext _context;
         public ExternalLoginModel(
-            SignInManager<AppUser> signInManager,
-            UserManager<AppUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ProjectNamePlaceHolderContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -123,8 +126,11 @@ namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName };
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };        
                 var result = await _userManager.CreateAsync(user);
+                var projectNamePlaceHolderUser = new ProjectNamePlaceHolderUser() { FullName = Input.FullName, Identity = user };
+                _context.ProjectNamePlaceHolderUser.Add(projectNamePlaceHolderUser);
+                await _context.SaveChangesAsync();
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);

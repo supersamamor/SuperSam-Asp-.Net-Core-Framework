@@ -5,6 +5,6 @@ namespace Identity.WebAPI.Queries.GetUserItem
 {
     public class GetUserItemRequest : IRequest<UserModel>
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }

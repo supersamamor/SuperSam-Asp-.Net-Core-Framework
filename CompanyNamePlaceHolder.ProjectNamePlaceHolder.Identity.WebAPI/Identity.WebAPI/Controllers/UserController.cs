@@ -49,7 +49,7 @@ namespace Identity.WebAPI.Controllers
         }
  
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> GetUserItemAsync(string id)
+        public async Task<ActionResult<UserModel>> GetUserItemAsync(int id)
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: id={Id}", nameof(GetUserItemAsync), id);
             try
@@ -108,7 +108,7 @@ namespace Identity.WebAPI.Controllers
         }
     
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserAsync(string id)
+        public async Task<IActionResult> DeleteUserAsync(int id)
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: id={Id}", nameof(DeleteUserAsync), id);
             try
