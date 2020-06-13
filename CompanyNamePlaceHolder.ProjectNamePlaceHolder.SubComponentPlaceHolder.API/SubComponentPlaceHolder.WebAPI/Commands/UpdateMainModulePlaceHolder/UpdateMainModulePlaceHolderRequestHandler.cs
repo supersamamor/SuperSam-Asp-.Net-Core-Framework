@@ -21,12 +21,12 @@ namespace SubComponentPlaceHolder.WebAPI.Commands.UpdateMainModulePlaceHolder
         }
         public async Task<MainModulePlaceHolderModel> Handle(UpdateMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = await _repository.GetItemAsync(request.MainModulePlaceHolder.Id);
-            templateCore.UpdateFrom(request.MainModulePlaceHolder.Name);
-            templateCore.SetUpdatedInformation(request.Username);
-            var template = await _repository.SaveAsync(templateCore);
+            var mainModulePlaceHolderCore = await _repository.GetItemAsync(request.MainModulePlaceHolder.Id);
+            mainModulePlaceHolderCore.UpdateFrom(request.MainModulePlaceHolder.Name);
+            mainModulePlaceHolderCore.SetUpdatedInformation(request.Username);
+            var mainModulePlaceHolder = await _repository.SaveAsync(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(template); ;
+            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolder); ;
         }      
     }
 }

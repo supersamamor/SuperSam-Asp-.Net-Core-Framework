@@ -22,11 +22,11 @@ namespace SubComponentPlaceHolder.WebAPI.Commands.AddMainModulePlaceHolder
 
         public async Task<MainModulePlaceHolderModel> Handle(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);        
-            templateCore.SetCreatedInformation(request.Username);
-            var template = await _repository.SaveAsync(templateCore);
+            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);        
+            mainModulePlaceHolderCore.SetCreatedInformation(request.Username);
+            var mainModulePlaceHolder = await _repository.SaveAsync(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(template); ;
+            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolder); ;
         }
     }
 }

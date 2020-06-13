@@ -18,8 +18,8 @@ namespace SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderItem
         }
         public async Task<MainModulePlaceHolderModel> Handle(GetMainModulePlaceHolderItemRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = await _repository.GetItemAsync(request.Id);
-            return _mapper.Map<Core.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(templateCore); ;
+            var mainModulePlaceHolderCore = await _repository.GetItemAsync(request.Id);
+            return _mapper.Map<Core.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolderCore); ;
         }
     }
 }

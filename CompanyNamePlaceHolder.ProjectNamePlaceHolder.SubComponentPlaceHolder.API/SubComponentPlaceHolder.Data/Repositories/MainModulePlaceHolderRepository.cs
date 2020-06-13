@@ -15,22 +15,22 @@ namespace SubComponentPlaceHolder.Data.Repositories
             _mapper = mapperConfig.CreateMapper();
         }    
 
-        public async Task<Data.Models.MainModulePlaceHolder> SaveAsync(Core.Models.MainModulePlaceHolder templateCore) {
-            var template = _mapper.Map<Core.Models.MainModulePlaceHolder, Models.MainModulePlaceHolder>(templateCore);
-            if (template.Id == 0)
+        public async Task<Data.Models.MainModulePlaceHolder> SaveAsync(Core.Models.MainModulePlaceHolder mainModulePlaceHolderCore) {
+            var mainModulePlaceHolder = _mapper.Map<Core.Models.MainModulePlaceHolder, Models.MainModulePlaceHolder>(mainModulePlaceHolderCore);
+            if (mainModulePlaceHolder.Id == 0)
             {
-                await _context.MainModulePlaceHolder.AddAsync(template);
+                await _context.MainModulePlaceHolder.AddAsync(mainModulePlaceHolder);
             }
             else {
-                _context.Entry(template).State = EntityState.Modified;
+                _context.Entry(mainModulePlaceHolder).State = EntityState.Modified;
             }   
-            return template;
+            return mainModulePlaceHolder;
         }
 
-        public void Delete(Core.Models.MainModulePlaceHolder templateCore)
+        public void Delete(Core.Models.MainModulePlaceHolder mainModulePlaceHolderCore)
         {
-            var template = _mapper.Map<Core.Models.MainModulePlaceHolder, Models.MainModulePlaceHolder>(templateCore);
-            _context.MainModulePlaceHolder.Remove(template);
+            var mainModulePlaceHolder = _mapper.Map<Core.Models.MainModulePlaceHolder, Models.MainModulePlaceHolder>(mainModulePlaceHolderCore);
+            _context.MainModulePlaceHolder.Remove(mainModulePlaceHolder);
         }
 
         public async Task<Core.Models.MainModulePlaceHolder> GetItemAsync(int id)

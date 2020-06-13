@@ -18,8 +18,8 @@ namespace SubComponentPlaceHolder.WebAPI.Commands.DeleteMainModulePlaceHolder
 
         protected override async Task Handle(DeleteMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = await _repository.GetItemAsync(request.Id);
-            _repository.Delete(templateCore);
+            var mainModulePlaceHolderCore = await _repository.GetItemAsync(request.Id);
+            _repository.Delete(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();
         }
 

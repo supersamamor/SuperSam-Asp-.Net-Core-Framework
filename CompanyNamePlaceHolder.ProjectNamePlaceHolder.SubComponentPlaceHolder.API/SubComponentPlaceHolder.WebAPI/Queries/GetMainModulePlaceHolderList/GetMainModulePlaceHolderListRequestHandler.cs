@@ -59,8 +59,8 @@ namespace SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderList
                     break;
             }
             var pagedMainModulePlaceHolder = new CustomPagedList<Data.Models.MainModulePlaceHolder>(query, request.PageIndex, request.PageSize); 
-            var templateList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.Items.ToListAsync());
-            return new CustomPagedList<MainModulePlaceHolderModel>(templateList, pagedMainModulePlaceHolder.PagedListMetaData);
+            var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.Items.ToListAsync());
+            return new CustomPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList, pagedMainModulePlaceHolder.PagedListMetaData);
         }
     }
 }

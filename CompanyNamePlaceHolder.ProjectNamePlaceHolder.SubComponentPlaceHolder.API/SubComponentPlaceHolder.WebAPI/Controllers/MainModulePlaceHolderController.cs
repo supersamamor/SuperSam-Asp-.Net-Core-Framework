@@ -68,14 +68,14 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<MainModulePlaceHolderModel>> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel template)
+        public async Task<ActionResult<MainModulePlaceHolderModel>> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
         {
-            _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(UpdateMainModulePlaceHolderAsync), template);
+            _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(UpdateMainModulePlaceHolderAsync), mainModulePlaceHolder);
             try
             {                
                 var request = new UpdateMainModulePlaceHolderRequest
                 {
-                    MainModulePlaceHolder = template,
+                    MainModulePlaceHolder = mainModulePlaceHolder,
                     Username = Request.Headers["UserName"].ToString()
                 };
                 return await _mediator.Send(request);
@@ -88,14 +88,14 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
         }
       
         [HttpPost]
-        public async Task<ActionResult<MainModulePlaceHolderModel>> AddMainModulePlaceHolderAsync(MainModulePlaceHolderModel template)
+        public async Task<ActionResult<MainModulePlaceHolderModel>> AddMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
         {
-            _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(AddMainModulePlaceHolderAsync), template);
+            _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(AddMainModulePlaceHolderAsync), mainModulePlaceHolder);
             try
             {
                 var request = new AddMainModulePlaceHolderRequest
                 {
-                    MainModulePlaceHolder = template,
+                    MainModulePlaceHolder = mainModulePlaceHolder,
                     Username = Request.Headers["UserName"].ToString()
                 };
                 return await _mediator.Send(request);
