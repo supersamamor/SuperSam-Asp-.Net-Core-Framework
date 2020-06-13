@@ -97,7 +97,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"";
             htmlstring += @"$(document).ready(function() {";
             htmlstring += @"$(window).keydown(function(event){";
-            htmlstring += @"if(event.keyCode == 13) {";
+            htmlstring += @"if(event.keyCode == 13 && !event.shiftKey) {";
             htmlstring += @"event.preventDefault();";
             htmlstring += @"ShowModal" + modalId + @"();";
             htmlstring += @"return false;";
@@ -136,7 +136,12 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 if (prp.PropertyType.IsPrimitive || prp.PropertyType == typeof(Decimal) || prp.PropertyType == typeof(String) 
                     || prp.PropertyType == typeof(DateTime)|| prp.PropertyType == typeof(DateTime?))
                 {
-                    object value = prp.GetValue(routes, new object[] { });                   
+                    object valueAsObject = prp.GetValue(routes, new object[] { });
+                    var value = valueAsObject;
+                    if (prp.PropertyType == typeof(DateTime) || prp.PropertyType == typeof(DateTime?))
+                    {
+                        value = (object)(((DateTime)valueAsObject).ToString("yyyy-MM-dd"));
+                    }
                     if (prp.Name == "SortBy")
                     {                      
                         _sortBy = value == null ? null : value.ToString();
