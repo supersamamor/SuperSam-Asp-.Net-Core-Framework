@@ -18,8 +18,8 @@ namespace Identity.WebAPI.Commands.DeleteUser
 
         protected override async Task Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = await _repository.GetItemAsync(request.Id);
-            _repository.Delete(templateCore);
+            var userCore = await _repository.GetItemAsync(request.Id);
+            _repository.Delete(userCore);
             await _context.SaveChangesAsync();
         }
 

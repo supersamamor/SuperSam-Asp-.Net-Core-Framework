@@ -21,12 +21,12 @@ namespace Identity.WebAPI.Commands.UpdateUser
         }
         public async Task<UserModel> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = await _repository.GetItemAsync(request.User.Id);
-            templateCore.UpdateFrom(request.User.FullName);
-            templateCore.SetUpdatedInformation(request.Username);
-            var template = await _repository.SaveAsync(templateCore);
+            var userCore = await _repository.GetItemAsync(request.User.Id);
+            userCore.UpdateFrom(request.User.FullName);
+            userCore.SetUpdatedInformation(request.Username);
+            var user = await _repository.SaveAsync(userCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(template); ;
+            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(user); ;
         }      
     }
 }

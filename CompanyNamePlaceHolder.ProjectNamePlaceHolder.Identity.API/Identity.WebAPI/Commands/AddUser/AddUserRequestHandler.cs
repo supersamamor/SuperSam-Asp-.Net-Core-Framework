@@ -22,11 +22,11 @@ namespace Identity.WebAPI.Commands.AddUser
 
         public async Task<UserModel> Handle(AddUserRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = _mapper.Map<UserModel, Core.Models.User>(request.User);        
-            templateCore.SetCreatedInformation(request.Username);
-            var template = await _repository.SaveAsync(templateCore);
+            var userCore = _mapper.Map<UserModel, Core.Models.User>(request.User);        
+            userCore.SetCreatedInformation(request.Username);
+            var user = await _repository.SaveAsync(userCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(template); ;
+            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(user); ;
         }
     }
 }

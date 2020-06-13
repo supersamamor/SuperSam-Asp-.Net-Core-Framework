@@ -15,22 +15,22 @@ namespace Identity.Data.Repositories
             _mapper = mapperConfig.CreateMapper();
         }    
 
-        public async Task<Data.Models.ProjectNamePlaceHolderUser> SaveAsync(Core.Models.User templateCore) {
-            var template = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(templateCore);
-            if (template.Id == 0)
+        public async Task<Data.Models.ProjectNamePlaceHolderUser> SaveAsync(Core.Models.User userCore) {
+            var user = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(userCore);
+            if (user.Id == 0)
             {
-                await _context.ProjectNamePlaceHolderUser.AddAsync(template);
+                await _context.ProjectNamePlaceHolderUser.AddAsync(user);
             }
             else {
-                _context.Entry(template).State = EntityState.Modified;
+                _context.Entry(user).State = EntityState.Modified;
             }   
-            return template;
+            return user;
         }
 
-        public void Delete(Core.Models.User templateCore)
+        public void Delete(Core.Models.User userCore)
         {
-            var template = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(templateCore);
-            _context.ProjectNamePlaceHolderUser.Remove(template);
+            var user = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(userCore);
+            _context.ProjectNamePlaceHolderUser.Remove(user);
         }
 
         public async Task<Core.Models.User> GetItemAsync(int id)

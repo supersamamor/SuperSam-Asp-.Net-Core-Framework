@@ -68,14 +68,14 @@ namespace Identity.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<UserModel>> UpdateUserAsync(UserModel template)
+        public async Task<ActionResult<UserModel>> UpdateUserAsync(UserModel user)
         {
-            _logger.LogInformation("MethodName: {MethodName}, Parameters: User={User}", nameof(UpdateUserAsync), template);
+            _logger.LogInformation("MethodName: {MethodName}, Parameters: User={User}", nameof(UpdateUserAsync), user);
             try
             {                
                 var request = new UpdateUserRequest
                 {
-                    User = template,
+                    User = user,
                     Username = Request.Headers["UserName"].ToString()
                 };
                 return await _mediator.Send(request);
@@ -88,14 +88,14 @@ namespace Identity.WebAPI.Controllers
         }
       
         [HttpPost]
-        public async Task<ActionResult<UserModel>> AddUserAsync(UserModel template)
+        public async Task<ActionResult<UserModel>> AddUserAsync(UserModel user)
         {
-            _logger.LogInformation("MethodName: {MethodName}, Parameters: User={User}", nameof(AddUserAsync), template);
+            _logger.LogInformation("MethodName: {MethodName}, Parameters: User={User}", nameof(AddUserAsync), user);
             try
             {
                 var request = new AddUserRequest
                 {
-                    User = template,
+                    User = user,
                     Username = Request.Headers["UserName"].ToString()
                 };
                 return await _mediator.Send(request);

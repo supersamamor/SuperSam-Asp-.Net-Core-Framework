@@ -61,8 +61,8 @@ namespace Identity.WebAPI.Queries.GetUserList
                     break;
             }
             var pagedUser = new CustomPagedList<Data.Models.ProjectNamePlaceHolderUser>(query, request.PageIndex, request.PageSize); 
-            var templateList = _mapper.Map<IList<Data.Models.ProjectNamePlaceHolderUser>, IList<UserModel>>(await pagedUser.Items.ToListAsync());
-            return new CustomPagedList<UserModel>(templateList, pagedUser.PagedListMetaData);
+            var userList = _mapper.Map<IList<Data.Models.ProjectNamePlaceHolderUser>, IList<UserModel>>(await pagedUser.Items.ToListAsync());
+            return new CustomPagedList<UserModel>(userList, pagedUser.PagedListMetaData);
         }
     }
 }

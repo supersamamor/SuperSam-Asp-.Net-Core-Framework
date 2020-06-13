@@ -18,8 +18,8 @@ namespace Identity.WebAPI.Queries.GetUserItem
         }
         public async Task<UserModel> Handle(GetUserItemRequest request, CancellationToken cancellationToken)
         {
-            var templateCore = await _repository.GetItemAsync(request.Id);
-            return _mapper.Map<Core.Models.User, UserModel>(templateCore); ;
+            var userCore = await _repository.GetItemAsync(request.Id);
+            return _mapper.Map<Core.Models.User, UserModel>(userCore); ;
         }
     }
 }
