@@ -55,9 +55,9 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
             return record;
         }
 
-        public async Task<MainModulePlaceHolderModel> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel template, CancellationToken token)
+        public async Task<MainModulePlaceHolderModel> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder, CancellationToken token)
         {
-            var content = JsonConvert.SerializeObject(template);
+            var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync(@"", httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
@@ -72,9 +72,9 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
             return JsonConvert.DeserializeObject<MainModulePlaceHolderModel>(result);
         }
 
-        public async Task<MainModulePlaceHolderModel> SaveMainModulePlaceHolderAsync(MainModulePlaceHolderModel template, CancellationToken token)
+        public async Task<MainModulePlaceHolderModel> SaveMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder, CancellationToken token)
         {
-            var content = JsonConvert.SerializeObject(template);
+            var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync(@"", httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
