@@ -53,7 +53,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
           
             try {
                 this.ValidateModelState();
-                await UpdateUserAsync();
+                await ActivateUserAsync();
                 ModelState.Clear();
                 TempData["Success"] =  Resource.PromptMessageSaveSuccess;
             }          
@@ -68,9 +68,9 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             AppUser = await _service.GetUserItemAsync(id, new CancellationToken());
         }
 
-        private async Task UpdateUserAsync()
+        private async Task ActivateUserAsync()
         {
-            AppUser = await _service.ActivateUser(AppUser, new CancellationToken());
+            AppUser = await _service.ActivateUserAsync(AppUser, new CancellationToken());
         }       
     }
 }

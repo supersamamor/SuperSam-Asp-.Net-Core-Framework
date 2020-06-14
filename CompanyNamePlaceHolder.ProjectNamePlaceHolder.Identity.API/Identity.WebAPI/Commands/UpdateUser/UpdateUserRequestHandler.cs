@@ -22,7 +22,7 @@ namespace Identity.WebAPI.Commands.UpdateUser
         public async Task<UserModel> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
             var userCore = await _repository.GetItemAsync(request.User.Id);
-            userCore.UpdateFrom(request.User.FullName);
+            userCore.UpdateFrom(request.User.FullName, request.User.IdentityEmail);
             userCore.SetUpdatedInformation(request.Username);
             var user = await _repository.SaveAsync(userCore);
             await _context.SaveChangesAsync();

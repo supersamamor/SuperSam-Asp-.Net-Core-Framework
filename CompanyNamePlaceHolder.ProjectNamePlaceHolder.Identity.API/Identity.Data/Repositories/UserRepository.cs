@@ -15,27 +15,28 @@ namespace Identity.Data.Repositories
             _mapper = mapperConfig.CreateMapper();
         }    
 
-        public async Task<Data.Models.ProjectNamePlaceHolderUser> SaveAsync(Core.Models.User userCore) {
-            var user = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(userCore);
+        public async Task<Data.Models.ProjectNamePlaceHolderUser> SaveAsync(Core.Models.ProjectNamePlaceHolderUser userCore) {
+            var user = _mapper.Map<Core.Models.ProjectNamePlaceHolderUser, Models.ProjectNamePlaceHolderUser>(userCore);
             if (user.Id == 0)
             {
                 await _context.ProjectNamePlaceHolderUser.AddAsync(user);
             }
             else {
                 _context.Entry(user).State = EntityState.Modified;
+                _context.Entry(user.Identity).State = EntityState.Modified;
             }   
             return user;
         }
 
-        public void Delete(Core.Models.User userCore)
+        public void Delete(Core.Models.ProjectNamePlaceHolderUser userCore)
         {
-            var user = _mapper.Map<Core.Models.User, Models.ProjectNamePlaceHolderUser>(userCore);
+            var user = _mapper.Map<Core.Models.ProjectNamePlaceHolderUser, Models.ProjectNamePlaceHolderUser>(userCore);
             _context.ProjectNamePlaceHolderUser.Remove(user);
         }
 
-        public async Task<Core.Models.User> GetItemAsync(int id)
+        public async Task<Core.Models.ProjectNamePlaceHolderUser> GetItemAsync(int id)
         {        
-            return _mapper.Map<Models.ProjectNamePlaceHolderUser, Core.Models.User>
+            return _mapper.Map<Models.ProjectNamePlaceHolderUser, Core.Models.ProjectNamePlaceHolderUser>
                 (await _context.ProjectNamePlaceHolderUser.Include(l=>l.Identity).Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
         }       
     }     

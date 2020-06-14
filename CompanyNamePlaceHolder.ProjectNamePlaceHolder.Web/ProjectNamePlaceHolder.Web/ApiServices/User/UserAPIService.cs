@@ -54,8 +54,23 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
             var record = JsonConvert.DeserializeObject<UserModel>(result);
             return record;
         }
-
-        public async Task<UserModel> ActivateUser(UserModel user, CancellationToken token)
+        public async Task<UserModel> UpdateUserAsync(UserModel user, CancellationToken token)
+        {
+            var content = JsonConvert.SerializeObject(user);
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await _client.PutAsync(@"User/", httpContent, token);
+            var result = await response.Content.ReadAsStringAsync();
+            try
+            {
+                response.EnsureSuccessStatusCode();
+            }
+            catch
+            {
+                throw new ApiResponseException(result);
+            }
+            return JsonConvert.DeserializeObject<UserModel>(result);
+        }
+        public async Task<UserModel> ActivateUserAsync(UserModel user, CancellationToken token)
         {
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");

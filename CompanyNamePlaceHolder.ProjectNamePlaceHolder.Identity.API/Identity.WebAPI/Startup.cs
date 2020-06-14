@@ -15,6 +15,7 @@ using System.Reflection;
 using Identity.Data;
 using Identity.Data.Repositories;
 using Identity.WebAPI.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Identity.WebAPI
 {
@@ -52,8 +53,9 @@ namespace Identity.WebAPI
             services.AddSingleton(new MapperConfiguration(cfg =>
                 {
                     cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
-                    cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, Core.Models.User>().ReverseMap();
-                    cfg.CreateMap<Core.Models.User, UserModel>().ReverseMap();
+                    cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, Core.Models.ProjectNamePlaceHolderUser>().ReverseMap();
+                    cfg.CreateMap<Core.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
+                    cfg.CreateMap<IdentityUser, Core.Models.IdentityUser>().ReverseMap();
                 }
             ));
             services.AddApplicationInsightsTelemetry();

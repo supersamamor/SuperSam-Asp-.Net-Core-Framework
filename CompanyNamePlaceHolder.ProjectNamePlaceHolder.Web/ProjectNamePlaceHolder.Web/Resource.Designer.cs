@@ -205,6 +205,15 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit User.
+        /// </summary>
+        public static string LabelEditUser {
+            get {
+                return ResourceManager.GetString("LabelEditUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string LabelEmail {
@@ -399,6 +408,15 @@ namespace ProjectNamePlaceHolder.Web {
         public static string PromptMessageUpdateSuccess {
             get {
                 return ResourceManager.GetString("PromptMessageUpdateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to update this user&apos;s information?.
+        /// </summary>
+        public static string PromptMessageUpdateUserConfirmation {
+            get {
+                return ResourceManager.GetString("PromptMessageUpdateUserConfirmation", resourceCulture);
             }
         }
     }

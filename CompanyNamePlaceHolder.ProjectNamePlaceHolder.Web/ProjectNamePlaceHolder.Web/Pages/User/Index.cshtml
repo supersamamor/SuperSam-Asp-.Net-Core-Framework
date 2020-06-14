@@ -48,10 +48,11 @@
 <table class="table small table-striped table-hover table">
     <thead>
         <tr>
-            @Html.PageSorter(model => Model.UserList[0].IdentityUserName, 100)
-            @Html.PageSorter(model => Model.UserList[0].FullName, 100)
-            @Html.PageSorter(model => Model.UserList[0].IdentityEmail, 100)
-            @Html.PageSorter(model => Model.UserList[0].IdentityEmailConfirmed, 100)
+            @Html.PageSorter(model => Model.UserList[0].IdentityUserName)
+            @Html.PageSorter(model => Model.UserList[0].FullName)
+            @Html.PageSorter(model => Model.UserList[0].IdentityEmail)
+            @Html.PageSorter(model => Model.UserList[0].IdentityEmailConfirmed)
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -73,6 +74,9 @@
                 @Html.DisplayFor(modelItem => item.IdentityEmail)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.IdentityEmailConfirmed)
+            </td>
+            <td>
                 <ul class="list-toolbar" style="float:right;">
                     @if (!item.IdentityEmailConfirmed)
                     {
@@ -92,6 +96,12 @@
                         </li>
 
                     }
+                    <li class="list-toolbar-button">
+                        <a Id="btnEdit@(item.Id)" asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                            <i class="fas fa-edit text-dark"
+                               aria-hidden="true"></i>
+                        </a>
+                    </li>
                     <li class="list-toolbar-button">
                         <a Id="btnView@(item.Id)" asp-page="./Details" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
                             <i class="fas fa-search text-dark"

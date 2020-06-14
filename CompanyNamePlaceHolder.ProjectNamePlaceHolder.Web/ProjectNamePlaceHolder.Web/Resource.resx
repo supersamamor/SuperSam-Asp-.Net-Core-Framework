@@ -231,4 +231,10 @@
   <data name="LabelUserName" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="LabelEditUser" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="PromptMessageUpdateUserConfirmation" xml:space="preserve">
+    <value>Are you sure you want to update this user's information?</value>
+  </data>
 </root>
