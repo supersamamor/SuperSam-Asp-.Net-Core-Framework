@@ -70,7 +70,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
 
         private async Task ActivateUserAsync()
         {
-            AppUser = await _service.ActivateUserAsync(AppUser, new CancellationToken());
+            AppUser = await _service.ActivateUserAsync(AppUser.Id, new CancellationToken());
         }       
     }
 }

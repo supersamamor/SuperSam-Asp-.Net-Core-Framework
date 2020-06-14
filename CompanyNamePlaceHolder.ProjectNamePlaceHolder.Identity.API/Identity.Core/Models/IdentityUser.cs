@@ -22,5 +22,9 @@ namespace Identity.Core.Models
         public void UpdateFrom(string email) {
             this.Email = email;
         }
+        public void ActivateUser()
+        {
+            this.EmailConfirmed = true;
+        }
     }
 }

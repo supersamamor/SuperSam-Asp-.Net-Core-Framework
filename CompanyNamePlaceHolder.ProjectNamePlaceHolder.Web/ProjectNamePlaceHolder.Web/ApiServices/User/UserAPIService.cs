@@ -70,11 +70,9 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
             }
             return JsonConvert.DeserializeObject<UserModel>(result);
         }
-        public async Task<UserModel> ActivateUserAsync(UserModel user, CancellationToken token)
-        {
-            var content = JsonConvert.SerializeObject(user);
-            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync(@"User/Activate", httpContent, token);
+        public async Task<UserModel> ActivateUserAsync(int id, CancellationToken token)
+        {           
+            var response = await _client.PutAsync(@"User/Activate/" + id, null, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {

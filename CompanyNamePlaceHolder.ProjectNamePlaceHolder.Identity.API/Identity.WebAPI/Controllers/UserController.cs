@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Identity.WebAPI.Commands.AddUser;
-using Identity.WebAPI.Commands.DeleteUser;
 using Identity.WebAPI.Commands.UpdateUser;
 using Identity.WebAPI.Models;
 using Identity.WebAPI.Queries.GetUserItem;
 using Identity.WebAPI.Queries.GetUserList;
+using Identity.WebAPI.Commands.ActivateUser;
+
 namespace Identity.WebAPI.Controllers
 {
     [Route("IdentityAPI/v1/[controller]")]
@@ -86,45 +86,24 @@ namespace Identity.WebAPI.Controllers
                 return BadRequest(problem);
             }
         }
-      
-        [HttpPost]
-        public async Task<ActionResult<UserModel>> AddUserAsync(UserModel user)
+        [HttpPut("Activate/{id}")]
+        public async Task<ActionResult<UserModel>> ActivateUserAsync(int id)
         {
-            _logger.LogInformation("MethodName: {MethodName}, Parameters: User={User}", nameof(AddUserAsync), user);
+            _logger.LogInformation("MethodName: {MethodName}, Parameters: UserId={UserId}", nameof(ActivateUserAsync), id);
             try
             {
-                var request = new AddUserRequest
+                var request = new ActivateUserRequest
                 {
-                    User = user,
+                    Id = id,
                     Username = Request.Headers["UserName"].ToString()
                 };
                 return await _mediator.Send(request);
             }
             catch (Exception e)
             {
-                var problem = new CustomValidationProblemDetails(nameof(AddUserAsync), e, _logger);
+                var problem = new CustomValidationProblemDetails(nameof(UpdateUserAsync), e, _logger);
                 return BadRequest(problem);
             }
         }
-    
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserAsync(int id)
-        {
-            _logger.LogInformation("MethodName: {MethodName}, Parameters: id={Id}", nameof(DeleteUserAsync), id);
-            try
-            {
-                var request = new DeleteUserRequest
-                {
-                    Id = id
-                };
-                await _mediator.Send(request);
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                var problem = new CustomValidationProblemDetails(nameof(DeleteUserAsync), e, _logger);
-                return BadRequest(problem);
-            }
-        }   
     }
 }
