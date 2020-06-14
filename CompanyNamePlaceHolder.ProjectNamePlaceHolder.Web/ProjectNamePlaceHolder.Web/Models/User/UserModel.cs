@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjectNamePlaceHolder.Web.Models.Role;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectNamePlaceHolder.Web.Models.User
 {
@@ -15,5 +17,6 @@ namespace ProjectNamePlaceHolder.Web.Models.User
         public string IdentityEmail { get; set; }
         [Display(Name = "LabelUserName", ResourceType = typeof(Resource))]
         public string IdentityUserName { get; set; }
+        public IList<RoleModel> UserRoles { get; set; }
     }
 }

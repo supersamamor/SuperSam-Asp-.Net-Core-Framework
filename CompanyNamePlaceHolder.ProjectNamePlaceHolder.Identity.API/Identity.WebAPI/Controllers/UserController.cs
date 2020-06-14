@@ -8,6 +8,7 @@ using Identity.WebAPI.Models;
 using Identity.WebAPI.Queries.GetUserItem;
 using Identity.WebAPI.Queries.GetUserList;
 using Identity.WebAPI.Commands.ActivateUser;
+using System.Collections.Generic;
 
 namespace Identity.WebAPI.Controllers
 {

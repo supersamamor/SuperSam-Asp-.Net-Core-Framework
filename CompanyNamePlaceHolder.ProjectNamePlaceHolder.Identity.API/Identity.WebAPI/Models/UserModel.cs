@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Identity.WebAPI.Models
 {
     public class UserModel
@@ -8,5 +10,6 @@ namespace Identity.WebAPI.Models
         public bool IdentityEmailConfirmed { get; set; }
         public string IdentityUserName { get; set; }
         public string IdentityEmail { get; set; }
+        public IList<RoleModel> UserRoles { get; set; }
     }
 }

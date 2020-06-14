@@ -56,6 +56,7 @@ namespace Identity.WebAPI
                     cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, Core.Models.ProjectNamePlaceHolderUser>().ReverseMap();
                     cfg.CreateMap<Core.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
                     cfg.CreateMap<IdentityUser, Core.Models.IdentityUser>().ReverseMap();
+                    cfg.CreateMap<IdentityRole, RoleModel>().ReverseMap();
                 }
             ));
             services.AddApplicationInsightsTelemetry();

@@ -159,6 +159,9 @@ body {
     margin-right: 0px;
 }
 
+.border-less {
+    border: none;
+}
 
 @media(max-width:575px) {
     .toolbar-right-panel {     

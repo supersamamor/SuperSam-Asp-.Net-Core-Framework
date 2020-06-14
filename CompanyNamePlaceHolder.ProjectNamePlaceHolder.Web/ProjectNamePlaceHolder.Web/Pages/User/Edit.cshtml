@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = @Resource.LabelEditUser;
 }
-
 <form method="get">
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
@@ -47,7 +46,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="AppUser.Id" />
         <div class="row" style="padding:10px;">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     @Html.DisplayLabelWithRequiredTag(model => Model.AppUser.IdentityUserName, "control-label small")
                     <input asp-for="AppUser.IdentityUserName" class="form-control form-control-sm" readonly />
@@ -64,10 +63,85 @@
                     <span asp-validation-for="AppUser.IdentityEmail" class="text-danger small"></span>
                 </div>
             </div>
+            <div class="col-md-4">
+                <table class="table small table-striped table-hover table">
+                    <thead>
+                        <tr>
+                            <th style="max-width:100px;width:100px;"><a href="#" class="page-sorter"> @Resource.LabelRoles</a></th>
+                            <th style="max-width:50px;width:50px;">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.CurrentUserRoles != null)
+                        {
+                            var idx = 0;
+                            foreach (var item in Model.CurrentUserRoles)
+                            {
+                                <tr style="cursor:pointer;">
+                                    <td>
+                                        <input name="CurrentUserRoles[@idx].Id" type="hidden" value="@(Model.CurrentUserRoles[idx].Id)" />
+                                        <input name="CurrentUserRoles[@idx].Name" type="hidden" value="@(Model.CurrentUserRoles[idx].Name)" />
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <ul class="list-toolbar" style="float:right;">
+                                            <li class="list-toolbar-button">
+                                                <button asp-page-handler="RemoveRole" class="border-less" name="RemoveRoleId" value="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelRemove">
+                                                    <i class="fas fa-window-close text-dark" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                idx++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table small table-striped table-hover table">
+                    <thead>
+                        <tr>
+                            <th style="max-width:100px;width:100px;"><a href="#" class="page-sorter"> @Resource.LabelRolesSelection</a></th>
+                            <th style="max-width:50px;width:50px;">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RoleSelection != null)
+                        {
+                            var idx = 0;
+                            foreach (var item in Model.RoleSelection)
+                            {
+                                <tr style="cursor:pointer;">
+                                    <td>
+                                        <input name="RoleSelection[@idx].Id" type="hidden" value="@(Model.RoleSelection[idx].Id)" />
+                                        <input name="RoleSelection[@idx].Name" type="hidden" value="@(Model.RoleSelection[idx].Name)" />
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <ul class="list-toolbar" style="float:right;">
+                                            <li class="list-toolbar-button">
+                                                <button asp-page-handler="AddRole" class="border-less" name="AddRoleId" value="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                                                    <i class="fas fa-plus text-dark" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                idx++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="form-group" style="display:none;">
-            <input type="submit" id="btnUpdate" value="Save" class="btn btn-primary" />
-        </div>
+        <button asp-page-handler="" class="btn btn-primary" id="btnUpdate" style="display:none;">
+        </button>
     </form>
 </div>
 @section Scripts {

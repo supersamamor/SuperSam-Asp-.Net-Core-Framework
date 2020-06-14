@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using ProjectNamePlaceHolder.Web.AppException;
 using ProjectNamePlaceHolder.Web.Models;
+using ProjectNamePlaceHolder.Web.Models.Role;
 using ProjectNamePlaceHolder.Web.Models.User;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -55,7 +57,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
             return record;
         }
         public async Task<UserModel> UpdateUserAsync(UserModel user, CancellationToken token)
-        {
+        {          
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync(@"User/", httpContent, token);

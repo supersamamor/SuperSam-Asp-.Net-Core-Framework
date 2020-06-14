@@ -14,6 +14,7 @@ using ProjectNamePlaceHolder.SecurityData;
 using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
 using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Web.ApiServices.User;
+using ProjectNamePlaceHolder.Web.ApiServices.Role;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -53,6 +54,11 @@ namespace ProjectNamePlaceHolder.Web
                 c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLIdentity"));
             }).CorrelateRequests();
 
+            services.AddTransient<RoleAPIService>();
+            services.AddHttpClient<RoleAPIService>(c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLIdentity"));
+            }).CorrelateRequests();
             #endregion
             #region External Logins
             services.AddAuthentication()

@@ -286,6 +286,42 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string LabelRemove {
+            get {
+                return ResourceManager.GetString("LabelRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Name.
+        /// </summary>
+        public static string LabelRoleName {
+            get {
+                return ResourceManager.GetString("LabelRoleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string LabelRoles {
+            get {
+                return ResourceManager.GetString("LabelRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roles Selection.
+        /// </summary>
+        public static string LabelRolesSelection {
+            get {
+                return ResourceManager.GetString("LabelRolesSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string LabelSave {

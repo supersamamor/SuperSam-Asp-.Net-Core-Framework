@@ -237,4 +237,16 @@
   <data name="PromptMessageUpdateUserConfirmation" xml:space="preserve">
     <value>Are you sure you want to update this user's information?</value>
   </data>
+  <data name="LabelRoles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="LabelRolesSelection" xml:space="preserve">
+    <value>Roles Selection</value>
+  </data>
+  <data name="LabelRoleName" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="LabelRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
 </root>
