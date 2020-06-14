@@ -3,3 +3,4 @@ Pending Items.
 1. Save navigation in sessions
 2. Improve the release pipelines to set the port number in variables and ssl thumbprint
 3. Working forgot password
+4. Set c# version to 8.0
