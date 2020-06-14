@@ -26,7 +26,7 @@ namespace SubComponentPlaceHolder.WebAPI.Commands.AddMainModulePlaceHolder
             mainModulePlaceHolderCore.SetCreatedInformation(request.Username);
             var mainModulePlaceHolder = await _repository.SaveAsync(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolder); ;
+            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolder); 
         }
     }
 }
