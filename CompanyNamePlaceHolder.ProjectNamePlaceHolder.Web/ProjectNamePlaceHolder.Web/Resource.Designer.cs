@@ -61,6 +61,24 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activate.
+        /// </summary>
+        public static string LabelActivate {
+            get {
+                return ResourceManager.GetString("LabelActivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activate User.
+        /// </summary>
+        public static string LabelActivateUser {
+            get {
+                return ResourceManager.GetString("LabelActivateUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string LabelAdd {
@@ -151,6 +169,15 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Detail.
+        /// </summary>
+        public static string LabelDetailsUser {
+            get {
+                return ResourceManager.GetString("LabelDetailsUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string LabelEdit {
@@ -174,6 +201,24 @@ namespace ProjectNamePlaceHolder.Web {
         public static string LabelFullName {
             get {
                 return ResourceManager.GetString("LabelFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string LabelHome {
+            get {
+                return ResourceManager.GetString("LabelHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MainModulePlaceHolder.
+        /// </summary>
+        public static string LabelMainModulePlaceHolder {
+            get {
+                return ResourceManager.GetString("LabelMainModulePlaceHolder", resourceCulture);
             }
         }
         
@@ -205,11 +250,38 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string LabelPrivacy {
+            get {
+                return ResourceManager.GetString("LabelPrivacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string LabelSave {
             get {
                 return ResourceManager.GetString("LabelSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User List.
+        /// </summary>
+        public static string LabelUserList {
+            get {
+                return ResourceManager.GetString("LabelUserList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string LabelUsers {
+            get {
+                return ResourceManager.GetString("LabelUsers", resourceCulture);
             }
         }
         
@@ -228,6 +300,15 @@ namespace ProjectNamePlaceHolder.Web {
         public static string MessagePatternErrorLog {
             get {
                 return ResourceManager.GetString("MessagePatternErrorLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to activate this user?.
+        /// </summary>
+        public static string PromptMessageActivateUserConfirmation {
+            get {
+                return ResourceManager.GetString("PromptMessageActivateUserConfirmation", resourceCulture);
             }
         }
         

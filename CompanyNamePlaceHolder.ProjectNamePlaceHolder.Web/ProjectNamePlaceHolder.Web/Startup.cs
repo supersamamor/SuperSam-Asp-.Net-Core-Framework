@@ -13,6 +13,7 @@ using System;
 using ProjectNamePlaceHolder.SecurityData;
 using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
 using Microsoft.AspNetCore.Identity;
+using ProjectNamePlaceHolder.Web.ApiServices.User;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -30,21 +31,28 @@ namespace ProjectNamePlaceHolder.Web
         {
             services.AddLogCorrelation();
             services.AddOptions();
-            services.Configure<MainModulePlaceHolderWebConfig>(Configuration.GetSection("MainModulePlaceHolderWebConfig"));
+            services.Configure<ProjectNamePlaceHolderWebConfig>(Configuration.GetSection("ProjectNamePlaceHolderWebConfig"));
             services.AddSession();
             services.AddDbContext<ProjectNamePlaceHolderContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ProjectNamePlaceHolderContext>();
          
             #region Api Services
             services.AddTransient<MainModulePlaceHolderAPIService>();
             services.AddHttpClient<MainModulePlaceHolderAPIService>(c =>
             {
-                c.BaseAddress = new Uri(Configuration.GetValue<string>("MainModulePlaceHolderWebConfig:ApiURLMainModulePlaceHolder"));              
+                c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLMainModulePlaceHolder"));              
             }).CorrelateRequests();
-        
+
+            services.AddTransient<UserAPIService>();
+            services.AddHttpClient<UserAPIService>(c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLIdentity"));
+            }).CorrelateRequests();
+
             #endregion
             #region External Logins
             services.AddAuthentication()

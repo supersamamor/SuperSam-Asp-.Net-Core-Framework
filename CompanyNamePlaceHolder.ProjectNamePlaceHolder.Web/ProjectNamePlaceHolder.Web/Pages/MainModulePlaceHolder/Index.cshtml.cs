@@ -21,7 +21,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public IndexModel(MainModulePlaceHolderAPIService service, IOptions<MainModulePlaceHolderWebConfig> appSetting, 
+        public IndexModel(MainModulePlaceHolderAPIService service, IOptions<ProjectNamePlaceHolderWebConfig> appSetting, 
             ILogger<IndexModel> logger, ICorrelationContextAccessor correlationContext) : base(appSetting.Value.PageSize)
         {
             _service = service;

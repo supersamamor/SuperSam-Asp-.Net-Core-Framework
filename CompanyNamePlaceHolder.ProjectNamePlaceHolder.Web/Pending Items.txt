@@ -2,3 +2,4 @@ Pending Items.
 
 1. Save navigation in sessions
 2. Improve the release pipelines to set the port number in variables and ssl thumbprint
+3. Add items on edit

@@ -35,7 +35,8 @@ namespace Identity.Data.Repositories
 
         public async Task<Core.Models.User> GetItemAsync(int id)
         {        
-            return _mapper.Map<Models.ProjectNamePlaceHolderUser, Core.Models.User>(await _context.ProjectNamePlaceHolderUser.Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
+            return _mapper.Map<Models.ProjectNamePlaceHolderUser, Core.Models.User>
+                (await _context.ProjectNamePlaceHolderUser.Include(l=>l.Identity).Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
         }       
     }     
 }

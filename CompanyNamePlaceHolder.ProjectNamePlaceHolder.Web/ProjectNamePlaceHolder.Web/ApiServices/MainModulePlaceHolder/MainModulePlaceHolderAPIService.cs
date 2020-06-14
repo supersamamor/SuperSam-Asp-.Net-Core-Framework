@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Text;
 using ProjectNamePlaceHolder.Web.AppException;
 using X.PagedList;
-using ProjectNamePlaceHolder.SecurityData.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 

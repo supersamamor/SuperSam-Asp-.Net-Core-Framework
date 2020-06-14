@@ -195,4 +195,31 @@
   <data name="LabelBack" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="PromptMessageActivateUserConfirmation" xml:space="preserve">
+    <value>Are you sure you want to activate this user?</value>
+  </data>
+  <data name="LabelActivate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="LabelActivateUser" xml:space="preserve">
+    <value>Activate User</value>
+  </data>
+  <data name="LabelUserList" xml:space="preserve">
+    <value>User List</value>
+  </data>
+  <data name="LabelDetailsUser" xml:space="preserve">
+    <value>User Detail</value>
+  </data>
+  <data name="LabelUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="LabelMainModulePlaceHolder" xml:space="preserve">
+    <value>MainModulePlaceHolder</value>
+  </data>
+  <data name="LabelHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="LabelPrivacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
 </root>

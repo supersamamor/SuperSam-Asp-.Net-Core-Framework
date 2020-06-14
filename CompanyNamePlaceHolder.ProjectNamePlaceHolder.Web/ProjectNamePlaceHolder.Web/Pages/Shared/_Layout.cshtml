@@ -1,7 +1,8 @@
 ﻿@using Microsoft.Extensions.Options
+@using ProjectNamePlaceHolder.SecurityData
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@inject IOptions<ProjectNamePlaceHolder.Web.MainModulePlaceHolderWebConfig> Config
+@inject IOptions<ProjectNamePlaceHolder.Web.ProjectNamePlaceHolderWebConfig> Config
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,8 @@
     <link rel="stylesheet" href="~/lib/fontawesome/dist/css/fontawesome.css" />
     <link rel="stylesheet" href="~/lib/fontawesome/dist/css/brands.css" />
     <link rel="stylesheet" href="~/lib/fontawesome/dist/css/solid.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/regular.css" />
+    <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <style>
         body {
@@ -81,9 +84,13 @@
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading" style="color:transparent;">Navigation</div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Index">Home</a>
-                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/MainModulePlaceHolder/Index">MainModulePlaceHolder</a>                  
-                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Privacy">Privacy</a>
+                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Index">@Resource.LabelHome</a>
+                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/MainModulePlaceHolder/Index">@Resource.LabelMainModulePlaceHolder</a>
+                    @if (User.IsInRole(Roles.ADMIN))
+                    {
+                        <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/User/Index">@Resource.LabelUsers</a>
+                    }
+                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Privacy">@Resource.LabelPrivacy</a>
                 </div>
             </div>
         }
@@ -110,13 +117,14 @@
             </div>
             <footer class="border-top footer text-muted">
                 <div class="container-fluid">
-                    &copy; 2020 - @Config.Value.Application - <a asp-area="" asp-page="/Privacy">Privacy</a>
+                    &copy; 2020 - @Config.Value.Application - <a asp-area="" asp-page="/Privacy">@Resource.LabelPrivacy</a>
                 </div>
             </footer>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/select2/dist/js/select2.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
     <script>
@@ -129,7 +137,7 @@
         });
 
         $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
 </body>
