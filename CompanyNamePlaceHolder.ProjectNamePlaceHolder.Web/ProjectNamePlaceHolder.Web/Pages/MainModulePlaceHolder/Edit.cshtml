@@ -18,6 +18,15 @@
             </div>
             <div class="vertical-divider"></div>
             <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                    <a asp-page="Create" class="input-group-text custom-anchor-button">
+                        <i class="fas fa-plus text-dark"
+                           aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
+                    </a>
+                </div>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
                     <a asp-page="./Index" class="input-group-text custom-anchor-button">
                         <i class="fas fa-backspace"></i><span class="btn-label"> @Resource.LabelBack</span>

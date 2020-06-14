@@ -7,5 +7,6 @@ namespace Identity.WebAPI.Models
         public string IdentityId { get; set; }
         public bool IdentityEmailConfirmed { get; set; }
         public string IdentityUserName { get; set; }
+        public string IdentityEmail { get; set; }
     }
 }

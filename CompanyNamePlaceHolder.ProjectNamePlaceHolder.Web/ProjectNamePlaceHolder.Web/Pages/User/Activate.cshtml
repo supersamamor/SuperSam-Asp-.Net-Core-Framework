@@ -12,16 +12,18 @@
             <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelActivate" id="btnShowUpdateModal">
                     <a class="input-group-text custom-anchor-button" href="#">
-                        <i class="fas fa-check"></i>
+                        <i class="fas fa-check"></i><span class="btn-label"> @Resource.LabelActivate</span>
                     </a>
                 </div>
             </div>
             <div class="vertical-divider"></div>
-            <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
-                    <a asp-page="./Index" class="input-group-text custom-anchor-button">
-                        <i class="fas fa-backspace"></i>
-                    </a>
+            <div class="input-group input-group-sm">            
+                <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
+                        <a asp-page="./Index" class="input-group-text custom-anchor-button">
+                            <i class="fas fa-backspace"></i><span class="btn-label"> @Resource.LabelBack</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

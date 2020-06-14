@@ -216,10 +216,19 @@
   <data name="LabelMainModulePlaceHolder" xml:space="preserve">
     <value>MainModulePlaceHolder</value>
   </data>
+  <data name="LabelActivated" xml:space="preserve">
+    <value>Activated</value>
+  </data>
   <data name="LabelHome" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="LabelPrivacy" xml:space="preserve">
     <value>Privacy</value>
+  </data>
+  <data name="LabelEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="LabelUserName" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

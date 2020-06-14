@@ -9,11 +9,13 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
-                    <a asp-page="./Index" class="input-group-text custom-anchor-button">
-                        <i class="fas fa-backspace"></i>
-                    </a>
-                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
+                        <a asp-page="./Index" class="input-group-text custom-anchor-button">
+                            <i class="fas fa-backspace"></i><span class="btn-label"> @Resource.LabelBack</span>
+                        </a>
+                    </div>
+                </div>              
             </div>
         </div>
     </div>

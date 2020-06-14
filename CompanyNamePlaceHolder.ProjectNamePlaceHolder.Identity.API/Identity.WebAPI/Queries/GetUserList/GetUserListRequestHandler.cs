@@ -29,19 +29,21 @@ namespace Identity.WebAPI.Queries.GetUserList
             if (request.SearchKey != null) {
                 var searchWords = request.SearchKey.ToLower().Split(' ');
                 query = query.Where(i => i.FullName.ToLower().Contains(searchWords[0])
-                                  || i.Identity.UserName.ToLower().Contains(searchWords[0]));
+                                  || i.Identity.UserName.ToLower().Contains(searchWords[0])
+                                  || i.Identity.Email.ToLower().Contains(searchWords[0]));
                 if (searchWords.Length > 1)
                 {
                     for (int x = 1; x < searchWords.Length; x++)
                     {
                         var search = searchWords[x];
                         query = query.Where(i => i.FullName.ToLower().Contains(search)
-                                  || i.Identity.UserName.ToLower().Contains(search));
+                                  || i.Identity.UserName.ToLower().Contains(search)
+                                  || i.Identity.Email.ToLower().Contains(search));
                     }
                 }            
             }
             switch (request.SortBy) {
-                case "UserName":
+                case "IdentityUserName":
                     if (request.OrderBy == "Asc") {
                         query = query.OrderBy(l=>l.Identity.UserName);
                     }
@@ -58,6 +60,29 @@ namespace Identity.WebAPI.Queries.GetUserList
                     {
                         query = query.OrderByDescending(l => l.FullName);
                     }
+                    break;
+                case "IdentityEmailConfirmed":
+                    if (request.OrderBy == "Asc")
+                    {
+                        query = query.OrderBy(l => l.Identity.EmailConfirmed);
+                    }
+                    else
+                    {
+                        query = query.OrderByDescending(l => l.Identity.EmailConfirmed);
+                    }
+                    break;
+                case "IdentityEmail":
+                    if (request.OrderBy == "Asc")
+                    {
+                        query = query.OrderBy(l => l.Identity.Email);
+                    }
+                    else
+                    {
+                        query = query.OrderByDescending(l => l.Identity.Email);
+                    }
+                    break;
+                default:
+                    query = query.OrderBy(l => l.FullName);
                     break;
             }
             var pagedUser = new CustomPagedList<Data.Models.ProjectNamePlaceHolderUser>(query, request.PageIndex, request.PageSize); 

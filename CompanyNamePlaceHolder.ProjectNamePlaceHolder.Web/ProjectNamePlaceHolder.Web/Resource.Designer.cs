@@ -70,6 +70,15 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activated.
+        /// </summary>
+        public static string LabelActivated {
+            get {
+                return ResourceManager.GetString("LabelActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activate User.
         /// </summary>
         public static string LabelActivateUser {
@@ -196,6 +205,15 @@ namespace ProjectNamePlaceHolder.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string LabelEmail {
+            get {
+                return ResourceManager.GetString("LabelEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full Name.
         /// </summary>
         public static string LabelFullName {
@@ -273,6 +291,15 @@ namespace ProjectNamePlaceHolder.Web {
         public static string LabelUserList {
             get {
                 return ResourceManager.GetString("LabelUserList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string LabelUserName {
+            get {
+                return ResourceManager.GetString("LabelUserName", resourceCulture);
             }
         }
         

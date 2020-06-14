@@ -9,7 +9,11 @@ namespace ProjectNamePlaceHolder.Web.Models.User
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "PromptMessageFieldIsRequired")]
         public string FullName { get; set; }  
         public string IdentityId { get; set; }
-        public bool IdentityEmailConfirmed { get; set; }    
+        [Display(Name = "LabelActivated", ResourceType = typeof(Resource))]
+        public bool IdentityEmailConfirmed { get; set; }
+        [Display(Name = "LabelEmail", ResourceType = typeof(Resource))]
+        public string IdentityEmail { get; set; }
+        [Display(Name = "LabelUserName", ResourceType = typeof(Resource))]
         public string IdentityUserName { get; set; }
     }
 }
