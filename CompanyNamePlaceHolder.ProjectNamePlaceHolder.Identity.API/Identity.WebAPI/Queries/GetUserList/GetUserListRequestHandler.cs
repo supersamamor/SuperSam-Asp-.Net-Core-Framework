@@ -26,7 +26,8 @@ namespace Identity.WebAPI.Queries.GetUserList
             var query = _context.ProjectNamePlaceHolderUser
                 .Include(l=>l.Identity)
                 .AsNoTracking();
-            if (request.SearchKey != null) {
+            if (request.SearchKey != null)
+            {
                 var searchWords = request.SearchKey.ToLower().Split(' ');
                 query = query.Where(i => i.FullName.ToLower().Contains(searchWords[0])
                                   || i.Identity.UserName.ToLower().Contains(searchWords[0])
@@ -42,7 +43,8 @@ namespace Identity.WebAPI.Queries.GetUserList
                     }
                 }            
             }
-            switch (request.SortBy) {
+            switch (request.SortBy)
+            {
                 case "IdentityUserName":
                     if (request.OrderBy == "Asc") {
                         query = query.OrderBy(l=>l.Identity.UserName);

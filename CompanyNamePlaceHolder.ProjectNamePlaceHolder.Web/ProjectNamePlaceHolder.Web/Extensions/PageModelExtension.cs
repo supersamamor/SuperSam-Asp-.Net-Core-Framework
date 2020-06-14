@@ -4,7 +4,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
 {
     public static class PageModelExtension
     {
-        public static void ValidateModelState(this PageModel pageModel) {
+        public static void ValidateModelState(this PageModel pageModel) 
+        {
             if (!pageModel.ModelState.IsValid)
             {
                 string modelStateError = "";

@@ -24,7 +24,8 @@ namespace SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderList
         public async Task<CustomPagedList<MainModulePlaceHolderModel>> Handle(GetMainModulePlaceHolderListRequest request, CancellationToken cancellationToken)
         {
             var query = _context.MainModulePlaceHolder.AsNoTracking();
-            if (request.SearchKey != null) {
+            if (request.SearchKey != null)
+            {
                 var searchWords = request.SearchKey.ToLower().Split(' ');
                 query = query.Where(i => i.Code.ToLower().Contains(searchWords[0])
                                   || i.Name.ToLower().Contains(searchWords[0]));
@@ -38,12 +39,15 @@ namespace SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderList
                     }
                 }            
             }
-            switch (request.SortBy) {
+            switch (request.SortBy)
+            {
                 case "Code":
-                    if (request.OrderBy == "Asc") {
+                    if (request.OrderBy == "Asc")
+                    {
                         query = query.OrderBy(l=>l.Code);
                     }
-                    else {
+                    else
+                    {
                         query = query.OrderByDescending(l => l.Code);
                     }
                     break;

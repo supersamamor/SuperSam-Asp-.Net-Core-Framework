@@ -15,7 +15,8 @@ namespace SubComponentPlaceHolder.Data.Repositories
             _mapper = mapperConfig.CreateMapper();
         }    
 
-        public async Task<Data.Models.MainModulePlaceHolder> SaveAsync(Core.Models.MainModulePlaceHolder mainModulePlaceHolderCore) {
+        public async Task<Data.Models.MainModulePlaceHolder> SaveAsync(Core.Models.MainModulePlaceHolder mainModulePlaceHolderCore) 
+        {
             var mainModulePlaceHolder = _mapper.Map<Core.Models.MainModulePlaceHolder, Models.MainModulePlaceHolder>(mainModulePlaceHolderCore);
             if (mainModulePlaceHolder.Id == 0)
             {
