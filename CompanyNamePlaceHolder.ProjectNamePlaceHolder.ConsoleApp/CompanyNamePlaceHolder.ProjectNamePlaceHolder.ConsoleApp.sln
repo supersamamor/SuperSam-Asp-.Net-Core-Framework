@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNamePlaceHolder.ConsoleApp", "LabResultExtractor.ConsoleApp\ProjectNamePlaceHolder.ConsoleApp.csproj", "{27DD84B3-0E14-4E37-8E36-F32FC610B296}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNamePlaceHolder.ConsoleApp", "ProjectNamePlaceHolder.ConsoleApp\ProjectNamePlaceHolder.ConsoleApp.csproj", "{27DD84B3-0E14-4E37-8E36-F32FC610B296}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "File", "File", "{A0945290-CEEC-4C35-8C26-6B1789AEE13C}"
 	ProjectSection(SolutionItems) = preProject
