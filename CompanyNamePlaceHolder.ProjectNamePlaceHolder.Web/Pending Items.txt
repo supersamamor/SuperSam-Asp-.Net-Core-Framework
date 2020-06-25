@@ -6,3 +6,7 @@ Pending Items.
 4. Set c# version to 8.0
 5. Tag registration as duplicate on google and Ms
 6. Consider using interfaces on data models and core
+7. Create html helper for updateable table
+8. on template put loader on html post
+9. Proper way of handling 400 error/sets of handled exception, then throw the rest
+10. always use utc and timezone
