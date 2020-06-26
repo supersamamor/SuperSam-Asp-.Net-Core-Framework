@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-MainModulePlaceHolder.Web-AED8F659-9233-455A-B3F3-23C466B36685</UserSecretsId>
+	<LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
 
