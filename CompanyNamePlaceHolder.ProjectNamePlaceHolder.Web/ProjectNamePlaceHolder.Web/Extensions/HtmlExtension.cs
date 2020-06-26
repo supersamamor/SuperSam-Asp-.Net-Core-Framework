@@ -50,7 +50,19 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement,
               string formId, string promptMessageContainerId, string message)
         {
-            var htmlstring = @"   <div class=""modal fade"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
+            var htmlstring = @"";
+            htmlstring += @"      <style> ";
+            htmlstring += @"           @keyframes spin {";
+            htmlstring += @"                0% {transform: rotate(0deg);}";
+            htmlstring += @"                100% { transform: rotate(360deg);}";
+            htmlstring += @"           }";
+            htmlstring += @"      </style>";       
+            htmlstring += @"      ";
+            htmlstring += @"      <div id=""" + modalId + @"_Loader"" style=""display:none;width: 100%;height: 100%;position: fixed;z-index: 9999;background:#000;opacity:0.3;top:0px;left:0px;"">";
+            htmlstring += @"           <div style=""border: 10px solid #f3f3f3;border-top: 10px solid #3498db;border-radius: 50%;width: 60px;height: 60px;animation: spin 2s linear infinite;margin: 0;top: 41%;left: 45%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);position: absolute;""></div>";
+            htmlstring += @"      </div>";
+            htmlstring += @"      ";
+            htmlstring += @"      <div class=""modal fade"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content"">";
             htmlstring += @"                     <div class=""modal-header"">";
@@ -62,7 +74,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                     </div>";
             htmlstring += @"                     <div class=""modal-footer"">";
             htmlstring += @"                          <button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top""";
-            htmlstring += @"                               title=""Ok"" onclick=""$('#" + modalId + @"   ').modal('hide');$('#" + triggerActionElement + @"   ').click();"">";
+            htmlstring += @"                               title=""Ok"" onclick=""$('#" + modalId + @"_Loader').show();$('#" + modalId + @"   ').modal('hide');$('#" + triggerActionElement + @"   ').click();"">";
             htmlstring += @"                               <i class=""fas fa-check""></i>";
             htmlstring += @"                          </button>";
             htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-dismiss=""modal"" data-toggle=""tooltip"" data-placement=""top"" title=""Close"">";
