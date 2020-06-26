@@ -1,11 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SubComponentPlaceHolder.WebAPI.Commands.AddMainModulePlaceHolder;
 using SubComponentPlaceHolder.WebAPI.Commands.DeleteMainModulePlaceHolder;
 using SubComponentPlaceHolder.WebAPI.Commands.UpdateMainModulePlaceHolder;
+using SubComponentPlaceHolder.WebAPI.Extensions;
 using SubComponentPlaceHolder.WebAPI.Models;
 using SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderItem;
 using SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderList;
@@ -42,9 +44,17 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
                 return await _mediator.Send(request);            
             }
             catch (Exception e)
-            {             
-                var problem = new CustomValidationProblemDetails(nameof(GetMainModulePlaceHolderListAsync), e, _logger);
-                return BadRequest(problem); 
+            {
+                _logger.LogError(e, "Error in {MethodName}", nameof(GetMainModulePlaceHolderListAsync));
+                var problem = e.GenerateProblemDetailsOnHandledExceptions();
+                if (problem != null)
+                {                
+                    return BadRequest(problem);
+                }
+                else 
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }              
             }                
         }
  
@@ -62,8 +72,16 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                var problem = new CustomValidationProblemDetails(nameof(GetMainModulePlaceHolderItemAsync), e, _logger);
-                return BadRequest(problem);
+                _logger.LogError(e, "Error in {MethodName}", nameof(GetMainModulePlaceHolderItemAsync));
+                var problem = e.GenerateProblemDetailsOnHandledExceptions();
+                if (problem != null)
+                {
+                    return BadRequest(problem);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
         }
 
@@ -82,8 +100,16 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                var problem = new CustomValidationProblemDetails(nameof(UpdateMainModulePlaceHolderAsync), e, _logger);
-                return BadRequest(problem);
+                _logger.LogError(e, "Error in {MethodName}", nameof(UpdateMainModulePlaceHolderAsync));
+                var problem = e.GenerateProblemDetailsOnHandledExceptions();
+                if (problem != null)
+                {
+                    return BadRequest(problem);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
         }
       
@@ -102,8 +128,16 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                var problem = new CustomValidationProblemDetails(nameof(AddMainModulePlaceHolderAsync), e, _logger);
-                return BadRequest(problem);
+                _logger.LogError(e, "Error in {MethodName}", nameof(AddMainModulePlaceHolderAsync));
+                var problem = e.GenerateProblemDetailsOnHandledExceptions();
+                if (problem != null)
+                {
+                    return BadRequest(problem);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
         }
     
@@ -122,8 +156,16 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                var problem = new CustomValidationProblemDetails(nameof(DeleteMainModulePlaceHolderAsync), e, _logger);
-                return BadRequest(problem);
+                _logger.LogError(e, "Error in {MethodName}", nameof(DeleteMainModulePlaceHolderAsync));
+                var problem = e.GenerateProblemDetailsOnHandledExceptions();
+                if (problem != null)
+                {
+                    return BadRequest(problem);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
         }   
     }

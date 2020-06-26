@@ -9,5 +9,7 @@ namespace SubComponentPlaceHolder.Data.Models
         public string Code { get; set; }
         [StringLength(500)]
         public string Name { get; set; }
+        [StringLength(450)]
+        public string MainModulePlaceHolderId { get; set; }
     }
 }
