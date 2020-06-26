@@ -96,7 +96,13 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
                     MainModulePlaceHolder = mainModulePlaceHolder,
                     Username = Request.Headers["UserName"].ToString()
                 };
-                return await _mediator.Send(request);
+                await _mediator.Send(request);
+
+                var updatedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemRequest
+                {
+                    Id = mainModulePlaceHolder.Id
+                };
+                return await _mediator.Send(updatedMainModulePlaceHolderRequest);
             }
             catch (Exception e)
             {
@@ -119,12 +125,20 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
             _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(AddMainModulePlaceHolderAsync), mainModulePlaceHolder);
             try
             {
+                var mainModulePlaceHolderId = Guid.NewGuid().ToString();
                 var request = new AddMainModulePlaceHolderRequest
                 {
                     MainModulePlaceHolder = mainModulePlaceHolder,
-                    Username = Request.Headers["UserName"].ToString()
+                    Username = Request.Headers["UserName"].ToString(),
+                    MainModulePlaceHolderId = mainModulePlaceHolderId
                 };
-                return await _mediator.Send(request);
+                await _mediator.Send(request);
+
+                var savedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemByIdRequest
+                {                    
+                    MainModulePlaceHolderId = mainModulePlaceHolderId
+                };
+                return await _mediator.Send(savedMainModulePlaceHolderRequest);
             }
             catch (Exception e)
             {

@@ -8,7 +8,7 @@ using SubComponentPlaceHolder.WebAPI.Models;
 
 namespace SubComponentPlaceHolder.WebAPI.Commands.AddMainModulePlaceHolder
 {  
-    public class AddMainModulePlaceHolderRequestHandler : IRequestHandler<AddMainModulePlaceHolderRequest, MainModulePlaceHolderModel>
+    public class AddMainModulePlaceHolderRequestHandler : AsyncRequestHandler<AddMainModulePlaceHolderRequest>
     {
         private readonly MainModulePlaceHolderRepository _repository;
         private readonly SubComponentPlaceHolderContext _context;
@@ -19,14 +19,19 @@ namespace SubComponentPlaceHolder.WebAPI.Commands.AddMainModulePlaceHolder
             _context = context;
             _mapper = mapperConfig.CreateMapper();
         }
-
-        public async Task<MainModulePlaceHolderModel> Handle(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
+        
+        protected override async Task Handle(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
-            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);        
+            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);
+            mainModulePlaceHolderCore.SetMainModulePlaceHolderId(request.MainModulePlaceHolderId);
             mainModulePlaceHolderCore.SetCreatedInformation(request.Username);
-            var mainModulePlaceHolder = await _repository.SaveAsync(mainModulePlaceHolderCore);
+            await _repository.SaveAsync(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolder); 
+        }
+
+        public async Task HandleAsync(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
+        {
+            await this.Handle(request, cancellationToken);
         }
     }
 }

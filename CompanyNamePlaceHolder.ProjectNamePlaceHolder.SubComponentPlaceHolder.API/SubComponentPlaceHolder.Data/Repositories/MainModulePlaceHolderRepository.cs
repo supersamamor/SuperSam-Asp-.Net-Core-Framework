@@ -37,6 +37,10 @@ namespace SubComponentPlaceHolder.Data.Repositories
         public async Task<Core.Models.MainModulePlaceHolder> GetItemAsync(int id)
         {        
             return _mapper.Map<Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>(await _context.MainModulePlaceHolder.Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
-        }       
+        }
+        public async Task<Core.Models.MainModulePlaceHolder> GetItemByIdAsync(string mainModulePlaceHolderId)
+        {
+            return _mapper.Map<Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>(await _context.MainModulePlaceHolder.Where(l => l.MainModulePlaceHolderId == mainModulePlaceHolderId).AsNoTracking().FirstOrDefaultAsync());
+        }
     }     
 }
