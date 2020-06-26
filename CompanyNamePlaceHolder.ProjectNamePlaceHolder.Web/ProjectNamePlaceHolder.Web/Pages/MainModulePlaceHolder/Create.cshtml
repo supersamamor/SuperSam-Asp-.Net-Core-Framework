@@ -44,13 +44,18 @@
         <form method="post" id="FormAdd">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Code,"control-label small")             
+                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Code, "control-label small")
                 <input asp-for="MainModulePlaceHolder.Code" class="form-control form-control-sm" />
                 <span asp-validation-for="MainModulePlaceHolder.Code" class="text-danger small"></span>
             </div>
             <div class="form-group">
-                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Name, "control-label small")              
+                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Name, "control-label small")
                 <input asp-for="MainModulePlaceHolder.Name" class="form-control form-control-sm" />
+                <span asp-validation-for="MainModulePlaceHolder.Name" class="text-danger small"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayLabelWithRequiredTag(model => Model.MainModulePlaceHolder.Name, "control-label small")
+                <textarea asp-for="MainModulePlaceHolder.Name" class="form-control form-control-sm"></textarea>
                 <span asp-validation-for="MainModulePlaceHolder.Name" class="text-danger small"></span>
             </div>
             <div class="form-group" style="display:none;">
