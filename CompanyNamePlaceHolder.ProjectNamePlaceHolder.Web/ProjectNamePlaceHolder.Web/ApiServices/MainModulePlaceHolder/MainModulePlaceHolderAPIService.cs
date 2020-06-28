@@ -9,14 +9,17 @@ using ProjectNamePlaceHolder.Web.AppException;
 using X.PagedList;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http.Headers;
+using Microsoft.Extensions.Configuration;
 
 namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
 {
     public class MainModulePlaceHolderAPIService  : BaseApiService
     {
-        public MainModulePlaceHolderAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+        public MainModulePlaceHolderAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
-        {          
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:MainModulePlaceHolderBearerToken"));
         }
 
         public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize, CancellationToken token)

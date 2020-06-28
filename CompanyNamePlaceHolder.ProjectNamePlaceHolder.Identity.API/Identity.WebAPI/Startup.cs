@@ -16,6 +16,7 @@ using Identity.Data;
 using Identity.Data.Repositories;
 using Identity.WebAPI.Models;
 using Microsoft.AspNetCore.Identity;
+using Identity.WebAPI.Middleware;
 
 namespace Identity.WebAPI
 {
@@ -80,6 +81,7 @@ namespace Identity.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProjectNamePlaceHolder Identity - API V1");
                 c.RoutePrefix = string.Empty;
             });
+            app.UseBearerTokenValidator();
             app.UseAuthorization();
             app.UseLogCorrelation();
             app.UseEndpoints(endpoints =>

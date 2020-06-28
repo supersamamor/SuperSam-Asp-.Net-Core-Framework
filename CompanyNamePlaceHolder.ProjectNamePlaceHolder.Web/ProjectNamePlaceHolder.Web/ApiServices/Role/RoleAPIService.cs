@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ProjectNamePlaceHolder.Web.AppException;
 using ProjectNamePlaceHolder.Web.Models;
 using ProjectNamePlaceHolder.Web.Models.Role;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -14,9 +16,10 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.Role
 {
     public class RoleAPIService: BaseApiService
     {
-        public RoleAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+        public RoleAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityBearerToken"));
         }
 
         public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId, CancellationToken token)

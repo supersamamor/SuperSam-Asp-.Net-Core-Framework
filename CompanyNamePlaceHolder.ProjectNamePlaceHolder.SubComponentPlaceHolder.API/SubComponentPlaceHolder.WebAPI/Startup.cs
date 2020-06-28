@@ -15,6 +15,7 @@ using System.Reflection;
 using SubComponentPlaceHolder.Data;
 using SubComponentPlaceHolder.Data.Repositories;
 using SubComponentPlaceHolder.WebAPI.Models;
+using SubComponentPlaceHolder.WebAPI.Middleware;
 
 namespace SubComponentPlaceHolder.WebAPI
 {
@@ -77,6 +78,7 @@ namespace SubComponentPlaceHolder.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProjectNamePlaceHolder SubComponentPlaceHolder - API V1");
                 c.RoutePrefix = string.Empty;
             });
+            app.UseBearerTokenValidator();
             app.UseAuthorization();
             app.UseLogCorrelation();
             app.UseEndpoints(endpoints =>

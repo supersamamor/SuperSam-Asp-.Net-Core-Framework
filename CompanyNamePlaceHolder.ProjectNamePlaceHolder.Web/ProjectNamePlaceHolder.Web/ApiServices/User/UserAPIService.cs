@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ProjectNamePlaceHolder.Web.AppException;
 using ProjectNamePlaceHolder.Web.Models;
@@ -7,6 +8,7 @@ using ProjectNamePlaceHolder.Web.Models.Role;
 using ProjectNamePlaceHolder.Web.Models.User;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,9 +18,10 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
 {
     public class UserAPIService: BaseApiService
     {
-        public UserAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+        public UserAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityBearerToken"));
         }
 
         public async Task<IPagedList<UserModel>> GetUserListAsync(string searchKey, string orderBy, string sortBy, int pageIndex,
