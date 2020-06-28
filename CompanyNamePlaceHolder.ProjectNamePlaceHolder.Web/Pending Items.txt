@@ -6,5 +6,5 @@ Pending Items.
 4. Consider using interfaces on data models and core
 5. Randomize Bearer Token, Put Bearer Token In Database
 6. If Template is per module. add module on context and mapping 
-
+7. Hash the api key and secret
 
