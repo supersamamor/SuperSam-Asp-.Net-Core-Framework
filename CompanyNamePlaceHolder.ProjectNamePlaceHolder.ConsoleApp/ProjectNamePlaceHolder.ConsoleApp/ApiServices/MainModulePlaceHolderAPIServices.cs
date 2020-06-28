@@ -2,6 +2,7 @@
 using ProjectNamePlaceHolder.ConsoleApp.Models;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace ProjectNamePlaceHolder.ConsoleApp.ApiServices
 {
@@ -9,9 +10,10 @@ namespace ProjectNamePlaceHolder.ConsoleApp.ApiServices
     {
         private readonly HttpClient _client;
 
-        public MainModulePlaceHolderAPIServices(HttpClient client)
+        public MainModulePlaceHolderAPIServices(HttpClient client, string token)
         {
             _client = client;
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public IList<MainModulePlaceHolderModel> GetMainModulePlaceHolderList()

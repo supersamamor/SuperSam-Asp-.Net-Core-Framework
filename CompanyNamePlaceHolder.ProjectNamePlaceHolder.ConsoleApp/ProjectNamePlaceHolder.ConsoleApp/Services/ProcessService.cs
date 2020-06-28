@@ -16,7 +16,8 @@ namespace ProjectNamePlaceHolder.ConsoleApp.Services
             {
                 BaseAddress = new Uri(config.SubComponentPlaceHolderAPI),
                 Timeout = Timeout.InfiniteTimeSpan
-            });         
+            }
+            ,config.SubComponentPlaceHolderToken);         
         }
         public IList<MainModulePlaceHolderModel> GetMainModulePlaceHolderList()
         {
