@@ -28,6 +28,9 @@ namespace SubComponentPlaceHolder.Data.Migrations
                 });
             migrationBuilder.Sql(@"Insert Into [dbo].[SubComponentPlaceHolderApiClient] ([Name],[Key],Secret,Active,CreatedDate,UpdatedDate,CreatedByUsername,UpdatedByUsername)
                                     Values ('ProjectNamePlaceHolder Web',newid(),newid(),1,GETUTCDATE(),GETUTCDATE(),'SYSTEM','SYSTEM');");
+
+            migrationBuilder.Sql(@"Insert Into [dbo].[SubComponentPlaceHolderApiClient] ([Name],[Key],Secret,Active,CreatedDate,UpdatedDate,CreatedByUsername,UpdatedByUsername)
+                                    Values ('ProjectNamePlaceHolder Console',newid(),newid(),1,GETUTCDATE(),GETUTCDATE(),'SYSTEM','SYSTEM');");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

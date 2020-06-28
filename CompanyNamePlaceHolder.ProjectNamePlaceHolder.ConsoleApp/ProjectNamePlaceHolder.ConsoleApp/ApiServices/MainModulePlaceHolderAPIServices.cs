@@ -10,10 +10,11 @@ namespace ProjectNamePlaceHolder.ConsoleApp.ApiServices
     {
         private readonly HttpClient _client;
 
-        public MainModulePlaceHolderAPIServices(HttpClient client, string token)
+        public MainModulePlaceHolderAPIServices(HttpClient client, string apiKey, string apiSecret)
         {
             _client = client;
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            _client.DefaultRequestHeaders.Add("ApiKey", apiKey);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiSecret", apiSecret);
         }
 
         public IList<MainModulePlaceHolderModel> GetMainModulePlaceHolderList()
