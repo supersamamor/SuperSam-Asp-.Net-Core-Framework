@@ -21,7 +21,8 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
         public UserAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
         {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityBearerToken"));
+            _client.DefaultRequestHeaders.Add("ApiKey", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityApiKey"));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiSecret", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityApiSecret"));              
         }
 
         public async Task<IPagedList<UserModel>> GetUserListAsync(string searchKey, string orderBy, string sortBy, int pageIndex,

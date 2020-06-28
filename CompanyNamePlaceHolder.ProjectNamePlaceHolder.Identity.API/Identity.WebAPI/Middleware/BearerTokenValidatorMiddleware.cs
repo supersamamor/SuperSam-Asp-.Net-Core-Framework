@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Identity.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,11 +16,15 @@ namespace Identity.WebAPI.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IConfiguration config)
+        public async Task Invoke(HttpContext context, IdentityContext dbContext)
         {
-            var bearerToken = config.GetValue<string>("BearerToken");
+            var apiKey = context.Request.Headers["ApiKey"].ToString();
+            var apiSecret = context.Request.Headers["Authorization"].ToString().Replace("ApiSecret", "").Trim();
+            var api = await dbContext.ProjectNamePlaceHolderIdentityApiClient
+                .Where(l => l.Key == apiKey && l.Secret == apiSecret && l.Active == true).FirstOrDefaultAsync();
+
             //This is temporary.Eventually, authentication will be handled by API gateway
-            if (context.Request.Headers["Authorization"] != "Bearer " + bearerToken)
+            if (api == null)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 return;

@@ -32,6 +32,7 @@ namespace SubComponentPlaceHolder.Data
             #endregion   
             base.OnModelCreating(builder);
         }
-        public virtual DbSet<Models.MainModulePlaceHolder> MainModulePlaceHolder { get; set; }     
+        public virtual DbSet<Models.MainModulePlaceHolder> MainModulePlaceHolder { get; set; }
+        public virtual DbSet<Models.SubComponentPlaceHolderApiClient> SubComponentPlaceHolderApiClient { get; set; }
     }
 }

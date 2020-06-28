@@ -29,6 +29,6 @@ namespace Identity.Data
             base.OnModelCreating(builder);
         }
         public DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
-
+        public DbSet<ProjectNamePlaceHolderIdentityApiClient> ProjectNamePlaceHolderIdentityApiClient { get; set; }
     }
 }
