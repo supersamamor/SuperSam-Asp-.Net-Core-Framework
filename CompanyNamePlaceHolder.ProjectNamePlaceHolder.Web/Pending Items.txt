@@ -1,11 +1,11 @@
 Pending Items.
 
 1. Save navigation in sessions
-2. Improve the release pipelines to set the port number in variables and ssl thumbprint
-3. Working forgot password
-5. Tag registration as duplicate on google and Ms
-6. Consider using interfaces on data models and core
-7. Create html helper for updateable table
-10. always use utc and timezone
-11. Proper command query pattern
-12. Email functionality
+2. Create html helper for updateable table
+3. Improve the release pipelines to set the port number in variables and ssl thumbprint
+4. Consider using interfaces on data models and core
+5. Working forgot password
+
+
+
+

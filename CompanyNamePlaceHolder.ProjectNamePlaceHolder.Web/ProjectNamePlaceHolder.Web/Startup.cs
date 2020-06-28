@@ -15,6 +15,8 @@ using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
 using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Web.ApiServices.User;
 using ProjectNamePlaceHolder.Web.ApiServices.Role;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using ProjectNamePlaceHolder.Web.Services.Email;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -26,13 +28,14 @@ namespace ProjectNamePlaceHolder.Web
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {        
             services.AddLogCorrelation();
             services.AddOptions();
             services.Configure<ProjectNamePlaceHolderWebConfig>(Configuration.GetSection("ProjectNamePlaceHolderWebConfig"));
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSession();
             services.AddDbContext<ProjectNamePlaceHolderContext>(options =>
                 options.UseSqlServer(
@@ -72,7 +75,8 @@ namespace ProjectNamePlaceHolder.Web
                 googleOptions.ClientId = Configuration["AuthenticationConfig:GoogleClientId"];
                 googleOptions.ClientSecret = Configuration["AuthenticationConfig:GoogleClientSecret"];
             });
-            #endregion         
+            #endregion
+            services.AddTransient<IEmailSender, SMTPEmailService>();
             services.AddRazorPages();
             services.AddHealthChecks().AddDbContextCheck<ProjectNamePlaceHolderContext>();
             services.AddApplicationInsightsTelemetry();

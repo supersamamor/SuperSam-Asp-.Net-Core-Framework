@@ -1,12 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProjectNamePlaceHolder.SecurityData.Models;
-
+using ProjectNamePlaceHolder.SecurityData;
 namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
@@ -14,15 +15,17 @@ namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
-
+        private readonly ProjectNamePlaceHolderContext _context;
         public DeletePersonalDataModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            ProjectNamePlaceHolderContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -66,7 +69,8 @@ namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account.Manage
                     return Page();
                 }
             }
-
+            var userToDelete = await _context.ProjectNamePlaceHolderUser.Where(l=>l.Identity.Id == user.Id).FirstOrDefaultAsync();
+            _context.ProjectNamePlaceHolderUser.Remove(userToDelete);
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
