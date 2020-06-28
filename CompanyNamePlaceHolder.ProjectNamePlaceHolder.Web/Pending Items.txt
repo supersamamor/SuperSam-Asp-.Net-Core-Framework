@@ -4,7 +4,6 @@ Pending Items.
 2. Create html helper for updateable table
 3. Improve the release pipelines to set the port number in variables and ssl thumbprint
 4. Consider using interfaces on data models and core
-5. Working forgot password
 
 
 
