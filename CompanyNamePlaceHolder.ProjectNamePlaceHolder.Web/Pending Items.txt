@@ -2,9 +2,11 @@ Pending Items.
 
 1. Save navigation in sessions
 2. Create html helper for updateable table
-3. Improve the release pipelines to set the port number in variables and ssl thumbprint
-4. Consider using interfaces on data models and core
-5. Randomize Bearer Token, Put Bearer Token In Database
-6. If Template is per module. add module on context and mapping 
-7. Hash the api key and secret
-
+3. Consider using interfaces on data models and core
+4. Randomize Bearer Token, Put Bearer Token In Database
+5. If Template is per module. add module on context and mapping 
+6. Hash the api key and secret
+7. Release pipelines WebAppName is still templateapi_qa
+8. Improve the release pipelines to set the port number in variables and ssl thumbprint
+9. Find a way to change artifact on release pipelines template
+10. SqlEFMigrationScriptPath is not sync vs artifacts
