@@ -4,9 +4,10 @@ Pending Items.
 2. Create html helper for updateable table
 3. Consider using interfaces on data models and core
 4. Randomize Bearer Token, Put Bearer Token In Database
-5. If Template is per module. add module on context and mapping 
+5. If Template is per module. add module on context and mapping,register repository,  and fix api routes an apiservices in web layer, make guid unique in context
 6. Hash the api key and secret
 7. Release pipelines WebAppName is still templateapi_qa
 8. Improve the release pipelines to set the port number in variables and ssl thumbprint
 9. Find a way to change artifact on release pipelines template
 10. SqlEFMigrationScriptPath is not sync vs artifacts
+11. Create Individualt Template and identify modules that are templatetable
