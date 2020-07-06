@@ -10,6 +10,7 @@ using SubComponentPlaceHolder.WebAPI.Commands.UpdateMainModulePlaceHolder;
 using SubComponentPlaceHolder.WebAPI.Extensions;
 using SubComponentPlaceHolder.WebAPI.Models;
 using SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderItem;
+using SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderItemByCode;
 using SubComponentPlaceHolder.WebAPI.Queries.GetMainModulePlaceHolderList;
 namespace SubComponentPlaceHolder.WebAPI.Controllers
 {
@@ -124,19 +125,17 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(AddMainModulePlaceHolderAsync), mainModulePlaceHolder);
             try
-            {
-                var mainModulePlaceHolderId = Guid.NewGuid().ToString();
+            {               
                 var request = new AddMainModulePlaceHolderRequest
                 {
                     MainModulePlaceHolder = mainModulePlaceHolder,
-                    Username = Request.Headers["UserName"].ToString(),
-                    MainModulePlaceHolderId = mainModulePlaceHolderId
+                    Username = Request.Headers["UserName"].ToString()                   
                 };
                 await _mediator.Send(request);
 
-                var savedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemByIdRequest
+                var savedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemByCodeRequest
                 {                    
-                    MainModulePlaceHolderId = mainModulePlaceHolderId
+                    MainModulePlaceHolderCode = mainModulePlaceHolder.Code
                 };
                 return await _mediator.Send(savedMainModulePlaceHolderRequest);
             }

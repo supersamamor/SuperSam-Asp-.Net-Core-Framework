@@ -22,8 +22,7 @@ namespace SubComponentPlaceHolder.WebAPI.Commands.AddMainModulePlaceHolder
         
         protected override async Task Handle(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
-            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);
-            mainModulePlaceHolderCore.SetMainModulePlaceHolderId(request.MainModulePlaceHolderId);
+            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);        
             mainModulePlaceHolderCore.SetCreatedInformation(request.Username);
             await _repository.SaveAsync(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();

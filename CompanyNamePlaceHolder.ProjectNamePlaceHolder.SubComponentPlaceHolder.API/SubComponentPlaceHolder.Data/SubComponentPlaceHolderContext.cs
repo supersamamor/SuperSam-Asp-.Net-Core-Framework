@@ -17,9 +17,6 @@ namespace SubComponentPlaceHolder.Data
             #region Is Unique
             builder.Entity<Models.MainModulePlaceHolder>()
             .HasIndex(c => new { c.Code }).IsUnique();
-
-            builder.Entity<Models.MainModulePlaceHolder>()
-            .HasIndex(c => new { c.MainModulePlaceHolderId }).IsUnique();
             #endregion
             #region Disable Cascade Delete
             var cascadeFKs = builder.Model.GetEntityTypes()
