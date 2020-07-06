@@ -13,7 +13,6 @@ Pending Items.
 11. Create Individual Template and identify modules that are templatetable
 12. sendgrid not working/Gmail Smtp
 13. bug on template when creating new module. need to edit routes
-14. update template to use code as unique fetcher instead of guid from command pattern
 15. level 2 navigation in template
 16. page size cannot be changed by the user in template
 17. include reactjs on template
