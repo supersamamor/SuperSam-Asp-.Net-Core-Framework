@@ -17,3 +17,4 @@ Pending Items.
 15. level 2 navigation in template
 16. page size cannot be changed by the user in template
 17. include reactjs on template
+18. Implement OAuth2 
