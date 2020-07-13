@@ -17,7 +17,7 @@ Pending Items.
 16. page size cannot be changed by the user in template
 17. include reactjs on template
 18. Passed an object of that core class in "updatefrom" method to make it easier to maintain rather than passing all the parameters to the method. (Mapping can be used)
-
+19. Apply search enhancement based on ARS with sir freds recommendation (Budget query)
 
 
 
@@ -27,3 +27,4 @@ Pending Items.
 2. Angular.js
 3. Save navigation (pagination, sort, search) in sessions efficiently
 4. Implement OAuth2.0 manually without api gateway.
+
