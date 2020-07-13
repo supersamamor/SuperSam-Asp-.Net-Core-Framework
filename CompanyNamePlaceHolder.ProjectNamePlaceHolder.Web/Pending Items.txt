@@ -5,8 +5,8 @@ Pending Items.
 3. Consider using interfaces on data models and core
 4. Randomize Bearer Token, Put Bearer Token In Database
 5. If Template is per module. add module on context and mapping,register repository,  and fix api routes an apiservices in web layer, make guid unique in context
-6. Hash the api key and secret
-7. Release pipelines WebAppName is still templateapi_qa
+6. Release pipelines WebAppName is still templateapi_qa
+7. Hash the api key and secret / Implement OAuth2 
 8. Improve the release pipelines to set the port number in variables and ssl thumbprint
 9. Find a way to change artifact on release pipelines template
 10. SqlEFMigrationScriptPath is not sync vs artifacts
@@ -16,4 +16,14 @@ Pending Items.
 15. level 2 navigation in template
 16. page size cannot be changed by the user in template
 17. include reactjs on template
-18. Implement OAuth2 
+18. Passed an object of that core class in "updatefrom" method to make it easier to maintain rather than passing all the parameters to the method. (Mapping can be used)
+
+
+
+
+
+
+1. React.js
+2. Angular.js
+3. Save navigation (pagination, sort, search) in sessions efficiently
+4. Implement OAuth2.0 manually without api gateway.
