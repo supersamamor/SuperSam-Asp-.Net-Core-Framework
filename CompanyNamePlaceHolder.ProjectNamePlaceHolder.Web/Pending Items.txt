@@ -18,6 +18,7 @@ Pending Items.
 17. include reactjs on template
 18. Passed an object of that core class in "updatefrom" method to make it easier to maintain rather than passing all the parameters to the method. (Mapping can be used)
 19. Apply search enhancement based on ARS with sir freds recommendation (Budget query)
+20. Do not sent username in header
 
 
 
