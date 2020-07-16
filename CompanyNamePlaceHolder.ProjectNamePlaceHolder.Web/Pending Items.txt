@@ -31,3 +31,8 @@ Pending Items.
 3. Save navigation (pagination, sort, search) in sessions efficiently
 4. Implement OAuth2.0 manually without api gateway.
 
+Other Notes:
+
+datetime will be converted to utc on apis
+there should always be time to handle different time zones on api
+
