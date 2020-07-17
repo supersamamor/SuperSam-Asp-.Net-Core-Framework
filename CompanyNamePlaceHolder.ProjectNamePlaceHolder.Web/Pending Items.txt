@@ -22,7 +22,7 @@ Pending Items.
 21. Comment and feedback section
 22. Privacy Policy Section
 23. About System Section
-
+24. Resource based auth  https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-3.1
 
 
 
