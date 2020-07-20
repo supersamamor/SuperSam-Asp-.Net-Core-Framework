@@ -26,7 +26,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.Role
         public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId, CancellationToken token)
         {
             var url = @"";
-            url += string.Concat("?", "userId=", userId);         
+            url += string.Concat("?", _userParameter, "&userId=", userId);         
             var response = await _client.GetAsync(@"Role/CurrentRoles/" + url, token);
             var result = await response.Content.ReadAsStringAsync();
             try
@@ -44,7 +44,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.Role
         public async Task<IList<RoleModel>> GetAvailableRoleListAsync(int userId, CancellationToken token)
         {
             var url = @"";
-            url += string.Concat("?", "userId=", userId);
+            url += string.Concat("?", _userParameter, "&userId=", userId);
             var response = await _client.GetAsync(@"Role/AvailableRoles/" + url, token);
             var result = await response.Content.ReadAsStringAsync();
             try

@@ -29,7 +29,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
             int pageSize, CancellationToken token)
         {
             var url = @"";
-            url += string.Concat("?", "searchKey=", searchKey, "&&orderBy=", orderBy, "&&sortBy=", sortBy,
+            url += string.Concat("?", _userParameter, "&searchKey=", searchKey, "&&orderBy=", orderBy, "&&sortBy=", sortBy,
                 "&&pageIndex=", pageIndex, "&&pageSize=", pageSize);         
             var response = await _client.GetAsync(@"User/" + url, token);
             var result = await response.Content.ReadAsStringAsync();
@@ -47,7 +47,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
 
         public async Task<UserModel> GetUserItemAsync(int id, CancellationToken token)
         {
-            var response = await _client.GetAsync(@"User/" + id.ToString(), token);
+            var response = await _client.GetAsync(@"User/" + id.ToString() +"?" + _userParameter, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
@@ -64,7 +64,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
         {          
             var content = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync(@"User/", httpContent, token);
+            var response = await _client.PutAsync(@"User?" + _userParameter, httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
@@ -78,7 +78,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.User
         }
         public async Task<UserModel> ActivateUserAsync(int id, CancellationToken token)
         {           
-            var response = await _client.PutAsync(@"User/Activate/" + id, null, token);
+            var response = await _client.PutAsync(@"User/Activate/" + id + "?" + _userParameter, null, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
