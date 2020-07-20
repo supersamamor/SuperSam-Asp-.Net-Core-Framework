@@ -69,7 +69,7 @@ namespace Identity.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<UserModel>> UpdateUserAsync(UserModel user)
+        public async Task<ActionResult<UserModel>> UpdateUserAsync(string userName, UserModel user)
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: User={User}", nameof(UpdateUserAsync), user);
             try
@@ -77,7 +77,7 @@ namespace Identity.WebAPI.Controllers
                 var request = new UpdateUserRequest
                 {
                     User = user,
-                    Username = Request.Headers["UserName"].ToString()
+                    Username = userName
                 };
                 return await _mediator.Send(request);
             }
@@ -88,7 +88,7 @@ namespace Identity.WebAPI.Controllers
             }
         }
         [HttpPut("Activate/{id}")]
-        public async Task<ActionResult<UserModel>> ActivateUserAsync(int id)
+        public async Task<ActionResult<UserModel>> ActivateUserAsync(int id, string userName)
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: UserId={UserId}", nameof(ActivateUserAsync), id);
             try
@@ -96,7 +96,7 @@ namespace Identity.WebAPI.Controllers
                 var request = new ActivateUserRequest
                 {
                     Id = id,
-                    Username = Request.Headers["UserName"].ToString()
+                    Username = userName
                 };
                 return await _mediator.Send(request);
             }

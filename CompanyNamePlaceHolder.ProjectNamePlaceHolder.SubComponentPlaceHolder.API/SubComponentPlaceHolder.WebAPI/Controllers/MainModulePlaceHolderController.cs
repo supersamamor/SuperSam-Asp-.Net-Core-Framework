@@ -87,7 +87,7 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<MainModulePlaceHolderModel>> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
+        public async Task<ActionResult<MainModulePlaceHolderModel>> UpdateMainModulePlaceHolderAsync(string userName, MainModulePlaceHolderModel mainModulePlaceHolder)
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(UpdateMainModulePlaceHolderAsync), mainModulePlaceHolder);
             try
@@ -95,7 +95,7 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
                 var request = new UpdateMainModulePlaceHolderRequest
                 {
                     MainModulePlaceHolder = mainModulePlaceHolder,
-                    Username = Request.Headers["UserName"].ToString()
+                    Username = userName
                 };
                 await _mediator.Send(request);
 
@@ -121,7 +121,7 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
         }
       
         [HttpPost]
-        public async Task<ActionResult<MainModulePlaceHolderModel>> AddMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
+        public async Task<ActionResult<MainModulePlaceHolderModel>> AddMainModulePlaceHolderAsync(string userName, MainModulePlaceHolderModel mainModulePlaceHolder)
         {
             _logger.LogInformation("MethodName: {MethodName}, Parameters: MainModulePlaceHolder={MainModulePlaceHolder}", nameof(AddMainModulePlaceHolderAsync), mainModulePlaceHolder);
             try
@@ -129,7 +129,7 @@ namespace SubComponentPlaceHolder.WebAPI.Controllers
                 var request = new AddMainModulePlaceHolderRequest
                 {
                     MainModulePlaceHolder = mainModulePlaceHolder,
-                    Username = Request.Headers["UserName"].ToString()                   
+                    Username = userName                   
                 };
                 await _mediator.Send(request);
 
