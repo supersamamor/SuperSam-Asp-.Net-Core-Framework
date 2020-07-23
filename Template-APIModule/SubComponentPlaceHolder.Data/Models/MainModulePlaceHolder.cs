@@ -8,8 +8,6 @@ namespace SubComponentPlaceHolder.Data.Models
         [Required]
         public string Code { get; set; }
         [StringLength(500)]
-        public string Name { get; set; }
-        [StringLength(450)]
-        public string MainModulePlaceHolderId { get; set; }
+        public string Name { get; set; }     
     }
 }

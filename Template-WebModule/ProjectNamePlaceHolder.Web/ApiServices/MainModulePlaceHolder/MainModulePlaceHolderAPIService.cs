@@ -18,15 +18,14 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
     {
         public MainModulePlaceHolderAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
-        {
-            _client.DefaultRequestHeaders.Add("ApiKey", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:SubComponentPlaceHolderApiKey"));
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiSecret", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:SubComponentPlaceHolderApiSecret"));
+        {   
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:MainModulePlaceHolderToken"));
         }
 
         public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize, CancellationToken token)
         {
             var url = @"";
-            url += string.Concat("?", "searchKey=", searchKey, "&&orderBy=", orderBy, "&&sortBy=", sortBy,
+            url += string.Concat("?", _userParameter, "&searchKey=", searchKey, "&&orderBy=", orderBy, "&&sortBy=", sortBy,
                 "&&pageIndex=", pageIndex, "&&pageSize=", pageSize);
             var response = await _client.GetAsync(url, token);          
             var result = await response.Content.ReadAsStringAsync();
@@ -44,7 +43,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
 
         public async Task<MainModulePlaceHolderModel> GetMainModulePlaceHolderItemAsync(int id, CancellationToken token)
         {
-            var response = await _client.GetAsync(id.ToString(), token);
+            var response = await _client.GetAsync(id.ToString() + "?" + _userParameter , token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
@@ -62,7 +61,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
         {
             var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync(@"", httpContent, token);
+            var response = await _client.PutAsync(@"?" + _userParameter, httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
@@ -79,7 +78,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
         {
             var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync(@"", httpContent, token);
+            var response = await _client.PostAsync(@"?" + _userParameter, httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
@@ -94,7 +93,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
 
         public async Task DeleteMainModulePlaceHolderAsync(int id, CancellationToken token)
         {
-            var response = await _client.DeleteAsync(id.ToString(), token);     
+            var response = await _client.DeleteAsync(id.ToString() + "?" + _userParameter, token);     
             try
             {
                 response.EnsureSuccessStatusCode();
