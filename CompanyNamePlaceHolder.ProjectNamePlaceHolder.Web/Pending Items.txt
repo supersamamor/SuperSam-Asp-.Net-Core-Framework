@@ -42,3 +42,49 @@ Done List
 
 
 Optional
+
+
+
+
+Manual Usage of Api Template.
+1. Add new data model to context
+2. Add new repos to start up
+3. Add necessary fields and relation ships.. adjust field of all layers
+4. Adjust all updates function based on new fields (Including Command and Query Pattern)
+
+Manual Usage of Web Template.
+1. Add resource items entry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
