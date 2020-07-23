@@ -50,15 +50,16 @@ Manual Usage of Api Template.
 1. Add new data model to context
 2. Add new repos to start up
 3. Add necessary fields and relation ships.. adjust field of all layers
-4. Adjust all updates function based on new fields (Including Command and Query Pattern)
+4. Adjust all updates function based on new fields (Including Command and Query Pattern) and (Include Tables)
 5. Add Mapping
 
 Manual Usage of Web Template.
 1. Add resource items entry
-1. Add on navigation menu with initial authorize attributes
+2. Add on navigation menu with initial authorize attributes
 3. Add api services from the start up
-
-
+4. Add fields from the model and new resource item again
+5. Apply/Fill dropdowns/ selection to related ui. (Needed to add apiservice to page model , OnGet/OnPost)
+6. Adjust UI for new fields with dropdown
 
 
 
