@@ -18,13 +18,11 @@ namespace Identity.WebAPI.Middleware
 
         public async Task Invoke(HttpContext context, IdentityContext dbContext)
         {
-            var apiKey = context.Request.Headers["ApiKey"].ToString();
-            var apiSecret = context.Request.Headers["Authorization"].ToString().Replace("ApiSecret", "").Trim();
-            var api = await dbContext.ProjectNamePlaceHolderIdentityApiClient
-                .Where(l => l.Key == apiKey && l.Secret == apiSecret && l.Active == true).FirstOrDefaultAsync();
+            var token = await dbContext.ProjectNamePlaceHolderIdentityApiClient
+                    .Where(l => l.Token == context.Request.Headers["Authorization"]).FirstOrDefaultAsync();
 
             //This is temporary.Eventually, authentication will be handled by API gateway
-            if (api == null)
+            if (token != null)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 return;
