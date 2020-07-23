@@ -51,10 +51,12 @@ Manual Usage of Api Template.
 2. Add new repos to start up
 3. Add necessary fields and relation ships.. adjust field of all layers
 4. Adjust all updates function based on new fields (Including Command and Query Pattern)
+5. Add Mapping
 
 Manual Usage of Web Template.
 1. Add resource items entry
-
+1. Add on navigation menu with initial authorize attributes
+3. Add api services from the start up
 
 
 

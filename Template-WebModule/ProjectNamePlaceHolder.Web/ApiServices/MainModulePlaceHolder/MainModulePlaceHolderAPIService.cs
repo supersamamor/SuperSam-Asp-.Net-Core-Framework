@@ -61,7 +61,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
         {
             var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync(@"MainModulePlaceHolder/" + _userParameter, httpContent, token);
+            var response = await _client.PutAsync(@"MainModulePlaceHolder?" + _userParameter, httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
@@ -78,7 +78,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
         {
             var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
             var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync(@"MainModulePlaceHolder/" + _userParameter, httpContent, token);
+            var response = await _client.PostAsync(@"MainModulePlaceHolder?" + _userParameter, httpContent, token);
             var result = await response.Content.ReadAsStringAsync();
             try
             {
