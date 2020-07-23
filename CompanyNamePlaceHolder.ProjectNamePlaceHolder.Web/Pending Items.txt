@@ -23,7 +23,7 @@ Pending Items.
 23. About System Section
 24. Resource based auth  https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-3.1
 25. There should be a word "Bearer" from the authrize header
-
+26. Remove EF on ym pipelines in Web Project
 
 1. React.js
 2. Angular.js
