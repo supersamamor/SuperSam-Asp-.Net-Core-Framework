@@ -19,8 +19,7 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.Role
         public RoleAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
         {
-            _client.DefaultRequestHeaders.Add("ApiKey", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityApiKey"));
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiSecret", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityApiSecret"));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:IdentityToken"));
         }
 
         public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId, CancellationToken token)

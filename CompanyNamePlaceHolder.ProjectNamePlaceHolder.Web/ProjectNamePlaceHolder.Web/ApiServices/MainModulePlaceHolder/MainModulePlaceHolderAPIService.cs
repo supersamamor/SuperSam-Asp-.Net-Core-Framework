@@ -18,9 +18,8 @@ namespace ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder
     {
         public MainModulePlaceHolderAPIService(HttpClient client, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
             : base(client, userManager, httpContext)
-        {
-            _client.DefaultRequestHeaders.Add("ApiKey", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:SubComponentPlaceHolderApiKey"));
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiSecret", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:SubComponentPlaceHolderApiSecret"));
+        {   
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.GetValue<string>("ProjectNamePlaceHolderWebConfig:MainModulePlaceHolderToken"));
         }
 
         public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize, CancellationToken token)

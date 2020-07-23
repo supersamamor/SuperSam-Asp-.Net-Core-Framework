@@ -18,8 +18,9 @@ namespace Identity.WebAPI.Middleware
 
         public async Task Invoke(HttpContext context, IdentityContext dbContext)
         {
+            var tokenFromHeader = (context.Request.Headers["Authorization"]).ToString().Replace("Bearer", "").Trim();
             var token = await dbContext.ProjectNamePlaceHolderIdentityApiClient
-                    .Where(l => l.Token == context.Request.Headers["Authorization"]).FirstOrDefaultAsync();
+                    .Where(l => l.Token == tokenFromHeader).FirstOrDefaultAsync();
 
             //This is temporary.Eventually, authentication will be handled by API gateway
             if (token != null)
