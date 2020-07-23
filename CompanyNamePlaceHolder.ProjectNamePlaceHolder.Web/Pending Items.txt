@@ -24,6 +24,10 @@ Pending Items.
 24. Resource based auth  https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-3.1
 25. There should be a word "Bearer" from the authrize header
 26. Remove EF on ym pipelines in Web Project
+27. Changes in release pipelines template from _Filinvest.DigitalForms.Forms.WebApi. to _Filinvest.DigitalForms.Forms.Api and the Build Pipelines that was used is for ArsLogs
+28. Replaece also all small letter
+29. Find all string with small letters "templateapi, template, etc" saw one in release of identity
+30. Parametarized the parameter in release pipelines to make it work in replacer
 
 1. React.js
 2. Angular.js
