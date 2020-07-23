@@ -22,7 +22,7 @@ Pending Items.
 22. Privacy Policy Section
 23. About System Section
 24. Resource based auth  https://docs.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-3.1
-
+25. There should be a word "Bearer" from the authrize header
 
 
 1. React.js
