@@ -28,6 +28,8 @@ Pending Items.
 28. Replaece also all small letter
 29. Find all string with small letters "templateapi, template, etc" saw one in release of identity
 30. Parametarized the parameter in release pipelines to make it work in replacer
+31. Bug on migration script. Token Is Null
+
 
 1. React.js
 2. Angular.js
@@ -65,16 +67,9 @@ Manual Usage of Web Template.
 5. Apply/Fill dropdowns/ selection to related ui. (Needed to add apiservice to page model , OnGet/OnPost)
 6. Adjust UI for new fields with dropdown
 
-
-
-
-
-
-
-
-
-
-
+Deployment Steps.
+1. Setup Connection String
+2. Setup Tokens
 
 
 
