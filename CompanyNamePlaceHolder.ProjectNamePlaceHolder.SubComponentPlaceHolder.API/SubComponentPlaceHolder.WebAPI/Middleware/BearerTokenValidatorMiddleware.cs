@@ -18,12 +18,9 @@ namespace SubComponentPlaceHolder.WebAPI.Middleware
 
         public async Task Invoke(HttpContext context, SubComponentPlaceHolderContext dbContext)
         {
-            var tokenFromHeader = (context.Request.Headers["Authorization"]).ToString().Replace("Bearer", "").Trim();
             var token = await dbContext.SubComponentPlaceHolderApiClient
-                .Where(l => l.Token == tokenFromHeader).FirstOrDefaultAsync();
-
-            //This is temporary.Eventually, authentication will be handled by API gateway
-            if(token != null)
+                 .Where(l => "Bearer " + l.Token == (context.Request.Headers["Authorization"]).ToString()).FirstOrDefaultAsync();
+            if (token == null)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 return;
