@@ -29,7 +29,7 @@ Pending Items.
 29. Find all string with small letters "templateapi, template, etc" saw one in release of identity
 30. Parametarized the parameter in release pipelines to make it work in replacer
 31. Bug on migration script. Token Is Null
-
+32. Change default api for ms and google auth
 
 1. React.js
 2. Angular.js
