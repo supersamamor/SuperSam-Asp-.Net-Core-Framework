@@ -56,10 +56,10 @@ Optional
 Manual Usage of Api Template.
 1. Add new data model to context
 2. Add new repos to start up
-3. Add necessary fields and relation ships.. adjust field of all layers
-4. Adjust all updates function based on new fields (Including Command and Query Pattern) and (Include Tables)
-5. Add Mapping
-6. Apply unique index and other attrubtes from db based on documentation
+3. Add Mapping
+4. Apply unique index and other attrubtes from db based on documentation
+5. Add necessary fields and relation ships.. adjust field of all layers based on documentation
+6. Adjust all updates function based on new fields (Including Command and Query Pattern) and (Include Tables)
 7. Run Add migration
 
 Manual Usage of Web Template.
