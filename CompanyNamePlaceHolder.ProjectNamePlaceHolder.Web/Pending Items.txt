@@ -30,7 +30,7 @@ Pending Items.
 31. Bug on migration script. Token Is Null
 32. Change default api for ms and google auth
 33. Publish Subscribe Pattern.
-
+34. Handle proper exception handling on identity api
 
 1. React.js
 2. Angular.js
@@ -59,6 +59,8 @@ Manual Usage of Api Template.
 3. Add necessary fields and relation ships.. adjust field of all layers
 4. Adjust all updates function based on new fields (Including Command and Query Pattern) and (Include Tables)
 5. Add Mapping
+6. Apply unique index and other attrubtes from db based on documentation
+7. Run Add migration
 
 Manual Usage of Web Template.
 1. Add resource items entry
@@ -67,6 +69,7 @@ Manual Usage of Web Template.
 4. Add fields from the model and new resource item again
 5. Apply/Fill dropdowns/ selection to related ui. (Needed to add apiservice to page model , OnGet/OnPost)
 6. Adjust UI for new fields with dropdown
+7. Apply required attributes based on documentation  based on documentation
 
 Deployment Steps.
 1. Setup Connection String
