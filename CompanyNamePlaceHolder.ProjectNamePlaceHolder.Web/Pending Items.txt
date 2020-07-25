@@ -29,6 +29,8 @@ Pending Items.
 30. Parametarized the parameter in release pipelines to make it work in replacer
 31. Bug on migration script. Token Is Null
 32. Change default api for ms and google auth
+33. Publish Subscribe Pattern.
+
 
 1. React.js
 2. Angular.js
