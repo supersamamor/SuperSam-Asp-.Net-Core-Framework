@@ -33,7 +33,7 @@ Pending Items.
 34. Handle proper exception handling on identity api
 35. CamelCase must be splitted in 2 Words
 36. By default. set all pages as admin
-
+37. On replacer, add LableModuleName 
 
 1. React.js
 2. Angular.js
