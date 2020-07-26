@@ -31,6 +31,9 @@ Pending Items.
 32. Change default api for ms and google auth
 33. Publish Subscribe Pattern.
 34. Handle proper exception handling on identity api
+35. CamelCase must be splitted in 2 Words
+36. By default. set all pages as admin
+
 
 1. React.js
 2. Angular.js
