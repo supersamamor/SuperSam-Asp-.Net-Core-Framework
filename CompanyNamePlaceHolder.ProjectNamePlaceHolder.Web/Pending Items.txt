@@ -34,6 +34,8 @@ Pending Items.
 35. CamelCase must be splitted in 2 Words
 36. By default. set all pages as admin
 37. On replacer, add LableModuleName 
+28. Parametarized TurboERPWebConfig:ApiURLIdentity on template
+29. Combine Api, Identity and Web in one Solution. Mobile Project will only be separated
 
 1. React.js
 2. Angular.js
