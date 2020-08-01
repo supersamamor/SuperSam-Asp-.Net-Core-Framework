@@ -5,6 +5,7 @@ using X.PagedList;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using MediatR;
+using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
 {
@@ -17,22 +18,15 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
 
         public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize, CancellationToken token)
         {
-            //var url = @"";
-            //url += string.Concat("?", _userParameter, "&searchKey=", searchKey, "&&orderBy=", orderBy, "&&sortBy=", sortBy,
-            //    "&&pageIndex=", pageIndex, "&&pageSize=", pageSize);
-            //var response = await _client.GetAsync(@"MainModulePlaceHolder/" + url, token);          
-            //var result = await response.Content.ReadAsStringAsync();
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{            
-            //    throw new ApiResponseException(result);
-            //}
-            //var record = JsonConvert.DeserializeObject<CustomPagedList<MainModulePlaceHolderModel>>(result);
-            //return new StaticPagedList<MainModulePlaceHolderModel>(record.Items, record.PagedListMetaData.PageNumber, record.PagedListMetaData.PageSize, record.PagedListMetaData.TotalItemCount);
-            return null;
+            var request = new GetMainModulePlaceHolderListRequest
+            {
+                SearchKey = searchKey,
+                OrderBy = orderBy,
+                SortBy = sortBy,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+            return await _mediator.Send(request);          
         }
 
         public async Task<MainModulePlaceHolderModel> GetMainModulePlaceHolderItemAsync(int id, CancellationToken token)

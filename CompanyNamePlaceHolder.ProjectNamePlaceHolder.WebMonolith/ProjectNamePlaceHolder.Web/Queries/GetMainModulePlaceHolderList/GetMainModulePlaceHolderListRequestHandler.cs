@@ -7,12 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using ProjectNamePlaceHolder.Data;
 using X.PagedList;
-using ProjectNamePlaceHolder.Web.Models;
 using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
 
 namespace ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList
 {
-    public class GetMainModulePlaceHolderListRequestHandler : IRequestHandler<GetMainModulePlaceHolderListRequest, CustomPagedList<MainModulePlaceHolderModel>>
+    public class GetMainModulePlaceHolderListRequestHandler : IRequestHandler<GetMainModulePlaceHolderListRequest, StaticPagedList<MainModulePlaceHolderModel>>
     {       
         
         private readonly ProjectNamePlaceHolderContext _context;
@@ -22,7 +21,7 @@ namespace ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList
             _context = context;
             _mapper = mapperConfig.CreateMapper();
         }
-        public async Task<CustomPagedList<MainModulePlaceHolderModel>> Handle(GetMainModulePlaceHolderListRequest request, CancellationToken cancellationToken)
+        public async Task<StaticPagedList<MainModulePlaceHolderModel>> Handle(GetMainModulePlaceHolderListRequest request, CancellationToken cancellationToken)
         {
             var query = _context.MainModulePlaceHolder.AsNoTracking();
             if (request.SearchKey != null)
@@ -63,9 +62,9 @@ namespace ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList
                     }
                     break;
             }
-            var pagedMainModulePlaceHolder = new CustomPagedList<Data.Models.MainModulePlaceHolder>(query, request.PageIndex, request.PageSize); 
-            var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.Items.ToListAsync());
-            return new CustomPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList, pagedMainModulePlaceHolder.PagedListMetaData);
+            var pagedMainModulePlaceHolder = query.ToPagedList(request.PageIndex, request.PageSize);          
+            var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.ToListAsync());
+            return new StaticPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList, pagedMainModulePlaceHolder);             
         }
     }
 }

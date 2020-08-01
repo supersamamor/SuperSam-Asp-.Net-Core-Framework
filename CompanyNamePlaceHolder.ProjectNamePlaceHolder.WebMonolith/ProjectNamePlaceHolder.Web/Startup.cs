@@ -18,6 +18,8 @@ using ProjectNamePlaceHolder.Data;
 using System.Reflection;
 using MediatR;
 using ProjectNamePlaceHolder.Data.Repositories;
+using AutoMapper;
+using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -44,13 +46,21 @@ namespace ProjectNamePlaceHolder.Web
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ProjectNamePlaceHolderContext>();
-         
+
+            services.AddSingleton(new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
+                    cfg.CreateMap<Data.Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>().ReverseMap();
+                    cfg.CreateMap<Core.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
+                }
+            ));
+
             #region Application Services
             services.AddTransient<MainModulePlaceHolderService>();
             services.AddTransient<UserService>();
-            services.AddTransient<RoleService>(); 
+            services.AddTransient<RoleService>();
             #endregion
-
+            
             #region External Logins
             services.AddAuthentication()
             .AddMicrosoftAccount(microsoftOptions =>
