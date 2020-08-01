@@ -13,6 +13,6 @@ namespace ProjectNamePlaceHolder.Data
         }
         public virtual DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
         public virtual DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; }
-        public virtual DbSet<ProjectNamePlaceHolderApiClient> SubComponentPlaceHolderApiClient { get; set; }
+        public virtual DbSet<ProjectNamePlaceHolderApiClient> ProjectNamePlaceHolderApiClient { get; set; }     
     }
 }
