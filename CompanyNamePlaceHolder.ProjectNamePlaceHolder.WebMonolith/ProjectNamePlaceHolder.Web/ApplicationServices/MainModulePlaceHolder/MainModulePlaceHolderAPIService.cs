@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 using X.PagedList;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using MediatR;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
 {
     public class MainModulePlaceHolderAPIService  : BaseApplicationService
     {
-        public MainModulePlaceHolderAPIService(UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
-            : base(userManager, httpContext)
+        public MainModulePlaceHolderAPIService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+            : base(mediator, userManager, httpContext)
         {            
         }
 
