@@ -17,11 +17,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
     [Authorize]
     public class IndexModel : BasePageModel
     {
-        private readonly MainModulePlaceHolderAPIService _service;
+        private readonly MainModulePlaceHolderService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public IndexModel(MainModulePlaceHolderAPIService service, IOptions<ProjectNamePlaceHolderWebConfig> appSetting, 
+        public IndexModel(MainModulePlaceHolderService service, IOptions<ProjectNamePlaceHolderWebConfig> appSetting, 
             ILogger<IndexModel> logger, ICorrelationContextAccessor correlationContext) : base(appSetting.Value.PageSize)
         {
             _service = service;

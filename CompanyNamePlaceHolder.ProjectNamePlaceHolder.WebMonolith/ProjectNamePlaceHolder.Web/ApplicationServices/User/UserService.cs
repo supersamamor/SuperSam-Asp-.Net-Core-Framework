@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using ProjectNamePlaceHolder.Web.Models.User;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,10 +8,10 @@ using X.PagedList;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.User
 {
-    public class UserAPIService: BaseApplicationService
+    public class UserService: BaseApplicationService
     {
-        public UserAPIService(UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
-            : base(userManager, httpContext)
+        public UserService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+            : base(mediator, userManager, httpContext)
         {          
         }
 

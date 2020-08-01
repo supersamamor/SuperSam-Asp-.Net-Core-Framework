@@ -18,10 +18,10 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
     [Authorize(Roles = Roles.ADMIN)]
     public class ActivateModel : PageModel
     {
-        private readonly UserAPIService _service;
+        private readonly UserService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;   
-        public ActivateModel(UserAPIService service, ILogger<ActivateModel> logger, 
+        public ActivateModel(UserService service, ILogger<ActivateModel> logger, 
             ICorrelationContextAccessor correlationContext)
         {
             _service = service;

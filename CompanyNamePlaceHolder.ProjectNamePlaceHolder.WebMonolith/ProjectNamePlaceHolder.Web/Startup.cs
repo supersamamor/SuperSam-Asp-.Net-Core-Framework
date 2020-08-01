@@ -46,9 +46,9 @@ namespace ProjectNamePlaceHolder.Web
                 .AddEntityFrameworkStores<ProjectNamePlaceHolderContext>();
          
             #region Application Services
-            services.AddTransient<MainModulePlaceHolderAPIService>();
-            services.AddTransient<UserAPIService>();
-            services.AddTransient<RoleAPIService>(); 
+            services.AddTransient<MainModulePlaceHolderService>();
+            services.AddTransient<UserService>();
+            services.AddTransient<RoleService>(); 
             #endregion
 
             #region External Logins

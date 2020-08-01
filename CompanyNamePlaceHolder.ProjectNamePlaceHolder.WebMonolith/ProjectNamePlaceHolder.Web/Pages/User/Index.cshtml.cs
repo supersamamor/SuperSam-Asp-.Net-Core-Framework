@@ -18,11 +18,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
     [Authorize(Roles = Roles.ADMIN)]
     public class IndexModel : BasePageModel
     {
-        private readonly UserAPIService _service;
+        private readonly UserService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public IndexModel(UserAPIService service, IOptions<ProjectNamePlaceHolderWebConfig> appSetting, 
+        public IndexModel(UserService service, IOptions<ProjectNamePlaceHolderWebConfig> appSetting, 
             ILogger<IndexModel> logger, ICorrelationContextAccessor correlationContext) : base(appSetting.Value.PageSize)
         {
             _service = service;

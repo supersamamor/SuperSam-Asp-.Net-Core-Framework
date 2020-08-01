@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using ProjectNamePlaceHolder.Web.Models.Role;
@@ -9,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.Role
 {
-    public class RoleAPIService: BaseApplicationService
+    public class RoleService: BaseApplicationService
     {
-        public RoleAPIService(UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext, IConfiguration config) 
-            : base(userManager, httpContext)
+        public RoleService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+            : base(mediator, userManager, httpContext)
         {          
         }
 

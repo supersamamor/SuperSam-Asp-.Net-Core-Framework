@@ -8,9 +8,9 @@ using MediatR;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
 {
-    public class MainModulePlaceHolderAPIService  : BaseApplicationService
+    public class MainModulePlaceHolderService  : BaseApplicationService
     {
-        public MainModulePlaceHolderAPIService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
+        public MainModulePlaceHolderService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
             : base(mediator, userManager, httpContext)
         {            
         }

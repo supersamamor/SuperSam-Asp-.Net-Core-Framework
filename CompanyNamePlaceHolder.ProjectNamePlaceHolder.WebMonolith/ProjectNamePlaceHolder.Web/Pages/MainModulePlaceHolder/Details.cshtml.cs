@@ -15,11 +15,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
     [Authorize]
     public class DetailsModel : PageModel
     {
-        private readonly MainModulePlaceHolderAPIService _service;
+        private readonly MainModulePlaceHolderService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public DetailsModel(MainModulePlaceHolderAPIService service, ILogger<DetailsModel> logger, ICorrelationContextAccessor correlationContext)
+        public DetailsModel(MainModulePlaceHolderService service, ILogger<DetailsModel> logger, ICorrelationContextAccessor correlationContext)
         {
             _service = service;
             _logger = logger;

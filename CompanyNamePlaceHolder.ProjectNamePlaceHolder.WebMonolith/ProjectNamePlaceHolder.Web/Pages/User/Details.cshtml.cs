@@ -16,11 +16,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
     [Authorize(Roles = Roles.ADMIN)]
     public class DetailsModel : PageModel
     {
-        private readonly UserAPIService _service;
+        private readonly UserService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public DetailsModel(UserAPIService service, ILogger<DetailsModel> logger, ICorrelationContextAccessor correlationContext)
+        public DetailsModel(UserService service, ILogger<DetailsModel> logger, ICorrelationContextAccessor correlationContext)
         {
             _service = service;
             _logger = logger;

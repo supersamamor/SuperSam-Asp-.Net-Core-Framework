@@ -15,11 +15,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly MainModulePlaceHolderAPIService _service;
+        private readonly MainModulePlaceHolderService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public CreateModel(MainModulePlaceHolderAPIService service, ILogger<CreateModel> logger, ICorrelationContextAccessor correlationContext)
+        public CreateModel(MainModulePlaceHolderService service, ILogger<CreateModel> logger, ICorrelationContextAccessor correlationContext)
         {
             _service = service;
             _logger = logger;

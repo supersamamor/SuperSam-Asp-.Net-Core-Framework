@@ -20,12 +20,12 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
     [Authorize(Roles = Roles.ADMIN)]
     public class EditModel : PageModel
     {
-        private readonly UserAPIService _service;
-        private readonly RoleAPIService _roleService;
+        private readonly UserService _service;
+        private readonly RoleService _roleService;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public EditModel(UserAPIService service, ILogger<EditModel> logger, ICorrelationContextAccessor correlationContext, RoleAPIService roleService)
+        public EditModel(UserService service, ILogger<EditModel> logger, ICorrelationContextAccessor correlationContext, RoleService roleService)
         {
             _service = service;
             _logger = logger;

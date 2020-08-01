@@ -15,11 +15,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
     [Authorize]
     public class DeleteModel : PageModel
     {
-        private readonly MainModulePlaceHolderAPIService _service;
+        private readonly MainModulePlaceHolderService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
 
-        public DeleteModel(MainModulePlaceHolderAPIService service, ILogger<DeleteModel> logger, ICorrelationContextAccessor correlationContext)
+        public DeleteModel(MainModulePlaceHolderService service, ILogger<DeleteModel> logger, ICorrelationContextAccessor correlationContext)
         {
             _service = service;
             _logger = logger;

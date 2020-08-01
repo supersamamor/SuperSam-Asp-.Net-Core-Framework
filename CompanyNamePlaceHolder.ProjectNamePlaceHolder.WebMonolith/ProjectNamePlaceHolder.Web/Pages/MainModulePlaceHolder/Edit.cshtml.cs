@@ -15,10 +15,10 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
     [Authorize]
     public class EditModel : PageModel
     {
-        private readonly MainModulePlaceHolderAPIService _service;
+        private readonly MainModulePlaceHolderService _service;
         private readonly ILogger _logger;
         private readonly ICorrelationContextAccessor _correlationContext;
-        public EditModel(MainModulePlaceHolderAPIService service, ILogger<EditModel> logger, ICorrelationContextAccessor correlationContext)
+        public EditModel(MainModulePlaceHolderService service, ILogger<EditModel> logger, ICorrelationContextAccessor correlationContext)
         {
             _service = service;
             _logger = logger;
