@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using ProjectNamePlaceHolder.SecurityData.Models;
+using ProjectNamePlaceHolder.Data.Models;
 
 namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account.Manage
 {

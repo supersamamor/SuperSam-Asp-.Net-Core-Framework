@@ -10,13 +10,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using ProjectNamePlaceHolder.SecurityData;
 using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
 using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Web.ApiServices.User;
 using ProjectNamePlaceHolder.Web.ApiServices.Role;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ProjectNamePlaceHolder.Web.Services.Email;
+using ProjectNamePlaceHolder.Data;
+using System.Reflection;
+using MediatR;
+using ProjectNamePlaceHolder.Data.Repositories;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -80,6 +83,8 @@ namespace ProjectNamePlaceHolder.Web
             services.AddRazorPages();
             services.AddHealthChecks().AddDbContextCheck<ProjectNamePlaceHolderContext>();
             services.AddApplicationInsightsTelemetry();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient<MainModulePlaceHolderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,8 +13,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProjectNamePlaceHolder.SecurityData;
-using ProjectNamePlaceHolder.SecurityData.Models;
+using ProjectNamePlaceHolder.Data;
+using ProjectNamePlaceHolder.Data.Models;
 
 namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account
 {

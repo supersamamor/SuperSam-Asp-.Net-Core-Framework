@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectNamePlaceHolder.Web.ApiServices.User;
 using ProjectNamePlaceHolder.Web.Models.User;
 using ProjectNamePlaceHolder.Web.Extensions;
-using ProjectNamePlaceHolder.SecurityData;
+using ProjectNamePlaceHolder.Data;
 
 namespace ProjectNamePlaceHolder.Web.Pages.User
 {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ProjectNamePlaceHolder.SecurityData.Models;
+using ProjectNamePlaceHolder.Data.Models;
 
 namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account.Manage
 {

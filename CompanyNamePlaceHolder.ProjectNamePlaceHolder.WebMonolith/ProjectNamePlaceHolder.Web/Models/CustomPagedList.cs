@@ -1,24 +1,31 @@
 using System.Collections.Generic;
+using System.Linq;
+using X.PagedList;
 
 namespace ProjectNamePlaceHolder.Web.Models
-{ 
+{
     public class CustomPagedList<T>
     {
-
-        public List<T> Items { get; set; }
+        public CustomPagedList() { }
+        public CustomPagedList(IEnumerable<T> items, int pageIndex, int pageSize)
+        {
+            pageIndex = pageIndex == 0 ? 1 : pageIndex;
+            if (pageSize == 0)
+            {
+                var recordCount = items.Count();
+                pageSize = recordCount == 0 ? 1 : recordCount;
+            }
+            pageSize = pageSize == 0 ? items.Count() == 0 ? 1 : items.Count() : pageSize;
+            var pagedQuery = items.ToPagedList(pageIndex, pageSize);
+            PagedListMetaData = pagedQuery.GetMetaData();
+            Items = pagedQuery.ToList();
+        }
+        public CustomPagedList(IEnumerable<T> items, PagedListMetaData pagedListMetaData)
+        {
+            Items = items.ToList();
+            PagedListMetaData = pagedListMetaData;
+        }
+        public IList<T> Items { get; set; }
         public PagedListMetaData PagedListMetaData { get; set; }
-    }
-    public class PagedListMetaData
-    {
-        public int PageCount { get; set; }
-        public int TotalItemCount { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public bool HasPreviousPage { get; set; }
-        public bool HasNextPage { get; set; }
-        public bool IsFirstPage { get; set; }
-        public bool IsLastPage { get; set; }
-        public int FirstItemOnPage { get; set; }
-        public int LastItemOnPage { get; set; }
     }
 }

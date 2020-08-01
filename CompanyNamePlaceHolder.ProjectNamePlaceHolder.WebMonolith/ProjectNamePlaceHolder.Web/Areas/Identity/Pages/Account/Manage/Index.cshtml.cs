@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectNamePlaceHolder.SecurityData.Models;
+using ProjectNamePlaceHolder.Data.Models;
 
 namespace ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account.Manage
 {

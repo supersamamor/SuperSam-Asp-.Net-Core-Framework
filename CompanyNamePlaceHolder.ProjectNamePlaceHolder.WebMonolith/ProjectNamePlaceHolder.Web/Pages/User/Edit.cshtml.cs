@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ProjectNamePlaceHolder.SecurityData;
+using ProjectNamePlaceHolder.Data;
 using ProjectNamePlaceHolder.Web.ApiServices.Role;
 using ProjectNamePlaceHolder.Web.ApiServices.User;
 using ProjectNamePlaceHolder.Web.Extensions;

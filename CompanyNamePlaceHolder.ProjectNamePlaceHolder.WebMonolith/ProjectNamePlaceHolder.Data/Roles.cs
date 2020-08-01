@@ -1,4 +1,4 @@
-﻿namespace ProjectNamePlaceHolder.SecurityData
+﻿namespace ProjectNamePlaceHolder.Data
 {
     public static class Roles
     {

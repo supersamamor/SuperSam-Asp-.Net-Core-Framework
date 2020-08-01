@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProjectNamePlaceHolder.SecurityData.Models;
+using ProjectNamePlaceHolder.Data.Models;
 
-namespace ProjectNamePlaceHolder.SecurityData
+namespace ProjectNamePlaceHolder.Data
 {
     public class ProjectNamePlaceHolderContext : IdentityDbContext<IdentityUser>
     {
@@ -11,6 +11,8 @@ namespace ProjectNamePlaceHolder.SecurityData
             : base(options)
         {
         }
-        public DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
+        public virtual DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
+        public virtual DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; }
+        public virtual DbSet<ProjectNamePlaceHolderApiClient> SubComponentPlaceHolderApiClient { get; set; }
     }
 }
