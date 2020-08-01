@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using MediatR;
 using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList;
+using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderItem;
+using ProjectNamePlaceHolder.Web.Commands.UpdateMainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Commands.AddMainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderItemByCode;
+using ProjectNamePlaceHolder.Web.Commands.DeleteMainModulePlaceHolder;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
 {
@@ -30,69 +35,53 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
         }
 
         public async Task<MainModulePlaceHolderModel> GetMainModulePlaceHolderItemAsync(int id, CancellationToken token)
-        {
-            //var response = await _client.GetAsync(@"MainModulePlaceHolder/" + id.ToString() + "?" + _userParameter , token);
-            //var result = await response.Content.ReadAsStringAsync();
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{
-            //    throw new ApiResponseException(result);
-            //}
-            //var record = JsonConvert.DeserializeObject<MainModulePlaceHolderModel>(result);
-            //return record;
-            return null;
+        {      
+            var request = new GetMainModulePlaceHolderItemRequest
+            {
+                Id = id
+            };
+            return await _mediator.Send(request);
         }
 
         public async Task<MainModulePlaceHolderModel> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder, CancellationToken token)
-        {
-            //var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
-            //var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            //var response = await _client.PutAsync(@"MainModulePlaceHolder?" + _userParameter, httpContent, token);
-            //var result = await response.Content.ReadAsStringAsync();
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{
-            //    throw new ApiResponseException(result);
-            //}
-            //return JsonConvert.DeserializeObject<MainModulePlaceHolderModel>(result);
-            return null;
+        {          
+            var request = new UpdateMainModulePlaceHolderRequest
+            {
+                MainModulePlaceHolder = mainModulePlaceHolder,
+                Username = _user.UserName
+            };
+            await _mediator.Send(request);
+
+            var updatedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemRequest
+            {
+                Id = mainModulePlaceHolder.Id
+            };
+            return await _mediator.Send(updatedMainModulePlaceHolderRequest);
         }
 
         public async Task<MainModulePlaceHolderModel> SaveMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder, CancellationToken token)
-        {
-            //var content = JsonConvert.SerializeObject(mainModulePlaceHolder);
-            //var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-            //var response = await _client.PostAsync(@"MainModulePlaceHolder?" + _userParameter, httpContent, token);
-            //var result = await response.Content.ReadAsStringAsync();
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{
-            //    throw new ApiResponseException(result);
-            //}
-            //return JsonConvert.DeserializeObject<MainModulePlaceHolderModel>(result);
-            return null;
+        {          
+            var request = new AddMainModulePlaceHolderRequest
+            {
+                MainModulePlaceHolder = mainModulePlaceHolder,
+                Username = _user.UserName
+            };
+            await _mediator.Send(request);
+
+            var savedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemByCodeRequest
+            {
+                MainModulePlaceHolderCode = mainModulePlaceHolder.Code
+            };
+            return await _mediator.Send(savedMainModulePlaceHolderRequest);
         }
 
         public async Task DeleteMainModulePlaceHolderAsync(int id, CancellationToken token)
         {
-            //var response = await _client.DeleteAsync(@"MainModulePlaceHolder/" + id.ToString() + "?" + _userParameter, token);     
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{               
-            //    throw new ApiResponseException(await response.Content.ReadAsStringAsync());
-            //}       
+            var request = new DeleteMainModulePlaceHolderRequest
+            {
+                Id = id
+            };
+            await _mediator.Send(request);
         }
     }
 }
