@@ -1,5 +1,4 @@
 using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
-using System.Threading;
 using System.Threading.Tasks;
 using X.PagedList;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +20,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
         {            
         }
 
-        public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize, CancellationToken token)
+        public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize)
         {
             var request = new GetMainModulePlaceHolderListRequest
             {
@@ -34,7 +33,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
             return await _mediator.Send(request);          
         }
 
-        public async Task<MainModulePlaceHolderModel> GetMainModulePlaceHolderItemAsync(int id, CancellationToken token)
+        public async Task<MainModulePlaceHolderModel> GetMainModulePlaceHolderItemAsync(int id)
         {      
             var request = new GetMainModulePlaceHolderItemRequest
             {
@@ -43,7 +42,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
             return await _mediator.Send(request);
         }
 
-        public async Task<MainModulePlaceHolderModel> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder, CancellationToken token)
+        public async Task<MainModulePlaceHolderModel> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
         {          
             var request = new UpdateMainModulePlaceHolderRequest
             {
@@ -59,7 +58,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
             return await _mediator.Send(updatedMainModulePlaceHolderRequest);
         }
 
-        public async Task<MainModulePlaceHolderModel> SaveMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder, CancellationToken token)
+        public async Task<MainModulePlaceHolderModel> SaveMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
         {          
             var request = new AddMainModulePlaceHolderRequest
             {
@@ -75,7 +74,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
             return await _mediator.Send(savedMainModulePlaceHolderRequest);
         }
 
-        public async Task DeleteMainModulePlaceHolderAsync(int id, CancellationToken token)
+        public async Task DeleteMainModulePlaceHolderAsync(int id)
         {
             var request = new DeleteMainModulePlaceHolderRequest
             {

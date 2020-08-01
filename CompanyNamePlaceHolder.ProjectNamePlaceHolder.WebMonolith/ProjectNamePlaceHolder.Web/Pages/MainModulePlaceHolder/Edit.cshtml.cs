@@ -57,12 +57,12 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
         private async Task GetMainModulePlaceHolderItemAsync(int id)
         {
-            MainModulePlaceHolder = await _service.GetMainModulePlaceHolderItemAsync(id, new CancellationToken());
+            MainModulePlaceHolder = await _service.GetMainModulePlaceHolderItemAsync(id);
         }
 
         private async Task UpdateMainModulePlaceHolderAsync()
         {
-            MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder, new CancellationToken());
+            MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
         }
     }
 }

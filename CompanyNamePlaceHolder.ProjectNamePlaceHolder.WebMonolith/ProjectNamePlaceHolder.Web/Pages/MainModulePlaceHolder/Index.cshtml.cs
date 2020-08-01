@@ -46,7 +46,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         }
 
         private async Task GetMainModulePlaceHolderListAsync() {
-            var paginatedMainModulePlaceHolder = await _service.GetMainModulePlaceHolderListAsync(SearchKey,OrderBy, SortBy, PageNumber, PageSize, new CancellationToken());
+            var paginatedMainModulePlaceHolder = await _service.GetMainModulePlaceHolderListAsync(SearchKey,OrderBy, SortBy, PageNumber, PageSize);
             MainModulePlaceHolderList = paginatedMainModulePlaceHolder;
         }
     }

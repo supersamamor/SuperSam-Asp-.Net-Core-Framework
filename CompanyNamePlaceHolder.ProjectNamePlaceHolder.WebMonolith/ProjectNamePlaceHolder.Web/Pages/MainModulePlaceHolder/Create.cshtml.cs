@@ -52,7 +52,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
         private async Task SaveMainModulePlaceHolderAsync()
         {
-            MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder, new CancellationToken());
+            MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder);
         }
     }
 }
