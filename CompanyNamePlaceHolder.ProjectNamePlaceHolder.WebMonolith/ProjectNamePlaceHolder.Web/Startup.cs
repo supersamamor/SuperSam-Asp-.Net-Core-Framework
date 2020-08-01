@@ -1,4 +1,3 @@
-using Correlate.DependencyInjection;
 using CTI.Common.Logging.Extensions.AspNetCore;
 using CTI.Common.Logging.Extensions.DependencyInjection;
 using HealthChecks.UI.Client;
@@ -9,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder;
 using Microsoft.AspNetCore.Identity;
-using ProjectNamePlaceHolder.Web.ApiServices.User;
-using ProjectNamePlaceHolder.Web.ApiServices.Role;
+using ProjectNamePlaceHolder.Web.ApplicationServices.User;
+using ProjectNamePlaceHolder.Web.ApplicationServices.Role;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ProjectNamePlaceHolder.Web.Services.Email;
 using ProjectNamePlaceHolder.Data;
@@ -47,25 +45,12 @@ namespace ProjectNamePlaceHolder.Web
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ProjectNamePlaceHolderContext>();
          
-            #region Api Services
+            #region Application Services
             services.AddTransient<MainModulePlaceHolderAPIService>();
-            services.AddHttpClient<MainModulePlaceHolderAPIService>(c =>
-            {
-                c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLMainModulePlaceHolder"));              
-            }).CorrelateRequests();
-
             services.AddTransient<UserAPIService>();
-            services.AddHttpClient<UserAPIService>(c =>
-            {
-                c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLIdentity"));
-            }).CorrelateRequests();
-
-            services.AddTransient<RoleAPIService>();
-            services.AddHttpClient<RoleAPIService>(c =>
-            {
-                c.BaseAddress = new Uri(Configuration.GetValue<string>("ProjectNamePlaceHolderWebConfig:ApiURLIdentity"));
-            }).CorrelateRequests();
+            services.AddTransient<RoleAPIService>(); 
             #endregion
+
             #region External Logins
             services.AddAuthentication()
             .AddMicrosoftAccount(microsoftOptions =>
@@ -79,6 +64,7 @@ namespace ProjectNamePlaceHolder.Web
                 googleOptions.ClientSecret = Configuration["AuthenticationConfig:GoogleClientSecret"];
             });
             #endregion
+
             services.AddTransient<IEmailSender, SMTPEmailService>();
             services.AddRazorPages();
             services.AddHealthChecks().AddDbContextCheck<ProjectNamePlaceHolderContext>();

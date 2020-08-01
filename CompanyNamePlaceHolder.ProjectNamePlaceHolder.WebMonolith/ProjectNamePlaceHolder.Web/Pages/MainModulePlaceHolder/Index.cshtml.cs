@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Web.Extensions;
 using ProjectNamePlaceHolder.Web.Models;
 using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;

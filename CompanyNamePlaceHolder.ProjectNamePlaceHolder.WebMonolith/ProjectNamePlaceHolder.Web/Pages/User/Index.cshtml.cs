@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using X.PagedList;
-using ProjectNamePlaceHolder.Web.ApiServices.User;
+using ProjectNamePlaceHolder.Web.ApplicationServices.User;
 using ProjectNamePlaceHolder.Data;
 using ProjectNamePlaceHolder.Web.Models;
 using ProjectNamePlaceHolder.Web.Models.User;

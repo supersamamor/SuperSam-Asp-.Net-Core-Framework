@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ProjectNamePlaceHolder.Web.ApiServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Web.Extensions;
 using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
 

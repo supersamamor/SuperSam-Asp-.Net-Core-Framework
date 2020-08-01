@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ProjectNamePlaceHolder.Web.ApiServices.User;
+using ProjectNamePlaceHolder.Web.ApplicationServices.User;
 using ProjectNamePlaceHolder.Web.Models.User;
 using ProjectNamePlaceHolder.Web.Extensions;
 using ProjectNamePlaceHolder.Data;
