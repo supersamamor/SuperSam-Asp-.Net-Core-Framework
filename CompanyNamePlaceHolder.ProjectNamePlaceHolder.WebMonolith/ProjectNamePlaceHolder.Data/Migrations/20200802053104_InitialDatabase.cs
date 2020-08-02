@@ -248,6 +248,12 @@ namespace ProjectNamePlaceHolder.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MainModulePlaceHolder_Code",
+                table: "MainModulePlaceHolder",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProjectNamePlaceHolderUser_IdentityId",
                 table: "ProjectNamePlaceHolderUser",
                 column: "IdentityId");

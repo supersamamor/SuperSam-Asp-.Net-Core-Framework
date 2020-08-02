@@ -249,6 +249,9 @@ namespace ProjectNamePlaceHolder.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
                     b.ToTable("MainModulePlaceHolder");
                 });
 

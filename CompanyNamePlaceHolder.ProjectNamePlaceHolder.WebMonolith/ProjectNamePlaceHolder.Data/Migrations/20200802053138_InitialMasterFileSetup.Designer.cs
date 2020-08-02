@@ -10,8 +10,8 @@ using ProjectNamePlaceHolder.Data;
 namespace ProjectNamePlaceHolder.Data.Migrations
 {
     [DbContext(typeof(ProjectNamePlaceHolderContext))]
-    [Migration("20200801111651_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20200802053138_InitialMasterFileSetup")]
+    partial class InitialMasterFileSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -250,6 +250,9 @@ namespace ProjectNamePlaceHolder.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.ToTable("MainModulePlaceHolder");
                 });
