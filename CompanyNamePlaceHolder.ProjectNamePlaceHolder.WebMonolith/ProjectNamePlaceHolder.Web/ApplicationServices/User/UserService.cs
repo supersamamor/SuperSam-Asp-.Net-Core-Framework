@@ -47,7 +47,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.User
             var request = new UpdateUserRequest
             {
                 User = user,
-                Username = _user.UserName
+                Username = _userName
             };
             return await _mediator.Send(request);           
         }
@@ -57,7 +57,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.User
             var request = new ActivateUserRequest
             {
                 Id = id,
-                Username = _user.UserName
+                Username = _userName
             };
             return await _mediator.Send(request);
         }

@@ -6,12 +6,11 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices
 {
     public class BaseApplicationService
     {  
-        protected IdentityUser _user { get; set; }     
+        protected string _userName { get; set; }     
         protected IMediator _mediator;
         public BaseApplicationService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext)
         {           
-            var claims = httpContext.HttpContext.User;
-            _user = (userManager.GetUserAsync(claims).Result);     
+            _userName = (userManager.GetUserAsync(httpContext.HttpContext.User).Result).UserName;     
             _mediator = mediator;
         }
     }
