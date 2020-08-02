@@ -6,7 +6,6 @@ using ProjectNamePlaceHolder.Web.Commands.User.UpdateUser;
 using ProjectNamePlaceHolder.Web.Models.User;
 using ProjectNamePlaceHolder.Web.Queries.User.GetUserItem;
 using ProjectNamePlaceHolder.Web.Queries.User.GetUserList;
-using System.Threading;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -15,12 +14,10 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.User
     public class UserService: BaseApplicationService
     {
         public UserService(IMediator mediator, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContext) 
-            : base(mediator, userManager, httpContext)
-        {          
-        }
+            : base(mediator, userManager, httpContext) {}
 
         public async Task<IPagedList<UserModel>> GetUserListAsync(string searchKey, string orderBy, string sortBy, int pageIndex,
-            int pageSize, CancellationToken token)
+            int pageSize)
         {
             var request = new GetUserListRequest
             {
