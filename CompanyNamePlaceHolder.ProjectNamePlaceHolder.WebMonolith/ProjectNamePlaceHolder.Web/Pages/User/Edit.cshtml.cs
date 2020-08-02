@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Correlate;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +51,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             }           
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
 
@@ -68,6 +68,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             }
             return Page();
         }
+
         public IActionResult OnPostAddRole(string addRoleId)
         {
             var roleToAdd = RoleSelection.Where(l => l.Id == addRoleId).FirstOrDefault();
@@ -75,6 +76,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             RoleSelection.Remove(roleToAdd);
             return Page();
         }
+
         public IActionResult OnPostRemoveRole(string removeRoleId)
         {
             var roleToRemove = CurrentUserRoles.Where(l => l.Id == removeRoleId).FirstOrDefault();
@@ -82,15 +84,18 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             CurrentUserRoles.Remove(roleToRemove);
             return Page();
         }
+
         private async Task GetUserItemAsync(int id)
         {
             AppUser = await _service.GetUserItemAsync(id);
         }
+
         private async Task UpdateUserAsync()
         {
             AppUser.UserRoles = CurrentUserRoles;
             AppUser = await _service.UpdateUserAsync(AppUser);
         }
+
         private async Task GetRoleDropdowns()
         {
             CurrentUserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id);

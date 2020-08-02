@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Web.Models.Role;
 using ProjectNamePlaceHolder.Web.Queries.GetRoleList;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using X.PagedList;
 

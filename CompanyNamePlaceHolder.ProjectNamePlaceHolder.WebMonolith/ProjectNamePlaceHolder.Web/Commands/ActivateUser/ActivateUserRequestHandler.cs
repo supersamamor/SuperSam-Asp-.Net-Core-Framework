@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ProjectNamePlaceHolder.Data.Repositories;
 using ProjectNamePlaceHolder.Data;
 using ProjectNamePlaceHolder.Web.Models.User;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjectNamePlaceHolder.Web.Commands.ActivateUser
 {  
@@ -13,20 +14,25 @@ namespace ProjectNamePlaceHolder.Web.Commands.ActivateUser
         private readonly UserRepository _repository;
         private readonly ProjectNamePlaceHolderContext _context;
         private readonly IMapper _mapper;
-        public ActivateUserRequestHandler(UserRepository repository, ProjectNamePlaceHolderContext context, MapperConfiguration mapperConfig) 
+        public ActivateUserRequestHandler(UserRepository repository, ProjectNamePlaceHolderContext context,
+            MapperConfiguration mapperConfig) 
         {
             _repository = repository;
             _context = context;
-            _mapper = mapperConfig.CreateMapper();
+            _mapper = mapperConfig.CreateMapper();           
         }
         public async Task<UserModel> Handle(ActivateUserRequest request, CancellationToken cancellationToken)
         {
-            var userCore = await _repository.GetItemAsync(request.Id);
-            userCore.Identity.ActivateUser();
-            userCore.SetUpdatedInformation(request.Username);
-            var user = await _repository.SaveAsync(userCore);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(user); ;
+            using (var transaction = _context.Database.BeginTransaction()) 
+            {
+                var userCore = await _repository.GetItemAsync(request.Id);           
+                userCore.SetUpdatedInformation(request.Username);             
+                userCore.Identity.ActivateUser();
+                var user = await _repository.SaveAsync(userCore);            
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(user);
+            }         
         }      
     }
 }
