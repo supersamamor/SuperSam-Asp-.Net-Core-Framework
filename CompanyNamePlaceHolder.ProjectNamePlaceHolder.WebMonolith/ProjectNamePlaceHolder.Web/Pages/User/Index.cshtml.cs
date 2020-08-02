@@ -46,7 +46,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
         }
 
         private async Task GetUserListAsync() {
-            var paginatedUser = await _service.GetUserListAsync(SearchKey,OrderBy, SortBy, PageNumber, PageSize, new CancellationToken());
+            var paginatedUser = await _service.GetUserListAsync(SearchKey,OrderBy, SortBy, PageNumber, PageSize);
             UserList = paginatedUser;
         }
     }
