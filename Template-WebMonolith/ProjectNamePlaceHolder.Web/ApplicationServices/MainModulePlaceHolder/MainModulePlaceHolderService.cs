@@ -47,7 +47,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
             var request = new UpdateMainModulePlaceHolderRequest
             {
                 MainModulePlaceHolder = mainModulePlaceHolder,
-                Username = _user.UserName
+                Username = _userName
             };
             await _mediator.Send(request);
 
@@ -63,7 +63,7 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
             var request = new AddMainModulePlaceHolderRequest
             {
                 MainModulePlaceHolder = mainModulePlaceHolder,
-                Username = _user.UserName
+                Username = _userName
             };
             await _mediator.Send(request);
 
