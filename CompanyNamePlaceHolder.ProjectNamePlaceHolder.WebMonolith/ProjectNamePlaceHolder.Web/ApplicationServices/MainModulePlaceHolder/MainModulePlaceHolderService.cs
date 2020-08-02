@@ -4,12 +4,12 @@ using X.PagedList;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using MediatR;
-using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList;
-using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderItem;
-using ProjectNamePlaceHolder.Web.Commands.UpdateMainModulePlaceHolder;
-using ProjectNamePlaceHolder.Web.Commands.AddMainModulePlaceHolder;
-using ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderItemByCode;
-using ProjectNamePlaceHolder.Web.Commands.DeleteMainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Commands.MainModulePlaceHolder.UpdateMainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Commands.MainModulePlaceHolder.AddMainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Commands.MainModulePlaceHolder.DeleteMainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderList;
+using ProjectNamePlaceHolder.Web.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItem;
+using ProjectNamePlaceHolder.Web.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItemByCode;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder
 {

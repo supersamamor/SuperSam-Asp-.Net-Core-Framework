@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Web.Models.Role;
-using ProjectNamePlaceHolder.Web.Queries.GetRoleList;
+using ProjectNamePlaceHolder.Web.Queries.Role.GetRoleList;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using X.PagedList;

@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using ProjectNamePlaceHolder.Web.Commands.ActivateUser;
-using ProjectNamePlaceHolder.Web.Commands.UpdateUser;
+using ProjectNamePlaceHolder.Web.Commands.User.ActivateUser;
+using ProjectNamePlaceHolder.Web.Commands.User.UpdateUser;
 using ProjectNamePlaceHolder.Web.Models.User;
-using ProjectNamePlaceHolder.Web.Queries.GetUserItem;
-using ProjectNamePlaceHolder.Web.Queries.GetUserList;
+using ProjectNamePlaceHolder.Web.Queries.User.GetUserItem;
+using ProjectNamePlaceHolder.Web.Queries.User.GetUserList;
 using System.Threading;
 using System.Threading.Tasks;
 using X.PagedList;
