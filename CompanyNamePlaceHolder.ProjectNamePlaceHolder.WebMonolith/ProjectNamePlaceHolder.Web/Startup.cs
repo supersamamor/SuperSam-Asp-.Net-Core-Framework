@@ -20,6 +20,8 @@ using MediatR;
 using ProjectNamePlaceHolder.Data.Repositories;
 using AutoMapper;
 using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Web.Models.Role;
+using ProjectNamePlaceHolder.Web.Models.User;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -52,6 +54,11 @@ namespace ProjectNamePlaceHolder.Web
                     cfg.CreateMap<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
                     cfg.CreateMap<Data.Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>().ReverseMap();
                     cfg.CreateMap<Core.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
+                    cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
+                    cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, Core.Models.ProjectNamePlaceHolderUser>().ReverseMap();
+                    cfg.CreateMap<Core.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
+                    cfg.CreateMap<IdentityUser, Core.Models.IdentityUser>().ReverseMap();
+                    cfg.CreateMap<IdentityRole, RoleModel>().ReverseMap();
                 }
             ));
 

@@ -84,17 +84,17 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
         }
         private async Task GetUserItemAsync(int id)
         {
-            AppUser = await _service.GetUserItemAsync(id, new CancellationToken());
+            AppUser = await _service.GetUserItemAsync(id);
         }
         private async Task UpdateUserAsync()
         {
             AppUser.UserRoles = CurrentUserRoles;
-            AppUser = await _service.UpdateUserAsync(AppUser, new CancellationToken());
+            AppUser = await _service.UpdateUserAsync(AppUser);
         }
         private async Task GetRoleDropdowns()
         {
-            CurrentUserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id, new CancellationToken());
-            RoleSelection = await _roleService.GetAvailableRoleListAsync(AppUser.Id, new CancellationToken());
+            CurrentUserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id);
+            RoleSelection = await _roleService.GetAvailableRoleListAsync(AppUser.Id);
         }
     }
 }

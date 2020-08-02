@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using ProjectNamePlaceHolder.Web.Models.Role;
+using ProjectNamePlaceHolder.Web.Queries.GetRoleList;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-
+using X.PagedList;
 
 namespace ProjectNamePlaceHolder.Web.ApplicationServices.Role
 {
@@ -17,42 +17,26 @@ namespace ProjectNamePlaceHolder.Web.ApplicationServices.Role
         {          
         }
 
-        public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId, CancellationToken token)
+        public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId)
         {
-            //var url = @"";
-            //url += string.Concat("?", _userParameter, "&userId=", userId);         
-            //var response = await _client.GetAsync(@"Role/CurrentRoles/" + url, token);
-            //var result = await response.Content.ReadAsStringAsync();
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{
-            //    throw new ApiResponseException(result);
-            //}
-            //var record = JsonConvert.DeserializeObject<CustomPagedList<RoleModel>>(result);
-            //return record.Items;
-            return null;
+            var request = new GetRoleListRequest
+            {       
+                FilterBy = "CurrentRoles",
+                UserId = userId
+            };
+            var pagedRoleList = await _mediator.Send(request);
+            return await pagedRoleList.ToListAsync();
         }
 
-        public async Task<IList<RoleModel>> GetAvailableRoleListAsync(int userId, CancellationToken token)
+        public async Task<IList<RoleModel>> GetAvailableRoleListAsync(int userId)
         {
-            //var url = @"";
-            //url += string.Concat("?", _userParameter, "&userId=", userId);
-            //var response = await _client.GetAsync(@"Role/AvailableRoles/" + url, token);
-            //var result = await response.Content.ReadAsStringAsync();
-            //try
-            //{
-            //    response.EnsureSuccessStatusCode();
-            //}
-            //catch
-            //{
-            //    throw new ApiResponseException(result);
-            //}
-            //var record = JsonConvert.DeserializeObject<CustomPagedList<RoleModel>>(result);
-            //return record.Items;
-            return null;
+            var request = new GetRoleListRequest
+            {        
+                FilterBy = "AvailableRoles",
+                UserId = userId
+            };
+            var pagedRoleList = await _mediator.Send(request);
+            return await pagedRoleList.ToListAsync();        
         }
     }
 }

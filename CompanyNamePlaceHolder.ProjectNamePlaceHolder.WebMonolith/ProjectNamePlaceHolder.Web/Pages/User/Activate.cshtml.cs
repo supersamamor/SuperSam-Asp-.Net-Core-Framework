@@ -63,14 +63,15 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             }         
             return Page();
         }     
+
         private async Task GetUserItemAsync(int id)
         {
-            AppUser = await _service.GetUserItemAsync(id, new CancellationToken());
+            AppUser = await _service.GetUserItemAsync(id);
         }
 
         private async Task ActivateUserAsync()
         {
-            AppUser = await _service.ActivateUserAsync(AppUser.Id, new CancellationToken());
+            AppUser = await _service.ActivateUserAsync(AppUser.Id);
         }       
     }
 }

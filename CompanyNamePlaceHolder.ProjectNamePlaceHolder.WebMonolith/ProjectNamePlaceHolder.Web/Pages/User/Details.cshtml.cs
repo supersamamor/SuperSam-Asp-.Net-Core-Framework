@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Correlate;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +43,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
 
         private async Task GetUserItemAsync(int id)
         {
-            AppUser = await _service.GetUserItemAsync(id, new CancellationToken());
+            AppUser = await _service.GetUserItemAsync(id);
         }
     }
 }

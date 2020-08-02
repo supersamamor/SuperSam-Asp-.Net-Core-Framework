@@ -62,6 +62,13 @@ namespace ProjectNamePlaceHolder.Web.Queries.GetMainModulePlaceHolderList
                     }
                     break;
             }
+            request.PageIndex = request.PageIndex == 0 ? 1 : request.PageIndex;
+            if (request.PageSize == 0)
+            {
+                var recordCount = query.Count();
+                request.PageSize = recordCount == 0 ? 1 : recordCount;
+            }
+            request.PageSize = request.PageSize == 0 ? query.Count() == 0 ? 1 : query.Count() : request.PageSize;
             var pagedMainModulePlaceHolder = query.ToPagedList(request.PageIndex, request.PageSize);          
             var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.ToListAsync());
             return new StaticPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList, pagedMainModulePlaceHolder);             
