@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using ProjectNamePlaceHolder.Application;
 using System;
 
 namespace ProjectNamePlaceHolder.Web.AppException

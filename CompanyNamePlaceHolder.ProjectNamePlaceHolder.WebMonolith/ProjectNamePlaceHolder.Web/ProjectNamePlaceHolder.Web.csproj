@@ -32,25 +32,9 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectNamePlaceHolder.Application\ProjectNamePlaceHolder.Application.csproj" />
     <ProjectReference Include="..\ProjectNamePlaceHolder.Data\ProjectNamePlaceHolder.Data.csproj" />
     <ProjectReference Include="..\ProjectNamePlaceHolder.Logger\ProjectNamePlaceHolder.Logger.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Compile Update="Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

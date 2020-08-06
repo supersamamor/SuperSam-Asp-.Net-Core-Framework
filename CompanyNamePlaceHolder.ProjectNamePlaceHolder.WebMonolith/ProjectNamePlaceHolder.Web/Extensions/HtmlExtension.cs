@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ProjectNamePlaceHolder.Application;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
@@ -23,8 +24,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             if (field != null)
             {
                 _fieldName = property.Name;
-                var _labelName = field.Name;
-                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), Assembly.GetExecutingAssembly());
+                var _labelName = field.Name;          
+                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
                 fieldDisplayName = rm.GetString(_labelName);
             }
             string routes = CreateRoutes(htmlHelper.ViewData.Model);
@@ -132,7 +133,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             if (field != null)
             {           
                 var _labelName = field.Name;
-                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), Assembly.GetExecutingAssembly());
+                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
                 fieldDisplayName = rm.GetString(_labelName);
             }            
             var htmlstring = @"<label class=""" + className + @""">" + fieldDisplayName;

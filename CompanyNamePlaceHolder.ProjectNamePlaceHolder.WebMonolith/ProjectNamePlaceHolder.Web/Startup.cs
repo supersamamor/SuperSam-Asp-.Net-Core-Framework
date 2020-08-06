@@ -6,10 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder;
 using Microsoft.AspNetCore.Identity;
-using ProjectNamePlaceHolder.Web.ApplicationServices.User;
-using ProjectNamePlaceHolder.Web.ApplicationServices.Role;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ProjectNamePlaceHolder.Web.Services.Email;
 using ProjectNamePlaceHolder.Data;
@@ -17,11 +14,15 @@ using System.Reflection;
 using MediatR;
 using ProjectNamePlaceHolder.Data.Repositories;
 using AutoMapper;
-using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
-using ProjectNamePlaceHolder.Web.Models.Role;
-using ProjectNamePlaceHolder.Web.Models.User;
 using ProjectNamePlaceHolder.Logger.Extensions.DependencyInjection;
 using ProjectNamePlaceHolder.Logger.Extensions.AspNetCore;
+using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application.Models.User;
+using ProjectNamePlaceHolder.Application.Models.Role;
+using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application.ApplicationServices.Role;
+using ProjectNamePlaceHolder.Application.ApplicationServices.User;
+using ProjectNamePlaceHolder.Application;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -86,7 +87,7 @@ namespace ProjectNamePlaceHolder.Web
             services.AddRazorPages();
             services.AddHealthChecks().AddDbContextCheck<ProjectNamePlaceHolderContext>();
             services.AddApplicationInsightsTelemetry();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(typeof(Resource).Assembly);
             services.AddTransient<MainModulePlaceHolderRepository>();
             services.AddTransient<UserRepository>();
         }

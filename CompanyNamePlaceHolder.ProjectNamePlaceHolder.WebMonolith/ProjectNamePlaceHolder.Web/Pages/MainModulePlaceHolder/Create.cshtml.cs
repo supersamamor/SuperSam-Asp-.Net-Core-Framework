@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application;
+using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Web.Extensions;
-using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
 
 namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 {

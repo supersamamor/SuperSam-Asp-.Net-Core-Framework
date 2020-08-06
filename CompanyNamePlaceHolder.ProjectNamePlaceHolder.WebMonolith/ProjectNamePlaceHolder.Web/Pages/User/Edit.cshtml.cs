@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ProjectNamePlaceHolder.Application;
+using ProjectNamePlaceHolder.Application.ApplicationServices.Role;
+using ProjectNamePlaceHolder.Application.ApplicationServices.User;
+using ProjectNamePlaceHolder.Application.Models.Role;
+using ProjectNamePlaceHolder.Application.Models.User;
 using ProjectNamePlaceHolder.Data;
-using ProjectNamePlaceHolder.Web.ApplicationServices.Role;
-using ProjectNamePlaceHolder.Web.ApplicationServices.User;
 using ProjectNamePlaceHolder.Web.Extensions;
-using ProjectNamePlaceHolder.Web.Models.Role;
-using ProjectNamePlaceHolder.Web.Models.User;
 
 namespace ProjectNamePlaceHolder.Web.Pages.User
 {

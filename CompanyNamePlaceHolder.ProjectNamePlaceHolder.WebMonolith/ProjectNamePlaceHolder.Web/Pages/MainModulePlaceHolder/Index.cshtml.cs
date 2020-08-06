@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using ProjectNamePlaceHolder.Web.ApplicationServices.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Web.Extensions;
 using ProjectNamePlaceHolder.Web.Models;
-using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
 using X.PagedList;
+using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 
 namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 {

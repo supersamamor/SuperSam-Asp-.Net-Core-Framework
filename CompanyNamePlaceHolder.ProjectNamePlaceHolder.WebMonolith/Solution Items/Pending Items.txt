@@ -37,6 +37,8 @@ Pending Items.
 28. Parametarized TurboERPWebConfig:ApiURLIdentity on template
 29. Combine Api, Identity and Web in one Solution. Mobile Project will only be separated
 30. On monolith, create a separate layer for service, command and query. For easier integration with other platforms.
+31. On monolith, separate the email service
+32. On monolith, create a feature for themes.
 
 1. React.js
 2. Angular.js

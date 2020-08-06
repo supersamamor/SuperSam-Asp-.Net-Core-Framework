@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using System.Text.RegularExpressions;
 using ProjectNamePlaceHolder.Web.AppException;
 using Correlate;
+using ProjectNamePlaceHolder.Application;
 
 namespace ProjectNamePlaceHolder.Web.Extensions
 {
