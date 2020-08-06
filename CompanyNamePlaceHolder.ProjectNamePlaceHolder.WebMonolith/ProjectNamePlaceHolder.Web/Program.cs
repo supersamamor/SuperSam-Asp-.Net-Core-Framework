@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
-using CTI.Common.Logging;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using ProjectNamePlaceHolder.Logger;
 using Serilog;
 using Serilog.Debugging;
 

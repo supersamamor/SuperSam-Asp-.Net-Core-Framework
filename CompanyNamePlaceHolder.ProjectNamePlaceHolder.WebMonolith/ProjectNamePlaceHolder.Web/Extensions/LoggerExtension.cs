@@ -1,4 +1,3 @@
-using Correlate;
 using Microsoft.Extensions.Logging;
 using System;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.Data.SqlClient;
 using System.Text.RegularExpressions;
 using ProjectNamePlaceHolder.Web.AppException;
+using Correlate;
 
 namespace ProjectNamePlaceHolder.Web.Extensions
 {

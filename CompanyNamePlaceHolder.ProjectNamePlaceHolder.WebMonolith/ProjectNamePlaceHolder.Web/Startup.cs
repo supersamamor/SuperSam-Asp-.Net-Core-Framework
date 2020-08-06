@@ -1,5 +1,3 @@
-using CTI.Common.Logging.Extensions.AspNetCore;
-using CTI.Common.Logging.Extensions.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -22,6 +20,8 @@ using AutoMapper;
 using ProjectNamePlaceHolder.Web.Models.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Web.Models.Role;
 using ProjectNamePlaceHolder.Web.Models.User;
+using ProjectNamePlaceHolder.Logger.Extensions.DependencyInjection;
+using ProjectNamePlaceHolder.Logger.Extensions.AspNetCore;
 
 namespace ProjectNamePlaceHolder.Web
 {
