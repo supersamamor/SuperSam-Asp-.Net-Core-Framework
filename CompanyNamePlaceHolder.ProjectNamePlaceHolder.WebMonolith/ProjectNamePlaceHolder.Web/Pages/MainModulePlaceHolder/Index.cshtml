@@ -8,109 +8,113 @@
 }
 <style>
     body x {
-           outline:1px solid red;
-    } 
+        outline: 1px solid red;
+    }
 </style>
-    <form method="get">
-        <div class="row toolbar-container">
-            <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
-                <div class="input-group input-group-sm">
-                    <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
-                        <a asp-page="Create" class="input-group-text custom-anchor-button">
-                            <i class="fas fa-plus text-dark"
-                               aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
-                        </a>
-                    </div>
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm"  data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                    <a class="input-group-text custom-anchor-button" id="btnAdd" style="cursor:pointer;">
+                        <i class="fas fa-plus text-dark"
+                           aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
+                    </a>
                 </div>
             </div>
-            <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
-                <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
-                    <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
-                        <div class="input-group-prepend input-group-sm">
-                            <button type="submit" class="input-group-text">
-                                <i class="fas fa-search text-dark"
-                                   aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <input asp-for="SearchKey" class="form-control" placeholder="Search"/>
+        </div>
+        <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
+            <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
+                <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
+                    <div class="input-group-prepend input-group-sm">
+                        <button type="submit" class="input-group-text">
+                            <i class="fas fa-search text-dark"
+                               aria-hidden="true"></i>
+                        </button>
                     </div>
-                </div>               
+                    <input asp-for="SearchKey" class="form-control" placeholder="Search" />
+                </div>
             </div>
         </div>
-    </form>   
-    <div class="" style="margin-top:5px;">
-        @if (TempData["Error"] != null)
-        {
-            <div class="alert alert-danger small alert-dismissible fade show" role="alert">
-                <span>@TempData["Error"] </span>
-            </div>
-        }
-        else if (TempData["Success"] != null)
-        {
-            <div class="alert alert-info small alert-dismissible fade show" role="alert">
-                <span>@TempData["Success"]</span>
-            </div>
-        }
-    </div>  
-    <table class="table small table-striped table-hover">
-        <thead>
-            <tr>
-                @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Code)
-                @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Name)           
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.MainModulePlaceHolderList != null)
-            {              
-                foreach (var item in Model.MainModulePlaceHolderList)
-                {
-                    <tr  onclick="document.getElementById('btnEdit@(item.Id)').click();" style="cursor:pointer;">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Code)
-                        </td>
-                        <td>
-                            <span style="float:left;">@Html.DisplayFor(modelItem => item.Name)</span>                         
-                            <ul class="list-toolbar" style="float:right;">
-                                <li class="list-toolbar-button">
-                                    <a Id="btnEdit@(item.Id)" asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
-                                        <i class="fas fa-edit text-dark"
-                                           aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="list-toolbar-button">
-                                    <a asp-page="./Details" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
-                                        <i class="fas fa-search text-dark"
-                                           aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                                <li class="list-toolbar-button">
-                                    <a asp-page="./Delete" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
-                                        <i class="fas fa-trash text-dark"
-                                           aria-hidden="true"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </td>                      
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-    <div class="small">
-        <br />
+    </div>
+</form>
+<div class="" style="margin-top:5px;">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info small alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<table class="table small table-striped table-hover">
+    <thead>
+        <tr>
+            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Code)
+            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Name)
+        </tr>
+    </thead>
+    <tbody>
         @if (Model.MainModulePlaceHolderList != null)
         {
-            <ul class="pagination justify-content-center">
-                @Html.PagedListPager((IPagedList)Model.MainModulePlaceHolderList, page => Url.Action("Index", new
-                {
-                    SearchKey = Model.SearchKey,
-                    PageNumber = page
-                }),
-                new PagedListRenderOptionsBase
-                {
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new string[] { "page-link" }
-                })
-            </ul>
+            foreach (var item in Model.MainModulePlaceHolderList)
+            {
+                <tr onclick="document.getElementById('btnEdit@(item.Id)').click();" style="cursor:pointer;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        <span style="float:left;">@Html.DisplayFor(modelItem => item.Name)</span>
+                        <ul class="list-toolbar" style="float:right;">
+                            <li class="list-toolbar-button">
+                                <a Id="btnEdit@(item.Id)" asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                                    <i class="fas fa-edit text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-toolbar-button">
+                                <a asp-page="./Details" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
+                                    <i class="fas fa-search text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-toolbar-button">
+                                <a asp-page="./Delete" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
+                                    <i class="fas fa-trash text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
         }
-    </div>
+    </tbody>
+</table>
+
+<div class="small">
+    <br />
+    @if (Model.MainModulePlaceHolderList != null)
+    {
+        <ul class="pagination justify-content-center">
+            @Html.PagedListPager((IPagedList)Model.MainModulePlaceHolderList, page => Url.Action("Index", new
+            {
+                SearchKey = Model.SearchKey,
+                PageNumber = page
+            }),
+            new PagedListRenderOptionsBase
+            {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+            })
+        </ul>
+    }
+</div>
+@section Scripts {
+    @Html.FormModal("CreateEdit", "Create", "btnAdd", @Resource.LabelAddMainModulePlaceHolder, 700) 
+}

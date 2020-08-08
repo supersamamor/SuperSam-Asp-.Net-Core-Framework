@@ -51,6 +51,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public static IHtmlContent PromptConfirmationModal(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement,
               string formId, string promptMessageContainerId, string message)
         {
+            int initialZindex = 1040;
             var htmlstring = @"";
             htmlstring += @"      <style> ";
             htmlstring += @"           @keyframes spin {";
@@ -60,45 +61,49 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      </style>";       
             htmlstring += @"      ";
             htmlstring += @"      <div id=""" + modalId + @"_Loader"" style=""display:none;width: 100%;height: 100%;position: fixed;z-index: 9999;background:#000;opacity:0.3;top:0px;left:0px;"">";
-            htmlstring += @"           <div style=""border: 10px solid #f3f3f3;border-top: 10px solid #3498db;border-radius: 50%;width: 60px;height: 60px;animation: spin 2s linear infinite;margin: 0;top: 41%;left: 45%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);position: absolute;""></div>";
+            htmlstring += @"           <div style=""border:10px solid #f3f3f3;border-top: 10px solid #3498db;border-radius:50%;width:60px;height:60px;animation:spin 2s linear infinite;margin:0;top:41%;left:45%;-ms-transform:translate(-50%, -50%);transform:translate(-50%, -50%);position:absolute;""></div>";
             htmlstring += @"      </div>";
             htmlstring += @"      ";
-            htmlstring += @"      <div class=""modal fade"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
+            htmlstring += @"      <div class=""modal"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
-            htmlstring += @"                <div class=""modal-content"">";
+            htmlstring += @"                <div class=""modal-content""  style=""z-index: " + (initialZindex + 1) + @";"">";
             htmlstring += @"                     <div class=""modal-header"">";
             htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">Confirmation</h6>";
-            htmlstring += @"                          <button type=""button"" class=""close"" data-dismiss=""modal"">&times;</button>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + modalId + @"();"">&times;</button>";
             htmlstring += @"                     </div>";
             htmlstring += @"                     <div class=""modal-body"">";
             htmlstring += @"                          " + message + @"   ";
             htmlstring += @"                     </div>";
             htmlstring += @"                     <div class=""modal-footer"">";
             htmlstring += @"                          <button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top""";
-            htmlstring += @"                               title=""Ok"" onclick=""$('#" + modalId + @"_Loader').show();$('#" + modalId + @"   ').modal('hide');$('#" + triggerActionElement + @"   ').click();"">";
+            htmlstring += @"                               title=""Ok"" onclick=""$('#" + modalId + @"_Loader').show();ShowHideModal" + modalId + @"();$('#" + triggerActionElement + @"').click();"">";
             htmlstring += @"                               <i class=""fas fa-check""></i>";
             htmlstring += @"                          </button>";
-            htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-dismiss=""modal"" data-toggle=""tooltip"" data-placement=""top"" title=""Close"">";
+            htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-placement=""top"" title=""Close"" onclick="" ShowHideModal" + modalId + @"();"">";
             htmlstring += @"                               <i class=""fas fa-times-circle""></i>";
             htmlstring += @"                          </button>";
             htmlstring += @"                     </div>";
-            htmlstring += @"                <div>";
+            htmlstring += @"                </div>";
             htmlstring += @"           </div>";
             htmlstring += @"      </div>";
-            htmlstring += @"";
+            htmlstring += @"      <div  id=""" + modalId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
             htmlstring += @"      <script type=""text/javascript"">";
             if (formId == "")
             {
-                htmlstring += @"       function ShowModal" + modalId + @"() {";
-                htmlstring += @"            $(""#" + modalId + @""").modal('show');";
+                htmlstring += @"       function ShowHideModal" + modalId + @"() {";
+                htmlstring += @"            Resize" + modalId + @"();";
+                htmlstring += @"            $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";
+                htmlstring += @"            $(""#" + modalId + @""").slideToggle(""fast"");";
                 htmlstring += @"       }";
             }
             else
             {
-                htmlstring += @"       function ShowModal" + modalId + @"() {";
+                htmlstring += @"       function ShowHideModal" + modalId + @"() {";
+                htmlstring += @"            Resize" + modalId + @"();";
                 htmlstring += @"            var form = $('#" + formId + @"');";
                 htmlstring += @"            if ($(form).valid()) {";
-                htmlstring += @"                 $(""#" + modalId + @""").modal('show');";
+                htmlstring += @"                 $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";
+                htmlstring += @"                 $(""#" + modalId + @""").slideToggle(""fast"");";
                 htmlstring += @"            }";
                 htmlstring += @"            else";
                 htmlstring += @"            {";
@@ -107,21 +112,161 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 htmlstring += @"       }";
             }
             htmlstring += @"           $( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
-            htmlstring += @"                ShowModal" + modalId + @"();";
+            htmlstring += @"                ShowHideModal" + modalId + @"();";
             htmlstring += @"           });";
             htmlstring += @"           ";
             htmlstring += @"           $(document).ready(function() {";
             htmlstring += @"                $(window).keydown(function(event){";
             htmlstring += @"                     if(event.keyCode == 13 && !event.shiftKey) {";
             htmlstring += @"                          event.preventDefault();";
-            htmlstring += @"                          ShowModal" + modalId + @"();";
+            htmlstring += @"                          ShowHideModal" + modalId + @"();";
             htmlstring += @"                          return false;";
             htmlstring += @"                     }";
             htmlstring += @"                });";
             htmlstring += @"           });";
+            htmlstring += @"           function Resize" + modalId + @"() {
+                                           var width = 500;   
+                                           var windowWidth = $(window).width(); 
+                                           if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
+                                           var leftPosition = (windowWidth - width) / 2;   
+                                           $('#" + modalId + @" .modal-content').width(width);                            
+                                           var windowWHeight = $(window).height(); 
+                                           var maxHeight = windowWHeight - ((windowWHeight * 0.2) * 2) - 100;
+                                           $('#" + modalId + @"  .modal-body').css({'maxHeight': maxHeight + 'px'});
+                                      }";
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
         }
+
+        public static IHtmlContent PromptConfirmationModalAjax(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement,
+              string formId, string promptMessageContainerId, string message)
+        {
+            int initialZindex = 1040;
+            var htmlstring = @"";
+            htmlstring += @"      <style> ";
+            htmlstring += @"           @keyframes spin {";
+            htmlstring += @"                0% {transform: rotate(0deg);}";
+            htmlstring += @"                100% { transform: rotate(360deg);}";
+            htmlstring += @"           }";
+            htmlstring += @"      </style>";
+            htmlstring += @"      ";
+            htmlstring += @"      <div class=""modal"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
+            htmlstring += @"           <div class=""modal-dialog"">";
+            htmlstring += @"                <div class=""modal-content""  style=""z-index: " + (initialZindex + 1) + @";"">";
+            htmlstring += @"                     <div class=""modal-header"">";
+            htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">Confirmation</h6>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + modalId + @"();"">&times;</button>";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div class=""modal-body"">";
+            htmlstring += @"                          " + message + @"   ";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div class=""modal-footer"">";
+            htmlstring += @"                          <button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top""";
+            htmlstring += @"                               title=""Ok"" onclick=""ShowHideModal" + modalId + @"();$('#" + triggerActionElement + @"').click();"">";
+            htmlstring += @"                               <i class=""fas fa-check""></i>";
+            htmlstring += @"                          </button>";
+            htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-placement=""top"" title=""Close"" onclick="" ShowHideModal" + modalId + @"();"">";
+            htmlstring += @"                               <i class=""fas fa-times-circle""></i>";
+            htmlstring += @"                          </button>";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                </div>";
+            htmlstring += @"           </div>";
+            htmlstring += @"      </div>";
+            htmlstring += @"      <div  id=""" + modalId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            htmlstring += @"      <script type=""text/javascript"">";
+            if (formId == "")
+            {
+                htmlstring += @"       function ShowHideModal" + modalId + @"() {";
+                htmlstring += @"            Resize" + modalId + @"();";
+                htmlstring += @"            $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";
+                htmlstring += @"            $(""#" + modalId + @""").slideToggle(""fast"");";
+                htmlstring += @"       }";
+            }
+            else
+            {
+                htmlstring += @"       function ShowHideModal" + modalId + @"() {";
+                htmlstring += @"            Resize" + modalId + @"();";
+                htmlstring += @"            var form = $('#" + formId + @"');";
+                htmlstring += @"            if ($(form).valid()) {";
+                htmlstring += @"                 $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";
+                htmlstring += @"                 $(""#" + modalId + @""").slideToggle(""fast"");";
+                htmlstring += @"            }";
+                htmlstring += @"            else";
+                htmlstring += @"            {";
+                htmlstring += @"                 $('#" + promptMessageContainerId + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>');";
+                htmlstring += @"            }";
+                htmlstring += @"       }";
+            }
+            htmlstring += @"           $( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
+            htmlstring += @"                ShowHideModal" + modalId + @"();";
+            htmlstring += @"           });";
+            htmlstring += @"           ";
+            htmlstring += @"           $(document).ready(function() {";
+            htmlstring += @"                $(window).keydown(function(event){";
+            htmlstring += @"                     if(event.keyCode == 13 && !event.shiftKey) {";
+            htmlstring += @"                          event.preventDefault();";
+            htmlstring += @"                          ShowHideModal" + modalId + @"();";
+            htmlstring += @"                          return false;";
+            htmlstring += @"                     }";
+            htmlstring += @"                });";
+            htmlstring += @"           });";
+            htmlstring += @"           function Resize" + modalId + @"() {
+                                           var width = 500;   
+                                           var windowWidth = $(window).width(); 
+                                           if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
+                                           var leftPosition = (windowWidth - width) / 2;   
+                                           $('#" + modalId + @" .modal-content').width(width);                            
+                                           var windowWHeight = $(window).height(); 
+                                           var maxHeight = windowWHeight - ((windowWHeight * 0.2) * 2) - 100;
+                                           $('#" + modalId + @"  .modal-body').css({'maxHeight': maxHeight + 'px'});
+                                      }";
+            htmlstring += @"      </script>";
+            return new HtmlString(htmlstring);
+        }
+
+        public static IHtmlContent FormModal(this IHtmlHelper htmlHelper, string modalId, string handlerName, string triggerShowElementId, string formLabel, int modalWidth)
+        {
+            int initialZindex = 1041;
+            var htmlstring = @"";  
+            htmlstring += @"      <div class="""" id=""" + modalId + @"Modal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:10%;display:none;"">";
+            htmlstring += @"           <div class=""modal-dialog"">";
+            htmlstring += @"                <div class=""modal-content""  style="""">";
+            htmlstring += @"                     <div class=""modal-header"">";
+            htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">" + formLabel + @"</h6>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + modalId + @"();"">&times;</button>";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div id=""" + modalId + @"Body"" class=""modal-body"" style=""overflow-y:scroll;"">";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div class=""modal-footer"">";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                </div>";
+            htmlstring += @"           </div>";
+            htmlstring += @"      </div>";
+            htmlstring += @"      <div id=""" + modalId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            htmlstring += @"      <script type=""text/javascript"">";
+            htmlstring += @"           function ShowHideModal" + modalId + @"() {";
+            htmlstring += @"                $(""#" + modalId + @"Modal"").slideToggle(""fast"");";
+            htmlstring += @"                $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";    
+            htmlstring += @"           }";
+            htmlstring += @"           $( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
+            htmlstring += @"                $('#" + modalId + @"Body').load(""?handler=" + handlerName + @""", function(){ Resize" + modalWidth + @"();});";
+            htmlstring += @"                ShowHideModal" + modalId + @"();";
+            htmlstring += @"           });";
+            htmlstring += @"           function Resize" + modalWidth + @"() {
+                                           var width = " + modalWidth + @";   
+                                           var windowWidth = $(window).width(); 
+                                           if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
+                                           var leftPosition = (windowWidth - width) / 2;   
+                                           $('#" + modalId + @"Modal .modal-content').width(width);
+                                           $('#" + modalId + @"Modal').css({ left: leftPosition });
+                                           var windowWHeight = $(window).height(); 
+                                           var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
+                                           $('#" + modalId + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px'});
+                                      }";
+            htmlstring += @"      </script>";
+            return new HtmlString(htmlstring);
+        }
+
         public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
         {
             var propertyGetExpression = expression.Body as MemberExpression;
