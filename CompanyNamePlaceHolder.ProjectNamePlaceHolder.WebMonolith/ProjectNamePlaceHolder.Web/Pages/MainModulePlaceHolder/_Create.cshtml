@@ -1,10 +1,11 @@
 @model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
+@using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
 <form method="get">
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowSaveModal">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="@MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
                     </a>
@@ -14,7 +15,7 @@
     </div>
 </form>
 
-<div class="" id="PromptCreateContainer" style="margin-top:5px;">
+<div class="" id="@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -30,7 +31,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post" asp-page-handler="Save" id="FormAdd">
+        <form method="post" asp-page-handler="@MainModulePlaceHolderHtmlElementVariables.Handler_Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 @Html.DisplayLabelWithRequiredTag(model => Model.Code, "control-label small")
@@ -43,19 +44,18 @@
                 <span asp-validation-for="Name" class="text-danger small"></span>
             </div>
             <div class="form-group" style="display:none;">
-                <input type="submit" id="btnSave" value="Save" class="btn btn-primary" />
+                <input type="submit" id="@MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@Html.PromptConfirmationModalAjax("ConfirmSaveModal", "btnShowSaveModal", "btnSave", "FormAdd", "PromptCreateContainer", Resource.PromptMessageSaveConfirmation)
-<script type="text/javascript">
-    $('#btnSave').on('click', function (evt) {
-        evt.preventDefault();
-        $.post('?handler=Save', $('#FormAdd').serialize(), function (data) {
-            $('#CreateEditBody').html(data);
-        });
-    });
-</script>
+@Html.PromptConfirmationModalAjax(MainModulePlaceHolderHtmlElementVariables.Handler_Save, 
+    MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Save, 
+    MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal, 
+    MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave, 
+    MainModulePlaceHolderHtmlElementVariables.FormName_Create, 
+    MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create, 
+    MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit, 
+    Resource.PromptMessageSaveConfirmation)

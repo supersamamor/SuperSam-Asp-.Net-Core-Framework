@@ -77,7 +77,22 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync), MainModulePlaceHolder);
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetEditAsync), MainModulePlaceHolder);
+            }
+            return Partial("_Edit", MainModulePlaceHolder);
+        }
+
+        public async Task<IActionResult> OnPostUpdateAsync()
+        {
+            try
+            {
+                this.ValidateModelState();
+                await UpdateMainModulePlaceHolderAsync();
+                TempData["Success"] = Resource.PromptMessageUpdateSuccess;
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), MainModulePlaceHolder);          
             }
             return Partial("_Edit", MainModulePlaceHolder);
         }
@@ -95,6 +110,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         private async Task GetMainModulePlaceHolderItemAsync(int id)
         {
             MainModulePlaceHolder = await _service.GetMainModulePlaceHolderItemAsync(id);
+        }    
+
+        private async Task UpdateMainModulePlaceHolderAsync()
+        {
+            MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
         }
     }
 }

@@ -39,7 +39,8 @@ Pending Items.
 30. On monolith, separate the email service
 31. On monolith, create a feature for themes.
 32. On monolith, Implement Ajax loader
-33. %20%20%20%20%20%20%20%20%20%20%20%20%20 bug when sorting
+33. On monolith, Refresh listing after changes from the data
+34. %20%20%20%20%20%20%20%20%20%20%20%20%20 bug when sorting
 
 Study Notes / Nice to have implementation notes
 1. React.js

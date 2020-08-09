@@ -16,6 +16,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public string ModalTitle { get; set; }
         public int ModalWidth { get; set; }
     }
+
     public static class HtmlExtension
     {
         private static string _sortBy { get; set; }
@@ -146,8 +147,20 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        public static IHtmlContent PromptConfirmationModalAjax(this IHtmlHelper htmlHelper, string modalId, string triggerShowElementId, string triggerActionElement,
-              string formId, string promptMessageContainerId, string message)
+        public class ConfirmationModalProperties
+        {
+            public string HandlerName { get; set; }
+            public string ModalElementId { get; set; }    
+            public string TriggerShowElementId { get; set; }
+            public string TriggerFormActionElementId { get; set; }
+            public string FormId { get; set; }
+            public string PromptMessageContainerId { get; set; }
+            public string ResultModalId { get; set; }
+            public string Message { get; set; }
+        }
+
+        public static IHtmlContent PromptConfirmationModalAjax(this IHtmlHelper htmlHelper, string handler, string modalId, string triggerShowElementId, string triggerActionElement,
+              string formId, string promptMessageContainerId, string resultModalId, string message)
         {
             int initialZindex = 1040;
             var htmlstring = @"";
@@ -228,6 +241,14 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                                            var maxHeight = windowWHeight - ((windowWHeight * 0.2) * 2) - 100;
                                            $('#" + modalId + @"  .modal-body').css({'maxHeight': maxHeight + 'px'});
                                       }";
+
+            htmlstring += @"          $('#" + triggerActionElement + @"').on('click', function (evt) {
+                                            evt.preventDefault();
+                                            $.post('?handler=" + handler + @"', $('#" + formId + @"').serialize(), function (data) {
+                                                $('#" + resultModalId + @"Body').html(data);
+                                            });
+                                      });";
+
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
         } 
