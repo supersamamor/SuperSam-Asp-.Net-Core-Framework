@@ -51,11 +51,14 @@
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@Html.PromptConfirmationModalAjax(MainModulePlaceHolderHtmlElementVariables.Handler_Save, 
-    MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Save, 
-    MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal, 
-    MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave, 
-    MainModulePlaceHolderHtmlElementVariables.FormName_Create, 
-    MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create, 
-    MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit, 
-    Resource.PromptMessageSaveConfirmation)
+@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
+{
+    HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Save,
+    ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Save,
+    TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal,
+    TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave,
+    FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Create,
+    PromptMessageContainerId= MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
+    ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
+    Message = Resource.PromptMessageSaveConfirmation
+})

@@ -52,12 +52,14 @@
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@Html.PromptConfirmationModalAjax(MainModulePlaceHolderHtmlElementVariables.Handler_Delete,
-    MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Delete,
-    MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmDeleteModal,
-    MainModulePlaceHolderHtmlElementVariables.Button_FormActionDelete,
-    MainModulePlaceHolderHtmlElementVariables.FormName_Delete,
-    MainModulePlaceHolderHtmlElementVariables.PromptContainer_Delete,
-    MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
-    Resource.PromptMessageDeleteConfirmation)
-
+@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
+{
+    HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Delete,
+    ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Delete,
+    TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmDeleteModal,
+    TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionDelete,
+    FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Delete,
+    PromptMessageContainerId = MainModulePlaceHolderHtmlElementVariables.PromptContainer_Delete,
+    ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
+    Message = Resource.PromptMessageDeleteConfirmation
+})

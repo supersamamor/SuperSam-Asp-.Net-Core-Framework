@@ -16,6 +16,17 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public string ModalTitle { get; set; }
         public int ModalWidth { get; set; }
     }
+    public class ConfirmationModalProperties
+    {
+        public string HandlerName { get; set; }
+        public string ModalElementId { get; set; }
+        public string TriggerShowElementId { get; set; }
+        public string TriggerFormActionElementId { get; set; }
+        public string FormId { get; set; }
+        public string PromptMessageContainerId { get; set; }
+        public string ResultModalId { get; set; }
+        public string Message { get; set; }
+    }
 
     public static class HtmlExtension
     {
@@ -146,21 +157,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
         }
-
-        public class ConfirmationModalProperties
-        {
-            public string HandlerName { get; set; }
-            public string ModalElementId { get; set; }    
-            public string TriggerShowElementId { get; set; }
-            public string TriggerFormActionElementId { get; set; }
-            public string FormId { get; set; }
-            public string PromptMessageContainerId { get; set; }
-            public string ResultModalId { get; set; }
-            public string Message { get; set; }
-        }
-
-        public static IHtmlContent PromptConfirmationModalAjax(this IHtmlHelper htmlHelper, string handler, string modalId, string triggerShowElementId, string triggerActionElement,
-              string formId, string promptMessageContainerId, string resultModalId, string message)
+        public static IHtmlContent PromptConfirmationModalAjax(this IHtmlHelper htmlHelper, ConfirmationModalProperties properties)
         {
             int initialZindex = 1040;
             var htmlstring = @"";
@@ -171,81 +168,81 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"           }";
             htmlstring += @"      </style>";
             htmlstring += @"      ";
-            htmlstring += @"      <div class=""modal"" id=""" + modalId + @""" style=""position:fixed;top:20%;"">";
+            htmlstring += @"      <div class=""modal"" id=""" + properties.ModalElementId + @""" style=""position:fixed;top:20%;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style=""z-index: " + (initialZindex + 1) + @";"">";
             htmlstring += @"                     <div class=""modal-header"">";
             htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">Confirmation</h6>";
-            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + modalId + @"();"">&times;</button>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + properties.ModalElementId + @"();"">&times;</button>";
             htmlstring += @"                     </div>";
             htmlstring += @"                     <div class=""modal-body"">";
-            htmlstring += @"                          " + message + @"   ";
+            htmlstring += @"                          " + properties.Message + @"   ";
             htmlstring += @"                     </div>";
             htmlstring += @"                     <div class=""modal-footer"">";
             htmlstring += @"                          <button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top""";
-            htmlstring += @"                               title=""Ok"" onclick=""ShowHideModal" + modalId + @"();$('#" + triggerActionElement + @"').click();"">";
+            htmlstring += @"                               title=""Ok"" onclick=""ShowHideModal" + properties.ModalElementId + @"();$('#" + properties.TriggerFormActionElementId + @"').click();"">";
             htmlstring += @"                               <i class=""fas fa-check""></i>";
             htmlstring += @"                          </button>";
-            htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-placement=""top"" title=""Close"" onclick="" ShowHideModal" + modalId + @"();"">";
+            htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-placement=""top"" title=""Close"" onclick="" ShowHideModal" + properties.ModalElementId + @"();"">";
             htmlstring += @"                               <i class=""fas fa-times-circle""></i>";
             htmlstring += @"                          </button>";
             htmlstring += @"                     </div>";
             htmlstring += @"                </div>";
             htmlstring += @"           </div>";
             htmlstring += @"      </div>";
-            htmlstring += @"      <div  id=""" + modalId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            htmlstring += @"      <div  id=""" + properties.ModalElementId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
             htmlstring += @"      <script type=""text/javascript"">";
-            if (formId == "")
+            if (properties.FormId == "")
             {
-                htmlstring += @"       function ShowHideModal" + modalId + @"() {";
-                htmlstring += @"            Resize" + modalId + @"();";
-                htmlstring += @"            $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";
-                htmlstring += @"            $(""#" + modalId + @""").slideToggle(""fast"");";
+                htmlstring += @"       function ShowHideModal" + properties.ModalElementId + @"() {";
+                htmlstring += @"            Resize" + properties.ModalElementId + @"();";
+                htmlstring += @"            $(""#" + properties.ModalElementId + @"BackGround"").slideToggle(""fast"");";
+                htmlstring += @"            $(""#" + properties.ModalElementId + @""").slideToggle(""fast"");";
                 htmlstring += @"       }";
             }
             else
             {
-                htmlstring += @"       function ShowHideModal" + modalId + @"() {";
-                htmlstring += @"            Resize" + modalId + @"();";
-                htmlstring += @"            var form = $('#" + formId + @"');";
+                htmlstring += @"       function ShowHideModal" + properties.ModalElementId + @"() {";
+                htmlstring += @"            Resize" + properties.ModalElementId + @"();";
+                htmlstring += @"            var form = $('#" + properties.FormId + @"');";
                 htmlstring += @"            if ($(form).valid()) {";
-                htmlstring += @"                 $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";
-                htmlstring += @"                 $(""#" + modalId + @""").slideToggle(""fast"");";
+                htmlstring += @"                 $(""#" + properties.ModalElementId + @"BackGround"").slideToggle(""fast"");";
+                htmlstring += @"                 $(""#" + properties.ModalElementId + @""").slideToggle(""fast"");";
                 htmlstring += @"            }";
                 htmlstring += @"            else";
                 htmlstring += @"            {";
-                htmlstring += @"                 $('#" + promptMessageContainerId + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>');";
+                htmlstring += @"                 $('#" + properties.PromptMessageContainerId + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>');";
                 htmlstring += @"            }";
                 htmlstring += @"       }";
             }
-            htmlstring += @"           $( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
-            htmlstring += @"                ShowHideModal" + modalId + @"();";
+            htmlstring += @"           $( ""#" + properties.TriggerShowElementId + @""" ).bind( ""click"", function() {";
+            htmlstring += @"                ShowHideModal" + properties.ModalElementId + @"();";
             htmlstring += @"           });";
             htmlstring += @"           ";
             htmlstring += @"           $(document).ready(function() {";
             htmlstring += @"                $(window).keydown(function(event){";
             htmlstring += @"                     if(event.keyCode == 13 && !event.shiftKey) {";
             htmlstring += @"                          event.preventDefault();";
-            htmlstring += @"                          ShowHideModal" + modalId + @"();";
+            htmlstring += @"                          ShowHideModal" + properties.ModalElementId + @"();";
             htmlstring += @"                          return false;";
             htmlstring += @"                     }";
             htmlstring += @"                });";
             htmlstring += @"           });";
-            htmlstring += @"           function Resize" + modalId + @"() {
+            htmlstring += @"           function Resize" + properties.ModalElementId + @"() {
                                            var width = 500;   
                                            var windowWidth = $(window).width(); 
                                            if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
                                            var leftPosition = (windowWidth - width) / 2;   
-                                           $('#" + modalId + @" .modal-content').width(width);                            
+                                           $('#" + properties.ModalElementId + @" .modal-content').width(width);                            
                                            var windowWHeight = $(window).height(); 
                                            var maxHeight = windowWHeight - ((windowWHeight * 0.2) * 2) - 100;
-                                           $('#" + modalId + @"  .modal-body').css({'maxHeight': maxHeight + 'px'});
+                                           $('#" + properties.ModalElementId + @"  .modal-body').css({'maxHeight': maxHeight + 'px'});
                                       }";
 
-            htmlstring += @"          $('#" + triggerActionElement + @"').on('click', function (evt) {
+            htmlstring += @"          $('#" + properties.TriggerFormActionElementId + @"').on('click', function (evt) {
                                             evt.preventDefault();
-                                            $.post('?handler=" + handler + @"', $('#" + formId + @"').serialize(), function (data) {
-                                                $('#" + resultModalId + @"Body').html(data);
+                                            $.post('?handler=" + properties.HandlerName + @"', $('#" + properties.FormId + @"').serialize(), function (data) {
+                                                $('#" + properties.ResultModalId + @"Body').html(data);
                                             });
                                       });";
 

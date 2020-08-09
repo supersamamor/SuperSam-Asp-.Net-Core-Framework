@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNamePlaceHolder.Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNamePlaceHolder.Logger", "ProjectNamePlaceHolder.Logger\ProjectNamePlaceHolder.Logger.csproj", "{86DC4498-398E-4C60-828B-DCEA8283D6BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectNamePlaceHolder.Application", "ProjectNamePlaceHolder.Application\ProjectNamePlaceHolder.Application.csproj", "{8AA10CA5-D2F4-469E-8C00-2AB7D1367E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNamePlaceHolder.Application", "ProjectNamePlaceHolder.Application\ProjectNamePlaceHolder.Application.csproj", "{8AA10CA5-D2F4-469E-8C00-2AB7D1367E06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
