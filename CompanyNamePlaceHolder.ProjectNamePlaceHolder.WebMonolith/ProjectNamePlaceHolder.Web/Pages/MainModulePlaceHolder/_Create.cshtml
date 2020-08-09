@@ -14,7 +14,7 @@
     </div>
 </form>
 
-<div class="" id="PromptContainer" style="margin-top:5px;">
+<div class="" id="PromptCreateContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -50,7 +50,7 @@
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@Html.PromptConfirmationModalAjax("ConfirmSaveModal", "btnShowSaveModal", "btnSave", "FormAdd", "PromptContainer", Resource.PromptMessageSaveConfirmation)
+@Html.PromptConfirmationModalAjax("ConfirmSaveModal", "btnShowSaveModal", "btnSave", "FormAdd", "PromptCreateContainer", Resource.PromptMessageSaveConfirmation)
 <script type="text/javascript">
     $('#btnSave').on('click', function (evt) {
         evt.preventDefault();

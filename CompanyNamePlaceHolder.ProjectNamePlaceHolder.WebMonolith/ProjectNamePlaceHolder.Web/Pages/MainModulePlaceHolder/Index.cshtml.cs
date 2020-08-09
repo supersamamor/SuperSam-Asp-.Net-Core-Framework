@@ -69,15 +69,32 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             return Partial("_Edit", MainModulePlaceHolder);
         }
 
+        public async Task<IActionResult> OnGetEditAsync(int id)
+        {
+            try
+            {
+                await GetMainModulePlaceHolderItemAsync(id);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync), MainModulePlaceHolder);
+            }
+            return Partial("_Edit", MainModulePlaceHolder);
+        }
+
         private async Task GetMainModulePlaceHolderListAsync()
         {
-            var paginatedMainModulePlaceHolder = await _service.GetMainModulePlaceHolderListAsync(SearchKey, OrderBy, SortBy, PageNumber, PageSize);
-            MainModulePlaceHolderList = paginatedMainModulePlaceHolder;
+            MainModulePlaceHolderList = await _service.GetMainModulePlaceHolderListAsync(SearchKey, OrderBy, SortBy, PageNumber, PageSize);          
         }
 
         private async Task SaveMainModulePlaceHolderAsync()
         {
             MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder);
+        }
+
+        private async Task GetMainModulePlaceHolderItemAsync(int id)
+        {
+            MainModulePlaceHolder = await _service.GetMainModulePlaceHolderItemAsync(id);
         }
     }
 }

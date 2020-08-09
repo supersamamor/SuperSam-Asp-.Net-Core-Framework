@@ -224,6 +224,10 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
+        public enum FormModalAction
+        { 
+        
+        }
         public static IHtmlContent FormModal(this IHtmlHelper htmlHelper, string modalId, string handlerName, string triggerShowElementId, string formLabel, int modalWidth)
         {
             int initialZindex = 1041;
@@ -248,17 +252,17 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                $(""#" + modalId + @"Modal"").slideToggle(""fast"");";
             htmlstring += @"                $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";    
             htmlstring += @"           }";
-            htmlstring += @"           $( ""#" + triggerShowElementId + @""" ).bind( ""click"", function() {";
-            htmlstring += @"                $('#" + modalId + @"Body').load(""?handler=" + handlerName + @""", function(){ Resize" + modalWidth + @"();});";
+            htmlstring += @"           $( """ + triggerShowElementId + @""" ).bind( ""click"", function() {";
+            htmlstring += @"                $('#" + modalId + @"Body').load(""?handler=" + handlerName + @"&id=4"", function(){ Resize" + modalId + @"();});";
             htmlstring += @"                ShowHideModal" + modalId + @"();";
             htmlstring += @"           });";
-            htmlstring += @"           function Resize" + modalWidth + @"() {
-                                           var width = " + modalWidth + @";   
+            htmlstring += @"           function Resize" + modalId + @"() {
+                                           var width = " + modalWidth + @";  
                                            var windowWidth = $(window).width(); 
                                            if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
                                            var leftPosition = (windowWidth - width) / 2;   
                                            $('#" + modalId + @"Modal .modal-content').width(width);
-                                           $('#" + modalId + @"Modal').css({ left: leftPosition });
+                                           $('#" + modalId + @"Modal').css({ left: leftPosition }); 
                                            var windowWHeight = $(window).height(); 
                                            var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
                                            $('#" + modalId + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px'});

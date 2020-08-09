@@ -4,7 +4,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowSaveModal">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowUpdateModal">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
                     </a>
@@ -14,7 +14,7 @@
     </div>
 </form>
 
-<div class="" id="PromptContainer" style="margin-top:5px;">
+<div class="" id="PromptUpdateContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -30,7 +30,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post" asp-page-handler="Save" id="FormAdd">
+        <form method="post" asp-page-handler="Save" id="FormUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 @Html.DisplayLabelWithRequiredTag(model => Model.Code, "control-label small")
@@ -43,11 +43,11 @@
                 <span asp-validation-for="Name" class="text-danger small"></span>
             </div>          
             <div class="form-group" style="display:none;">
-                <input type="submit" id="btnSave" value="Save" class="btn btn-primary" />
+                <input type="submit" id="btnUpdate" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@Html.PromptConfirmationModal("ConfirmSaveModal", "btnShowSaveModal", "btnSave", "FormAdd", "PromptContainer", Resource.PromptMessageSaveConfirmation)
+@Html.PromptConfirmationModal("ConfirmUpdateModal", "btnShowUpdateModal", "btnUpdate", "FormUpdate", "PromptUpdateContainer", Resource.PromptMessageSaveConfirmation)
