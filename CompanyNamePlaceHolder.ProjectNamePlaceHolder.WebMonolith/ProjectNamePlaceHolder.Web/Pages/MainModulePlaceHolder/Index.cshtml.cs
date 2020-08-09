@@ -69,7 +69,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             return Partial("_Edit", MainModulePlaceHolder);
         }
 
-        public async Task<IActionResult> OnGetEditAsync(int id)
+        public async Task<IActionResult> OnGetRecordAsync(int id, string pageName)
         {
             try
             {
@@ -77,9 +77,9 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetEditAsync), MainModulePlaceHolder);
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetRecordAsync), MainModulePlaceHolder);
             }
-            return Partial("_Edit", MainModulePlaceHolder);
+            return Partial(pageName, MainModulePlaceHolder);
         }
 
         public async Task<IActionResult> OnPostUpdateAsync()
@@ -95,6 +95,21 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
                 TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), MainModulePlaceHolder);          
             }
             return Partial("_Edit", MainModulePlaceHolder);
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            try
+            {
+                await DeleteMainModulePlaceHolderAsync(id);
+                TempData["Success"] = Resource.PromptMessageDeleteSuccess;
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);
+                return Page();
+            }
+            return Partial("_Delete", MainModulePlaceHolder);
         }
 
         private async Task GetMainModulePlaceHolderListAsync()
@@ -115,6 +130,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         private async Task UpdateMainModulePlaceHolderAsync()
         {
             MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
+        }
+
+        private async Task DeleteMainModulePlaceHolderAsync(int id)
+        {
+            await _service.DeleteMainModulePlaceHolderAsync(id);
         }
     }
 }

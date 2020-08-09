@@ -315,7 +315,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 {
                     object valueAsObject = prp.GetValue(handlerParameters, new object[] { });
                     var value = valueAsObject;
-                    handlerParameterQueryString += @"&" + prp.Name + @"=' + " + prp.Name + @" +'";
+                    string paramValue = value == null || value?.ToString() == "" ? @"=' + " + prp.Name + @" +'" : @"=" + value.ToString() + @"";
+                    handlerParameterQueryString += @"&" + prp.Name + paramValue;
                     handlerFunctionParameter += @"," + prp.Name;
                 }
                 handlerFunctionParameter = handlerFunctionParameter.Substring(1, handlerFunctionParameter.Length - 1);

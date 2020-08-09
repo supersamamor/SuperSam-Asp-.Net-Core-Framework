@@ -73,7 +73,7 @@
                     <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    <td>             
+                    <td>
                         <ul class="list-toolbar" style="float:right;">
                             <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
@@ -81,14 +81,14 @@
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li class="list-toolbar-button">
-                                <a asp-page="./Details" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
                                     <i class="fas fa-search text-dark"
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li class="list-toolbar-button">
-                                <a asp-page="./Delete" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
                                     <i class="fas fa-trash text-dark"
                                        aria-hidden="true"></i>
                                 </a>
@@ -107,15 +107,15 @@
     {
         <ul class="pagination justify-content-center">
             @Html.PagedListPager((IPagedList)Model.MainModulePlaceHolderList, page => Url.Action("Index", new
-            {
-                SearchKey = Model.SearchKey,
-                PageNumber = page
-            }),
-            new PagedListRenderOptionsBase
-            {
-                LiElementClasses = new string[] { "page-item" },
-                PageClasses = new string[] { "page-link" }
-            })
+       {
+           SearchKey = Model.SearchKey,
+           PageNumber = page
+       }),
+     new PagedListRenderOptionsBase
+     {
+         LiElementClasses = new string[] { "page-item" },
+         PageClasses = new string[] { "page-link" }
+     })
         </ul>
     }
 </div>
@@ -132,10 +132,28 @@
     @Html.FormModal(new FormModalProperties()
     {
         ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
-        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Edit,  
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
         TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit,
         ModalTitle = @Resource.LabelEditMainModulePlaceHolder,
-        ModalWidth = 700,  
-    },  new { Id = "" })  
+        ModalWidth = 700,
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Edit })
+
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete,
+        ModalTitle = @Resource.LabelDeleteMainModulePlaceHolder,
+        ModalWidth = 700,
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Delete })
+
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_View,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View,
+        ModalTitle = @Resource.LabelDetailsMainModulePlaceHolder,
+        ModalWidth = 700,
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })
 }
 
