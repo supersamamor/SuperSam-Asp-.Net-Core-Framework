@@ -8,6 +8,14 @@ using System.Reflection;
 using System.Resources;
 namespace ProjectNamePlaceHolder.Web.Extensions
 {
+    public class FormModalProperties
+    {
+        public string ModalElementId { get; set; }
+        public string HandlerName { get; set; }
+        public string TriggerShowElementIdOrJsFunction { get; set; }
+        public string ModalTitle { get; set; }
+        public int ModalWidth { get; set; }
+    }
     public static class HtmlExtension
     {
         private static string _sortBy { get; set; }
@@ -222,53 +230,80 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                                       }";
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
-        }
+        } 
 
-        public enum FormModalAction
-        { 
-        
-        }
-        public static IHtmlContent FormModal(this IHtmlHelper htmlHelper, string modalId, string handlerName, string triggerShowElementId, string formLabel, int modalWidth)
-        {
+        public static IHtmlContent FormModal(this IHtmlHelper htmlHelper, FormModalProperties properties, object handlerParameters = null)
+        {          
             int initialZindex = 1041;
             var htmlstring = @"";  
-            htmlstring += @"      <div class="""" id=""" + modalId + @"Modal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:10%;display:none;"">";
+            htmlstring += @"      <div class="""" id=""" + properties.ModalElementId + @"Modal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:10%;display:none;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style="""">";
             htmlstring += @"                     <div class=""modal-header"">";
-            htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">" + formLabel + @"</h6>";
-            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + modalId + @"();"">&times;</button>";
+            htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">" + properties.ModalTitle + @"</h6>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + properties.ModalElementId + @"();"">&times;</button>";
             htmlstring += @"                     </div>";
-            htmlstring += @"                     <div id=""" + modalId + @"Body"" class=""modal-body"" style=""overflow-y:scroll;"">";
+            htmlstring += @"                     <div id=""" + properties.ModalElementId + @"Body"" class=""modal-body"" style=""overflow-y:scroll;"">";
             htmlstring += @"                     </div>";
             htmlstring += @"                     <div class=""modal-footer"">";
             htmlstring += @"                     </div>";
             htmlstring += @"                </div>";
             htmlstring += @"           </div>";
             htmlstring += @"      </div>";
-            htmlstring += @"      <div id=""" + modalId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            htmlstring += @"      <div id=""" + properties.ModalElementId + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
             htmlstring += @"      <script type=""text/javascript"">";
-            htmlstring += @"           function ShowHideModal" + modalId + @"() {";
-            htmlstring += @"                $(""#" + modalId + @"Modal"").slideToggle(""fast"");";
-            htmlstring += @"                $(""#" + modalId + @"BackGround"").slideToggle(""fast"");";    
+            htmlstring += @"           function ShowHideModal" + properties.ModalElementId + @"() {";
+            htmlstring += @"                $(""#" + properties.ModalElementId + @"Modal"").slideToggle(""fast"");";
+            htmlstring += @"                $(""#" + properties.ModalElementId + @"BackGround"").slideToggle(""fast"");";    
             htmlstring += @"           }";
-            htmlstring += @"           $( """ + triggerShowElementId + @""" ).bind( ""click"", function() {";
-            htmlstring += @"                $('#" + modalId + @"Body').load(""?handler=" + handlerName + @"&id=4"", function(){ Resize" + modalId + @"();});";
-            htmlstring += @"                ShowHideModal" + modalId + @"();";
-            htmlstring += @"           });";
-            htmlstring += @"           function Resize" + modalId + @"() {
-                                           var width = " + modalWidth + @";  
+
+            htmlstring +=         CreateJSTriggerMethod(properties.TriggerShowElementIdOrJsFunction, properties.ModalElementId, properties.HandlerName, handlerParameters);
+
+            htmlstring += @"           function Resize" + properties.ModalElementId + @"() {
+                                           var width = " + properties.ModalWidth + @";  
                                            var windowWidth = $(window).width(); 
                                            if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
                                            var leftPosition = (windowWidth - width) / 2;   
-                                           $('#" + modalId + @"Modal .modal-content').width(width);
-                                           $('#" + modalId + @"Modal').css({ left: leftPosition }); 
+                                           $('#" + properties.ModalElementId + @"Modal .modal-content').width(width);
+                                           $('#" + properties.ModalElementId + @"Modal').css({ left: leftPosition }); 
                                            var windowWHeight = $(window).height(); 
                                            var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
-                                           $('#" + modalId + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px'});
+                                           $('#" + properties.ModalElementId + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px'});
                                       }";
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
+        }
+
+        private static string CreateJSTriggerMethod(string triggerShowElementIdOrJsFunction, string modalElementId, string handlerName, object handlerParameters)
+        {
+            var htmlstring = @"";
+            if (handlerParameters == null)
+            {
+                htmlstring += @"           $( """ + triggerShowElementIdOrJsFunction + @""" ).bind( ""click"", function() {";
+                htmlstring += @"                $('#" + modalElementId + @"Body').load(""?handler=" + handlerName + @""", function(){ Resize" + modalElementId + @"();});";
+                htmlstring += @"                ShowHideModal" + modalElementId + @"();";
+                htmlstring += @"           });";
+            }
+            else
+            {
+                var handlerParameterQueryString = @"";
+                var handlerFunctionParameter = @"";
+                Type t = handlerParameters.GetType();
+                PropertyInfo[] props = t.GetProperties();
+                foreach (PropertyInfo prp in props)
+                {
+                    object valueAsObject = prp.GetValue(handlerParameters, new object[] { });
+                    var value = valueAsObject;
+                    handlerParameterQueryString += @"&" + prp.Name + @"=' + " + prp.Name + @" +'";
+                    handlerFunctionParameter += @"," + prp.Name;
+                }
+                handlerFunctionParameter = handlerFunctionParameter.Substring(1, handlerFunctionParameter.Length - 1);
+                htmlstring += @"           function "+ triggerShowElementIdOrJsFunction + @"(" + handlerFunctionParameter + @") {";
+                htmlstring += @"                $('#" + modalElementId + @"Body').load('?handler=" + handlerName + handlerParameterQueryString + @"', function(){ Resize" + modalElementId + @"();});";
+                htmlstring += @"                ShowHideModal" + modalElementId + @"();";
+                htmlstring += @"           };";
+            }        
+            return htmlstring;
         }
 
         public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
@@ -290,6 +325,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"</label>";
             return new HtmlString(htmlstring); ;
         }
+               
         private static string CreateRoutes(object routes)
         {
             if (routes == null)

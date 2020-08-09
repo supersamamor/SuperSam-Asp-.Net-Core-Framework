@@ -57,6 +57,7 @@
         <tr>
             @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Code)
             @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Name)
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -65,14 +66,16 @@
             foreach (var item in Model.MainModulePlaceHolderList)
             {
                 <tr style="cursor:pointer;">
-                    <td>
+                    <td onclick="Edit(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Code)
                     </td>
-                    <td>
-                        <span style="float:left;">@Html.DisplayFor(modelItem => item.Name)</span>
+                    <td onclick="Edit(@item.Id)">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>             
                         <ul class="list-toolbar" style="float:right;">
-                            <li class="list-toolbar-button">
-                                <a class="btnEdit" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                            <li onclick="Edit(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
                                     <i class="fas fa-edit text-dark"
                                        aria-hidden="true"></i>
                                 </a>
@@ -116,7 +119,22 @@
     }
 </div>
 @section Scripts {
-    @Html.FormModal("CreateEdit", "Create", "#btnAdd", @Resource.LabelAddMainModulePlaceHolder, 700)
-    @Html.FormModal("WewW", "Edit", ".btnEdit", @Resource.LabelEditMainModulePlaceHolder, 700)
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = "CreateEdit",
+        HandlerName = "Create",
+        TriggerShowElementIdOrJsFunction = "#btnAdd",
+        ModalTitle = @Resource.LabelAddMainModulePlaceHolder,
+        ModalWidth = 700
+    })
 
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = "Edit",
+        HandlerName = "Edit",  
+        TriggerShowElementIdOrJsFunction = "Edit",
+        ModalTitle = @Resource.LabelEditMainModulePlaceHolder,
+        ModalWidth = 700,  
+    },  new { Id = "" })  
 }
+

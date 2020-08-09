@@ -15,7 +15,7 @@ namespace ProjectNamePlaceHolder.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();         
+            //optionsBuilder.EnableSensitiveDataLogging();         
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
