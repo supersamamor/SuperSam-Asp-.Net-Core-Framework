@@ -1,5 +1,6 @@
 @page
 @model ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder.IndexModel
+@using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 @using X.PagedList.Web.Common
 @using X.PagedList.Mvc.Core
 @using X.PagedList
@@ -16,7 +17,7 @@
         <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
             <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
-                    <a class="input-group-text custom-anchor-button" id="btnAdd" style="cursor:pointer;">
+                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Create)()" style="cursor:pointer;">
                         <i class="fas fa-plus text-dark"
                            aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
                     </a>
@@ -66,15 +67,15 @@
             foreach (var item in Model.MainModulePlaceHolderList)
             {
                 <tr style="cursor:pointer;">
-                    <td onclick="Edit(@item.Id)">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Code)
                     </td>
-                    <td onclick="Edit(@item.Id)">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>             
                         <ul class="list-toolbar" style="float:right;">
-                            <li onclick="Edit(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
                                     <i class="fas fa-edit text-dark"
                                        aria-hidden="true"></i>
@@ -121,18 +122,18 @@
 @section Scripts {
     @Html.FormModal(new FormModalProperties()
     {
-        ModalElementId = "CreateEdit",
-        HandlerName = "Create",
-        TriggerShowElementIdOrJsFunction = "#btnAdd",
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Create,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Create,
         ModalTitle = @Resource.LabelAddMainModulePlaceHolder,
         ModalWidth = 700
     })
 
     @Html.FormModal(new FormModalProperties()
     {
-        ModalElementId = "Edit",
-        HandlerName = "Edit",  
-        TriggerShowElementIdOrJsFunction = "Edit",
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Edit,  
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit,
         ModalTitle = @Resource.LabelEditMainModulePlaceHolder,
         ModalWidth = 700,  
     },  new { Id = "" })  

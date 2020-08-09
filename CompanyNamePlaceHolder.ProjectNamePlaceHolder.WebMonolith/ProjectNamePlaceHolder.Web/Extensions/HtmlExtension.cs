@@ -12,7 +12,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
     {
         public string ModalElementId { get; set; }
         public string HandlerName { get; set; }
-        public string TriggerShowElementIdOrJsFunction { get; set; }
+        public string TriggerShowJsFunction { get; set; }
         public string ModalTitle { get; set; }
         public int ModalWidth { get; set; }
     }
@@ -257,7 +257,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                $(""#" + properties.ModalElementId + @"BackGround"").slideToggle(""fast"");";    
             htmlstring += @"           }";
 
-            htmlstring +=         CreateJSTriggerMethod(properties.TriggerShowElementIdOrJsFunction, properties.ModalElementId, properties.HandlerName, handlerParameters);
+            htmlstring +=         CreateJSTriggerMethod(properties.TriggerShowJsFunction, properties.ModalElementId, properties.HandlerName, handlerParameters);
 
             htmlstring += @"           function Resize" + properties.ModalElementId + @"() {
                                            var width = " + properties.ModalWidth + @";  
@@ -274,15 +274,15 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        private static string CreateJSTriggerMethod(string triggerShowElementIdOrJsFunction, string modalElementId, string handlerName, object handlerParameters)
+        private static string CreateJSTriggerMethod(string triggerShowJsFunction, string modalElementId, string handlerName, object handlerParameters)
         {
             var htmlstring = @"";
             if (handlerParameters == null)
             {
-                htmlstring += @"           $( """ + triggerShowElementIdOrJsFunction + @""" ).bind( ""click"", function() {";
-                htmlstring += @"                $('#" + modalElementId + @"Body').load(""?handler=" + handlerName + @""", function(){ Resize" + modalElementId + @"();});";
+                htmlstring += @"           function " + triggerShowJsFunction + @"() {";
+                htmlstring += @"                $('#" + modalElementId + @"Body').load('?handler=" + handlerName + @"', function(){ Resize" + modalElementId + @"();});";
                 htmlstring += @"                ShowHideModal" + modalElementId + @"();";
-                htmlstring += @"           });";
+                htmlstring += @"           };";
             }
             else
             {
@@ -298,7 +298,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                     handlerFunctionParameter += @"," + prp.Name;
                 }
                 handlerFunctionParameter = handlerFunctionParameter.Substring(1, handlerFunctionParameter.Length - 1);
-                htmlstring += @"           function "+ triggerShowElementIdOrJsFunction + @"(" + handlerFunctionParameter + @") {";
+                htmlstring += @"           function "+ triggerShowJsFunction + @"(" + handlerFunctionParameter + @") {";
                 htmlstring += @"                $('#" + modalElementId + @"Body').load('?handler=" + handlerName + handlerParameterQueryString + @"', function(){ Resize" + modalElementId + @"();});";
                 htmlstring += @"                ShowHideModal" + modalElementId + @"();";
                 htmlstring += @"           };";
