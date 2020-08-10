@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Correlate;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ProjectNamePlaceHolder.Application.ApplicationServices.User;
 using ProjectNamePlaceHolder.Application.Models.User;
-using ProjectNamePlaceHolder.Data;
 using ProjectNamePlaceHolder.Web.Extensions;
 
 namespace ProjectNamePlaceHolder.Web.Pages.User
-{
-    [Authorize(Roles = Roles.ADMIN)]
+{    
     public class DetailsModel : PageModel
     {
         private readonly UserService _service;

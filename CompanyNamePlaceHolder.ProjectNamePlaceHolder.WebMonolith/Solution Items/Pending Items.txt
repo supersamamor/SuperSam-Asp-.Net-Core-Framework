@@ -41,6 +41,8 @@ Pending Items.
 32. On monolith, Implement Ajax loader
 33. On monolith, Refresh listing after changes from the data
 34. %20%20%20%20%20%20%20%20%20%20%20%20%20 bug when sorting
+35. On monolith, finalize api authentication to include username and password from the body from generating a token and to relate api key table to user table in order to define token per user.
+
 
 Study Notes / Nice to have implementation notes
 1. React.js

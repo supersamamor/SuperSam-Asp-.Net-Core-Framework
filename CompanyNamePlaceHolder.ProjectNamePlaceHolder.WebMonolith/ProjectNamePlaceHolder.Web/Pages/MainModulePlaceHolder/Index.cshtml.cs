@@ -1,5 +1,4 @@
 using Correlate;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -14,8 +13,7 @@ using ProjectNamePlaceHolder.Application;
 using ProjectNamePlaceHolder.Data;
 
 namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
-{
-    [Authorize(Roles = Roles.ADMIN)]
+{   
     public class IndexModel : BasePageModel
     {
         private readonly MainModulePlaceHolderService _service;

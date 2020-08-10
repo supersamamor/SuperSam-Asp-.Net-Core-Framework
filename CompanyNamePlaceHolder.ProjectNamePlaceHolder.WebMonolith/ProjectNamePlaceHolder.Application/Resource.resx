@@ -249,4 +249,7 @@
   <data name="LabelRemove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="PromptUnAuthorized" xml:space="preserve">
+    <value>You are not authorized to access this feature.</value>
+  </data>
 </root>

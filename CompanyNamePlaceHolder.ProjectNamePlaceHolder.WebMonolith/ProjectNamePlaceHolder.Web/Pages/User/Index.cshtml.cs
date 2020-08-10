@@ -1,12 +1,10 @@
 ﻿using Correlate;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 using X.PagedList;
-using ProjectNamePlaceHolder.Data;
 using ProjectNamePlaceHolder.Web.Models;
 using ProjectNamePlaceHolder.Web.Extensions;
 using ProjectNamePlaceHolder.Application.ApplicationServices.User;
@@ -14,7 +12,6 @@ using ProjectNamePlaceHolder.Application.Models.User;
 
 namespace ProjectNamePlaceHolder.Web.Pages.User
 {
-    [Authorize(Roles = Roles.ADMIN)]
     public class IndexModel : BasePageModel
     {
         private readonly UserService _service;

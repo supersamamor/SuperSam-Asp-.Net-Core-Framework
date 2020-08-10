@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using ProjectNamePlaceHolder.Web.AppException;
 using Correlate;
 using ProjectNamePlaceHolder.Application;
+using ProjectNamePlaceHolder.Application.Exception;
 
 namespace ProjectNamePlaceHolder.Web.Extensions
 {
@@ -44,7 +45,11 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             else if (ex is ModelStateException)
             {
                 return ex.Message.ToString() + traceId;
-            }        
+            }
+            else if (ex is UnAuthorizedException)
+            {
+                return Resource.PromptUnAuthorized + traceId;
+            }
             return Resource.PromptMessageDefaultError + traceId;
         }
     }

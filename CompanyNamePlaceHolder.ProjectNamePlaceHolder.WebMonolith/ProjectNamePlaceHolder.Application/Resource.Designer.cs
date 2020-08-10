@@ -455,5 +455,14 @@ namespace ProjectNamePlaceHolder.Application {
                 return ResourceManager.GetString("PromptMessageUpdateUserConfirmation", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized to access this feature..
+        /// </summary>
+        public static string PromptUnAuthorized {
+            get {
+                return ResourceManager.GetString("PromptUnAuthorized", resourceCulture);
+            }
+        }
     }
 }

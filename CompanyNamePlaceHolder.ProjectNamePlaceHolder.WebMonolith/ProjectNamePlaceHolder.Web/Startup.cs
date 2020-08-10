@@ -149,8 +149,7 @@ namespace ProjectNamePlaceHolder.Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseLogCorrelation();
-   
+            app.UseLogCorrelation();   
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

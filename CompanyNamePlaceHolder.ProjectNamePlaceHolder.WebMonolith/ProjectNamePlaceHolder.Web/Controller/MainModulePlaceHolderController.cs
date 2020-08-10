@@ -19,11 +19,11 @@ namespace ProjectNamePlaceHolder.Web.Controller
     [Route("api/v1/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class MainModulePlaceHolderController : ControllerBase
+    public class MainModulePlaceHolderController : BaseController
     {
         private readonly IMediator _mediator;
         private readonly ILogger _logger;
-        public MainModulePlaceHolderController(IMediator mediator, ILogger<MainModulePlaceHolderController> logger)
+        public MainModulePlaceHolderController(IMediator mediator, ILogger<MainModulePlaceHolderController> logger) 
         {
             _mediator = mediator;
             _logger = logger;

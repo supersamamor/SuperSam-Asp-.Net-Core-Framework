@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using ProjectNamePlaceHolder.Application.Exception;
 using ProjectNamePlaceHolder.Application.Models.Role;
 using ProjectNamePlaceHolder.Application.Queries.Role.GetRoleList;
+using ProjectNamePlaceHolder.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -18,6 +20,10 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.Role
 
         public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId)
         {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new GetRoleListRequest
             {       
                 FilterBy = "CurrentRoles",
@@ -29,6 +35,10 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.Role
 
         public async Task<IList<RoleModel>> GetAvailableRoleListAsync(int userId)
         {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new GetRoleListRequest
             {        
                 FilterBy = "AvailableRoles",

@@ -1,6 +1,5 @@
 using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 using System.Threading.Tasks;
-using X.PagedList;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using MediatR;
@@ -11,6 +10,8 @@ using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainMo
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItem;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItemByCode;
 using ProjectNamePlaceHolder.Application.Models;
+using ProjectNamePlaceHolder.Data;
+using ProjectNamePlaceHolder.Application.Exception;
 
 namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder
 {
@@ -22,7 +23,11 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
         }
 
         public async Task<CustomPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize)
-        {
+        {          
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new GetMainModulePlaceHolderListRequest
             {
                 SearchKey = searchKey,
@@ -35,7 +40,11 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
         }
 
         public async Task<MainModulePlaceHolderModel> GetMainModulePlaceHolderItemAsync(int id)
-        {      
+        {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new GetMainModulePlaceHolderItemRequest
             {
                 Id = id
@@ -44,7 +53,11 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
         }
 
         public async Task<MainModulePlaceHolderModel> UpdateMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
-        {          
+        {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new UpdateMainModulePlaceHolderRequest
             {
                 MainModulePlaceHolder = mainModulePlaceHolder,
@@ -60,7 +73,11 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
         }
 
         public async Task<MainModulePlaceHolderModel> SaveMainModulePlaceHolderAsync(MainModulePlaceHolderModel mainModulePlaceHolder)
-        {          
+        {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new AddMainModulePlaceHolderRequest
             {
                 MainModulePlaceHolder = mainModulePlaceHolder,
@@ -77,6 +94,10 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
 
         public async Task DeleteMainModulePlaceHolderAsync(int id)
         {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
             var request = new DeleteMainModulePlaceHolderRequest
             {
                 Id = id
