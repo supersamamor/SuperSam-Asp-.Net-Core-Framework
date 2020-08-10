@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using ProjectNamePlaceHolder.Application;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Resources;
+using X.PagedList;
+
 namespace ProjectNamePlaceHolder.Web.Extensions
 {
     public class FormModalProperties
@@ -48,7 +53,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
                 fieldDisplayName = rm.GetString(_labelName);
             }
-            string routes = CreateRoutes(htmlHelper.ViewData.Model);
+            string routes = "";
+            routes = CreateRoutes(htmlHelper.ViewData.Model, true);
             var sortIcon = "fas fa-sort";
             if (_sortBy == _fieldName)
             {
@@ -61,8 +67,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             string maxwidthsytle = maxwidth != null ? @"style=""max-width:" + maxwidth + @"px;width:" + maxwidth + @"px;""" : "";
             var htmlstring = @"<th " + maxwidthsytle + @">";
             htmlstring += @"        <i class=""" + sortIcon + @"""></i>";
-            htmlstring += @"        <a href=""" + _pageName + @"?";
-            htmlstring += @"             " + routes + @"""";
+            htmlstring += @"        <a href=""" + _pageName + @"?" + routes + @""""; 
             htmlstring += @"             class=""page-sorter""> " + fieldDisplayName;
             htmlstring += @"        </a>";
             htmlstring += @"   </th>";
@@ -292,6 +297,66 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
+        public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
+        {
+            var propertyGetExpression = expression.Body as MemberExpression;
+            var fieldOnClosureExpression = propertyGetExpression.Expression;
+            MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
+            var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+            var requiredAttribute = property.GetCustomAttribute(typeof(RequiredAttribute)) as RequiredAttribute;
+            string fieldDisplayName = "[Field Not Found]";
+            if (field != null)
+            {
+                var _labelName = field.Name;
+                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
+                fieldDisplayName = rm.GetString(_labelName);
+            }
+            var htmlstring = @"<label class=""" + className + @""">" + fieldDisplayName;
+            if (requiredAttribute != null) { htmlstring += @"<span style=""color:red;""> *<span>"; }
+            htmlstring += @"</label>";
+            return new HtmlString(htmlstring); ;
+        }
+
+        public static IHtmlContent CelerSoftPager(this IHtmlHelper htmlHelper, IPagedList pagedListMetaData)
+        {
+            var pageBuffer = 5;
+            var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+            var pageName = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext).ActionContext.ActionDescriptor.DisplayName.Replace("/Index", "");
+
+            var pageCount = pagedListMetaData.PageSize != 0 ? (pagedListMetaData.TotalItemCount / pagedListMetaData.PageSize) + 1 : 0;
+            var previous = pagedListMetaData.PageNumber - pageBuffer <= 0 ? 1 : pagedListMetaData.PageNumber - pageBuffer;
+            var next = pagedListMetaData.PageNumber + pageBuffer >= pageCount ? pageCount : pagedListMetaData.PageNumber + pageBuffer;
+            var htmlstring = @"<ul class=""pagination justify-content-center"">";
+            htmlstring += @"<ul class=""pagination pagination-sm no-margin pull-right"">";
+            if (pagedListMetaData.PageNumber != 1)
+            {
+                htmlstring += CreatePagelLink(htmlHelper.ViewData.Model, pageName, "<<", 1);
+                htmlstring += CreatePagelLink(htmlHelper.ViewData.Model, pageName, "Previous", previous);
+            }
+            for (var i = (pagedListMetaData.PageNumber - pageBuffer) <= 0 ? 1 : (pagedListMetaData.PageNumber - pageBuffer); i <= (pagedListMetaData.PageNumber + pageBuffer <= pageCount ? pagedListMetaData.PageNumber + pageBuffer : pageCount); i++)
+            {
+                htmlstring += CreatePagelLink(htmlHelper.ViewData.Model, pageName, i.ToString(), i, pagedListMetaData.PageNumber);
+            }
+            if (pagedListMetaData.PageNumber != pageCount)
+            {
+                htmlstring += CreatePagelLink(htmlHelper.ViewData.Model, pageName, "Next", next);
+                htmlstring += CreatePagelLink(htmlHelper.ViewData.Model, pageName, ">>", pageCount);
+            }
+            htmlstring += @"</ul></ul>";
+            return new HtmlString(htmlstring);
+        }
+
+        private static string CreatePagelLink(object routes, string pageName, string label, int pageNo, int currentPage = 0)
+        {
+            var str = @"<li class=""page-item " + (label == currentPage.ToString() ? "active" : "") + @""">";
+            str += @"<a href=""" + pageName + @"?PageNumber=" + pageNo;
+            str += CreateRoutes(routes, false, new List<string> { "PageNumber" }) + @"""";
+            str += @" class=""page-link"">" + label;
+            str += @"</a>";
+            str += @"</li>";
+            return str;
+        }
+        
         private static string CreateJSTriggerMethod(string triggerShowJsFunction, string modalElementId, string handlerName, object handlerParameters)
         {
             var htmlstring = @"";
@@ -325,68 +390,62 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return htmlstring;
         }
 
-        public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
+        private static string CreateRoutes(object routes, bool isSorter, List<string> excludeProperties = null)
         {
-            var propertyGetExpression = expression.Body as MemberExpression;
-            var fieldOnClosureExpression = propertyGetExpression.Expression;
-            MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
-            var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-            var requiredAttribute = property.GetCustomAttribute(typeof(RequiredAttribute)) as RequiredAttribute;
-            string fieldDisplayName = "[Field Not Found]";
-            if (field != null)
-            {           
-                var _labelName = field.Name;
-                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
-                fieldDisplayName = rm.GetString(_labelName);
-            }            
-            var htmlstring = @"<label class=""" + className + @""">" + fieldDisplayName;
-            if (requiredAttribute != null) { htmlstring += @"<span style=""color:red;""> *<span>"; }
-            htmlstring += @"</label>";
-            return new HtmlString(htmlstring); ;
-        }
-               
-        private static string CreateRoutes(object routes)
-        {
+            if (excludeProperties == null) { excludeProperties = new List<string>(); }
             if (routes == null)
                 return "";
             var str = @"";
             Type t = routes.GetType();
             PropertyInfo[] props = t.GetProperties();
             foreach (PropertyInfo prp in props)
-            {                
-                if (prp.PropertyType.IsPrimitive || prp.PropertyType == typeof(Decimal) || prp.PropertyType == typeof(String) 
-                    || prp.PropertyType == typeof(DateTime)|| prp.PropertyType == typeof(DateTime?))
+            {           
+                if ((prp.PropertyType.IsPrimitive || prp.PropertyType == typeof(Decimal) || prp.PropertyType == typeof(String) 
+                    || prp.PropertyType == typeof(DateTime)|| prp.PropertyType == typeof(DateTime?)) && !excludeProperties.Contains(prp.Name))
                 {
                     object valueAsObject = prp.GetValue(routes, new object[] { });
-                    var value = valueAsObject;
+                    var value = valueAsObject;                   
                     if (prp.PropertyType == typeof(DateTime) || prp.PropertyType == typeof(DateTime?))
                     {
                         value = (object)(((DateTime)valueAsObject).ToString("yyyy-MM-dd"));
                     }
                     if (prp.Name == "SortBy")
-                    {                      
+                    {
                         _sortBy = value == null ? null : value.ToString();
                         str += @"&" + prp.Name + @"=" + _fieldName;
                     }
                     else if (prp.Name == "OrderBy")
                     {
-                        _orderBy = value == null ? null : value.ToString();
-                        var orderByValue = "Asc";
-                        if (_orderBy == null || _orderBy == "Desc")
+                        if (isSorter == true)
                         {
-                            orderByValue = "Asc";
+                            _orderBy = value == null ? null : value.ToString();
+                            var orderByValue = "Asc";
+                            if (_orderBy == null || _orderBy == "Desc")
+                            {
+                                orderByValue = "Asc";
+                            }
+                            else
+                            {
+                                orderByValue = "Desc";
+                            }
+                            str += @"&" + prp.Name + @"=" + orderByValue;
                         }
-                        else {
-                            orderByValue = "Desc";
-                        }
-                        str += @"&" + prp.Name + @"=" + orderByValue;
-                    }
-                    else {
-                        if (value != null)
+                        else
                         {
                             str += @"&" + prp.Name + @"=" + value;
-                        }                           
-                    } 
+                        }                      
+                    }
+                    else
+                    {
+                        if (value != null && value.ToString() != "")
+                        {
+                            str += @"&" + prp.Name + @"=" + value;
+                        }
+                        else
+                        {
+                            str += @"";
+                        }
+                    }                                     
                 }            
             }
             return str;

@@ -114,7 +114,10 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
         private async Task GetMainModulePlaceHolderListAsync()
         {
-            MainModulePlaceHolderList = await _service.GetMainModulePlaceHolderListAsync(SearchKey, OrderBy, SortBy, PageNumber, PageSize);          
+            var mainModulePlaceHolderList = await _service.GetMainModulePlaceHolderListAsync(SearchKey, OrderBy, SortBy, PageNumber, PageSize);
+            MainModulePlaceHolderList = new StaticPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList.Items, 
+                mainModulePlaceHolderList.PagedListMetaData.PageNumber, mainModulePlaceHolderList.PagedListMetaData.PageSize, 
+                mainModulePlaceHolderList.PagedListMetaData.TotalItemCount);
         }
 
         private async Task SaveMainModulePlaceHolderAsync()

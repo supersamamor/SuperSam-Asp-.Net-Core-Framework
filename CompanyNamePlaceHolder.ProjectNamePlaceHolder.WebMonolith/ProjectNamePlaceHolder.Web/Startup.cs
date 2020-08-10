@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ProjectNamePlaceHolder.Web.Services.Email;
 using ProjectNamePlaceHolder.Data;
-using System.Reflection;
 using MediatR;
 using ProjectNamePlaceHolder.Data.Repositories;
 using AutoMapper;
@@ -23,6 +22,10 @@ using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHold
 using ProjectNamePlaceHolder.Application.ApplicationServices.Role;
 using ProjectNamePlaceHolder.Application.ApplicationServices.User;
 using ProjectNamePlaceHolder.Application;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.OpenApi.Models;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -90,6 +93,32 @@ namespace ProjectNamePlaceHolder.Web
             services.AddMediatR(typeof(Resource).Assembly);
             services.AddTransient<MainModulePlaceHolderRepository>();
             services.AddTransient<UserRepository>();
+            services.AddHealthChecks().AddSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            #region Api
+            services.AddHttpContextAccessor();
+
+            services.AddControllers(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "ProjectNamePlaceHolder API",
+                    Description = "Web APIs for accessing ProjectNamePlaceHolder resources",
+                });
+            });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,17 +137,29 @@ namespace ProjectNamePlaceHolder.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            #region Api
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProjectNamePlaceHolder API");
+            });
+            app.UseLogCorrelation();
+            #endregion
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseLogCorrelation();
+   
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-            });
-            app.UseHealthChecks("/health", new HealthCheckOptions()
-            {
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

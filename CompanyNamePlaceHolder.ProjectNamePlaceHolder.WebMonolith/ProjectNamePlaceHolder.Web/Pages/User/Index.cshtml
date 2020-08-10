@@ -9,11 +9,11 @@
 }
 <form method="get">
     <div class="row toolbar-container">
-        <div class="btn-toolbar mb-1 col-sm-3 toolbar-left-panel" role="toolbar">         
+        <div class="btn-toolbar mb-1 col-sm-3 toolbar-left-panel" role="toolbar">
         </div>
         <div class="btn-toolbar mb-1 col-sm-9 toolbar-right-panel" role="toolbar" style="padding-left:0px;padding-right:0px;">
-            <div class="col-sm-12 row" style="margin-right:0px;padding-right:0px;">               
-                <div class="col-sm-8" id="">                  
+            <div class="col-sm-12 row" style="margin-right:0px;padding-right:0px;">
+                <div class="col-sm-8" id="">
                 </div>
                 <div class="col-sm-4" id="SearchContainer">
                     <div id="search-toolbar" class="input-group input-group-sm">
@@ -59,82 +59,69 @@
         {
             foreach (var item in Model.UserList)
             {
-        <tr onclick="@if (!item.IdentityEmailConfirmed)
+                <tr onclick="@if (!item.IdentityEmailConfirmed)
                                 { <text>document.getElementById('btnActivate@(item.Id)').click();</text>}
                                 else
                                 { <text>document.getElementById('btnView@(item.Id)').click();</text>}" style="cursor:pointer;">
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityUserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityEmailConfirmed)
-            </td>
-            <td>
-                <ul class="list-toolbar" style="float:right;">
-                    @if (!item.IdentityEmailConfirmed)
-                    {
-                        <li class="list-toolbar-button">
-                            <a Id="btnActivate@(item.Id)" asp-page="./Activate" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelActivate">
-                                <i class="fas fa-check text-dark"
-                                   aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="list-toolbar-button">
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="@Resource.LabelActivated">
-                                <i class="fas fa-check" aria-hidden="true" style="color:#17a2b8;"></i>
-                            </a>
-                        </li>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdentityUserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdentityEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdentityEmailConfirmed)
+                    </td>
+                    <td>
+                        <ul class="list-toolbar" style="float:right;">
+                            @if (!item.IdentityEmailConfirmed)
+                            {
+                                <li class="list-toolbar-button">
+                                    <a Id="btnActivate@(item.Id)" asp-page="./Activate" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelActivate">
+                                        <i class="fas fa-check text-dark"
+                                           aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="list-toolbar-button">
+                                    <a href="#" data-toggle="tooltip" data-placement="top" title="@Resource.LabelActivated">
+                                        <i class="fas fa-check" aria-hidden="true" style="color:#17a2b8;"></i>
+                                    </a>
+                                </li>
 
-                    }
-                    <li class="list-toolbar-button">
-                        <a Id="btnEdit@(item.Id)" asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
-                            <i class="fas fa-edit text-dark"
-                               aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li class="list-toolbar-button">
-                        <a Id="btnView@(item.Id)" asp-page="./Details" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
-                            <i class="fas fa-search text-dark"
-                               aria-hidden="true"></i>
-                        </a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-                }
-                }
-            </tbody>
+                            }
+                            <li class="list-toolbar-button">
+                                <a Id="btnEdit@(item.Id)" asp-page="./Edit" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                                    <i class="fas fa-edit text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-toolbar-button">
+                                <a Id="btnView@(item.Id)" asp-page="./Details" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
+                                    <i class="fas fa-search text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
 </table>
 <div class="small">
     <br />
     @if (Model.UserList != null)
     {
-        <ul class="pagination justify-content-center">
-            @Html.PagedListPager((IPagedList)Model.UserList, page => Url.Action("Index", new
-            {
-                SearchKey = Model.SearchKey,         
-                PageNumber = page,
-                OrderBy = Model.OrderBy,
-                SortBy = Model.SortBy
-            }),
-            new PagedListRenderOptionsBase
-            {
-                LiElementClasses = new string[] { "page-item" },
-                PageClasses = new string[] { "page-link" }
-            })
-        </ul>
+        @Html.CelerSoftPager(Model.UserList)
     }
 </div>
 @section Scripts {
-  
+
 }
 

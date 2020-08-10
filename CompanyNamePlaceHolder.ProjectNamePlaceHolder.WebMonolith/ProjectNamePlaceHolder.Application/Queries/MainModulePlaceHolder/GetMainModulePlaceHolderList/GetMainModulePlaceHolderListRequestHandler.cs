@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using ProjectNamePlaceHolder.Data;
 using X.PagedList;
 using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application.Models;
 
 namespace ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderList
 {
-    public class GetMainModulePlaceHolderListRequestHandler : IRequestHandler<GetMainModulePlaceHolderListRequest, StaticPagedList<MainModulePlaceHolderModel>>
+    public class GetMainModulePlaceHolderListRequestHandler : IRequestHandler<GetMainModulePlaceHolderListRequest, CustomPagedList<MainModulePlaceHolderModel>>
     {       
         
         private readonly ProjectNamePlaceHolderContext _context;
@@ -21,7 +22,7 @@ namespace ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMa
             _context = context;
             _mapper = mapperConfig.CreateMapper();
         }
-        public async Task<StaticPagedList<MainModulePlaceHolderModel>> Handle(GetMainModulePlaceHolderListRequest request, CancellationToken cancellationToken)
+        public async Task<CustomPagedList<MainModulePlaceHolderModel>> Handle(GetMainModulePlaceHolderListRequest request, CancellationToken cancellationToken)
         {
             var query = _context.MainModulePlaceHolder.AsNoTracking();
             if (request.SearchKey != null)
@@ -61,17 +62,10 @@ namespace ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMa
                         query = query.OrderByDescending(l => l.Name);
                     }
                     break;
-            }
-            request.PageIndex = request.PageIndex == 0 ? 1 : request.PageIndex;
-            if (request.PageSize == 0)
-            {
-                var recordCount = query.Count();
-                request.PageSize = recordCount == 0 ? 1 : recordCount;
-            }
-            request.PageSize = request.PageSize == 0 ? query.Count() == 0 ? 1 : query.Count() : request.PageSize;
-            var pagedMainModulePlaceHolder = query.ToPagedList(request.PageIndex, request.PageSize);          
-            var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.ToListAsync());
-            return new StaticPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList, pagedMainModulePlaceHolder);             
+            }         
+            var pagedMainModulePlaceHolder = new CustomPagedList<Data.Models.MainModulePlaceHolder>(query, request.PageIndex, request.PageSize);
+            var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.Items.ToListAsync());
+            return new CustomPagedList<MainModulePlaceHolderModel>(mainModulePlaceHolderList, pagedMainModulePlaceHolder.PagedListMetaData);                     
         }
     }
 }

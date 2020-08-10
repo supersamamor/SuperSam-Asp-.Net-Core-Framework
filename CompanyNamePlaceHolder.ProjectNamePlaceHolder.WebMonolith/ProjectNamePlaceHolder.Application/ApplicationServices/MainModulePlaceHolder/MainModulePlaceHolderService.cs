@@ -10,6 +10,7 @@ using ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.DeleteMa
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderList;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItem;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItemByCode;
+using ProjectNamePlaceHolder.Application.Models;
 
 namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder
 {
@@ -20,7 +21,7 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
         {            
         }
 
-        public async Task<IPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize)
+        public async Task<CustomPagedList<MainModulePlaceHolderModel>> GetMainModulePlaceHolderListAsync(string searchKey, string orderBy, string sortBy, int pageIndex, int pageSize)
         {
             var request = new GetMainModulePlaceHolderListRequest
             {

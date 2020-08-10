@@ -105,18 +105,7 @@
     <br />
     @if (Model.MainModulePlaceHolderList != null)
     {
-        <ul class="pagination justify-content-center">
-            @Html.PagedListPager((IPagedList)Model.MainModulePlaceHolderList, page => Url.Action("Index", new
-       {
-           SearchKey = Model.SearchKey,
-           PageNumber = page
-       }),
-     new PagedListRenderOptionsBase
-     {
-         LiElementClasses = new string[] { "page-item" },
-         PageClasses = new string[] { "page-link" }
-     })
-        </ul>
+        @Html.CelerSoftPager(Model.MainModulePlaceHolderList) 
     }
 </div>
 @section Scripts {
