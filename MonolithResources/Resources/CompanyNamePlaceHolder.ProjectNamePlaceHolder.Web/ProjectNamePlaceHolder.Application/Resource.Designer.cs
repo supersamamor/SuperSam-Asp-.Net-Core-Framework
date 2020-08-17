@@ -464,5 +464,7 @@ namespace ProjectNamePlaceHolder.Application {
                 return ResourceManager.GetString("PromptUnAuthorized", resourceCulture);
             }
         }
+		
+		Template:[InsertNewResouceDesignerPropertiesHere]
     }
 }
