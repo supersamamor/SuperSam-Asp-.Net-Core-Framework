@@ -88,6 +88,7 @@
                     @if (User.IsInRole(Roles.ADMIN))
                     {
                         <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/MainModulePlaceHolder/Index">@Resource.LabelMainModulePlaceHolder</a>
+						Template:[InsertNewNavigationMenuTextHere]
                         <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/User/Index">@Resource.LabelUsers</a>
                     }
                     <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Privacy">@Resource.LabelPrivacy</a>
