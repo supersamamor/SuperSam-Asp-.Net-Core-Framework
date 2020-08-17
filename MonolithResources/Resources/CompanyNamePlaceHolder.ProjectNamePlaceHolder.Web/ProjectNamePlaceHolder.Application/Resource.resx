@@ -119,10 +119,7 @@
   </resheader>
   <data name="LabelAdd" xml:space="preserve">
     <value>Add</value>
-  </data>
-  <data name="LabelAddMainModulePlaceHolder" xml:space="preserve">
-    <value>Add MainModulePlaceHolder</value>
-  </data>
+  </data>  
   <data name="LabelBackToList" xml:space="preserve">
     <value>Back To List</value>
   </data>
@@ -137,18 +134,9 @@
   </data>
   <data name="LabelDelete" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="LabelDeleteMainModulePlaceHolder" xml:space="preserve">
-    <value>Delete MainModulePlaceHolder</value>
-  </data>
-  <data name="LabelDetailsMainModulePlaceHolder" xml:space="preserve">
-    <value>MainModulePlaceHolder Details</value>
-  </data>
+  </data>  
   <data name="LabelEdit" xml:space="preserve">
     <value>Edit</value>
-  </data>
-  <data name="LabelEditMainModulePlaceHolder" xml:space="preserve">
-    <value>Edit MainModulePlaceHolder</value>
   </data>
   <data name="LabelFullName" xml:space="preserve">
     <value>Full Name</value>
@@ -161,10 +149,7 @@
   </data>
   <data name="LabelSave" xml:space="preserve">
     <value>Save</value>
-  </data>
-  <data name="LabelMainModulePlaceHolderList" xml:space="preserve">
-    <value>MainModulePlaceHolder List</value>
-  </data>
+  </data>  
   <data name="LabelView" xml:space="preserve">
     <value>View</value>
   </data>
@@ -212,9 +197,6 @@
   </data>
   <data name="LabelUsers" xml:space="preserve">
     <value>Users</value>
-  </data>
-  <data name="LabelMainModulePlaceHolder" xml:space="preserve">
-    <value>MainModulePlaceHolder</value>
   </data>
   <data name="LabelActivated" xml:space="preserve">
     <value>Activated</value>

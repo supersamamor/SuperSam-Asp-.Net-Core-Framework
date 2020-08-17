@@ -94,16 +94,7 @@ namespace ProjectNamePlaceHolder.Application {
             get {
                 return ResourceManager.GetString("LabelAdd", resourceCulture);
             }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add MainModulePlaceHolder.
-        /// </summary>
-        public static string LabelAddMainModulePlaceHolder {
-            get {
-                return ResourceManager.GetString("LabelAddMainModulePlaceHolder", resourceCulture);
-            }
-        }
+        }     
         
         /// <summary>
         ///   Looks up a localized string similar to Back.
@@ -160,24 +151,6 @@ namespace ProjectNamePlaceHolder.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete MainModulePlaceHolder.
-        /// </summary>
-        public static string LabelDeleteMainModulePlaceHolder {
-            get {
-                return ResourceManager.GetString("LabelDeleteMainModulePlaceHolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MainModulePlaceHolder Details.
-        /// </summary>
-        public static string LabelDetailsMainModulePlaceHolder {
-            get {
-                return ResourceManager.GetString("LabelDetailsMainModulePlaceHolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to User Detail.
         /// </summary>
         public static string LabelDetailsUser {
@@ -192,15 +165,6 @@ namespace ProjectNamePlaceHolder.Application {
         public static string LabelEdit {
             get {
                 return ResourceManager.GetString("LabelEdit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit MainModulePlaceHolder.
-        /// </summary>
-        public static string LabelEditMainModulePlaceHolder {
-            get {
-                return ResourceManager.GetString("LabelEditMainModulePlaceHolder", resourceCulture);
             }
         }
         
@@ -238,25 +202,7 @@ namespace ProjectNamePlaceHolder.Application {
             get {
                 return ResourceManager.GetString("LabelHome", resourceCulture);
             }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MainModulePlaceHolder.
-        /// </summary>
-        public static string LabelMainModulePlaceHolder {
-            get {
-                return ResourceManager.GetString("LabelMainModulePlaceHolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MainModulePlaceHolder List.
-        /// </summary>
-        public static string LabelMainModulePlaceHolderList {
-            get {
-                return ResourceManager.GetString("LabelMainModulePlaceHolderList", resourceCulture);
-            }
-        }
+        }     
         
         /// <summary>
         ///   Looks up a localized string similar to Name.
