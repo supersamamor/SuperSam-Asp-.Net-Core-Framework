@@ -85,7 +85,6 @@
                 <div class="sidebar-heading" style="color:transparent;">Navigation</div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Index">@Resource.LabelHome</a>
-
                     @if (User.IsInRole(Roles.ADMIN))
                     {
                         <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/MainModulePlaceHolder/Index">@Resource.LabelMainModulePlaceHolder</a>
