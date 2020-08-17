@@ -19,9 +19,7 @@ namespace ProjectNamePlaceHolder.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            #region Is Unique
-            builder.Entity<Models.MainModulePlaceHolder>()
-            .HasIndex(c => new { c.Code }).IsUnique();
+            #region Is Unique       
             #endregion
 
             #region Disable Cascade Delete
@@ -38,7 +36,6 @@ namespace ProjectNamePlaceHolder.Data
             base.OnModelCreating(builder);
         }
         public virtual DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
-        public virtual DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; }
         public virtual DbSet<ProjectNamePlaceHolderApiClient> ProjectNamePlaceHolderApiClient { get; set; }     
     }
 }

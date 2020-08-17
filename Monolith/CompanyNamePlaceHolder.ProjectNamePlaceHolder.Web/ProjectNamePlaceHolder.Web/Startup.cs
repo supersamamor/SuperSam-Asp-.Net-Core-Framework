@@ -15,10 +15,8 @@ using ProjectNamePlaceHolder.Data.Repositories;
 using AutoMapper;
 using ProjectNamePlaceHolder.Logger.Extensions.DependencyInjection;
 using ProjectNamePlaceHolder.Logger.Extensions.AspNetCore;
-using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application.Models.User;
 using ProjectNamePlaceHolder.Application.Models.Role;
-using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application.ApplicationServices.Role;
 using ProjectNamePlaceHolder.Application.ApplicationServices.User;
 using ProjectNamePlaceHolder.Application;
@@ -54,10 +52,7 @@ namespace ProjectNamePlaceHolder.Web
                 .AddEntityFrameworkStores<ProjectNamePlaceHolderContext>();
 
             services.AddSingleton(new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
-                    cfg.CreateMap<Data.Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>().ReverseMap();
-                    cfg.CreateMap<Core.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
+                {                  
                     cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
                     cfg.CreateMap<Data.Models.ProjectNamePlaceHolderUser, Core.Models.ProjectNamePlaceHolderUser>().ReverseMap();
                     cfg.CreateMap<Core.Models.ProjectNamePlaceHolderUser, UserModel>().ReverseMap();
@@ -66,8 +61,7 @@ namespace ProjectNamePlaceHolder.Web
                 }
             ));
 
-            #region Application Services
-            services.AddTransient<MainModulePlaceHolderService>();
+            #region Application Services   
             services.AddTransient<UserService>();
             services.AddTransient<RoleService>();
             #endregion
@@ -90,8 +84,7 @@ namespace ProjectNamePlaceHolder.Web
             services.AddRazorPages();
             services.AddHealthChecks().AddDbContextCheck<ProjectNamePlaceHolderContext>();
             services.AddApplicationInsightsTelemetry();
-            services.AddMediatR(typeof(Resource).Assembly);
-            services.AddTransient<MainModulePlaceHolderRepository>();
+            services.AddMediatR(typeof(Resource).Assembly);         
             services.AddTransient<UserRepository>();
             services.AddHealthChecks().AddSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             services.Configure<CookiePolicyOptions>(options =>
