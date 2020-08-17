@@ -1,0 +1,148 @@
+@page
+@model ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder.IndexModel
+@using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
+@using X.PagedList.Web.Common
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@{
+    ViewData["Title"] = @Resource.LabelMainModulePlaceHolderList;
+}
+<style>
+    body x {
+        outline: 1px solid red;
+    }
+</style>
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Create)()" style="cursor:pointer;">
+                        <i class="fas fa-plus text-dark"
+                           aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
+            <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
+                <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
+                    <div class="input-group-prepend input-group-sm">
+                        <button type="submit" class="input-group-text">
+                            <i class="fas fa-search text-dark"
+                               aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <input asp-for="SearchKey" class="form-control" placeholder="Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="" style="margin-top:5px;">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info small alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<table class="table small table-striped table-hover">
+    <thead>
+        <tr>
+            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Code)
+            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Name)
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.MainModulePlaceHolderList != null)
+        {
+            foreach (var item in Model.MainModulePlaceHolderList)
+            {
+                <tr style="cursor:pointer;">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <ul class="list-toolbar" style="float:right;">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                                    <i class="fas fa-edit text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
+                                    <i class="fas fa-search text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
+                                    <i class="fas fa-trash text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="small">
+    <br />
+    @if (Model.MainModulePlaceHolderList != null)
+    {
+        @Html.CelerSoftPager(Model.MainModulePlaceHolderList) 
+    }
+</div>
+@section Scripts {
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Create,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Create,
+        ModalTitle = @Resource.LabelAddMainModulePlaceHolder,
+        ModalWidth = 700
+    })
+
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit,
+        ModalTitle = @Resource.LabelEditMainModulePlaceHolder,
+        ModalWidth = 700,
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Edit })
+
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete,
+        ModalTitle = @Resource.LabelDeleteMainModulePlaceHolder,
+        ModalWidth = 700,
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Delete })
+
+    @Html.FormModal(new FormModalProperties()
+    {
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_View,
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View,
+        ModalTitle = @Resource.LabelDetailsMainModulePlaceHolder,
+        ModalWidth = 700,
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })
+}
+
