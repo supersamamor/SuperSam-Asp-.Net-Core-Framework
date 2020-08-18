@@ -2,8 +2,7 @@ namespace ProjectNamePlaceHolder.Core.Models
 {
     public class MainModulePlaceHolder : BaseModel
     {      
-        public string Code { get; private set; }      
-        public string Name { get; private set; }
+        Template:[InsertNewCoreModelColumnTextHere]
         public void UpdateFrom(string name) 
         {
             this.Name = name;
