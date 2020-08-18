@@ -21,7 +21,7 @@ namespace ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.Upda
         protected override async Task Handle(UpdateMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
             var mainModulePlaceHolderCore = await _repository.GetItemAsync(request.MainModulePlaceHolder.Id);
-            mainModulePlaceHolderCore.UpdateFrom(request.MainModulePlaceHolder.Name);
+            mainModulePlaceHolderCore.UpdateFrom(Template:[InsertNewCommandUpdateParameterTextHere]);
             mainModulePlaceHolderCore.SetUpdatedInformation(request.Username);
             await _repository.SaveAsync(mainModulePlaceHolderCore);
             await _context.SaveChangesAsync();          
