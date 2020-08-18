@@ -38,9 +38,9 @@ namespace ProjectNamePlaceHolder.Data.Repositories
         {        
             return _mapper.Map<Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>(await _context.MainModulePlaceHolder.Where(l => l.Id == id).AsNoTracking().FirstOrDefaultAsync());          
         }
-        public async Task<Core.Models.MainModulePlaceHolder> GetItemByCodeAsync(string mainModulePlaceHolderCode)
+        public async Task<Core.Models.MainModulePlaceHolder> GetItemBy[UFF]Async(string mainModulePlaceHolder[UFF])
         {
-            return _mapper.Map<Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>(await _context.MainModulePlaceHolder.Where(l => l.Code == mainModulePlaceHolderCode).AsNoTracking().FirstOrDefaultAsync());
+            return _mapper.Map<Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>(await _context.MainModulePlaceHolder.Where(l => l.[UFF] == mainModulePlaceHolder[UFF]).AsNoTracking().FirstOrDefaultAsync());
         }
     }     
 }

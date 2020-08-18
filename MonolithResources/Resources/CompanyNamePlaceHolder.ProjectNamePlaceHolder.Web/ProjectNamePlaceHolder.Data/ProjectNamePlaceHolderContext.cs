@@ -20,8 +20,7 @@ namespace ProjectNamePlaceHolder.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             #region Is Unique
-            builder.Entity<Models.MainModulePlaceHolder>()
-            .HasIndex(c => new { c.Code }).IsUnique();
+			Template:[InsertNewUniqueIndexOfModel]
             #endregion
 
             #region Disable Cascade Delete
