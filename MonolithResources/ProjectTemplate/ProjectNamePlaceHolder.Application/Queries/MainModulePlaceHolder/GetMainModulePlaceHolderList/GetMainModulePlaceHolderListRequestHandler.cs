@@ -28,40 +28,23 @@ namespace ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMa
             if (request.SearchKey != null)
             {
                 var searchWords = request.SearchKey.ToLower().Split(' ');
-                query = query.Where(i => i.Code.ToLower().Contains(searchWords[0])
-                                  || i.Name.ToLower().Contains(searchWords[0]));
+                query = query.Where(i => 
+									 Template:[InsertNewSearchableZero]
+								  );
                 if (searchWords.Length > 1)
                 {
                     for (int x = 1; x < searchWords.Length; x++)
                     {
                         var search = searchWords[x];
-                        query = query.Where(i => i.Code.ToLower().Contains(search)
-                                  || i.Name.ToLower().Contains(search));
+                        query = query.Where(i => 
+									 Template:[InsertNewSearchableIndex]
+								  );
                     }
                 }            
             }
             switch (request.SortBy)
             {
-                case "Code":
-                    if (request.OrderBy == "Asc")
-                    {
-                        query = query.OrderBy(l=>l.Code);
-                    }
-                    else
-                    {
-                        query = query.OrderByDescending(l => l.Code);
-                    }
-                    break;
-                case "Name":
-                    if (request.OrderBy == "Asc")
-                    {
-                        query = query.OrderBy(l => l.Name);
-                    }
-                    else
-                    {
-                        query = query.OrderByDescending(l => l.Name);
-                    }
-                    break;
+				Template:[InsertNewListSorterAndOrder]            
             }         
             var pagedMainModulePlaceHolder = new CustomPagedList<Data.Models.MainModulePlaceHolder>(query, request.PageIndex, request.PageSize);
             var mainModulePlaceHolderList = _mapper.Map<IList<Data.Models.MainModulePlaceHolder>, IList<MainModulePlaceHolderModel>>(await pagedMainModulePlaceHolder.Items.ToListAsync());
