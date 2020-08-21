@@ -56,8 +56,7 @@
 <table class="table small table-striped table-hover">
     <thead>
         <tr>
-            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Code)
-            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Name)
+		    Template:[InsertNewTableHeader]
             <th></th>
         </tr>
     </thead>
@@ -67,12 +66,7 @@
             foreach (var item in Model.MainModulePlaceHolderList)
             {
                 <tr style="cursor:pointer;">
-                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
-                        @Html.DisplayFor(modelItem => item.Code)
-                    </td>
-                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
+					Template:[InsertNewTableRowValue]                    
                     <td>
                         <ul class="list-toolbar" style="float:right;">
                             <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)" class="list-toolbar-button">
