@@ -33,16 +33,7 @@
     <div class="col-md-12">
         <form method="post" asp-page-handler="@MainModulePlaceHolderHtmlElementVariables.Handler_Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @Html.DisplayLabelWithRequiredTag(model => Model.Code, "control-label small")
-                <input asp-for="Code" class="form-control form-control-sm" />
-                <span asp-validation-for="Code" class="text-danger small"></span>
-            </div>
-            <div class="form-group">
-                @Html.DisplayLabelWithRequiredTag(model => Model.Name, "control-label small")
-                <input asp-for="Name" class="form-control form-control-sm" />
-                <span asp-validation-for="Name" class="text-danger small"></span>
-            </div>
+			Template:[InsertNewCreateField]          
             <div class="form-group" style="display:none;">
                 <input type="submit" id="@MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave" class="btn btn-primary" />
             </div>
