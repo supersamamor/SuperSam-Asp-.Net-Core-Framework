@@ -56,8 +56,8 @@
 <table class="table small table-striped table-hover">
     <thead>
         <tr>
-            @*@Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Code)
-            @Html.PageSorter(model => Model.MainModulePlaceHolderList[0].Name)*@
+            @Html.CelerSoftTableHeaderSorter(model => Model.MainModulePlaceHolderList[0].Code)
+            @Html.CelerSoftTableHeaderSorter(model => Model.MainModulePlaceHolderList[0].Name)
             <th></th>
         </tr>
     </thead>
@@ -143,6 +143,6 @@
         TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View,
         ModalTitle = @Resource.LabelDetailsMainModulePlaceHolder,
         ModalWidth = 700,
-    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })*@
-}
+    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })
+}*@
 
