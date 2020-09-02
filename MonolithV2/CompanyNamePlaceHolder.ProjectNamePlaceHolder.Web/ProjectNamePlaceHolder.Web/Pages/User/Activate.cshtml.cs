@@ -1,0 +1,74 @@
+﻿using System;
+using System.Threading.Tasks;
+using Correlate;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ProjectNamePlaceHolder.Web.Extensions;
+using ProjectNamePlaceHolder.Application.ApplicationServices.User;
+using ProjectNamePlaceHolder.Application.Models.User;
+using ProjectNamePlaceHolder.Application;
+
+namespace ProjectNamePlaceHolder.Web.Pages.User
+{ 
+    public class ActivateModel : PageModel
+    {
+        private readonly UserService _service;
+        private readonly ILogger _logger;
+        private readonly ICorrelationContextAccessor _correlationContext;   
+        public ActivateModel(UserService service, ILogger<ActivateModel> logger, 
+            ICorrelationContextAccessor correlationContext)
+        {
+            _service = service;
+            _logger = logger;
+            _correlationContext = correlationContext;      
+        }
+        public IEnumerable<SelectListItem> NatureList { get; set; }
+        public IEnumerable<SelectListItem> TaskList { get; set; }
+        public IEnumerable<SelectListItem> ProjectList { get; set; }
+        public IEnumerable<SelectListItem> SubProjectList { get; set; }
+        [BindProperty]
+        public UserModel AppUser { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            try
+            {             
+                await GetUserItemAsync(id);               
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostAsync), User);
+            }          
+            return Page();
+        }
+               
+        public async Task<IActionResult> OnPostAsync()
+        {
+          
+            try {
+                this.ValidateModelState();
+                await ActivateUserAsync();
+                ModelState.Clear();
+                TempData["Success"] =  Resource.PromptMessageSaveSuccess;
+            }          
+            catch (Exception ex)
+            {
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostAsync), User);
+            }         
+            return Page();
+        }     
+
+        private async Task GetUserItemAsync(int id)
+        {
+            AppUser = await _service.GetUserItemAsync(id);
+        }
+
+        private async Task ActivateUserAsync()
+        {
+            AppUser = await _service.ActivateUserAsync(AppUser.Id);
+        }       
+    }
+}

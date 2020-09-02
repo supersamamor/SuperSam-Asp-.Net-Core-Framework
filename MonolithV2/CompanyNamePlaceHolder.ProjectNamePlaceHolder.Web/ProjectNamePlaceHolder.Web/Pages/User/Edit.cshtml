@@ -1,0 +1,150 @@
+﻿@*@page
+@model ProjectNamePlaceHolder.Web.Pages.User.EditModel
+
+@{
+    ViewData["Title"] = @Resource.LabelEditUser;
+}
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-12" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="btnShowUpdateModal">
+                        <a class="input-group-text custom-anchor-button" href="#">
+                            <i class="fas fa-check"></i><span class="btn-label"> @Resource.LabelSave</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="vertical-divider"></div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelBackToList">
+                        <a asp-page="./Index" class="input-group-text custom-anchor-button">
+                            <i class="fas fa-backspace"></i><span class="btn-label"> @Resource.LabelBack</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="" style="margin-top:5px;">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info small alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<div class="panel-container">
+    <form id="FormUpdate" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="AppUser.Id" />
+        <div class="row" style="padding:10px;">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.DisplayLabelWithRequiredTag(model => Model.AppUser.IdentityUserName, "control-label small")
+                    <input asp-for="AppUser.IdentityUserName" class="form-control form-control-sm" readonly />
+                    <span asp-validation-for="AppUser.IdentityUserName" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    @Html.DisplayLabelWithRequiredTag(model => Model.AppUser.FullName, "control-label small")
+                    <input asp-for="AppUser.FullName" class="form-control form-control-sm" />
+                    <span asp-validation-for="AppUser.FullName" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    @Html.DisplayLabelWithRequiredTag(model => Model.AppUser.IdentityEmail, "control-label small")
+                    <input asp-for="AppUser.IdentityEmail" class="form-control form-control-sm" />
+                    <span asp-validation-for="AppUser.IdentityEmail" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <table class="table small table-striped table-hover table">
+                    <thead>
+                        <tr>
+                            <th style="max-width:100px;width:100px;"><a href="#" class="page-sorter"> @Resource.LabelRoles</a></th>
+                            <th style="max-width:50px;width:50px;">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.CurrentUserRoles != null)
+                        {
+                            var idx = 0;
+                            foreach (var item in Model.CurrentUserRoles)
+                            {
+                                <tr style="cursor:pointer;">
+                                    <td>
+                                        <input name="CurrentUserRoles[@idx].Id" type="hidden" value="@(Model.CurrentUserRoles[idx].Id)" />
+                                        <input name="CurrentUserRoles[@idx].Name" type="hidden" value="@(Model.CurrentUserRoles[idx].Name)" />
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <ul class="list-toolbar" style="float:right;">
+                                            <li class="list-toolbar-button">
+                                                <button asp-page-handler="RemoveRole" class="border-less" name="RemoveRoleId" value="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelRemove">
+                                                    <i class="fas fa-window-close text-dark" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                idx++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table small table-striped table-hover table">
+                    <thead>
+                        <tr>
+                            <th style="max-width:100px;width:100px;"><a href="#" class="page-sorter"> @Resource.LabelRolesSelection</a></th>
+                            <th style="max-width:50px;width:50px;">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RoleSelection != null)
+                        {
+                            var idx = 0;
+                            foreach (var item in Model.RoleSelection)
+                            {
+                                <tr style="cursor:pointer;">
+                                    <td>
+                                        <input name="RoleSelection[@idx].Id" type="hidden" value="@(Model.RoleSelection[idx].Id)" />
+                                        <input name="RoleSelection[@idx].Name" type="hidden" value="@(Model.RoleSelection[idx].Name)" />
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <ul class="list-toolbar" style="float:right;">
+                                            <li class="list-toolbar-button">
+                                                <button asp-page-handler="AddRole" class="border-less" name="AddRoleId" value="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                                                    <i class="fas fa-plus text-dark" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                idx++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button asp-page-handler="" class="btn btn-primary" id="btnUpdate" style="display:none;">
+        </button>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @Html.PromptConfirmationModal("ConfirmUpdateModal", "btnShowUpdateModal", "btnUpdate", "FormUpdate", "PromptContainer", Resource.PromptMessageUpdateUserConfirmation)
+}*@

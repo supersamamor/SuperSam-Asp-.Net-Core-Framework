@@ -1,0 +1,64 @@
+@*@model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
+@using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
+
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-12" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="@MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal">
+                    <a class="input-group-text custom-anchor-button" href="#">
+                        <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="" id="@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create" style="margin-top:5px;">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info small alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<div class="row panel-container">
+    <div class="col-md-12">
+        <form method="post" asp-page-handler="@MainModulePlaceHolderHtmlElementVariables.Handler_Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.DisplayLabelWithRequiredTag(model => Model.Code, "control-label small")
+                <input asp-for="Code" class="form-control form-control-sm" />
+                <span asp-validation-for="Code" class="text-danger small"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayLabelWithRequiredTag(model => Model.Name, "control-label small")
+                <input asp-for="Name" class="form-control form-control-sm" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <input type="submit" id="@MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
+{
+    HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Save,
+    ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Save,
+    TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal,
+    TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave,
+    FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Create,
+    PromptMessageContainerId= MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
+    ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
+    Message = Resource.PromptMessageSaveConfirmation
+})*@
