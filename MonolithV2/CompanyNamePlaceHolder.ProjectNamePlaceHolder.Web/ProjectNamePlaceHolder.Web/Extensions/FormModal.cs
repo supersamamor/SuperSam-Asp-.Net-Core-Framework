@@ -66,7 +66,9 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                </div>";
             htmlstring += @"           </div>";
             htmlstring += @"      </div>";
+
             htmlstring += @"      <div id=""" + this.Name + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + ZIndex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+           
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function ShowHideModal" + this.Name + @"() {";
             htmlstring += @"                $(""#" + this.Body + @""").html(""" + PageLoader(this.Body + "Loader", true) + @""");";
@@ -88,6 +90,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                Resize" + this.Name + @"();ShowHideModal" + this.Name + @"();";
             htmlstring += @"           }";
             htmlstring += @"      </script>";
+
             return new HtmlString(htmlstring);
         }      
     }

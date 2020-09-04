@@ -68,9 +68,9 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, bool validate = false, bool withConfirmation = false, string confirmationMessage = null)
+        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, bool validate = false, bool withConfirmation = false, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
-            var postString = @"$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) {  $('#" + modal.Body + @"').html(data); });";
+            var postString = @"$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) {  $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess != null ? runJavascriptOnSuccess : "") + @" });";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";

@@ -62,15 +62,14 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             try
             {
                 this.ValidateModelState();
-                await SaveMainModulePlaceHolderAsync();
+                await SaveUpdateMainModulePlaceHolderAsync();
                 TempData["Success"] = Resource.PromptMessageSaveSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostSave), MainModulePlaceHolder);
-                return Partial("_Create", MainModulePlaceHolder);
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostSave), MainModulePlaceHolder);            
             }
-            return Partial("_Edit", MainModulePlaceHolder);
+            return Partial("_Create", MainModulePlaceHolder);
         }    
 
         public async Task<IActionResult> OnPostUpdateAsync()
@@ -78,7 +77,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             try
             {
                 this.ValidateModelState();
-                await UpdateMainModulePlaceHolderAsync();
+                await SaveUpdateMainModulePlaceHolderAsync();
                 TempData["Success"] = Resource.PromptMessageUpdateSuccess;
             }
             catch (Exception ex)
@@ -111,20 +110,22 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
                 mainModulePlaceHolderList.PagedListMetaData.TotalItemCount);
         }
 
-        private async Task SaveMainModulePlaceHolderAsync()
+        private async Task SaveUpdateMainModulePlaceHolderAsync()
         {
-            MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder);
+            if (MainModulePlaceHolder.Id == 0)
+            {
+                MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder);
+            }
+            else
+            {
+                MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
+            }          
         }
 
         private async Task GetMainModulePlaceHolderItemAsync(int id)
         {
             MainModulePlaceHolder = await _service.GetMainModulePlaceHolderItemAsync(id);
-        }    
-
-        private async Task UpdateMainModulePlaceHolderAsync()
-        {
-            MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
-        }
+        }              
 
         private async Task DeleteMainModulePlaceHolderAsync(int id)
         {
