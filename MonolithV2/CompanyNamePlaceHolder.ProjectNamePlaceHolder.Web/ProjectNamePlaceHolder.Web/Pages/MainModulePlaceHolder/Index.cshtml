@@ -112,8 +112,8 @@
 @section Scripts {
 
     @Html.CelerSoftFormModal(modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @Html.CelerSoftAjaxModalGetHandler(handler : MainModulePlaceHolderHtmlElementVariables.ShowCreate, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @Html.CelerSoftAjaxModalGetHandler(handler : MainModulePlaceHolderHtmlElementVariables.ShowEdit, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @Html.CelerSoftShowModalTriggerHandlerAjax(handler : MainModulePlaceHolderHtmlElementVariables.ShowCreate, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @Html.CelerSoftShowModalTriggerHandlerAjax(handler : MainModulePlaceHolderHtmlElementVariables.ShowEdit, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
     @*@Html.FormModal(new FormModalProperties()
         {
             ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
@@ -141,4 +141,3 @@
             ModalWidth = 700,
         }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })*@
 }
-

@@ -98,7 +98,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      </div>";
             htmlstring += @"      <div id=""" +  modal.Name + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
             htmlstring += @"      <script type=""text/javascript"">";
-            htmlstring += @"           function ShowHideModal" +  modal.Name + @"() {";
+            htmlstring += @"           function ShowHideModal" +  modal.Name + @"() {";      
             htmlstring += @"                $(""#" +modal.Body + @""").html(""" + HtmlObjectCreator.PageLoaderString(modal.Body + "Loader", true) + @""");";
             htmlstring += @"                $(""#" +  modal.Name + @"Modal"").slideToggle(""fast"");";
             htmlstring += @"                $(""#" +  modal.Name + @"BackGround"").slideToggle(""fast"");";
@@ -114,7 +114,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                                            var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
                                            $('#" +  modal.Name + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px','minHeight': maxHeight + 'px','Height': maxHeight + 'px'});
                                       };";
-            htmlstring += @"           function " + modal.JSFunctionToggleShowHideModal + @"() {";
+            htmlstring += @"           function " + modal.JSFunctionToggleShowHideModal + @"() {";        
             htmlstring += @"                Resize" + modal.Name + @"();ShowHideModal" + modal.Name + @"();";   
             htmlstring += @"           }";
             htmlstring += @"      </script>";
@@ -140,14 +140,16 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring); ;
         }
 
-        public static IHtmlContent CelerSoftAjaxModalGetHandler(this IHtmlHelper htmlHelper, PageHandler handler, FormModal modal)
+        public static IHtmlContent CelerSoftShowModalTriggerHandlerAjax(this IHtmlHelper htmlHelper, PageHandler handler, FormModal modal)
         {
-            var htmlstring = @"<script type=""text/javascript"">";
+            var htmlstring = @"<script type=""text/javascript"">";         
             if (handler.HandlerParameters == null)
             {
-                htmlstring += @"           function " + handler.JSFunctionTriggerHandler + @"() {";
+                htmlstring += @"           function " + handler.JSFunctionTriggerHandler + @"() {";    
                 htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + handler.Description + @"');";
-                htmlstring += @"               " + modal.JSFunctionToggleShowHideModal + @"();";
+                htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
+                htmlstring += @"                     " + modal.JSFunctionToggleShowHideModal + @"();";
+                htmlstring += @"               }";
                 htmlstring += @"                $('#" + modal.Body + @"').load('?handler=" + handler.Name + @"', function(){ });";
                 htmlstring += @"           };";
             }
@@ -163,7 +165,9 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 handlerFunctionParameter = handlerFunctionParameter.Substring(1, handlerFunctionParameter.Length - 1);
                 htmlstring += @"           function " + handler.JSFunctionTriggerHandler + @"(" + handlerFunctionParameter + @") {";
                 htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + handler.Description + @"');";
-                htmlstring += @"               " + modal.JSFunctionToggleShowHideModal + @"();";
+                htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
+                htmlstring += @"                     " + modal.JSFunctionToggleShowHideModal + @"();";
+                htmlstring += @"               }";
                 htmlstring += @"               $('#" + modal.Body + @"').load('?handler=" + handler.Name + handlerParameterQueryString + @"', function(){ });";              
                 htmlstring += @"           };";
             }
