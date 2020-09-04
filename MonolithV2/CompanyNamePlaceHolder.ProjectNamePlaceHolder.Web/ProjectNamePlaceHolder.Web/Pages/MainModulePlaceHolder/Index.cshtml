@@ -17,7 +17,7 @@
         <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
             <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
-                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Create)()" style="cursor:pointer;">
+                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreate.JSFunctionTriggerHandler)()" style="cursor:pointer;">
                         <i class="fas fa-plus text-dark"
                            aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
                     </a>
@@ -67,27 +67,27 @@
             foreach (var item in Model.MainModulePlaceHolderList)
             {
                 <tr style="cursor:pointer;">
-                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Code)
                     </td>
-                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         <ul class="list-toolbar" style="float:right;">
-                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit)(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
                                     <i class="fas fa-edit text-dark"
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View)(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
                                     <i class="fas fa-search text-dark"
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete)(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
                                     <i class="fas fa-trash text-dark"
                                        aria-hidden="true"></i>
@@ -108,41 +108,37 @@
         @Html.CelerSoftTablePagination(Model.MainModulePlaceHolderList)
     }
 </div>
-@*@section Scripts {
-    @Html.FormModal(new FormModalProperties()
-    {
-        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
-        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Create,
-        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Create,
-        ModalTitle = @Resource.LabelAddMainModulePlaceHolder,
-        ModalWidth = 700
-    })
 
-    @Html.FormModal(new FormModalProperties()
-    {
-        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
-        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
-        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit,
-        ModalTitle = @Resource.LabelEditMainModulePlaceHolder,
-        ModalWidth = 700,
-    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Edit })
+@section Scripts {
 
-    @Html.FormModal(new FormModalProperties()
-    {
-        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
-        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
-        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete,
-        ModalTitle = @Resource.LabelDeleteMainModulePlaceHolder,
-        ModalWidth = 700,
-    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Delete })
+    @Html.CelerSoftFormModal(modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @Html.CelerSoftAjaxModalGetHandler(handler : MainModulePlaceHolderHtmlElementVariables.ShowCreate, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @Html.CelerSoftAjaxModalGetHandler(handler : MainModulePlaceHolderHtmlElementVariables.ShowEdit, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @*@Html.FormModal(new FormModalProperties()
+        {
+            ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
+            HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+            TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Edit,
+            ModalTitle = @Resource.LabelEditMainModulePlaceHolder,
+            ModalWidth = 700,
+        }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Edit })
 
-    @Html.FormModal(new FormModalProperties()
-    {
-        ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_View,
-        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
-        TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View,
-        ModalTitle = @Resource.LabelDetailsMainModulePlaceHolder,
-        ModalWidth = 700,
-    }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })
-}*@
+        @Html.FormModal(new FormModalProperties()
+        {
+            ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
+            HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+            TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_Delete,
+            ModalTitle = @Resource.LabelDeleteMainModulePlaceHolder,
+            ModalWidth = 700,
+        }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_Delete })
+
+        @Html.FormModal(new FormModalProperties()
+        {
+            ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_View,
+            HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_GetRecord,
+            TriggerShowJsFunction = MainModulePlaceHolderHtmlElementVariables.JSTriggerShow_View,
+            ModalTitle = @Resource.LabelDetailsMainModulePlaceHolder,
+            ModalWidth = 700,
+        }, new { Id = "", PageName = MainModulePlaceHolderHtmlElementVariables.PageName_View })*@
+}
 

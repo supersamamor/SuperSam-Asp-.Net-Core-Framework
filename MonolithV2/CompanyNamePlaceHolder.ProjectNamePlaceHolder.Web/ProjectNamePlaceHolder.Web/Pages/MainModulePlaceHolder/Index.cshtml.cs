@@ -46,10 +46,16 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }               
         }
 
-        public IActionResult OnGetCreate()
+        public IActionResult OnGetShowCreate()
         {
             return Partial("_Create", new MainModulePlaceHolderModel());
-        }   
+        }
+
+        public async Task<IActionResult> OnGetShowEdit(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_Edit", MainModulePlaceHolder);
+        }
 
         public async Task<IActionResult> OnPostSave()
         {
@@ -65,20 +71,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
                 return Partial("_Create", MainModulePlaceHolder);
             }
             return Partial("_Edit", MainModulePlaceHolder);
-        }
-
-        public async Task<IActionResult> OnGetRecordAsync(int id, string pageName)
-        {
-            try
-            {
-                await GetMainModulePlaceHolderItemAsync(id);
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetRecordAsync), MainModulePlaceHolder);
-            }
-            return Partial(pageName, MainModulePlaceHolder);
-        }
+        }    
 
         public async Task<IActionResult> OnPostUpdateAsync()
         {
@@ -136,6 +129,18 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         private async Task DeleteMainModulePlaceHolderAsync(int id)
         {
             await _service.DeleteMainModulePlaceHolderAsync(id);
+        }
+
+        private async Task GetRecordAsync(int id)
+        {
+            try
+            {
+                await GetMainModulePlaceHolderItemAsync(id);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetShowEdit), MainModulePlaceHolder);
+            }
         }
     }
 }

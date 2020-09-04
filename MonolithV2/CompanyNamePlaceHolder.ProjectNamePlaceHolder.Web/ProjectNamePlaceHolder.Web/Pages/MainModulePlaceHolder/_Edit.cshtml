@@ -1,4 +1,4 @@
-@*@model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
+@model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
 @using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 <form method="get">
     <div class="row toolbar-container">
@@ -28,6 +28,7 @@
         </div>
     }
 </div>
+
 <div class="row panel-container">
     <div class="col-md-12">
         <form method="post" asp-page-handler="Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Edit">
@@ -51,7 +52,7 @@
     </div>
 </div>
 
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
 {
     HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Update,

@@ -78,6 +78,99 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
+        public static IHtmlContent CelerSoftFormModal(this IHtmlHelper htmlHelper, FormModal modal)
+        {
+            int initialZindex = 1041;
+            var htmlstring = @"";
+            htmlstring += @"      <div class="""" id=""" + modal.Name + @"Modal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:10%;display:none;"">";
+            htmlstring += @"           <div class=""modal-dialog"">";
+            htmlstring += @"                <div class=""modal-content""  style="""">";
+            htmlstring += @"                     <div id=""" + modal.Name + @"Header"" class=""modal-header"">";
+            htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"" id=""" + modal.TitleHtmlElement + @""">" + modal.Name + @"</h6>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + modal.Name + @"();"">&times;</button>";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div id=""" +  modal.Body + @""" class=""modal-body"" style=""overflow-y:scroll;"">"; 
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div class=""modal-footer"">"; 
+            htmlstring += @"                     </div>";
+            htmlstring += @"                </div>";
+            htmlstring += @"           </div>";
+            htmlstring += @"      </div>";
+            htmlstring += @"      <div id=""" +  modal.Name + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            htmlstring += @"      <script type=""text/javascript"">";
+            htmlstring += @"           function ShowHideModal" +  modal.Name + @"() {";
+            htmlstring += @"                $(""#" +modal.Body + @""").html(""" + HtmlObjectCreator.PageLoaderString(modal.Body + "Loader", true) + @""");";
+            htmlstring += @"                $(""#" +  modal.Name + @"Modal"").slideToggle(""fast"");";
+            htmlstring += @"                $(""#" +  modal.Name + @"BackGround"").slideToggle(""fast"");";
+            htmlstring += @"           }";       
+            htmlstring += @"           function Resize" +  modal.Name + @"() {
+                                           var width = " + modal.Width + @";  
+                                           var windowWidth = $(window).width(); 
+                                           if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
+                                           var leftPosition = (windowWidth - width) / 2;   
+                                           $('#" +  modal.Name + @"Modal .modal-content').width(width);
+                                           $('#" +  modal.Name + @"Modal').css({ left: leftPosition }); 
+                                           var windowWHeight = $(window).height(); 
+                                           var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
+                                           $('#" +  modal.Name + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px','minHeight': maxHeight + 'px','Height': maxHeight + 'px'});
+                                      };";
+            htmlstring += @"           function " + modal.JSFunctionToggleShowHideModal + @"() {";
+            htmlstring += @"                Resize" + modal.Name + @"();ShowHideModal" + modal.Name + @"();";   
+            htmlstring += @"           }";
+            htmlstring += @"      </script>";
+            return new HtmlString(htmlstring);
+        }
+        public static IHtmlContent DisplayLabelWithRequiredTag<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, string className = null)
+        {
+            var propertyGetExpression = expression.Body as MemberExpression;
+            var fieldOnClosureExpression = propertyGetExpression.Expression;
+            MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
+            var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+            var requiredAttribute = property.GetCustomAttribute(typeof(RequiredAttribute)) as RequiredAttribute;
+            string fieldDisplayName = field.Name;
+            if (field != null)
+            {
+                var _labelName = field.Name;
+                ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
+                fieldDisplayName = rm.GetString(_labelName);
+            }
+            var htmlstring = @"<label class=""" + className + @""">" + fieldDisplayName;
+            if (requiredAttribute != null) { htmlstring += @"<span style=""color:red;""> *<span>"; }
+            htmlstring += @"</label>";
+            return new HtmlString(htmlstring); ;
+        }
+
+        public static IHtmlContent CelerSoftAjaxModalGetHandler(this IHtmlHelper htmlHelper, PageHandler handler, FormModal modal)
+        {
+            var htmlstring = @"<script type=""text/javascript"">";
+            if (handler.HandlerParameters == null)
+            {
+                htmlstring += @"           function " + handler.JSFunctionTriggerHandler + @"() {";
+                htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + handler.Description + @"');";
+                htmlstring += @"               " + modal.JSFunctionToggleShowHideModal + @"();";
+                htmlstring += @"                $('#" + modal.Body + @"').load('?handler=" + handler.Name + @"', function(){ });";
+                htmlstring += @"           };";
+            }
+            else
+            {
+                var handlerParameterQueryString = @"";
+                var handlerFunctionParameter = @"";        
+                foreach (string param in handler.HandlerParameters)
+                {                             
+                    handlerParameterQueryString += @"&" + param + (@"=' + " + param + @" +'");
+                    handlerFunctionParameter += @"," + param;
+                }
+                handlerFunctionParameter = handlerFunctionParameter.Substring(1, handlerFunctionParameter.Length - 1);
+                htmlstring += @"           function " + handler.JSFunctionTriggerHandler + @"(" + handlerFunctionParameter + @") {";
+                htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + handler.Description + @"');";
+                htmlstring += @"               " + modal.JSFunctionToggleShowHideModal + @"();";
+                htmlstring += @"               $('#" + modal.Body + @"').load('?handler=" + handler.Name + handlerParameterQueryString + @"', function(){ });";              
+                htmlstring += @"           };";
+            }
+            htmlstring += @"</script>";
+            return new HtmlString(htmlstring);
+        }
+
         private static class HtmlObjectCreator
         {
             /// <summary>
@@ -246,8 +339,12 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                     }
                 }
                 return str;
-            } 
-            
+            }
+
+            public static string PageLoaderString(string elementId, bool isShowed = false)
+            {
+                return @"<style>@keyframes spin {0% {transform: rotate(0deg);} 100% { transform: rotate(360deg);}}</style><div id='" + elementId + @"' style='display:" + (isShowed == true ? "block" : "none") + @";width: 100%;height: 100%;position:absolute;background:#000;opacity:0.3;top:0;left:0;z-index:9999999;'><div style='border: 10px solid #f3f3f3;border-top: 10px solid #3498db;border-radius: 50%;width: 60px;height: 60px;animation: spin 2s linear infinite;margin: 0;top: 41%;left: 45%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);position: absolute;'></div></div>";
+            }
         }
     }  
 }
