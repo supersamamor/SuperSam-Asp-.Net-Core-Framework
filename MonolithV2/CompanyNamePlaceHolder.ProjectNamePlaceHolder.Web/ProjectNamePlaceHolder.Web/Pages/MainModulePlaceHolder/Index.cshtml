@@ -12,33 +12,34 @@
         outline: 1px solid red;
     }
 </style>
-<form method="get">
-    <div class="row toolbar-container">
-        <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
-            <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
-                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreate.JSFunctionTriggerHandler)()" style="cursor:pointer;">
-                        <i class="fas fa-plus text-dark"
-                           aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
-            <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
-                <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
-                    <div class="input-group-prepend input-group-sm">
-                        <button type="submit" class="input-group-text">
-                            <i class="fas fa-search text-dark"
-                               aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <input asp-for="SearchKey" class="form-control" placeholder="Search" />
-                </div>
+
+<div class="row toolbar-container">
+    <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
+        <div class="input-group input-group-sm">
+            <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreate.JSFunctionTriggerHandler)()" style="cursor:pointer;">
+                    <i class="fas fa-plus text-dark"
+                        aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
+                </a>
             </div>
         </div>
     </div>
-</form>
+    <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
+        <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
+            <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
+                <div class="input-group-prepend input-group-sm">
+                    <button type="submit" class="input-group-text">
+                        <i class="fas fa-search text-dark"
+                            aria-hidden="true"></i>
+                    </button>
+                </div>
+                <input asp-for="SearchKey" class="form-control" placeholder="Search" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
@@ -110,10 +111,9 @@
 </div>
 
 @section Scripts {
-
-    @Html.CelerSoftFormModal(modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @Html.CelerSoftShowModalTriggerHandlerAjax(handler : MainModulePlaceHolderHtmlElementVariables.ShowCreate, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @Html.CelerSoftShowModalTriggerHandlerAjax(handler : MainModulePlaceHolderHtmlElementVariables.ShowEdit, modal : MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal.CelerSoftFormModal();
+    @MainModulePlaceHolderHtmlElementVariables.ShowCreate.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal);
+    @MainModulePlaceHolderHtmlElementVariables.ShowEdit.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal);
     @*@Html.FormModal(new FormModalProperties()
         {
             ModalElementId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,

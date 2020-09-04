@@ -5,7 +5,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="@MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" onclick="@(MainModulePlaceHolderHtmlElementVariables.Save.JSFunctionTriggerHandler)();">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
                     </a>
@@ -51,14 +51,20 @@
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+@MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal, 
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create, 
+    formName: MainModulePlaceHolderHtmlElementVariables.FormName_Create, 
+    validate : true)
+
 @*@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
-{
-    HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Save,
-    ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Save,
-    TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal,
-    TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave,
-    FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Create,
-    PromptMessageContainerId= MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
-    ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
-    Message = Resource.PromptMessageSaveConfirmation
-})*@
+    {
+        HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Save,
+        ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Save,
+        TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmSaveModal,
+        TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionSave,
+        FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Create,
+        PromptMessageContainerId= MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
+        ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_CreateEdit,
+        Message = Resource.PromptMessageSaveConfirmation
+    })*@

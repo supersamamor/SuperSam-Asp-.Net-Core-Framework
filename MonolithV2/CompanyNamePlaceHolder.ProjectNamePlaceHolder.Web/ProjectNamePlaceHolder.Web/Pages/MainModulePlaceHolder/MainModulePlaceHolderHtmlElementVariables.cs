@@ -45,6 +45,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         public static readonly FormModal MainModulePlaceHolderModal = new FormModal("MainModulePlaceHolderModal", 700);
         public static readonly PageHandler ShowCreate = new PageHandler("ShowCreate", "Add MainModulePlaceHolderModal");
         public static readonly PageHandler ShowEdit = new PageHandler("ShowEdit", "Edit MainModulePlaceHolderModal", new List<string> { "id" });
+        public static readonly PageHandler Save = new PageHandler("Save");
     }
 }
 
