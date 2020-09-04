@@ -42,12 +42,17 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 return this.Name + "ModalTitle";
             }
         }
-
-        public IHtmlContent CelerSoftFormModal()
+        public int ZIndex
         {
-            int initialZindex = 1041;
+            get
+            {
+                return 1041;
+            }
+        }
+        public IHtmlContent CelerSoftFormModal()
+        {         
             var htmlstring = @"";
-            htmlstring += @"      <div class="""" id=""" + this.Name + @"Modal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:10%;display:none;"">";
+            htmlstring += @"      <div class="""" id=""" + this.Name + @"Modal"" style=""z-index: " + (ZIndex + 1) + @";position:fixed;top:10%;display:none;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style="""">";
             htmlstring += @"                     <div id=""" + this.Name + @"Header"" class=""modal-header"">";
@@ -61,7 +66,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                </div>";
             htmlstring += @"           </div>";
             htmlstring += @"      </div>";
-            htmlstring += @"      <div id=""" + this.Name + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            htmlstring += @"      <div id=""" + this.Name + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + ZIndex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function ShowHideModal" + this.Name + @"() {";
             htmlstring += @"                $(""#" + this.Body + @""").html(""" + PageLoader(this.Body + "Loader", true) + @""");";

@@ -68,27 +68,78 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, bool validate = false, bool withConfirmation = false)
+        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, bool validate = false, bool withConfirmation = false, string confirmationMessage = null)
         {
             var postString = @"$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) {  $('#" + modal.Body + @"').html(data); });";
+
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
-
-
-            var htmlstring = @"";
+                   
+            var htmlstring = withConfirmation ? PromptConfirmationModal(modal, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
-            if (validate == true)
+            if (withConfirmation == true)
             {
-                htmlstring += validateString;
+                htmlstring += @"       var form = $('#" + formName + @"');";
+                htmlstring += @"       if ($(form).valid()) { ";
+                htmlstring += @"            ShowHideConfirm" + modal.Name + @"();";  
+                htmlstring += @"       }";
+                htmlstring += @"       else {";
+                htmlstring += @"            $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); ";
+                htmlstring += @"       }";
             }
-            else
+            else 
             {
-                htmlstring += postString;
-            }
+                if (validate == true)
+                {
+                    htmlstring += validateString;
+                }
+                else
+                {
+                    htmlstring += postString;
+                }
+            }  
             htmlstring += @"           };";
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
+        }
+
+        private string PromptConfirmationModal(FormModal modal, string confirmationMessage, string postString)
+        {
+            int initialZindex = modal.ZIndex + 1;           
+            var htmlstring = @"";
+            htmlstring += @"      <script type=""text/javascript"">";
+            htmlstring += @"           function ShowHideConfirm" + modal.Name + @"() {";
+            htmlstring += @"                $(""#" + modal.Name + @"PromptModal"").slideToggle(""fast"");";
+            htmlstring += @"                $(""#" + modal.Name + @"PromptModalBackGround"").slideToggle(""fast"");";
+            htmlstring += @"           }";
+            htmlstring += @"           function TriggerConfirm" + modal.Name + @"() {";
+            htmlstring += @"               " + postString;
+            htmlstring += @"           }";
+            htmlstring += @"      </script>";
+            htmlstring += @"      <div class=""modal"" id=""" + modal.Name + @"PromptModal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:20%;display:none;"">";
+            htmlstring += @"           <div class=""modal-dialog"">";
+            htmlstring += @"                <div class=""modal-content""  style=""z-index: " + (initialZindex + 1) + @";"">";
+            htmlstring += @"                     <div class=""modal-header"">";
+            htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"">Confirmation</h6>";
+            htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideConfirm" + modal.Name + @"();"">&times;</button>";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div class=""modal-body"">";
+            htmlstring += @"                          " + confirmationMessage + @"   ";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                     <div class=""modal-footer"">";
+            htmlstring += @"                          <button type=""button"" class=""btn btn-info"" data-toggle=""tooltip"" data-placement=""top"" title=""Ok"" onclick=""TriggerConfirm" + modal.Name + @"();"">";     
+            htmlstring += @"                               <i class=""fas fa-check""></i>";
+            htmlstring += @"                          </button>";
+            htmlstring += @"                          <button type=""button"" class=""btn btn-danger"" data-placement=""top"" title=""Close"" onclick=""ShowHideConfirm" + modal.Name + @"();"">";
+            htmlstring += @"                               <i class=""fas fa-times-circle""></i>";
+            htmlstring += @"                          </button>";
+            htmlstring += @"                     </div>";
+            htmlstring += @"                </div>";
+            htmlstring += @"           </div>";
+            htmlstring += @"      </div>";
+            htmlstring += @"      <div  id=""" + modal.Name + @"PromptModalBackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + initialZindex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
+            return htmlstring;
         }
     }
 }

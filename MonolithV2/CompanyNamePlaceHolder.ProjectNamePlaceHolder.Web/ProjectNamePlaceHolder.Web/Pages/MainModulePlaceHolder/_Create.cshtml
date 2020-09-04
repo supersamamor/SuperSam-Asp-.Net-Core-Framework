@@ -52,10 +52,14 @@
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-@MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal, 
-    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create, 
-    formName: MainModulePlaceHolderHtmlElementVariables.FormName_Create, 
-    validate : true)
+@MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
+    formName: MainModulePlaceHolderHtmlElementVariables.FormName_Create,
+    validate: true, withConfirmation: true, "test")
+
+@*@MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
+    formName: MainModulePlaceHolderHtmlElementVariables.FormName_Create)*@
 
 @*@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
     {
