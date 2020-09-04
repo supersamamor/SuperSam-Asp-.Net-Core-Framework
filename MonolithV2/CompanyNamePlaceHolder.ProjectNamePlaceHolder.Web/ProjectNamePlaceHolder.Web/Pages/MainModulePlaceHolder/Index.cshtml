@@ -103,10 +103,10 @@
 
 <div class="small">
     <br />
-    @*@if (Model.MainModulePlaceHolderList != null)
+    @if (Model.MainModulePlaceHolderList != null)
     {
-        @Html.CelerSoftPager(Model.MainModulePlaceHolderList) 
-    }*@
+        @Html.CelerSoftTablePagination(Model.MainModulePlaceHolderList)
+    }
 </div>
 @*@section Scripts {
     @Html.FormModal(new FormModalProperties()

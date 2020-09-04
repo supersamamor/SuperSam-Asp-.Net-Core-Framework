@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using ProjectNamePlaceHolder.Application;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Resources;
+using X.PagedList;
 
 namespace ProjectNamePlaceHolder.Web.Extensions
 {
@@ -34,10 +37,46 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
                 fieldDisplayName = rm.GetString(_labelName);
             }
-            var htmlstring = HtmlObjectCreator.TableHeaderSorterLinkHtml(fieldDisplayName, fieldName, htmlHelper.ViewData.Model, maxwidth);
+            var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+            var pageName = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext).ActionContext.ActionDescriptor.DisplayName.Replace("/Index", "");
+            var htmlstring = HtmlObjectCreator.TableHeaderSorterLinkHtml(fieldDisplayName, pageName, fieldName, htmlHelper.ViewData.Model, maxwidth);
             return new HtmlString(htmlstring);
-        }      
+        }
 
+        /// <summary>
+        ///  Html helper to create pagination
+        /// </summary>
+        /// <param name="pagedListMetaData">List of object to be displayed as paginated list</param>
+        /// <returns></returns>
+        public static IHtmlContent CelerSoftTablePagination(this IHtmlHelper htmlHelper, IPagedList pagedListMetaData)
+        {
+            var pageBuffer = 5;
+            var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+            var pageName = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext).ActionContext.ActionDescriptor.DisplayName.Replace("/Index", "");
+
+            var pageCount = pagedListMetaData.PageSize != 0 ? (pagedListMetaData.TotalItemCount / pagedListMetaData.PageSize) + 1 : 0;
+            var previous = pagedListMetaData.PageNumber - pageBuffer <= 0 ? 1 : pagedListMetaData.PageNumber - pageBuffer;
+            var next = pagedListMetaData.PageNumber + pageBuffer >= pageCount ? pageCount : pagedListMetaData.PageNumber + pageBuffer;
+            var htmlstring = @"<ul class=""pagination justify-content-center"">";
+            htmlstring += @"<ul class=""pagination pagination-sm no-margin pull-right"">";          
+            if (pagedListMetaData.PageNumber != 1)
+            {    
+                htmlstring += HtmlObjectCreator.TablePageLinkHtml(htmlHelper.ViewData.Model, pageName, "<<", 1);
+                htmlstring += HtmlObjectCreator.TablePageLinkHtml(htmlHelper.ViewData.Model, pageName, "Previous", previous);
+            }
+            for (var i = (pagedListMetaData.PageNumber - pageBuffer) <= 0 ? 1 : (pagedListMetaData.PageNumber - pageBuffer); i <= (pagedListMetaData.PageNumber + pageBuffer <= pageCount ? pagedListMetaData.PageNumber + pageBuffer : pageCount); i++)
+            {
+                htmlstring += HtmlObjectCreator.TablePageLinkHtml(htmlHelper.ViewData.Model, pageName, i.ToString(), i, pagedListMetaData.PageNumber);
+      
+            }
+            if (pagedListMetaData.PageNumber != pageCount)
+            {
+                htmlstring += HtmlObjectCreator.TablePageLinkHtml(htmlHelper.ViewData.Model, pageName, "Next", next);
+                htmlstring += HtmlObjectCreator.TablePageLinkHtml(htmlHelper.ViewData.Model, pageName, ">>", pageCount);            
+            }
+            htmlstring += @"</ul></ul>";
+            return new HtmlString(htmlstring);
+        }
 
         private static class HtmlObjectCreator
         {
@@ -65,11 +104,12 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             /// Creates an html script for Table Header with Sort Functionality
             /// </summary>
             /// <param name="sortFieldDisplayName">Display name of the sorter</param>
+            /// <param name="pageName">Page name/Current page name</param>
             /// <param name="sortFieldName">Parameter name of the sorter</param>
             /// <param name="currentModelValues">Current values of the Model</param> 
             /// <param name="maxwidth"></param>
             /// <returns></returns>
-            public static string TableHeaderSorterLinkHtml(string sortFieldDisplayName, string sortFieldName, object currentModelValues, int? maxwidth = null)
+            public static string TableHeaderSorterLinkHtml(string sortFieldDisplayName, string pageName, string sortFieldName, object currentModelValues, int? maxwidth = null)
             {
                 string currentSelectedSortBy = "";
                 string currentSelectedOrderBy = "";
@@ -86,7 +126,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 }
                 var htmlstring = @"<th " + maxwidthsytle + @">";
                 htmlstring += @"        <i class=""" + sortIcon + @"""></i>";
-                htmlstring += @"        <a href=""?" + CreateRoutesForSorterLink(currentModelValues, sortFieldName) + @"""";
+                htmlstring += @"        <a href=""" + pageName + @"?" + CreateRoutesForSorterLink(currentModelValues, sortFieldName) + @"""";
                 htmlstring += @"             class=""page-sorter""> " + sortFieldDisplayName;
                 htmlstring += @"        </a>";
                 htmlstring += @"   </th>";
