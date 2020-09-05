@@ -100,7 +100,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 htmlstring += @"            ShowHideConfirm" + modal.Name + @"();";  
                 htmlstring += @"       }";
                 htmlstring += @"       else {";
-                htmlstring += @"            $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); ";
+                htmlstring += @"            $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); $('#" + promptMessageContainer + @"').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);";
                 htmlstring += @"       }";
             }
             else 
