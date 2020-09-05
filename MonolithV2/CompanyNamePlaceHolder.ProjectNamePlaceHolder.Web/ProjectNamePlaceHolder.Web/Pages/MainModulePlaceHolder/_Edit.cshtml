@@ -4,7 +4,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" onclick="@(MainModulePlaceHolderHtmlElementVariables.Update.JSFunctionTriggerHandler)();">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" onclick="@(MainModulePlaceHolderHtmlElementVariables.UpdateHandler.JSFunctionTriggerHandler)();">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
                     </a>
@@ -49,11 +49,11 @@
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@MainModulePlaceHolderHtmlElementVariables.Update.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
+@MainModulePlaceHolderHtmlElementVariables.UpdateHandler.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
     promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
     formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
     confirmationMessage: Resource.PromptMessageSaveConfirmation,
-    runJavascriptOnSuccess: MainModulePlaceHolderHtmlElementVariables.InitializeList.JSFunctionTriggerHandler + "();")
+    runJavascriptOnSuccess: MainModulePlaceHolderHtmlElementVariables.InitializeListHandler.JSFunctionTriggerHandler + "();")
 <script type="text/javascript">
     $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     $("#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal.ModalElementId").draggable();

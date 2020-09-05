@@ -14,7 +14,7 @@
         <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
             <div class="input-group input-group-sm">
                 <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
-                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreate.JSFunctionTriggerHandler)()" style="cursor:pointer;">
+                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreateHandler.JSFunctionTriggerHandler)()" style="cursor:pointer;">
                         <i class="fas fa-plus text-dark"
                            aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
                     </a>
@@ -41,13 +41,13 @@
 </div>
 @section Scripts {
     @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal.CelerSoftFormModal();
-    @MainModulePlaceHolderHtmlElementVariables.ShowCreate.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @MainModulePlaceHolderHtmlElementVariables.ShowEdit.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @MainModulePlaceHolderHtmlElementVariables.ShowView.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @MainModulePlaceHolderHtmlElementVariables.ShowDelete.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
-    @MainModulePlaceHolderHtmlElementVariables.InitializeList.CelerSoftShowModalTriggerHandlerAjax(targetElement: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsContainer, Model)
+    @MainModulePlaceHolderHtmlElementVariables.ShowCreateHandler.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @MainModulePlaceHolderHtmlElementVariables.ShowEditHandler.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @MainModulePlaceHolderHtmlElementVariables.ShowViewHandler.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @MainModulePlaceHolderHtmlElementVariables.ShowDeleteHandler.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal)
+    @MainModulePlaceHolderHtmlElementVariables.InitializeListHandler.CelerSoftShowModalTriggerHandlerAjax(targetElement: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsContainer, Model)
 <script type="text/javascript">
         $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-        @(MainModulePlaceHolderHtmlElementVariables.InitializeList.JSFunctionTriggerHandler)();
+        @(MainModulePlaceHolderHtmlElementVariables.InitializeListHandler.JSFunctionTriggerHandler)();
 </script>
 }

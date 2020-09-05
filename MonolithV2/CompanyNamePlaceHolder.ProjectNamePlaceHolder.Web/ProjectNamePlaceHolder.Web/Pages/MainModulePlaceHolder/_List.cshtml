@@ -29,27 +29,27 @@
             foreach (var item in Model.MainModulePlaceHolderList)
             {
                 <tr style="cursor:pointer;">
-                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Code)
                     </td>
-                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)">
+                    <td onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)">
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         <ul class="list-toolbar" style="float:right;">
-                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
                                     <i class="fas fa-edit text-dark"
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowView.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowViewHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
                                     <i class="fas fa-search text-dark"
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowDelete.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowDeleteHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
                                     <i class="fas fa-trash text-dark"
                                        aria-hidden="true"></i>
