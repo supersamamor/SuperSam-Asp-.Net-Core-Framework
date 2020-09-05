@@ -69,7 +69,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                     handlerParameterQueryString += @"&" + param + (@"=' + " + param + @" +'");
                     handlerFunctionParameter += @"," + param;
                 }
-                handlerFunctionParameter = handlerFunctionParameter.Substring(1, handlerFunctionParameter.Length - 1);
+                handlerFunctionParameter = handlerFunctionParameter[1..];
                 htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"(" + handlerFunctionParameter + @") {";
                 htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + this.Description + @"');";
                 htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
@@ -95,7 +95,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
 
         public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
-            var postString = @"$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess != null ? runJavascriptOnSuccess : "") + @" });";
+            var postString = @"$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess ?? "") + @" });";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
@@ -130,7 +130,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         }
         public IHtmlContent CelerSoftPostTriggerHandler(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
-            var postString = @"document.getElementById('"+ formName + @"').submit();" + (runJavascriptOnSuccess != null ? runJavascriptOnSuccess : "") + @";";
+            var postString = @"document.getElementById('"+ formName + @"').submit();" + (runJavascriptOnSuccess ?? "") + @";";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";

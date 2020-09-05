@@ -8,7 +8,7 @@ namespace ProjectNamePlaceHolder.Web.Models
         public BasePageModel(int defaultPage)
         {
             PageNumber = 1;
-            defaultPageSize = defaultPage;
+            DefaultPageSize = defaultPage;
         }
         #region Pagination         
         [BindProperty(SupportsGet = true)]
@@ -17,17 +17,17 @@ namespace ProjectNamePlaceHolder.Web.Models
         public string OrderBy { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SortBy { get; set; }
-        private int defaultPageSize { get; set; }
+        private int DefaultPageSize { get; set; }
         public int PageSize
         {
             get
             {
-                return defaultPageSize;
+                return DefaultPageSize;
             }
 
             set
             {
-                defaultPageSize = value > 0 ? value : defaultPageSize;
+                DefaultPageSize = value > 0 ? value : DefaultPageSize;
             }
         }
         #endregion         

@@ -24,14 +24,12 @@ namespace ProjectNamePlaceHolder.Web.Extensions
        /// <returns></returns>
         public static IHtmlContent CelerSoftTableHeaderSorter<TProperty>(this IHtmlHelper htmlHelper, Expression<Func<object, TProperty>> expression, int? maxwidth = null)
         {
-            string fieldName = "";
             var propertyGetExpression = expression.Body as MemberExpression;
             var fieldOnClosureExpression = propertyGetExpression.Expression;
             MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
-            var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
             string fieldDisplayName = property.Name;
-            fieldName = property.Name;
-            if (field != null)
+            string fieldName = property.Name;
+            if (property.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute field)
             {              
                 var _labelName = field.Name;
                 ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
@@ -84,7 +82,6 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var fieldOnClosureExpression = propertyGetExpression.Expression;
             MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
             var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-            var requiredAttribute = property.GetCustomAttribute(typeof(RequiredAttribute)) as RequiredAttribute;
             string fieldDisplayName = field.Name;
             if (field != null)
             {
@@ -93,7 +90,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 fieldDisplayName = rm.GetString(_labelName);
             }
             var htmlstring = @"<label class=""" + className + @""">" + fieldDisplayName;
-            if (requiredAttribute != null) { htmlstring += @"<span style=""color:red;""> *<span>"; }
+            if (property.GetCustomAttribute(typeof(RequiredAttribute)) is RequiredAttribute) { htmlstring += @"<span style=""color:red;""> *<span>"; }
             htmlstring += @"</label>";
             return new HtmlString(htmlstring); ;
         }       

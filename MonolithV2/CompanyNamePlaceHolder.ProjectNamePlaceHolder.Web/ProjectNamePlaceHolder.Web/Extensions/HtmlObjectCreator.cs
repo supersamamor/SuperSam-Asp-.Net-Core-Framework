@@ -38,9 +38,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         /// <returns></returns>
         public static string TableHeaderSorterLinkHtml(string sortFieldDisplayName, string pageName, string sortFieldName, object currentModelValues, int? maxwidth = null)
         {
-            string currentSelectedSortBy = "";
-            string currentSelectedOrderBy = "";
-            GetSelectedSortByAndOrderBy(currentModelValues, out currentSelectedSortBy, out currentSelectedOrderBy);
+            GetSelectedSortByAndOrderBy(currentModelValues, out string currentSelectedSortBy, out string currentSelectedOrderBy);
             string maxwidthsytle = maxwidth != null ? @"style=""max-width:" + maxwidth + @"px;width:" + maxwidth + @"px;""" : "";
             var sortIcon = "fas fa-sort";
             if (currentSelectedSortBy == sortFieldName)
@@ -78,11 +76,11 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 var value = valueAsObject;
                 if (prp.Name == "SortBy")
                 {
-                    currentSelectedSortBy = value == null ? null : value.ToString();
+                    currentSelectedSortBy = value?.ToString();
                 }
                 else if (prp.Name == "OrderBy")
                 {
-                    currentSelectedOrderBy = value == null ? null : value.ToString();
+                    currentSelectedOrderBy = value?.ToString();
                 }
             }
         }
@@ -141,13 +139,13 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                     }
                     if (prp.Name == "SortBy")
                     {
-                        str += @"&" + prp.Name + @"=" + (sorterFieldName == null ? value?.ToString() : sorterFieldName);
+                        str += @"&" + prp.Name + @"=" + (sorterFieldName ?? (value?.ToString()));
                     }
                     else if (prp.Name == "OrderBy")
                     {
                         if (sorterFieldName != null)
                         {
-                            var currentSelectedOrderBy = value == null ? null : value.ToString();
+                            var currentSelectedOrderBy = value?.ToString();
                             var orderByValue = "Asc";
                             if (currentSelectedOrderBy == null || currentSelectedOrderBy == "Desc")
                             {

@@ -65,7 +65,8 @@
 @MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
     promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
     formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
-    confirmationMessage: Resource.PromptMessageSaveConfirmation)
+    confirmationMessage: Resource.PromptMessageSaveConfirmation,
+    runJavascriptOnSuccess:  MainModulePlaceHolderHtmlElementVariables.InitializeList.JSFunctionTriggerHandler + "();")
 <script type="text/javascript">
     $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     $("#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal.ModalElementId").draggable();
