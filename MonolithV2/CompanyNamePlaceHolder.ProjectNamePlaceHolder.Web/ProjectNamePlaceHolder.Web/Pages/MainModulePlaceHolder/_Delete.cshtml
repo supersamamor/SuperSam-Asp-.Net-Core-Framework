@@ -4,7 +4,7 @@
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave"  onclick="@(MainModulePlaceHolderHtmlElementVariables.Delete.JSFunctionTriggerHandler)();">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-trash"></i><span class="btn-label"> @Resource.LabelDelete</span>
                     </a>
@@ -30,7 +30,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post" asp-page-handler="Save" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
+        <form method="post" asp-page-handler="@MainModulePlaceHolderHtmlElementVariables.Delete.Name" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -49,10 +49,10 @@
 
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@MainModulePlaceHolderHtmlElementVariables.Update.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
+@MainModulePlaceHolderHtmlElementVariables.Delete.CelerSoftPostTriggerHandler(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
     promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
     formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
-    confirmationMessage: Resource.PromptMessageSaveConfirmation)
+    confirmationMessage: Resource.PromptMessageDeleteConfirmation)
 <script type="text/javascript">
      $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 </script>

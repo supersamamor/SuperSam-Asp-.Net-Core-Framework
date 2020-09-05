@@ -36,7 +36,7 @@
         </div>
     </div>
 </form>
-<div class="" style="margin-top:5px;">
+<div id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -106,12 +106,13 @@
     }
 </div>
 
-@section Scripts {
-  
-
+@section Scripts { 
     @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal.CelerSoftFormModal();
     @MainModulePlaceHolderHtmlElementVariables.ShowCreate.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal);
     @MainModulePlaceHolderHtmlElementVariables.ShowEdit.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal);
     @MainModulePlaceHolderHtmlElementVariables.ShowView.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal);
     @MainModulePlaceHolderHtmlElementVariables.ShowDelete.CelerSoftShowModalTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal);
+    <script type="text/javascript">
+         $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    </script>
 }

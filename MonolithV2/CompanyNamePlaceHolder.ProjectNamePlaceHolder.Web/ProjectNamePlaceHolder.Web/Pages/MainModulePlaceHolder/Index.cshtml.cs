@@ -108,10 +108,10 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);
-                return Page();
+                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);              
             }
-            return Partial("_Delete", MainModulePlaceHolder);
+            await GetMainModulePlaceHolderListAsync();
+            return Page();
         }
 
         private async Task GetMainModulePlaceHolderListAsync()
