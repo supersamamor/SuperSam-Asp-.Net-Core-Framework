@@ -34,8 +34,13 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         [BindProperty]
         public MainModulePlaceHolderModel MainModulePlaceHolder { get; set; }
 
-        public async Task OnGetAsync()
-        {           
+        public IActionResult OnGetAsync()
+        {
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetInitializeListAsync()
+        {
             try
             {
                 await GetMainModulePlaceHolderListAsync();
@@ -43,9 +48,10 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             catch (Exception ex)
             {
                 TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
-            }               
+            }
+            return Partial("_List", this);
         }
-
+    
         public IActionResult OnGetShowCreate()
         {
             return Partial("_Create", new MainModulePlaceHolderModel());

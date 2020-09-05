@@ -10,7 +10,8 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         public const string MainModulePlaceHolderForm = "formMainModulePlaceHolderForm";
         public const string MainModulePlaceHolderFormPromptContainer = "promptMainModulePlaceHolderForm";
         public const string MainModulePlaceHolderListingsPromptContainer = "promptMainModulePlaceHolderListings";
-        
+        public const string MainModulePlaceHolderListingsContainer = "containerMainModulePlaceHolderListings";
+
         public static readonly FormModal MainModulePlaceHolderModal = new FormModal("MainModulePlaceHolderModal", 700);
         public static readonly PageHandler ShowCreate = new PageHandler("ShowCreate", Resource.LabelAddMainModulePlaceHolder);
         public static readonly PageHandler ShowEdit = new PageHandler("ShowEdit", Resource.LabelEditMainModulePlaceHolder, new List<string> { "id" });
@@ -19,6 +20,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         public static readonly PageHandler Save = new PageHandler(name: "Save", withPromptConfirmation: true);
         public static readonly PageHandler Update = new PageHandler(name: "Update", withPromptConfirmation: true);
         public static readonly PageHandler Delete = new PageHandler(name: "Delete", withPromptConfirmation: true);
+        public static readonly PageHandler InitializeList = new PageHandler(name: "InitializeList");
     }
 }
 

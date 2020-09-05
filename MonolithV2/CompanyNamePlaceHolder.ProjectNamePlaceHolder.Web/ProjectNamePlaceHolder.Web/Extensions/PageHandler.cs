@@ -39,7 +39,6 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public string Description { get; private set; }
         public bool JQueryValidate { get; private set; }
         public bool WithPromptConfirmation { get; private set; }
-
         public List<string> HandlerParameters { get; private set; }
         public string JSFunctionTriggerHandler
         {
@@ -79,6 +78,17 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 htmlstring += @"               $('#" + modal.Body + @"').load('?handler=" + this.Name + handlerParameterQueryString + @"', function(){ });";
                 htmlstring += @"           };";
             }
+            htmlstring += @"</script>";
+            return new HtmlString(htmlstring);
+        }
+
+        public IHtmlContent CelerSoftShowModalTriggerHandlerAjax(string targetElement, object currentModelValues)
+        {
+            var htmlstring = @"<script type=""text/javascript"">";
+            htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
+            htmlstring += @"                $(""#" + targetElement + @""").append(""" + PageLoader(targetElement + "Loader", true) + @""");";
+            htmlstring += @"                $('#" + targetElement + @"').load('/MainModulePlaceHolder?handler=" + this.Name + @""+ HtmlObjectCreator.CreateRoutesForListingHandler(currentModelValues) + @"', function(){ });";
+            htmlstring += @"           };";
             htmlstring += @"</script>";
             return new HtmlString(htmlstring);
         }
