@@ -40,7 +40,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             }
             else if (ex is ValidationException)
             {
-                return ex.Message != null ? ex.Message : "Error occured" + traceId;
+                return ex.Message ?? "Error occured" + traceId;
             }
             else if (ex is ModelStateException)
             {
