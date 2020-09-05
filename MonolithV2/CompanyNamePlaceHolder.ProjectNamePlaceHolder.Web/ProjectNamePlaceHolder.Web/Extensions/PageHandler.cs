@@ -5,26 +5,41 @@ namespace ProjectNamePlaceHolder.Web.Extensions
 {
     public class PageHandler : BaseHtmlHelper
     {
-        public PageHandler(string name)
+        public PageHandler(string name, bool withPromptConfirmation = false)
         {
-            this.Name = name;         
+            this.Name = name;  
+            this.WithPromptConfirmation = withPromptConfirmation;   
         }
+
+        public PageHandler(string name, bool jqueryValidate, bool withPromptConfirmation = false)
+        {
+            this.Name = name;
+            this.WithPromptConfirmation = withPromptConfirmation;
+            this.JQueryValidate = jqueryValidate;            
+        }
+
         public PageHandler(string name, string description) 
         {
             this.Name = name;
             this.Description = description;
         }
+
         public PageHandler(string name, string description, List<string> handlerParameters)
         {
             this.Name = name;
             this.Description = description;
             this.HandlerParameters = handlerParameters;
         }
+
         private PageHandler()
         {
         }
+
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public bool JQueryValidate { get; private set; }
+        public bool WithPromptConfirmation { get; private set; }
+
         public List<string> HandlerParameters { get; private set; }
         public string JSFunctionTriggerHandler
         {
@@ -68,17 +83,17 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, bool validate = false, bool withConfirmation = false, string confirmationMessage = null, string runJavascriptOnSuccess = null)
+        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
             var postString = @"$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) {  $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess != null ? runJavascriptOnSuccess : "") + @" });";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
                    
-            var htmlstring = withConfirmation ? PromptConfirmationModal(modal, confirmationMessage, postString) : "";
+            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(modal, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
-            if (withConfirmation == true)
+            if (this.WithPromptConfirmation == true)
             {
                 htmlstring += @"       var form = $('#" + formName + @"');";
                 htmlstring += @"       if ($(form).valid()) { ";
@@ -90,7 +105,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             }
             else 
             {
-                if (validate == true)
+                if (this.JQueryValidate == true)
                 {
                     htmlstring += validateString;
                 }
