@@ -43,16 +43,16 @@
                 @Html.DisplayLabelWithRequiredTag(model => Model.Name, "control-label small")
                 <input asp-for="Name" class="form-control form-control-sm" />
                 <span asp-validation-for="Name" class="text-danger small"></span>
-            </div>           
+            </div>
         </form>
     </div>
 </div>
 
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @MainModulePlaceHolderHtmlElementVariables.Update.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
     promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
     formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
     confirmationMessage: Resource.PromptMessageSaveConfirmation)
-
 <script type="text/javascript">
      $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 </script>

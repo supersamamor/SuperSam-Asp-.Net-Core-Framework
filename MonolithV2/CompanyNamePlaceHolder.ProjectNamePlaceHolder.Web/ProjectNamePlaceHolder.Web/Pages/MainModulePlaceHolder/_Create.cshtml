@@ -31,7 +31,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post"  id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
+        <form method="post" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" value="@Model.Id" />
             @if (Model.Id == 0)
@@ -54,18 +54,18 @@
                 @Html.DisplayLabelWithRequiredTag(model => Model.Name, "control-label small")
                 <input asp-for="Name" class="form-control form-control-sm" />
                 <span asp-validation-for="Name" class="text-danger small"></span>
-            </div>          
+            </div>
         </form>
     </div>
 </div>
 
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
     promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
     formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
-    confirmationMessage : Resource.PromptMessageSaveConfirmation)
-
+    confirmationMessage: Resource.PromptMessageSaveConfirmation)
 <script type="text/javascript">
      $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 </script>

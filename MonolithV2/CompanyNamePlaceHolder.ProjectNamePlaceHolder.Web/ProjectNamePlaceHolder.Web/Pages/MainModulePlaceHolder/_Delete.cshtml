@@ -1,10 +1,10 @@
-@*@model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
+@model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
 @using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 <form method="get">
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="@MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmDeleteModal">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-trash"></i><span class="btn-label"> @Resource.LabelDelete</span>
                     </a>
@@ -14,7 +14,7 @@
     </div>
 </form>
 
-<div class="" id="@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Delete" style="margin-top:5px;">
+<div class="" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -30,9 +30,9 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post" asp-page-handler="Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Delete">
+        <form method="post" asp-page-handler="Save" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />    
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 @Html.DisplayLabelWithRequiredTag(model => Model.Code, "control-label small")
                 <input asp-for="Code" class="form-control form-control-sm" readonly />
@@ -42,12 +42,17 @@
                 @Html.DisplayLabelWithRequiredTag(model => Model.Name, "control-label small")
                 <input asp-for="Name" class="form-control form-control-sm" disabled />
                 <span asp-validation-for="Name" class="text-danger small"></span>
-            </div>
-            <div class="form-group" style="display:none;">
-                <input type="submit" id="@MainModulePlaceHolderHtmlElementVariables.Button_FormActionDelete" class="btn btn-primary" />
-            </div>
+            </div>        
         </form>
     </div>
 </div>
 
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@MainModulePlaceHolderHtmlElementVariables.Update.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
+    formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
+    confirmationMessage: Resource.PromptMessageSaveConfirmation)
+<script type="text/javascript">
+     $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+</script>
