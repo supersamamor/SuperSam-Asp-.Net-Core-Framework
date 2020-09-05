@@ -15,7 +15,7 @@
     </div>
 </form>
 
-<div class="" id="@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create" style="margin-top:5px;">
+<div class="" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger small alert-dismissible fade show" role="alert">
@@ -31,7 +31,7 @@
 </div>
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post" asp-page-handler="@MainModulePlaceHolderHtmlElementVariables.Handler_Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Create">
+        <form method="post" asp-page-handler="@MainModulePlaceHolderHtmlElementVariables.Handler_Save" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id"  value="@Model.Id"/>
             <div class="form-group">
@@ -54,10 +54,10 @@
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 @MainModulePlaceHolderHtmlElementVariables.Save.CelerSoftPostTriggerHandlerAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
-    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create,
-    formName: MainModulePlaceHolderHtmlElementVariables.FormName_Create,
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
+    formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
     confirmationMessage : Resource.PromptMessageSaveConfirmation)
 
 <script type="text/javascript">
-     $('#@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Create').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+     $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 </script>

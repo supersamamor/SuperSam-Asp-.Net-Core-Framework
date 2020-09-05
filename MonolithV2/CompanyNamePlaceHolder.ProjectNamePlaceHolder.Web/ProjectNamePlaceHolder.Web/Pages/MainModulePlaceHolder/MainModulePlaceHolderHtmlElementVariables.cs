@@ -15,8 +15,8 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         public const string JSTriggerShow_Create = "Create";
         public const string Button_FormActionSave = "btnSave";
         public const string Button_ShowConfirmSaveModal = "btnShowSaveModal";
-        public const string PromptContainer_Create = "PromptCreateContainer";
-        public const string FormName_Create = "FormAdd";
+  
+  
 
         public const string FormModal_Edit = "Edit";
         public const string ConfirmModal_Update = "ConfirmUpdateModal";
@@ -42,6 +42,10 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         public const string PageName_View = "_View";
         public const string JSTriggerShow_View = "View";
 
+
+
+        public const string MainModulePlaceHolderForm = "formMainModulePlaceHolderForm";
+        public const string MainModulePlaceHolderFormPromptContainer = "promptMainModulePlaceHolderForm";
         public static readonly FormModal MainModulePlaceHolderModal = new FormModal("MainModulePlaceHolderModal", 700);
         public static readonly PageHandler ShowCreate = new PageHandler("ShowCreate", "Add MainModulePlaceHolderModal");
         public static readonly PageHandler ShowEdit = new PageHandler("ShowEdit", "Edit MainModulePlaceHolderModal", new List<string> { "id" });
