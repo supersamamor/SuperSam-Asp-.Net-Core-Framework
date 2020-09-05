@@ -9,34 +9,33 @@
         outline: 1px solid red;
     }
 </style>
-
-<div class="row toolbar-container">
-    <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
-        <div class="input-group input-group-sm">
-            <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
-                <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreate.JSFunctionTriggerHandler)()" style="cursor:pointer;">
-                    <i class="fas fa-plus text-dark"
-                       aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
-        <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
-            <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
-                <div class="input-group-prepend input-group-sm">
-                    <button type="submit" class="input-group-text">
-                        <i class="fas fa-search text-dark"
-                           aria-hidden="true"></i>
-                    </button>
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-sm-6 toolbar-left-panel" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                    <a class="input-group-text custom-anchor-button" onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowCreate.JSFunctionTriggerHandler)()" style="cursor:pointer;">
+                        <i class="fas fa-plus text-dark"
+                           aria-hidden="true"></i><span class="btn-label"> @Resource.LabelAdd</span>
+                    </a>
                 </div>
-                <input asp-for="SearchKey" class="form-control" placeholder="Search" />
+            </div>
+        </div>
+        <div class="btn-toolbar mb-1 col-sm-6 toolbar-right-panel" role="toolbar">
+            <div class="col-sm-12" style="margin-right:0px;padding-right:0px;">
+                <div class="input-group input-group-sm" style="margin-right:0px;padding-right:0px;float:right;">
+                    <div class="input-group-prepend input-group-sm">
+                        <button type="submit" class="input-group-text">
+                            <i class="fas fa-search text-dark"
+                               aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <input asp-for="SearchKey" class="form-control" placeholder="Search" />
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
+</form>
 <div class="" style="margin-top:5px;">
     @if (TempData["Error"] != null)
     {
@@ -76,19 +75,19 @@
                             <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEdit.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
                                     <i class="fas fa-edit text-dark"
-                                       aria-hidden="true"></i>
+                                        aria-hidden="true"></i>
                                 </a>
                             </li>
                             <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowView.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
                                     <i class="fas fa-search text-dark"
-                                       aria-hidden="true"></i>
+                                        aria-hidden="true"></i>
                                 </a>
                             </li>
                             <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowDelete.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
                                     <i class="fas fa-trash text-dark"
-                                       aria-hidden="true"></i>
+                                        aria-hidden="true"></i>
                                 </a>
                             </li>
                         </ul>

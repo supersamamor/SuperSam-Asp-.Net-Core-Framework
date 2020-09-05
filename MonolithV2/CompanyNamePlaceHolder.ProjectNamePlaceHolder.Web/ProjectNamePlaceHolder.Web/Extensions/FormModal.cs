@@ -35,6 +35,13 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 return "ShowHide" + this.Name;
             }
         }
+        public string ModalElementId
+        {
+            get
+            {
+                return this.Name + "Modal";
+            }
+        }
         public string TitleHtmlElement
         {
             get
@@ -52,7 +59,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public IHtmlContent CelerSoftFormModal()
         {         
             var htmlstring = @"";
-            htmlstring += @"      <div class="""" id=""" + this.Name + @"Modal"" style=""z-index: " + (ZIndex + 1) + @";position:fixed;top:10%;display:none;"">";
+            htmlstring += @"      <div class="""" id=""" + this.ModalElementId + @""" style=""z-index: " + (ZIndex + 1) + @";position:fixed;top:10%;display:none;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style="""">";
             htmlstring += @"                     <div id=""" + this.Name + @"Header"" class=""modal-header"">";
@@ -72,7 +79,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function ShowHideModal" + this.Name + @"() {";
             htmlstring += @"                $(""#" + this.Body + @""").html(""" + PageLoader(this.Body + "Loader", true) + @""");";
-            htmlstring += @"                $(""#" + this.Name + @"Modal"").slideToggle(""fast"");";
+            htmlstring += @"                $(""#" + this.ModalElementId + @""").slideToggle(""fast"");";
             htmlstring += @"                $(""#" + this.Name + @"BackGround"").slideToggle(""fast"");";
             htmlstring += @"           }";
             htmlstring += @"           function Resize" + this.Name + @"() {
@@ -80,11 +87,11 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                                            var windowWidth = $(window).width(); 
                                            if (width > (windowWidth + 40)) { width = windowWidth - 40; };       
                                            var leftPosition = (windowWidth - width) / 2;   
-                                           $('#" + Name + @"Modal .modal-content').width(width);
-                                           $('#" + this.Name + @"Modal').css({ left: leftPosition }); 
+                                           $('#" + this.ModalElementId + @" .modal-content').width(width);
+                                           $('#" + this.ModalElementId + @"').css({ left: leftPosition }); 
                                            var windowWHeight = $(window).height(); 
                                            var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
-                                           $('#" + this.Name + @"Modal  .modal-body').css({'maxHeight': maxHeight + 'px','minHeight': maxHeight + 'px','Height': maxHeight + 'px'});
+                                           $('#" + this.ModalElementId + @"  .modal-body').css({'maxHeight': maxHeight + 'px','minHeight': maxHeight + 'px','Height': maxHeight + 'px'});
                                       };";
             htmlstring += @"           function " + this.JSFunctionToggleShowHideModal + @"() {";
             htmlstring += @"                Resize" + this.Name + @"();ShowHideModal" + this.Name + @"();";
