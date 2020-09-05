@@ -49,6 +49,14 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 return this.Name + "ModalTitle";
             }
         }
+        public string PromptModalNamel
+        {
+            get
+            {
+                return this.Name + "PromptModal";
+            }
+        }
+        
         public int ZIndex
         {
             get

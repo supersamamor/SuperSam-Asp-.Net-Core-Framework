@@ -177,7 +177,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"               " + postString;
             htmlstring += @"           }";
             htmlstring += @"      </script>";
-            htmlstring += @"      <div class=""modal"" id=""" + modal.Name + @"PromptModal"" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:20%;display:none;"">";
+            htmlstring += @"      <div class=""modal"" id=""" + modal.PromptModalNamel + @""" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:20%;display:none;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style=""z-index: " + (initialZindex + 1) + @";"">";
             htmlstring += @"                     <div class=""modal-header"">";
