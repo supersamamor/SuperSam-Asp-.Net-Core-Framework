@@ -57,6 +57,18 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             return Partial("_Edit", MainModulePlaceHolder);
         }
 
+        public async Task<IActionResult> OnGetShowView(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_View", MainModulePlaceHolder);
+        }
+
+        public async Task<IActionResult> OnGetShowDelete(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_Delete", MainModulePlaceHolder);
+        }
+
         public async Task<IActionResult> OnPostSave()
         {
             try
