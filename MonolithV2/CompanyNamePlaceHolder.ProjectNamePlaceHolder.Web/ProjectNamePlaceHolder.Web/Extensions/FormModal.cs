@@ -28,6 +28,13 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 return this.Name + "Body";
             }
         }
+        public string Header
+        {
+            get
+            {
+                return this.Name + "Header";
+            }
+        }
         public string JSFunctionToggleShowHideModal
         {
             get
@@ -70,7 +77,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      <div class="""" id=""" + this.ModalElementId + @""" style=""z-index: " + (ZIndex + 1) + @";position:fixed;top:10%;display:none;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style="""">";
-            htmlstring += @"                     <div id=""" + this.Name + @"Header"" class=""modal-header"">";
+            htmlstring += @"                     <div id=""" + this.Header + @""" class=""modal-header"">";
             htmlstring += @"                          <h6 class=""modal-title"" style=""font-weight:400;"" id=""" + this.TitleHtmlElement + @""">" + this.Name + @"</h6>";
             htmlstring += @"                          <button type=""button"" class=""close"" onclick=""ShowHideModal" + this.Name + @"();"">&times;</button>";
             htmlstring += @"                     </div>";

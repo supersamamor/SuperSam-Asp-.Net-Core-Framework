@@ -98,7 +98,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var postString = @"$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess ?? "") + @" });";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
-            validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
+            validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); $('#" + promptMessageContainer + @"').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);}";
                    
             var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(modal, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
