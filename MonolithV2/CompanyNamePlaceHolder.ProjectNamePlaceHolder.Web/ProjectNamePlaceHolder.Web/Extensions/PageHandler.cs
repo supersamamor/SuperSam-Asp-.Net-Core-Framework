@@ -31,6 +31,13 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             this.HandlerParameters = handlerParameters;
         }
 
+        public PageHandler(string name, bool jqueryValidate, List<string> handlerParameters)
+        {
+            this.Name = name;
+            this.JQueryValidate = jqueryValidate;
+            this.HandlerParameters = handlerParameters;
+        }
+
         private PageHandler()
         {
         }
@@ -96,36 +103,52 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
             var promptModalName = modal.Name + this.Name;
-            var postString = @"$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");$.post('?handler=" + this.Name + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess ?? "") + @" });";
+            #region Trigger Post JS Function String    
+            var handlerParameterQueryString = @"";
+            var handlerFunctionParameter = @"";
+            if (this.HandlerParameters != null)
+            {
+                foreach (string param in this.HandlerParameters)
+                {
+                    handlerParameterQueryString += @"&" + param + (@"=' + " + param + @" +'");
+                    handlerFunctionParameter += @"," + param;
+                }
+                handlerFunctionParameter = handlerFunctionParameter[1..];
+            }
+            var postString = @"$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");$.post('?handler=" + this.Name + handlerParameterQueryString + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess ?? "") + @" });";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); $('#" + promptMessageContainer + @"').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);document.getElementById('" + modal.Body + @"').scrollTop = 0;}";
 
-            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
-            htmlstring += @"      <script type=""text/javascript"">";
-            htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
+            string triggerPostJSFunctionString = "";
+            triggerPostJSFunctionString += @"           function " + this.JSFunctionTriggerHandler + @"(" + handlerFunctionParameter + @") {";
             if (this.WithPromptConfirmation == true)
             {
-                htmlstring += @"       var form = $('#" + formName + @"');";
-                htmlstring += @"       if ($(form).valid()) { ";
-                htmlstring += @"            ShowHideConfirm" + promptModalName + @"();";
-                htmlstring += @"       }";
-                htmlstring += @"       else {";
-                htmlstring += @"            $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); $('#" + promptMessageContainer + @"').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);document.getElementById('" + modal.Body + @"').scrollTop = 0;";
-                htmlstring += @"       }";
+                triggerPostJSFunctionString += @"       var form = $('#" + formName + @"');";
+                triggerPostJSFunctionString += @"       if ($(form).valid()) { ";
+                triggerPostJSFunctionString += @"            ShowHideConfirm" + promptModalName + @"();";
+                triggerPostJSFunctionString += @"       }";
+                triggerPostJSFunctionString += @"       else {";
+                triggerPostJSFunctionString += @"            $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); $('#" + promptMessageContainer + @"').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);document.getElementById('" + modal.Body + @"').scrollTop = 0;";
+                triggerPostJSFunctionString += @"       }";
             }
             else
             {
                 if (this.JQueryValidate == true)
                 {
-                    htmlstring += validateString;
+                    triggerPostJSFunctionString += validateString;
                 }
                 else
                 {
-                    htmlstring += postString;
+                    triggerPostJSFunctionString += postString;
                 }
             }
-            htmlstring += @"           };";
+            triggerPostJSFunctionString += @"           };";
+            #endregion
+            //Prompt Confirmation will not work if Function has parameter (HandlerParameters is not null)
+            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
+            htmlstring += @"      <script type=""text/javascript"">";
+            htmlstring += triggerPostJSFunctionString;
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
         }
