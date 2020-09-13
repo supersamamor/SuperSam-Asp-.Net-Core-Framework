@@ -131,13 +131,50 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         }
         public IHtmlContent CelerSoftPostTriggerHandler(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
-            var promptModalName = modal.Name + this.Name;
+            var promptModalName = modal.Name + this.Name + "Prompt";
             var postString = @"document.getElementById('" + formName + @"').submit();" + (runJavascriptOnSuccess ?? "") + @";";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
 
             var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
+            htmlstring += @"      <script type=""text/javascript"">";
+            htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
+            if (this.WithPromptConfirmation == true)
+            {
+                htmlstring += @"       var form = $('#" + formName + @"');";
+                htmlstring += @"       if ($(form).valid()) { ";
+                htmlstring += @"            ShowHideConfirm" + promptModalName + @"();";
+                htmlstring += @"       }";
+                htmlstring += @"       else {";
+                htmlstring += @"            $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); ";
+                htmlstring += @"       }";
+            }
+            else
+            {
+                if (this.JQueryValidate == true)
+                {
+                    htmlstring += validateString;
+                }
+                else
+                {
+                    htmlstring += postString;
+                }
+            }
+            htmlstring += @"           };";
+            htmlstring += @"      </script>";
+            return new HtmlString(htmlstring);
+        }
+
+        public IHtmlContent CelerSoftPostTriggerHandler(string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
+        {
+            var promptModalName = this.Name + "Prompt";
+            var postString = @"document.getElementById('" + formName + @"').submit();" + (runJavascriptOnSuccess ?? "") + @";";
+
+            var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
+            validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
+
+            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, 1, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
             if (this.WithPromptConfirmation == true)
