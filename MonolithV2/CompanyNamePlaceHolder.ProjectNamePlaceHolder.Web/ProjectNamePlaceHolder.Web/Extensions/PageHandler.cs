@@ -146,7 +146,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             triggerPostJSFunctionString += @"           };";
             #endregion
             //Prompt Confirmation will not work if Function has parameter (HandlerParameters is not null)
-            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
+            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(modal.Body, promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += triggerPostJSFunctionString;
             htmlstring += @"      </script>";
@@ -160,7 +160,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
 
-            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
+            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal("", promptModalName, modal.ZIndex, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
             if (this.WithPromptConfirmation == true)
@@ -197,7 +197,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); }";
 
-            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal(promptModalName, 1, confirmationMessage, postString) : "";
+            var htmlstring = this.WithPromptConfirmation ? PromptConfirmationModal("", promptModalName, 1, confirmationMessage, postString) : "";
             htmlstring += @"      <script type=""text/javascript"">";
             htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
             if (this.WithPromptConfirmation == true)
@@ -226,9 +226,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        private string PromptConfirmationModal(string promptModalName, int modalZIndex, string confirmationMessage, string postString)
+        private string PromptConfirmationModal(string modalBody, string promptModalName, int modalZIndex, string confirmationMessage, string postString)
         {
-
             int initialZindex = modalZIndex + 1;
             var htmlstring = @"";
             htmlstring += @"      <script type=""text/javascript"">";
@@ -237,7 +236,11 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"                $(""#" + promptModalName + @"BackGround"").slideToggle(""fast"");";
             htmlstring += @"           }";
             htmlstring += @"           function TriggerConfirm" + promptModalName + @"() {";
-            htmlstring += @"               " + postString;
+            htmlstring += @"             " + postString;
+            if (modalBody != null && modalBody.Trim() != "")
+            {
+                htmlstring += @"document.getElementById('" + modalBody + @"').scrollTop = 0;";
+            }
             htmlstring += @"           }";
             htmlstring += @"      </script>";
             htmlstring += @"      <div class=""modal"" id=""" + promptModalName + @""" style=""z-index: " + (initialZindex + 1) + @";position:fixed;top:20%;display:none;"">";
