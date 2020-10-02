@@ -1,5 +1,4 @@
-﻿using ProjectNamePlaceHolder.Application.Models.Role;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjectNamePlaceHolder.Application.Models.User
@@ -17,7 +16,7 @@ namespace ProjectNamePlaceHolder.Application.Models.User
         public string IdentityEmail { get; set; }
         [Display(Name = "LabelUserName", ResourceType = typeof(Resource))]
         public string IdentityUserName { get; set; }
-        public IList<RoleModel> UserRoles { get; set; } 
-        public IList<RoleModel> RoleSelection { get; set; }
+        [Display(Name = "LabelUserRole", ResourceType = typeof(Resource))]
+        public IList<string> Roles { get; set; }       
     }
 }

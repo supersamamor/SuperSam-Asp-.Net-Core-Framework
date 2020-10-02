@@ -2,14 +2,13 @@ using AutoMapper;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Application.Models.User;
 using ProjectNamePlaceHolder.Data.Repositories;
 using ProjectNamePlaceHolder.Data;
-using ProjectNamePlaceHolder.Application.Models.Role;
+using Microsoft.AspNetCore.Identity;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectNamePlaceHolder.Application.Commands.User.UpdateUser
 {  
@@ -18,11 +17,14 @@ namespace ProjectNamePlaceHolder.Application.Commands.User.UpdateUser
         private readonly UserRepository _repository;
         private readonly ProjectNamePlaceHolderContext _context;
         private readonly IMapper _mapper;
-        public UpdateUserRequestHandler(UserRepository repository, ProjectNamePlaceHolderContext context, MapperConfiguration mapperConfig) 
+        private readonly UserManager<IdentityUser> _userManager;
+        public UpdateUserRequestHandler(UserRepository repository, ProjectNamePlaceHolderContext context, MapperConfiguration mapperConfig,
+             UserManager<IdentityUser> userManager) 
         {
             _repository = repository;
             _context = context;
             _mapper = mapperConfig.CreateMapper();
+            _userManager = userManager;
         }
         public async Task<UserModel> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
@@ -30,44 +32,36 @@ namespace ProjectNamePlaceHolder.Application.Commands.User.UpdateUser
             userCore.UpdateFrom(request.User.FullName, request.User.IdentityEmail);
             userCore.SetUpdatedInformation(request.Username);
             var user = await _repository.SaveAsync(userCore);
-            await UpdateUserRoleAsync(userCore.Identity.Id, request.User.UserRoles);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(user); ;
+            await UpdateUserRoleAsync(userCore.Identity.Id, request.User.Roles);
+            await _context.SaveChangesAsync();         
+            var userModel = _mapper.Map<Data.Models.ProjectNamePlaceHolderUser, UserModel>(user);
+            userModel.Roles = await _repository.GetUserRoles(user.Id);
+            return userModel;
         }   
-        private async Task UpdateUserRoleAsync(string identityId, IList<RoleModel> userRoles)
+        private async Task UpdateUserRoleAsync(string identityId, IList<string> roles)
         {
-            var roleIds = userRoles.Select(l => l.Id).ToList();
-            // Delete roles
-            var rolesToRemove = await _context.UserRoles
-                    .Where(l => !roleIds.Contains(l.RoleId) && l.UserId == identityId)
-                    .AsNoTracking().ToListAsync();
-
-            foreach (var userRoleToRemove in rolesToRemove)
-            {              
-                _context.UserRoles.Remove(userRoleToRemove);
-            }
-
-            // Update and Insert roles
-            foreach (var roleIdToUpsert in roleIds)
+            var identity = await _context.Users.Where(l => l.Id == identityId).FirstOrDefaultAsync();
+            var result = IdentityResult.Success;
+            var currentRoles = await _userManager.GetRolesAsync(identity);
+            foreach (var item in currentRoles)
             {
-                var userRole = _context.UserRoles
-                    .Where(c => c.UserId == identityId && c.RoleId == roleIdToUpsert)
-                    .SingleOrDefault();
-               
-                if (userRole != null)
-                    // Update 
-                    _context.Entry(userRole).State = EntityState.Modified;             
-                else
-                {
-                    // Insert 
-                    var newUserRole = new IdentityUserRole<string>
-                    {
-                        UserId = identityId,
-                        RoleId = roleIdToUpsert
-                    };
-                    _context.Add(newUserRole);
-                }
+                result = await _userManager.RemoveFromRoleAsync(identity, item);
             }
+            if (roles?.Count > 0)
+            {
+                foreach (var role in roles)
+                {
+                    var isInRole = await _userManager.IsInRoleAsync(identity, role);
+                    if (!isInRole)
+                    {
+                        result = await _userManager.AddToRoleAsync(identity, role);
+                    }
+                    if (!result.Succeeded)
+                    {
+                        break;
+                    }
+                }
+            }          
         }
     }
 }

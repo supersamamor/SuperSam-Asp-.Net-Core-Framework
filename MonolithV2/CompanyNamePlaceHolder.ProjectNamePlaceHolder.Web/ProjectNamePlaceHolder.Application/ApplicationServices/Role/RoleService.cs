@@ -17,33 +17,14 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.Role
             : base(mediator, userManager, httpContext)
         {          
         }
-
-        public async Task<IList<RoleModel>> GetCurrentRoleListAsync(int userId)
+              
+        public async Task<IList<RoleModel>> GetRoleListAsync()
         {
             if (!_claims.IsInRole(Roles.ADMIN))
             {
                 throw new UnAuthorizedException();
             }
-            var request = new GetRoleListRequest
-            {       
-                FilterBy = "CurrentRoles",
-                UserId = userId
-            };
-            var pagedRoleList = await _mediator.Send(request);
-            return await pagedRoleList.ToListAsync();
-        }
-
-        public async Task<IList<RoleModel>> GetAvailableRoleListAsync(int userId)
-        {
-            if (!_claims.IsInRole(Roles.ADMIN))
-            {
-                throw new UnAuthorizedException();
-            }
-            var request = new GetRoleListRequest
-            {        
-                FilterBy = "AvailableRoles",
-                UserId = userId
-            };
+            var request = new GetRoleListRequest();
             var pagedRoleList = await _mediator.Send(request);
             return await pagedRoleList.ToListAsync();        
         }

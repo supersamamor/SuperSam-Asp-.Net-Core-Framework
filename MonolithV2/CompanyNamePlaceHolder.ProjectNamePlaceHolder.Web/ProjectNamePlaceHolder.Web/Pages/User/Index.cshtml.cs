@@ -13,6 +13,8 @@ using ProjectNamePlaceHolder.Application.Models.Role;
 using System.Collections.Generic;
 using ProjectNamePlaceHolder.Application.ApplicationServices.Role;
 using ProjectNamePlaceHolder.Application;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace ProjectNamePlaceHolder.Web.Pages.User
 {
@@ -35,8 +37,8 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
         [BindProperty(SupportsGet = true)]
         public string SearchKey { get; set; }   
         [BindProperty]
-        public UserModel AppUser { get; set; }
-
+        public UserModel ProjectNamePlaceHolderUser { get; set; }
+        public IList<SelectListItem> Roles { get; set; }
         public IActionResult OnGetAsync()
         {
             return Page();
@@ -57,9 +59,8 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
 
         public async Task<IActionResult> OnGetShowEdit(int id)
         {
-            await GetRecordAsync(id);
-            await GetRoleDropdowns();
-            return Partial("_Edit", AppUser);
+            await GetRecordAsync(id);           
+            return Partial("_Edit", this);
         }
         public async Task<IActionResult> OnPostUpdateAsync()
         {
@@ -71,14 +72,15 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             }
             catch (Exception ex)
             {
-                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), AppUser);
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), ProjectNamePlaceHolderUser);
             }
-            return Partial("_Edit", AppUser);
+            await GetRoleDropdowns();
+            return Partial("_Edit", this);
         }
         public async Task<IActionResult> OnGetShowView(int id)
         {
             await GetRecordAsync(id);
-            return Partial("_View", AppUser);
+            return Partial("_View", this);
         }
 
         private async Task GetUserListAsync() 
@@ -89,17 +91,17 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
 
         private async Task UpdateUserAsync()
         {
-            AppUser = await _service.UpdateUserAsync(AppUser);
+            ProjectNamePlaceHolderUser = await _service.UpdateUserAsync(ProjectNamePlaceHolderUser);
         }
 
         private async Task GetRoleDropdowns()
-        {
-            AppUser.UserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id);
-            AppUser.RoleSelection = await _roleService.GetAvailableRoleListAsync(AppUser.Id);
+        {          
+            var roleList = await _roleService.GetRoleListAsync();
+            Roles = roleList.Select(r => new SelectListItem { Text = r.NormalizedName, Value = r.Name }).ToListAsync().Result;
         }
         private async Task GetUserItemAsync(int id)
         {
-            AppUser = await _service.GetUserItemAsync(id);
+            ProjectNamePlaceHolderUser = await _service.GetUserItemAsync(id);
         }
 
         private async Task GetRecordAsync(int id)
@@ -112,6 +114,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             {
                 TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(GetRecordAsync), User);
             }
+            await GetRoleDropdowns();
         }
     }
 }

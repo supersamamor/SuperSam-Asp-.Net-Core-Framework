@@ -26,34 +26,7 @@ namespace ProjectNamePlaceHolder.Application.Queries.Role.GetRoleList
         {
             var query = _context.Roles          
                 .AsNoTracking();
-
-            if (request.FilterBy == "CurrentRoles")
-            {
-                if (request.UserId != 0)
-                {
-                    query = from r in query
-                            join ur in _context.UserRoles on r.Id equals ur.RoleId
-                            join au in _context.ProjectNamePlaceHolderUser on ur.UserId equals au.Identity.Id
-                            where au.Id == request.UserId
-                            select r;
-                }
-            }
-            else if(request.FilterBy == "AvailableRoles")
-            {
-                if (request.UserId != 0)
-                {
-                    var currentRoles = await (from r in query
-                            join ur in _context.UserRoles on r.Id equals ur.RoleId
-                            join au in _context.ProjectNamePlaceHolderUser on ur.UserId equals au.Identity.Id
-                            where au.Id == request.UserId
-                            select r.Id).ToListAsync();
-
-                    query = from r in query
-                                 where !currentRoles.Contains(r.Id)
-                                 select r;
-                }            
-            }         
-
+                       
             if (request.SearchKey != null) 
             {
                 var searchWords = request.SearchKey.ToLower().Split(' ');

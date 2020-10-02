@@ -349,6 +349,15 @@ namespace ProjectNamePlaceHolder.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Role.
+        /// </summary>
+        public static string LabelUserRole {
+            get {
+                return ResourceManager.GetString("LabelUserRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Users.
         /// </summary>
         public static string LabelUsers {

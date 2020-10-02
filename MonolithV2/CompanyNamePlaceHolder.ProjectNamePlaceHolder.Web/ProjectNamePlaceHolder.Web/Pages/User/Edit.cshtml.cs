@@ -35,8 +35,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
         {
             try
             {
-                await GetUserItemAsync(id);
-                await GetRoleDropdowns();
+                await GetUserItemAsync(id);              
             }
             catch (Exception ex)
             {
@@ -62,21 +61,6 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             return Page();
         }
 
-        public IActionResult OnPostAddRole(string addRoleId)
-        {
-            var roleToAdd = AppUser.RoleSelection.Where(l => l.Id == addRoleId).FirstOrDefault();
-            AppUser.UserRoles.Add(roleToAdd);
-            AppUser.RoleSelection.Remove(roleToAdd);
-            return Page();
-        }
-
-        public IActionResult OnPostRemoveRole(string removeRoleId)
-        {
-            var roleToRemove = AppUser.UserRoles.Where(l => l.Id == removeRoleId).FirstOrDefault();
-            AppUser.RoleSelection.Add(roleToRemove);
-            AppUser.UserRoles.Remove(roleToRemove);
-            return Page();
-        }
 
         private async Task GetUserItemAsync(int id)
         {
@@ -86,12 +70,6 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
         private async Task UpdateUserAsync()
         {          
             AppUser = await _service.UpdateUserAsync(AppUser);
-        }
-
-        private async Task GetRoleDropdowns()
-        {
-            AppUser.UserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id);
-            AppUser.RoleSelection = await _roleService.GetAvailableRoleListAsync(AppUser.Id);
-        }
+        }    
     }
 }
