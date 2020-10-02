@@ -1,7 +1,7 @@
 @model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
 @using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
-<form method="get">
+<form method="get" style="margin-bottom:5px;">
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
@@ -14,22 +14,7 @@
         </div>
     </div>
 </form>
-
-<div class="" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer" style="margin-top:5px;">
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
-            <span>@TempData["Error"] </span>
-        </div>
-    }
-    else if (TempData["Success"] != null)
-    {
-        <div class="alert alert-info small alert-dismissible fade show" role="alert">
-            <span>@TempData["Success"]</span>
-        </div>
-    }
-</div>
-
+@Html.CelerSoftPromptMessageContainer(MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer)
 <div class="row panel-container">
     <div class="col-md-12">
         <form method="post" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
@@ -63,10 +48,9 @@
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 @MainModulePlaceHolderHtmlElementVariables.SaveHandler.CelerSoftTriggerHandlerPostAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
-    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer,
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer.Name,
     formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
     confirmationMessage: Resource.PromptMessageSaveConfirmation,
-    runJavascriptOnSuccess:  MainModulePlaceHolderHtmlElementVariables.InitializeListHandler.JSFunctionTriggerHandler + "();")
+    runJavascriptOnSuccess: MainModulePlaceHolderHtmlElementVariables.InitializeListHandler.JSFunctionTriggerHandler + "();")
 <script type="text/javascript">
-    $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100); 
 </script>

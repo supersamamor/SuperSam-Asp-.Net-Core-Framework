@@ -91,6 +91,33 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             if (property.GetCustomAttribute(typeof(RequiredAttribute)) is RequiredAttribute) { htmlstring += @"<span style=""color:red;""> *<span>"; }
             htmlstring += @"</label>";
             return new HtmlString(htmlstring); ;
-        }       
+        }
+
+        public static IHtmlContent CelerSoftPromptMessageContainer(this IHtmlHelper htmlHelper, PromptContainer promptContainer)
+        {
+            var htmlstring = @"<div id=""" + promptContainer.Name + @""">";
+            if (htmlHelper.TempData[PromptContainerMessageTempDataName.Error] != null)
+            {
+                htmlstring += @"<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert"">";
+                htmlstring += @"<span>" + htmlHelper.TempData[PromptContainerMessageTempDataName.Error] + "</span>";
+                htmlstring += @"</div>";
+            }
+            else if (htmlHelper.TempData[PromptContainerMessageTempDataName.Success] != null)
+            {
+                htmlstring += @"<div class=""alert alert-info small alert-dismissible fade show"" role=""alert"">";
+                htmlstring += @"<span>" + htmlHelper.TempData[PromptContainerMessageTempDataName.Success] + "</span>";
+                htmlstring += @"</div>";
+            }
+            htmlstring += @"</div>";
+            if (htmlHelper.TempData[PromptContainerMessageTempDataName.Error] != null || htmlHelper.TempData[PromptContainerMessageTempDataName.Success] != null) {
+                if (promptContainer.Effects == "Blink")
+                {
+                    htmlstring += @"      <script type=""text/javascript"">";
+                    htmlstring += @"$(""#" + promptContainer.Name + @""").fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);";
+                    htmlstring += @"      </script>";
+                }
+            }      
+            return new HtmlString(htmlstring); ;
+        }
     }  
 }

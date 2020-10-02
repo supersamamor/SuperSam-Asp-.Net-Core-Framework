@@ -1,21 +1,7 @@
 @model ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder.IndexModel
 @using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
-<div id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer" style="margin-top:5px;">
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
-            <span>@TempData["Error"] </span>
-        </div>
-    }
-    else if (TempData["Success"] != null)
-    {
-        <div class="alert alert-info small alert-dismissible fade show" role="alert">
-            <span>@TempData["Success"]</span>
-        </div>
-    }
-</div>
-
+@Html.CelerSoftPromptMessageContainer(MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer)
 <table class="table small table-striped table-hover">
     <thead>
         <tr>
@@ -72,5 +58,4 @@
     }
 </div>
 <script type="text/javascript">
-    $('#@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 </script>

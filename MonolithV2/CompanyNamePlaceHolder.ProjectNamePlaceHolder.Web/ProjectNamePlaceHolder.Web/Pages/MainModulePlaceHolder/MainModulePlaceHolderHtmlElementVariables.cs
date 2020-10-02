@@ -8,8 +8,8 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
     public static class MainModulePlaceHolderHtmlElementVariables
     {     
         public const string MainModulePlaceHolderForm = "formMainModulePlaceHolderForm";
-        public const string MainModulePlaceHolderFormPromptContainer = "promptMainModulePlaceHolderForm";
-        public const string MainModulePlaceHolderListingsPromptContainer = "promptMainModulePlaceHolderListings";
+        public static PromptContainer MainModulePlaceHolderFormPromptContainer = new PromptContainer(name: "promptMainModulePlaceHolderForm", effects: "Blink");
+        public static PromptContainer MainModulePlaceHolderListingsPromptContainer = new PromptContainer(name: "promptMainModulePlaceHolderListings", effects: "Blink");
         public const string MainModulePlaceHolderListingsContainer = "containerMainModulePlaceHolderListings";
 
         public static readonly FormModal MainModulePlaceHolderModal = new FormModal(name: "MainModulePlaceHolderModal", width: 700, isDraggable: true);
