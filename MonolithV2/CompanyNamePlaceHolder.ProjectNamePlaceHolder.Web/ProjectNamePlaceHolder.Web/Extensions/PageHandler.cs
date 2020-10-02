@@ -95,7 +95,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }    
 
-        public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
+        public IHtmlContent CelerSoftTriggerHandlerPostAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
             var promptModalName = modal.Name + this.Name;        
             #region Trigger Post JS Function String    
@@ -148,7 +148,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        public IHtmlContent CelerSoftPostTriggerHandler(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
+        public IHtmlContent CelerSoftTriggerHandlerPost(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
             var promptModalName = modal.Name + this.Name + "Prompt";
             var postString = @"$('#" + formName + @"Handler').val('" + this.Name + @"');";
@@ -187,7 +187,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }
 
-        public IHtmlContent CelerSoftPostTriggerHandler(string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
+        public IHtmlContent CelerSoftTriggerHandlerPost(string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
             var promptModalName = this.Name + "Prompt";
             var postString = @"document.getElementById('" + formName + @"').submit();" + (runJavascriptOnSuccess ?? "") + @";";
@@ -223,8 +223,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      </script>";
             return new HtmlString(htmlstring);
         }
-
-        public IHtmlContent CelerSoftPromptConfirmationModal(string confirmationMessage, string formName, string parameterName)
+        
+        public IHtmlContent CelerSoftPromptConfirmationTriggerHandlerPost(string confirmationMessage, string formName, string parameterName)
         {
             int initialZindex = this.ZIndex;
             var htmlstring = @"";
