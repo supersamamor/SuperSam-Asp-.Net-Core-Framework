@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace ProjectNamePlaceHolder.Web.Extensions
 {
+    public static class PageHandlerReturnType
+    {
+        public const string FormModal = "FormModal";
+        public const string HtmlElement = "HtmlElement";
+    }
     public class PageHandler : BaseHtmlHelper
     {
         public PageHandler(string name, string description = null, bool withPromptConfirmation = false, bool jqueryValidate = false, bool autoScrollUp = false,
@@ -42,51 +47,53 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 return "PromptModal" + this.Name;
             }
         }
-        public IHtmlContent CelerSoftShowModalTriggerHandlerAjax(FormModal modal)
+        public IHtmlContent CelerSoftShowModalTriggerHandlerGetAjax(string resultType = PageHandlerReturnType.FormModal, FormModal modal = null, string targetElement = null, object currentModelValues = null)
         {
-            var htmlstring = @"<script type=""text/javascript"">";
-            if (this.HandlerParameters == null)
+            var htmlstring = "";
+            if (resultType == PageHandlerReturnType.FormModal)
             {
-                htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
-                htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + this.Description + @"');";
-                htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
-                htmlstring += @"                     " + modal.JSFunctionToggleShowHideModal + @"();";
-                htmlstring += @"               }";
-                htmlstring += @"                $('#" + modal.Body + @"').load('?handler=" + this.Name + @"', function(){ });";
-                htmlstring += @"           };";
-            }
-            else
-            {
-                var handlerParameterQueryString = @"";
-                var handlerFunctionParameter = @"";
-                foreach (string param in this.HandlerParameters)
+                htmlstring = @"<script type=""text/javascript"">";
+                if (this.HandlerParameters == null)
                 {
-                    handlerParameterQueryString += @"&" + param + (@"=' + " + param + @" +'");
-                    handlerFunctionParameter += @"," + param;
+                    htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
+                    htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + this.Description + @"');";
+                    htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
+                    htmlstring += @"                     " + modal.JSFunctionToggleShowHideModal + @"();";
+                    htmlstring += @"               }";
+                    htmlstring += @"                $('#" + modal.Body + @"').load('?handler=" + this.Name + @"', function(){ });";
+                    htmlstring += @"           };";
                 }
-                handlerFunctionParameter = handlerFunctionParameter[1..];
-                htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"(" + handlerFunctionParameter + @") {";
-                htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + this.Description + @"');";
-                htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
-                htmlstring += @"                     " + modal.JSFunctionToggleShowHideModal + @"();";
-                htmlstring += @"               }";
-                htmlstring += @"               $('#" + modal.Body + @"').load('?handler=" + this.Name + handlerParameterQueryString + @"', function(){ });";
-                htmlstring += @"           };";
+                else
+                {
+                    var handlerParameterQueryString = @"";
+                    var handlerFunctionParameter = @"";
+                    foreach (string param in this.HandlerParameters)
+                    {
+                        handlerParameterQueryString += @"&" + param + (@"=' + " + param + @" +'");
+                        handlerFunctionParameter += @"," + param;
+                    }
+                    handlerFunctionParameter = handlerFunctionParameter[1..];
+                    htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"(" + handlerFunctionParameter + @") {";
+                    htmlstring += @"               $('#" + modal.TitleHtmlElement + @"').html('" + this.Description + @"');";
+                    htmlstring += @"               if($('#" + modal.Name + @"Modal:visible').length == 0) {";
+                    htmlstring += @"                     " + modal.JSFunctionToggleShowHideModal + @"();";
+                    htmlstring += @"               }";
+                    htmlstring += @"               $('#" + modal.Body + @"').load('?handler=" + this.Name + handlerParameterQueryString + @"', function(){ });";
+                    htmlstring += @"           };";
+                }
+                htmlstring += @"</script>";
             }
-            htmlstring += @"</script>";
+            else if (resultType == PageHandlerReturnType.HtmlElement)
+            {
+                htmlstring = @"<script type=""text/javascript"">";
+                htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
+                htmlstring += @"                $(""#" + targetElement + @""").append(""" + PageLoader(targetElement + "Loader", true) + @""");";
+                htmlstring += @"                $('#" + targetElement + @"').load('/MainModulePlaceHolder?handler=" + this.Name + @"" + HtmlObjectCreator.CreateRoutesForListingHandler(currentModelValues) + @"', function(){ });";
+                htmlstring += @"           };";
+                htmlstring += @"</script>";
+            }         
             return new HtmlString(htmlstring);
-        }
-
-        public IHtmlContent CelerSoftShowModalTriggerHandlerAjax(string targetElement, object currentModelValues)
-        {
-            var htmlstring = @"<script type=""text/javascript"">";
-            htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
-            htmlstring += @"                $(""#" + targetElement + @""").append(""" + PageLoader(targetElement + "Loader", true) + @""");";
-            htmlstring += @"                $('#" + targetElement + @"').load('/MainModulePlaceHolder?handler=" + this.Name + @""+ HtmlObjectCreator.CreateRoutesForListingHandler(currentModelValues) + @"', function(){ });";
-            htmlstring += @"           };";
-            htmlstring += @"</script>";
-            return new HtmlString(htmlstring);
-        }
+        }    
 
         public IHtmlContent CelerSoftPostTriggerHandlerAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
         {
