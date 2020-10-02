@@ -9,10 +9,14 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         /// </summary>
         /// <param name="name">Name of the modal</param>     
         /// <param name="width">Width of the modal in pixel</param>
-        public FormModal(string name, int width)
+        public FormModal(string name, int width, int topPosition = 0, int height = 0, decimal heightPercentage = 0)
         {
             this.Name = name;        
             this.Width = width;
+            this.TopPosition = topPosition;
+            this.Height = height;
+            this.HeightPercentage = heightPercentage;
+            if (this.HeightPercentage > 100) { this.HeightPercentage = 100; }
         }
 
         private FormModal()
@@ -21,6 +25,9 @@ namespace ProjectNamePlaceHolder.Web.Extensions
 
         public string Name { get; private set; }        
         public int Width { get; private set; }
+        public int TopPosition { get; private set; }
+        public int Height { get; private set; }
+        public decimal HeightPercentage { get; private set; }        
         public string Body 
         {
             get
@@ -56,14 +63,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 return this.Name + "ModalTitle";
             }
         }
-        public string PromptModalNamel
-        {
-            get
-            {
-                return this.Name + "PromptModal";
-            }
-        }
-        
+
         public int ZIndex
         {
             get
@@ -74,7 +74,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public IHtmlContent CelerSoftFormModal()
         {         
             var htmlstring = @"";
-            htmlstring += @"      <div class="""" id=""" + this.ModalElementId + @""" style=""z-index: " + (ZIndex + 1) + @";position:fixed;top:10%;display:none;"">";
+            htmlstring += @"      <div class="""" id=""" + this.ModalElementId + @""" style=""z-index: " + (ZIndex + 1) + @";position:fixed;top:" + (TopPosition == 0 ? "10%" : TopPosition + "px" ) + @";display:none;"">";
             htmlstring += @"           <div class=""modal-dialog"">";
             htmlstring += @"                <div class=""modal-content""  style="""">";
             htmlstring += @"                     <div id=""" + this.Header + @""" class=""modal-header"">";
@@ -105,7 +105,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                                            $('#" + this.ModalElementId + @" .modal-content').width(width);
                                            $('#" + this.ModalElementId + @"').css({ left: leftPosition }); 
                                            var windowWHeight = $(window).height(); 
-                                           var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;
+                                           var maxHeight = windowWHeight - ((windowWHeight * 0.1) * 2) - 100;" 
+                                           + (this.Height != 0 ? "maxHeight = " + this.Height + ";" : "") + (this.HeightPercentage != 0 ? "maxHeight = windowWHeight * " + (this.HeightPercentage / 100) + @";" : "") + @"
                                            $('#" + this.ModalElementId + @"  .modal-body').css({'maxHeight': maxHeight + 'px','minHeight': maxHeight + 'px','Height': maxHeight + 'px'});
                                       };";
             htmlstring += @"           function " + this.JSFunctionToggleShowHideModal + @"() {";
