@@ -9,7 +9,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         /// </summary>
         /// <param name="name">Name of the modal</param>     
         /// <param name="width">Width of the modal in pixel</param>
-        public FormModal(string name, int width, int topPosition = 0, int height = 0, decimal heightPercentage = 0)
+        public FormModal(string name, int width, int topPosition = 0, int height = 0, decimal heightPercentage = 0, bool isDraggable = false)
         {
             this.Name = name;        
             this.Width = width;
@@ -17,6 +17,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             this.Height = height;
             this.HeightPercentage = heightPercentage;
             if (this.HeightPercentage > 100) { this.HeightPercentage = 100; }
+            this.IsDraggable = isDraggable;
         }
 
         private FormModal()
@@ -27,7 +28,8 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public int Width { get; private set; }
         public int TopPosition { get; private set; }
         public int Height { get; private set; }
-        public decimal HeightPercentage { get; private set; }        
+        public decimal HeightPercentage { get; private set; }
+        public bool IsDraggable { get; private set; }
         public string Body 
         {
             get
@@ -92,6 +94,10 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             htmlstring += @"      <div id=""" + this.Name + @"BackGround"" style=""display:none;position:fixed;top:0;left:0;z-index:" + ZIndex + @";width:100vw;height:100vh;background-color:#000;opacity:0.3;""></div>";
            
             htmlstring += @"      <script type=""text/javascript"">";
+            if (this.IsDraggable == true)
+            {
+                htmlstring +=  @"$(""#" + this.ModalElementId + @""").draggable();";
+            }   
             htmlstring += @"           function ShowHideModal" + this.Name + @"() {";
             htmlstring += @"                $(""#" + this.Body + @""").html(""" + PageLoader(this.Body + "Loader", true) + @""");";
             htmlstring += @"                $(""#" + this.ModalElementId + @""").slideToggle(""fast"");";

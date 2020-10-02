@@ -32,7 +32,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 var _labelName = field.Name;
                 ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
                 fieldDisplayName = rm.GetString(_labelName);
-            }
+            }        
             var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
             var pageName = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext).ActionContext.ActionDescriptor.DisplayName.Replace("/Index", "");
             var htmlstring = HtmlObjectCreator.TableHeaderSorterLinkHtml(fieldDisplayName, pageName, fieldName, htmlHelper.ViewData.Model, maxwidth);
