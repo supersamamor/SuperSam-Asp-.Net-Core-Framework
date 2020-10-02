@@ -1,0 +1,59 @@
+@model ProjectNamePlaceHolder.Web.Pages.User.IndexModel
+@using ProjectNamePlaceHolder.Web.Pages.User
+
+@Html.CelerSoftPromptMessageContainer(UserHtmlElementVariables.UserListingsPromptContainer)
+<table class="table small table-striped table-hover">
+    <thead>
+        <tr>
+            @Html.CelerSoftTableHeaderSorter(model => Model.UserList[0].FullName)
+            @Html.CelerSoftTableHeaderSorter(model => Model.UserList[0].IdentityUserName)
+            @Html.CelerSoftTableHeaderSorter(model => Model.UserList[0].IdentityEmailConfirmed)
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.UserList != null)
+        {
+            foreach (var item in Model.UserList)
+            {
+                <tr style="cursor:pointer;">
+                    <td onclick="@(UserHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)">
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td onclick="@(UserHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)">
+                        @Html.DisplayFor(modelItem => item.IdentityUserName)
+                    </td>
+                    <td onclick="@(UserHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)">
+                        @Html.DisplayFor(modelItem => item.IdentityEmailConfirmed)
+                    </td>
+                    <td>
+                        <ul class="list-toolbar" style="float:right;">
+                            <li onclick="@(UserHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                                    <i class="fas fa-edit text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li onclick="@(UserHtmlElementVariables.ShowViewHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
+                                    <i class="fas fa-search text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="small">
+    <br />
+    @if (Model.UserList != null)
+    {
+        @Html.CelerSoftTablePagination(Model.UserList)
+    }
+</div>
+<script type="text/javascript">
+</script>

@@ -30,12 +30,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             _roleService = roleService;
         }
         [BindProperty]
-        public UserModel AppUser { get; set; }
-        [BindProperty]
-        public IList<RoleModel> CurrentUserRoles { get; set; }
-        [BindProperty]
-        public IList<RoleModel> RoleSelection { get; set; }
-
+        public UserModel AppUser { get; set; } 
         public async Task<IActionResult> OnGetAsync(int id)
         {
             try
@@ -69,17 +64,17 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
 
         public IActionResult OnPostAddRole(string addRoleId)
         {
-            var roleToAdd = RoleSelection.Where(l => l.Id == addRoleId).FirstOrDefault();
-            CurrentUserRoles.Add(roleToAdd);
-            RoleSelection.Remove(roleToAdd);
+            var roleToAdd = AppUser.RoleSelection.Where(l => l.Id == addRoleId).FirstOrDefault();
+            AppUser.UserRoles.Add(roleToAdd);
+            AppUser.RoleSelection.Remove(roleToAdd);
             return Page();
         }
 
         public IActionResult OnPostRemoveRole(string removeRoleId)
         {
-            var roleToRemove = CurrentUserRoles.Where(l => l.Id == removeRoleId).FirstOrDefault();
-            RoleSelection.Add(roleToRemove);
-            CurrentUserRoles.Remove(roleToRemove);
+            var roleToRemove = AppUser.UserRoles.Where(l => l.Id == removeRoleId).FirstOrDefault();
+            AppUser.RoleSelection.Add(roleToRemove);
+            AppUser.UserRoles.Remove(roleToRemove);
             return Page();
         }
 
@@ -89,15 +84,14 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
         }
 
         private async Task UpdateUserAsync()
-        {
-            AppUser.UserRoles = CurrentUserRoles;
+        {          
             AppUser = await _service.UpdateUserAsync(AppUser);
         }
 
         private async Task GetRoleDropdowns()
         {
-            CurrentUserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id);
-            RoleSelection = await _roleService.GetAvailableRoleListAsync(AppUser.Id);
+            AppUser.UserRoles = await _roleService.GetCurrentRoleListAsync(AppUser.Id);
+            AppUser.RoleSelection = await _roleService.GetAvailableRoleListAsync(AppUser.Id);
         }
     }
 }

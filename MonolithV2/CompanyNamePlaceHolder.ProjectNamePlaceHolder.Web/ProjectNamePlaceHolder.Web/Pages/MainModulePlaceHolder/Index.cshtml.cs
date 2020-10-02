@@ -46,7 +46,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetInitializeListAsync));
             }
             return Partial("_List", this);
         }
@@ -157,7 +157,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetShowEdit), MainModulePlaceHolder);
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(GetRecordAsync), MainModulePlaceHolder);
             }
         }
     }

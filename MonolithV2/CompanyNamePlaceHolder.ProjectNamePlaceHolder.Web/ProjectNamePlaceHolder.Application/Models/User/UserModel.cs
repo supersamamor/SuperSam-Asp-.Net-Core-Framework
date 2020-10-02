@@ -17,6 +17,7 @@ namespace ProjectNamePlaceHolder.Application.Models.User
         public string IdentityEmail { get; set; }
         [Display(Name = "LabelUserName", ResourceType = typeof(Resource))]
         public string IdentityUserName { get; set; }
-        public IList<RoleModel> UserRoles { get; set; }
+        public IList<RoleModel> UserRoles { get; set; } 
+        public IList<RoleModel> RoleSelection { get; set; }
     }
 }

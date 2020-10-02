@@ -1,0 +1,131 @@
+@model ProjectNamePlaceHolder.Application.Models.User.UserModel
+@using ProjectNamePlaceHolder.Web.Pages.User
+
+<form method="get" style="margin-bottom:5px;">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-12" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" onclick="@(UserHtmlElementVariables.UpdateHandler.JSFunctionTriggerHandler)();">
+                    <a class="input-group-text custom-anchor-button" href="#">
+                        <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.CelerSoftPromptMessageContainer(UserHtmlElementVariables.UserFormPromptContainer)
+
+<div class="row panel-container">
+    <div class="col-md-12">
+        <form method="post" id="@UserHtmlElementVariables.UserForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="row" style="padding:10px;">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.DisplayLabelWithRequiredTag(model => Model.IdentityUserName, "control-label small")
+                        <input asp-for="IdentityUserName" class="form-control form-control-sm" readonly />
+                        <span asp-validation-for="IdentityUserName" class="text-danger small"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayLabelWithRequiredTag(model => Model.FullName, "control-label small")
+                        <input asp-for="FullName" class="form-control form-control-sm" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayLabelWithRequiredTag(model => Model.IdentityEmail, "control-label small")
+                        <input asp-for="IdentityEmail" class="form-control form-control-sm" />
+                        <span asp-validation-for="IdentityEmail" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table small table-striped table-hover table">
+                        <thead>
+                            <tr>
+                                <th style="max-width:100px;width:100px;"><a href="#" class="page-sorter"> @Resource.LabelRoles</a></th>
+                                <th style="max-width:50px;width:50px;">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.UserRoles != null)
+                            {
+                                var idx = 0;
+                                foreach (var item in Model.UserRoles)
+                                {
+                                    <tr style="cursor:pointer;">
+                                        <td>
+                                            <input name="CurrentUserRoles[@idx].Id" type="hidden" value="@(Model.UserRoles[idx].Id)" />
+                                            <input name="CurrentUserRoles[@idx].Name" type="hidden" value="@(Model.UserRoles[idx].Name)" />
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <ul class="list-toolbar" style="float:right;">
+                                                <li class="list-toolbar-button">
+                                                    <button asp-page-handler="RemoveRole" class="border-less" name="RemoveRoleId" value="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelRemove">
+                                                        <i class="fas fa-window-close text-dark" aria-hidden="true"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    idx++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <table class="table small table-striped table-hover table">
+                        <thead>
+                            <tr>
+                                <th style="max-width:100px;width:100px;"><a href="#" class="page-sorter"> @Resource.LabelRolesSelection</a></th>
+                                <th style="max-width:50px;width:50px;">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.RoleSelection != null)
+                            {
+                                var idx = 0;
+                                foreach (var item in Model.RoleSelection)
+                                {
+                                    <tr style="cursor:pointer;">
+                                        <td>
+                                            <input name="RoleSelection[@idx].Id" type="hidden" value="@(Model.RoleSelection[idx].Id)" />
+                                            <input name="RoleSelection[@idx].Name" type="hidden" value="@(Model.RoleSelection[idx].Name)" />
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <ul class="list-toolbar" style="float:right;">
+                                                <li class="list-toolbar-button">
+                                                    <button asp-page-handler="AddRole" class="border-less" name="AddRoleId" value="@item.Id" data-toggle="tooltip" data-placement="top" title="@Resource.LabelAdd">
+                                                        <i class="fas fa-plus text-dark" aria-hidden="true"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    idx++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@UserHtmlElementVariables.UpdateHandler.CelerSoftTriggerHandlerPostAjax(modal: UserHtmlElementVariables.UserModal,
+    promptMessageContainer: @UserHtmlElementVariables.UserFormPromptContainer.Name,
+    formName: UserHtmlElementVariables.UserForm,
+    confirmationMessage: Resource.PromptMessageSaveConfirmation,
+    runJavascriptOnSuccess: UserHtmlElementVariables.InitializeListHandler.JSFunctionTriggerHandler + "();")
+<script type="text/javascript"> 
+</script>

@@ -88,7 +88,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 htmlstring = @"<script type=""text/javascript"">";
                 htmlstring += @"           function " + this.JSFunctionTriggerHandler + @"() {";
                 htmlstring += @"                $(""#" + targetElement + @""").append(""" + PageLoader(targetElement + "Loader", true) + @""");";
-                htmlstring += @"                $('#" + targetElement + @"').load('/MainModulePlaceHolder?handler=" + this.Name + @"" + HtmlObjectCreator.CreateRoutesForListingHandler(currentModelValues) + @"', function(){ });";
+                htmlstring += @"                $('#" + targetElement + @"').load('?handler=" + this.Name + @"" + HtmlObjectCreator.CreateRoutesForListingHandler(currentModelValues) + @"', function(){ });";
                 htmlstring += @"           };";
                 htmlstring += @"</script>";
             }         
