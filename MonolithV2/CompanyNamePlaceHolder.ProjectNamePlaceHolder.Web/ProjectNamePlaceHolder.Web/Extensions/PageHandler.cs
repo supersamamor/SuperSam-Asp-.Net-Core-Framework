@@ -5,48 +5,18 @@ namespace ProjectNamePlaceHolder.Web.Extensions
 {
     public class PageHandler : BaseHtmlHelper
     {
-        public PageHandler(string name, bool withPromptConfirmation = false)
+        public PageHandler(string name, string description = null, bool withPromptConfirmation = false, bool jqueryValidate = false, bool autoScrollUp = false,
+             List<string> handlerParameters = null)
         {
             this.Name = name;  
             this.WithPromptConfirmation = withPromptConfirmation;
-            this.ZIndex = 1041;          
-        }
-      
-        public PageHandler(string name, bool jqueryValidate, bool withPromptConfirmation = false, bool autoScrollUp = false)
-        {
-            this.Name = name;
-            this.WithPromptConfirmation = withPromptConfirmation;
+            this.ZIndex = 1041;
             this.JQueryValidate = jqueryValidate;
             this.AutomaticScrollUp = autoScrollUp;
-        }
-
-        public PageHandler(string name, bool jqueryValidate, string description)
-        {
-            this.Name = name;
-            this.Description = description;
-            this.JQueryValidate = jqueryValidate;
-        }
-
-        public PageHandler(string name, string description) 
-        {
-            this.Name = name;
-            this.Description = description;
-        }
-
-        public PageHandler(string name, string description, List<string> handlerParameters)
-        {
-            this.Name = name;
             this.Description = description;
             this.HandlerParameters = handlerParameters;
-        }
-
-        public PageHandler(string name, bool jqueryValidate, List<string> handlerParameters)
-        {
-            this.Name = name;
-            this.JQueryValidate = jqueryValidate;
-            this.HandlerParameters = handlerParameters;
-        }
-
+        }   
+ 
         private PageHandler()
         {
         }

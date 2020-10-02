@@ -14,9 +14,9 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 
         public static readonly FormModal MainModulePlaceHolderModal = new FormModal("MainModulePlaceHolderModal", 700);
         public static readonly PageHandler ShowCreateHandler = new PageHandler("ShowCreate", Resource.LabelAddMainModulePlaceHolder);
-        public static readonly PageHandler ShowEditHandler = new PageHandler("ShowEdit", Resource.LabelEditMainModulePlaceHolder, new List<string> { "id" });
-        public static readonly PageHandler ShowViewHandler = new PageHandler("ShowView", Resource.LabelDetailsMainModulePlaceHolder, new List<string> { "id" });
-        public static readonly PageHandler ShowDeleteHandler = new PageHandler("ShowDelete", Resource.LabelDeleteMainModulePlaceHolder, new List<string> { "id" });
+        public static readonly PageHandler ShowEditHandler = new PageHandler(name: "ShowEdit", description: Resource.LabelEditMainModulePlaceHolder, handlerParameters: new List<string> { "id" });
+        public static readonly PageHandler ShowViewHandler = new PageHandler(name: "ShowView", description: Resource.LabelDetailsMainModulePlaceHolder, handlerParameters: new List<string> { "id" });
+        public static readonly PageHandler ShowDeleteHandler = new PageHandler(name: "ShowDelete", description: Resource.LabelDeleteMainModulePlaceHolder, handlerParameters: new List<string> { "id" });
         public static readonly PageHandler SaveHandler = new PageHandler(name: "Save", withPromptConfirmation: true);
         public static readonly PageHandler UpdateHandler = new PageHandler(name: "Update", withPromptConfirmation: true);
         public static readonly PageHandler DeleteHandler = new PageHandler(name: "Delete", withPromptConfirmation: true);
