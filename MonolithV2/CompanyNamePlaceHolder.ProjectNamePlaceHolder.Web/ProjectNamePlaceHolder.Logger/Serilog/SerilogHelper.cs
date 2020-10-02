@@ -47,9 +47,13 @@ namespace ProjectNamePlaceHolder.Logger
                 new SqlColumn("Elapsed", SqlDbType.NVarChar)
             };
 
-            var logger = new LoggerConfiguration()
-              .ReadFrom.Configuration(config)              
-              .CreateLogger();
+            var logger = GetDefaultLoggerConfiguration(configuration)
+                .WriteTo.MSSqlServer(
+                    connectionString: config["ConnectionStrings:SerilogContext"],
+                    tableName: config["Serilog:TableName"],
+                    autoCreateSqlTable: true,
+                    columnOptions: options)
+                .CreateLogger();
 
             return logger;
         }

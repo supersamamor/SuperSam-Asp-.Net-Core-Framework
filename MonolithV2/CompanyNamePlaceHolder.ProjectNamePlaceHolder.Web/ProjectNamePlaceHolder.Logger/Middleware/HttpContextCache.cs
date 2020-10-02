@@ -63,6 +63,7 @@ namespace ProjectNamePlaceHolder.Logger.Middleware
             if (ctx.Request.ContentLength.HasValue && ctx.Request.ContentLength > 0)
             {
                 ctx.Request.EnableBuffering();
+                ctx.Request.Body.Position = 0;
 
                 using (StreamReader reader = new StreamReader(ctx.Request.Body, Encoding.UTF8, true, 1024, true))
                 {

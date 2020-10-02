@@ -18,7 +18,7 @@ namespace ProjectNamePlaceHolder.Logger.Middleware
         {
             var ctx = HttpContextCache.CreateFrom(context);
 
-            using (LogContext.PushProperty("HttpContext", ctx))
+            using (LogContext.PushProperty("HttpContext", ctx, true))
             using (LogContext.PushProperty("Method", ctx.Method))
             using (LogContext.PushProperty("Path", ctx.Path))
             using (LogContext.PushProperty("Host", ctx.Host))

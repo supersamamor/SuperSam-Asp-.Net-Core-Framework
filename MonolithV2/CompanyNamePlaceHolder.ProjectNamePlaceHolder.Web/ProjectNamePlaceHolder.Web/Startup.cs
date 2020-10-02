@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
+using ProjectNamePlaceHolder.Logger.Filters;
 
 namespace ProjectNamePlaceHolder.Web
 {
@@ -108,7 +109,9 @@ namespace ProjectNamePlaceHolder.Web
                     .RequireAuthenticatedUser()
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
+                config.Filters.Add<SerilogLoggingActionFilter>();
             });
+        
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

@@ -1,7 +1,7 @@
-﻿using ProjectNamePlaceHolder.Logger.Middleware;
+﻿using Correlate.AspNetCore;
+using ProjectNamePlaceHolder.Logger.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
-using Correlate.AspNetCore;
 
 namespace ProjectNamePlaceHolder.Logger.Extensions.AspNetCore
 {
