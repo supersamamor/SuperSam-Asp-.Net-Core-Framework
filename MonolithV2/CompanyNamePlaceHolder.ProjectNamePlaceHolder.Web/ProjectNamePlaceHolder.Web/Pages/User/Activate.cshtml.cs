@@ -25,10 +25,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             _logger = logger;
             _correlationContext = correlationContext;      
         }
-        public IEnumerable<SelectListItem> NatureList { get; set; }
-        public IEnumerable<SelectListItem> TaskList { get; set; }
-        public IEnumerable<SelectListItem> ProjectList { get; set; }
-        public IEnumerable<SelectListItem> SubProjectList { get; set; }
+
         [BindProperty]
         public UserModel AppUser { get; set; }
 

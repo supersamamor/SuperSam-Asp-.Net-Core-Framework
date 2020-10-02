@@ -37,7 +37,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
             }               
         }
 
