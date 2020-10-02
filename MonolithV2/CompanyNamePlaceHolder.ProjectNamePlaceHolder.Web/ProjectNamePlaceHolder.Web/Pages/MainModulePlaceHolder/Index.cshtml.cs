@@ -10,7 +10,6 @@ using X.PagedList;
 using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application;
-using ProjectNamePlaceHolder.Data;
 
 namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 {   
@@ -47,7 +46,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
             }
             return Partial("_List", this);
         }
@@ -81,11 +80,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             {
                 this.ValidateModelState();
                 await SaveUpdateMainModulePlaceHolderAsync();
-                TempData["Success"] = Resource.PromptMessageSaveSuccess;
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageSaveSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostSave), MainModulePlaceHolder);            
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostSave), MainModulePlaceHolder);            
             }
             return Partial("_Create", MainModulePlaceHolder);
         }    
@@ -96,11 +95,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             {
                 this.ValidateModelState();
                 await SaveUpdateMainModulePlaceHolderAsync();
-                TempData["Success"] = Resource.PromptMessageUpdateSuccess;
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageUpdateSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), MainModulePlaceHolder);          
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), MainModulePlaceHolder);          
             }
             return Partial("_Edit", MainModulePlaceHolder);
         }
@@ -110,11 +109,11 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             try
             {
                 await DeleteMainModulePlaceHolderAsync(id);
-                TempData["Success"] = Resource.PromptMessageDeleteSuccess;
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageDeleteSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);              
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);              
             }
             await GetMainModulePlaceHolderListAsync();
             return Page();
@@ -158,7 +157,7 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetShowEdit), MainModulePlaceHolder);
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetShowEdit), MainModulePlaceHolder);
             }
         }
     }
