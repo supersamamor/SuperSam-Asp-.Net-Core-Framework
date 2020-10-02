@@ -255,4 +255,19 @@
   <data name="LabelUserRole" xml:space="preserve">
     <value>User Role</value>
   </data>
+  <data name="LabelDeactivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="LabelDeactivateUser" xml:space="preserve">
+    <value>Deactivate User</value>
+  </data>
+  <data name="PromptMessageActivateSuccess" xml:space="preserve">
+    <value>Activation successful</value>
+  </data>
+  <data name="PromptMessageDeactivateSuccess" xml:space="preserve">
+    <value>Deactivation successful</value>
+  </data>
+  <data name="PromptMessageDeactivateUserConfirmation" xml:space="preserve">
+    <value>Are you sure you want to deactivate this user?</value>
+  </data>
 </root>

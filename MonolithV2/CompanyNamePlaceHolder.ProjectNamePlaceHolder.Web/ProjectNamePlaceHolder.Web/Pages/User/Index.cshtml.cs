@@ -62,6 +62,19 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             await GetRecordAsync(id);           
             return Partial("_Edit", this);
         }
+
+        public async Task<IActionResult> OnGetShowActivate(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_Activate", this);
+        }
+
+        public async Task<IActionResult> OnGetShowDeactivate(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_Deactivate", this);
+        }
+
         public async Task<IActionResult> OnPostUpdateAsync()
         {
             try
@@ -77,10 +90,55 @@ namespace ProjectNamePlaceHolder.Web.Pages.User
             await GetRoleDropdowns();
             return Partial("_Edit", this);
         }
+
+        public async Task<IActionResult> OnPostActivateAsync()
+        {
+
+            try
+            {
+                this.ValidateModelState();
+                await ActivateUserAsync();       
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageActivateSuccess;
+            }
+            catch (Exception ex)
+            {
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostActivateAsync), User);
+            }
+            await GetRoleDropdowns();
+            return Partial("_Activate", this);
+        }
+
+        public async Task<IActionResult> OnPostDeactivateAsync()
+        {
+
+            try
+            {
+                this.ValidateModelState();
+                await DeactivateUserAsync();
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageDeactivateSuccess;
+            }
+            catch (Exception ex)
+            {
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostActivateAsync), User);
+            }
+            await GetRoleDropdowns();
+            return Partial("_Deactivate", this);
+        }
+
         public async Task<IActionResult> OnGetShowView(int id)
         {
             await GetRecordAsync(id);
             return Partial("_View", this);
+        }
+
+        private async Task ActivateUserAsync()
+        {
+            ProjectNamePlaceHolderUser = await _service.ActivateUserAsync(ProjectNamePlaceHolderUser.Id);
+        }
+
+        private async Task DeactivateUserAsync()
+        {
+            ProjectNamePlaceHolderUser = await _service.DeactivateUserAsyncAsync(ProjectNamePlaceHolderUser.Id);
         }
 
         private async Task GetUserListAsync() 

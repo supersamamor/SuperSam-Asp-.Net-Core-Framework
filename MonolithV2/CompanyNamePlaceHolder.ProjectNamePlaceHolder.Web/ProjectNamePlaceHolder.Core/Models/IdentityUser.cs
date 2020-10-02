@@ -26,5 +26,9 @@ namespace ProjectNamePlaceHolder.Core.Models
         {
             this.EmailConfirmed = true;
         }
+        public void DeactivateUser()
+        {
+            this.EmailConfirmed = false;
+        }        
     }
 }

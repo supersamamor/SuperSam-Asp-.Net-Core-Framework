@@ -34,6 +34,24 @@
                                        aria-hidden="true"></i>
                                 </a>
                             </li>
+                            @if (item.IdentityEmailConfirmed == true)
+                            {
+                                <li onclick="@(UserHtmlElementVariables.ShowDeactivateHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                    <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDeactivate">
+                                        <i class="fas fa-times text-dark"
+                                           aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li onclick="@(UserHtmlElementVariables.ShowActivateHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                    <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelActivate">
+                                        <i class="fa fa-check text-dark"
+                                           aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            }
                             <li onclick="@(UserHtmlElementVariables.ShowViewHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
                                 <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
                                     <i class="fas fa-search text-dark"

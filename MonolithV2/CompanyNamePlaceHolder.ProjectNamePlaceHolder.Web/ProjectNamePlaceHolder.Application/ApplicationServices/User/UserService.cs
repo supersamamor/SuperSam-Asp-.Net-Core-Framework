@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using ProjectNamePlaceHolder.Application.Commands.User.ActivateUser;
+using ProjectNamePlaceHolder.Application.Commands.User.DeactivateUser;
 using ProjectNamePlaceHolder.Application.Commands.User.UpdateUser;
 using ProjectNamePlaceHolder.Application.Exception;
 using ProjectNamePlaceHolder.Application.Models.User;
@@ -76,5 +77,18 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.User
             };
             return await _mediator.Send(request);
         }
+        public async Task<UserModel> DeactivateUserAsyncAsync(int id)
+        {
+            if (!_claims.IsInRole(Roles.ADMIN))
+            {
+                throw new UnAuthorizedException();
+            }
+            var request = new DeactivateUserRequest
+            {
+                Id = id,
+                Username = _userName
+            };
+            return await _mediator.Send(request);
+        }     
     }
 }
