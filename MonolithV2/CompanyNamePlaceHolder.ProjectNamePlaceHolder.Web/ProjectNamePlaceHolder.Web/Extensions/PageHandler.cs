@@ -11,7 +11,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
     public class PageHandler : BaseHtmlHelper
     {
         public PageHandler(string name, string description = null, bool withPromptConfirmation = false, bool jqueryValidate = false, bool autoScrollUp = false,
-             List<string> handlerParameters = null)
+             List<string> handlerParameters = null, bool showAjaxLoader = true)
         {
             this.Name = name;  
             this.WithPromptConfirmation = withPromptConfirmation;
@@ -20,6 +20,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             this.AutomaticScrollUp = autoScrollUp;
             this.Description = description;
             this.HandlerParameters = handlerParameters;
+            this.ShowAjaxLoader = showAjaxLoader;
         }   
  
         private PageHandler()
@@ -33,6 +34,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
         public List<string> HandlerParameters { get; private set; }
         public int ZIndex { get; private set; }
         public bool AutomaticScrollUp { get; private set; }
+        public bool ShowAjaxLoader { get; private set; }
         public string JSFunctionTriggerHandler
         {
             get
@@ -95,7 +97,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             return new HtmlString(htmlstring);
         }    
 
-        public IHtmlContent CelerSoftTriggerHandlerPostAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null)
+        public IHtmlContent CelerSoftTriggerHandlerPostAjax(FormModal modal, string promptMessageContainer, string formName, string confirmationMessage = null, string runJavascriptOnSuccess = null, string runJavascriptOnStart = null)
         {
             var promptModalName = modal.Name + this.Name;        
             #region Trigger Post JS Function String    
@@ -110,7 +112,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                 }
                 handlerFunctionParameter = handlerFunctionParameter[1..];          
             }
-            var postString = @"$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");" + (this.AutomaticScrollUp == true ? "document.getElementById('" + modal.Body + @"').scrollTop = 0;" : "") + "$.post('?handler=" + this.Name + handlerParameterQueryString + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess ?? "") + @" });";
+            var postString = (runJavascriptOnStart ?? "") + @";" + (this.ShowAjaxLoader == true ? @";$(""#" + modal.Body + @""").append(""" + PageLoader(modal.Body + "Loader", true) + @""");" : "") + (this.AutomaticScrollUp == true ? "document.getElementById('" + modal.Body + @"').scrollTop = 0;" : "") + "$.post('?handler=" + this.Name + handlerParameterQueryString + @"', $('#" + formName + @"').serialize(), function(data) { $('#" + modal.Body + @"').html(data); " + (runJavascriptOnSuccess ?? "") + @" });";
 
             var validateString = $"var form = $('#" + formName + @"'); if ($(form).valid()) { ";
             validateString += postString + @"} else { $('#" + promptMessageContainer + @"').html('<div class=""alert alert-danger small alert-dismissible fade show"" role=""alert""><span>Please check for invalid or missing fields.</span></div>'); $('#" + promptMessageContainer + @"').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);document.getElementById('" + modal.Body + @"').scrollTop = 0;}";
