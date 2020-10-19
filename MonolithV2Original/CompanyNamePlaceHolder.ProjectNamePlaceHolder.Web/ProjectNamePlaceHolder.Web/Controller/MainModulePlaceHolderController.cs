@@ -8,7 +8,6 @@ using ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.UpdateMa
 using ProjectNamePlaceHolder.Application.Models;
 using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItem;
-using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItemByCode;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderList;
 using ProjectNamePlaceHolder.Web.Extensions;
 using System;
@@ -133,13 +132,7 @@ namespace ProjectNamePlaceHolder.Web.Controller
                     MainModulePlaceHolder = mainModulePlaceHolder,
                     Username = userName
                 };
-                await _mediator.Send(request);
-
-                var savedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemByCodeRequest
-                {
-                    MainModulePlaceHolderCode = mainModulePlaceHolder.Code
-                };
-                return await _mediator.Send(savedMainModulePlaceHolderRequest);
+                return await _mediator.Send(request);          
             }
             catch (Exception e)
             {

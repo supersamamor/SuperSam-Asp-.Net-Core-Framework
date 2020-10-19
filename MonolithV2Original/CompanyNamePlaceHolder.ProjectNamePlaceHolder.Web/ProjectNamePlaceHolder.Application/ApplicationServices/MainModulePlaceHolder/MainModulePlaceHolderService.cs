@@ -8,7 +8,6 @@ using ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.AddMainM
 using ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.DeleteMainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderList;
 using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItem;
-using ProjectNamePlaceHolder.Application.Queries.MainModulePlaceHolder.GetMainModulePlaceHolderItemByCode;
 using ProjectNamePlaceHolder.Application.Models;
 using ProjectNamePlaceHolder.Data;
 using ProjectNamePlaceHolder.Application.Exception;
@@ -83,13 +82,7 @@ namespace ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlace
                 MainModulePlaceHolder = mainModulePlaceHolder,
                 Username = _userName
             };
-            await _mediator.Send(request);
-
-            var savedMainModulePlaceHolderRequest = new GetMainModulePlaceHolderItemByCodeRequest
-            {
-                MainModulePlaceHolderCode = mainModulePlaceHolder.Code
-            };
-            return await _mediator.Send(savedMainModulePlaceHolderRequest);
+            return await _mediator.Send(request);         
         }
 
         public async Task DeleteMainModulePlaceHolderAsync(int id)
