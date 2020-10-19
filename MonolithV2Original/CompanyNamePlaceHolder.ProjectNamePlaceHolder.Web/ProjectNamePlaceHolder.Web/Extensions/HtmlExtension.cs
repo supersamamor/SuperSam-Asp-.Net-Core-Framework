@@ -25,14 +25,15 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var propertyGetExpression = expression.Body as MemberExpression;
             var fieldOnClosureExpression = propertyGetExpression.Expression;
             MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
+            var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
             string fieldDisplayName = field == null ? propertyGetExpression.Member.Name : field?.Name;
             string fieldName = property.Name;
-            if (property.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute field)
-            {              
+            if (field != null)
+            {
                 var _labelName = field.Name;
                 ResourceManager rm = new ResourceManager(field.ResourceType.ToString(), typeof(Resource).Assembly);
                 fieldDisplayName = rm.GetString(_labelName);
-            }        
+            }
             var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
             var pageName = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext).ActionContext.ActionDescriptor.DisplayName.Replace("/Index", "");
             var htmlstring = HtmlObjectCreator.TableHeaderSorterLinkHtml(fieldDisplayName, pageName, fieldName, htmlHelper.ViewData.Model, maxwidth);
