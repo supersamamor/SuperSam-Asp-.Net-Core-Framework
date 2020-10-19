@@ -1,0 +1,55 @@
+@model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
+@using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
+<form method="get">
+    <div class="row toolbar-container">
+        <div class="btn-toolbar mb-1 col-12" role="toolbar">
+            <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="@MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmDeleteModal">
+                    <a class="input-group-text custom-anchor-button" href="#">
+                        <i class="fas fa-trash"></i><span class="btn-label"> @Resource.LabelDelete</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="" id="@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Delete" style="margin-top:5px;">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
+            <span>@TempData["Error"] </span>
+        </div>
+    }
+    else if (TempData["Success"] != null)
+    {
+        <div class="alert alert-info small alert-dismissible fade show" role="alert">
+            <span>@TempData["Success"]</span>
+        </div>
+    }
+</div>
+<div class="row panel-container">
+    <div class="col-md-12">
+        <form method="post" asp-page-handler="Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Delete">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />           
+            Template:[InsertNewDeleteField]
+            <div class="form-group" style="display:none;">
+                <input type="submit" id="@MainModulePlaceHolderHtmlElementVariables.Button_FormActionDelete" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
+{
+    HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Delete,
+    ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Delete,
+    TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmDeleteModal,
+    TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionDelete,
+    FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Delete,
+    PromptMessageContainerId = MainModulePlaceHolderHtmlElementVariables.PromptContainer_Delete,
+    ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_Delete,
+    Message = Resource.PromptMessageDeleteConfirmation
+})

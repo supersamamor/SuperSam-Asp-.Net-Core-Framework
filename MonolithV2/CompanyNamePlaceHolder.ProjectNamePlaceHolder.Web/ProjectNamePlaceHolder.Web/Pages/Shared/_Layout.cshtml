@@ -1,0 +1,146 @@
+﻿@using Microsoft.Extensions.Options
+@using ProjectNamePlaceHolder.Data
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IOptions<ProjectNamePlaceHolder.Web.ProjectNamePlaceHolderWebConfig> Config
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Config.Value.Application</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/fontawesome.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/brands.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/solid.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/regular.css" />
+    <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            margin-left: -15rem;
+            -webkit-transition: margin .25s ease-out;
+            -moz-transition: margin .25s ease-out;
+            -o-transition: margin .25s ease-out;
+            transition: margin .25s ease-out;
+        }
+
+            #sidebar-wrapper .sidebar-heading {
+                padding: 0.875rem 1.25rem;
+                font-size: 1.3rem;
+            }
+
+            #sidebar-wrapper .list-group {
+                width: 15rem;
+            }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        .arrow {
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+
+        .point-up {
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+        }
+
+        @@media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading" style="color:transparent;">Navigation</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Index">@Resource.LabelHome</a>
+                    @if (User.IsInRole(Roles.ADMIN))
+                    {
+                        <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/MainModulePlaceHolder/Index">@Resource.LabelMainModulePlaceHolder</a>
+                        <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/User/Index">@Resource.LabelUsers</a>
+                    }
+                    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Privacy">@Resource.LabelPrivacy</a>
+                </div>
+            </div>
+        }
+        <div id="page-content-wrapper">
+            <header>
+                <nav class="navbar bg-light navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+                    <div class="container-fluid text-light">
+                        <a id="menu-toggle" class="navbar-brand navbar-light" asp-area=""><span class="navbar-toggler-icon"></span></a>
+                        <a id="web-title" class="navbar-brand text-dark" asp-area="">@Config.Value.Application | @ViewData["Title"]</a>
+                        <button id="account-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-caret-down text-dark"></i>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="container-fluid">
+                <main role="main" class="pb-3" style="padding-right:10px;">
+                    @RenderBody()
+                </main>
+            </div>
+            <footer class="border-top footer text-muted">
+                <div class="container-fluid">
+                    &copy; 2020 - @Config.Value.Application - <a asp-area="" asp-page="/Privacy">@Resource.LabelPrivacy</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery-3.5.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/select2/dist/js/select2.min.js"></script>
+    <script src="~/lib/jquery-ui/dist/js/jquery-ui.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        $("#account-toggle").click(function () {
+            $("#account-toggle span").toggleClass("point-up");
+        });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })    
+    </script>
+</body>
+</html>
