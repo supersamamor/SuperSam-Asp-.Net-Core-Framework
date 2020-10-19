@@ -25,7 +25,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var propertyGetExpression = expression.Body as MemberExpression;
             var fieldOnClosureExpression = propertyGetExpression.Expression;
             MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
-            string fieldDisplayName = property.Name;
+            string fieldDisplayName = field == null ? propertyGetExpression.Member.Name : field?.Name;
             string fieldName = property.Name;
             if (property.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute field)
             {              
@@ -80,7 +80,7 @@ namespace ProjectNamePlaceHolder.Web.Extensions
             var fieldOnClosureExpression = propertyGetExpression.Expression;
             MemberInfo property = fieldOnClosureExpression.Type.GetProperty(propertyGetExpression.Member.Name);
             var field = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-            string fieldDisplayName = field.Name;
+            string fieldDisplayName = field == null ? propertyGetExpression.Member.Name : field?.Name;
             if (field != null)
             {
                 var _labelName = field.Name;
