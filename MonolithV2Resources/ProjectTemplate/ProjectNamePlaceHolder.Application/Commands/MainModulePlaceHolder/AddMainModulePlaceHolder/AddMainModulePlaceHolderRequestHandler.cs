@@ -8,7 +8,7 @@ using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 
 namespace ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.AddMainModulePlaceHolder
 {  
-    public class AddMainModulePlaceHolderRequestHandler : AsyncRequestHandler<AddMainModulePlaceHolderRequest>
+    public class AddMainModulePlaceHolderRequestHandler : IRequestHandler<AddMainModulePlaceHolderRequest, MainModulePlaceHolderModel>
     {
         private readonly MainModulePlaceHolderRepository _repository;
         private readonly ProjectNamePlaceHolderContext _context;
@@ -19,18 +19,14 @@ namespace ProjectNamePlaceHolder.Application.Commands.MainModulePlaceHolder.AddM
             _context = context;
             _mapper = mapperConfig.CreateMapper();
         }
-        
-        protected override async Task Handle(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
-        {
-            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);        
-            mainModulePlaceHolderCore.SetCreatedInformation(request.Username);
-            await _repository.SaveAsync(mainModulePlaceHolderCore);
-            await _context.SaveChangesAsync();
-        }
 
-        public async Task HandleAsync(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
+        public async Task<MainModulePlaceHolderModel> Handle(AddMainModulePlaceHolderRequest request, CancellationToken cancellationToken)
         {
-            await this.Handle(request, cancellationToken);
-        }
+            var mainModulePlaceHolderCore = _mapper.Map<MainModulePlaceHolderModel, Core.Models.MainModulePlaceHolder>(request.MainModulePlaceHolder);
+            mainModulePlaceHolderCore.SetCreatedInformation(request.Username);
+            var mainModulePlaceHolderData = await _repository.SaveAsync(mainModulePlaceHolderCore);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>(mainModulePlaceHolderData);
+        }  
     }
 }

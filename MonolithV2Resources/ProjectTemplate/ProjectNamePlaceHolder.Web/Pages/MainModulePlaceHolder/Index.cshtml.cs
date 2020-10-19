@@ -10,7 +10,6 @@ using X.PagedList;
 using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
 using ProjectNamePlaceHolder.Application;
-using ProjectNamePlaceHolder.Data;
 
 namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 {   
@@ -34,63 +33,73 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
         [BindProperty]
         public MainModulePlaceHolderModel MainModulePlaceHolder { get; set; }
 
-        public async Task OnGetAsync()
-        {           
+        public IActionResult OnGetAsync()
+        {
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetInitializeListAsync()
+        {
             try
             {
                 await GetMainModulePlaceHolderListAsync();
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetAsync));
-            }               
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetInitializeListAsync));
+            }
+            return Partial("_List", this);
         }
-
-        public IActionResult OnGetCreate()
+    
+        public IActionResult OnGetShowCreate()
         {
             return Partial("_Create", new MainModulePlaceHolderModel());
-        }   
+        }
+
+        public async Task<IActionResult> OnGetShowEdit(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_Edit", MainModulePlaceHolder);
+        }
+
+        public async Task<IActionResult> OnGetShowView(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_View", MainModulePlaceHolder);
+        }
+
+        public async Task<IActionResult> OnGetShowDelete(int id)
+        {
+            await GetRecordAsync(id);
+            return Partial("_Delete", MainModulePlaceHolder);
+        }
 
         public async Task<IActionResult> OnPostSave()
         {
             try
             {
                 this.ValidateModelState();
-                await SaveMainModulePlaceHolderAsync();
-                TempData["Success"] = Resource.PromptMessageSaveSuccess;
+                await SaveUpdateMainModulePlaceHolderAsync();
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageSaveSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostSave), MainModulePlaceHolder);
-                return Partial("_Create", MainModulePlaceHolder);
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostSave), MainModulePlaceHolder);            
             }
-            return Partial("_Edit", MainModulePlaceHolder);
-        }
-
-        public async Task<IActionResult> OnGetRecordAsync(int id, string pageName)
-        {
-            try
-            {
-                await GetMainModulePlaceHolderItemAsync(id);
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnGetRecordAsync), MainModulePlaceHolder);
-            }
-            return Partial(pageName, MainModulePlaceHolder);
-        }
+            return Partial("_Create", MainModulePlaceHolder);
+        }    
 
         public async Task<IActionResult> OnPostUpdateAsync()
         {
             try
             {
                 this.ValidateModelState();
-                await UpdateMainModulePlaceHolderAsync();
-                TempData["Success"] = Resource.PromptMessageUpdateSuccess;
+                await SaveUpdateMainModulePlaceHolderAsync();
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageUpdateSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), MainModulePlaceHolder);          
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostUpdateAsync), MainModulePlaceHolder);          
             }
             return Partial("_Edit", MainModulePlaceHolder);
         }
@@ -100,14 +109,14 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
             try
             {
                 await DeleteMainModulePlaceHolderAsync(id);
-                TempData["Success"] = Resource.PromptMessageDeleteSuccess;
+                TempData[PromptContainerMessageTempDataName.Success] = Resource.PromptMessageDeleteSuccess;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);
-                return Page();
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(OnPostDeleteAsync), MainModulePlaceHolder);              
             }
-            return Partial("_Delete", MainModulePlaceHolder);
+            await GetMainModulePlaceHolderListAsync();
+            return Page();
         }
 
         private async Task GetMainModulePlaceHolderListAsync()
@@ -118,24 +127,38 @@ namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
                 mainModulePlaceHolderList.PagedListMetaData.TotalItemCount);
         }
 
-        private async Task SaveMainModulePlaceHolderAsync()
+        private async Task SaveUpdateMainModulePlaceHolderAsync()
         {
-            MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder);
+            if (MainModulePlaceHolder.Id == 0)
+            {
+                MainModulePlaceHolder = await _service.SaveMainModulePlaceHolderAsync(MainModulePlaceHolder);
+            }
+            else
+            {
+                MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
+            }          
         }
 
         private async Task GetMainModulePlaceHolderItemAsync(int id)
         {
             MainModulePlaceHolder = await _service.GetMainModulePlaceHolderItemAsync(id);
-        }    
-
-        private async Task UpdateMainModulePlaceHolderAsync()
-        {
-            MainModulePlaceHolder = await _service.UpdateMainModulePlaceHolderAsync(MainModulePlaceHolder);
-        }
+        }              
 
         private async Task DeleteMainModulePlaceHolderAsync(int id)
         {
             await _service.DeleteMainModulePlaceHolderAsync(id);
+        }
+
+        private async Task GetRecordAsync(int id)
+        {
+            try
+            {
+                await GetMainModulePlaceHolderItemAsync(id);
+            }
+            catch (Exception ex)
+            {
+                TempData[PromptContainerMessageTempDataName.Error] = _logger.CustomErrorLogger(ex, _correlationContext, nameof(GetRecordAsync), MainModulePlaceHolder);
+            }
         }
     }
 }

@@ -1,43 +1,26 @@
-﻿namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
+﻿using ProjectNamePlaceHolder.Application;
+using ProjectNamePlaceHolder.Web.Extensions;
+using ProjectNamePlaceHolder.Web.Models;
+using System.Collections.Generic;
+
+namespace ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
 {
     public static class MainModulePlaceHolderHtmlElementVariables
-    {        
-        public const string Handler_GetRecord = "Record";
+    {     
+        public const string MainModulePlaceHolderForm = "formMainModulePlaceHolderForm";
+        public static PromptContainer MainModulePlaceHolderFormPromptContainer = new PromptContainer(name: "promptMainModulePlaceHolderForm", effects: "Blink");
+        public static PromptContainer MainModulePlaceHolderListingsPromptContainer = new PromptContainer(name: "promptMainModulePlaceHolderListings", effects: "Blink");
+        public const string MainModulePlaceHolderListingsContainer = "containerMainModulePlaceHolderListings";
 
-        public const string FormModal_CreateEdit = "CreateEdit";
-        public const string ConfirmModal_Save = "ConfirmSaveModal";
-        public const string Handler_Create = "Create";
-        public const string Handler_Save = "Save";
-        public const string JSTriggerShow_Create = "Create";
-        public const string Button_FormActionSave = "btnSave";
-        public const string Button_ShowConfirmSaveModal = "btnShowSaveModal";
-        public const string PromptContainer_Create = "PromptCreateContainer";
-        public const string FormName_Create = "FormAdd";
-        
-        public const string FormModal_Edit = "Edit";
-        public const string ConfirmModal_Update = "ConfirmUpdateModal";  
-        public const string PageName_Edit = "_Edit";       
-        public const string Handler_Update = "Update";
-        public const string JSTriggerShow_Edit = "Edit";
-        public const string Button_FormActionUpdate = "btnUpdate";
-        public const string Button_ShowConfirmUpdateModal = "btnShowUpdateModal"; 
-        public const string PromptContainer_Edit = "PromptEditContainer";
-        public const string FormName_Edit = "FormEdit";
-
-        public const string FormModal_Delete = "Delete";
-        public const string ConfirmModal_Delete = "ConfirmDeleteModal";
-        public const string PageName_Delete = "_Delete";
-        public const string Handler_Delete = "Delete";
-        public const string JSTriggerShow_Delete = "Delete";
-        public const string Button_FormActionDelete = "btnDelete";
-        public const string Button_ShowConfirmDeleteModal = "btnShowDeleteModal";
-        public const string PromptContainer_Delete = "PromptDeleteContainer";
-        public const string FormName_Delete = "FormDelete";
-
-        public const string FormModal_View = "View";   
-        public const string PageName_View = "_View"; 
-        public const string JSTriggerShow_View = "View";
-       
+        public static readonly FormModal MainModulePlaceHolderModal = new FormModal(name: "MainModulePlaceHolderModal", width: 700, isDraggable: true);
+        public static readonly PageHandler ShowCreateHandler = new PageHandler("ShowCreate", Resource.LabelAddMainModulePlaceHolder);
+        public static readonly PageHandler ShowEditHandler = new PageHandler(name: "ShowEdit", description: Resource.LabelEditMainModulePlaceHolder, handlerParameters: new List<string> { "id" });
+        public static readonly PageHandler ShowViewHandler = new PageHandler(name: "ShowView", description: Resource.LabelDetailsMainModulePlaceHolder, handlerParameters: new List<string> { "id" });
+        public static readonly PageHandler ShowDeleteHandler = new PageHandler(name: "ShowDelete", description: Resource.LabelDeleteMainModulePlaceHolder, handlerParameters: new List<string> { "id" });
+        public static readonly PageHandler SaveHandler = new PageHandler(name: "Save", withPromptConfirmation: true);
+        public static readonly PageHandler UpdateHandler = new PageHandler(name: "Update", withPromptConfirmation: true);
+        public static readonly PageHandler DeleteHandler = new PageHandler(name: "Delete", withPromptConfirmation: true);
+        public static readonly PageHandler InitializeListHandler = new PageHandler(name: "InitializeList");
     }
 }
 

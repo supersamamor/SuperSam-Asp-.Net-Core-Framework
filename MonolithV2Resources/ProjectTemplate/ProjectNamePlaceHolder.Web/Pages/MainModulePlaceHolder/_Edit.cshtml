@@ -1,10 +1,10 @@
 @model ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder.MainModulePlaceHolderModel
 @using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
-<form method="get">
+<form method="get" style="margin-bottom:5px;">
     <div class="row toolbar-container">
         <div class="btn-toolbar mb-1 col-12" role="toolbar">
             <div class="input-group input-group-sm">
-                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" id="@MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmUpdateModal">
+                <div class="input-group input-group-sm" data-toggle="tooltip" data-placement="top" title="@Resource.LabelSave" onclick="@(MainModulePlaceHolderHtmlElementVariables.UpdateHandler.JSFunctionTriggerHandler)();">
                     <a class="input-group-text custom-anchor-button" href="#">
                         <i class="fas fa-save"></i><span class="btn-label"> @Resource.LabelSave</span>
                     </a>
@@ -14,42 +14,23 @@
     </div>
 </form>
 
-<div class="" id="@MainModulePlaceHolderHtmlElementVariables.PromptContainer_Edit" style="margin-top:5px;">
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger small alert-dismissible fade show" role="alert">
-            <span>@TempData["Error"] </span>
-        </div>
-    }
-    else if (TempData["Success"] != null)
-    {
-        <div class="alert alert-info small alert-dismissible fade show" role="alert">
-            <span>@TempData["Success"]</span>
-        </div>
-    }
-</div>
+@Html.CelerSoftPromptMessageContainer(MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer)
+
 <div class="row panel-container">
     <div class="col-md-12">
-        <form method="post" asp-page-handler="Save" id="@MainModulePlaceHolderHtmlElementVariables.FormName_Edit">
+        <form method="post" id="@MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />      
-			Template:[InsertNewEditField]           
-            <div class="form-group" style="display:none;">
-                <input type="submit" id="@MainModulePlaceHolderHtmlElementVariables.Button_FormActionUpdate" class="btn btn-primary" />
-            </div>
+            <input type="hidden" asp-for="Id" />
+           	Template:[InsertNewEditField]
         </form>
     </div>
 </div>
 
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@Html.PromptConfirmationModalAjax(new ConfirmationModalProperties()
-{
-    HandlerName = MainModulePlaceHolderHtmlElementVariables.Handler_Update,
-    ModalElementId = MainModulePlaceHolderHtmlElementVariables.ConfirmModal_Update,
-    TriggerShowElementId = MainModulePlaceHolderHtmlElementVariables.Button_ShowConfirmUpdateModal,
-    TriggerFormActionElementId = MainModulePlaceHolderHtmlElementVariables.Button_FormActionUpdate,
-    FormId = MainModulePlaceHolderHtmlElementVariables.FormName_Edit,
-    PromptMessageContainerId = MainModulePlaceHolderHtmlElementVariables.PromptContainer_Edit,
-    ResultModalId = MainModulePlaceHolderHtmlElementVariables.FormModal_Edit,
-    Message = Resource.PromptMessageSaveConfirmation
-})
+@MainModulePlaceHolderHtmlElementVariables.UpdateHandler.CelerSoftTriggerHandlerPostAjax(modal: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderModal,
+    promptMessageContainer: @MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderFormPromptContainer.Name,
+    formName: MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderForm,
+    confirmationMessage: Resource.PromptMessageSaveConfirmation,
+    runJavascriptOnSuccess: MainModulePlaceHolderHtmlElementVariables.InitializeListHandler.JSFunctionTriggerHandler + "();")
+<script type="text/javascript"> 
+</script>

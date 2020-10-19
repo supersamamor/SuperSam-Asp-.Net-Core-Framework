@@ -1,0 +1,55 @@
+@model ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder.IndexModel
+@using ProjectNamePlaceHolder.Web.Pages.MainModulePlaceHolder
+
+@Html.CelerSoftPromptMessageContainer(MainModulePlaceHolderHtmlElementVariables.MainModulePlaceHolderListingsPromptContainer)
+<table class="table small table-striped table-hover">
+    <thead>
+        <tr>
+            Template:[InsertNewTableHeader]
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.MainModulePlaceHolderList != null)
+        {
+            foreach (var item in Model.MainModulePlaceHolderList)
+            {
+                <tr style="cursor:pointer;">
+                    Template:[InsertNewTableRowValue]
+                    <td>
+                        <ul class="list-toolbar" style="float:right;">
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowEditHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelEdit">
+                                    <i class="fas fa-edit text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowViewHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelView">
+                                    <i class="fas fa-search text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li onclick="@(MainModulePlaceHolderHtmlElementVariables.ShowDeleteHandler.JSFunctionTriggerHandler)(@item.Id)" class="list-toolbar-button">
+                                <a data-toggle="tooltip" data-placement="top" title="@Resource.LabelDelete">
+                                    <i class="fas fa-trash text-dark"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="small">
+    <br />
+    @if (Model.MainModulePlaceHolderList != null)
+    {
+        @Html.CelerSoftTablePagination(Model.MainModulePlaceHolderList)
+    }
+</div>
+<script type="text/javascript">
+</script>
