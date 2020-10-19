@@ -119,7 +119,7 @@
   </resheader>
   <data name="LabelAdd" xml:space="preserve">
     <value>Add</value>
-  </data>  
+  </data> 
   <data name="LabelBackToList" xml:space="preserve">
     <value>Back To List</value>
   </data>
@@ -134,10 +134,10 @@
   </data>
   <data name="LabelDelete" xml:space="preserve">
     <value>Delete</value>
-  </data>  
+  </data>
   <data name="LabelEdit" xml:space="preserve">
     <value>Edit</value>
-  </data>
+  </data> 
   <data name="LabelFullName" xml:space="preserve">
     <value>Full Name</value>
   </data>
@@ -149,7 +149,7 @@
   </data>
   <data name="LabelSave" xml:space="preserve">
     <value>Save</value>
-  </data>  
+  </data> 
   <data name="LabelView" xml:space="preserve">
     <value>View</value>
   </data>
@@ -197,7 +197,7 @@
   </data>
   <data name="LabelUsers" xml:space="preserve">
     <value>Users</value>
-  </data>
+  </data>  
   <data name="LabelActivated" xml:space="preserve">
     <value>Activated</value>
   </data>
@@ -233,6 +233,24 @@
   </data>
   <data name="PromptUnAuthorized" xml:space="preserve">
     <value>You are not authorized to access this feature.</value>
+  </data>
+  <data name="LabelUserRole" xml:space="preserve">
+    <value>User Role</value>
+  </data>
+  <data name="LabelDeactivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="LabelDeactivateUser" xml:space="preserve">
+    <value>Deactivate User</value>
+  </data>
+  <data name="PromptMessageActivateSuccess" xml:space="preserve">
+    <value>Activation successful</value>
+  </data>
+  <data name="PromptMessageDeactivateSuccess" xml:space="preserve">
+    <value>Deactivation successful</value>
+  </data>
+  <data name="PromptMessageDeactivateUserConfirmation" xml:space="preserve">
+    <value>Are you sure you want to deactivate this user?</value>
   </data>
   Template:[InsertNewResouceXPropertiesHere]
 </root>

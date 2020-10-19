@@ -94,8 +94,8 @@ namespace ProjectNamePlaceHolder.Application {
             get {
                 return ResourceManager.GetString("LabelAdd", resourceCulture);
             }
-        }     
-        
+        }        
+             
         /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
@@ -142,14 +142,32 @@ namespace ProjectNamePlaceHolder.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deactivate.
+        /// </summary>
+        public static string LabelDeactivate {
+            get {
+                return ResourceManager.GetString("LabelDeactivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deactivate User.
+        /// </summary>
+        public static string LabelDeactivateUser {
+            get {
+                return ResourceManager.GetString("LabelDeactivateUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string LabelDelete {
             get {
                 return ResourceManager.GetString("LabelDelete", resourceCulture);
             }
-        }
-        
+        }     
+             
         /// <summary>
         ///   Looks up a localized string similar to User Detail.
         /// </summary>
@@ -167,7 +185,7 @@ namespace ProjectNamePlaceHolder.Application {
                 return ResourceManager.GetString("LabelEdit", resourceCulture);
             }
         }
-        
+                      
         /// <summary>
         ///   Looks up a localized string similar to Edit User.
         /// </summary>
@@ -202,8 +220,8 @@ namespace ProjectNamePlaceHolder.Application {
             get {
                 return ResourceManager.GetString("LabelHome", resourceCulture);
             }
-        }     
-        
+        }
+                    
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
@@ -295,6 +313,15 @@ namespace ProjectNamePlaceHolder.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Role.
+        /// </summary>
+        public static string LabelUserRole {
+            get {
+                return ResourceManager.GetString("LabelUserRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Users.
         /// </summary>
         public static string LabelUsers {
@@ -322,11 +349,38 @@ namespace ProjectNamePlaceHolder.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activation successful.
+        /// </summary>
+        public static string PromptMessageActivateSuccess {
+            get {
+                return ResourceManager.GetString("PromptMessageActivateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to activate this user?.
         /// </summary>
         public static string PromptMessageActivateUserConfirmation {
             get {
                 return ResourceManager.GetString("PromptMessageActivateUserConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deactivation successful.
+        /// </summary>
+        public static string PromptMessageDeactivateSuccess {
+            get {
+                return ResourceManager.GetString("PromptMessageDeactivateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to deactivate this user?.
+        /// </summary>
+        public static string PromptMessageDeactivateUserConfirmation {
+            get {
+                return ResourceManager.GetString("PromptMessageDeactivateUserConfirmation", resourceCulture);
             }
         }
         

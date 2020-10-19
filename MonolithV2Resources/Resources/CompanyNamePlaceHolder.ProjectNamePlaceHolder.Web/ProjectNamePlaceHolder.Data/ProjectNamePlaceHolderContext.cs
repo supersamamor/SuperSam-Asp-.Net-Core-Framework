@@ -37,7 +37,7 @@ namespace ProjectNamePlaceHolder.Data
             base.OnModelCreating(builder);
         }
         public virtual DbSet<ProjectNamePlaceHolderUser> ProjectNamePlaceHolderUser { get; set; }
-		Template:[InsertNewDataModelContextPropertyTextHere]        
+        Template:[InsertNewDataModelContextPropertyTextHere]  
         public virtual DbSet<ProjectNamePlaceHolderApiClient> ProjectNamePlaceHolderApiClient { get; set; }     
     }
 }

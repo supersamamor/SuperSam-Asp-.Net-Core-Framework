@@ -86,8 +86,8 @@
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Index">@Resource.LabelHome</a>
                     @if (User.IsInRole(Roles.ADMIN))
-                    {                      
-						Template:[InsertNewNavigationMenuTextHere]
+                    {
+                        Template:[InsertNewNavigationMenuTextHere]
                         <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/User/Index">@Resource.LabelUsers</a>
                     }
                     <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/Privacy">@Resource.LabelPrivacy</a>
@@ -125,6 +125,7 @@
     <script src="~/lib/jquery/dist/jquery-3.5.1.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/select2/dist/js/select2.min.js"></script>
+    <script src="~/lib/jquery-ui/dist/js/jquery-ui.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
@@ -139,7 +140,7 @@
 
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
+        })    
     </script>
 </body>
 </html>

@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
+using ProjectNamePlaceHolder.Logger.Filters;
 Template:[InsertNewImportApplicationServicePropertyTextHere]
 
 namespace ProjectNamePlaceHolder.Web
@@ -87,8 +88,8 @@ namespace ProjectNamePlaceHolder.Web
             services.AddRazorPages();
             services.AddHealthChecks().AddDbContextCheck<ProjectNamePlaceHolderContext>();
             services.AddApplicationInsightsTelemetry();
-            services.AddMediatR(typeof(Resource).Assembly);         
-			Template:[InsertNewRepositoryPropertyTextHere]
+            services.AddMediatR(typeof(Resource).Assembly);
+            Template:[InsertNewRepositoryPropertyTextHere]
             services.AddTransient<UserRepository>();
             services.AddHealthChecks().AddSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             services.Configure<CookiePolicyOptions>(options =>
@@ -105,7 +106,9 @@ namespace ProjectNamePlaceHolder.Web
                     .RequireAuthenticatedUser()
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
+                config.Filters.Add<SerilogLoggingActionFilter>();
             });
+        
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -116,6 +119,7 @@ namespace ProjectNamePlaceHolder.Web
                 });
             });
             #endregion
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
