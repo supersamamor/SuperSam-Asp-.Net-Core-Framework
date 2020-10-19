@@ -76,9 +76,42 @@ Deployment Steps.
 
 
 
+Notes on Creating Resource Template
+
+ProjectNamePlaceHolderContext
+-  public virtual DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; }
+- #region Is Unique
+builder.Entity<Models.MainModulePlaceHolder>()
+.HasIndex(c => new { c.Code }).IsUnique();
+#endregion
+
+#region Disable Cascade Delete
+var cascadeFKs = builder.Model.GetEntityTypes()
+.SelectMany(t => t.GetForeignKeys())
+.Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+foreach (var fk in cascadeFKs)
+{
+fk.DeleteBehavior = DeleteBehavior.Restrict;
+}
+#endregion
 
 
 
+Startup
+-using ProjectNamePlaceHolder.Application.Models.MainModulePlaceHolder;
+using ProjectNamePlaceHolder.Application.ApplicationServices.MainModulePlaceHolder;
+
+-cfg.CreateMap<Data.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
+cfg.CreateMap<Data.Models.MainModulePlaceHolder, Core.Models.MainModulePlaceHolder>().ReverseMap();
+cfg.CreateMap<Core.Models.MainModulePlaceHolder, MainModulePlaceHolderModel>().ReverseMap();
+
+-services.AddTransient<MainModulePlaceHolderRepository>();
+
+-services.AddTransient<MainModulePlaceHolderService>();
+
+
+_LayOut.cshtml
+-<a class="list-group-item list-group-item-action bg-light" asp-area="" asp-page="/MainModulePlaceHolder/Index">@Resource.LabelMainModulePlaceHolder</a>
 
 
 
