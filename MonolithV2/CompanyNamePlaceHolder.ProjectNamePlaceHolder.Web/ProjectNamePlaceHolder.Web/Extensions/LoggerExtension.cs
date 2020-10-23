@@ -33,9 +33,13 @@ namespace ProjectNamePlaceHolder.Web.Extensions
                         return "A database error occured" + traceId;
                     }
                 }
-                else if (sqlException != null && (sqlException.Number == 515 || sqlException.Number == 547))
+				else if (sqlException != null && (sqlException.Number == 515))
                 {
                     return " There are missing required fields.  Please check the file to ensure all required fields are filled up.." + traceId;
+                }
+                else if (sqlException != null && (sqlException.Number == 547))
+                {
+                    return " The conflict occurred in database.." + traceId;
                 }
             }
             else if (ex is ValidationException)
