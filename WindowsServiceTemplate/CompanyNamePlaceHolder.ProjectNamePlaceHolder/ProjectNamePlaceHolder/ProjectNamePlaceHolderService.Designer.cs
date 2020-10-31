@@ -1,6 +1,6 @@
 ﻿namespace ProjectNamePlaceHolder
 {
-    partial class Service1
+    partial class ProjectNamePlaceHolderService
     {
         /// <summary> 
         /// Required designer variable.
@@ -27,14 +27,16 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {
-            // 
-            // Service1
-            // 
-            this.ServiceName = "Service1";
-
+        {         
+            this.ServiceName = "ProjectNamePlaceHolderService";
+            ServiceProcess();
         }
 
+        private void ServiceProcess()
+        {
+            string folderName = @"c:\Test Service Folder";   
+            System.IO.Directory.CreateDirectory(folderName);
+        }
         #endregion
     }
 }

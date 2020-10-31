@@ -16,7 +16,7 @@ namespace ProjectNamePlaceHolder
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new ProjectNamePlaceHolderService()
             };
             ServiceBase.Run(ServicesToRun);
         }

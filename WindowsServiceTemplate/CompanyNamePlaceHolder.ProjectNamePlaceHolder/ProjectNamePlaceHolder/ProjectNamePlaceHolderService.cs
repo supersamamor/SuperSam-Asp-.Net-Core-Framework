@@ -9,9 +9,9 @@ using System.Text;
 
 namespace ProjectNamePlaceHolder
 {
-    public partial class Service1 : ServiceBase
+    public partial class ProjectNamePlaceHolderService : ServiceBase
     {
-        public Service1()
+        public ProjectNamePlaceHolderService()
         {
             InitializeComponent();
         }
