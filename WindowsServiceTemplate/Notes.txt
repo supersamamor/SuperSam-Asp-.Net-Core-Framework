@@ -1,6 +1,6 @@
 The following are replaceable:
 
-1. ProjectNameProperNamePlaceHolder
+1. ProjectNameProperNamePlaceHolder - Max is 80 Characters
 2. CompanyNamePlaceHolder
 3. ProjectNamePlaceHolder
 4. CompanyNameProperNamePlaceHolder

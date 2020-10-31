@@ -1,4 +1,7 @@
-﻿namespace ProjectNamePlaceHolder
+﻿using System;
+using System.Diagnostics;
+
+namespace ProjectNamePlaceHolder
 {
     partial class ProjectNamePlaceHolderService
     {
@@ -31,12 +34,24 @@
             this.ServiceName = "ProjectNamePlaceHolderService";
             ServiceProcess();
         }
+        #endregion
 
         private void ServiceProcess()
-        {
-            string folderName = @"c:\Test Service Folder";   
-            System.IO.Directory.CreateDirectory(folderName);
+        {            
+            try
+            {
+                //Change the logic here
+                string folderName = @"c:\Test Service Folder";
+                System.IO.Directory.CreateDirectory(folderName);
+            }
+            catch (Exception ex)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(ex?.Message?.ToString() + "/" + ex?.StackTrace, EventLogEntryType.Error);
+                }
+            }
         }
-        #endregion
     }
 }
