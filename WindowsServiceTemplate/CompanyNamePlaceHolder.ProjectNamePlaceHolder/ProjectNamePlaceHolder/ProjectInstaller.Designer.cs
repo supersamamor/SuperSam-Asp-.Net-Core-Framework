@@ -39,7 +39,7 @@
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.ServiceName = "ProjectNamePlaceHolderService";
+            this.serviceInstaller.ServiceName = "ProjectNameProperNamePlaceHolder";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

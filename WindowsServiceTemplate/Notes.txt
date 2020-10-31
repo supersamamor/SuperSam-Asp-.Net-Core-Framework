@@ -1,0 +1,6 @@
+The following are replaceable:
+
+1. ProjectNameProperNamePlaceHolder
+2. CompanyNamePlaceHolder
+3. ProjectNamePlaceHolder
+4. CompanyNameProperNamePlaceHolder
