@@ -69,6 +69,9 @@ Manual Usage of Web Template.
 7. Apply required attributes based on documentation  based on documentation
 
 
+URGENT!!
+1. Changes $(Build.SourcesDirectory)/AGMMREG.SecurityData/AGMMREG.SecurityData.csproj' to "Data"
+
 Deployment Steps.
 1. Setup Connection String
 2. Setup Tokens
