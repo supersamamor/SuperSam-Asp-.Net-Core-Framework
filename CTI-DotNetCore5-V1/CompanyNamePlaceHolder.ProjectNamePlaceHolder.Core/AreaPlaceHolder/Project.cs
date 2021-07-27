@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
 {
     public record Project : BaseEntity
     {

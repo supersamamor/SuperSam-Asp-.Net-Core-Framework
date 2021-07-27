@@ -1,7 +1,7 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using LanguageExt;
@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Commands
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands
 {
     public record EditProjectCommand(
         string Id,

@@ -21,7 +21,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder.Project", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.Project", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

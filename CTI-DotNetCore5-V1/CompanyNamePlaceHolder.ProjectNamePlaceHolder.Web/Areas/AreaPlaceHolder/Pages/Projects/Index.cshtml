@@ -48,7 +48,7 @@
 			order: [[ 4, 'asc' ]],
 			ajax:
 			{
-				url: '@Url.Page("/Projects/Index", new { area = "MainModulePlaceHolder", handler = "ListAll" })',
+				url: '@Url.Page("/Projects/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
 				type: "POST",
 				headers: {
 					RequestVerificationToken:
@@ -70,7 +70,7 @@
 					text: '@Localizer["Add"]',
 					action: function (e, dt, button, config) {
 						var title = '@Localizer["Add Project"]';
-						var url = '@Url.Page("/Projects/Add", new { area = "MainModulePlaceHolder", handler = "Add" })';
+						var url = '@Url.Page("/Projects/Add", new { area = "AreaPlaceHolder", handler = "Add" })';
 						openFormModal(url, title, function() {
 							dt.order([dt.init().columns.length - 1, 'asc']).page('last').draw(false);
 						});
@@ -86,7 +86,7 @@
 					text: '@Localizer["Edit"]',
 					action: function (e, dt, button, config) {
 						var title = '@Localizer["Edit Project"]';
-						var url = '@Url.Page("/Projects/Edit", new { area = "MainModulePlaceHolder", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
+						var url = '@Url.Page("/Projects/Edit", new { area = "AreaPlaceHolder", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
 						openFormModal(url, title, function() {
 							if(dt.order()[0][0] == dt.init().columns.length - 1)
 							{
@@ -109,7 +109,7 @@
 					text: '@Localizer["Delete"]',
 					action: function (e, dt, button, config) {
 						var title = '@Localizer["Delete Project"]';
-						var url = '@Url.Page("/Projects/Delete", new { area = "MainModulePlaceHolder", handler = "Delete" })' + '&id=' + dt.row({ selected: true }).data().id;
+						var url = '@Url.Page("/Projects/Delete", new { area = "AreaPlaceHolder", handler = "Delete" })' + '&id=' + dt.row({ selected: true }).data().id;
 						openFormModal(url, title, function() {
 							dt.ajax.reload(null, false);
 						});

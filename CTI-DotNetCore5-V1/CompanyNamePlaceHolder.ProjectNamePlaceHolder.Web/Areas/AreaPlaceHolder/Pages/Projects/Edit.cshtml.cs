@@ -1,12 +1,12 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.Entities;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Entities;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.MainModulePlaceHolder.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.MainModulePlaceHolder.Pages.Projects
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.Projects
 {
     [Authorize(Policy = Permission.Projects.Edit)]
     public class EditModel : BasePageModel<EditModel>

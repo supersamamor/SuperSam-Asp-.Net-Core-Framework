@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.MainModulePlaceHolder.Models
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models
 {
     public record ProjectViewModel
     {

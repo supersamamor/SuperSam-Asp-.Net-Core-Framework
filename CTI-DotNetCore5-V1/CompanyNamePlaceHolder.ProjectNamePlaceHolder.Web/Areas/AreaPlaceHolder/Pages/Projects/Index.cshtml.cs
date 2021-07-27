@@ -1,9 +1,9 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.MainModulePlaceHolder.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using LanguageExt;
@@ -19,7 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.MainModulePlaceHolder.Pages.Projects
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.Projects
 {
     [Authorize(Policy = Permission.Projects.View)]
     public class IndexModel : BasePageModel<IndexModel>
