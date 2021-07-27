@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services
 {
     public interface IAuthenticatedUserService

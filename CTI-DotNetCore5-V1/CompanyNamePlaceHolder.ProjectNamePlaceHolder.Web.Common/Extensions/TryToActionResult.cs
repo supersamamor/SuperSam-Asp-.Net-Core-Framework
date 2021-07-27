@@ -1,4 +1,4 @@
-﻿using LanguageExt;
+using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

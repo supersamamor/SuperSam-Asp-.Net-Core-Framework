@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;

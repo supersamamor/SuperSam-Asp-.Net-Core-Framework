@@ -1,0 +1,48 @@
+@using Models
+@model ProjectViewModel
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["Message"]
+    </div>
+}
+<form method="post" asp-area="MainModulePlaceHolder" asp-page="Delete" asp-page-handler="Delete">
+    <input name="ShouldClose" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <label asp-for="@Model.Code" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Code" class="form-control" readonly />
+            <span asp-validation-for="@Model.Code" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Name" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Name" class="form-control" readonly />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Description" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Description" class="form-control" readonly />
+            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Type" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Type" class="form-control" readonly />
+            <span asp-validation-for="@Model.Type" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Status" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Status" class="form-control" readonly />
+            <span asp-validation-for="@Model.Status" class="text-danger"></span>
+        </div>
+    </div>
+    <input type="hidden" asp-for="@Model.Id" />
+</form>

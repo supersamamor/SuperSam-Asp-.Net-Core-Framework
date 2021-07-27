@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;

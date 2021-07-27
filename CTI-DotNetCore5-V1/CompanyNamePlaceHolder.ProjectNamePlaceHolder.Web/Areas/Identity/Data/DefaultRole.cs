@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using LanguageExt;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

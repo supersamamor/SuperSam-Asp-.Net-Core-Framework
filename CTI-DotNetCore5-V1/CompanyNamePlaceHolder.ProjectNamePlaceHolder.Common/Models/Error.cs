@@ -1,4 +1,4 @@
-﻿using LanguageExt;
+using LanguageExt;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;

@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;

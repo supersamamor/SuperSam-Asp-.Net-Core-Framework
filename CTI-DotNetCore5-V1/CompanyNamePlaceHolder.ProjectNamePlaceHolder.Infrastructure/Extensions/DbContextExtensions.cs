@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;

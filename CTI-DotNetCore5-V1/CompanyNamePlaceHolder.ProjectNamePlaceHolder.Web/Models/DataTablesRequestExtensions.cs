@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using System;
 using System.Collections.Generic;

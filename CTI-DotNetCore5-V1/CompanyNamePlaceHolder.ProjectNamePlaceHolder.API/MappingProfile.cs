@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Inventory.Projects.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

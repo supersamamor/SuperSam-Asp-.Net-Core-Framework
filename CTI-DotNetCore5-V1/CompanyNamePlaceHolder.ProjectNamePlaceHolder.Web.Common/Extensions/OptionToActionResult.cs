@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using System;

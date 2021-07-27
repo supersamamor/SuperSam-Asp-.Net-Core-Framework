@@ -1,4 +1,4 @@
-﻿@{
+@{
     var user = await UserManager.GetUserAsync(User);
 }
 <!-- Main Sidebar Container -->
@@ -83,7 +83,7 @@
                     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.View)).Succeeded)
                     {
                         <li class="nav-item">
-                            <a href="/Inventory/Projects" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Projects")">
+                            <a href="/MainModulePlaceHolder/Projects" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Projects")">
                                 <i class="nav-icon fas fa-calendar-alt"></i>
                                 <p>
                                     @Localizer["Projects"]

@@ -1,5 +1,5 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Inventory;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;

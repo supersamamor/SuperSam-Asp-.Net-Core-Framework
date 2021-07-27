@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

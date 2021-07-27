@@ -1,7 +1,7 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Inventory.Projects.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Inventory.Projects.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.MainModulePlaceHolder.Projects.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Inventory;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.MainModulePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;

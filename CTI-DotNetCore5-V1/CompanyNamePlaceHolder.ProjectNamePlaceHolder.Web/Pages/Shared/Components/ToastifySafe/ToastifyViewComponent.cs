@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Helpers;
 using AspNetCoreHero.ToastNotification.Toastify;
 using AspNetCoreHero.ToastNotification.Toastify.Models;

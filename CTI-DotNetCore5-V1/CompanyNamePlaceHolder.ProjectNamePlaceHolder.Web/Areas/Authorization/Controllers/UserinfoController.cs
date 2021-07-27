@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
