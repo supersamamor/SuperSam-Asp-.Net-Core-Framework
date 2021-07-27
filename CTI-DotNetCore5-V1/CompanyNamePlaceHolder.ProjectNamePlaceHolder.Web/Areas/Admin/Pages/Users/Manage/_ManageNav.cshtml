@@ -1,0 +1,7 @@
+﻿@{ 
+    var Id = ViewData["Id"];
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="overview" href="/Admin/Users/@(Id)">@Localizer["Overview"]</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.RolesNavClass(ViewContext)" id="roles" href="/Admin/Users/@(Id)/Roles">@Localizer["Roles"]</a></li>
+</ul>

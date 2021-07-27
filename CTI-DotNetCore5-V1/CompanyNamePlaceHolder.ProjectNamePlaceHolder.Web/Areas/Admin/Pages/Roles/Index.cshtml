@@ -1,0 +1,91 @@
+﻿@page
+@model IndexModel
+
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+
+@{
+    ViewData["Title"] = Localizer["Roles List"];
+    ViewData["ActiveMainPage"] = "Roles";
+}
+<div class="card">
+    <div class="card-body">
+        <table id="roles" class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role!.Name)
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<partial name="_FormModalPartial" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_DataTableScripts" />
+    <script asp-add-nonce>
+	$(document).ready(function () {
+		var table = $('#roles').DataTable({
+			serverSide: true,
+			order: [[ 0, 'asc' ]],
+			ajax:
+			{
+				url: '@Url.Page("/Roles/Index", new { area = "Admin", handler = "ListAll" })',
+				type: "POST",
+				headers: {
+					RequestVerificationToken:
+						$('input:hidden[name="__RequestVerificationToken"]').val()
+				},
+			},
+			columns: [
+				{ data: "name", name: "Name", title: '@Localizer["Name"]' },
+			],
+			buttons: [
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.Create)).Succeeded)
+		{
+			<text>
+				{
+					text: '@Localizer["Add"]',
+					action: function (e, dt, button, config) {
+						var url = '@Url.Page("/Roles/Add", new { area = "Admin", handler = "Add" })';
+                        window.location.href = url;
+					},
+				},
+			</text>
+		}
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.Edit)).Succeeded)
+		{
+			<text>
+                {
+                    extend: 'selectedSingle',
+					text: '@Localizer["Edit"]',
+                    action: function (e, dt, button, config) {
+						var url = '/Admin/Roles/' + dt.row({ selected: true }).data().id + '/Edit';
+                        window.location.href = url;
+                    },
+				},
+			</text>
+		}
+                {
+                    extend: 'selectedSingle',
+					text: '@Localizer["View"]',
+                    action: function (e, dt, button, config) {
+						var url = '/Admin/Roles/' + dt.row({ selected: true }).data().id;
+                        window.location.href = url;
+                    },
+				},
+				'excel', 'pdf', 'pageLength',
+			],
+		});
+	});
+    </script>
+}

@@ -1,0 +1,28 @@
+﻿@using Models
+@model ScopeViewModel
+
+<form method="post" asp-area="Admin" asp-page="Add" asp-page-handler="Add">
+    <input name="ShouldClose" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <label asp-for="@Model.Name" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Name" class="form-control" />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.DisplayName" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.DisplayName" class="form-control" />
+            <span asp-validation-for="@Model.DisplayName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Resources" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.Resources" class="form-control" />
+            <span asp-validation-for="@Model.Resources" class="text-danger"></span>
+        </div>
+    </div>
+</form>
