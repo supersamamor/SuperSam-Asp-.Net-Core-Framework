@@ -77,7 +77,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
             public const string Delete = "Permission.Applications.Delete";
         }
 
-        public static class Projects
+        public static class MainModulePlaceHolder
         {
             public const string View = "Permission.Projects.View";
             public const string Create = "Permission.Projects.Create";

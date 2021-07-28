@@ -1,5 +1,5 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Mapping
     {
         public AreaPlaceHolderProfile()
         {
-            CreateMap<AddProjectCommand, Project>();
-            CreateMap<EditProjectCommand, Project>();
+            CreateMap<AddMainModulePlaceHolderCommand, MainModulePlaceHolder>();
+            CreateMap<EditMainModulePlaceHolderCommand, MainModulePlaceHolder>();
         }
     }
 }

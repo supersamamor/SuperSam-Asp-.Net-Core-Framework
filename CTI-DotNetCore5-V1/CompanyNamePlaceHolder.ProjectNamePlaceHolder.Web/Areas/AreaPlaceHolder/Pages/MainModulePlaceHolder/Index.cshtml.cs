@@ -1,34 +1,24 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.Projects
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder
 {
-    [Authorize(Policy = Permission.Projects.View)]
+    [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
     public class IndexModel : BasePageModel<IndexModel>
     {
         [DataTablesRequest]
         public DataTablesRequest? DataRequest { get; set; }
 
         [BindProperty]
-        public ProjectViewModel? Project { get; set; }
+        public MainModulePlaceHolderViewModel? MainModulePlaceHolder { get; set; }
 
         public IActionResult OnGet()
         {
@@ -37,7 +27,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 
         public async Task<IActionResult> OnPostListAllAsync()
         {
-            var result = await Mediatr.Send(DataRequest!.ToQuery<GetProjectsQuery>());
+            var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderQuery>());
             return new JsonResult(result.Data
                 .Select(e => new
                 {

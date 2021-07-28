@@ -1,30 +1,21 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.Entities;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Entities;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.Projects
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder
 {
-    [Authorize(Policy = Permission.Projects.Delete)]
+    [Authorize(Policy = Permission.MainModulePlaceHolder.Delete)]
     public class DeleteModel : BasePageModel<DeleteModel>
     {
         [BindProperty]
-        public ProjectViewModel? Project { get; set; }
+        public MainModulePlaceHolderViewModel? MainModulePlaceHolder { get; set; }
 
         [ViewData]
         public string? Message { get; set; }
@@ -35,12 +26,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
             {
                 return NotFound();
             }
-            return await Mediatr.Send(new GetProjectByIdQuery(id))
+            return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id))
                                 .ToActionResult(p =>
                                 {
-                                    Message = Localizer[$"Are you sure you want to delete this project?"];
-                                    return Partial("_DeleteProjectDetails",
-                                                   Mapper.Map<ProjectViewModel>(p));
+                                    Message = Localizer[$"Are you sure you want to delete this MainModulePlaceHolder?"];
+                                    return Partial("_DeleteMainModulePlaceHolderDetails",
+                                                   Mapper.Map<MainModulePlaceHolderViewModel>(p));
                                 }, none: null);
         }
 
@@ -48,13 +39,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
         {
             if (!ModelState.IsValid)
             {
-                return Partial("_DeleteProjectDetails", Project);
+                return Partial("_DeleteMainModulePlaceHolderDetails", MainModulePlaceHolder);
             }
-            var result = await TryAsync(async () => await Mediatr.Send(new DeleteProjectCommand(Project!.Id!)))
+            var result = await TryAsync(async () => await Mediatr.Send(new DeleteMainModulePlaceHolderCommand(MainModulePlaceHolder!.Id!)))
                 .IfFail(ex =>
                 {
                     Logger.LogError(ex, "Exception in OnPostDeleteAsync");
-                    return Fail<Error, Project>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
+                    return Fail<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
                 });
             result.Match(
                 Succ: succ =>
@@ -67,7 +58,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
                     errors.Iter(errors => ModelState.AddModelError("", (string)errors));
                     Logger.LogError("Error in OnPostDeleteAsync. Errors: {Errors}", string.Join(",", errors));
                 });
-            return Partial("_DeleteProjectDetails", Project);
+            return Partial("_DeleteMainModulePlaceHolderDetails", MainModulePlaceHolder);
         }
     }
 }

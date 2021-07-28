@@ -10,11 +10,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Queries
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Queries
 {
-    public record GetProjectByIdQuery(string Id) : IRequest<Option<Project>>;
+    public record GetMainModulePlaceHolderByIdQuery(string Id) : IRequest<Option<Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
-    public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, Option<Project>>
+    public class GetProjectByIdQueryHandler : IRequestHandler<GetMainModulePlaceHolderByIdQuery, Option<Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         private readonly ApplicationContext _context;
 
@@ -23,7 +23,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
             _context = context;
         }
 
-        public async Task<Option<Project>> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken) =>
+        public async Task<Option<Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(GetMainModulePlaceHolderByIdQuery request, CancellationToken cancellationToken) =>
             await _context.Projects.FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken: cancellationToken);
     }
 }

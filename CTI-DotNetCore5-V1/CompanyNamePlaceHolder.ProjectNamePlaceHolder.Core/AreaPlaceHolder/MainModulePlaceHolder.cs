@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
 {
-    public record Project : BaseEntity
+    public record MainModulePlaceHolder : BaseEntity
     {
         public string? Code { get; init; }
         public string? Name { get; init; }

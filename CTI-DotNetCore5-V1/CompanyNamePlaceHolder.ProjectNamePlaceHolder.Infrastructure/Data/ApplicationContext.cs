@@ -22,7 +22,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
             _authenticatedUser = authenticatedUser;
         }
 
-        public DbSet<Project> Projects { get; set; } = default!;
+        public DbSet<MainModulePlaceHolder> Projects { get; set; } = default!;
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -32,9 +32,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Project>().HasIndex(p => p.Entity);
-            modelBuilder.Entity<Project>().HasIndex(p => p.LastModifiedDate);
-            modelBuilder.Entity<Project>().HasQueryFilter(p => EF.Property<string>(p, "Entity") == _authenticatedUser.Entity);
+            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.Entity);
+            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.LastModifiedDate);
+            modelBuilder.Entity<MainModulePlaceHolder>().HasQueryFilter(p => EF.Property<string>(p, "Entity") == _authenticatedUser.Entity);
 
             base.OnModelCreating(modelBuilder);
         }

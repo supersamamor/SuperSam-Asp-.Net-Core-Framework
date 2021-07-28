@@ -13,13 +13,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Queries
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Queries
 {
-    public record GetProjectsQuery : BaseQuery, IRequest<PagedListResponse<Project>>
+    public record GetMainModulePlaceHolderQuery : BaseQuery, IRequest<PagedListResponse<Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
     }
 
-    public class GetProjectsQueryHandler : IRequestHandler<GetProjectsQuery, PagedListResponse<Project>>
+    public class GetProjectsQueryHandler : IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         private readonly ApplicationContext _context;
 
@@ -28,7 +28,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
             _context = context;
         }
 
-        public async Task<PagedListResponse<Project>> Handle(GetProjectsQuery request, CancellationToken cancellationToken) =>
+        public async Task<PagedListResponse<Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(GetMainModulePlaceHolderQuery request, CancellationToken cancellationToken) =>
             await _context.Projects.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
                                                                    request.SortColumn, request.SortOrder,
                                                                    request.PageNumber, request.PageSize,

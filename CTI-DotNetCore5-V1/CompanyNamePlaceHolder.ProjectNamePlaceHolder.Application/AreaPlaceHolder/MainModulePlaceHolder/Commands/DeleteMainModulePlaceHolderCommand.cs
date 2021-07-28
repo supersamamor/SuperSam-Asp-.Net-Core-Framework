@@ -16,11 +16,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Commands
 {
-    public record DeleteProjectCommand(string Id) : BaseCommand(Id), IRequest<Validation<Error, Project>>;
+    public record DeleteMainModulePlaceHolderCommand(string Id) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
-    public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, Validation<Error, Project>>
+    public class DeleteProjectCommandHandler : IRequestHandler<DeleteMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         private readonly ApplicationContext _context;
 
@@ -29,19 +29,19 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
             _context = context;
         }
 
-        public async Task<Validation<Error, Project>> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
-            var project = await _context.GetSingle<Project>(p => p.Id == request.Id, cancellationToken);
+            var project = await _context.GetSingle((Core.AreaPlaceHolder.MainModulePlaceHolder p) => p.Id == request.Id, cancellationToken);
             return await project.MatchAsync(
                 Some: async p =>
                  {
                      _context.Projects.Remove(p);
                      await _context.SaveChangesAsync(cancellationToken);
-                     return Success<Error, Project>(p);
+                     return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(p);
                  },
                 None: () =>
                 {
-                    return Fail<Error, Project>($"Project not found");
+                    return Fail<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>($"Project not found");
                 });
         }
     }

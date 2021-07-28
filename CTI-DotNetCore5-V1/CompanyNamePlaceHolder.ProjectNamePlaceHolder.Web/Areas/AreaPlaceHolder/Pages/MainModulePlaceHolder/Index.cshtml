@@ -6,25 +6,25 @@
 }
 
 @{
-    ViewData["Title"] = Localizer["Projects List"];
-    ViewData["ActiveMainPage"] = "Projects";
+    ViewData["Title"] = Localizer["MainModulePlaceHolder List"];
+    ViewData["ActiveMainPage"] = "MainModulePlaceHolder";
 }
 <div class="card">
     <div class="card-body">
-        <table id="projects" class="table table-hover table-bordered table-striped">
+        <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Project!.Code)
+                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Code)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Project!.Name)
+                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Name)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Project!.Type)
+                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Type)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Project!.Status)
+                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Status)
                     </th>
                 </tr>
             </thead>
@@ -43,12 +43,12 @@
     <partial name="_DataTableScripts" />
     <script asp-add-nonce>
 	$(document).ready(function () {
-		var table = $('#projects').DataTable({
+		var table = $('#mainModulePlaceHolder').DataTable({
 			serverSide: true,
 			order: [[ 4, 'asc' ]],
 			ajax:
 			{
-				url: '@Url.Page("/Projects/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
+				url: '@Url.Page("/MainModulePlaceHolder/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
 				type: "POST",
 				headers: {
 					RequestVerificationToken:
@@ -63,14 +63,14 @@
 				{ data: "lastModifiedDate", name: "LastModifiedDate", title: "LastModifiedDate", visible: false, searchable: false },
 			],
 			buttons: [
-		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Create)).Succeeded)
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
 		{
 			<text>
 				{
 					text: '@Localizer["Add"]',
 					action: function (e, dt, button, config) {
-						var title = '@Localizer["Add Project"]';
-						var url = '@Url.Page("/Projects/Add", new { area = "AreaPlaceHolder", handler = "Add" })';
+						var title = '@Localizer["Add MainModulePlaceHolder"]';
+						var url = '@Url.Page("/MainModulePlaceHolder/Add", new { area = "AreaPlaceHolder", handler = "Add" })';
 						openFormModal(url, title, function() {
 							dt.order([dt.init().columns.length - 1, 'asc']).page('last').draw(false);
 						});
@@ -78,15 +78,15 @@
 				},
 			</text>
 		}
-		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Edit)).Succeeded)
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
 		{
 			<text>
 				{
 					extend: 'selectedSingle',
 					text: '@Localizer["Edit"]',
 					action: function (e, dt, button, config) {
-						var title = '@Localizer["Edit Project"]';
-						var url = '@Url.Page("/Projects/Edit", new { area = "AreaPlaceHolder", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
+						var title = '@Localizer["Edit MainModulePlaceHolder"]';
+						var url = '@Url.Page("/MainModulePlaceHolder/Edit", new { area = "AreaPlaceHolder", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
 						openFormModal(url, title, function() {
 							if(dt.order()[0][0] == dt.init().columns.length - 1)
 							{
@@ -101,15 +101,15 @@
 				},
 			</text>
 		}
-		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Delete)).Succeeded)
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Delete)).Succeeded)
 		{
 			<text>
 				{
 					extend: 'selectedSingle',
 					text: '@Localizer["Delete"]',
 					action: function (e, dt, button, config) {
-						var title = '@Localizer["Delete Project"]';
-						var url = '@Url.Page("/Projects/Delete", new { area = "AreaPlaceHolder", handler = "Delete" })' + '&id=' + dt.row({ selected: true }).data().id;
+						var title = '@Localizer["Delete MainModulePlaceHolder"]';
+						var url = '@Url.Page("/MainModulePlaceHolder/Delete", new { area = "AreaPlaceHolder", handler = "Delete" })' + '&id=' + dt.row({ selected: true }).data().id;
 						openFormModal(url, title, function() {
 							dt.ajax.reload(null, false);
 						});

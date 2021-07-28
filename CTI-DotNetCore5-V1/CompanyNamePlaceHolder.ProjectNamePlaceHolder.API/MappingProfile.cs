@@ -1,6 +1,6 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.Projects.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
     {
         public MappingProfile()
         {
-            CreateMap<ProjectViewModel, AddProjectCommand>();
-            CreateMap<ProjectViewModel, EditProjectCommand>();
+            CreateMap<ProjectViewModel, AddMainModulePlaceHolderCommand>();
+            CreateMap<ProjectViewModel, EditMainModulePlaceHolderCommand>();
         }
     }
 }

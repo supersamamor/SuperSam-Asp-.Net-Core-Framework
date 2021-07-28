@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models
 {
-    public record ProjectViewModel
+    public record MainModulePlaceHolderViewModel
     {
         public string? Id { get; set; } = Guid.NewGuid().ToString();
         [Required]
