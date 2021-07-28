@@ -7,8 +7,6 @@ using LanguageExt;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
@@ -17,11 +15,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 {
     public record EditMainModulePlaceHolderCommand(
         string Id,
-        string Code,
-        string Name,
-        string Description,
-        string Type,
-        string Status) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
+        string Code) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
     public class EditProjectCommandHandler : IRequestHandler<EditMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
@@ -42,14 +36,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
         async Task<Validation<Error, EditMainModulePlaceHolderCommand>> ValidateRequest(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
             var validations = new List<Validation<Error, EditMainModulePlaceHolderCommand>>()
-            {
-                await ValidateName(request, cancellationToken),
+            {           
                 await ValidateCode(request, cancellationToken)
             };
-            var errors = validations.Map(v => v.Match(_ => None, errors => Some(errors))) //IEnumerable<Option<Seq<Error>>>
-                                    .Bind(e => e) //IEnumerable<Seq<Error>>
-                                    .Bind(e => e) //IEnumerable<Error>
-                                    .ToSeq(); // Seq<Error>
+            var errors = validations.Map(v => v.Match(_ => None, errors => Some(errors))) 
+                                    .Bind(e => e) 
+                                    .Bind(e => e) 
+                                    .ToSeq(); 
             return errors.Count == 0
                 ? Success<Error, EditMainModulePlaceHolderCommand>(request)
                 : Validation<Error, EditMainModulePlaceHolderCommand>.Fail(errors);
@@ -63,14 +56,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
                     _context.Update(project);
                     _ = await _context.SaveChangesAsync(cancellationToken);
                     return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(project);
-                });
-
-        Func<EditMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, EditMainModulePlaceHolderCommand>>> ValidateName =>
-            async (request, cancellationToken) =>
-            await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Name == request.Name && p.Id != request.Id, cancellationToken).Match(
-                Some: p => Fail<Error, EditMainModulePlaceHolderCommand>($"Project with name {p.Name} already exists"),
-                None: () => request
-            );
+                });      
 
         Func<EditMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, EditMainModulePlaceHolderCommand>>> ValidateCode =>
             async (request, cancellationToken) =>

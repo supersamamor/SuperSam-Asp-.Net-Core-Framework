@@ -10,14 +10,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
     {
         public string? Id { get; set; } = Guid.NewGuid().ToString();
         [Required]
-        public string? Code { get; set; }
-        [Required]
-        public string? Name { get; set; }
-        [Required]
-        public string? Description { get; set; }
-        [Required]
-        public string? Type { get; set; }
-        [Required]
-        public string? Status { get; set; }
+        public string? Code { get; set; }       
     }
 }

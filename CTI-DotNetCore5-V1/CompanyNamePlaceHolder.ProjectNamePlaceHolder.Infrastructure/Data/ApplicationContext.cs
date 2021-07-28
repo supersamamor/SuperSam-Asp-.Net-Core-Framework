@@ -1,12 +1,7 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +17,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
             _authenticatedUser = authenticatedUser;
         }
 
-        public DbSet<MainModulePlaceHolder> Projects { get; set; } = default!;
+        public DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; } = default!;
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

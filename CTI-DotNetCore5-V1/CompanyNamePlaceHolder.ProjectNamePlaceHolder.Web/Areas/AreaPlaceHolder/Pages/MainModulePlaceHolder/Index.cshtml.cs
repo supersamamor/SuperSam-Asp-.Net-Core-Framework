@@ -32,10 +32,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
                 .Select(e => new
                 {
                     e.Id,
-                    e.Code,
-                    e.Name,
-                    e.Type,
-                    e.Status,
+                    e.Code,                  
                     e.LastModifiedDate
                 })
                 .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

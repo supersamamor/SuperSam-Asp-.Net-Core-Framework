@@ -1,12 +1,7 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,6 +19,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
         }
 
         public async Task<Option<Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(GetMainModulePlaceHolderByIdQuery request, CancellationToken cancellationToken) =>
-            await _context.Projects.FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken: cancellationToken);
+            await _context.MainModulePlaceHolder.FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken: cancellationToken);
     }
 }

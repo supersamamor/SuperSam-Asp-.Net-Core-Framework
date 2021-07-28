@@ -15,11 +15,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 {
     public record AddMainModulePlaceHolderCommand(
         string Id,
-        string Code,
-        string Name,
-        string Description,
-        string Type,
-        string Status) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
+        string Code) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
     public class AddProjectCommandHandler : IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
@@ -46,13 +42,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
             var validations = new List<Validation<Error, AddMainModulePlaceHolderCommand>>()
             {
                 await ValidateId(request, cancellationToken),
-                await ValidateName(request, cancellationToken),
                 await ValidateCode(request, cancellationToken)
             };
-            var errors = validations.Map(v => v.Match(_ => None, errors => Some(errors))) //IEnumerable<Option<Seq<Error>>>
-                                    .Bind(e => e) //IEnumerable<Seq<Error>>
-                                    .Bind(e => e) //IEnumerable<Error>
-                                    .ToSeq(); // Seq<Error>
+            var errors = validations.Map(v => v.Match(_ => None, errors => Some(errors))) 
+                                    .Bind(e => e)
+                                    .Bind(e => e) 
+                                    .ToSeq(); 
             return errors.Count == 0
                 ? Success<Error, AddMainModulePlaceHolderCommand>(request)
                 : Validation<Error, AddMainModulePlaceHolderCommand>.Fail(errors);
@@ -63,14 +58,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
             await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Id == request.Id, cancellationToken).Match(
                 Some: p => Fail<Error, AddMainModulePlaceHolderCommand>($"Project with id {p.Id} already exists"),
                 None: () => request
-            );
-
-        Func<AddMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, AddMainModulePlaceHolderCommand>>> ValidateName =>
-            async (request, cancellationToken) =>
-            await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Name == request.Name, cancellationToken).Match(
-                Some: p => Fail<Error, AddMainModulePlaceHolderCommand>($"Project with name {p.Name} already exists"),
-                None: () => request
-            );
+            );      
 
         Func<AddMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, AddMainModulePlaceHolderCommand>>> ValidateCode =>
             async (request, cancellationToken) =>

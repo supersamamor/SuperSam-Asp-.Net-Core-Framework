@@ -16,16 +16,7 @@
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Code)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Type)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Status)
-                    </th>
+                    </th>                  
                 </tr>
             </thead>
         </table>
@@ -45,7 +36,7 @@
 	$(document).ready(function () {
 		var table = $('#mainModulePlaceHolder').DataTable({
 			serverSide: true,
-			order: [[ 4, 'asc' ]],
+			order: [[ 1, 'asc' ]],
 			ajax:
 			{
 				url: '@Url.Page("/MainModulePlaceHolder/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
@@ -56,10 +47,7 @@
 				},
 			},
 			columns: [
-				{ data: "code", name: "Code", title: '@Localizer["Code"]' },
-				{ data: "name", name: "Name", title: '@Localizer["Name"]' },
-				{ data: "type", name: "Type", title: '@Localizer["Type"]' },
-				{ data: "status", name: "Status", title: '@Localizer["Status"]' },
+				{ data: "code", name: "Code", title: '@Localizer["Code"]' },	
 				{ data: "lastModifiedDate", name: "LastModifiedDate", title: "LastModifiedDate", visible: false, searchable: false },
 			],
 			buttons: [

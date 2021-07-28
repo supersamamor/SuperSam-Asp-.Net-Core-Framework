@@ -14,13 +14,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
     [ApiVersion("1.0")]
     public class MainModulePlaceHolderController : BaseApiController<MainModulePlaceHolderController>
     {
-        [Authorize(Policy = Permission.Projects.View)]
+        [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
         [ProducesResponseType(typeof(PagedListResponse<MainModulePlaceHolder>), StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<IActionResult> GetAsync([FromQuery] GetMainModulePlaceHolderQuery query) =>
             Ok(await Mediator.Send(query));
 
-        [Authorize(Policy = Permission.Projects.View)]
+        [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
         [ProducesResponseType(typeof(MainModulePlaceHolder), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -28,7 +28,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
         public async Task<IActionResult> GetAsync(string id) =>
             await Mediator.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult();
 
-        [Authorize(Policy = Permission.Projects.Create)]
+        [Authorize(Policy = Permission.MainModulePlaceHolder.Create)]
         [ProducesResponseType(typeof(MainModulePlaceHolder), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
@@ -41,7 +41,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
                     return BadRequest(ModelState);
                 });
 
-        [Authorize(Policy = Permission.Projects.Edit)]
+        [Authorize(Policy = Permission.MainModulePlaceHolder.Edit)]
         [ProducesResponseType(typeof(MainModulePlaceHolder), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,7 +55,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
                     return BadRequest(ModelState);
                 });
 
-        [Authorize(Policy = Permission.Projects.Delete)]
+        [Authorize(Policy = Permission.MainModulePlaceHolder.Delete)]
         [ProducesResponseType(typeof(MainModulePlaceHolder), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,14 +74,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
         [Required]
         public string? Id { get; set; }
         [Required]
-        public string? Code { get; set; }
-        [Required]
-        public string? Name { get; set; }
-        [Required]
-        public string? Description { get; set; }
-        [Required]
-        public string? Type { get; set; }
-        [Required]
-        public string? Status { get; set; }
+        public string? Code { get; set; }      
     }
 }

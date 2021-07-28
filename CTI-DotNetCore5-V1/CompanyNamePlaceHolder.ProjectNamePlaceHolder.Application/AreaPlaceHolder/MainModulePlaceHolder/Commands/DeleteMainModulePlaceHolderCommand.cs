@@ -1,17 +1,9 @@
-using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using LanguageExt;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
@@ -35,7 +27,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
             return await project.MatchAsync(
                 Some: async p =>
                  {
-                     _context.Projects.Remove(p);
+                     _context.MainModulePlaceHolder.Remove(p);
                      await _context.SaveChangesAsync(cancellationToken);
                      return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(p);
                  },
