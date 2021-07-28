@@ -1,0 +1,47 @@
+@page
+@model ViewModel
+
+@{
+    ViewData["ActiveMainPage"] = "Applications";
+    ViewData["Title"] = Localizer["View Application"];
+}
+<div class="card">
+    <div class="card-body">
+        <div class="form-group row">
+            <label asp-for="@Model.Application!.ClientId" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.Application!.ClientId" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Application!.DisplayName" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.Application!.DisplayName" class="form-control" readonly />
+                <span asp-validation-for="@Model.Application!.DisplayName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Application!.RedirectUri" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.Application!.RedirectUri" class="form-control" readonly />
+                <span asp-validation-for="@Model.Application!.RedirectUri" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Application!.Scopes" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.Application!.Scopes" class="form-control" readonly />
+                <span asp-validation-for="@Model.Application!.Scopes" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.Edit)).Succeeded)
+            {
+                <a asp-page="Edit" asp-page-handler="Details" asp-route-id="@Model.Application!.ClientId" class="btn btn-primary">@Localizer["Edit"]</a>
+            }
+            </div>
+        </div>
+    </div>
+</div>

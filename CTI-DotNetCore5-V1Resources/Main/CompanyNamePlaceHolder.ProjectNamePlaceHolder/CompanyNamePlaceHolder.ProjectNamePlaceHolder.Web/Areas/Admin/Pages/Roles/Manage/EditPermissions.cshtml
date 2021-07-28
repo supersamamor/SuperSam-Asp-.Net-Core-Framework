@@ -1,0 +1,98 @@
+@page "/Admin/Roles/{Id}/Permissions/Edit"
+@model EditPermissionsModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Id"] = Model.Id;
+    ViewData["Title"] = $"{Model.Role!.Name} | " + Localizer["Permissions"].Value;
+    ViewData["ActivePage"] = ManageNavPages.Permissions;
+    ViewData["ActiveMainPage"] = "Roles";
+}
+<h4>@ViewData["Title"]</h4>
+<form id="permissions-form" method="post">
+    <div class="row">
+        <div class="col-12">
+            <table id="permissions-table" class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Permissions!.First().Permission)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Permissions!.First().Enabled)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Permissions!.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                @Model.Permissions![i].Permission
+                            </td>
+                            <td>
+                                <div class="form-check m-1">
+                                    @if (Model.Permissions![i].Enabled)
+                                    {
+                                        <input type="checkbox" name="Permissions[@(i)].Enabled" class="form-check-input" value=true checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="Permissions[@(i)].Enabled" class="form-check-input" value=true />
+                                    }
+                                    <input type="hidden" asp-for="@Model.Permissions![i].Permission" />
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <input type="hidden" asp-for="@Model.Role!.Id" />
+            <input type="hidden" asp-for="@Model.Role!.Name" />
+            <a asp-page="../Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+            <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+        </div>
+    </div>
+</form>
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+@section Scripts
+{
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $("#permissions-table").DataTable({
+            select: false,
+        });
+
+        $('#permissions-form').on('submit', function (e) {
+            var form = this;
+
+            // Encode a set of form elements from all pages as an array of names and values
+            var params = table.$('input,select,textarea').serializeArray();
+
+            // Iterate over all form elements
+            $.each(params, function () {
+                // If element doesn't exist in DOM
+                if (!$.contains(document, form[this.name])) {
+                    // Create a hidden element
+                    $(form).append(
+                        $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', this.name)
+                            .val(this.value)
+                    );
+                }
+            });
+        });
+    });
+</script>
+}

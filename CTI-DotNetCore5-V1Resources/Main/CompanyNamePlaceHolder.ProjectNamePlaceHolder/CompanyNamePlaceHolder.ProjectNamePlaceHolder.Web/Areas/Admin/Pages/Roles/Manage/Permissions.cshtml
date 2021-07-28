@@ -1,0 +1,61 @@
+@page "/Admin/Roles/{Id}/Permissions"
+@model PermissionsModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Id"] = Model.Id;
+    ViewData["Title"] = $"{Model.Role!.Name} | " + Localizer["Permissions"].Value;
+    ViewData["ActivePage"] = ManageNavPages.Permissions;
+    ViewData["ActiveMainPage"] = "Roles";
+}
+<h4>@ViewData["Title"]</h4>
+
+<table id="permissions-table" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Permissions!.First().Permission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Permissions!.First().Enabled)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permission in Model.Permissions!)
+        {
+            <tr>
+                <td>
+                    @permission.Permission
+                </td>
+                <td>
+                    <div class="form-check m-1">
+                        <input asp-for="@permission.Enabled" class="form-check-input" disabled>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-page="../Index" class="btn btn-secondary">@Localizer["Close"]</a>
+@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.Edit)).Succeeded)
+{
+    <a href="/Admin/Roles/@(Model.Role!.Id)/Permissions/Edit" class="btn btn-primary">@Localizer["Edit"]</a>
+}
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+@section Scripts
+{
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        $("#permissions-table").DataTable({
+            select: false,
+        });
+    });
+</script>
+}

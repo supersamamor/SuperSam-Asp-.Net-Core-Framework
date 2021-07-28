@@ -1,0 +1,113 @@
+@page
+@model IndexModel
+
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+
+@{
+    ViewData["Title"] = Localizer["MainModulePlaceHolder List"];
+    ViewData["ActiveMainPage"] = "MainModulePlaceHolder";
+}
+<div class="card">
+    <div class="card-body">
+        <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Code)
+                    </th>                  
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<partial name="_FormModalPartial" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_DataTableScripts" />
+    <script asp-add-nonce>
+	$(document).ready(function () {
+		var table = $('#mainModulePlaceHolder').DataTable({
+			serverSide: true,
+			order: [[ 1, 'asc' ]],
+			ajax:
+			{
+				url: '@Url.Page("/MainModulePlaceHolder/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
+				type: "POST",
+				headers: {
+					RequestVerificationToken:
+						$('input:hidden[name="__RequestVerificationToken"]').val()
+				},
+			},
+			columns: [
+				{ data: "code", name: "Code", title: '@Localizer["Code"]' },	
+				{ data: "lastModifiedDate", name: "LastModifiedDate", title: "LastModifiedDate", visible: false, searchable: false },
+			],
+			buttons: [
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
+		{
+			<text>
+				{
+					text: '@Localizer["Add"]',
+					action: function (e, dt, button, config) {
+						var title = '@Localizer["Add MainModulePlaceHolder"]';
+						var url = '@Url.Page("/MainModulePlaceHolder/Add", new { area = "AreaPlaceHolder", handler = "Add" })';
+						openFormModal(url, title, function() {
+							dt.order([dt.init().columns.length - 1, 'asc']).page('last').draw(false);
+						});
+					},
+				},
+			</text>
+		}
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
+		{
+			<text>
+				{
+					extend: 'selectedSingle',
+					text: '@Localizer["Edit"]',
+					action: function (e, dt, button, config) {
+						var title = '@Localizer["Edit MainModulePlaceHolder"]';
+						var url = '@Url.Page("/MainModulePlaceHolder/Edit", new { area = "AreaPlaceHolder", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
+						openFormModal(url, title, function() {
+							if(dt.order()[0][0] == dt.init().columns.length - 1)
+							{
+								dt.page('last').draw(false);
+							}
+							else
+							{
+								dt.ajax.reload(null, false);
+							}
+						});
+					},
+				},
+			</text>
+		}
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Delete)).Succeeded)
+		{
+			<text>
+				{
+					extend: 'selectedSingle',
+					text: '@Localizer["Delete"]',
+					action: function (e, dt, button, config) {
+						var title = '@Localizer["Delete MainModulePlaceHolder"]';
+						var url = '@Url.Page("/MainModulePlaceHolder/Delete", new { area = "AreaPlaceHolder", handler = "Delete" })' + '&id=' + dt.row({ selected: true }).data().id;
+						openFormModal(url, title, function() {
+							dt.ajax.reload(null, false);
+						});
+					},
+				},
+			</text>
+		}
+				'excel', 'pdf', 'pageLength',
+			],
+		});
+	});
+    </script>
+}
