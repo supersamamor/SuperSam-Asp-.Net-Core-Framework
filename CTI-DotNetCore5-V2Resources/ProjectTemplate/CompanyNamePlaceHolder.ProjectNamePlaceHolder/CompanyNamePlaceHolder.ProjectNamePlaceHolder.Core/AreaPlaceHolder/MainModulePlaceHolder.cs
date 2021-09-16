@@ -1,9 +1,7 @@
-using System;
-
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
 {
-    public record MainModulePlaceHolder : BaseEntity
+    public record MainModulePlaceHolder : BaseAreaPlaceHolder
     {
-        Template:[InsertNewCoreModelColumnTextHere]    
-    }
+        public string Code { get; init; } = "";       
+    }    
 }

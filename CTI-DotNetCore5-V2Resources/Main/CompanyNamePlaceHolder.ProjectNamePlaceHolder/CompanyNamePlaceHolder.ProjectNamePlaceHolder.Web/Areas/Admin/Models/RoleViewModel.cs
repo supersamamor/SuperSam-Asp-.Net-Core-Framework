@@ -8,8 +8,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models
 {
     public record RoleViewModel
     {
-        public string? Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         [Required]
-        public string? Name { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; } = "";
     }
 }

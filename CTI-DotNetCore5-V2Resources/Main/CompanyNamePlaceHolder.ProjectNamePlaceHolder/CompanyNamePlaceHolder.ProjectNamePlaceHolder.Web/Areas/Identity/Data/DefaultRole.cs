@@ -1,8 +1,8 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using LanguageExt;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

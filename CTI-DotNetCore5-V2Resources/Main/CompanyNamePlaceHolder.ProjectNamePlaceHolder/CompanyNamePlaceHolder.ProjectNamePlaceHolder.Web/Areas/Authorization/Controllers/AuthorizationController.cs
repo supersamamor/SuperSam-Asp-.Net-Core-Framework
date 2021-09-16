@@ -1,7 +1,3 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Extensions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
+using OpenIddict.Core;
 using OpenIddict.Server.AspNetCore;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Helpers;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +27,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.
     [Area("Authorization")]
     public class AuthorizationController : Controller
     {
-        private readonly IOpenIddictApplicationManager _applicationManager;
+        private readonly OpenIddictApplicationManager<OidcApplication> _applicationManager;
         private readonly IOpenIddictAuthorizationManager _authorizationManager;
         private readonly IOpenIddictScopeManager _scopeManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthorizationController(IOpenIddictApplicationManager applicationManager,
+        public AuthorizationController(OpenIddictApplicationManager<OidcApplication> applicationManager,
                               IOpenIddictAuthorizationManager authorizationManager,
                               IOpenIddictScopeManager scopeManager,
                               SignInManager<ApplicationUser> signInManager,
@@ -479,7 +482,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.
             {
                 // Note: the client credentials are automatically validated by OpenIddict:
                 // if client_id or client_secret are invalid, this action won't be invoked.
-
                 var application = await _applicationManager.FindByClientIdAsync(request.ClientId!);
                 if (application == null)
                 {
@@ -493,11 +495,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.
                     Claims.Name, Claims.Role);
 
                 // Use the client_id as the subject identifier.
-                identity.AddClaim(Claims.Subject, (await _applicationManager.GetClientIdAsync(application))!,
-                    Destinations.AccessToken, Destinations.IdentityToken);
-
-                identity.AddClaim(Claims.Name, (await _applicationManager.GetDisplayNameAsync(application))!,
-                    Destinations.AccessToken, Destinations.IdentityToken);
+                identity.AddClaim(Claims.Subject, application.ClientId!, Destinations.AccessToken, Destinations.IdentityToken);
+                identity.AddClaim(Claims.Name, application.DisplayName!, Destinations.AccessToken, Destinations.IdentityToken);
+                identity.AddClaim(CustomClaimTypes.Entity, application.Entity, Destinations.AccessToken, Destinations.IdentityToken);
 
                 var principal = new ClaimsPrincipal(identity);
 

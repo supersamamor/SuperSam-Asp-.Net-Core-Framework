@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models
 {
-    public record BaseCommand(string Id);
+    public record BaseCommand()
+    {
+        public string Id { get; init; } = Guid.NewGuid().ToString();
+    }
 }

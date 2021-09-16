@@ -1,7 +1,3 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +5,11 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenIddict.Core;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using System;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
@@ -27,7 +28,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity
                     services.AddDbContext<IdentityContext>(options =>
                     {
                         options.UseInMemoryDatabase("IdentityContext");
-                        options.UseOpenIddict();
+                        options.UseOpenIddict<OidcApplication, OidcAuthorization, OidcScope, OidcToken, string>();
                     });
                 }
                 else
@@ -35,7 +36,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity
                     services.AddDbContext<IdentityContext>(options =>
                     {
                         options.UseSqlServer(context.Configuration.GetConnectionString("IdentityContext"));
-                        options.UseOpenIddict();
+                        options.UseOpenIddict<OidcApplication, OidcAuthorization, OidcScope, OidcToken, string>();
                     });
                 }
 
@@ -45,7 +46,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity
                         .AddDefaultTokenProviders();
 
                 services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
-                services.AddTransient<IAuthenticatedUserService, AuthenticatedUserService>();
+                services.AddTransient<AuthenticatedUser>();
 
                 services.Configure<IdentityOptions>(options =>
                 {
@@ -58,7 +59,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity
                         .AddCore(options =>
                         {
                             options.UseEntityFrameworkCore()
-                                   .UseDbContext<IdentityContext>();
+                                   .UseDbContext<IdentityContext>()
+                                   .ReplaceDefaultEntities<OidcApplication, OidcAuthorization, OidcScope, OidcToken, string>();
                             options.UseQuartz();
                         })
                         .AddServer(options =>

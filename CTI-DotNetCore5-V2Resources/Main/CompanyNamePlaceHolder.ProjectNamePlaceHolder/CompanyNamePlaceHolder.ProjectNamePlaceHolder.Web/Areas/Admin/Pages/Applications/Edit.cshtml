@@ -1,52 +1,78 @@
 @page
 @model EditModel
-
-@{
-    ViewData["ActiveMainPage"] = "Applications";
-    ViewData["Title"] = Localizer["Edit Application"];
+@section Styles {
+<partial name="_DataTableStyles" />
 }
-<div class="card">
-    <div class="card-body">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row">
-                <label asp-for="@Model.Application!.ClientId" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Application!.ClientId" class="form-control" readonly />
+@{
+    ViewData["Title"] = Localizer["Edit Application"];
+    ViewData["ActiveMainPage"] = "Applications";
+    ViewData["Level1"] = "Admin";
+}
+<form id="application-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h5 class="card-title">@Localizer["Application Info"]</h5>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <partial name="_EditApplicationDetails" model="Model.Application" />
                 </div>
             </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Application!.DisplayName" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Application!.DisplayName" class="form-control" />
-                    <span asp-validation-for="@Model.Application!.DisplayName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Application!.RedirectUri" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Application!.RedirectUri" class="form-control" />
-                    <span asp-validation-for="@Model.Application!.RedirectUri" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Application!.Scopes" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Application!.Scopes" class="form-control" />
-                    <span asp-validation-for="@Model.Application!.Scopes" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
-                    <button asp-page-handler="Generate" type="submit" class="btn btn-primary">@Localizer["Generate new secret"]</button>
-                    <button asp-page-handler="Edit" type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h5 class="card-title">@Localizer["Permissions"]</h5>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <partial name="_EditPermissions" model="Model.ApplicationPermissions" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button asp-page-handler="Generate" type="submit" class="btn btn-primary">@Localizer["Generate new secret"]</button>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var permissions = $("#permissions").DataTable({
+            select: false,
+            searching: true,
+            paging: true,
+            info: true,
+            buttons: [],
+            columnDefs: [
+                {
+                    targets: [1],
+                    orderDataType: 'dom-checkbox',
+                }
+            ]
+        });
+        $('#application-form').onSubmitIncludeAllFieldsFromTable(permissions);
+    });
+</script>
 }

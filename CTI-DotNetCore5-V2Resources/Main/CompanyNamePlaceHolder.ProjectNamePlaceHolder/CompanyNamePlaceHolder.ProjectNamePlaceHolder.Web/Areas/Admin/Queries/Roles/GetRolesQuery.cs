@@ -1,10 +1,10 @@
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models
 {
-    public record MainModulePlaceHolderViewModel
+    public record MainModulePlaceHolderViewModel : BaseAreaPlaceHolderViewModel
     {
-        public string? Id { get; set; } = Guid.NewGuid().ToString();
-        
-        Template:[InsertNewWebModelColumnTextHere]
+        [Display(Name = "Code")]
+        [Required]
+        [StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
+        public string Code { get; init; } = "";   
     }
 }

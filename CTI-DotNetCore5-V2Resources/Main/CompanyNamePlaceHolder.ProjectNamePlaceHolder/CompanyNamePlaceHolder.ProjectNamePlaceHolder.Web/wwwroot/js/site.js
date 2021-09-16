@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     $(".select2").select2({
         placeholder: "Select one",
+        allowClear: true,
         escapeMarkup: function (m) {
             return m;
         }

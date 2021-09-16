@@ -1,40 +1,38 @@
 @page
 @model IndexModel
-
 @section Styles {
     <partial name="_DataTableStyles" />
 }
-
 @{
     ViewData["ActiveMainPage"] = "Applications";
     ViewData["Title"] = Localizer["Applications List"];
+    ViewData["Level1"] = "Admin";
 }
 <div class="card">
     <div class="card-body">
-        <table id="applications" class="table table-hover table-bordered table-striped">
+        <table id="applications" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Application!.DisplayName)
+                        @Html.DisplayNameFor(model => model.Application.DisplayName)
                     </th>
+					<th>
+						@Localizer["Actions"]
+					</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
-
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
-
-<partial name="_FormModalPartial" />
-
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
     <partial name="_DataTableScripts" />
     <script asp-add-nonce>
 	$(document).ready(function () {
 		var table = $('#applications').DataTable({
+			select: false,
 			serverSide: true,
 			order: [[ 0, 'asc' ]],
 			ajax:
@@ -47,7 +45,24 @@
 				},
 			},
 			columns: [
-				{ data: "displayName", name: "DisplayName", title: '@Localizer["Name"]' },
+				{ data: "displayName", name: "DisplayName", responsivePriority: 1 },
+				{
+					data: null,
+					responsivePriority: 2,
+                    width: "10%",
+					render: function (data, type, row, meta) {
+						var url = '@Url.Page("/Applications/View", new { area = "Admin" })' + '?id=' + row.clientId;
+						var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.Edit)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Applications/Edit", new { area = "Admin" })' + '?id=' + row.clientId;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Edit"]</a>';
+					</text>
+				}
+						return button;
+					},
+				},
 			],
             buttons: [
         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.Create)).Succeeded)
@@ -56,36 +71,17 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Applications/Add", new { area = "Admin", handler = "Add" })';
-                        window.location.href = url;
+						var url = '@Url.Page("/Applications/Add", new { area = "Admin" })';
+						window.location.href = url;
                     },
+                    className: 'btn btn-success',
 				},
             </text>
         }
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.Edit)).Succeeded)
-        {
-	        <text>
-                {
-                    extend: 'selectedSingle',
-					text: '@Localizer["Edit"]',
-                    action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Applications/Edit", new { area = "Admin", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().clientId;
-                        window.location.href = url;
-                    },
-				},
-	        </text>
-        }
-                {
-                    extend: 'selectedSingle',
-					text: '@Localizer["View"]',
-                    action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Applications/View", new { area = "Admin", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().clientId;
-                        window.location.href = url;
-                    },
-				},
 				'excel', 'pdf', 'pageLength',
 			],
 		});
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
 	});
     </script>
 }

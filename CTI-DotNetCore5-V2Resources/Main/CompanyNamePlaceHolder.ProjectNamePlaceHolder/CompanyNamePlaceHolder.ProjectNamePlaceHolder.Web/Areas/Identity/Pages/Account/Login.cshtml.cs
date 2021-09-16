@@ -1,5 +1,4 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +6,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AuditTrail.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,12 +23,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Pages
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMediator _mediator;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
-                          UserManager<ApplicationUser> userManager)
+                          UserManager<ApplicationUser> userManager, 
+                          IMediator mediator)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _mediator = mediator;
         }
 
         [BindProperty]
@@ -85,11 +90,14 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Pages
                 }
                 if (!user.IsActive)
                 {
+                    await _mediator.Send(new AddAuditLogCommand() { UserId = user.Id, Type = "User is not active" });
+                    Logger.LogError("User is not active, Email = {Email}", Input!.Email);
                     return RedirectToPage("./NotActive");
                 }
                 var result = await _signInManager.PasswordSignInAsync(Input!.Email, Input!.Password, Input!.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    await _mediator.Send(new AddAuditLogCommand() { UserId = user.Id, Type = "User logged in" });
                     Logger.LogInformation("User logged in, Email = {Email}", Input!.Email);
                     NotyfService.Success($"Logged in as {Input!.Email}");
                     return LocalRedirect(returnUrl);
@@ -100,13 +108,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Pages
                 }
                 if (result.IsLockedOut)
                 {
+                    await _mediator.Send(new AddAuditLogCommand() { UserId = user.Id, Type = "User account locked out" });
                     Logger.LogWarning("User account locked out, Email = {Email}", Input!.Email);
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    await _mediator.Send(new AddAuditLogCommand() { UserId = user.Id, Type = "Invalid login attempt" });
                     Logger.LogError("Invalid login attempt, Email = {Email}", Input!.Email);
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
             }

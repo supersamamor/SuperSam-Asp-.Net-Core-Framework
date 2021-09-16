@@ -16,7 +16,8 @@
 
 <div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
     <form id="selectLanguage" asp-page="Culture" asp-route-returnUrl="@returnUrl"
-          method="post" class="form-horizontal" role="form">
+        method="post" class="form-horizontal" role="form">
+        <!-- 
         <label asp-for="@requestCulture!.RequestCulture.UICulture.Name">
             @Localizer["Language:"]
         </label>
@@ -24,5 +25,7 @@
                 asp-for="@requestCulture!.RequestCulture.UICulture.Name"
                 asp-items="cultureItems">
         </select>
+        -->
+        <input type="hidden" asp-for="@requestCulture!.RequestCulture.UICulture.Name" value="@cultureItems[0].Value" />
     </form>
 </div>

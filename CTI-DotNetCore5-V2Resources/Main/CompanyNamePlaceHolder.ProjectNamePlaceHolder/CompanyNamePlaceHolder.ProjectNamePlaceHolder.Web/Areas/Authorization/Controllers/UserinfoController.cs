@@ -1,13 +1,13 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

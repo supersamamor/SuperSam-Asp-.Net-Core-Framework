@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using DataTables.AspNetCore.Mvc.Binder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

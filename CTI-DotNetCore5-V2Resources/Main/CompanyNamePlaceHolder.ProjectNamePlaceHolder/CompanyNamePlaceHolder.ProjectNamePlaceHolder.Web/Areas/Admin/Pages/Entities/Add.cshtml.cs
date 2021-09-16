@@ -1,13 +1,13 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.Entities;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Entities;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.Entities;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Entities;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,36 +28,37 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.En
         }
 
         [BindProperty]
-        public EntityViewModel? Entity { get; set; }
+        public EntityViewModel Entity { get; set; } = new();
 
-        public IActionResult OnGetAdd()
+        public IActionResult OnGet()
         {
-            return Partial("_AddEntityDetails", new EntityViewModel());
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
-                return Partial("_AddEntityDetails", Entity);
+                return Page();
             }
-            var result = await Optional(await _context.Entities.FirstOrDefaultAsync(e => e.Name == Entity!.Name))
+            var result = await Optional(await _context.Entities.FirstOrDefaultAsync(e => e.Name == Entity.Name))
                 .MatchAsync(
-                scope => Fail<Error, Entity>($"Entity with name {scope!.Name} already exists"),
+                entity => Fail<Error, Entity>($"Entity with name {entity!.Name} already exists"),
                 async () => await CreateEntity()
                 );
-            result.Match(
-                Succ: succ =>
+            return result.Match<IActionResult>(
+                Succ: entity =>
                 {
                     NotyfService.Success(Localizer["Record saved successfully"]);
-                    Logger.LogInformation("Added Record. ID: {ID}, Record: {Record}", succ.Id, succ.ToString());
+                    Logger.LogInformation("Added Record. ID: {ID}, Record: {Record}", entity.Id, entity.ToString());
+                    return RedirectToPage("View", new { id = entity.Id });
                 },
                 Fail: errors =>
                 {
                     errors.Iter(errors => ModelState.AddModelError("", (string)errors));
-                    Logger.LogError("Error in OnPostAddAsync. Errors: {Errors}", string.Join(",", errors));
+                    Logger.LogError("Error in OnPost. Errors: {Errors}", string.Join(",", errors));
+                    return Page();
                 });
-            return Partial("_AddEntityDetails", Entity);
         }
 
         async Task<LanguageExt.Validation<Error, Entity>> CreateEntity()
@@ -65,7 +66,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.En
             return await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddOrEditEntityCommand>(Entity)))
                             .IfFail(ex =>
                             {
-                                Logger.LogError(ex, "Exception in OnPostAddAsync");
+                                Logger.LogError(ex, "Exception in OnPost");
                                 return Fail<Error, Entity>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
                             });
         }

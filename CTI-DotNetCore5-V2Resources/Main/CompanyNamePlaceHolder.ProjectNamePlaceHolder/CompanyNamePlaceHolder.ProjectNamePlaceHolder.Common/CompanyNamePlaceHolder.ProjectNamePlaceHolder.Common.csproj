@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
-    <PackageReference Include="libphonenumber-csharp" Version="8.12.27" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.10" />
+    <PackageReference Include="libphonenumber-csharp" Version="8.12.28" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.11" />
     <PackageReference Include="X.PagedList" Version="8.1.0" />
   </ItemGroup>
 

@@ -1,6 +1,10 @@
 @using Models
 @model EntityViewModel
-
-<form method="post" asp-area="Admin" asp-page="Edit" asp-page-handler="Edit">
-    <partial name="_EntityDetails" model="Model" />
-</form>
+<input type="hidden" asp-for="@Model.Id" />
+<div class="form-group row">
+    <label asp-for="@Model.Name" class="col-md-3 col-form-label"></label>
+    <div class="col-md-9">
+        <input asp-for="@Model.Name" class="form-control" />
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+</div>

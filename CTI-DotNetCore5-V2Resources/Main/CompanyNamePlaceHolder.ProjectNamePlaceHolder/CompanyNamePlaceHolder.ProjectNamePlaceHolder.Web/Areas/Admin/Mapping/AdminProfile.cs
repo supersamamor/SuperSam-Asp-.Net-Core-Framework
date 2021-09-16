@@ -1,10 +1,11 @@
+using AspNetCoreHero.EntityFrameworkCore.AuditTrail.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.Entities;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Entities;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Roles;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Mapping
             CreateMap<AddOrEditEntityCommand, Entity>();
 
             CreateMap<IdentityRole, RoleViewModel>().ReverseMap();
+
+            CreateMap<Audit, AuditLogViewModel>();
+            CreateMap<ApplicationUser, AuditLogUserViewModel>();
         }
     }
 }

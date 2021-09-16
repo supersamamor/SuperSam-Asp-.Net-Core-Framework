@@ -1,13 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.Entities;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Entities;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,43 +20,47 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.En
     public class EditModel : BasePageModel<EditModel>
     {
         [BindProperty]
-        public EntityViewModel? Entity { get; set; }
+        public EntityViewModel Entity { get; set; } = new();
 
-        public async Task<IActionResult> OnGetDetailsAsync(string? id)
+        public async Task<IActionResult> OnGet(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            return await Mediatr.Send(new GetEntityByIdQuery(id))
-                                .ToActionResult(e => Partial("_EditEntityDetails",
-                                                             Mapper.Map<EntityViewModel>(e)), none: null);
+            return await Mediatr.Send(new GetEntityByIdQuery(id)).ToActionResult(
+                e => 
+                { 
+                    Mapper.Map(e, Entity); 
+                    return Page(); 
+                }, none: null);
         }
 
-        public async Task<IActionResult> OnPostEditAsync()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
-                return Partial("_EditEntityDetails", Entity);
+                return Page();
             }
             var result = await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddOrEditEntityCommand>(Entity)))
                 .IfFail(ex =>
                 {
-                    Logger.LogError(ex, "Exception in OnPostEditAsync");
+                    Logger.LogError(ex, "Exception in OnPost");
                     return Fail<Error, Entity>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
                 });
-            result.Match(
-                Succ: succ =>
+            return result.Match<IActionResult>(
+                Succ: entity =>
                 {
                     NotyfService.Success(Localizer["Record saved successfully"]);
-                    Logger.LogInformation("Updated Record. ID: {ID}, Record: {Record}", succ.Id, succ.ToString());
+                    Logger.LogInformation("Updated Record. ID: {ID}, Record: {Record}", entity.Id, entity.ToString());
+                    return RedirectToPage("View", new { id = entity.Id });
                 },
                 Fail: errors =>
                 {
                     errors.Iter(errors => ModelState.AddModelError("", (string)errors));
-                    Logger.LogError("Error in OnPostEditAsync. Errors: {Errors}", string.Join(",", errors));
+                    Logger.LogError("Error in OnPost. Errors: {Errors}", string.Join(",", errors));
+                    return Page();
                 });
-            return Partial("_EditEntityDetails", Entity);
         }
     }
 }

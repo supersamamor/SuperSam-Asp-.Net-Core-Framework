@@ -1,10 +1,15 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
 {
     class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
@@ -17,7 +22,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
                 .Build();
             var builder = new DbContextOptionsBuilder<ApplicationContext>();
             builder.UseSqlServer(configuration.GetConnectionString("ApplicationContext"));
-            return new ApplicationContext(builder.Options, new AuthenticatedUserService(new HttpContextAccessor()));
+            return new ApplicationContext(builder.Options, new AuthenticatedUser(new HttpContextAccessor()));
         }
     }
 }

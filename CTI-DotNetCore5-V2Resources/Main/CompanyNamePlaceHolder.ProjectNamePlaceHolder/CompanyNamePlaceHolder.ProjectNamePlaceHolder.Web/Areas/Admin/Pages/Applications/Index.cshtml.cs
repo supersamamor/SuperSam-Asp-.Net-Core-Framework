@@ -1,10 +1,10 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Applications;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Applications;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
         [DataTablesRequest]
         public DataTablesRequest? DataRequest { get; set; }
 
-        [BindProperty]
-        public ApplicationViewModel? Application { get; set; }
+        public ApplicationViewModel Application { get; set; } = new();
 
         public async Task<IActionResult> OnPostListAllAsync()
         {

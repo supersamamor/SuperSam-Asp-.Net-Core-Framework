@@ -1,6 +1,3 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +6,15 @@ using Microsoft.Extensions.Logging;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 using OpenIddict.EntityFrameworkCore.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 using static OpenIddict.Abstractions.OpenIddictConstants;
@@ -21,23 +24,31 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
     [Authorize(Policy = Permission.Applications.Create)]
     public class AddModel : BasePageModel<AddModel>
     {
-        private readonly OpenIddictApplicationManager<OpenIddictEntityFrameworkCoreApplication> _manager;
+        private readonly OpenIddictApplicationManager<OidcApplication> _manager;
+        private readonly IdentityContext _context;
 
-        public AddModel(OpenIddictApplicationManager<OpenIddictEntityFrameworkCoreApplication> manager)
+        public AddModel(OpenIddictApplicationManager<OidcApplication> manager, IdentityContext context)
         {
             _manager = manager;
+            _context = context;
         }
 
         [BindProperty]
-        public ApplicationViewModel? Application { get; set; }
+        public ApplicationViewModel Application { get; set; } = new();
 
-        public IActionResult OnGetAdd()
+        [BindProperty]
+        public IList<PermissionViewModel> ApplicationPermissions { get; set; } = new List<PermissionViewModel>();
+        
+        public async Task<IActionResult> OnGet()
         {
+            ApplicationPermissions = Permission.GenerateAllPermissions().Map(p => new PermissionViewModel { Permission = p }).ToList();
+            Application.Entities = await _context.GetEntitiesList(Application.EntityId);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync()
+        public async Task<IActionResult> OnPost()
         {
+            Application.Entities = await _context.GetEntitiesList(Application.EntityId);
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -47,7 +58,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
                 {
                     NotyfService.Success(Localizer["Record saved successfully"]);
                     Logger.LogInformation("Created Application. Client ID: {ClientId}, Application: {Application}", application.ClientId, application.ToString());
-                    TempData.Put("Application", Application!);
+                    TempData.Put("Application", Application);
                     return RedirectToPage("Details");
                 },
                 Fail: errors =>
@@ -62,9 +73,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
         {
             return await TryAsync(async () =>
             {
-                Application!.ClientId = Guid.NewGuid().ToString();
-                Application.ClientSecret = Guid.NewGuid().ToString();
-
+                var redirectUris = new System.Collections.Generic.HashSet<Uri> { new(Application.RedirectUri) };
                 var permissions = new System.Collections.Generic.HashSet<string>
                 {
                     Permissions.Endpoints.Authorization,
@@ -78,21 +87,23 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
                     Permissions.GrantTypes.RefreshToken,
                     Permissions.ResponseTypes.Code,
                 };
-
-                Application.Scopes!.Split(" ")
-                                   .ToList()
-                                   .ForEach(scope => permissions.Add(Permissions.Prefixes.Scope + scope));
-
-                var descriptor = new OpenIddictApplicationDescriptor
+                Application.ClientId = Guid.NewGuid().ToString();
+                Application.ClientSecret = Guid.NewGuid().ToString();
+                permissions = permissions.Append(Application.Scopes.Split(" ")
+                                                                   .Map(e => Permissions.Prefixes.Scope + e))
+                                         .ToHashSet();
+                permissions = permissions.Append(ApplicationPermissions.Filter(e => e.Enabled)
+                                                                       .Map(e => Permissions.Prefixes.Scope + e.Permission))
+                                         .ToHashSet();
+                var application = new OidcApplication
                 {
                     ClientId = Application.ClientId,
-                    ClientSecret = Application.ClientSecret,
-                    DisplayName = Application.DisplayName
+                    DisplayName = Application.DisplayName,
+                    RedirectUris = JsonSerializer.Serialize(redirectUris),
+                    Permissions = JsonSerializer.Serialize(permissions),
+                    Entity = Application.EntityId,
                 };
-                descriptor.RedirectUris.Add(new(Application.RedirectUri!));
-                descriptor.Permissions.UnionWith(permissions);
-
-                await _manager.CreateAsync(descriptor);
+                await _manager.CreateAsync(application, Application.ClientSecret);
                 return Success<Error, ApplicationViewModel>(Application);
             }).IfFail(ex =>
             {

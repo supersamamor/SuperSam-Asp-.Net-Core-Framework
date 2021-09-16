@@ -11,12 +11,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models
         [Required]
         [RegularExpression(@"^\S+$", ErrorMessage = "Whitespaces are not allowed")]
         [Display(Name = "Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = "";
         [Required]
         [Display(Name = "Description")]
-        public string? DisplayName { get; set; }
+        public string DisplayName { get; set; } = "";
         [Required]
         [Display(Name = "API URL")]
-        public string? Resources { get; set; }
+        public string Resources { get; set; } = "";
     }
 }

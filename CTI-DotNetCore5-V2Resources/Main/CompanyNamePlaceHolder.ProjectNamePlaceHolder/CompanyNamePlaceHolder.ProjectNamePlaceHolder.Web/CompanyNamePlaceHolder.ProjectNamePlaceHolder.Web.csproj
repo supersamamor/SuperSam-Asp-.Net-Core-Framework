@@ -13,7 +13,7 @@
     <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.311" />
     <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.8" />
@@ -40,6 +40,13 @@
     <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.csproj" />
     <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.csproj" />
     <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Shared\_StatusMessage.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

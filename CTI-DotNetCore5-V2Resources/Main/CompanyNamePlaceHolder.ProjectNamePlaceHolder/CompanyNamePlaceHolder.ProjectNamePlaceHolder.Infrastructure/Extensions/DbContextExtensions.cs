@@ -1,9 +1,15 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using LanguageExt;
+using static LanguageExt.Prelude;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,11 +17,16 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extension
 {
     public static class DbContextExtensions
     {
-        public static async Task<Option<T>> GetSingle<T>(this DbContext context, Expression<Func<T, bool>> predicate, CancellationToken cancellationToken) where T : BaseEntity =>
-            await context.Set<T>().FirstOrDefaultAsync(predicate, cancellationToken);
+        public static async Task<Option<T>> GetSingle<T>(this DbContext context, Expression<Func<T, bool>> predicate, CancellationToken cancellationToken, bool tracking = false) 
+            where T : class
+        {
+            var query = tracking ? context.Set<T>() : context.Set<T>().AsNoTracking();
+            return await query.FirstOrDefaultAsync(predicate, cancellationToken);
+        }
 
-        public static async Task<T> AddOrUpdate<T>(this DbContext context, T entity, CancellationToken cancellationToken) where T : BaseEntity =>
-            (await context.GetSingle<T>(e => e.Id == entity.Id, cancellationToken))
+        public static async Task<T> AddOrUpdate<T>(this DbContext context, T entity, Expression<Func<T, bool>> predicate, CancellationToken cancellationToken) 
+            where T : class =>
+            (await context.GetSingle<T>(predicate, cancellationToken))
             .Match(
                 Some: _ =>
                 {
@@ -28,25 +39,16 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extension
                     return entity;
                 });
 
-        public static void SetBaseEntityFields(this DbContext context, IAuthenticatedUserService authenticatedUser)
-        {
-            foreach (var entry in context.ChangeTracker.Entries<BaseEntity>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.Entity.Entity = authenticatedUser.Entity;
-                        entry.Entity.CreatedDate = DateTime.UtcNow;
-                        entry.Entity.CreatedBy = authenticatedUser.UserId;
-                        entry.Entity.LastModifiedDate = DateTime.UtcNow;
-                        entry.Entity.LastModifiedBy = authenticatedUser.UserId;
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.LastModifiedDate = DateTime.UtcNow;
-                        entry.Entity.LastModifiedBy = authenticatedUser.UserId;
-                        break;
-                }
-            }
-        }
+        public static async Task<Validation<Error, TSuccess>> MustExist<TEntity, TSuccess>(this DbContext context, Expression<Func<TEntity, bool>> predicate, TSuccess success, Error fail, CancellationToken cancellationToken)
+            where TEntity : class =>
+            await context.GetSingle(predicate, cancellationToken).Match(
+                Some: _ => success,
+                None: () => Fail<Error, TSuccess>(fail));
+
+        public static async Task<Validation<Error, TSuccess>> MustNotExist<TEntity, TSuccess>(this DbContext context, Expression<Func<TEntity, bool>> predicate, TSuccess success, Error fail, CancellationToken cancellationToken)
+            where TEntity : class =>
+            await context.GetSingle(predicate, cancellationToken).Match(
+                Some: _ => Fail<Error, TSuccess>(fail),
+                None: () => success);
     }
 }

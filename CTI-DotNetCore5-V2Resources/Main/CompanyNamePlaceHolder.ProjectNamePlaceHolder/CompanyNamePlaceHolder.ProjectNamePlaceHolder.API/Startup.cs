@@ -1,23 +1,31 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using OpenIddict.Validation.AspNetCore;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Logging;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
 {
@@ -30,6 +38,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var issuer = new Uri(Configuration.GetValue<string>("Authentication:Issuer"));
@@ -68,7 +77,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
             }
 
             services.AddHttpContextAccessor();
-            services.AddTransient<IAuthenticatedUserService, AuthenticatedUserService>();
+            services.AddTransient<AuthenticatedUser>();
             services.AddApplicationServices();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -80,7 +89,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
         }
-               
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
                               IApiVersionDescriptionProvider provider,
                               IWebHostEnvironment env)
@@ -88,22 +98,23 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.DisplayRequestDuration();
-                    foreach (var description in provider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerEndpoint(
-                            $"/swagger/{description.GroupName}/swagger.json",
-                            description.GroupName.ToUpperInvariant());
-                    }
-                });
             }
             else
             {
                 app.UseExceptionHandler("/error");
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.DisplayRequestDuration();
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                }
+            });
 
             app.UseHttpsRedirection();
 

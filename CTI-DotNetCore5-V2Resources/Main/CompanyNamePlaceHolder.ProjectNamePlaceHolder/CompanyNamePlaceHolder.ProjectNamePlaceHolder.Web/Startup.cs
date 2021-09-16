@@ -1,10 +1,5 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Logging;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +18,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Quartz;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Annotations;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Logging;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -107,7 +109,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
             else
             {
                 services.AddDbContext<ApplicationContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext"),
+                                         o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
             }
 
             services.AddNotyf(config =>
@@ -137,6 +140,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
                     .AddDbContextCheck<IdentityContext>();
 
             services.AddWebOptimizer();
+
+            services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -187,6 +192,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
                         "public,max-age=" + durationInSeconds;
                 }
             });
+
             app.UseCookiePolicy();
             app.UseSerilogRequestLogging(opts => opts.EnrichDiagnosticContext = LogEnricher.EnrichFromRequest);
 

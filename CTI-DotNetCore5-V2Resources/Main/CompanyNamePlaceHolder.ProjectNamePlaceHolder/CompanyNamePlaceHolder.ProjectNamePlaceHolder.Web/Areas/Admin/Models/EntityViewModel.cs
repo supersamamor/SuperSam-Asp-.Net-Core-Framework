@@ -10,6 +10,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models
     {
         public string? Id { get; set; } = Guid.NewGuid().ToString();
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; } = "";
     }
 }

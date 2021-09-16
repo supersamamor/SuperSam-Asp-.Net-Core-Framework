@@ -1,5 +1,3 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +6,15 @@ using Microsoft.Extensions.Logging;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 using OpenIddict.EntityFrameworkCore.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 using static OpenIddict.Abstractions.OpenIddictConstants;
@@ -20,17 +24,22 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
     [Authorize(Policy = Permission.Applications.Edit)]
     public class EditModel : BasePageModel<EditModel>
     {
-        private readonly OpenIddictApplicationManager<OpenIddictEntityFrameworkCoreApplication> _manager;
+        private readonly OpenIddictApplicationManager<OidcApplication> _manager;
+        private readonly IdentityContext _context;
 
-        public EditModel(OpenIddictApplicationManager<OpenIddictEntityFrameworkCoreApplication> manager)
+        public EditModel(OpenIddictApplicationManager<OidcApplication> manager, IdentityContext context)
         {
             _manager = manager;
+            _context = context;
         }
 
         [BindProperty]
-        public ApplicationViewModel? Application { get; set; }
+        public ApplicationViewModel Application { get; set; } = new();
 
-        public async Task<IActionResult> OnGetDetailsAsync(string? id)
+        [BindProperty]
+        public IList<PermissionViewModel> ApplicationPermissions { get; set; } = new List<PermissionViewModel>();
+
+        public async Task<IActionResult> OnGet(string? id)
         {
             if (id == null)
             {
@@ -41,14 +50,22 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
                 {
                     var descriptor = new OpenIddictApplicationDescriptor();
                     await _manager.PopulateAsync(descriptor, application!);
+                    var scopes = descriptor.Permissions.Where(p => p.StartsWith(Permissions.Prefixes.Scope))
+                                                       .Map(p => p[4..]);
+                    ApplicationPermissions = Permission.GenerateAllPermissions()
+                                                       .Map(p => new PermissionViewModel
+                                                       {
+                                                           Permission = p,
+                                                           Enabled = scopes.Any(s => s == p),
+                                                       }).ToList();
                     Application = new()
                     {
-                        ClientId = descriptor!.ClientId!,
-                        DisplayName = descriptor.DisplayName,
+                        ClientId = descriptor.ClientId ?? "",
+                        DisplayName = descriptor.DisplayName ?? "",
                         RedirectUri = string.Join(" ", descriptor.RedirectUris),
-                        Scopes = string.Join(" ",
-                                             descriptor.Permissions.Where(p => p.StartsWith(Permissions.Prefixes.Scope))
-                                                                   .Map(p => p[4..]))
+                        Scopes = string.Join(" ", scopes.Where(s => !s.StartsWith(AuthorizationClaimTypes.Permission))),
+                        EntityId = application!.Entity,
+                        Entities = await _context.GetEntitiesList(application!.Entity)
                     };
                     return Page();
                 }, none: null);
@@ -60,32 +77,32 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
             {
                 return Page();
             }
-            return await Optional(await _manager.FindByClientIdAsync(Application!.ClientId))
+            return await Optional(await _manager.FindByClientIdAsync(Application.ClientId))
                 .ToActionResult(async application => await GenerateNewSecret(application!), none: null);
         }
 
-        public async Task<IActionResult> OnPostEditAsync()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            return await Optional(await _manager.FindByClientIdAsync(Application!.ClientId))
+            return await Optional(await _manager.FindByClientIdAsync(Application.ClientId))
                 .ToActionResult(async application => await UpdateApplication(application!), none: null);
         }
 
-        async Task<IActionResult> GenerateNewSecret(OpenIddictEntityFrameworkCoreApplication application)
+        async Task<IActionResult> GenerateNewSecret(OidcApplication application)
         {
             return await TryAsync<IActionResult>(async () =>
             {
-                Application!.ClientSecret = Guid.NewGuid().ToString();
+                Application.ClientSecret = Guid.NewGuid().ToString();
                 var descriptor = new OpenIddictApplicationDescriptor();
-                await _manager.PopulateAsync(descriptor, application!);
+                await _manager.PopulateAsync(descriptor, application);
                 descriptor.ClientSecret = Application.ClientSecret;
                 await _manager.UpdateAsync(application, descriptor, new());
                 NotyfService.Success(Localizer["Generated new client secret"]);
                 Logger.LogInformation("Updated Client Secret. Client ID: {ClientId}, Application: {Application}", application.ClientId, application.ToString());
-                TempData.Put("Application", Application!);
+                TempData.Put("Application", Application);
                 return RedirectToPage("Details");
             }).IfFail(ex =>
             {
@@ -95,10 +112,11 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
             });
         }
 
-        async Task<IActionResult> UpdateApplication(OpenIddictEntityFrameworkCoreApplication application)
+        async Task<IActionResult> UpdateApplication(OidcApplication application)
         {
             return await TryAsync<IActionResult>(async () =>
             {
+                var redirectUris = new System.Collections.Generic.HashSet<Uri> { new(Application.RedirectUri) };
                 var permissions = new System.Collections.Generic.HashSet<string>
                 {
                     Permissions.Endpoints.Authorization,
@@ -112,23 +130,20 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
                     Permissions.GrantTypes.RefreshToken,
                     Permissions.ResponseTypes.Code,
                 };
-
-                Application!.Scopes!.Split(" ")
-                                    .ToList()
-                                    .ForEach(scope => permissions.Add(Permissions.Prefixes.Scope + scope));
-
-                var descriptor = new OpenIddictApplicationDescriptor();
-                await _manager.PopulateAsync(descriptor, application!);
-                descriptor.DisplayName = Application.DisplayName;
-                descriptor.RedirectUris.Clear();
-                descriptor.RedirectUris.Add(new(Application.RedirectUri!));
-                descriptor.Permissions.Clear();
-                descriptor.Permissions.UnionWith(permissions);
-
-                await _manager.UpdateAsync(application, descriptor, new());
+                permissions = permissions.Append(Application.Scopes.Split(" ")
+                                                                   .Map(e => Permissions.Prefixes.Scope + e))
+                                         .ToHashSet();
+                permissions = permissions.Append(ApplicationPermissions.Filter(e => e.Enabled)
+                                                                       .Map(e => Permissions.Prefixes.Scope + e.Permission))
+                                         .ToHashSet();
+                application.DisplayName = Application.DisplayName;
+                application.RedirectUris = JsonSerializer.Serialize(redirectUris);
+                application.Permissions = JsonSerializer.Serialize(permissions);
+                application.Entity = Application.EntityId;
+                await _manager.UpdateAsync(application);
                 NotyfService.Success(Localizer["Record saved successfully"]);
                 Logger.LogInformation("Updated Application. Client ID: {ClientId}, Application: {Application}", application.ClientId, application.ToString());
-                return RedirectToPage("View", new { handler = "Details", id = Application.ClientId });
+                return RedirectToPage("View", new { id = Application.ClientId });
             }).IfFail(ex =>
             {
                 ModelState.AddModelError("", Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");

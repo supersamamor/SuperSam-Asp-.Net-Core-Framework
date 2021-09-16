@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using OpenIddict.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Authorization
                 return Task.CompletedTask;
             }
             var issuer = _configuration.GetValue<string>("Authentication:Issuer") ?? "LOCAL AUTHORITY";
-            var isAllowed = context.User.Claims.Any(c => c.Type == AuthorizationClaimTypes.Permission
-                                                         && c.Value == requirement.Permission
-                                                         && c.Issuer == issuer);
+            var isAllowed = context.User.HasPermission(requirement.Permission, issuer)
+                            || context.User.HasScope(requirement.Permission);
             if (isAllowed)
             {
                 context.Succeed(requirement);

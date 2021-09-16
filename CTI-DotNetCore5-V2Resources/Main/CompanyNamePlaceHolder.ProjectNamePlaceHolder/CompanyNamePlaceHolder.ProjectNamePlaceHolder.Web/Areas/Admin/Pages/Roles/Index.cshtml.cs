@@ -1,7 +1,3 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,8 +24,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ro
         [DataTablesRequest]
         public DataTablesRequest? DataRequest { get; set; }
 
-        [BindProperty]
-        public RoleViewModel? Role { get; set; }
+        public RoleViewModel Role { get; set; } = new();
 
         public IActionResult OnGet()
         {

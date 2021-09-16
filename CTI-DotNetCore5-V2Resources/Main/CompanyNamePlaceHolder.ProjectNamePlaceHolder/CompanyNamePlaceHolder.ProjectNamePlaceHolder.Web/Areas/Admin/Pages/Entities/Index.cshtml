@@ -1,40 +1,38 @@
 @page
 @model IndexModel
-
 @section Styles {
     <partial name="_DataTableStyles" />
 }
-
 @{
     ViewData["ActiveMainPage"] = "Entities";
     ViewData["Title"] = Localizer["Entities List"];
+    ViewData["Level1"] = "Admin";
 }
 <div class="card">
     <div class="card-body">
-        <table id="entities" class="table table-hover table-bordered table-striped">
+        <table id="entities" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Entity!.Name)
+                        @Html.DisplayNameFor(model => model.Entity.Name)
                     </th>
+					<th>
+						@Localizer["Actions"]
+					</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
-
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
-
-<partial name="_FormModalPartial" />
-
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
     <partial name="_DataTableScripts" />
     <script asp-add-nonce>
 	$(document).ready(function () {
 		var table = $('#entities').DataTable({
+			select: false,
 			serverSide: true,
 			order: [[ 0, 'asc' ]],
 			ajax:
@@ -47,7 +45,24 @@
 				},
 			},
 			columns: [
-				{ data: "name", name: "Name", title: '@Localizer["Name"]' },
+				{ data: "name", name: "Name", responsivePriority: 1 },
+				{
+					data: null,
+					responsivePriority: 2,
+                    width: "10%",
+					render: function (data, type, row, meta) {
+						var url = '@Url.Page("/Entities/View", new { area = "Admin" })' + '?id=' + row.id;
+						var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Edit)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Entities/Edit", new { area = "Admin" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Edit"]</a>';
+					</text>
+				}
+						return button;
+					},
+				},
 			],
             buttons: [
         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Create)).Succeeded)
@@ -56,41 +71,17 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var title = '@Localizer["Add Entity"]';
-                        var url = '@Url.Page("/Entities/Add", new { area = "Admin", handler = "Add" })';
-                        openFormModal(url, title, function() {
-                            dt.order([dt.init().columns.length - 1, 'asc']).page('last').draw(false);
-                        });
+						var url = '@Url.Page("/Entities/Add", new { area = "Admin" })';
+						window.location.href = url;
                     },
+                    className: 'btn btn-success',
 				},
             </text>
-        }
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Edit)).Succeeded)
-        {
-	        <text>
-                {
-                    extend: 'selectedSingle',
-					text: '@Localizer["Edit"]',
-                    action: function (e, dt, button, config) {
-                        var title = '@Localizer["Edit Entity"]';
-                        var url = '@Url.Page("/Entities/Edit", new { area = "Admin", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
-                        openFormModal(url, title, function() {
-                            if(dt.order()[0][0] == dt.init().columns.length - 1)
-                            {
-                                dt.page('last').draw(false);
-                            }
-                            else
-                            {
-                                dt.ajax.reload(null, false);
-                            }
-                        });
-                    },
-				},
-	        </text>
         }
 				'excel', 'pdf', 'pageLength',
 			],
 		});
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
 	});
     </script>
 }

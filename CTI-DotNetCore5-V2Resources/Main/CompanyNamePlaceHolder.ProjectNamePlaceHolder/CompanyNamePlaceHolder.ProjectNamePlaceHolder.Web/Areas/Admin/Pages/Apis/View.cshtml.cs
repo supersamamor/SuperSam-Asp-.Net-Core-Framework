@@ -1,5 +1,3 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 using OpenIddict.EntityFrameworkCore.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,16 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
     [Authorize(Policy = Permission.Apis.View)]
     public class ViewModel : BasePageModel<ViewModel>
     {
-        private readonly OpenIddictScopeManager<OpenIddictEntityFrameworkCoreScope> _manager;
+        private readonly OpenIddictScopeManager<OidcScope> _manager;
 
-        public ViewModel(OpenIddictScopeManager<OpenIddictEntityFrameworkCoreScope> manager)
+        public ViewModel(OpenIddictScopeManager<OidcScope> manager)
         {
             _manager = manager;
         }
 
-        [BindProperty]
-        public ScopeViewModel? Scope { get; set; }
+        public ScopeViewModel Scope { get; set; } = new();
 
-        public async Task<IActionResult> OnGetDetailsAsync(string? name)
+        public async Task<IActionResult> OnGet(string? name)
         {
             if (name == null)
             {
@@ -41,8 +41,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ap
                     await _manager.PopulateAsync(descriptor, scope!);
                     Scope = new()
                     {
-                        Name = descriptor!.Name,
-                        DisplayName = descriptor.DisplayName,
+                        Name = descriptor.Name ?? "",
+                        DisplayName = descriptor.DisplayName ?? "",
                         Resources = string.Join(" ", descriptor.Resources)
                     };
                     return Page();

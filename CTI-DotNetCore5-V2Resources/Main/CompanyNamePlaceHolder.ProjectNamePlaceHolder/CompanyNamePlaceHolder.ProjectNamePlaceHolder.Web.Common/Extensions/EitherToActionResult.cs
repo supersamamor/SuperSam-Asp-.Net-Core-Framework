@@ -1,7 +1,7 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions;
 using System;
 using System.Threading.Tasks;
 using static CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Extensions.Common;

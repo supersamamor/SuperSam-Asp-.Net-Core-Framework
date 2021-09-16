@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using LanguageExt;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Common.Models;
 using System;
 using System.Linq;
 using System.Net.Mail;

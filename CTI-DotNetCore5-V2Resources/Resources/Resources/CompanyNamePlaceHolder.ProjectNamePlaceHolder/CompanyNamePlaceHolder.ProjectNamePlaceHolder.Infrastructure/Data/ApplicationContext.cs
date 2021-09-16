@@ -1,35 +1,36 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.Identity;
+using System.Linq;
+
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : AuditableDbContext
     {
-        private readonly IAuthenticatedUserService _authenticatedUser;
+        private readonly AuthenticatedUser _authenticatedUser;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options,
-                                  IAuthenticatedUserService authenticatedUser) : base(options)
+                                  AuthenticatedUser authenticatedUser) : base(options, authenticatedUser)
         {
             _authenticatedUser = authenticatedUser;
         }
 
-        Template:[InsertNewDataModelContextPropertyTextHere]
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            this.SetBaseEntityFields(_authenticatedUser);
-            return base.SaveChangesAsync(cancellationToken);
-        }
+        public DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Template:[InsertNewEFFluentAttributesTextHere]
-			Template:[InsertNewEFFluentAttributesUniqueTextHere]
-			Template:[InsertNewEFFluentAttributesStringLengthTextHere]
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+                                                       .SelectMany(t => t.GetProperties())
+                                                       .Where(p => p.ClrType == typeof(decimal)
+                                                                   || p.ClrType == typeof(decimal?)))
+            {
+                property.SetColumnType("decimal(18,6)");
+            }   
+            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(e => e.LastModifiedDate);
+            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(e => e.Entity);
+            modelBuilder.Entity<MainModulePlaceHolder>().HasQueryFilter(e => e.Entity == _authenticatedUser.Entity);
+
             base.OnModelCreating(modelBuilder);
         }
     }
