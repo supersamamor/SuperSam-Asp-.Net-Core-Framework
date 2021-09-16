@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data.Migrations

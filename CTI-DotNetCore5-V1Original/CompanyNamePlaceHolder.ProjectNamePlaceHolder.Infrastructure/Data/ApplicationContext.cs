@@ -1,4 +1,4 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +18,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
         }
 
         public DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; } = default!;
+        
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -27,10 +28,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.Entity);
-            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.LastModifiedDate);
-            modelBuilder.Entity<MainModulePlaceHolder>().HasQueryFilter(p => EF.Property<string>(p, "Entity") == _authenticatedUser.Entity);
-
+            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.Entity);modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<MainModulePlaceHolder>().HasQueryFilter(p => EF.Property<string>(p, "Entity") == _authenticatedUser.Entity);
+        
+			modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(p => p.Code).IsUnique();
+        
+			modelBuilder.Entity<MainModulePlaceHolder>().Property(e => e.Code).HasMaxLength(10);
+        
             base.OnModelCreating(modelBuilder);
         }
     }

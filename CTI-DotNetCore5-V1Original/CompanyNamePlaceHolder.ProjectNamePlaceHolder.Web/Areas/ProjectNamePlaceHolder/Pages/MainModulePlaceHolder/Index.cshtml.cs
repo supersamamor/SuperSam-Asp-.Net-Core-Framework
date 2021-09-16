@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.ProjectNamePlaceHolder.MainModulePlaceHolder.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using LanguageExt;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.MainModulePlaceHolder
 {
     [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
     public class IndexModel : BasePageModel<IndexModel>
@@ -27,12 +27,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 
         public async Task<IActionResult> OnPostListAllAsync()
         {
-            var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderQuery>());
+            var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderListQuery>());
             return new JsonResult(result.Data
                 .Select(e => new
                 {
                     e.Id,
-                    e.Code,                  
+					e.Code,
+
                     e.LastModifiedDate
                 })
                 .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
