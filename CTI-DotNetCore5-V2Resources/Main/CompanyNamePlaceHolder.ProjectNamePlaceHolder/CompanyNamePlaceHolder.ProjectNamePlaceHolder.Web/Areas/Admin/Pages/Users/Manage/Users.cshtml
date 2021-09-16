@@ -1,0 +1,54 @@
+@page "/Admin/Users/{Id}"
+@model UsersModel
+@{
+    ViewData["Id"] = Model.Id;
+    ViewData["Title"] = $"{Model.UserDetails!.Name} | " + Localizer["Overview"].Value;
+    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["ActiveMainPage"] = "Users";
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label asp-for="@Model.UserDetails!.Email" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.UserDetails!.Email" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.UserDetails!.Name" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.UserDetails!.Name" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.UserDetails!.BirthDate" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.UserDetails!.BirthDate" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.UserDetails!.Entity" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9">
+                <input asp-for="@Model.UserDetails!.Entity" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.UserDetails!.IsActive" class="col-md-3 col-form-label"></label>
+            <div class="col-md-9 d-flex align-items-center">
+                @Html.DisplayFor(m => m.UserDetails!.IsActive, "UserStatus")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <input type="hidden" asp-for="@Model.UserDetails!.Id" />
+                <a asp-page="../Index" class="btn btn-secondary">@Localizer["Close"]</a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.Edit)).Succeeded)
+            {
+                <a href="/Admin/Users/@(Model.Id)/Edit" class="btn btn-primary">@Localizer["Edit"]</a>
+            }
+            </div>
+        </div>
+    </div>
+</div>

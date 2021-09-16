@@ -1,0 +1,96 @@
+@page
+@model IndexModel
+
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+
+@{
+    ViewData["ActiveMainPage"] = "Entities";
+    ViewData["Title"] = Localizer["Entities List"];
+}
+<div class="card">
+    <div class="card-body">
+        <table id="entities" class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Entity!.Name)
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<partial name="_FormModalPartial" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_DataTableScripts" />
+    <script asp-add-nonce>
+	$(document).ready(function () {
+		var table = $('#entities').DataTable({
+			serverSide: true,
+			order: [[ 0, 'asc' ]],
+			ajax:
+			{
+				url: '@Url.Page("/Entities/Index", new { area = "Admin", handler = "ListAll" })',
+				type: "POST",
+				headers: {
+					RequestVerificationToken:
+						$('input:hidden[name="__RequestVerificationToken"]').val()
+				},
+			},
+			columns: [
+				{ data: "name", name: "Name", title: '@Localizer["Name"]' },
+			],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var title = '@Localizer["Add Entity"]';
+                        var url = '@Url.Page("/Entities/Add", new { area = "Admin", handler = "Add" })';
+                        openFormModal(url, title, function() {
+                            dt.order([dt.init().columns.length - 1, 'asc']).page('last').draw(false);
+                        });
+                    },
+				},
+            </text>
+        }
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Edit)).Succeeded)
+        {
+	        <text>
+                {
+                    extend: 'selectedSingle',
+					text: '@Localizer["Edit"]',
+                    action: function (e, dt, button, config) {
+                        var title = '@Localizer["Edit Entity"]';
+                        var url = '@Url.Page("/Entities/Edit", new { area = "Admin", handler = "Details" })' + '&id=' + dt.row({ selected: true }).data().id;
+                        openFormModal(url, title, function() {
+                            if(dt.order()[0][0] == dt.init().columns.length - 1)
+                            {
+                                dt.page('last').draw(false);
+                            }
+                            else
+                            {
+                                dt.ajax.reload(null, false);
+                            }
+                        });
+                    },
+				},
+	        </text>
+        }
+				'excel', 'pdf', 'pageLength',
+			],
+		});
+	});
+    </script>
+}

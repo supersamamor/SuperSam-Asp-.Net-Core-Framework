@@ -1,0 +1,7 @@
+@using Models
+@model MainModulePlaceHolderViewModel
+
+<input name="ShouldClose" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+Template:[InsertNewAddEditField]
+<input type="hidden" asp-for="@Model.Id" />

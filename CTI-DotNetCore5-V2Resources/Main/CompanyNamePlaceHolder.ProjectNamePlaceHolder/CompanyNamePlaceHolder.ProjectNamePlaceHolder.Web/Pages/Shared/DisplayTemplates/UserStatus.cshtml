@@ -1,0 +1,10 @@
+@model bool
+
+@if (Model)
+{
+    <span class="badge badge-success">@Localizer["Active"]</span>
+}
+else
+{
+    <span class="badge badge-danger">@Localizer["Deactivated"]</span>
+}

@@ -1,0 +1,49 @@
+@page "/Admin/Users/{Id}/Edit"
+@model EditUserModel
+@{
+    ViewData["Id"] = Model.Id;
+    ViewData["Title"] = $"{Model.Input!.Name} | " + Localizer["Overview"].Value;
+    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["ActiveMainPage"] = "Users";
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="form-group row">
+                <label asp-for="@Model.Input!.EntityId" class="col-md-3 col-form-label"></label>
+                <div class="col-md-9">
+                    <select id="entity-select" asp-for="@Model.Input!.EntityId"
+                            class="select2 form-control"
+                            asp-items="@Model.Entities">
+                        <option></option>
+                    </select>
+                    <span asp-validation-for="@Model.Input!.EntityId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="@Model.Input!.IsActive" class="col-md-3 col-form-label"></label>
+                <div class="col-md-9">
+                    <select id="status-select" asp-for="@Model.Input!.IsActive"
+                            class="select2 form-control"
+                            asp-items="@Model.Statuses">
+                        <option></option>
+                    </select>
+                    <span asp-validation-for="@Model.Input!.IsActive" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <input type="hidden" asp-for="@Model.Input!.Id" />
+                    <input type="hidden" asp-for="@Model.Input!.Name" />
+                    <a asp-page="../Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                    <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
