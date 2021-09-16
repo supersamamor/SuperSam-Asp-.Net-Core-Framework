@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "appInsights1": {
+      "type": "appInsights.sdk"
+    },
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "IdentityContextConnection"
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "ApplicationContext"
+    }
+  }
+}
