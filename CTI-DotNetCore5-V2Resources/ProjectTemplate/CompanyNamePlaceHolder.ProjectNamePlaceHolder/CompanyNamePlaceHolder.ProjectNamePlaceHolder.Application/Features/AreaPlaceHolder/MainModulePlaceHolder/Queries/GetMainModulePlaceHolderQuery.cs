@@ -16,9 +16,7 @@ using System.Threading.Tasks;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries
 {
     public record GetMainModulePlaceHolderQuery : BaseQuery, IRequest<PagedListResponse<Core.AreaPlaceHolder.MainModulePlaceHolder>>
-    {
-        public string Status { get; set; } = "";
-        public string Brand { get; set; } = "";
+    {     
     }
 
     public class GetMainModulePlaceHolderQueryHandler : BaseAreaPlaceHolderQueryHandler<Core.AreaPlaceHolder.MainModulePlaceHolder, GetMainModulePlaceHolderQuery>, IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<Core.AreaPlaceHolder.MainModulePlaceHolder>>

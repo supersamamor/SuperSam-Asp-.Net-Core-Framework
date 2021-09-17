@@ -30,8 +30,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Are
         async Task<Validation<Error, AddMainModulePlaceHolderCommand>> ValidateRequest(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
             var validations = List(
-                await ValidateId(request, cancellationToken),              
-                await ValidateCode(request, cancellationToken));
+                await ValidateId(request, cancellationToken)            
+                ,Template:[InsertNewUniqueValidationFromCommandTextHere]
+			);
             var errors = validations.Bind(v => v.Match(_ => None, errors => Some(errors))) //IEnumerable<Seq<Error>>
                                     .Bind(e => e) //IEnumerable<Error>
                                     .ToSeq(); // Seq<Error>
@@ -44,12 +45,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Are
             await _context.MustNotExist<Core.AreaPlaceHolder.MainModulePlaceHolder, AddMainModulePlaceHolderCommand>(p => p.Id == request.Id,
                                                                          request,
                                                                          $"MainModulePlaceHolder with id {request.Id} already exists",
-                                                                         cancellationToken);       
-
-        async Task<Validation<Error, AddMainModulePlaceHolderCommand>> ValidateCode(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
-            await _context.MustNotExist<Core.AreaPlaceHolder.MainModulePlaceHolder, AddMainModulePlaceHolderCommand>(p => p.Code == request.Code,
-                                                                         request,
-                                                                         $"MainModulePlaceHolder with code {request.Code} already exists",
                                                                          cancellationToken);
+																		 
+		Template:[InsertNewUniqueValidationMethodFromCommandTextHere]
     }
 }

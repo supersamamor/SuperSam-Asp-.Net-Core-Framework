@@ -29,7 +29,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Are
         async Task<Validation<Error, EditMainModulePlaceHolderCommand>> ValidateRequest(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
             var validations = List(           
-                await ValidateCode(request, cancellationToken));
+                Template:[InsertNewUniqueValidationFromEditCommandTextHere]
+			);
             var errors = validations.Bind(v => v.Match(_ => None, errors => Some(errors))) //IEnumerable<Seq<Error>>
                                     .Bind(e => e) //IEnumerable<Error>
                                     .ToSeq(); // Seq<Error>
@@ -38,10 +39,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Are
                 : Validation<Error, EditMainModulePlaceHolderCommand>.Fail(errors);
         }
  
-        async Task<Validation<Error, EditMainModulePlaceHolderCommand>> ValidateCode(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
-            await _context.MustNotExist<Core.AreaPlaceHolder.MainModulePlaceHolder, EditMainModulePlaceHolderCommand>(p => p.Code == request.Code && p.Id != request.Id,
-                                                                          request,
-                                                                          $"MainModulePlaceHolder with code {request.Code} already exists",
-                                                                          cancellationToken);
+        Template:[InsertNewUniqueValidationMethodFromCommandForEditTextHere]
     }
 }
