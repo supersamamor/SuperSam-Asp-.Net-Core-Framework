@@ -48,7 +48,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
                 .Select(e => new
                 {
                     e.Id,
-                    e.Code,                 
+                    Template:[InsertNewJSONParameterForListingQueryTextHere]                
                     e.LastModifiedDate
                 })
                 .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
@@ -56,14 +56,5 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 
         public async Task<IActionResult> OnGetData([FromQuery] GetMainModulePlaceHolderQuery query) =>
             new JsonResult(await Mediatr.Send(query));
-    }
-
-    public record FilterViewModel
-    {
-        [Display(Name = "Status")]
-        public string Status { get; set; } = "";
-
-        [Display(Name = "Brand")]
-        public string Brand { get; set; } = "";
-    }
+    } 
 }

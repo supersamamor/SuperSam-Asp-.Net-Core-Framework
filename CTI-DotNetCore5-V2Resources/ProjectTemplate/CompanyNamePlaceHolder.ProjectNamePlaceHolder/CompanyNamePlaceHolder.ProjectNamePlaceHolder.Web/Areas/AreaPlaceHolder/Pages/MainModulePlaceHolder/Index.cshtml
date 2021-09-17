@@ -16,9 +16,7 @@
 				<table id="main-table" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
 					<thead>
 						<tr>
-							<th>
-								@Html.DisplayNameFor(model => model.MainModulePlaceHolder.Code)
-							</th>							
+							Template:[InsertNewTableHeader]
 							<th>
 								@Localizer["Actions"]
 							</th>
@@ -50,8 +48,8 @@
 						$('input:hidden[name="__RequestVerificationToken"]').val()
 				}				
 			},
-			columns: [
-				{ data: "code", name: "Code", responsivePriority: 1 },			
+			columns: [							
+				Template:[InsertNewTableRowValue]
 				{
 					data: null,
 					responsivePriority: 2,
