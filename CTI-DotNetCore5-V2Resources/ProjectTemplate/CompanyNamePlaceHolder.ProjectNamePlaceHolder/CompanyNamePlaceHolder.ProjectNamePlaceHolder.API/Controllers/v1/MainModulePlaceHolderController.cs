@@ -81,45 +81,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
     {
         [Required]
         public string Id { get; set; } = "";
-        [Required]
-        public string Code { get; set; } = "";
-        [Required]
-        public string Name { get; set; } = "";
-        [Required]
-        public string EntityCode { get; init; } = "";
-        [Required]
-        public string IfcaProjectCode { get; init; } = "";
-        [Required]
-        public string Address { get; init; } = "";
-        [Required]
-        public string Location { get; init; } = "";
-        [Required]
-        public string Status { get; init; } = "";
-        [Required]
-        public string Type { get; init; } = "";
-        [Required]
-        public string Owner { get; init; } = "";
-        [Required]
-        public string Description { get; init; } = "";
-        [Required]
-        public string Division { get; init; } = "";
-        [Required]
-        public DateTime StartDate { get; init; }
-        [Required]
-        public DateTime CompletionDate { get; init; }
-        [Required]
-        public int TrxDays { get; init; }
-        [Required]
-        public string Department { get; init; } = "";
-        [Required]
-        public string ContactDetails { get; init; } = "";
-        [Required]
-        public string Category { get; init; } = "";
-        [Required]
-        public string ProductUse { get; init; } = "";
-        [Required]
-        public string MarketSegment { get; init; } = "";
-        [Required]
-        public string Brand { get; init; } = "";
+        Template:[InsertNewWebModelColumnTextHere]          
     }
 }
