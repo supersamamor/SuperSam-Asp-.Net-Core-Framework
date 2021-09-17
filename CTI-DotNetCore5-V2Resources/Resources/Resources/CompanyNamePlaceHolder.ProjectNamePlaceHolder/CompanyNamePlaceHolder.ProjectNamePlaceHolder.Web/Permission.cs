@@ -16,7 +16,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
                 .Concat(GeneratePermissionsForModule("Apis"))
                 .Concat(GeneratePermissionsForModule("Applications"))
                 .Concat(GeneratePermissionsForModule("AuditTrail"))
-                .Concat(GeneratePermissionsForModule("MainModulePlaceHolder"));
+                Template:[InsertNewPermissionGenerator];
         }
 
         public static IEnumerable<string> GeneratePermissionsForModule(string module)
@@ -86,12 +86,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
             public const string Delete = "Permission.AuditTrail.Delete";
         }
 
-        public static class MainModulePlaceHolder
-        {
-            public const string View = "Permission.MainModulePlaceHolder.View";
-            public const string Create = "Permission.MainModulePlaceHolder.Create";
-            public const string Edit = "Permission.MainModulePlaceHolder.Edit";
-            public const string Delete = "Permission.MainModulePlaceHolder.Delete";
-        }
+        Template:[InsertNewPermissionTextHere]
     }
 }
