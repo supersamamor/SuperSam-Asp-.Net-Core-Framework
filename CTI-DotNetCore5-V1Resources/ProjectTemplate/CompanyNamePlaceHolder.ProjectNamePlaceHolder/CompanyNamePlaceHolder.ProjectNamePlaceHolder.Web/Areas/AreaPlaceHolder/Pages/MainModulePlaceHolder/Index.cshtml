@@ -14,9 +14,7 @@
         <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MainModulePlaceHolder!.Code)
-                    </th>                  
+                    Template:[InsertNewTableHeader]                 
                 </tr>
             </thead>
         </table>
@@ -46,8 +44,8 @@
 						$('input:hidden[name="__RequestVerificationToken"]').val()
 				},
 			},
-			columns: [
-				{ data: "code", name: "Code", title: '@Localizer["Code"]' },	
+			columns: [					
+				Template:[InsertNewTableRowValue]
 				{ data: "lastModifiedDate", name: "LastModifiedDate", title: "LastModifiedDate", visible: false, searchable: false },
 			],
 			buttons: [

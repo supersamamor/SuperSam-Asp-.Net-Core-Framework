@@ -1,6 +1,6 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+Template:[InsertNewImportAreaPlaceHolderTextHere]
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Mapping
 {
@@ -8,8 +8,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Mapping
     {
         public AreaPlaceHolderProfile()
         {
-            CreateMap<AddMainModulePlaceHolderCommand, MainModulePlaceHolder>();
-            CreateMap<EditMainModulePlaceHolderCommand, MainModulePlaceHolder>();
+            Template:[InsertNewApplicationLayerMapperConfigTextHerePropertyTextHere]
         }
     }
 }

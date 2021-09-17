@@ -27,12 +27,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 
         public async Task<IActionResult> OnPostListAllAsync()
         {
-            var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderQuery>());
+            var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderListQuery>());
             return new JsonResult(result.Data
                 .Select(e => new
                 {
                     e.Id,
-                    e.Code,                  
+					Template:[InsertNewJSONParameterForListingQueryTextHere]
                     e.LastModifiedDate
                 })
                 .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

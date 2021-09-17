@@ -15,14 +15,14 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 {
     public record EditMainModulePlaceHolderCommand(
         string Id,
-        string Code) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
+        Template:[InsertNewCQRSParameterTextHere]) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
-    public class EditProjectCommandHandler : IRequestHandler<EditMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
+    public class EditMainModulePlaceHolderCommandHandler : IRequestHandler<EditMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         readonly ApplicationContext _context;
         readonly IMapper _mapper;
 
-        public EditProjectCommandHandler(ApplicationContext context, IMapper mapper)
+        public EditMainModulePlaceHolderCommandHandler(ApplicationContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -30,14 +30,14 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 
         public async Task<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
             await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Id == request.Id, cancellationToken).MatchAsync(
-                async project => await UpdateProject(request, project, cancellationToken),
-                () => Fail<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>($"Project with id {request.Id} does not exist"));
+                async mainModulePlaceHolder => await UpdateMainModulePlaceHolder(request, mainModulePlaceHolder, cancellationToken),
+                () => Fail<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>($"MainModulePlaceHolder with id {request.Id} does not exist"));
 
         async Task<Validation<Error, EditMainModulePlaceHolderCommand>> ValidateRequest(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
             var validations = new List<Validation<Error, EditMainModulePlaceHolderCommand>>()
             {           
-                await ValidateCode(request, cancellationToken)
+               Template:[InsertNewUniqueValidationFromEditCommandTextHere]
             };
             var errors = validations.Map(v => v.Match(_ => None, errors => Some(errors))) 
                                     .Bind(e => e) 
@@ -48,21 +48,16 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
                 : Validation<Error, EditMainModulePlaceHolderCommand>.Fail(errors);
         }
 
-        async Task<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>> UpdateProject(EditMainModulePlaceHolderCommand request, Core.AreaPlaceHolder.MainModulePlaceHolder project, CancellationToken cancellationToken) =>
+        async Task<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>> UpdateMainModulePlaceHolder(EditMainModulePlaceHolderCommand request, Core.AreaPlaceHolder.MainModulePlaceHolder mainModulePlaceHolder, CancellationToken cancellationToken) =>
             await ValidateRequest(request, cancellationToken).BindT(
                 async request =>
                 {
-                    _mapper.Map(request, project);
-                    _context.Update(project);
+                    _mapper.Map(request, mainModulePlaceHolder);
+                    _context.Update(mainModulePlaceHolder);
                     _ = await _context.SaveChangesAsync(cancellationToken);
-                    return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(project);
-                });      
-
-        Func<EditMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, EditMainModulePlaceHolderCommand>>> ValidateCode =>
-            async (request, cancellationToken) =>
-            await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Code == request.Code && p.Id != request.Id, cancellationToken).Match(
-                Some: p => Fail<Error, EditMainModulePlaceHolderCommand>($"Project with code {p.Code} already exists"),
-                None: () => request
-            );
+                    return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(mainModulePlaceHolder);
+                });   
+				
+		Template:[InsertNewUniqueValidationMethodFromCommandForEditTextHere]
     }
 }

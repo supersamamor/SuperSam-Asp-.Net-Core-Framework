@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
 {
@@ -17,7 +18,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
         [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
         [ProducesResponseType(typeof(PagedListResponse<MainModulePlaceHolder>), StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<IActionResult> GetAsync([FromQuery] GetMainModulePlaceHolderQuery query) =>
+        public async Task<IActionResult> GetAsync([FromQuery] GetMainModulePlaceHolderListQuery query) =>
             Ok(await Mediator.Send(query));
 
         [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
@@ -32,7 +33,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
         [ProducesResponseType(typeof(MainModulePlaceHolder), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] ProjectViewModel request) =>
+        public async Task<IActionResult> PostAsync([FromBody] MainModulePlaceHolderViewModel request) =>
             await Mediator.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(request)).ToActionResult(
                 success: null,
                 errors =>
@@ -46,7 +47,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut]
-        public async Task<IActionResult> PutAsync([FromBody] ProjectViewModel request) =>
+        public async Task<IActionResult> PutAsync([FromBody] MainModulePlaceHolderViewModel request) =>
             await Mediator.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(request)).ToActionResult(
                 success: null,
                 errors =>
@@ -69,11 +70,11 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1
                     return BadRequest(ModelState);
                 });
     }
-    public record ProjectViewModel
+    public record MainModulePlaceHolderViewModel
     {
         [Required]
         public string? Id { get; set; }
-        [Required]
-        public string? Code { get; set; }      
+		
+        Template:[InsertNewWebModelColumnTextHere]      
     }
 }

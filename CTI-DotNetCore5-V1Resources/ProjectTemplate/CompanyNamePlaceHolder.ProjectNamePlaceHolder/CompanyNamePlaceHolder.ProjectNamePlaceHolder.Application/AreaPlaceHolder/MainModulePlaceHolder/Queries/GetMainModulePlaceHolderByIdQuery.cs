@@ -9,11 +9,11 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 {
     public record GetMainModulePlaceHolderByIdQuery(string Id) : IRequest<Option<Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
-    public class GetProjectByIdQueryHandler : IRequestHandler<GetMainModulePlaceHolderByIdQuery, Option<Core.AreaPlaceHolder.MainModulePlaceHolder>>
+    public class GetMainModulePlaceHolderByIdQueryHandler : IRequestHandler<GetMainModulePlaceHolderByIdQuery, Option<Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         private readonly ApplicationContext _context;
 
-        public GetProjectByIdQueryHandler(ApplicationContext context)
+        public GetMainModulePlaceHolderByIdQueryHandler(ApplicationContext context)
         {
             _context = context;
         }

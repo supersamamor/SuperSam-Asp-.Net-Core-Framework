@@ -12,19 +12,19 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 {
     public record DeleteMainModulePlaceHolderCommand(string Id) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
-    public class DeleteProjectCommandHandler : IRequestHandler<DeleteMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
+    public class DeleteMainModulePlaceHolderCommandHandler : IRequestHandler<DeleteMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         private readonly ApplicationContext _context;
 
-        public DeleteProjectCommandHandler(ApplicationContext context)
+        public DeleteMainModulePlaceHolderCommandHandler(ApplicationContext context)
         {
             _context = context;
         }
 
         public async Task<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
-            var project = await _context.GetSingle((Core.AreaPlaceHolder.MainModulePlaceHolder p) => p.Id == request.Id, cancellationToken);
-            return await project.MatchAsync(
+            var mainModulePlaceHolder = await _context.GetSingle((Core.AreaPlaceHolder.MainModulePlaceHolder p) => p.Id == request.Id, cancellationToken);
+            return await mainModulePlaceHolder.MatchAsync(
                 Some: async p =>
                  {
                      _context.MainModulePlaceHolder.Remove(p);
@@ -33,7 +33,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
                  },
                 None: () =>
                 {
-                    return Fail<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>($"Project not found");
+                    return Fail<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>($"MainModulePlaceHolder not found");
                 });
         }
     }

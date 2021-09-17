@@ -15,7 +15,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
                 .Concat(GeneratePermissionsForModule("Users"))
                 .Concat(GeneratePermissionsForModule("Apis"))
                 .Concat(GeneratePermissionsForModule("Applications"))
-                .Concat(GeneratePermissionsForModule("Projects"));
+                .Concat(GeneratePermissionsForModule("Projects"))
+				Template:[InsertNewPermissionGenerator];
         }
 
         public static IEnumerable<string> GeneratePermissionsForModule(string module)
@@ -77,12 +78,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
             public const string Delete = "Permission.Applications.Delete";
         }
 
-        public static class MainModulePlaceHolder
-        {
-            public const string View = "Permission.Projects.View";
-            public const string Create = "Permission.Projects.Create";
-            public const string Edit = "Permission.Projects.Edit";
-            public const string Delete = "Permission.Projects.Delete";
-        }
+        Template:[InsertNewPermissionTextHere]
     }
 }

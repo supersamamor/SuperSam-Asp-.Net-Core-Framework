@@ -9,7 +9,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
     public record MainModulePlaceHolderViewModel
     {
         public string? Id { get; set; } = Guid.NewGuid().ToString();
-        [Required]
-        public string? Code { get; set; }       
+        
+        Template:[InsertNewWebModelColumnTextHere]
     }
 }

@@ -15,14 +15,14 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
 {
     public record AddMainModulePlaceHolderCommand(
         string Id,
-        string Code) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
+        Template:[InsertNewCQRSParameterTextHere]) : BaseCommand(Id), IRequest<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>;
 
-    public class AddProjectCommandHandler : IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
+    public class AddMainModulePlaceHolderCommandHandler : IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>>
     {
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
 
-        public AddProjectCommandHandler(ApplicationContext context, IMapper mapper)
+        public AddMainModulePlaceHolderCommandHandler(ApplicationContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -31,18 +31,18 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
         public async Task<Validation<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>> Handle(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
             await ValidateRequest(request, cancellationToken).BindT(async request =>
             {
-                var project = _mapper.Map<Core.AreaPlaceHolder.MainModulePlaceHolder>(request);
-                _context.Add(project);
+                var mainModulePlaceHolder = _mapper.Map<Core.AreaPlaceHolder.MainModulePlaceHolder>(request);
+                _context.Add(mainModulePlaceHolder);
                 _ = await _context.SaveChangesAsync(cancellationToken);
-                return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(project);
+                return Success<Error, Core.AreaPlaceHolder.MainModulePlaceHolder>(mainModulePlaceHolder);
             });
 
         async Task<Validation<Error, AddMainModulePlaceHolderCommand>> ValidateRequest(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
         {
             var validations = new List<Validation<Error, AddMainModulePlaceHolderCommand>>()
             {
-                await ValidateId(request, cancellationToken),
-                await ValidateCode(request, cancellationToken)
+                await ValidateId(request, cancellationToken)
+				,Template:[InsertNewUniqueValidationFromCommandTextHere]
             };
             var errors = validations.Map(v => v.Match(_ => None, errors => Some(errors))) 
                                     .Bind(e => e)
@@ -56,15 +56,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.AreaPlaceHol
         Func<AddMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, AddMainModulePlaceHolderCommand>>> ValidateId =>
             async (request, cancellationToken) =>
             await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Id == request.Id, cancellationToken).Match(
-                Some: p => Fail<Error, AddMainModulePlaceHolderCommand>($"Project with id {p.Id} already exists"),
+                Some: p => Fail<Error, AddMainModulePlaceHolderCommand>($"MainModulePlaceHolder with id {p.Id} already exists"),
                 None: () => request
-            );      
-
-        Func<AddMainModulePlaceHolderCommand, CancellationToken, Task<Validation<Error, AddMainModulePlaceHolderCommand>>> ValidateCode =>
-            async (request, cancellationToken) =>
-            await _context.GetSingle<Core.AreaPlaceHolder.MainModulePlaceHolder>(p => p.Code == request.Code, cancellationToken).Match(
-                Some: p => Fail<Error, AddMainModulePlaceHolderCommand>($"Project with code {p.Code} already exists"),
-                None: () => request
-            );
+            );  
+			
+		Template:[InsertNewUniqueValidationMethodFromCommandTextHere]
     }
 }
