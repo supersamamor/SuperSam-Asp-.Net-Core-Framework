@@ -12,8 +12,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API
     {
         public MappingProfile()
         {
-            CreateMap<MainModulePlaceHolderViewModel, AddMainModulePlaceHolderCommand>();
-            CreateMap<MainModulePlaceHolderViewModel, EditMainModulePlaceHolderCommand>();
+            Template:[InsertNewMapperConfigTextHerePropertyTextHere]
         }
     }
 }
