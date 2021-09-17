@@ -16,8 +16,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
             _authenticatedUser = authenticatedUser;
         }
 
-        public DbSet<MainModulePlaceHolder> MainModulePlaceHolder { get; set; } = default!;
-
+		Template:[InsertNewDataModelContextPropertyTextHere]
+		
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var property in modelBuilder.Model.GetEntityTypes()
@@ -26,11 +26,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
                                                                    || p.ClrType == typeof(decimal?)))
             {
                 property.SetColumnType("decimal(18,6)");
-            }   
-            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(e => e.LastModifiedDate);
-            modelBuilder.Entity<MainModulePlaceHolder>().HasIndex(e => e.Entity);
-            modelBuilder.Entity<MainModulePlaceHolder>().HasQueryFilter(e => e.Entity == _authenticatedUser.Entity);
-
+            }    
+			
+			Template:[InsertNewEFFluentAttributesTextHere]
+			Template:[InsertNewEFFluentAttributesUniqueTextHere]
+			Template:[InsertNewEFFluentAttributesStringLengthTextHere]			
+			
             base.OnModelCreating(modelBuilder);
         }
     }
