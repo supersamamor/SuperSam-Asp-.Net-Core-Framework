@@ -1,0 +1,8 @@
+@using Models
+@model EntityViewModel
+<div class="form-group row">
+    <label asp-for="@Model.Name" class="col-md-3 col-form-label"></label>
+    <div class="col-md-9">
+        <input asp-for="@Model.Name" class="form-control" readonly />
+    </div>
+</div>

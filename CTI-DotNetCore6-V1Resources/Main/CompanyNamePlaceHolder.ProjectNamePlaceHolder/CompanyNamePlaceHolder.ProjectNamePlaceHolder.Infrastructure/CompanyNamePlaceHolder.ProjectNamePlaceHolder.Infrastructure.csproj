@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.EntityFrameworkCore.AuditTrail" Version="1.0.0" />
+    <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Common.csproj" />
+  </ItemGroup>
+
+</Project>

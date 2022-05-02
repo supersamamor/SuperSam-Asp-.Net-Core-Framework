@@ -1,0 +1,39 @@
+@page
+@model ViewModel
+@{
+	ViewData["Title"] = Localizer["View Entity"];
+	ViewData["ActiveMainPage"] = "Entities";
+	ViewData["Level1"] = "Admin";
+}
+<div class="row">
+	<div class="col-12">
+		<div class="card card-outline card-primary">
+			<div class="card-header">
+				<h5 class="card-title">@Localizer["Entity Info"]</h5>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse">
+						<i class="fas fa-minus"></i>
+					</button>
+				</div>
+			</div>
+			<div class="card-body">
+				<partial name="_ViewEntityDetails" model="Model.Entity" />
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<p>
+			<a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
+			@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Create)).Succeeded)
+			{
+				<a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
+			}
+			@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Edit)).Succeeded)
+			{
+				<a asp-page="Edit" asp-route-id="@Model.Entity.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+			}
+		</p>
+	</div>
+</div>

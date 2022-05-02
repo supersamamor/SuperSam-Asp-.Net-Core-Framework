@@ -1,0 +1,78 @@
+@page
+@model EditModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Edit Application"];
+    ViewData["ActiveMainPage"] = "Applications";
+    ViewData["Level1"] = "Admin";
+}
+<form id="application-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h5 class="card-title">@Localizer["Application Info"]</h5>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <partial name="_EditApplicationDetails" model="Model.Application" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h5 class="card-title">@Localizer["Permissions"]</h5>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <partial name="_EditPermissions" model="Model.ApplicationPermissions" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button asp-page-handler="Generate" type="submit" class="btn btn-primary">@Localizer["Generate new secret"]</button>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var permissions = $("#permissions").DataTable({
+            select: false,
+            searching: true,
+            paging: true,
+            info: true,
+            buttons: [],
+            columnDefs: [
+                {
+                    targets: [1],
+                    orderDataType: 'dom-checkbox',
+                }
+            ]
+        });
+        $('#application-form').onSubmitIncludeAllFieldsFromTable(permissions);
+    });
+</script>
+}

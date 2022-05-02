@@ -1,0 +1,11 @@
+@using Models
+@model MainModulePlaceHolderViewModel
+
+<div class="form-group row">
+    <label asp-for="@Model.Code" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.Code" class="form-control" />
+        <span asp-validation-for="@Model.Code" class="text-danger"></span>
+    </div>
+</div>
+<input type="hidden" asp-for="@Model.Id" />
