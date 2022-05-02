@@ -7,7 +7,7 @@
 @{
     ViewData["Title"] = Localizer["Projects List"];
     ViewData["ActiveMainPage"] = "Projects";
-    ViewData["Level1"] = "Inventory";
+    ViewData["Level1"] = "AreaPlaceHolder";
 }
 <div class="row">
     <div class="col-12">
@@ -48,7 +48,7 @@
             order: [[ 4, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/Projects/Index", new { area = "Inventory", handler = "ListAll" })',
+                url: '@Url.Page("/Projects/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
@@ -66,19 +66,19 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/Projects/Details", new { area = "Inventory" })' + '?id=' + row.id;
+                        var url = '@Url.Page("/Projects/Details", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
                         var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Projects/Edit", new { area = "Inventory" })' + '?id=' + row.id;
+                        url = '@Url.Page("/Projects/Edit", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Edit"]</a>';
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Projects/Delete", new { area = "Inventory" })' + '?id=' + row.id;
+                        url = '@Url.Page("/Projects/Delete", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger">@Localizer["Delete"]</a>';
                     </text>
                 }
@@ -95,7 +95,7 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Projects/Add", new { area = "Inventory" })';
+                        var url = '@Url.Page("/Projects/Add", new { area = "AreaPlaceHolder" })';
                         window.location.href = url;
                     },
                     className: 'btn btn-success',

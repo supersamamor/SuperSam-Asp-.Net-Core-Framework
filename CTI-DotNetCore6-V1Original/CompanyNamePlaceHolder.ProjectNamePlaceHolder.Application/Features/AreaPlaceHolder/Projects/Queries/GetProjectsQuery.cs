@@ -1,10 +1,10 @@
 using CTI.Common.Utility.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Inventory;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using MediatR;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Inventory.Projects.Queries;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Projects.Queries;
 
 public record GetProjectsQuery : BaseQuery, IRequest<PagedListResponse<ProjectState>>;
 

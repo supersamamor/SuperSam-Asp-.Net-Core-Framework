@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Inventory;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 
 public record ProjectState : BaseEntity
 {

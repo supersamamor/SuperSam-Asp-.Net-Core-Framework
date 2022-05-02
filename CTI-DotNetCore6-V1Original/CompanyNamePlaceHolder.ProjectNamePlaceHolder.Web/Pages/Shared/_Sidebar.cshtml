@@ -82,11 +82,11 @@
                         </ul>
                     </li>
                 }
-                <li class="nav-item @ManageNavPages.Level1Class(ViewContext, "Inventory")">
+                <li class="nav-item @ManageNavPages.Level1Class(ViewContext, "AreaPlaceHolder")">
                     <a href="#" class="nav-link">
                         <i class="fas fa-list-alt nav-icon"></i>
                         <p>
-                            @Localizer["Inventory"]
+                            @Localizer["AreaPlaceHolder"]
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -94,7 +94,7 @@
                         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.View)).Succeeded)
                         {
                             <li class="nav-item">
-                                <a href="/Inventory/Projects" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Projects")">
+                                <a href="/AreaPlaceHolder/Projects" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Projects")">
                                     <i class="fas fa-dot-circle nav-icon"></i>
                                     <p>
                                         @Localizer["Projects"]
