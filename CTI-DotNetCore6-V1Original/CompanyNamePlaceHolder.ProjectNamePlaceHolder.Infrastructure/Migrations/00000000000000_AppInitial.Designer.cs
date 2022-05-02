@@ -72,7 +72,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Projects");
+                    b.ToTable("MainModulePlaceHolder");
                 });
 
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Models.Audit", b =>

@@ -1,7 +1,6 @@
 using CTI.Common.Utility.Extensions;
 using CTI.Common.Web.Utility.Extensions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Projects.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Projects.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
@@ -10,27 +9,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.Projects;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder;
 
-[Authorize(Policy = Permission.Projects.Edit)]
-public class EditModel : BasePageModel<EditModel>
+[Authorize(Policy = Permission.MainModulePlaceHolder.Create)]
+public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]
     public ProjectViewModel Project { get; set; } = new();
 
-    public async Task<IActionResult> OnGet(string? id)
+    public IActionResult OnGet()
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
-        return await Mediatr.Send(new GetProjectByIdQuery(id)).ToActionResult(
-            e =>
-            {
-                Mapper.Map(e, Project);
-                return Page();
-            },
-            none: null);
+        return Page();
     }
 
     public async Task<IActionResult> OnPost()
@@ -39,7 +28,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<EditProjectCommand>(Project)))
+        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddProjectCommand>(Project)))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");
@@ -48,7 +37,7 @@ public class EditModel : BasePageModel<EditModel>
             success: project =>
             {
                 NotyfService.Success(Localizer["Record saved successfully"]);
-                Logger.LogInformation("Edited Record. ID: {ID}, Record: {Record}", project.Id, project.ToString());
+                Logger.LogInformation("Added Record. ID: {ID}, Record: {Record}", project.Id, project.ToString());
                 return RedirectToPage("Details", new { id = project.Id });
             },
             fail: errors =>

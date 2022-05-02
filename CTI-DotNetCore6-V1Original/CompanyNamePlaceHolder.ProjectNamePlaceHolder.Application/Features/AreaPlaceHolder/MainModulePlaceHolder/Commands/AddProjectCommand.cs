@@ -8,7 +8,7 @@ using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Projects.Commands;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
 public record AddProjectCommand : ProjectState, IRequest<Validation<Error, ProjectState>>;
 

@@ -5,15 +5,15 @@
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Projects List"];
-    ViewData["ActiveMainPage"] = "Projects";
+    ViewData["Title"] = Localizer["MainModulePlaceHolder List"];
+    ViewData["ActiveMainPage"] = "MainModulePlaceHolder";
     ViewData["Level1"] = "AreaPlaceHolder";
 }
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <table id="projects" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
                             <th>
@@ -42,13 +42,13 @@
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
-        var table = $('#projects').DataTable({
+        var table = $('#mainModulePlaceHolder').DataTable({
             select: false,
             serverSide: true,
             order: [[ 4, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/Projects/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
+                url: '@Url.Page("/MainModulePlaceHolder/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
@@ -66,19 +66,19 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/Projects/Details", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+                        var url = '@Url.Page("/MainModulePlaceHolder/Details", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
                         var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Edit)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Projects/Edit", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+                        url = '@Url.Page("/MainModulePlaceHolder/Edit", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Edit"]</a>';
                     </text>
                 }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Edit)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Projects/Delete", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+                        url = '@Url.Page("/MainModulePlaceHolder/Delete", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger">@Localizer["Delete"]</a>';
                     </text>
                 }
@@ -89,13 +89,13 @@
                 { data: "id", name: "Id", visible: false },
             ],
             buttons: [
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Projects.Create)).Succeeded)
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
         {
             <text>
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Projects/Add", new { area = "AreaPlaceHolder" })';
+                        var url = '@Url.Page("/MainModulePlaceHolder/Add", new { area = "AreaPlaceHolder" })';
                         window.location.href = url;
                     },
                     className: 'btn btn-success',

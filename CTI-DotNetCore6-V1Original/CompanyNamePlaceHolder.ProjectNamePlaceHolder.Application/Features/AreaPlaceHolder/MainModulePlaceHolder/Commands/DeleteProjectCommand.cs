@@ -8,7 +8,7 @@ using LanguageExt.Common;
 using MediatR;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Projects.Commands;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
 public record DeleteProjectCommand : BaseCommand, IRequest<Validation<Error, ProjectState>>;
 

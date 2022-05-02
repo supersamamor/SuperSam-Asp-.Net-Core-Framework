@@ -14,7 +14,7 @@ public class ApplicationContext : AuditableDbContext
         _authenticatedUser = authenticatedUser;
     }
 
-    public DbSet<ProjectState> Projects { get; set; } = default!;
+    public DbSet<ProjectState> MainModulePlaceHolder { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

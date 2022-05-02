@@ -30,7 +30,7 @@ public partial class AppInitial : Migration
             });
 
         migrationBuilder.CreateTable(
-            name: "Projects",
+            name: "MainModulePlaceHolder",
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -46,32 +46,32 @@ public partial class AppInitial : Migration
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_Projects", x => x.Id);
+                table.PrimaryKey("PK_MainModulePlaceHolder", x => x.Id);
             });
 
         migrationBuilder.CreateIndex(
-            name: "IX_Projects_Code",
-            table: "Projects",
+            name: "IX_MainModulePlaceHolder_Code",
+            table: "MainModulePlaceHolder",
             column: "Code");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Projects_Entity",
-            table: "Projects",
+            name: "IX_MainModulePlaceHolder_Entity",
+            table: "MainModulePlaceHolder",
             column: "Entity");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Projects_LastModifiedDate",
-            table: "Projects",
+            name: "IX_MainModulePlaceHolder_LastModifiedDate",
+            table: "MainModulePlaceHolder",
             column: "LastModifiedDate");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Projects_Name",
-            table: "Projects",
+            name: "IX_MainModulePlaceHolder_Name",
+            table: "MainModulePlaceHolder",
             column: "Name");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Projects_Status",
-            table: "Projects",
+            name: "IX_MainModulePlaceHolder_Status",
+            table: "MainModulePlaceHolder",
             column: "Status");
     }
 
@@ -81,6 +81,6 @@ public partial class AppInitial : Migration
             name: "AuditLogs");
 
         migrationBuilder.DropTable(
-            name: "Projects");
+            name: "MainModulePlaceHolder");
     }
 }
