@@ -18,7 +18,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.csproj'
+    projects: '**/CTI.WebAppTemplate.API.csproj'
     arguments: '-c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 - task: PublishBuildArtifacts@1

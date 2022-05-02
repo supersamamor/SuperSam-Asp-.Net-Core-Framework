@@ -1,0 +1,133 @@
+﻿@page
+@model AddModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Add User"];
+    ViewData["ActiveMainPage"] = "Users";
+    ViewData["Level1"] = "Admin";
+}
+<form id="user-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header d-flex">
+                    <div class="card-title flex-grow-1">
+                        <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                            <h5>@Localizer["User Info"]</h5>
+                        </button>
+                    </div>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label asp-for="@Model.Input.Email" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="@Model.Input.Email" class="form-control" />
+                            <span asp-validation-for="@Model.Input.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="@Model.Input.Password" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="@Model.Input.Password" class="form-control" />
+                            <span asp-validation-for="@Model.Input.Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="@Model.Input.ConfirmPassword" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="@Model.Input.ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="@Model.Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="@Model.Input.Name" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="@Model.Input.Name" class="form-control" />
+                            <span asp-validation-for="@Model.Input.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="@Model.Input.BirthDate" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input asp-for="@Model.Input.BirthDate" class="form-control" />
+                            <span asp-validation-for="@Model.Input.BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="@Model.Input.EntityId" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <select id="entity-select" asp-for="@Model.Input.EntityId"
+                                    class="select2 form-control"
+                                    asp-items="@Model.Input.Entities">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="@Model.Input.EntityId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header d-flex">
+                    <div class="card-title flex-grow-1">
+                        <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                            <h5>@Localizer["Roles"]</h5>
+                        </button>
+                    </div>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <partial name="_EditRoles" model="Model.Roles" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var roles = $("#roles").DataTable({
+            select: false,
+            searching: true,
+            paging: true,
+            info: true,
+            buttons: [],
+            columnDefs: [
+                {
+                    targets: [1],
+                    orderDataType: 'dom-checkbox',
+                }
+            ]
+        });
+        $('#user-form').onSubmitIncludeAllFieldsFromTable(roles);
+    });
+</script>
+}

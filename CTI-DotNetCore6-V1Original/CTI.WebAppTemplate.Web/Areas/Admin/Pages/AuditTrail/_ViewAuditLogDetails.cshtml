@@ -1,0 +1,58 @@
+﻿@using Models
+@model AuditLogViewModel
+
+<input type="hidden" asp-for="@Model.Id" />
+<div class="form-group row">
+    <label asp-for="@Model.TraceId" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.TraceId" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Timestamp" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.TimeStamp" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.TableName" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.TableName" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Type" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.Type" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.PrimaryKey" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <textarea rows="3" asp-for="@Model.PrimaryKeyPretty" class="form-control" readonly></textarea>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.User.Name" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.User.Name'" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.AffectedColumns" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <textarea rows="5" asp-for="@Model.AffectedColumnsPretty" class="form-control" readonly></textarea>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.OldValues" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <textarea rows="5" asp-for="@Model.OldValuesPretty" class="form-control" readonly></textarea>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.NewValues" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <textarea rows="5" asp-for="@Model.NewValuesPretty" class="form-control" readonly></textarea>
+    </div>
+</div>

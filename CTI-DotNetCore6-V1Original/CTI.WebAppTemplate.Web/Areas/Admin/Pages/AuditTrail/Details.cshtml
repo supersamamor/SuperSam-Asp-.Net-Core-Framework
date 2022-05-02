@@ -1,0 +1,39 @@
+﻿@page
+@model DetailsModel
+
+@{
+    ViewData["Title"] = Localizer["View Audit Log"];
+    ViewData["ActiveMainPage"] = "AuditTrail";
+    ViewData["Level1"] = "Admin";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Audit Log Details"]</h5>
+                    </button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <partial name="_ViewAuditLogDetails" model="Model.AuditLog" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p>
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
+        </p>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>

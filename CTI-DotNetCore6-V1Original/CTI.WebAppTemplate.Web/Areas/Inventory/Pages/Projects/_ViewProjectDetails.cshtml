@@ -1,0 +1,33 @@
+﻿@using Models
+@model ProjectViewModel
+
+<div class="form-group row">
+    <label asp-for="@Model.Id" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.Id" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Code" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.Code" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Status" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.Status" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Name" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <input asp-for="@Model.Name" class="form-control" readonly />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Description" class="col-md-3 col-form-label"></label>
+    <div class="col-md-6">
+        <textarea rows="3" asp-for="@Model.Description" class="form-control" readonly></textarea>
+    </div>
+</div>
