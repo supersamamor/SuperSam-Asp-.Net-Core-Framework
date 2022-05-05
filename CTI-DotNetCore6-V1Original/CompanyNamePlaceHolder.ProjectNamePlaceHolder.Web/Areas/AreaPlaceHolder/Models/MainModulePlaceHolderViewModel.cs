@@ -12,19 +12,4 @@ public record MainModulePlaceHolderViewModel : BaseViewModel
     [Required]
     [StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
     public string Code { get; init; } = "";
-
-    [Display(Name = "Status")]
-    [Required]
-    public string Status { get; init; } = "Active";
-
-    [Display(Name = "Name")]
-    [Required]
-    [StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
-    public string Name { get; init; } = "";
-
-    [Display(Name = "Description")]
-    [Required]
-    public string Description { get; init; } = "";
-
-    public SelectList Statuses { get; set; } = EnumUtilities.ToSelectList<ProjectStatuses>();
 }

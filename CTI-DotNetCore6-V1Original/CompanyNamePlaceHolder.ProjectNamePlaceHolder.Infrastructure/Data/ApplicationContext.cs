@@ -28,10 +28,7 @@ public class ApplicationContext : AuditableDbContext
 
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
-
-        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Name);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Code);
-        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Status);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.LastModifiedDate);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Entity);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);

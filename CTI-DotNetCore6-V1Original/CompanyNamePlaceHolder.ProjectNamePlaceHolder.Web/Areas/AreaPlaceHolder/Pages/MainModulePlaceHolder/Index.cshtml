@@ -18,13 +18,7 @@
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Project.Code)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project.Status)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project.Name)
-                            </th>
+                            </th>                           
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -45,7 +39,7 @@
         var table = $('#mainModulePlaceHolder').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 4, 'desc' ]],
+            order: [[ 2, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/MainModulePlaceHolder/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
@@ -56,9 +50,7 @@
                 },
             },
             columns: [
-                { data: "code", name: "Code", responsivePriority: 1 },
-                { data: "status", name: "Status" },
-                { data: "name", name: "Name" },
+                { data: "code", name: "Code", responsivePriority: 1 },               
                 {
                     data: null,
                     searchable: false,

@@ -29,17 +29,9 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.Code,
-                e.Status,
-                e.Name,
+                e.Code,              
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    }
-
-    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
-    {
-        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Name)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
-    }
+    } 
 }

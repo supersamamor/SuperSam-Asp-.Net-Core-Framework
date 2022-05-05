@@ -38,9 +38,6 @@ public class EditProjectCommandValidator : AbstractValidator<EditMainModulePlace
     public EditProjectCommandValidator(ApplicationContext context)
     {
         _context = context;
-
-        RuleFor(x => x.Name).MustAsync(async (request, name, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Name == name && x.Id != request.Id, cancellation))
-                            .WithMessage("Project with name {PropertyValue} already exists");
         RuleFor(x => x.Code).MustAsync(async (request, code, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Code == code && x.Id != request.Id, cancellation))
                             .WithMessage("Project with code {PropertyValue} already exists");
     }

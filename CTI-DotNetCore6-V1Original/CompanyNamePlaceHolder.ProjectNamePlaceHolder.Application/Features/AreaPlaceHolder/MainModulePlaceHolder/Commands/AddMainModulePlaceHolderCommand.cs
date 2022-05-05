@@ -35,8 +35,6 @@ public class AddProjectCommandValidator : AbstractValidator<AddMainModulePlaceHo
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellation))
                           .WithMessage("Project with id {PropertyValue} already exists");
-        RuleFor(x => x.Name).MustAsync(async (name, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Name == name, cancellation))
-                          .WithMessage("Project with name {PropertyValue} already exists");
         RuleFor(x => x.Code).MustAsync(async (code, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Code == code, cancellation))
                           .WithMessage("Project with code {PropertyValue} already exists");
     }
