@@ -10,9 +10,9 @@ using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
-public record DeleteMainModulePlaceHolderCommand : BaseCommand, IRequest<Validation<Error, ProjectState>>;
+public record DeleteMainModulePlaceHolderCommand : BaseCommand, IRequest<Validation<Error, MainModulePlaceHolderState>>;
 
-public class DeleteMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, DeleteMainModulePlaceHolderCommand>, IRequestHandler<DeleteMainModulePlaceHolderCommand, Validation<Error, ProjectState>>
+public class DeleteMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, MainModulePlaceHolderState, DeleteMainModulePlaceHolderCommand>, IRequestHandler<DeleteMainModulePlaceHolderCommand, Validation<Error, MainModulePlaceHolderState>>
 {
     public DeleteMainModulePlaceHolderCommandHandler(ApplicationContext context,
                                        IMapper mapper,
@@ -20,11 +20,11 @@ public class DeleteMainModulePlaceHolderCommandHandler : BaseCommandHandler<Appl
     {
     }
 
-    public async Task<Validation<Error, ProjectState>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
     {
-        var project = await _context.GetSingle<ProjectState>(p => p.Id == request.Id, cancellationToken, true);
+        var project = await _context.GetSingle<MainModulePlaceHolderState>(p => p.Id == request.Id, cancellationToken, true);
         return await project.MatchAsync(
             Some: async p => await Delete(p, cancellationToken),
-            None: () => Fail<Error, ProjectState>($"Project not found"));
+            None: () => Fail<Error, MainModulePlaceHolderState>($"Project not found"));
     }
 }

@@ -16,7 +16,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 public class EditModel : BasePageModel<EditModel>
 {
     [BindProperty]
-    public ProjectViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel Project { get; set; } = new();
 
     public async Task<IActionResult> OnGet(string? id)
     {
@@ -43,7 +43,7 @@ public class EditModel : BasePageModel<EditModel>
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");
-                return Fail<Error, ProjectState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
+                return Fail<Error, MainModulePlaceHolderState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
             }).ToActionResult(
             success: project =>
             {

@@ -10,9 +10,9 @@ using MediatR;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
-public record AddMainModulePlaceHolderCommand : ProjectState, IRequest<Validation<Error, ProjectState>>;
+public record AddMainModulePlaceHolderCommand : MainModulePlaceHolderState, IRequest<Validation<Error, MainModulePlaceHolderState>>;
 
-public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, AddMainModulePlaceHolderCommand>, IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, ProjectState>>
+public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, MainModulePlaceHolderState, AddMainModulePlaceHolderCommand>, IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, MainModulePlaceHolderState>>
 {
     public AddMainModulePlaceHolderCommandHandler(ApplicationContext context,
                                     IMapper mapper,
@@ -20,7 +20,7 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
     {
     }
 
-    public async Task<Validation<Error, ProjectState>> Handle(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
+    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
         await _validator.ValidateTAsync(request, cancellationToken).BindT(
             async request => await Add(request, cancellationToken));
 }
@@ -33,11 +33,11 @@ public class AddProjectCommandValidator : AbstractValidator<AddMainModulePlaceHo
     {
         _context = context;
 
-        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<ProjectState>(x => x.Id == id, cancellation))
+        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellation))
                           .WithMessage("Project with id {PropertyValue} already exists");
-        RuleFor(x => x.Name).MustAsync(async (name, cancellation) => await _context.NotExists<ProjectState>(x => x.Name == name, cancellation))
+        RuleFor(x => x.Name).MustAsync(async (name, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Name == name, cancellation))
                           .WithMessage("Project with name {PropertyValue} already exists");
-        RuleFor(x => x.Code).MustAsync(async (code, cancellation) => await _context.NotExists<ProjectState>(x => x.Code == code, cancellation))
+        RuleFor(x => x.Code).MustAsync(async (code, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Code == code, cancellation))
                           .WithMessage("Project with code {PropertyValue} already exists");
     }
 }

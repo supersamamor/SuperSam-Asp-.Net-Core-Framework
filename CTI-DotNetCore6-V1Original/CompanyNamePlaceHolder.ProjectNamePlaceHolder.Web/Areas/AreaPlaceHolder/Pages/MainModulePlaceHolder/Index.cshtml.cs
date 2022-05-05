@@ -12,7 +12,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
 public class IndexModel : BasePageModel<IndexModel>
 {
-    public ProjectViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel Project { get; set; } = new();
 
     [DataTablesRequest]
     public DataTablesRequest? DataRequest { get; set; }
@@ -39,7 +39,7 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(ProjectState.Name)));
+        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Name)));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
     }
 }

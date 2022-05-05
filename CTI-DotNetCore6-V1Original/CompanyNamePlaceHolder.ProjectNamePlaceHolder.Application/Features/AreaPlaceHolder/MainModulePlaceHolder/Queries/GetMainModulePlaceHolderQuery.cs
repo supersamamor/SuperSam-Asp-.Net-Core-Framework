@@ -6,9 +6,9 @@ using MediatR;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 
-public record GetMainModulePlaceHolderQuery : BaseQuery, IRequest<PagedListResponse<ProjectState>>;
+public record GetMainModulePlaceHolderQuery : BaseQuery, IRequest<PagedListResponse<MainModulePlaceHolderState>>;
 
-public class GetMainModulePlaceHolderQueryHandler : BaseQueryHandler<ApplicationContext, ProjectState, GetMainModulePlaceHolderQuery>, IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<ProjectState>>
+public class GetMainModulePlaceHolderQueryHandler : BaseQueryHandler<ApplicationContext, MainModulePlaceHolderState, GetMainModulePlaceHolderQuery>, IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<MainModulePlaceHolderState>>
 {
     public GetMainModulePlaceHolderQueryHandler(ApplicationContext context) : base(context)
     {

@@ -15,7 +15,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]
-    public ProjectViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel Project { get; set; } = new();
 
     public IActionResult OnGet()
     {
@@ -32,7 +32,7 @@ public class AddModel : BasePageModel<AddModel>
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");
-                return Fail<Error, ProjectState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
+                return Fail<Error, MainModulePlaceHolderState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
             }).ToActionResult(
             success: project =>
             {

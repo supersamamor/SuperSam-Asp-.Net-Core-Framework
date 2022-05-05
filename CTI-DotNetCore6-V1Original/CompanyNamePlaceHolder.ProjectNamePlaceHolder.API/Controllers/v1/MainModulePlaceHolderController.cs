@@ -13,31 +13,31 @@ public class MainModulePlaceHolderController : BaseApiController<MainModulePlace
 {
     [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
     [HttpGet]
-    public async Task<ActionResult<PagedListResponse<ProjectState>>> GetAsync([FromQuery] GetMainModulePlaceHolderQuery query) =>
+    public async Task<ActionResult<PagedListResponse<MainModulePlaceHolderState>>> GetAsync([FromQuery] GetMainModulePlaceHolderQuery query) =>
         Ok(await Mediator.Send(query));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProjectState>> GetAsync(string id) =>
+    public async Task<ActionResult<MainModulePlaceHolderState>> GetAsync(string id) =>
         await ToActionResult(async () => await Mediator.Send(new GetMainModulePlaceHolderByIdQuery(id)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Create)]
     [HttpPost]
-    public async Task<ActionResult<ProjectState>> PostAsync([FromBody] ProjectViewModel request) =>
+    public async Task<ActionResult<MainModulePlaceHolderState>> PostAsync([FromBody] MainModulePlaceHolderViewModel request) =>
         await ToActionResult(async () => await Mediator.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(request)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Edit)]
     [HttpPut]
-    public async Task<ActionResult<ProjectState>> PutAsync([FromBody] ProjectViewModel request) =>
+    public async Task<ActionResult<MainModulePlaceHolderState>> PutAsync([FromBody] MainModulePlaceHolderViewModel request) =>
         await ToActionResult(async () => await Mediator.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(request)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Delete)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ProjectState>> DeleteAsync(string id) =>
+    public async Task<ActionResult<MainModulePlaceHolderState>> DeleteAsync(string id) =>
         await ToActionResult(async () => await Mediator.Send(new DeleteMainModulePlaceHolderCommand { Id = id }));
 }
 
-public record ProjectViewModel
+public record MainModulePlaceHolderViewModel
 {
     [Required]
     public string Id { get; set; } = "";

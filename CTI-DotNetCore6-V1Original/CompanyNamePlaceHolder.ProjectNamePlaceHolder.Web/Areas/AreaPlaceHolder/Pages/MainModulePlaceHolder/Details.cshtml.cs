@@ -10,7 +10,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
 public class DetailsModel : BasePageModel<DetailsModel>
 {
-    public ProjectViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel Project { get; set; } = new();
 
     public async Task<IActionResult> OnGet(string? id)
     {

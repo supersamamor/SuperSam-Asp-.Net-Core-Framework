@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 
-public record ProjectViewModel : BaseViewModel
+public record MainModulePlaceHolderViewModel : BaseViewModel
 {
     [Display(Name = "Code")]
     [Required]

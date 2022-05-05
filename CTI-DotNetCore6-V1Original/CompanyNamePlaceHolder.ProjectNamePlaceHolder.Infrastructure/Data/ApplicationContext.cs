@@ -14,7 +14,7 @@ public class ApplicationContext : AuditableDbContext
         _authenticatedUser = authenticatedUser;
     }
 
-    public DbSet<ProjectState> MainModulePlaceHolder { get; set; } = default!;
+    public DbSet<MainModulePlaceHolderState> MainModulePlaceHolder { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,12 +29,12 @@ public class ApplicationContext : AuditableDbContext
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
 
-        modelBuilder.Entity<ProjectState>().HasIndex(e => e.Name);
-        modelBuilder.Entity<ProjectState>().HasIndex(e => e.Code);
-        modelBuilder.Entity<ProjectState>().HasIndex(e => e.Status);
-        modelBuilder.Entity<ProjectState>().HasIndex(e => e.LastModifiedDate);
-        modelBuilder.Entity<ProjectState>().HasIndex(e => e.Entity);
-        modelBuilder.Entity<ProjectState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Name);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Code);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Status);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.LastModifiedDate);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(e => e.Entity);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 
         base.OnModelCreating(modelBuilder);
     }

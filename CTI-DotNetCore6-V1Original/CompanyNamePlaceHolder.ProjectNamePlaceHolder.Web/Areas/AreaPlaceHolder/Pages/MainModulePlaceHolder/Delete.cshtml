@@ -1,7 +1,7 @@
 @page
 @model DeleteModel
 @{
-    ViewData["Title"] = Localizer["Delete Project"];
+    ViewData["Title"] = Localizer["Delete MainModulePlaceHolder"];
     ViewData["ActiveMainPage"] = "MainModulePlaceHolder";
     ViewData["Level1"] = "AreaPlaceHolder";
 }
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <partial name="_ViewProjectDetails" model="Model.Project" />
+                    <partial name="_ViewMainModulePlaceHolderDetails" model="Model.Project" />
                 </div>
             </div>
         </div>
