@@ -24,7 +24,7 @@ public class DeleteModel : BasePageModel<DeleteModel>
         {
             return NotFound();
         }
-        return await Mediatr.Send(new GetProjectByIdQuery(id)).ToActionResult(
+        return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
             e =>
             {
                 Mapper.Map(e, Project);
@@ -39,7 +39,7 @@ public class DeleteModel : BasePageModel<DeleteModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(new DeleteProjectCommand { Id = Project.Id }))
+        return await TryAsync(async () => await Mediatr.Send(new DeleteMainModulePlaceHolderCommand { Id = Project.Id }))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");

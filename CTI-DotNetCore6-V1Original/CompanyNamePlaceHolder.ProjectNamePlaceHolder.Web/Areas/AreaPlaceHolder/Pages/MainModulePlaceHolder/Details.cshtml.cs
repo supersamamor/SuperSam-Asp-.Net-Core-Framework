@@ -18,7 +18,7 @@ public class DetailsModel : BasePageModel<DetailsModel>
         {
             return NotFound();
         }
-        return await Mediatr.Send(new GetProjectByIdQuery(id)).ToActionResult(
+        return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
             e =>
             {
                 Mapper.Map(e, Project);

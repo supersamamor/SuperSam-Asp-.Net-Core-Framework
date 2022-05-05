@@ -10,17 +10,17 @@ using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
-public record DeleteProjectCommand : BaseCommand, IRequest<Validation<Error, ProjectState>>;
+public record DeleteMainModulePlaceHolderCommand : BaseCommand, IRequest<Validation<Error, ProjectState>>;
 
-public class DeleteProjectCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, DeleteProjectCommand>, IRequestHandler<DeleteProjectCommand, Validation<Error, ProjectState>>
+public class DeleteMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, DeleteMainModulePlaceHolderCommand>, IRequestHandler<DeleteMainModulePlaceHolderCommand, Validation<Error, ProjectState>>
 {
-    public DeleteProjectCommandHandler(ApplicationContext context,
+    public DeleteMainModulePlaceHolderCommandHandler(ApplicationContext context,
                                        IMapper mapper,
-                                       CompositeValidator<DeleteProjectCommand> validator) : base(context, mapper, validator)
+                                       CompositeValidator<DeleteMainModulePlaceHolderCommand> validator) : base(context, mapper, validator)
     {
     }
 
-    public async Task<Validation<Error, ProjectState>> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, ProjectState>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
     {
         var project = await _context.GetSingle<ProjectState>(p => p.Id == request.Id, cancellationToken, true);
         return await project.MatchAsync(

@@ -24,7 +24,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return NotFound();
         }
-        return await Mediatr.Send(new GetProjectByIdQuery(id)).ToActionResult(
+        return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
             e =>
             {
                 Mapper.Map(e, Project);
@@ -39,7 +39,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<EditProjectCommand>(Project)))
+        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(Project)))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");

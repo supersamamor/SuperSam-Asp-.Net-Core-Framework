@@ -9,8 +9,8 @@ public class AreaPlaceHolderProfile : Profile
 {
     public AreaPlaceHolderProfile()
     {
-        CreateMap<ProjectViewModel, AddProjectCommand>();
-        CreateMap<ProjectViewModel, EditProjectCommand>();
+        CreateMap<ProjectViewModel, AddMainModulePlaceHolderCommand>();
+        CreateMap<ProjectViewModel, EditMainModulePlaceHolderCommand>();
         CreateMap<ProjectState, ProjectViewModel>();
     }
 }

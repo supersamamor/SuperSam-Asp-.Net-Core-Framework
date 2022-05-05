@@ -9,7 +9,7 @@ public class AreaPlaceHolderProfile : Profile
 {
     public AreaPlaceHolderProfile()
     {
-        CreateMap<AddProjectCommand, ProjectState>();
-        CreateMap<EditProjectCommand, ProjectState>().IgnoreBaseEntityProperties();
+        CreateMap<AddMainModulePlaceHolderCommand, ProjectState>();
+        CreateMap<EditMainModulePlaceHolderCommand, ProjectState>().IgnoreBaseEntityProperties();
     }
 }

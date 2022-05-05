@@ -19,22 +19,22 @@ public class MainModulePlaceHolderController : BaseApiController<MainModulePlace
     [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
     [HttpGet("{id}")]
     public async Task<ActionResult<ProjectState>> GetAsync(string id) =>
-        await ToActionResult(async () => await Mediator.Send(new GetProjectByIdQuery(id)));
+        await ToActionResult(async () => await Mediator.Send(new GetMainModulePlaceHolderByIdQuery(id)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Create)]
     [HttpPost]
     public async Task<ActionResult<ProjectState>> PostAsync([FromBody] ProjectViewModel request) =>
-        await ToActionResult(async () => await Mediator.Send(Mapper.Map<AddProjectCommand>(request)));
+        await ToActionResult(async () => await Mediator.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(request)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Edit)]
     [HttpPut]
     public async Task<ActionResult<ProjectState>> PutAsync([FromBody] ProjectViewModel request) =>
-        await ToActionResult(async () => await Mediator.Send(Mapper.Map<EditProjectCommand>(request)));
+        await ToActionResult(async () => await Mediator.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(request)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Delete)]
     [HttpDelete("{id}")]
     public async Task<ActionResult<ProjectState>> DeleteAsync(string id) =>
-        await ToActionResult(async () => await Mediator.Send(new DeleteProjectCommand { Id = id }));
+        await ToActionResult(async () => await Mediator.Send(new DeleteMainModulePlaceHolderCommand { Id = id }));
 }
 
 public record ProjectViewModel

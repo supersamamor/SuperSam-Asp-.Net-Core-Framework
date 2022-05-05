@@ -10,22 +10,22 @@ using MediatR;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
-public record AddProjectCommand : ProjectState, IRequest<Validation<Error, ProjectState>>;
+public record AddMainModulePlaceHolderCommand : ProjectState, IRequest<Validation<Error, ProjectState>>;
 
-public class AddProjectCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, AddProjectCommand>, IRequestHandler<AddProjectCommand, Validation<Error, ProjectState>>
+public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, AddMainModulePlaceHolderCommand>, IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, ProjectState>>
 {
-    public AddProjectCommandHandler(ApplicationContext context,
+    public AddMainModulePlaceHolderCommandHandler(ApplicationContext context,
                                     IMapper mapper,
-                                    CompositeValidator<AddProjectCommand> validator) : base(context, mapper, validator)
+                                    CompositeValidator<AddMainModulePlaceHolderCommand> validator) : base(context, mapper, validator)
     {
     }
 
-    public async Task<Validation<Error, ProjectState>> Handle(AddProjectCommand request, CancellationToken cancellationToken) =>
+    public async Task<Validation<Error, ProjectState>> Handle(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
         await _validator.ValidateTAsync(request, cancellationToken).BindT(
             async request => await Add(request, cancellationToken));
 }
 
-public class AddProjectCommandValidator : AbstractValidator<AddProjectCommand>
+public class AddProjectCommandValidator : AbstractValidator<AddMainModulePlaceHolderCommand>
 {
     readonly ApplicationContext _context;
 

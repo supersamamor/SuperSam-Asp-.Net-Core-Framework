@@ -11,27 +11,27 @@ using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
-public record EditProjectCommand : ProjectState, IRequest<Validation<Error, ProjectState>>;
+public record EditMainModulePlaceHolderCommand : ProjectState, IRequest<Validation<Error, ProjectState>>;
 
-public class EditProjectCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, EditProjectCommand>, IRequestHandler<EditProjectCommand, Validation<Error, ProjectState>>
+public class EditMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, ProjectState, EditMainModulePlaceHolderCommand>, IRequestHandler<EditMainModulePlaceHolderCommand, Validation<Error, ProjectState>>
 {
-    public EditProjectCommandHandler(ApplicationContext context,
+    public EditMainModulePlaceHolderCommandHandler(ApplicationContext context,
                                      IMapper mapper,
-                                     CompositeValidator<EditProjectCommand> validator) : base(context, mapper, validator)
+                                     CompositeValidator<EditMainModulePlaceHolderCommand> validator) : base(context, mapper, validator)
     {
     }
 
-    public async Task<Validation<Error, ProjectState>> Handle(EditProjectCommand request, CancellationToken cancellationToken) =>
+    public async Task<Validation<Error, ProjectState>> Handle(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
         await _context.GetSingle<ProjectState>(p => p.Id == request.Id, cancellationToken, true).MatchAsync(
             async project => await UpdateProject(request, project, cancellationToken),
             () => Fail<Error, ProjectState>($"Project with id {request.Id} does not exist"));
 
-    async Task<Validation<Error, ProjectState>> UpdateProject(EditProjectCommand request, ProjectState project, CancellationToken cancellationToken) =>
+    async Task<Validation<Error, ProjectState>> UpdateProject(EditMainModulePlaceHolderCommand request, ProjectState project, CancellationToken cancellationToken) =>
         await _validator.ValidateTAsync(request, cancellationToken).BindT(
             async request => await Edit(request, project, cancellationToken));
 }
 
-public class EditProjectCommandValidator : AbstractValidator<EditProjectCommand>
+public class EditProjectCommandValidator : AbstractValidator<EditMainModulePlaceHolderCommand>
 {
     readonly ApplicationContext _context;
 

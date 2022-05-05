@@ -8,7 +8,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<ProjectViewModel, AddProjectCommand>();
-        CreateMap<ProjectViewModel, EditProjectCommand>();
+        CreateMap<ProjectViewModel, AddMainModulePlaceHolderCommand>();
+        CreateMap<ProjectViewModel, EditMainModulePlaceHolderCommand>();
     }
 }

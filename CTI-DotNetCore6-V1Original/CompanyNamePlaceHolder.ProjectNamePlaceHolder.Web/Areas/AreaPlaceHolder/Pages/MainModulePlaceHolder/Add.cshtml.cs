@@ -28,7 +28,7 @@ public class AddModel : BasePageModel<AddModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddProjectCommand>(Project)))
+        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(Project)))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");
