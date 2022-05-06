@@ -11,7 +11,7 @@
             <div class="card-header d-flex">
                 <div class="card-title flex-grow-1">
                     <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
-                        <h5>@Localizer["Project Info"]</h5>
+                        <h5>@Localizer["MainModulePlaceHolder Info"]</h5>
                     </button>
                 </div>
                 <div class="card-tools">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <partial name="_ViewMainModulePlaceHolderDetails" model="Model.Project" />
+                <partial name="_ViewMainModulePlaceHolderDetails" model="Model.MainModulePlaceHolder" />
             </div>
         </div>
     </div>
@@ -36,11 +36,11 @@
             }
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
             {
-                <a asp-page="Edit" asp-route-id="@Model.Project.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+                <a asp-page="Edit" asp-route-id="@Model.MainModulePlaceHolder.Id" class="btn btn-primary">@Localizer["Edit"]</a>
             }
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Delete)).Succeeded)
             {
-                <a asp-page="Delete" asp-route-id="@Model.Project.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+                <a asp-page="Delete" asp-route-id="@Model.MainModulePlaceHolder.Id" class="btn btn-danger">@Localizer["Delete"]</a>
             }
         </p>
     </div>

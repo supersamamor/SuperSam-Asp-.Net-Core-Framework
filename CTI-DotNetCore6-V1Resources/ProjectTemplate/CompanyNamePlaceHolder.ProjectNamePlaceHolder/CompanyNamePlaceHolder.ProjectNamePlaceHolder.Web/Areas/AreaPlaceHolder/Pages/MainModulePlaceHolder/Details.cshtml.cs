@@ -10,7 +10,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
 public class DetailsModel : BasePageModel<DetailsModel>
 {
-    public MainModulePlaceHolderViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
 
     public async Task<IActionResult> OnGet(string? id)
     {
@@ -21,7 +21,7 @@ public class DetailsModel : BasePageModel<DetailsModel>
         return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
             e =>
             {
-                Mapper.Map(e, Project);
+                Mapper.Map(e, MainModulePlaceHolder);
                 return Page();
             },
             none: null);

@@ -16,7 +16,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 public class EditModel : BasePageModel<EditModel>
 {
     [BindProperty]
-    public MainModulePlaceHolderViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
 
     public async Task<IActionResult> OnGet(string? id)
     {
@@ -27,7 +27,7 @@ public class EditModel : BasePageModel<EditModel>
         return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
             e =>
             {
-                Mapper.Map(e, Project);
+                Mapper.Map(e, MainModulePlaceHolder);
                 return Page();
             },
             none: null);
@@ -39,17 +39,17 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(Project)))
+        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(MainModulePlaceHolder)))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");
                 return Fail<Error, MainModulePlaceHolderState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
             }).ToActionResult(
-            success: project =>
+            success: mainModulePlaceHolder =>
             {
                 NotyfService.Success(Localizer["Record saved successfully"]);
-                Logger.LogInformation("Edited Record. ID: {ID}, Record: {Record}", project.Id, project.ToString());
-                return RedirectToPage("Details", new { id = project.Id });
+                Logger.LogInformation("Edited Record. ID: {ID}, Record: {Record}", mainModulePlaceHolder.Id, mainModulePlaceHolder.ToString());
+                return RedirectToPage("Details", new { id = mainModulePlaceHolder.Id });
             },
             fail: errors =>
             {

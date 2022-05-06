@@ -12,7 +12,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
 public class IndexModel : BasePageModel<IndexModel>
 {
-    public MainModulePlaceHolderViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
 
     [DataTablesRequest]
     public DataTablesRequest? DataRequest { get; set; }
@@ -29,7 +29,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.Code,              
+                Template:[InsertNewJSONParameterForListingQueryTextHere]              
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

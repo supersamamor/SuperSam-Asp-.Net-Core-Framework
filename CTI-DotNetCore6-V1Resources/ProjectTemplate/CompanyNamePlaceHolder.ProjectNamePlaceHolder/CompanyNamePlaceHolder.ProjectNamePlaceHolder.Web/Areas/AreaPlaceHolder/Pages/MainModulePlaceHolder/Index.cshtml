@@ -16,9 +16,7 @@
                 <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project.Code)
-                            </th>                           
+                            Template:[InsertNewTableHeader]                           
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -50,7 +48,7 @@
                 },
             },
             columns: [
-                { data: "code", name: "Code", responsivePriority: 1 },               
+                Template:[InsertNewTableRowValue]               
                 {
                     data: null,
                     searchable: false,

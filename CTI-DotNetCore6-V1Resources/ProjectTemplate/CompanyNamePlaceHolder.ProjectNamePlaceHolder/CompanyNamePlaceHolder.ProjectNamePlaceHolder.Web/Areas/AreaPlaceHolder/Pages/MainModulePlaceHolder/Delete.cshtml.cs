@@ -16,7 +16,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 public class DeleteModel : BasePageModel<DeleteModel>
 {
     [BindProperty]
-    public MainModulePlaceHolderViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
 
     public async Task<IActionResult> OnGet(string? id)
     {
@@ -27,7 +27,7 @@ public class DeleteModel : BasePageModel<DeleteModel>
         return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
             e =>
             {
-                Mapper.Map(e, Project);
+                Mapper.Map(e, MainModulePlaceHolder);
                 return Page();
             },
             none: null);
@@ -39,7 +39,7 @@ public class DeleteModel : BasePageModel<DeleteModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(new DeleteMainModulePlaceHolderCommand { Id = Project.Id }))
+        return await TryAsync(async () => await Mediatr.Send(new DeleteMainModulePlaceHolderCommand { Id = MainModulePlaceHolder.Id }))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");

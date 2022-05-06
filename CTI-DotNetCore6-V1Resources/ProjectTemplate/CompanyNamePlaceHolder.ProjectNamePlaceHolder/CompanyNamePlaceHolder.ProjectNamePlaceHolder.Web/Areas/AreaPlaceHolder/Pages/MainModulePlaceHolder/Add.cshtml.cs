@@ -15,7 +15,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]
-    public MainModulePlaceHolderViewModel Project { get; set; } = new();
+    public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
 
     public IActionResult OnGet()
     {
@@ -28,17 +28,17 @@ public class AddModel : BasePageModel<AddModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(Project)))
+        return await TryAsync(async () => await Mediatr.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(MainModulePlaceHolder)))
             .IfFail(ex =>
             {
                 Logger.LogError(ex, "Exception in OnPost");
                 return Fail<Error, MainModulePlaceHolderState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
             }).ToActionResult(
-            success: project =>
+            success: mainModulePlaceHolder =>
             {
                 NotyfService.Success(Localizer["Record saved successfully"]);
-                Logger.LogInformation("Added Record. ID: {ID}, Record: {Record}", project.Id, project.ToString());
-                return RedirectToPage("Details", new { id = project.Id });
+                Logger.LogInformation("Added Record. ID: {ID}, Record: {Record}", mainModulePlaceHolder.Id, mainModulePlaceHolder.ToString());
+                return RedirectToPage("Details", new { id = mainModulePlaceHolder.Id });
             },
             fail: errors =>
             {
