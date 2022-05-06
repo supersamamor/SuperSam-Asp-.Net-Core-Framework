@@ -25,17 +25,16 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
             async request => await Add(request, cancellationToken));
 }
 
-public class AddProjectCommandValidator : AbstractValidator<AddMainModulePlaceHolderCommand>
+public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMainModulePlaceHolderCommand>
 {
     readonly ApplicationContext _context;
 
-    public AddProjectCommandValidator(ApplicationContext context)
+    public AddMainModulePlaceHolderCommandValidator(ApplicationContext context)
     {
         _context = context;
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellation))
-                          .WithMessage("Project with id {PropertyValue} already exists");
-        RuleFor(x => x.Code).MustAsync(async (code, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Code == code, cancellation))
-                          .WithMessage("Project with code {PropertyValue} already exists");
+                          .WithMessage("MainModulePlaceHolder with id {PropertyValue} already exists");
+		Template:[InsertNewUniqueValidationFromCommandTextHere]        
     }
 }
