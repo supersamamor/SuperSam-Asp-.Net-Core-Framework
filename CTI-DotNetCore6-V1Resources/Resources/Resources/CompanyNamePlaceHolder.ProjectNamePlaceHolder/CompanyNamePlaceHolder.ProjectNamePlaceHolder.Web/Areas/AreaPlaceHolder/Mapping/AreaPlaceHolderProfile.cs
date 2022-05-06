@@ -9,8 +9,6 @@ public class AreaPlaceHolderProfile : Profile
 {
     public AreaPlaceHolderProfile()
     {
-        CreateMap<MainModulePlaceHolderViewModel, AddMainModulePlaceHolderCommand>();
-        CreateMap<MainModulePlaceHolderViewModel, EditMainModulePlaceHolderCommand>();
-        CreateMap<MainModulePlaceHolderState, MainModulePlaceHolderViewModel>();
+        Template:[InsertNewCommandMapperConfigTextHere]
     }
 }

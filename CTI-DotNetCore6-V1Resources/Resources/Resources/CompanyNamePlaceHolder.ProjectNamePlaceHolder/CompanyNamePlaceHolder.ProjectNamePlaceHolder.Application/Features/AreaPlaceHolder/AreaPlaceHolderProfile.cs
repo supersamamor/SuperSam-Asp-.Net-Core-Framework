@@ -9,7 +9,6 @@ public class AreaPlaceHolderProfile : Profile
 {
     public AreaPlaceHolderProfile()
     {
-        CreateMap<AddMainModulePlaceHolderCommand, MainModulePlaceHolderState>();
-        CreateMap<EditMainModulePlaceHolderCommand, MainModulePlaceHolderState>().IgnoreBaseEntityProperties();
+        Template:[InsertNewApplicationLayerMapperConfigTextHerePropertyTextHere]
     }
 }

@@ -8,7 +8,6 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<MainModulePlaceHolderViewModel, AddMainModulePlaceHolderCommand>();
-        CreateMap<MainModulePlaceHolderViewModel, EditMainModulePlaceHolderCommand>();
+        Template:[InsertNewMapperConfigTextHerePropertyTextHere]
     }
 }
