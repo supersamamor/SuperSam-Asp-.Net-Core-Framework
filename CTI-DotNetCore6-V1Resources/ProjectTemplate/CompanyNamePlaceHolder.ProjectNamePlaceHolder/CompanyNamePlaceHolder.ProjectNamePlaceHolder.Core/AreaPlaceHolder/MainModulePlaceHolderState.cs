@@ -4,5 +4,5 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 
 public record MainModulePlaceHolderState : BaseEntity
 {
-    public string Code { get; init; } = ""; 
+    Template:[InsertNewCoreModelColumnTextHere] 
 }
