@@ -23,22 +23,21 @@ public class EditMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applic
 
     public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
         await _context.GetSingle<MainModulePlaceHolderState>(p => p.Id == request.Id, cancellationToken, true).MatchAsync(
-            async project => await UpdateProject(request, project, cancellationToken),
-            () => Fail<Error, MainModulePlaceHolderState>($"Project with id {request.Id} does not exist"));
+            async mainModulePlaceHolder => await UpdateMainModulePlaceHolder(request, mainModulePlaceHolder, cancellationToken),
+            () => Fail<Error, MainModulePlaceHolderState>($"MainModulePlaceHolder with id {request.Id} does not exist"));
 
-    async Task<Validation<Error, MainModulePlaceHolderState>> UpdateProject(EditMainModulePlaceHolderCommand request, MainModulePlaceHolderState project, CancellationToken cancellationToken) =>
+    async Task<Validation<Error, MainModulePlaceHolderState>> UpdateMainModulePlaceHolder(EditMainModulePlaceHolderCommand request, MainModulePlaceHolderState mainModulePlaceHolder, CancellationToken cancellationToken) =>
         await _validator.ValidateTAsync(request, cancellationToken).BindT(
-            async request => await Edit(request, project, cancellationToken));
+            async request => await Edit(request, mainModulePlaceHolder, cancellationToken));
 }
 
-public class EditProjectCommandValidator : AbstractValidator<EditMainModulePlaceHolderCommand>
+public class EditMainModulePlaceHolderCommandValidator : AbstractValidator<EditMainModulePlaceHolderCommand>
 {
     readonly ApplicationContext _context;
 
-    public EditProjectCommandValidator(ApplicationContext context)
+    public EditMainModulePlaceHolderCommandValidator(ApplicationContext context)
     {
         _context = context;
-        RuleFor(x => x.Code).MustAsync(async (request, code, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Code == code && x.Id != request.Id, cancellation))
-                            .WithMessage("Project with code {PropertyValue} already exists");
+        Template:[InsertNewUniqueValidationFromCommandTextHere]
     }
 }

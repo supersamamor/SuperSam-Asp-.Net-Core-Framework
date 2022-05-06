@@ -22,9 +22,9 @@ public class DeleteMainModulePlaceHolderCommandHandler : BaseCommandHandler<Appl
 
     public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
     {
-        var project = await _context.GetSingle<MainModulePlaceHolderState>(p => p.Id == request.Id, cancellationToken, true);
-        return await project.MatchAsync(
+        var mainModulePlaceHolder = await _context.GetSingle<MainModulePlaceHolderState>(p => p.Id == request.Id, cancellationToken, true);
+        return await mainModulePlaceHolder.MatchAsync(
             Some: async p => await Delete(p, cancellationToken),
-            None: () => Fail<Error, MainModulePlaceHolderState>($"Project not found"));
+            None: () => Fail<Error, MainModulePlaceHolderState>($"MainModulePlaceHolder not found"));
     }
 }
