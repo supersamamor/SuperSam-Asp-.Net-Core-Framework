@@ -30,8 +30,7 @@ public class ApplicationContext : AuditableDbContext
         // It causes filter to be evaluated before user has signed in
         Template:[InsertNewEFFluentAttributesTextHere]
 		Template:[InsertNewEFFluentAttributesUniqueTextHere]
-		Template:[InsertNewEFFluentAttributesStringLengthTextHere]
-		
+		Template:[InsertNewEFFluentAttributesStringLengthTextHere]		
         base.OnModelCreating(modelBuilder);
     }
 }
