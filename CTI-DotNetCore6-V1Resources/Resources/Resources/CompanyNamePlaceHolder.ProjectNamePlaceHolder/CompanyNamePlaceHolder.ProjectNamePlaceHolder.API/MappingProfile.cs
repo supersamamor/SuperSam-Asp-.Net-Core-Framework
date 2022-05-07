@@ -1,6 +1,6 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
+Template:[InsertNewImportAreaPlaceHolderTextHere]
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API;
 

@@ -41,6 +41,6 @@ public record MainModulePlaceHolderViewModel
 {
     [Required]
     public string Id { get; set; } = "";
-    [Required]
+
     Template:[InsertNewWebModelColumnTextHere]   
 }
