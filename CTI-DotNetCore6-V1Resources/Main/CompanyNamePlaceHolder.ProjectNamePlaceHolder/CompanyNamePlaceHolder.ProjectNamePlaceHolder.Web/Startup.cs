@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
 using System.Reflection;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 
@@ -59,5 +60,6 @@ public class Startup
                 .AddDbContextCheck<IdentityContext>();
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
+		services.AddTransient<DropdownServices>();
     }
 }
