@@ -9,4 +9,5 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
 public record MainModulePlaceHolderViewModel : BaseViewModel
 {	
 	Template:[InsertNewWebUIModelColumnTextHere]
+	Template:[InsertNewParentTableViewTextHere]
 }

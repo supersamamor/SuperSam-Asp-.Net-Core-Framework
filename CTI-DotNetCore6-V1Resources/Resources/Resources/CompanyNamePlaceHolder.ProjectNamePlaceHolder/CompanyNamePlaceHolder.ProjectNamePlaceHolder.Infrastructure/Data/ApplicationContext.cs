@@ -25,12 +25,21 @@ public class ApplicationContext : AuditableDbContext
         {
             property.SetColumnType("decimal(18,6)");
         }
-
+		#region Disable Cascade Delete
+		var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+		.SelectMany(t => t.GetForeignKeys())
+		.Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+		foreach (var fk in cascadeFKs)
+		{
+			fk.DeleteBehavior = DeleteBehavior.Restrict;
+		}
+		#endregion
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
         Template:[InsertNewEFFluentAttributesTextHere]
 		Template:[InsertNewEFFluentAttributesUniqueTextHere]
-		Template:[InsertNewEFFluentAttributesStringLengthTextHere]		
+		Template:[InsertNewEFFluentAttributesStringLengthTextHere]	
+		Template:[InsertNewSubCollectionFluentApiTextHere]
         base.OnModelCreating(modelBuilder);
     }
 }
