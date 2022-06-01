@@ -1,6 +1,7 @@
 using CTI.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.EntityFrameworkCore;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Models;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 
@@ -34,6 +35,8 @@ public class ApplicationContext : AuditableDbContext
 			fk.DeleteBehavior = DeleteBehavior.Restrict;
 		}
 		#endregion
+		modelBuilder.Entity<Audit>().Property(e => e.PrimaryKey).HasMaxLength(120);
+		modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
         Template:[InsertNewEFFluentAttributesTextHere]
