@@ -36,6 +36,6 @@ public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMai
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("MainModulePlaceHolder with id {PropertyValue} already exists");
-        Template:[InsertNewUniqueValidationFromCommandTextHere]
+        Template:[InsertNewUniqueValidationFromAddCommandTextHere]
     }
 }

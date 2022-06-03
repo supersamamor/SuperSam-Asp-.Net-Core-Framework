@@ -1,12 +1,13 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
+using CompanyNamePlaceHolder.Common.Core.Commands;
+using CompanyNamePlaceHolder.Common.Data;
+using CompanyNamePlaceHolder.Common.Utility.Validators;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
+using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
-using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
@@ -20,11 +21,20 @@ public class DeleteMainModulePlaceHolderCommandHandler : BaseCommandHandler<Appl
     {
     }
 
-    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(DeleteMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
+        await _validator.ValidateTAsync(request, cancellationToken).BindT(
+            async request => await Delete(request.Id, cancellationToken));
+}
+
+
+public class DeleteMainModulePlaceHolderCommandValidator : AbstractValidator<DeleteMainModulePlaceHolderCommand>
+{
+    readonly ApplicationContext _context;
+
+    public DeleteMainModulePlaceHolderCommandValidator(ApplicationContext context)
     {
-        var mainModulePlaceHolder = await _context.GetSingle<MainModulePlaceHolderState>(p => p.Id == request.Id, cancellationToken, true);
-        return await mainModulePlaceHolder.MatchAsync(
-            Some: async p => await Delete(p, cancellationToken),
-            None: () => Fail<Error, MainModulePlaceHolderState>($"MainModulePlaceHolder not found"));
+        _context = context;
+        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<MainModulePlaceHolderState>(x => x.Id == id, cancellationToken: cancellation))
+                          .WithMessage("MainModulePlaceHolder with id {PropertyValue} does not exists");
     }
 }

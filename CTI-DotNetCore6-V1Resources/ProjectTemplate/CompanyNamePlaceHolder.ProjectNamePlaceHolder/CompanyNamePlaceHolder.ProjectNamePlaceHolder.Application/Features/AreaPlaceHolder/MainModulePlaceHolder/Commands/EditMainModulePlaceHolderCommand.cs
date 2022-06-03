@@ -1,13 +1,13 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
+using CompanyNamePlaceHolder.Common.Core.Commands;
+using CompanyNamePlaceHolder.Common.Data;
+using CompanyNamePlaceHolder.Common.Utility.Validators;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
-using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
@@ -22,13 +22,8 @@ public class EditMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applic
     }
 
     public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
-        await _context.GetSingle<MainModulePlaceHolderState>(p => p.Id == request.Id, cancellationToken, true).MatchAsync(
-            async mainModulePlaceHolder => await UpdateMainModulePlaceHolder(request, mainModulePlaceHolder, cancellationToken),
-            () => Fail<Error, MainModulePlaceHolderState>($"MainModulePlaceHolder with id {request.Id} does not exist"));
-
-    async Task<Validation<Error, MainModulePlaceHolderState>> UpdateMainModulePlaceHolder(EditMainModulePlaceHolderCommand request, MainModulePlaceHolderState mainModulePlaceHolder, CancellationToken cancellationToken) =>
         await _validator.ValidateTAsync(request, cancellationToken).BindT(
-            async request => await Edit(request, mainModulePlaceHolder, cancellationToken));
+            async request => await Edit(request, cancellationToken));
 }
 
 public class EditMainModulePlaceHolderCommandValidator : AbstractValidator<EditMainModulePlaceHolderCommand>
@@ -38,6 +33,8 @@ public class EditMainModulePlaceHolderCommandValidator : AbstractValidator<EditM
     public EditMainModulePlaceHolderCommandValidator(ApplicationContext context)
     {
         _context = context;
-        Template:[InsertNewUniqueValidationFromCommandTextHere]
+		RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<MainModulePlaceHolderState>(x => x.Id == id, cancellationToken: cancellation))
+                          .WithMessage("MainModulePlaceHolder with id {PropertyValue} does not exists");
+        Template:[InsertNewUniqueValidationFromEditCommandTextHere]
     }
 }
