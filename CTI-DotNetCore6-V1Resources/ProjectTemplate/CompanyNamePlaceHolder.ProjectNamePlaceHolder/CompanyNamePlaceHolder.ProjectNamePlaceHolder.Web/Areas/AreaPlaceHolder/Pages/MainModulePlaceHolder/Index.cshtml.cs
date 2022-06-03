@@ -37,7 +37,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Name)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
+        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Template:[InsertNewFieldName])));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Template:[InsertNewFieldName] }));
     }
 }
