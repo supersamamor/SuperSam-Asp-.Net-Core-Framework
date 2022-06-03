@@ -16,8 +16,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
-		<PackageReference Include="CompanyNamePlaceHolder.Common.Data" Version="2.3.1" />
-		<PackageReference Include="CompanyNamePlaceHolder.Common.Utility" Version="2.2.2" />
 	</ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Data\CompanyNamePlaceHolder.Common.Data.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Utility\CompanyNamePlaceHolder.Common.Utility.csproj" />
+  </ItemGroup>
 </Project>

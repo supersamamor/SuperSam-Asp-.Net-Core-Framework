@@ -1,4 +1,4 @@
-using CTI.Common.Core.Base.Models;
+using CompanyNamePlaceHolder.Common.Core.Base.Models;
 using System.ComponentModel;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;

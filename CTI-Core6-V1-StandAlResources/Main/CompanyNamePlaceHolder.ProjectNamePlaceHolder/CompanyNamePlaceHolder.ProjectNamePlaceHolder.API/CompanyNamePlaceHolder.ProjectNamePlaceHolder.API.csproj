@@ -6,8 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CompanyNamePlaceHolder.Common.API" Version="2.2.3" />
+  <ItemGroup> 
     <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.5" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.5" />
@@ -16,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.API\CompanyNamePlaceHolder.Common.API.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-using CTI.Common.Data;
-using CTI.Common.Identity.Abstractions;
+using CompanyNamePlaceHolder.Common.Data;
+using CompanyNamePlaceHolder.Common.Identity.Abstractions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.EntityFrameworkCore;
 

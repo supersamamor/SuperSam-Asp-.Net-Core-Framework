@@ -14,11 +14,12 @@
 		<PackageId>CompanyNamePlaceHolder.Common.Data</PackageId>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="CompanyNamePlaceHolder.Common.Core.Base" Version="2.2.1" />
-		<PackageReference Include="CompanyNamePlaceHolder.Common.Identity.Abstractions" Version="2.2.1" />
+	<ItemGroup>		
 		<PackageReference Include="LanguageExt.Core" Version="4.1.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
 	</ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Core.Base\CompanyNamePlaceHolder.Common.Core.Base.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Identity.Abstractions\CompanyNamePlaceHolder.Common.Identity.Abstractions.csproj" />
+  </ItemGroup>
 </Project>
