@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
-    <PackageReference Include="CompanyNamePlaceHolder.Common.Services.Shared" Version="2.2.1" />
-    <PackageReference Include="CompanyNamePlaceHolder.Common.Web.Utility" Version="2.2.3" />
+    <PackageReference Include="CTI.Common.Services.Shared" Version="2.2.1" />
+    <PackageReference Include="CTI.Common.Web.Utility" Version="2.2.3" />
     <PackageReference Include="DataTables.AspNetCore.Mvc" Version="1.4.2" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.357" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
