@@ -1,10 +1,10 @@
 using CTI.Common.Utility.Extensions;
 using CTI.Common.Utility.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CTI.Common.Core.Queries;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
 

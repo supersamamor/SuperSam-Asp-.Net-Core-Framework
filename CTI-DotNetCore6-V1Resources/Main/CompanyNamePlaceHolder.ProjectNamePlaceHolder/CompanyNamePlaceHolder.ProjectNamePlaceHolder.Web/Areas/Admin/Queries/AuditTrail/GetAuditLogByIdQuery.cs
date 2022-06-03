@@ -1,6 +1,5 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Models;
+using CTI.Common.Data;
 using LanguageExt;
 using MediatR;
 
@@ -18,5 +17,5 @@ public class GetAuditLogByIdQueryHandler : IRequestHandler<GetAuditLogByIdQuery,
     }
 
     public async Task<Option<Audit>> Handle(GetAuditLogByIdQuery request, CancellationToken cancellationToken) =>
-        await _context.GetSingle<Audit>(e => e.Id == request.Id, cancellationToken);
+        await _context.GetSingle<Audit>(e => e.Id == request.Id, cancellationToken: cancellationToken);
 }

@@ -1,8 +1,8 @@
 using CTI.Common.Utility.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Models;
 using MediatR;
+using CTI.Common.Core.Queries;
+using CTI.Common.Data;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.AuditTrail;
 

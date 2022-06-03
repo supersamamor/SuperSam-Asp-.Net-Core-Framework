@@ -1,12 +1,12 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Area.Projects.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Inventory;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Inventory.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.MainModulePlaceHolder;
 
 [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
 public class IndexModel : BasePageModel<IndexModel>
@@ -28,7 +28,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                Template:[InsertNewJSONParameterForListingQueryTextHere]              
+                e.Code,
+				              
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
