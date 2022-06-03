@@ -27,9 +27,12 @@ public class MainModulePlaceHolderController : BaseApiController<MainModulePlace
         await ToActionResult(async () => await Mediator.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(request)));
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Edit)]
-    [HttpPut]
-    public async Task<ActionResult<MainModulePlaceHolderState>> PutAsync([FromBody] MainModulePlaceHolderViewModel request) =>
-        await ToActionResult(async () => await Mediator.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(request)));
+    [HttpPut("{id}")]
+    public async Task<ActionResult<MainModulePlaceHolderState>> PutAsync(string id, [FromBody] ProjectViewModel request)
+    {
+        var command = Mapper.Map<EditProjectCommand>(request);
+        return await ToActionResult(async () => await Mediator.Send(command with { Id = id }));
+    }
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Delete)]
     [HttpDelete("{id}")]
@@ -39,7 +42,5 @@ public class MainModulePlaceHolderController : BaseApiController<MainModulePlace
 
 public record MainModulePlaceHolderViewModel
 {
-    [Required]
-    public string Id { get; set; } = "";
     Template:[InsertNewWebModelColumnTextHere]   
 }
