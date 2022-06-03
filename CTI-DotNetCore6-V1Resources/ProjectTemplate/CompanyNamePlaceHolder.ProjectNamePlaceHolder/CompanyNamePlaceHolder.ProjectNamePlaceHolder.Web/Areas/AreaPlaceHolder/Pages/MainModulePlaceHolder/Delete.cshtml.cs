@@ -1,14 +1,9 @@
-using CTI.Common.Utility.Extensions;
-using CTI.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
-using LanguageExt.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder;
 
@@ -24,13 +19,7 @@ public class DeleteModel : BasePageModel<DeleteModel>
         {
             return NotFound();
         }
-        return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
-            e =>
-            {
-                Mapper.Map(e, MainModulePlaceHolder);
-                return Page();
-            },
-            none: null);
+        return await PageFrom(async () => await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)), MainModulePlaceHolder);
     }
 
     public async Task<IActionResult> OnPost()
@@ -39,23 +28,6 @@ public class DeleteModel : BasePageModel<DeleteModel>
         {
             return Page();
         }
-        return await TryAsync(async () => await Mediatr.Send(new DeleteMainModulePlaceHolderCommand { Id = MainModulePlaceHolder.Id }))
-            .IfFail(ex =>
-            {
-                Logger.LogError(ex, "Exception in OnPost");
-                return Fail<Error, MainModulePlaceHolderState>(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
-            }).ToActionResult(
-            success: succ =>
-            {
-                NotyfService.Success(Localizer["Record deleted successfully"]);
-                Logger.LogInformation("Deleted Record. ID: {ID}, Record: {Record}", succ.Id, succ.ToString());
-                return RedirectToPage("Index");
-            },
-            fail: errors =>
-            {
-                errors.Iter(error => ModelState.AddModelError("", error.ToString()));
-                Logger.LogError("Error in OnPost. Errors: {Errors}", errors.Join().ToString());
-                return Page();
-            });
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(new DeleteMainModulePlaceHolderCommand { Id = MainModulePlaceHolder.Id }), "Index");
     }
 }

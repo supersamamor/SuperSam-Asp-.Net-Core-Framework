@@ -1,4 +1,3 @@
-using CTI.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
@@ -18,12 +17,6 @@ public class DetailsModel : BasePageModel<DetailsModel>
         {
             return NotFound();
         }
-        return await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)).ToActionResult(
-            e =>
-            {
-                Mapper.Map(e, MainModulePlaceHolder);
-                return Page();
-            },
-            none: null);
+        return await PageFrom(async () => await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)), MainModulePlaceHolder);
     }
 }
