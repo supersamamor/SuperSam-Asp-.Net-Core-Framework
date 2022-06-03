@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Quartz;
 using System.Globalization;
 using System.Reflection;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 
@@ -42,6 +43,7 @@ public static class ServiceCollectionExtensions
         });
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
+		services.AddTransient<DropdownServices>();
     }
 
     public static IServiceCollection ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)

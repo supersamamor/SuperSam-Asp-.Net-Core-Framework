@@ -5,6 +5,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using CTI.Common.API.Controllers;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1;
 
@@ -28,9 +29,9 @@ public class MainModulePlaceHolderController : BaseApiController<MainModulePlace
 
     [Authorize(Policy = Permission.MainModulePlaceHolder.Edit)]
     [HttpPut("{id}")]
-    public async Task<ActionResult<MainModulePlaceHolderState>> PutAsync(string id, [FromBody] ProjectViewModel request)
+    public async Task<ActionResult<MainModulePlaceHolderState>> PutAsync(string id, [FromBody] MainModulePlaceHolderViewModel request)
     {
-        var command = Mapper.Map<EditProjectCommand>(request);
+        var command = Mapper.Map<EditMainModulePlaceHolderCommand>(request);
         return await ToActionResult(async () => await Mediator.Send(command with { Id = id }));
     }
 

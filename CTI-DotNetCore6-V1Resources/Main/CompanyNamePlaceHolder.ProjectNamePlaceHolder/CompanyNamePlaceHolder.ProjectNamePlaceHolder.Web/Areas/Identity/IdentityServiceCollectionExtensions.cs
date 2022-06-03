@@ -1,3 +1,4 @@
+using CTI.Common.Identity.Abstractions;
 using CTI.Common.Web.Utility.Authorization;
 using CTI.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
@@ -8,18 +9,11 @@ using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 
-public class IdentityStartup
+public static class IdentityServiceCollectionExtensions
 {
-    public IdentityStartup(IConfiguration configuration)
+    public static IServiceCollection ConfigureIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
+        if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
             services.AddDbContext<IdentityContext>(options =>
             {
@@ -31,7 +25,7 @@ public class IdentityStartup
         {
             services.AddDbContext<IdentityContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("IdentityContext"));
+                options.UseSqlServer(configuration.GetConnectionString("IdentityContext"));
                 options.UseOpenIddict<OidcApplication, OidcAuthorization, OidcScope, OidcToken, string>();
             });
         }
@@ -41,19 +35,18 @@ public class IdentityStartup
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
 
-        services.AddAuthentication();
-        #region Add These to enable external login
-        //.AddMicrosoftAccount(options =>
-        //{
-        //    options.ClientId = Configuration["Authentication:Microsoft:ClientId"];
-        //    options.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
-        //})
-        //.AddGoogle(options =>
-        //{
-        //    options.ClientId = Configuration["Authentication:Google:ClientId"];
-        //    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-        //});
-        #endregion
+        services.AddAuthentication()
+                .AddMicrosoftAccount(options =>
+                {
+                    options.ClientId = configuration["Authentication:Microsoft:ClientId"];
+                    options.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = configuration["Authentication:Google:ClientId"];
+                    options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+                });
+
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
         services.AddTransient<IAuthenticatedUser, DefaultAuthenticatedUser>();
 
@@ -106,8 +99,8 @@ public class IdentityStartup
                     //           .AddDevelopmentSigningCertificate();
                     //}
 
-                    options.AddEncryptionCertificate(Configuration.GetValue<string>("SslThumbprint"))
-                           .AddSigningCertificate(Configuration.GetValue<string>("SslThumbprint"));
+                    options.AddEncryptionCertificate(configuration.GetValue<string>("SslThumbprint"))
+                           .AddSigningCertificate(configuration.GetValue<string>("SslThumbprint"));
 
                     // Force client applications to use Proof Key for Code Exchange (PKCE).
                     options.RequireProofKeyForCodeExchange();
@@ -152,5 +145,6 @@ public class IdentityStartup
                     // Register the ASP.NET Core host.
                     options.UseAspNetCore();
                 });
+        return services;
     }
 }
