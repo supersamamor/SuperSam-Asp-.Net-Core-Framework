@@ -1,8 +1,9 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
+using CompanyNamePlaceHolder.Common.Core.Commands;
+using CompanyNamePlaceHolder.Common.Data;
+using CompanyNamePlaceHolder.Common.Utility.Validators;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
@@ -33,8 +34,8 @@ public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMai
     {
         _context = context;
 
-        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellation))
+        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("MainModulePlaceHolder with id {PropertyValue} already exists");
-		Template:[InsertNewUniqueValidationFromCommandTextHere]        
+        Template:[InsertNewUniqueValidationFromCommandTextHere]
     }
 }
