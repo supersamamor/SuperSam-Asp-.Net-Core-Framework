@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.Common.Core.Queries;
-using CompanyNamePlaceHolder.Common.Utility.Models;
+using CTI.Common.Core.Queries;
+using CTI.Common.Utility.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using MediatR;

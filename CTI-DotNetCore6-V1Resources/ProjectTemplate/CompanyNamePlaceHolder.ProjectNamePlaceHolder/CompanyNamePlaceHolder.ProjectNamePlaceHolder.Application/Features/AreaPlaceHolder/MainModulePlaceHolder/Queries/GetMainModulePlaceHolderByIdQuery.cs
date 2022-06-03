@@ -1,4 +1,4 @@
-using CompanyNamePlaceHolder.Common.Core.Queries;
+using CTI.Common.Core.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using LanguageExt;
