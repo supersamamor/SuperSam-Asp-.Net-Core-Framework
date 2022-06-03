@@ -28,8 +28,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.Code,
-				              
+                Template:[InsertNewJSONParameterForListingQueryTextHere],				              
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
@@ -37,7 +36,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Template:[InsertNewFieldName])));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Template:[InsertNewFieldName] }));
+        var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Template:[InsertNewUniqueField])));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Template:[InsertNewUniqueField] }));
     }
 }
