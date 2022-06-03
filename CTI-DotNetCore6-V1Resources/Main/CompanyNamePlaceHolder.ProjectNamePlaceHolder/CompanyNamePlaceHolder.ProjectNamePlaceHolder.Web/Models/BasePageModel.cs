@@ -1,7 +1,7 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Extensions;
+using CTI.Common.Core.Base.Models;
+using CTI.Common.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,4 +1,4 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
+using CTI.Common.Core.Queries;
 using DataTables.AspNetCore.Mvc.Binder;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;

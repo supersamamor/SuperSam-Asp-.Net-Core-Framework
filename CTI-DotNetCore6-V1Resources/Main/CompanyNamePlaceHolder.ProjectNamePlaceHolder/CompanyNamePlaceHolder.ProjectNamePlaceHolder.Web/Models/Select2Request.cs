@@ -1,5 +1,6 @@
+using CTI.Common.Core.Queries;
 using CTI.Common.Utility.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Common;
+
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 
