@@ -1,12 +1,13 @@
 @{
     var user = await UserManager.GetUserAsync(User);
+    var appName = Configuration.GetValue<string>("Application");
 }
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/Index" class="brand-link">
-        <img src="https://ui-avatars.com/api/?background=random&rounded=true&name=ApplicationNamePlaceHolder" alt="Logo" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">ApplicationNamePlaceHolder</span>
+        <img src="https://ui-avatars.com/api/?background=random&rounded=true&name=@appName" alt="Logo" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">@appName</span>
     </a>
 
     <!-- Sidebar -->
