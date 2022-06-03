@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CTI.Common.Utility" Version="2.1.5" />
-    <PackageReference Include="CTI.Common.Web.Utility" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
+    <PackageReference Include="CompanyNamePlaceHolder.Common.Data" Version="2.3.2" />
+    <PackageReference Include="CompanyNamePlaceHolder.Common.Utility" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>

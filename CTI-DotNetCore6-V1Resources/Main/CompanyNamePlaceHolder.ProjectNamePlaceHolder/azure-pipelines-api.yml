@@ -14,6 +14,12 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.csproj'
+    feedsToUse: 'select'
+    vstsFeed: 'b45948e4-3066-4767-a8ce-ac420ca2a595'
+- task: DotNetCoreCLI@2
   displayName: 'dotnet publish'
   inputs:
     command: 'publish'

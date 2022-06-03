@@ -1,16 +1,49 @@
-using CTI.Common.Web.Utility.Authorization;
+using AspNetCoreHero.ToastNotification;
+using CompanyNamePlaceHolder.Common.Services.Shared;
+using CompanyNamePlaceHolder.Common.Web.Utility.Annotations;
+using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
+using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Quartz;
 using System.Globalization;
+using System.Reflection;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 
 public static class ServiceCollectionExtensions
 {
+    public static void ConfigureDefaultServices(this IServiceCollection services, IConfiguration Configuration)
+    {
+        services.AddApplicationInsightsTelemetry();
+        services.AddDatabaseDeveloperPageExceptionFilter();
+        services.AddControllersWithViews();
+        services.ConfigureSecurity(Configuration);
+        services.ConfigureAuthorization();
+        services.ConfigureLocalization();
+        services.AddRazorPages().ConfigureLocalization();
+        services.AddApplicationServices();
+        services.AddSharedServices(Configuration);
+        services.AddQuartz();
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddWebOptimizer();
+        services.AddNotyf(config =>
+        {
+            config.DurationInSeconds = 10;
+            config.IsDismissable = true;
+            config.Position = NotyfPosition.BottomRight;
+        });
+        services.AddLogEnricherServices();
+        services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
+    }
+
     public static IServiceCollection ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<CookiePolicyOptions>(options =>

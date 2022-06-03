@@ -169,7 +169,7 @@ authorization code flow, device authorization flow, client credentials and passw
 Download the Postman collection below for samples of how to generate access tokens using the supported flows. You can
 use the generated access token to authenticate API requests.
 
-[OpenID Postman Collection](https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate?version=GBmain&path=%2Fdocs%2FUploads%2FOpenIdDict.postman_collection.json)
+[OpenID Postman Collection](https://dev.azure.com/fai-dev-team/CompanyNamePlaceHolder%20Alabang%20Apps/_git/CompanyNamePlaceHolder.ProjectNamePlaceHolder?version=GBmain&path=%2Fdocs%2FUploads%2FOpenIdDict.postman_collection.json)
 
 # Contribute
 You can contribute to the project in 2 ways:

@@ -1,7 +1,10 @@
-using CTI.Common.Web.Utility.Logging;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.API;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using CompanyNamePlaceHolder.Common.API;
+using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +15,23 @@ builder.Host.UseSerilog((context, services, configuration) =>
                           .FromLogContext());
 
 // Add services to the container.
-var startup = new Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
+
+var configuration = builder.Configuration;
+builder.Services.AddControllers();
+builder.Services.AddDefaultApiServices(configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationContext>();
+if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+{
+    builder.Services.AddDbContext<ApplicationContext>(options
+        => options.UseInMemoryDatabase("ApplicationContext"));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationContext>(options
+        => options.UseSqlServer(configuration.GetConnectionString("ApplicationContext")));
+}
 
 var app = builder.Build();
 
@@ -23,20 +41,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
-var scope = app.Services.CreateScope();
-
-app.UseSwagger();
-var provider = scope.ServiceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
-app.UseSwaggerUI(options =>
-{
-    options.DisplayRequestDuration();
-    foreach (var description in provider.ApiVersionDescriptions)
-    {
-        options.SwaggerEndpoint(
-            $"/swagger/{description.GroupName}/swagger.json",
-            description.GroupName.ToUpperInvariant());
-    }
-});
+app.EnableSwagger();
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
 app.UseRouting();

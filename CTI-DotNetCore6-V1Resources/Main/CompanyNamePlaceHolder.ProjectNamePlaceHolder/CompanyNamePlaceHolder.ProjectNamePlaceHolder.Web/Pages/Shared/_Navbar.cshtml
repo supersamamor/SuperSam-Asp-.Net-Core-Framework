@@ -1,6 +1,7 @@
 @{
     var user = await UserManager.GetUserAsync(User);
     var navbarColor = Configuration.GetValue<string>("NavbarColor");
+    var appName = Configuration.GetValue<string>("Application");
 }
 <nav class="main-header navbar navbar-expand navbar-@navbarColor navbar-dark">
     <!-- Left navbar links -->
@@ -9,7 +10,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/Index" class="nav-link">ApplicationNamePlaceHolder | @ViewData["Title"]</a>
+            <a href="/Index" class="nav-link">@appName | @ViewData["Title"]</a>
         </li>
     </ul>
 

@@ -1,6 +1,7 @@
 @{
     var release = Configuration.GetValue<string>("Version:ReleaseName");
     var build = Configuration.GetValue<string>("Version:BuildNumber");
+    var appName = Configuration.GetValue<string>("Application");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" href="~/lib/pace-progress/dist/themes/blue/pace-theme-flat-top.min.css" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewData["Title"] - ApplicationNamePlaceHolder</title>
+    <title>@ViewData["Title"] - @appName</title>
     <partial name="_Styles" />
     @RenderSection("Styles", required: false)
     <script asp-add-nonce>
