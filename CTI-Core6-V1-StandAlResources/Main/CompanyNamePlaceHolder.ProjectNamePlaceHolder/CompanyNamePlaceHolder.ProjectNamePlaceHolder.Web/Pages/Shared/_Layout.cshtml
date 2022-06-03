@@ -1,0 +1,63 @@
+@{
+    var release = Configuration.GetValue<string>("Version:ReleaseName");
+    var build = Configuration.GetValue<string>("Version:BuildNumber");
+    var appName = Configuration.GetValue<string>("Application");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script asp-add-nonce src="~/lib/pace-progress/dist/pace.min.js"></script>
+    <link rel="stylesheet" href="~/lib/pace-progress/dist/themes/blue/pace-theme-flat-top.min.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - @appName</title>
+    <partial name="_Styles" />
+    @RenderSection("Styles", required: false)
+    <script asp-add-nonce>
+        @Html.Raw(JavaScriptSnippet.ScriptBody)
+    </script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <partial name="_Navbar" />
+        <partial name="_Sidebar" />
+        <div class="content-wrapper">
+            <partial name="_CookieConsentPartial" />
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@ViewData["Title"]</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="main-footer">
+            <div class="float-right custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="themeSwitch">
+                <label class="custom-control-label" for="themeSwitch">Dark mode</label>
+            </div>
+            <div class="float-right p-1 d-none d-sm-block">
+                @await Html.PartialAsync("_SelectLanguagePartial")
+            </div>
+            <strong>Copyright &copy; @System.DateTime.Now.Year - Corporate Technologies Inc.</strong> All rights reserved.
+            Release @release Build @build
+            <a href="https://filinvest.com/privacy-policy">Privacy</a>
+        </footer>
+    </div>
+    <partial name="_Scripts" />
+    @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("NotyfSafe")
+</body>
+</html>
