@@ -28,7 +28,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                Template:[InsertNewJSONParameterForListingQueryTextHere],				              
+                Template:[InsertNewJSONParameterForListingQueryTextHere]				              
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
