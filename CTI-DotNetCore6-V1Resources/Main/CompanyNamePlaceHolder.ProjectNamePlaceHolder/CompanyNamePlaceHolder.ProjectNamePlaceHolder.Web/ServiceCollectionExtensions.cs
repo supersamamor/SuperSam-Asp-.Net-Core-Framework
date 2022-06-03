@@ -1,8 +1,8 @@
 using AspNetCoreHero.ToastNotification;
-using CompanyNamePlaceHolder.Common.Services.Shared;
-using CompanyNamePlaceHolder.Common.Web.Utility.Annotations;
-using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
-using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+using CTI.Common.Services.Shared;
+using CTI.Common.Web.Utility.Annotations;
+using CTI.Common.Web.Utility.Authorization;
+using CTI.Common.Web.Utility.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

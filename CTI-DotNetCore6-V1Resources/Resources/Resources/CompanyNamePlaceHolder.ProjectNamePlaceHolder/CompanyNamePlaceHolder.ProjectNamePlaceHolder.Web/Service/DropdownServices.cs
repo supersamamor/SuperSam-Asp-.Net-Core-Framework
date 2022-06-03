@@ -1,4 +1,4 @@
-﻿Template:[InsertNewImportQueryFromDropdownService]
+Template:[InsertNewImportQueryFromDropdownService]
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

@@ -1,5 +1,5 @@
 using AspNetCoreHero.ToastNotification.Extensions;
-using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+using CTI.Common.Web.Utility.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
