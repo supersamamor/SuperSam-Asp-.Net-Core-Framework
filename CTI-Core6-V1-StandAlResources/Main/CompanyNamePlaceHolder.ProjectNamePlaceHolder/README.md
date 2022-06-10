@@ -64,43 +64,17 @@ and a Web API project.
 - .NET 6 SDK or above
 - Visual Studio 2022 or above
 
-### Install the template
-
-[Visual Studio templates are deprecated]
-
-1. Add the _CTI.Alabang.Nuget_ feed
-
-   ```
-   nuget.exe sources Add -Name "CTI.Alabang.Nuget" -Source "https://pkgs.dev.azure.com/fai-dev-team/_packaging/CTI.Alabang.Nuget/nuget/v3/index.json"
-   ```
-
-   Or, connect to the [feed](https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_packaging?_a=feed&feed=CTI.Alabang.Nuget) using Visual Studio
-
-1. Install the template package from Nuget
-
-   ```
-   dotnet new --interactive --install CTI.WebApp.Template
-   ```
-
 ### Using the template
-
-[Visual Studio templates are deprecated]
-
-1. Use the template to create a new project.
-
-   ```
-   dotnet new web-solution-template -n MyApp
-   ```
 
 1. [Optional] Generate a self-signed certificate and store in the local machine
     - You can generate a self-signed certificate using the self-cert utility you can download from this [site](https://www.pluralsight.com/blog/software-development/selfcert-create-a-self-signed-certificate-interactively-gui-or-programmatically-in-net).
     - Refer to this [link](https://improveandrepeat.com/2018/12/how-to-fix-the-keyset-does-not-exist-cryptographicexception) if you encounter "Keyset does not exist" error
 
-1. [Optional] Set up external login providers
+2. [Optional] Set up external login providers
     - [Google](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins) instructions
     - [Microsoft](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/microsoft-logins) instructions
 
-1. Open the solution in Visual Studio. After the packages are restored, update the configuration in appsettings.Development.json for both the Web API and Web projects.
+3. Open the solution in Visual Studio. After the packages are restored, update the configuration in appsettings.Development.json for both the Web API and Web projects.
 
     Web API:
 
@@ -184,14 +158,15 @@ and a Web API project.
     }
     ```
 
-1. Open the Package Manager Console and apply the EF Core migrations
+4. Open the Package Manager Console and apply the EF Core migrations
 
     ```powershell
+	Add-Migraation -Context ApplicationContext InitialDatabaseStructure
     Update-Database -Context IdentityContext
     Update-Database -Context ApplicationContext
     ```
 
-1. Out of the box, the application assumes that the following URLs are configured
+5. Out of the box, the application assumes that the following URLs are configured
     - Web: https://localhost:5001
     - Web API: https://localhost:44379  
 
@@ -258,13 +233,6 @@ authorization code flow, device authorization flow, client credentials and passw
 Download the Postman collection below for samples of how to generate access tokens using the supported flows. You can
 use the generated access token to authenticate API requests.
 
-[OpenID Postman Collection](https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate?version=GBmain&path=%2Fdocs%2FUploads%2FOpenIdDict.postman_collection.json)
-
-## Solution structure
-Here is the solution structure that the template will set up for you.
-
-![Solution structure](https://dev.azure.com/fai-dev-team/5d14b026-fdfb-4687-b8c9-85758d482332/_apis/git/repositories/69898df6-0594-4c8c-9185-acfac62ebf46/items?path=/docs/images/solution_structure.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=main&resolveLfs=true&%24format=octetStream&api-version=5.0)
-
 ### API
 This is the Web API project. It is an ASP<span>.</span>NET Core application with an example Controller for a RESTful HTTP 
 service. It uses claims-based authorization to secure the endpoints.
@@ -284,8 +252,3 @@ This project contains code for communicating with external sources such as datab
 This is the Web project. It implements ASP<span>.</span>NET Core Identity and uses Areas to organize functionality. It
 also implements an OpenID server and token authentication using the OpenIddict library. It uses claims-based authorization
 to secure the pages.
-
-## Contribute
-You can contribute to the project in 2 ways:
-- [Submit bugs and feature requests](https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_backlogs/backlog/Web%20App%20Template/Stories)
-- [Clone the repository](https://fai-dev-team@dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate), create your feature branch and submit a pull request
