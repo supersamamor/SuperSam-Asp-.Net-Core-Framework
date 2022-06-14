@@ -57,7 +57,9 @@ public static class IdentityServiceCollectionExtensions
             options.ClaimsIdentity.RoleClaimType = Claims.Role;
         });
 
-        services.AddOpenIddict()
+        if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
+        {
+            services.AddOpenIddict()
                 .AddCore(options =>
                 {
                     options.UseEntityFrameworkCore()
@@ -145,6 +147,7 @@ public static class IdentityServiceCollectionExtensions
                     // Register the ASP.NET Core host.
                     options.UseAspNetCore();
                 });
+        }
         return services;
     }
 }
