@@ -15,4 +15,5 @@ button.accept-policy {
     -o-transform: scale(2); /* Opera */
     transform: scale(2);
     margin-left: 10px;
+	margin-top: 13px;
 }
