@@ -21,9 +21,8 @@ public class EditMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applic
     {
     }
 
-    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
-            async request => await Edit(request, cancellationToken));
+    Template:[InsertEditCommandMethod]
+	Template:[InsertEditSubDetailCommandMethod]
 }
 
 public class EditMainModulePlaceHolderCommandValidator : AbstractValidator<EditMainModulePlaceHolderCommand>

@@ -21,9 +21,8 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
     {
     }
 
-    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(AddMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
-            async request => await Add(request, cancellationToken));
+    Template:[InsertAddCommandMethod]
+	Template:[InsertAddSubDetailCommandMethod]
 }
 
 public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMainModulePlaceHolderCommand>
