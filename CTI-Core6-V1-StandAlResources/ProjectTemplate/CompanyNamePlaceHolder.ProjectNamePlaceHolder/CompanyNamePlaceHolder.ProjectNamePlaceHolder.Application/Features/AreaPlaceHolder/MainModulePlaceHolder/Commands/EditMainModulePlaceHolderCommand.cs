@@ -8,6 +8,8 @@ using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
