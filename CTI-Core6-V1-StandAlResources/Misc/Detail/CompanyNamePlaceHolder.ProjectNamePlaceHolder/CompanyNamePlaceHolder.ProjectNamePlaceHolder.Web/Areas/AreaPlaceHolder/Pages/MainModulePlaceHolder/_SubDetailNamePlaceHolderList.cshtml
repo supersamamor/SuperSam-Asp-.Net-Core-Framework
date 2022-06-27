@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                <table id="subDetailNamePlaceHolder" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
 							<th style="display:none;"></th>
@@ -38,7 +38,7 @@
                             foreach (var item in Model.SubDetailNamePlaceHolderList)
                             {
                                 <tr>
-									<td>
+									<td style="display:none;">
                                         <input type="hidden" name="SubDetailNamePlaceHolderList[@counter].Id" value="@item.Id" />
                                         <input type="hidden" name="SubDetailNamePlaceHolderList[@counter].MainModulePlaceHolderId" value="@item.MainModulePlaceHolderId" />                                      
                                     </td>
