@@ -10,4 +10,5 @@ public record MainModulePlaceHolderViewModel : BaseViewModel
 	Template:[InsertNewWebUIModelColumnTextHere]
 	public DateTime LastModifiedDate { get; set; }
 	Template:[InsertNewParentTableViewTextHere]	
+	Template:[InsertNewSubCollectionViewModelTextHere]
 }
