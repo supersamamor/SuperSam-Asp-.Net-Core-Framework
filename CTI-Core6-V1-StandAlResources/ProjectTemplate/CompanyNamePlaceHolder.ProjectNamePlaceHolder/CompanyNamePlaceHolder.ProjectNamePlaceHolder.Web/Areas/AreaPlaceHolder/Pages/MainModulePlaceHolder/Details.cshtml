@@ -5,7 +5,7 @@
     ViewData["ActiveMainPage"] = "MainModulePlaceHolder";
     ViewData["Level1"] = "AreaPlaceHolder";
 }
-<div class="row">
+<div class="row" id="mainModulePlaceHolder-container">
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header d-flex">
@@ -49,5 +49,5 @@
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-<partial name="_DisableFieldsPartial" model="@("mainModulePlaceHolder-form")" />
+<partial name="_DisableFieldsPartial" model="@("mainModulePlaceHolder-container")" />
 }
