@@ -13,4 +13,5 @@ public class GetMainModulePlaceHolderByIdQueryHandler : BaseQueryByIdHandler<App
     public GetMainModulePlaceHolderByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
+	Template:[InsertNewSubCollectionIncludeInQuery]
 }
