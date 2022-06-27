@@ -12,7 +12,8 @@ public class DeleteModel : BasePageModel<DeleteModel>
 {
     [BindProperty]
     public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
-
+	[BindProperty]
+	public string? RemoveSubDetailId { get; set; }
     public async Task<IActionResult> OnGet(string? id)
     {
         if (id == null)
