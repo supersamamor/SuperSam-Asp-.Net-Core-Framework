@@ -3,6 +3,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using LanguageExt;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 
