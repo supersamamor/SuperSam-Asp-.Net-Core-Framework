@@ -22,12 +22,14 @@ public class EditModel : BasePageModel<EditModel>
         return await PageFrom(async () => await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)), MainModulePlaceHolder);
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPost(string? handler)
     {
+		Template:[InsertNewSubDetailAddRemovePostHandlerFromPage]
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
     }
+	Template:[InsertNewSubDetailAddRemoveMethodFromPage]
 }
