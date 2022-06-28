@@ -1,0 +1,24 @@
+﻿@using Models
+@model MainModulePlaceHolderViewModel
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["SubDetailDescriptionPlaceHolder"]</h5>
+                    </button>                  
+                    <button class="cancel" type="submit" name="handler" id="btnRemoveSubDetailNamePlaceHolder" value="RemoveSubDetailNamePlaceHolder" style="display:none;"></button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+				Template:[InsertNewSubDetailListName]                
+            </div>
+        </div>
+    </div>
+</div>
