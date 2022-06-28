@@ -9,50 +9,56 @@ using System.Threading.Tasks;
 namespace CompanyNamePlaceHolder.Common.Web.Utility.Logging
 {
     public static class LogEnricher
+{
+    /// <summary>
+    /// Enrich the logs with additional information from the <see cref="HttpContext"/>.
+    /// </summary>
+    /// <param name="diagnosticContext"></param>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    public static async Task EnrichFromRequest(IDiagnosticContext diagnosticContext, HttpContext httpContext)
     {
-        public static async Task EnrichFromRequest(IDiagnosticContext diagnosticContext, HttpContext httpContext)
+        diagnosticContext.Set("ClientIP", httpContext.Connection.RemoteIpAddress?.ToString());
+        diagnosticContext.Set("Path", httpContext.Request.Path.ToString());
+        diagnosticContext.Set("Method", httpContext.Request.Method.ToString());
+        diagnosticContext.Set("QueryString", httpContext.Request.QueryString.ToString());
+        diagnosticContext.Set("Query", httpContext.Request.Query.ToDictionary(x => x.Key, y => y.Value.ToString()));
+        diagnosticContext.Set("Headers", httpContext.Request.Headers.ToDictionary(x => x.Key, y => y.Value.ToString()));
+        diagnosticContext.Set("Cookies", httpContext.Request.Cookies.ToDictionary(x => x.Key, y => y.Value.ToString()));
+        diagnosticContext.Set("Claims", httpContext.User?.Claims);
+
+        if (httpContext.Request.ContentLength.HasValue && httpContext.Request.ContentLength > 0)
         {
-            diagnosticContext.Set("ClientIP", httpContext.Connection.RemoteIpAddress?.ToString());
-            diagnosticContext.Set("Path", httpContext.Request.Path.ToString());
-            diagnosticContext.Set("Method", httpContext.Request.Method.ToString());
-            diagnosticContext.Set("QueryString", httpContext.Request.QueryString.ToString());
-            diagnosticContext.Set("Query", httpContext.Request.Query.ToDictionary(x => x.Key, y => y.Value.ToString()));
-            diagnosticContext.Set("Headers", httpContext.Request.Headers.ToDictionary(x => x.Key, y => y.Value.ToString()));
-            diagnosticContext.Set("Cookies", httpContext.Request.Cookies.ToDictionary(x => x.Key, y => y.Value.ToString()));
-            diagnosticContext.Set("Claims", httpContext.User?.Claims);
-
-            if (httpContext.Request.ContentLength.HasValue && httpContext.Request.ContentLength > 0)
+            if (httpContext.Request.ContentType!.Contains("form", System.StringComparison.InvariantCultureIgnoreCase))
             {
-                if (httpContext.Request.ContentType.Contains("form", System.StringComparison.InvariantCultureIgnoreCase))
+                var form = httpContext.Request.Form.ToDictionary(form => form.Key, form => form.Value);
+                if (form != null && form.ContainsKey("Input.Password"))
                 {
-                    var form = httpContext.Request.Form.ToDictionary(form => form.Key, form => form.Value);
-                    if (form != null && form.ContainsKey("Input.Password"))
-                    {
-                        form["Input.Password"] = "[redacted]";
-                    }
-                    if (form != null && form.ContainsKey("Input.ConfirmPassword"))
-                    {
-                        form["Input.ConfirmPassword"] = "[redacted]";
-                    }
-                    if (form != null && form.ContainsKey("client_secret"))
-                    {
-                        form["client_secret"] = "[redacted]";
-                    }
-                    diagnosticContext.Set("Form", form);
-                    diagnosticContext.Set("FormFiles", httpContext.Request.Form.Files);
+                    form["Input.Password"] = "[redacted]";
                 }
-                httpContext.Request.EnableBuffering();
-                httpContext.Request.Body.Position = 0;
-                using (var reader = new StreamReader(httpContext.Request.Body, Encoding.UTF8, true, 1024, true))
+                if (form != null && form.ContainsKey("Input.ConfirmPassword"))
                 {
-                    var body = await reader.ReadToEndAsync();
-                    if (!string.IsNullOrWhiteSpace(body))
-                        diagnosticContext.Set("Body", body);
+                    form["Input.ConfirmPassword"] = "[redacted]";
                 }
-                httpContext.Request.Body.Position = 0;
+                if (form != null && form.ContainsKey("client_secret"))
+                {
+                    form["client_secret"] = "[redacted]";
+                }
+                diagnosticContext.Set("Form", form);
+                diagnosticContext.Set("FormFiles", httpContext.Request.Form.Files);
             }
-
-            diagnosticContext.Set("TraceId", Activity.Current?.Id ?? httpContext?.TraceIdentifier);
+            httpContext.Request.EnableBuffering();
+            httpContext.Request.Body.Position = 0;
+            using (var reader = new StreamReader(httpContext.Request.Body, Encoding.UTF8, true, 1024, true))
+            {
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrWhiteSpace(body))
+                    diagnosticContext.Set("Body", body);
+            }
+            httpContext.Request.Body.Position = 0;
         }
+
+        diagnosticContext.Set("TraceId", Activity.Current?.Id ?? httpContext?.TraceIdentifier);
     }
+}
 }
