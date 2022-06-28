@@ -17,7 +17,15 @@
                 </div>
             </div>
             <div class="card-body" style="overflow:auto;">
-				Template:[InsertNewSubDetailListName]                
+				@if (Model?.SubDetailNamePlaceHolderList != null)
+				{
+					int counter = 0;
+					foreach (var item in Model.SubDetailNamePlaceHolderList)
+					{
+						Template:[InsertNewSubDetailListName]
+						counter++;
+					}
+				}				                
             </div>
         </div>
     </div>
