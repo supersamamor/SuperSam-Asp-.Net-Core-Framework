@@ -31,6 +31,6 @@ public class AddModel : BasePageModel<AddModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-        return Partial("_InputFieldsPartial", ModuleNamePlaceHolder);
+        return Partial("_InputFieldsPartial", MainModulePlaceHolder);
     }
 }

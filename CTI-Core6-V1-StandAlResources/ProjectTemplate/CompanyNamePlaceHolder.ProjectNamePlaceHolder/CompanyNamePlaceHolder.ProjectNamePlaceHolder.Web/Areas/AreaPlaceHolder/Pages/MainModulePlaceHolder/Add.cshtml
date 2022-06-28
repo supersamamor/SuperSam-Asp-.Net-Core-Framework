@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="card-body" id="PartialLoaderContainer">
-                    <partial name="_InputFieldsPartial" model="Model.ModuleNamePlaceHolder" />
+                    <partial name="_InputFieldsPartial" model="Model.MainModulePlaceHolder" />
                 </div>
             </div>
         </div>
@@ -44,4 +44,14 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 Template:[InsertNewSubDetailFieldValidationAndRemoveItemJavascript]
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            let changeFormValueTriggerElements = ["#Code"];
+            $.initializeChangeFormValue('ChangeFormValue', changeFormValueTriggerElements,'#PartialLoaderContainer','#mainModulePlaceHolder-form',InitializeForm);
+        }
+        InitializeForm();
+    });
+</script>
 }

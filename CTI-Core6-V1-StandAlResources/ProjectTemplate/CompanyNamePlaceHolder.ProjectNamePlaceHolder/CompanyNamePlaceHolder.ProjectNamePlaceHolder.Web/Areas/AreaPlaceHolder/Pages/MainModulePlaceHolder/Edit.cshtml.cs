@@ -35,6 +35,6 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-        return Partial("_InputFieldsPartial", ModuleNamePlaceHolder);
+        return Partial("_InputFieldsPartial", MainModulePlaceHolder);
     }
 }
