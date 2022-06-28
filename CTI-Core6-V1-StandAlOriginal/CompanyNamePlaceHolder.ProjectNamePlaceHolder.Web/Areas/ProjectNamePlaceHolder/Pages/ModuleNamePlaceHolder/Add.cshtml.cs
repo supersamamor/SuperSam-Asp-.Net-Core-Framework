@@ -14,18 +14,22 @@ public class AddModel : BasePageModel<AddModel>
 
     public IActionResult OnGet()
     {
-		
+
         return Page();
     }
 
     public async Task<IActionResult> OnPost(string? handler)
     {
-		
+
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddModuleNamePlaceHolderCommand>(ModuleNamePlaceHolder)), "Details", true);
     }
-	
+    public async Task<IActionResult> OnPostChangeFormValue()
+    {
+        ModelState.Clear();
+        return Partial("_InputFieldsPartial", ModuleNamePlaceHolder);
+    }
 }

@@ -22,14 +22,13 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body">
-					<input type="hidden" asp-for="@Model.ModuleNamePlaceHolder.Id" name="Id" />
-                    <partial name="_EditModuleNamePlaceHolderDetails" model="Model.ModuleNamePlaceHolder" />
+                <div class="card-body" id="PartialLoaderContainer">
+                    <partial name="_InputFieldsPartial" model="Model.ModuleNamePlaceHolder" />
                 </div>
             </div>
         </div>
     </div>
-	
+
     <div class="row">
         <div class="col-12">
             <p>
@@ -44,5 +43,14 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            let changeFormValueTriggerElements = ["#Code"];
+            $.initializeChangeFormValue('ChangeFormValue', changeFormValueTriggerElements,'#PartialLoaderContainer','#moduleNamePlaceHolder-form',InitializeForm);
+        }
+        InitializeForm();
+    });
+</script>
 }

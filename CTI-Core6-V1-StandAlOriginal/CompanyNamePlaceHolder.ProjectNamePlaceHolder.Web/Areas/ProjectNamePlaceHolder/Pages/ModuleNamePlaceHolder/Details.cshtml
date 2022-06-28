@@ -21,13 +21,7 @@
                 </div>
             </div>
             <div class="card-body">
-				<div class="form-group row">
-					<label asp-for="@Model.ModuleNamePlaceHolder.Id" class="col-md-3 col-form-label"></label>
-					<div class="col-md-6">
-						<input asp-for="@Model.ModuleNamePlaceHolder.Id" name="Id" class="form-control" readonly />
-					</div>
-				</div>
-                <partial name="_EditModuleNamePlaceHolderDetails" model="Model.ModuleNamePlaceHolder" />
+				 <partial name="_InputFieldsPartial" model="Model.ModuleNamePlaceHolder" />
             </div>
         </div>
     </div>
