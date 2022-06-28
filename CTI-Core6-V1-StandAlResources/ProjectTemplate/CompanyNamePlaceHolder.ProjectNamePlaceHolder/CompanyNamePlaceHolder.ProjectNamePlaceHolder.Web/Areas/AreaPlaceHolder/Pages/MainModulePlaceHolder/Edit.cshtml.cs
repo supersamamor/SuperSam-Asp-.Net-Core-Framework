@@ -32,4 +32,9 @@ public class EditModel : BasePageModel<EditModel>
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
     }
 	Template:[InsertNewSubDetailAddRemoveMethodFromPage]
+	public IActionResult OnPostChangeFormValue()
+    {
+        ModelState.Clear();
+        return Partial("_InputFieldsPartial", ModuleNamePlaceHolder);
+    }
 }

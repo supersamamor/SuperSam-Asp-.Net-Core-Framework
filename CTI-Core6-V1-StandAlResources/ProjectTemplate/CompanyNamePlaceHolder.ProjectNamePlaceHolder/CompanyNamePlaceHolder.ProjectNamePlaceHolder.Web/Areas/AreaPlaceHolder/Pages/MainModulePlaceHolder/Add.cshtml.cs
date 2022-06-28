@@ -28,4 +28,9 @@ public class AddModel : BasePageModel<AddModel>
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
     }
 	Template:[InsertNewSubDetailAddRemoveMethodFromPage]
+	public IActionResult OnPostChangeFormValue()
+    {
+        ModelState.Clear();
+        return Partial("_InputFieldsPartial", ModuleNamePlaceHolder);
+    }
 }
