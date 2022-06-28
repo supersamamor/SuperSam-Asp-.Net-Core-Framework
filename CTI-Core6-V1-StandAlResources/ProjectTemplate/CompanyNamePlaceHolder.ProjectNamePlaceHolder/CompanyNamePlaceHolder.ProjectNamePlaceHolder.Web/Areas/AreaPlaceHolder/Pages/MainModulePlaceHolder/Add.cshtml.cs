@@ -14,6 +14,7 @@ public class AddModel : BasePageModel<AddModel>
 
     public IActionResult OnGet()
     {
+		Template:[InsertNewSubDetailItemAddInitial]
         return Page();
     }
 
