@@ -140,4 +140,8 @@ $(document).ready(function () {
             callback();
         });
     }
+
+    setTimeout(function () {
+        $('body').addClass('loaded');
+    }, 200);
 });
