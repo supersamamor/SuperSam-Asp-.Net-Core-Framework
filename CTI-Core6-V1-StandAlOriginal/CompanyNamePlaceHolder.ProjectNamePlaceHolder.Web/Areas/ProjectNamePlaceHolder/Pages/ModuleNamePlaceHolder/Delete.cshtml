@@ -1,0 +1,59 @@
+@page
+@model DeleteModel
+@{
+    ViewData["Title"] = Localizer["Delete ModuleNamePlaceHolder"];
+    ViewData["ActiveMainPage"] = "ModuleNamePlaceHolder";
+    ViewData["Level1"] = "ProjectNamePlaceHolder";
+}
+<div class=row>
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            @Localizer["Are you sure you want to delete this moduleNamePlaceHolder?"]
+        </div>
+    </div>
+</div>
+<form id="moduleNamePlaceHolder-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header d-flex">
+                    <div class="card-title flex-grow-1">
+                        <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                            <h5>@Localizer["ModuleNamePlaceHolder Info"]</h5>
+                        </button>
+                    </div>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+					<div class="form-group row">
+						<label asp-for="@Model.ModuleNamePlaceHolder.Id" class="col-md-3 col-form-label"></label>
+						<div class="col-md-6">
+							<input asp-for="@Model.ModuleNamePlaceHolder.Id" name="Id" class="form-control" readonly />
+						</div>
+					</div>
+                    <partial name="_EditModuleNamePlaceHolderDetails" model="Model.ModuleNamePlaceHolder" />
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DisableFieldsPartial" model="@("moduleNamePlaceHolder-form")" />
+}

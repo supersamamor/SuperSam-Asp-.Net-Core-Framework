@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Authors>Fred Songco</Authors>
+		<Company>Corporate Technologies, Inc.</Company>
+		<Description>Interfaces for identity-related classes.</Description>
+		<Copyright>Copyright 2022 Corporate Technologies, Inc.</Copyright>
+		<PackageProjectUrl>https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate</PackageProjectUrl>
+		<RepositoryUrl>https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate</RepositoryUrl>
+		<Version>1.0.0</Version>
+		<PackageId>CompanyNamePlaceHolder.Common.Identity.Abstractions</PackageId>
+	</PropertyGroup>
+
+</Project>
