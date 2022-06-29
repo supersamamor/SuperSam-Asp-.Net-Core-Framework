@@ -12,7 +12,10 @@ public class EditModel : BasePageModel<EditModel>
 {
     [BindProperty]
     public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
-
+    [BindProperty]
+    public string? RemoveSubDetailId { get; set; }
+    [BindProperty]
+    public string? AsyncAction { get; set; }
     public async Task<IActionResult> OnGet(string? id)
     {
         if (id == null)
@@ -23,11 +26,18 @@ public class EditModel : BasePageModel<EditModel>
     }
 
     public async Task<IActionResult> OnPost()
-    {
+    {		
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
+    }	
+	public IActionResult OnPostChangeFormValue()
+    {
+        ModelState.Clear();
+		Template:[InsertNewSubDetailAddRemovePostHandlerFromPage]
+        return Partial("_InputFieldsPartial", MainModulePlaceHolder);
     }
+	Template:[InsertNewSubDetailAddRemoveMethodFromPage]
 }

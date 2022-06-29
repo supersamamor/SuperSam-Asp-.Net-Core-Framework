@@ -1,13 +1,15 @@
 using AutoMapper;
-using CTI.Common.Core.Commands;
-using CTI.Common.Data;
-using CTI.Common.Utility.Validators;
+using CompanyNamePlaceHolder.Common.Core.Commands;
+using CompanyNamePlaceHolder.Common.Data;
+using CompanyNamePlaceHolder.Common.Utility.Validators;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 
@@ -21,9 +23,8 @@ public class EditMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applic
     {
     }
 
-    public async Task<Validation<Error, MainModulePlaceHolderState>> Handle(EditMainModulePlaceHolderCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
-            async request => await Edit(request, cancellationToken));
+    Template:[InsertEditCommandMethod]
+	Template:[InsertEditSubDetailCommandMethod]
 }
 
 public class EditMainModulePlaceHolderCommandValidator : AbstractValidator<EditMainModulePlaceHolderCommand>

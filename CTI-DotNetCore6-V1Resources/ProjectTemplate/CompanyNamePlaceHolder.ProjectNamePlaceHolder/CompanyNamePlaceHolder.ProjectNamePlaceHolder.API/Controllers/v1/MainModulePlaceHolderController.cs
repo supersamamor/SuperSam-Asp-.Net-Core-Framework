@@ -1,11 +1,11 @@
-using CTI.Common.Utility.Models;
+using CompanyNamePlaceHolder.Common.Utility.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Commands;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using CTI.Common.API.Controllers;
+using CompanyNamePlaceHolder.Common.API.Controllers;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.Controllers.v1;
 

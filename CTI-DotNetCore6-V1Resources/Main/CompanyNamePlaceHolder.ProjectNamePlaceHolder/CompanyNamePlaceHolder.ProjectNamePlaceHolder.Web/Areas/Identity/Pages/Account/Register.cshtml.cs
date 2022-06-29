@@ -1,4 +1,4 @@
-using CTI.Common.Services.Shared.Interfaces;
+using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

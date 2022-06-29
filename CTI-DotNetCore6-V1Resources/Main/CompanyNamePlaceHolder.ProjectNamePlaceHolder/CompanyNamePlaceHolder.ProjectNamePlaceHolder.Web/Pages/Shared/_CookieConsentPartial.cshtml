@@ -4,12 +4,13 @@
     var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
+	var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
 }
 
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        By continuing to use this website, you consent to the use of cookies in accordance with our <a href="https://filinvest.com/privacy-policy">Privacy and Cookie Use Policy</a>.
+        By continuing to use this website, you consent to the use of cookies in accordance with our <a href="@privacyPolicyUrl" target="_blank">Privacy and Cookie Use Policy.</a>
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
             <span aria-hidden="true">@Localizer["Accept and Close"]</span>
         </button>

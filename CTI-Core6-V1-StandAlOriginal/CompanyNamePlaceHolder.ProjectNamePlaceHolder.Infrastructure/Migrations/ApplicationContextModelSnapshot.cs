@@ -22,7 +22,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.Common.Data.Audit", b =>
+            modelBuilder.Entity("CTI.Common.Data.Audit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

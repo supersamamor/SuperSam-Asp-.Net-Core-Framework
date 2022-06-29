@@ -1,4 +1,4 @@
-using CTI.Common.Web.Utility.Identity;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;

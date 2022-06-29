@@ -1,6 +1,6 @@
-using CTI.Common.Identity.Abstractions;
-using CTI.Common.Web.Utility.Authorization;
-using CTI.Common.Web.Utility.Identity;
+using CompanyNamePlaceHolder.Common.Identity.Abstractions;
+using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using Microsoft.AspNetCore.Identity;
@@ -57,7 +57,9 @@ public static class IdentityServiceCollectionExtensions
             options.ClaimsIdentity.RoleClaimType = Claims.Role;
         });
 
-        services.AddOpenIddict()
+        if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
+        {
+            services.AddOpenIddict()
                 .AddCore(options =>
                 {
                     options.UseEntityFrameworkCore()
@@ -145,6 +147,7 @@ public static class IdentityServiceCollectionExtensions
                     // Register the ASP.NET Core host.
                     options.UseAspNetCore();
                 });
+        }
         return services;
     }
 }

@@ -1,5 +1,5 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.Common.Data;
+using CTI.Common.Data;
 using LanguageExt;
 using MediatR;
 

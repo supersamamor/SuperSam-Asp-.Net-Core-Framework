@@ -1,5 +1,5 @@
 using AspNetCoreHero.ToastNotification.Extensions;
-using CTI.Common.Web.Utility.Logging;
+using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
@@ -95,12 +95,14 @@ app.MapHealthChecks("/health").AllowAnonymous();
 app.UseNotyf();
 
 // Seed the database
-Log.Information("Seeding database");
-var scope = app.Services.CreateScope();
-await DefaultEntity.Seed(scope.ServiceProvider);
-await DefaultRole.Seed(scope.ServiceProvider);
-await DefaultUser.Seed(scope.ServiceProvider);
-await DefaultClient.Seed(scope.ServiceProvider);
-Log.Information("Finished seeding database");
-
+if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
+{
+    Log.Information("Seeding database");
+    var scope = app.Services.CreateScope();
+    await DefaultEntity.Seed(scope.ServiceProvider);
+    await DefaultRole.Seed(scope.ServiceProvider);
+    await DefaultUser.Seed(scope.ServiceProvider);
+    await DefaultClient.Seed(scope.ServiceProvider);
+    Log.Information("Finished seeding database");
+}
 app.Run();

@@ -1,9 +1,9 @@
-using CompanyNamePlaceHolder.Common.Utility.Extensions;
-using CompanyNamePlaceHolder.Common.Utility.Models;
+using CTI.Common.Utility.Extensions;
+using CTI.Common.Utility.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using CompanyNamePlaceHolder.Common.Core.Queries;
+using CTI.Common.Core.Queries;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Entities;
 

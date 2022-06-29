@@ -1,8 +1,9 @@
-using CTI.Common.Core.Queries;
+using CompanyNamePlaceHolder.Common.Core.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using LanguageExt;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 
@@ -13,4 +14,5 @@ public class GetMainModulePlaceHolderByIdQueryHandler : BaseQueryByIdHandler<App
     public GetMainModulePlaceHolderByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
+	Template:[InsertNewSubCollectionIncludeInQuery]
 }

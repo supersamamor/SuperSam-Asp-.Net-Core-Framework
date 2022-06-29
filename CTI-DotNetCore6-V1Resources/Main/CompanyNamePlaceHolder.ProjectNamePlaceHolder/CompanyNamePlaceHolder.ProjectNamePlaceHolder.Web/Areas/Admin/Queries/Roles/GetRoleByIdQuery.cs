@@ -3,7 +3,7 @@ using LanguageExt;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static CTI.Common.Utility.Helpers.OptionHelper;
+using static CompanyNamePlaceHolder.Common.Utility.Helpers.OptionHelper;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
 

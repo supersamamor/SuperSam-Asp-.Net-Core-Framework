@@ -5,9 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="CTI.Common.Core.Base" Version="2.2.1" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Core.Base\CompanyNamePlaceHolder.Common.Core.Base.csproj" />
   </ItemGroup>
-
 </Project>

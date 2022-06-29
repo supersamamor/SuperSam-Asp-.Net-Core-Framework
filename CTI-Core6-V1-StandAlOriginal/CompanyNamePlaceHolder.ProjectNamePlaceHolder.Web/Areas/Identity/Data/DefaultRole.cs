@@ -1,4 +1,4 @@
-using CompanyNamePlaceHolder.Common.Utility.Extensions;
+using CTI.Common.Utility.Extensions;
 using LanguageExt;
 using Microsoft.AspNetCore.Identity;
 

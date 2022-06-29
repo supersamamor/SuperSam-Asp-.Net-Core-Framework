@@ -6,28 +6,12 @@
     ViewData["Level1"] = "AreaPlaceHolder";
 }
 <form id="mainModulePlaceHolder-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-outline card-primary">
-                <div class="card-header d-flex">
-                    <div class="card-title flex-grow-1">
-                        <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
-                            <h5>@Localizer["MainModulePlaceHolder Info"]</h5>
-                        </button>
-                    </div>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <partial name="_EditMainModulePlaceHolderDetails" model="Model.MainModulePlaceHolder" />
-                </div>
-            </div>
-        </div>
-    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.MainModulePlaceHolder" />
+    </div> 
     <div class="row">
         <div class="col-12">
             <p>
@@ -42,4 +26,5 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+Template:[InsertNewSubDetailFieldValidationAndRemoveItemJavascript]
 }

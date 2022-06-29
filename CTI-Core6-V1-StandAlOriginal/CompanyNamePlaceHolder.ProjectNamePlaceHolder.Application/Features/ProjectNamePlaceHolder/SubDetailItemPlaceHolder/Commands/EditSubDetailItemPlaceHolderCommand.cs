@@ -1,7 +1,7 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.Common.Core.Commands;
-using CompanyNamePlaceHolder.Common.Data;
-using CompanyNamePlaceHolder.Common.Utility.Validators;
+using CTI.Common.Core.Commands;
+using CTI.Common.Data;
+using CTI.Common.Utility.Validators;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using FluentValidation;

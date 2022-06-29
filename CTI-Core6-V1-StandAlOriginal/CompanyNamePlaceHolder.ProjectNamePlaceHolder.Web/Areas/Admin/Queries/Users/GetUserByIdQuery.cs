@@ -2,7 +2,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static CompanyNamePlaceHolder.Common.Utility.Helpers.OptionHelper;
+using static CTI.Common.Utility.Helpers.OptionHelper;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 
