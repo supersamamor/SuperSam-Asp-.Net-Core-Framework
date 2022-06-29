@@ -1,10 +1,10 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using CompanyNamePlaceHolder.Common.Core.Base.Models;
-using CompanyNamePlaceHolder.Common.Data;
-using CompanyNamePlaceHolder.Common.Utility.Extensions;
-using CompanyNamePlaceHolder.Common.Utility.Models;
-using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
+using CTI.Common.Core.Base.Models;
+using CTI.Common.Data;
+using CTI.Common.Utility.Extensions;
+using CTI.Common.Utility.Models;
+using CTI.Common.Web.Utility.Extensions;
 using DataTables.AspNetCore.Mvc.Binder;
 using LanguageExt;
 using LanguageExt.Common;

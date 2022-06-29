@@ -1,5 +1,5 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.Common.Core.Mapping;
+using CTI.Common.Core.Mapping;
 Template:[InsertNewImportAreaPlaceHolderTextHere]
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 

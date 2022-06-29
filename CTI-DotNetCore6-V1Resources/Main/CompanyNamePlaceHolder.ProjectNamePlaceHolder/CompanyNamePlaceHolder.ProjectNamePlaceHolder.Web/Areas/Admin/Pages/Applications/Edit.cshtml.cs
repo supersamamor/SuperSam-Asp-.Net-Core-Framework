@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
-using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
+using CTI.Common.Web.Utility.Authorization;
+using CTI.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;

@@ -1,6 +1,6 @@
-using CompanyNamePlaceHolder.Common.Utility.Extensions;
-using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
-using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
+using CTI.Common.Utility.Extensions;
+using CTI.Common.Web.Utility.Helpers;
+using CTI.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;

@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
-using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
+using CTI.Common.Web.Utility.Authorization;
+using CTI.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
 using Microsoft.EntityFrameworkCore;
 using OpenIddict.Abstractions;

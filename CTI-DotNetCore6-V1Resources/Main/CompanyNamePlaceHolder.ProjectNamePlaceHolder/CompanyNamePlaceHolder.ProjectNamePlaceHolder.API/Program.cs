@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.Common.API;
-using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+using CTI.Common.API;
+using CTI.Common.Web.Utility.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

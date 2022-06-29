@@ -1,5 +1,5 @@
-using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
-using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
+using CTI.Common.Web.Utility.Authorization;
+using CTI.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
