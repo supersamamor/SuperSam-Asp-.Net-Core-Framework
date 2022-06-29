@@ -2,33 +2,36 @@
 @model MainModulePlaceHolderViewModel
 <script asp-add-nonce>
     $(document).ready(function () { 
-        let reqs = [];
-        let count = @(Model?.SubDetailNamePlaceHolderList?.Count())
-        for (let idx = 0; idx < count; idx++) {
-            Template:[InsertNewSubDetailFieldValidation]
-        }
-        let validator = $("#main-form").validate();
-        for (let j in reqs)
+		$.InitializeSubDetailNamePlaceHolderFieldValidations = function(count)
         {
-            let e = reqs[j];
-            let el = $(`*[name="${e.name}"]`);
-            el.rules("add", {
-                required: {                
-                    depends: function(element) {
-                        return e.isrequired;
-                    }
-                },
-                messages: {
-                    required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
-                },
-            });
-			if(e.isrequired == true)
-            {
-                let labelElement = $(`label[name="Label.${e.name}"]`);
-                $(labelElement).addClass("fieldrequired");
-            }
-			if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
-            if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
-        }        
+			let reqs = [];
+			let count = @(Model?.SubDetailNamePlaceHolderList?.Count())
+			for (let idx = 0; idx < count; idx++) {
+				Template:[InsertNewSubDetailFieldValidation]
+			}
+			let validator = $("#main-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
     });
 </script>

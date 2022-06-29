@@ -1,5 +1,26 @@
 @using Models
 @model MainModulePlaceHolderViewModel
 
-<input type="hidden" asp-for="@Model.Id" name="Id" />
-<partial name="_EditMainModulePlaceHolderDetails" model="Model" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["MainModulePlaceHolder Info"]</h5>
+                    </button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <input type="hidden" asp-for="@Model.Id" name="Id" />
+				<partial name="_EditMainModulePlaceHolderDetails" model="Model" />
+            </div>
+        </div>
+    </div>
+</div>
+Template:[InsertNewSubDetailPartialPage]

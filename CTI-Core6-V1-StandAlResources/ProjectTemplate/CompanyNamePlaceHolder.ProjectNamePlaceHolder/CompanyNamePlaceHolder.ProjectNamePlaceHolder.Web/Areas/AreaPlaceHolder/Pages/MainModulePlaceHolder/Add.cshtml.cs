@@ -11,26 +11,30 @@ public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]
     public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
-
+    [BindProperty]
+    public string? RemoveSubDetailId { get; set; }
+    [BindProperty]
+    public string? AsyncAction { get; set; }
     public IActionResult OnGet()
     {
 		Template:[InsertNewSubDetailItemAddInitial]
         return Page();
     }
 
-    public async Task<IActionResult> OnPost(string? handler)
+    public async Task<IActionResult> OnPost()
     {
-		Template:[InsertNewSubDetailAddRemovePostHandlerFromPage]
+		
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
-    }
-	Template:[InsertNewSubDetailAddRemoveMethodFromPage]
+    }	
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
+		Template:[InsertNewSubDetailAddRemovePostHandlerFromPage]
         return Partial("_InputFieldsPartial", MainModulePlaceHolder);
     }
+	Template:[InsertNewSubDetailAddRemoveMethodFromPage]
 }

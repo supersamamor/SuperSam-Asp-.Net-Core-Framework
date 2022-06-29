@@ -1,5 +1,6 @@
 ﻿@using Models
 @model MainModulePlaceHolderViewModel
+<input type="hidden" id="SubDetailDescriptionPlaceHolderCount" value="@Model?.SubDetailDescriptionPlaceHolderList?.Count" />
 <div class="row">
     <div class="col-12">
         <div class="card card-outline card-primary">
@@ -8,11 +9,11 @@
                     <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
                         <h5>@Localizer["SubDetailDescriptionPlaceHolder"]</h5>
                     </button>
-                    <button type="submit" name="handler" value="AddSubDetailNamePlaceHolder" class="btn-field btn btn-primary cancel">
+                    <button type="button" id="btnAddSubDetailNamePlaceHolder" class="btn-field btn btn-primary cancel">
                         <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
                         <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
                     </button>
-                    <button class="cancel" type="submit" name="handler" id="btnRemoveSubDetailNamePlaceHolder" value="RemoveSubDetailNamePlaceHolder" style="display:none;"></button>
+                    <button class="cancel" type="button" id="btnRemoveSubDetailNamePlaceHolder" value="RemoveSubDetailNamePlaceHolder" style="display:none;"></button>
                 </div>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -44,9 +45,9 @@
                                     </td>
                                     Template:[InsertNewSubDetailListName]
                                     <td>
-                                        <a href="#" class="btn-field btn btn-danger RemoveSubDetailNamePlaceHolderButton cancel" title="@Localizer["Remove SubDetailNamePlaceHolder"]" removeId="@(item.Id)">
+                                        <button type="button" class="btn-field btn btn-danger RemoveSubDetailNamePlaceHolderButton cancel" title="@Localizer["Remove SubDetailNamePlaceHolder"]" removeId="@(item.Id)">
                                             <i class="fas fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 counter++;
