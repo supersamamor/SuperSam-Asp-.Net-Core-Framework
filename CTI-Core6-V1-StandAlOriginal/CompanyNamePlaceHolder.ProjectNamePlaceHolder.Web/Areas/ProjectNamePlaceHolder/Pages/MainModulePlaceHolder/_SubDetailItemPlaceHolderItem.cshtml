@@ -1,0 +1,41 @@
+@using Models
+@model MainModulePlaceHolderViewModel
+<input type="hidden" id="SubDetailItemPlaceHolderCount" value="@Model?.SubDetailItemPlaceHolderList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["SubDetailItemPlaceHolder"]</h5>
+                    </button>     
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+				@if (Model?.SubDetailItemPlaceHolderList != null)
+				{
+					int counter = 0;
+					foreach (var item in Model.SubDetailItemPlaceHolderList)
+					{
+						<input type="hidden" name="SubDetailItemPlaceHolderList[@counter].Id" value="@item.Id" />
+						<input type="hidden" name="SubDetailItemPlaceHolderList[@counter].MainModulePlaceHolderId" value="@item.MainModulePlaceHolderId"  />
+						<div class="form-group row">
+							<label asp-for="@item.Code" class="col-md-3 col-form-label"></label>
+							<div class="col-md-6">
+								<input asp-for="@item.Code"  name="SubDetailItemPlaceHolderList[@counter].Code" class="form-control" />
+								<span data-valmsg-for="SubDetailItemPlaceHolderList[@counter].Code" asp-validation-for="@item.Code" class="text-danger"></span>
+							</div>
+						</div>
+						
+						counter++;
+					}
+				}				                
+            </div>
+        </div>
+    </div>
+</div>

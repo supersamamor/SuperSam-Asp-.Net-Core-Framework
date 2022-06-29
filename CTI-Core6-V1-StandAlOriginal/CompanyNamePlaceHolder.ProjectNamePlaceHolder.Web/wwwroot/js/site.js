@@ -140,19 +140,18 @@ $(document).ready(function () {
             callback();
         });
     }
-
-    setTimeout(function () {
+	
+	setTimeout(function () {
         $('body').addClass('loaded');
     }, 200);
-
-
-    $.initializeChangeFormValue = function (handler, triggerElements, elementContainer, form, initializeFormFunction) {
+	
+	$.initializeFormAction = function (action, handler, triggerElements, elementContainer, form, initializeFormFunction) {
         var triggerElementString = "";
         for (let i = 0; i < triggerElements.length; i++) {
             if (triggerElementString != "") { triggerElementString += ", "; }
             triggerElementString += triggerElements[i];
         }
-        $(triggerElementString).bind("change", function () {
+        $(triggerElementString).bind(action, function () {
             $.triggerPageForm(handler, elementContainer, form, initializeFormFunction);
         });
     }

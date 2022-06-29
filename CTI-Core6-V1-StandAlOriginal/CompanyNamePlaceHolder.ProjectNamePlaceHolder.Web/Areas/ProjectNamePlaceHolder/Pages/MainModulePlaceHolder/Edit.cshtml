@@ -1,0 +1,64 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit MainModulePlaceHolder"];
+    ViewData["ActiveMainPage"] = "MainModulePlaceHolder";
+    ViewData["Level1"] = "ProjectNamePlaceHolder";
+}
+<form id="mainModulePlaceHolder-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.MainModulePlaceHolder" />
+    </div> 
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_SubDetailItemPlaceHolderListValidationPartial" model="@Model.MainModulePlaceHolder" />
+<partial name="_SubDetailListPlaceHolderListValidationPartial" model="@Model.MainModulePlaceHolder" />
+<script asp-add-nonce>
+	$(document).ready(function () {
+		function InitializeForm()
+		{
+			$.InitializeSubDetailItemPlaceHolderFieldValidations($('#SubDetailItemPlaceHolderCount').val());
+			$('.RemoveSubDetailItemPlaceHolderButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveSubDetailItemPlaceHolder');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModulePlaceHolder-form', InitializeForm);
+			});
+
+			$('#btnAddSubDetailItemPlaceHolder').on( 'click', function () {
+				$('#AsyncAction').val('AddSubDetailItemPlaceHolder');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModulePlaceHolder-form', InitializeForm);
+			});
+
+			$.InitializeSubDetailListPlaceHolderFieldValidations($('#SubDetailListPlaceHolderCount').val());
+			$('.RemoveSubDetailListPlaceHolderButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveSubDetailListPlaceHolder');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModulePlaceHolder-form', InitializeForm);
+			});
+
+			$('#btnAddSubDetailListPlaceHolder').on( 'click', function () {
+				$('#AsyncAction').val('AddSubDetailListPlaceHolder');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModulePlaceHolder-form', InitializeForm);
+			});
+
+		}
+		InitializeForm();
+	});
+</script>
+
+}

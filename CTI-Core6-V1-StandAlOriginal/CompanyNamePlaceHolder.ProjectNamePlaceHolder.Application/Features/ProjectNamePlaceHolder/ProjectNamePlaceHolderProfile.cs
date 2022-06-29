@@ -1,6 +1,8 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.Common.Core.Mapping;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.ModuleNamePlaceHolder.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.MainModulePlaceHolder.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.SubDetailItemPlaceHolder.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.SubDetailListPlaceHolder.Commands;
 
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 
@@ -10,8 +12,12 @@ public class ProjectNamePlaceHolderProfile : Profile
 {
     public ProjectNamePlaceHolderProfile()
     {
-        CreateMap<AddModuleNamePlaceHolderCommand, ModuleNamePlaceHolderState>();
-		CreateMap <EditModuleNamePlaceHolderCommand, ModuleNamePlaceHolderState>().IgnoreBaseEntityProperties();
+        CreateMap<AddMainModulePlaceHolderCommand, MainModulePlaceHolderState>();
+		CreateMap <EditMainModulePlaceHolderCommand, MainModulePlaceHolderState>().IgnoreBaseEntityProperties();
+		CreateMap<AddSubDetailItemPlaceHolderCommand, SubDetailItemPlaceHolderState>();
+		CreateMap <EditSubDetailItemPlaceHolderCommand, SubDetailItemPlaceHolderState>().IgnoreBaseEntityProperties();
+		CreateMap<AddSubDetailListPlaceHolderCommand, SubDetailListPlaceHolderState>();
+		CreateMap <EditSubDetailListPlaceHolderCommand, SubDetailListPlaceHolderState>().IgnoreBaseEntityProperties();
 		
     }
 }
