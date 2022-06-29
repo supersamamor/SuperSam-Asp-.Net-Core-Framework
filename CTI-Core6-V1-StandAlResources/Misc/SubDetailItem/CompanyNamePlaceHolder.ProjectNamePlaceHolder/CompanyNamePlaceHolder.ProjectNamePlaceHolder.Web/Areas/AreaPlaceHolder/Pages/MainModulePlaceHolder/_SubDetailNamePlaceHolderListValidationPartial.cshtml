@@ -4,12 +4,11 @@
     $(document).ready(function () { 
 		$.InitializeSubDetailNamePlaceHolderFieldValidations = function(count)
         {
-			let reqs = [];
-			let count = @(Model?.SubDetailNamePlaceHolderList?.Count())
+			let reqs = [];			
 			for (let idx = 0; idx < count; idx++) {
 				Template:[InsertNewSubDetailFieldValidation]
 			}
-			let validator = $("#main-form").validate();
+			let validator = $("#mainModulePlaceHolder-form").validate();
 			for (let j in reqs)
 			{
 				let e = reqs[j];
