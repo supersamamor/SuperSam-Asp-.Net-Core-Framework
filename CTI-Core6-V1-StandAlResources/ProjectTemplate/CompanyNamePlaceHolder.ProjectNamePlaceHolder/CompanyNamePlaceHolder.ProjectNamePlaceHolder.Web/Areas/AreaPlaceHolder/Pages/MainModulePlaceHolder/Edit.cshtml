@@ -27,14 +27,4 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 Template:[InsertNewSubDetailFieldValidationAndRemoveItemJavascript]
-<script asp-add-nonce>
-    $(document).ready(function () {
-        function InitializeForm()
-        {
-            let changeFormValueTriggerElements = ["#Code"];
-            $.initializeFormAction('click', ChangeFormValue', changeFormValueTriggerElements,'#PartialLoaderContainer','#mainModulePlaceHolder-form',InitializeForm);
-        }
-        InitializeForm();
-    });
-</script>
 }
