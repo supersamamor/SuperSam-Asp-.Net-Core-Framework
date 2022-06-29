@@ -2,6 +2,9 @@
     var release = Configuration.GetValue<string>("Version:ReleaseName");
     var build = Configuration.GetValue<string>("Version:BuildNumber");
     var appName = Configuration.GetValue<string>("Application");
+    var customerSupportEmail = Configuration.GetValue<string>("CustomerSupportEmail");
+    var companyName = Configuration.GetValue<string>("CompanyName");
+    var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -55,8 +58,9 @@
             <div class="float-right p-1 d-none d-sm-block">
                 @await Html.PartialAsync("_SelectLanguagePartial")
             </div>
-            <strong>Copyright &copy; @System.DateTime.Now.Year - CelerSoft PH - <a href="mailto:celersoft.solutions@gmail.com">celersoft.solutions@gmail.com</a></strong> All rights reserved.
-            Release @release Build @build          
+            <strong>Copyright &copy; @System.DateTime.Now.Year - @companyName - <a href="mailto:@customerSupportEmail">@customerSupportEmail</a></strong> All rights reserved.
+            Release @release Build @build
+            <a href="@privacyPolicyUrl" target="_blank">Privacy</a>        
         </footer>
     </div>
     <partial name="_Scripts" />
