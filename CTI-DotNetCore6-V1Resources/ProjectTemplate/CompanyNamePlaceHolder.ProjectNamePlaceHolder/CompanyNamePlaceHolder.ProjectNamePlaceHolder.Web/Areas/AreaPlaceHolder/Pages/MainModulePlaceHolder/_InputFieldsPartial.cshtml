@@ -18,7 +18,9 @@
             </div>
             <div class="card-body">
                 <input type="hidden" asp-for="@Model.Id" name="Id" />
-				<partial name="_EditMainModulePlaceHolderDetails" model="Model" />
+				<div class="row">
+					<partial name="_EditMainModulePlaceHolderDetails" model="Model" />
+				</div>	
             </div>
         </div>
     </div>
