@@ -24,7 +24,7 @@
 					foreach (var item in Model.SubDetailNamePlaceHolderList)
 					{
 						<input type="hidden" name="SubDetailNamePlaceHolderList[@counter].Id" value="@item.Id" />
-						<input type="hidden" name="SubDetailNamePlaceHolderList[@counter].MainModulePlaceHolderId" value="@item.MainModulePlaceHolderId"  />
+						<input type="hidden" name="SubDetailNamePlaceHolderList[@counter].SubDetailForeignKeyPlaceHolder" value="@item.SubDetailForeignKeyPlaceHolder"  />
 						Template:[InsertNewSubDetailListName]
 						counter++;
 					}
