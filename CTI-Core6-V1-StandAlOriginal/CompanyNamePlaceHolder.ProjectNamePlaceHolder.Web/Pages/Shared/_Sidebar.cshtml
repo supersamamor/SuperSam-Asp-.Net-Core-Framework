@@ -80,6 +80,17 @@
                                     </a>
                                 </li>
                             }
+                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
+                            {
+                                <li class="nav-item">
+                                    <a href="/ProjectNamePlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ApproverSetup")">
+                                        <i class="fas fa-circle nav-icon"></i>
+                                        <p>
+                                            @Localizer["ApproverSetup"]
+                                        </p>
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </li>
                 }
@@ -92,18 +103,18 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/ProjectNamePlaceHolder/MainModulePlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModulePlaceHolder")">
-									<i class="fas fa-circle nav-icon"></i>
-									<p>
-										@Localizer["MainModulePlaceHolder"]
-									</p>
-								</a>
-							</li>
-						}
-						
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/ProjectNamePlaceHolder/MainModulePlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModulePlaceHolder")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>
+                                        @Localizer["MainModulePlaceHolder"]
+                                    </p>
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </li>
             </ul>

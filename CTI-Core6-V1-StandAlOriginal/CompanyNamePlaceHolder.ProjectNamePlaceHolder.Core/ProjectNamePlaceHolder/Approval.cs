@@ -2,25 +2,26 @@
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder
 {
-    public record Approval : BaseEntity
+    public record ApprovalState : BaseEntity
     {
         public string ApproverSetupId { get; init; } = "";
         public int Sequence { get; init; } = 0;
         public string ApproverUserId { get; init; } = "";
         public string Status { get; init; } = ApprovalStatus.New;
-        public ApproverSetup ApproverSetup { get; init; } = new ApproverSetup();
+        public ApproverSetupState ApproverSetup { get; init; } = new ApproverSetupState();
     }
-    public record ApproverSetup : BaseEntity
+    public record ApproverSetupState : BaseEntity
     {
         public string TableName { get; init; } = "";
         public string ApprovalType { get; init; } = ApprovalTypes.InSequence;
+        public IList<ApproverAssignmentState>? ApproverAssignmentList { get; set; }
     }
-    public record ApproverAssignment : BaseEntity
+    public record ApproverAssignmentState : BaseEntity
     {
         public string ApproverSetupId { get; init; } = "";
         public int Sequence { get; init; } = 0;
         public string ApproverUserId { get; init; } = "";
-        public ApproverSetup ApproverSetup { get; init; } = new ApproverSetup();
+        public ApproverSetupState ApproverSetup { get; init; } = new ApproverSetupState();
     }
     public static class ApprovalStatus
     {

@@ -18,9 +18,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     public DbSet<MainModulePlaceHolderState> MainModulePlaceHolder { get; set; } = default!;
     public DbSet<SubDetailItemPlaceHolderState> SubDetailItemPlaceHolder { get; set; } = default!;
     public DbSet<SubDetailListPlaceHolderState> SubDetailListPlaceHolder { get; set; } = default!;
-    public DbSet<Approval> Approval { get; set; } = default!;
-    public DbSet<ApproverSetup> ApproverSetup { get; set; } = default!;
-    public DbSet<ApproverAssignment> ApproverAssignment { get; set; } = default!;
+    public DbSet<ApprovalState> Approval { get; set; } = default!;
+    public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
+    public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
@@ -65,11 +65,11 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 
         modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailItemPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailListPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
-        modelBuilder.Entity<Approval>().Property(e => e.ApproverUserId).HasMaxLength(450);
-        modelBuilder.Entity<Approval>().Property(e => e.Status).HasMaxLength(450);
-        modelBuilder.Entity<ApproverSetup>().Property(e => e.TableName).HasMaxLength(450);
-        modelBuilder.Entity<ApproverSetup>().Property(e => e.ApprovalType).HasMaxLength(450);
-        modelBuilder.Entity<ApproverAssignment>().Property(e => e.ApproverUserId).HasMaxLength(450);
+        modelBuilder.Entity<ApprovalState>().Property(e => e.ApproverUserId).HasMaxLength(450);
+        modelBuilder.Entity<ApprovalState>().Property(e => e.Status).HasMaxLength(450);
+        modelBuilder.Entity<ApproverSetupState>().Property(e => e.TableName).HasMaxLength(450);
+        modelBuilder.Entity<ApproverSetupState>().Property(e => e.ApprovalType).HasMaxLength(450);
+        modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
         base.OnModelCreating(modelBuilder);
     }
 }
