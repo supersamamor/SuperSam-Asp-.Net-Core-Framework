@@ -1,6 +1,6 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CTI.Common.Data;
 using CTI.Common.Identity.Abstractions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
@@ -16,9 +16,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     }
 
     public DbSet<MainModulePlaceHolderState> MainModulePlaceHolder { get; set; } = default!;
-	public DbSet<SubDetailItemPlaceHolderState> SubDetailItemPlaceHolder { get; set; } = default!;
-	public DbSet<SubDetailListPlaceHolderState> SubDetailListPlaceHolder { get; set; } = default!;
-	
+    public DbSet<SubDetailItemPlaceHolderState> SubDetailItemPlaceHolder { get; set; } = default!;
+    public DbSet<SubDetailListPlaceHolderState> SubDetailListPlaceHolder { get; set; } = default!;
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,6 +29,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         {
             property.SetColumnType("decimal(18,6)");
         }
+
         #region Disable Cascade Delete
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()
         .SelectMany(t => t.GetForeignKeys())
@@ -42,23 +43,23 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
-        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Entity);modelBuilder.Entity<MainModulePlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasIndex(p => p.Entity);modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<SubDetailListPlaceHolderState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SubDetailListPlaceHolderState>().HasIndex(p => p.Entity);modelBuilder.Entity<SubDetailListPlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.LastModifiedDate); modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Entity); modelBuilder.Entity<MainModulePlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasIndex(p => p.LastModifiedDate); modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasIndex(p => p.Entity); modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<SubDetailListPlaceHolderState>().HasIndex(p => p.LastModifiedDate); modelBuilder.Entity<SubDetailListPlaceHolderState>().HasIndex(p => p.Entity); modelBuilder.Entity<SubDetailListPlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+
         modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Code).IsUnique();
-		modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasIndex(p => p.Code).IsUnique();
-		modelBuilder.Entity<SubDetailListPlaceHolderState>().HasIndex(p => p.Code).IsUnique();
-		
+        modelBuilder.Entity<SubDetailItemPlaceHolderState>().HasIndex(p => p.Code).IsUnique();
+        modelBuilder.Entity<SubDetailListPlaceHolderState>().HasIndex(p => p.Code).IsUnique();
+
         modelBuilder.Entity<MainModulePlaceHolderState>().Property(e => e.Code).HasMaxLength(255);
-		
-		modelBuilder.Entity<SubDetailItemPlaceHolderState>().Property(e => e.Code).HasMaxLength(255);
-		
-		modelBuilder.Entity<SubDetailListPlaceHolderState>().Property(e => e.Code).HasMaxLength(255);
-		
-        		modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailItemPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
-				modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailListPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
-				
+
+        modelBuilder.Entity<SubDetailItemPlaceHolderState>().Property(e => e.Code).HasMaxLength(255);
+
+        modelBuilder.Entity<SubDetailListPlaceHolderState>().Property(e => e.Code).HasMaxLength(255);
+
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailItemPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailListPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
+
         base.OnModelCreating(modelBuilder);
     }
 }
