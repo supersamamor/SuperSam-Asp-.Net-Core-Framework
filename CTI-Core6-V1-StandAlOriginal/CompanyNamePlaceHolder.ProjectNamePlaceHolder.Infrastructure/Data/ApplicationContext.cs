@@ -18,18 +18,24 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     public DbSet<MainModulePlaceHolderState> MainModulePlaceHolder { get; set; } = default!;
     public DbSet<SubDetailItemPlaceHolderState> SubDetailItemPlaceHolder { get; set; } = default!;
     public DbSet<SubDetailListPlaceHolderState> SubDetailListPlaceHolder { get; set; } = default!;
-
-
+    public DbSet<Approval> Approval { get; set; } = default!;
+    public DbSet<ApproverSetup> ApproverSetup { get; set; } = default!;
+    public DbSet<ApproverAssignment> ApproverAssignment { get; set; } = default!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
-                                                   .SelectMany(t => t.GetProperties())
-                                                   .Where(p => p.ClrType == typeof(decimal)
-                                                               || p.ClrType == typeof(decimal?)))
+                                                   .SelectMany(t => t.GetProperties()))
         {
-            property.SetColumnType("decimal(18,6)");
+            if (property.ClrType == typeof(decimal) || property.ClrType == typeof(decimal?))
+            {
+                property.SetColumnType("decimal(18,6)");
+            }
+            if (property.Name == "CreatedBy" || property.Name == "LastModifiedBy" || property.Name == "Entity" +
+                "")
+            {
+                property.SetMaxLength(450);
+            }
         }
-
         #region Disable Cascade Delete
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()
         .SelectMany(t => t.GetForeignKeys())
@@ -59,7 +65,11 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 
         modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailItemPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailListPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
-
+        modelBuilder.Entity<Approval>().Property(e => e.ApproverUserId).HasMaxLength(450);
+        modelBuilder.Entity<Approval>().Property(e => e.Status).HasMaxLength(450);
+        modelBuilder.Entity<ApproverSetup>().Property(e => e.TableName).HasMaxLength(450);
+        modelBuilder.Entity<ApproverSetup>().Property(e => e.ApprovalType).HasMaxLength(450);
+        modelBuilder.Entity<ApproverAssignment>().Property(e => e.ApproverUserId).HasMaxLength(450);
         base.OnModelCreating(modelBuilder);
     }
 }
