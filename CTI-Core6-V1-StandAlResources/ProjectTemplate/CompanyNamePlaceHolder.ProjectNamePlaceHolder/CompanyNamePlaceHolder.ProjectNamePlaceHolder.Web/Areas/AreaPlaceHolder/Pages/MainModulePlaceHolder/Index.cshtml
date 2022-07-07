@@ -68,7 +68,7 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditMainModulePlaceHolder">@Localizer["Edit"]</a>';
                     </text>
                 }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Delete)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/MainModulePlaceHolder/Delete", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
