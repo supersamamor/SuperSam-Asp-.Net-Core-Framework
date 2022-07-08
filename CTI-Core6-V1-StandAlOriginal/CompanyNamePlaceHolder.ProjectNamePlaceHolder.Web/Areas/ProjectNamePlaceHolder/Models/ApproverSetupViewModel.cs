@@ -17,5 +17,18 @@ public record ApproverSetupViewModel : BaseViewModel
     public DateTime LastModifiedDate { get; set; }
 
     public IList<ApproverAssignmentViewModel>? ApproverAssignmentList { get; set; }
-
+    public string SelectedApprovers
+    {
+        get
+        {
+            if (this.ApproverAssignmentList != null)
+            {
+                return string.Join(",", this.ApproverAssignmentList.Select(l => l.ApproverUserId).ToList());
+            }
+            else
+            {
+                return "";
+            }
+        }
+    }
 }

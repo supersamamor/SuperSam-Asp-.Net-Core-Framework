@@ -14,7 +14,7 @@ public record ApproverAssignmentViewModel : BaseViewModel
     public string ApproverSetupId { get; init; } = "";
     [Display(Name = "Sequence")]
     [Required]
-    public int Sequence { get; init; }
+    public int Sequence { get; set; }
 
     public DateTime LastModifiedDate { get; set; }
     public ApproverSetupViewModel? ApproverSetup { get; init; }

@@ -28,11 +28,25 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
         public const string New = "New";
         public const string Approved = "Approved";
         public const string Rejected = "Rejected";
+        public static readonly List<string> ApprovalStatusList =
+              new()
+              {
+                  New,
+                  Approved,
+                  Rejected,
+              };
     }
     public static class ApprovalTypes
     {
         public const string Any = "Any";
         public const string All = "All";
-        public const string InSequence = "InSequence";
+        public const string InSequence = "In Sequence";
+        public static readonly List<string> ApprovalTypeList =
+           new()
+           {
+               Any,
+               All,
+               InSequence,
+           };
     }
 }

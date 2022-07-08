@@ -16,6 +16,8 @@ public class EditModel : BasePageModel<EditModel>
     public string? RemoveSubDetailId { get; set; }
     [BindProperty]
     public string? AsyncAction { get; set; }
+    [BindProperty]
+    public string? MoveUpDownId { get; set; }
     public async Task<IActionResult> OnGet(string? id)
     {
         if (id == null)
@@ -26,41 +28,59 @@ public class EditModel : BasePageModel<EditModel>
     }
 
     public async Task<IActionResult> OnPost()
-    {		
+    {
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditApproverSetupCommand>(ApproverSetup)), "Details", true);
-    }	
-	public IActionResult OnPostChangeFormValue()
+    }
+    public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddApproverAssignment")
-		{
-			return AddApproverAssignment();
-		}
-		if (AsyncAction == "RemoveApproverAssignment")
-		{
-			return RemoveApproverAssignment();
-		}
-		
-		
+        if (AsyncAction == "AddApproverAssignment")
+        {
+            return AddApproverAssignment();
+        }
+        if (AsyncAction == "RemoveApproverAssignment")
+        {
+            return RemoveApproverAssignment();
+        }
+        if (AsyncAction == "MoveUpApproverAssignment")
+        {
+            return MoveApproverAssignment(true);
+        }
+        if (AsyncAction == "MoveDownApproverAssignment")
+        {
+            return MoveApproverAssignment(false);
+        }
         return Partial("_InputFieldsPartial", ApproverSetup);
     }
-	
-	private IActionResult AddApproverAssignment()
-	{
-		ModelState.Clear();
-		if (ApproverSetup!.ApproverAssignmentList == null) { ApproverSetup!.ApproverAssignmentList = new List<ApproverAssignmentViewModel>(); }
-		ApproverSetup!.ApproverAssignmentList!.Add(new ApproverAssignmentViewModel() { ApproverSetupId = ApproverSetup.Id });
-		return Partial("_InputFieldsPartial", ApproverSetup);
-	}
-	private IActionResult RemoveApproverAssignment()
-	{
-		ModelState.Clear();
-		ApproverSetup.ApproverAssignmentList = ApproverSetup!.ApproverAssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", ApproverSetup);
-	}
-	
+
+    private IActionResult AddApproverAssignment()
+    {
+        ModelState.Clear();
+        if (ApproverSetup!.ApproverAssignmentList == null) { ApproverSetup!.ApproverAssignmentList = new List<ApproverAssignmentViewModel>(); }
+        ApproverSetup!.ApproverAssignmentList!.Add(new ApproverAssignmentViewModel() { ApproverSetupId = ApproverSetup.Id });
+        return Partial("_InputFieldsPartial", ApproverSetup);
+    }
+    private IActionResult RemoveApproverAssignment()
+    {
+        ModelState.Clear();
+        ApproverSetup.ApproverAssignmentList = ApproverSetup!.ApproverAssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+        return Partial("_InputFieldsPartial", ApproverSetup);
+    }
+    private IActionResult MoveApproverAssignment(bool moveUp)
+    {
+        ModelState.Clear();
+        int currentSequence = ApproverSetup!.ApproverAssignmentList!.Where(l => l.Id == MoveUpDownId).FirstOrDefault()!.Sequence;
+        int newSequence = currentSequence + 1;
+        if (moveUp)
+        {
+            newSequence = currentSequence - 1;
+        }
+        _ = ApproverSetup!.ApproverAssignmentList!.Where(c => c.Sequence == newSequence).Select(c => { c.Sequence = currentSequence; return c; }).ToList();
+        _ = ApproverSetup!.ApproverAssignmentList!.Where(c => c.Id == MoveUpDownId).Select(c => { c.Sequence = newSequence; return c; }).ToList();
+        return Partial("_InputFieldsPartial", ApproverSetup);
+    }
 }
