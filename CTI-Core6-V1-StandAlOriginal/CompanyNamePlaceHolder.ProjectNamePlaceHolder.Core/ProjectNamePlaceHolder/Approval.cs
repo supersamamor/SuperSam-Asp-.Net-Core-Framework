@@ -4,11 +4,34 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
 {
     public record ApprovalState : BaseEntity
     {
-        public string ApproverSetupId { get; init; } = "";
-        public int Sequence { get; init; } = 0;
         public string ApproverUserId { get; init; } = "";
+        public string ApprovalRecordId { get; init; } = "";
+        public int Sequence { get; init; } = 0;
+        public string Status { get; init; } = ApprovalStatus.New;
+        public string EmailSendingStatus { get; set; } = "";
+        public string EmailSendingRemarks { get; set; } = "";
+        public ApprovalRecordState ApprovalRecord { get; init; } = new ApprovalRecordState();
+        public void SetToPendingEmail()
+        {
+            this.EmailSendingStatus = SendingStatus.Pending;
+        }
+        public void SendingDone()
+        {
+            this.EmailSendingStatus = SendingStatus.Done;
+        }
+        public void SendingFailed(string error)
+        {
+            this.EmailSendingStatus = SendingStatus.Failed;
+            this.EmailSendingRemarks = error;
+        }
+    }
+    public record ApprovalRecordState : BaseEntity
+    {
+        public string ApproverSetupId { get; init; } = "";
+        public string DataId { get; init; } = "";
         public string Status { get; init; } = ApprovalStatus.New;
         public ApproverSetupState ApproverSetup { get; init; } = new ApproverSetupState();
+        public IList<ApprovalState>? ApprovalList { get; set; }
     }
     public record ApproverSetupState : BaseEntity
     {
@@ -26,6 +49,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
     public static class ApprovalStatus
     {
         public const string New = "New";
+        public const string PartiallyApproved = "Partially Approved";
         public const string Approved = "Approved";
         public const string Rejected = "Rejected";
         public static readonly List<string> ApprovalStatusList =
@@ -48,5 +72,20 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
                All,
                InSequence,
            };
+    }
+    public static class SendingStatus
+    {
+        public const string Pending = "Pending";
+        public const string Done = "Done";
+        public const string Failed = "Failed";
+    }
+    public static class ApprovalModule
+    {
+        public const string MainModulePlaceHolder = "MainModulePlaceHolder";
+        public static readonly List<string> MainModulePlaceHolderList =
+        new()
+        {
+            MainModulePlaceHolder,
+        };
     }
 }

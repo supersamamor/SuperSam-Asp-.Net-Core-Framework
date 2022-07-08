@@ -108,6 +108,7 @@ public static class Permission
     }
     public static class ApproverSetup
     {
+        public const string Create = "Permission.ApproverSetup.Create";
         public const string View = "Permission.ApproverSetup.View";
         public const string Edit = "Permission.ApproverSetup.Edit";
     }

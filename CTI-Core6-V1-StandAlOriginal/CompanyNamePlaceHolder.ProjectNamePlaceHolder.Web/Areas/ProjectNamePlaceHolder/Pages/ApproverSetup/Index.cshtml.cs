@@ -30,7 +30,7 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.TableName,
                 e.ApprovalType,
-
+                e.Entity,
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

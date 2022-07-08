@@ -7,7 +7,7 @@
 @{
     ViewData["Title"] = Localizer["Approver Setup List"];
     ViewData["ActiveMainPage"] = "ApproverSetup";
-    ViewData["Level1"] = "ProjectNamePlaceHolder";
+    ViewData["Level1"] = "Admin";
 }
 <div class="row">
     <div class="col-12">
@@ -17,12 +17,14 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Table"]
-							</th>
-							<th>
-								@Localizer["Approval Type"]
-							</th>
-							                           
+                                @Localizer["Table"]
+                            </th>
+                            <th>
+                                @Localizer["Approval Type"]
+                            </th>
+                            <th>
+                                @Localizer["Entity"]
+                            </th>
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -53,13 +55,13 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
             },
-			initComplete: function( settings, json ) {
+            initComplete: function( settings, json ) {
                 BindTableRowCollapseEvent();
             },
-			columns: [
+            columns: [
                 { data: "tableName", name: "TableName", responsivePriority: 1, title: '@Localizer["Table"]', searchable: true },
-	{ data: "approvalType", name: "ApprovalType", responsivePriority: 1, title: '@Localizer["Approval Type"]', searchable: false },
-	               
+                { data: "approvalType", name: "ApprovalType", responsivePriority: 1, title: '@Localizer["Approval Type"]', searchable: false },
+                { data: "entity", name: "Entity", responsivePriority: 1, title: '@Localizer["Entity"]', searchable: false },
                 {
                     data: null,
                     searchable: false,
@@ -75,21 +77,35 @@
                         url = '@Url.Page("/ApproverSetup/Edit", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditApproverSetup">@Localizer["Edit"]</a>';
                     </text>
-                }          
+                }
                         return button;
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: ['excel', 'pdf', 'pageLength',],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/ApproverSetup/Add", new { area = "ProjectNamePlaceHolder" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',],
         });
         var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
 
         $('.btn-table_filter').on('click', function(e) {
             table.ajax.reload(null, false);
         });
-		function BindTableRowCollapseEvent()
+        function BindTableRowCollapseEvent()
         {
             $('#approverSetup tbody').on('click', 'td.dtr-control', function () {
                 $.showAjaxLoaderOnClick([".btnAddApproverSetup",".btnEditApproverSetup",".btnViewApproverSetup",".btnDeleteApproverSetup"]);

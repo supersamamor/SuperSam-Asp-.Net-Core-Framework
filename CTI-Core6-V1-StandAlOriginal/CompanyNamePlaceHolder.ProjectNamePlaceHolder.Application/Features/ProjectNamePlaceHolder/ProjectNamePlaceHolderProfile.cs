@@ -21,5 +21,7 @@ public class ProjectNamePlaceHolderProfile : Profile
 
 
         CreateMap<EditApproverSetupCommand, ApproverSetupState>().IgnoreBaseEntityProperties();
+        CreateMap<AddApproverSetupCommand, ApproverSetupState>().IgnoreBaseEntityProperties();
+        CreateMap<ApproverAssignmentState, ApproverAssignmentState>().IgnoreBaseEntityProperties();
     }
 }

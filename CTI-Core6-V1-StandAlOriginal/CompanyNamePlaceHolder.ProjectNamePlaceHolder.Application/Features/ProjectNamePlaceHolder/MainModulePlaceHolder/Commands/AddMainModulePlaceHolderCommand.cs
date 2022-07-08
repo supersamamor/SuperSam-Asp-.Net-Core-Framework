@@ -33,7 +33,8 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
         MainModulePlaceHolderState entity = _mapper.Map<MainModulePlaceHolderState>(request);
         UpdateSubDetailItemPlaceHolderList(entity);
         UpdateSubDetailListPlaceHolderList(entity);
-        _ = await _context.AddAsync(entity);
+        _ = await _context.AddAsync(entity, cancellationToken);
+        await AddApprovers(entity.Id, cancellationToken);
         _ = await _context.SaveChangesAsync(cancellationToken);
         return Success<Error, MainModulePlaceHolderState>(entity);
     }
@@ -58,7 +59,26 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
             }
         }
     }
-
+    private async Task AddApprovers(string mainModulePlaceHolderId, CancellationToken cancellationToken)
+    {
+        var approverList = await _context.ApproverAssignment.Where(l => l.ApproverSetup.TableName == ApprovalModule.MainModulePlaceHolder).AsNoTracking().ToListAsync(cancellationToken);
+        var approvalRecord = new ApprovalRecordState()
+        {
+            ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
+            DataId = mainModulePlaceHolderId,
+            ApprovalList = new List<ApprovalState>(),
+        };
+        foreach (var item in approverList)
+        {
+            var approval = new ApprovalState()
+            {
+                Sequence = item.Sequence,
+                ApproverUserId = item.ApproverUserId,
+            };
+            approvalRecord.ApprovalList.Add(approval);
+        }
+        await _context.AddAsync(approvalRecord, cancellationToken);
+    }
 }
 
 public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMainModulePlaceHolderCommand>
@@ -72,6 +92,5 @@ public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMai
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("MainModulePlaceHolder with id {PropertyValue} already exists");
         RuleFor(x => x.Code).MustAsync(async (code, cancellation) => await _context.NotExists<MainModulePlaceHolderState>(x => x.Code == code, cancellationToken: cancellation)).WithMessage("MainModulePlaceHolder with code {PropertyValue} already exists");
-
     }
 }

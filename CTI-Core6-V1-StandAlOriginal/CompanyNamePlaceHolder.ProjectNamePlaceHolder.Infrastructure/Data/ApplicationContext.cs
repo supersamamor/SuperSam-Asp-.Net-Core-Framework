@@ -21,6 +21,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     public DbSet<ApprovalState> Approval { get; set; } = default!;
     public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
     public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
+    public DbSet<ApprovalRecordState> ApprovalRecord { get; set; } = default!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
@@ -65,11 +66,26 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 
         modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailItemPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
         modelBuilder.Entity<MainModulePlaceHolderState>().HasMany(t => t.SubDetailListPlaceHolderList).WithOne(l => l.MainModulePlaceHolder).HasForeignKey(t => t.MainModulePlaceHolderId);
+
+        modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<ApproverSetupState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<ApproverAssignmentState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+
+        modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.DataId);
+        modelBuilder.Entity<ApprovalRecordState>().Property(e => e.DataId).HasMaxLength(450);
+        modelBuilder.Entity<ApprovalRecordState>().Property(e => e.ApproverSetupId).HasMaxLength(450);
+        modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.ApproverSetupId);
+        modelBuilder.Entity<ApprovalRecordState>().Property(e => e.Status).HasMaxLength(450);
+
+        modelBuilder.Entity<ApprovalState>().HasIndex(l => l.ApproverUserId);
         modelBuilder.Entity<ApprovalState>().Property(e => e.ApproverUserId).HasMaxLength(450);
         modelBuilder.Entity<ApprovalState>().Property(e => e.Status).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.TableName).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.ApprovalType).HasMaxLength(450);
+        modelBuilder.Entity<ApproverSetupState>().HasIndex(e => new { e.TableName, e.Entity }).IsUnique();
         modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
+        modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId }).IsUnique();
         base.OnModelCreating(modelBuilder);
     }
 }

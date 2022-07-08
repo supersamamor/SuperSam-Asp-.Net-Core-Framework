@@ -26,6 +26,7 @@ public class ProjectNamePlaceHolderProfile : Profile
 
         CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();
         CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
+        CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
         CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
     }
 }

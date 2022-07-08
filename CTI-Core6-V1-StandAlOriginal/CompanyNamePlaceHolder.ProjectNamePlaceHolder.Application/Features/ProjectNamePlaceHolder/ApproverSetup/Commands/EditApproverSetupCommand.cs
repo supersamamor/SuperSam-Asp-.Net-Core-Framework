@@ -30,7 +30,7 @@ public class EditApproverSetupCommandHandler : BaseCommandHandler<ApplicationCon
 
     public async Task<Validation<Error, ApproverSetupState>> EditApproverSetup(EditApproverSetupCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.ApproverSetup.Where(l => l.Id == request.Id).SingleAsync();
+        var entity = await _context.ApproverSetup.Where(l => l.Id == request.Id).SingleAsync(cancellationToken);
         _mapper.Map(request, entity);
         await UpdateApproverAssignmentList(entity, request, cancellationToken);
         _context.Update(entity);
@@ -46,7 +46,7 @@ public class EditApproverSetupCommandHandler : BaseCommandHandler<ApplicationCon
         {
             queryApproverAssignmentForDeletion = queryApproverAssignmentForDeletion.Where(l => !(entity.ApproverAssignmentList.Select(l => l.Id).ToList().Contains(l.Id)));
         }
-        approverAssignmentListForDeletion = await queryApproverAssignmentForDeletion.ToListAsync();
+        approverAssignmentListForDeletion = await queryApproverAssignmentForDeletion.ToListAsync(cancellationToken);
         foreach (var approverAssignment in approverAssignmentListForDeletion!)
         {
             _context.Entry(approverAssignment).State = EntityState.Deleted;
@@ -78,7 +78,6 @@ public class EditApproverSetupCommandValidator : AbstractValidator<EditApproverS
         _context = context;
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<ApproverSetupState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("ApproverSetup with id {PropertyValue} does not exists");
-        RuleFor(x => x.TableName).MustAsync(async (request, tableName, cancellation) => await _context.NotExists<ApproverSetupState>(x => x.TableName == tableName && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("ApproverSetup with tableName {PropertyValue} already exists");
-
+        RuleFor(x => new { x.TableName, x.Entity }).MustAsync(async (request, tableObject, cancellation) => await _context.NotExists<ApproverSetupState>(x => x.TableName == tableObject.TableName && x.Entity == tableObject.Entity && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("ApproverSetup with tableName {PropertyValue} already exists");
     }
 }
