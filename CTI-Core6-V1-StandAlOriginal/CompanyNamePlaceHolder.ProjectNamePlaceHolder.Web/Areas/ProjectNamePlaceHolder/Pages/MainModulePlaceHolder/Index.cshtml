@@ -78,6 +78,13 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger">@Localizer["Delete"]</a>';
                     </text>
                 }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/MainModulePlaceHolder/Approve", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Approve"]</a>';
+                    </text>
+                }
                         return button;
                     },
                 },
