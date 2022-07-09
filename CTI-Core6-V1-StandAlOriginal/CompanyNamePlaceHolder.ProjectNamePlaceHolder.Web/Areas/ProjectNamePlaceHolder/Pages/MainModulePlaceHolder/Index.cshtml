@@ -17,9 +17,11 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Code"]
-							</th>
-							                           
+                                @Localizer["Code"]
+                            </th>
+                            <th>
+                                @Localizer["Status"]
+                            </th>
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -52,7 +54,7 @@
             },
             columns: [
                 { data: "code", name: "Code", responsivePriority: 1, title: '@Localizer["Code"]', searchable: true },
-	               
+                { data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {
                     data: null,
                     searchable: false,

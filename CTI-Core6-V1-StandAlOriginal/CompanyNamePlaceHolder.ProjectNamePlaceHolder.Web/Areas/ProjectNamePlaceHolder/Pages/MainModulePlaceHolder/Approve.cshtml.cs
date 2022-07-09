@@ -21,7 +21,7 @@ public class ApproveModel : BasePageModel<ApproveModel>
         {
             return NotFound();
         }
-        ApprovalStatus = await Mediatr.Send(new GetApprovalStatusByIdQuery(id)).MapAsync(l => l);       
+        ApprovalStatus = await Mediatr.Send(new GetApprovalStatusPerApproverByIdQuery(id)).MapAsync(l => l);       
         return await PageFrom(async () => await Mediatr.Send(new GetMainModulePlaceHolderByIdQuery(id)), MainModulePlaceHolder);
     }
 
