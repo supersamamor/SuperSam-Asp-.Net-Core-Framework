@@ -56,15 +56,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                             approvalItem.SendingFailed(ex.Message);
                         }
                     }
-                    if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Count() == item.ApprovalList.Count())
+                    if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Count() == item.ApprovalList.Count)
                     {
                         item.Approve();
                     }
-                    else if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Rejected).Count() > 0)
+                    else if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Rejected).Any())
                     {
                         item.Reject();
                     }
-                    else if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Count() > 0)
+                    else if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Any())
                     {
                         item.PartiallyApprove();
                     }
