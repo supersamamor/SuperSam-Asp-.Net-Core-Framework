@@ -5,8 +5,8 @@
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Approver Setup List"];
-    ViewData["ActiveMainPage"] = "ApproverSetup";
+    ViewData["Title"] = Localizer["Approval Setup List"];
+    ViewData["ActiveMainPage"] = "Approval";
     ViewData["Level1"] = "Admin";
 }
 <div class="row">
@@ -78,6 +78,13 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditApproverSetup">@Localizer["Edit"]</a>';
                     </text>
                 }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.PendingApprovals)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/ApproverSetup/PendingApprovals", new { area = "ProjectNamePlaceHolder" })' + '?tableName=' + row.tableName;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnPendingApprovals">@Localizer["Pending Approvals"]</a>';
+                    </text>
+                }
                         return button;
                     },
                 },
@@ -111,7 +118,7 @@
                 $.showAjaxLoaderOnClick([".btnAddApproverSetup",".btnEditApproverSetup",".btnViewApproverSetup",".btnDeleteApproverSetup"]);
             });
         }
-        $.showAjaxLoaderOnClick([".btnAddApproverSetup",".btnEditApproverSetup",".btnViewApproverSetup",".btnDeleteApproverSetup"]);
+        $.showAjaxLoaderOnClick([".btnAddApproverSetup",".btnEditApproverSetup",".btnViewApproverSetup",".btnDeleteApproverSetup",".btnPendingApprovals"]);
     });
 </script>
 }

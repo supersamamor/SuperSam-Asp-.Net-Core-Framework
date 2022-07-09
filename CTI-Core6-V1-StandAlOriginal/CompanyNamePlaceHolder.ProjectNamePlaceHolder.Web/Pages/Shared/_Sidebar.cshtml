@@ -83,10 +83,10 @@
                             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
                             {
                                 <li class="nav-item">
-                                    <a href="/ProjectNamePlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ApproverSetup")">
+                                    <a href="/ProjectNamePlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
                                         <i class="fas fa-circle nav-icon"></i>
                                         <p>
-                                            @Localizer["Approver Setup"]
+                                            @Localizer["Approval"]
                                         </p>
                                     </a>
                                 </li>

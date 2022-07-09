@@ -20,14 +20,19 @@ public static class Permission
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
-        return new List<string>()
+        var permissions = new List<string>()
         {
             $"Permission.{module}.Create",
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
-            $"Permission.{module}.Approve",
         };
+        if (module == "")
+        {
+            permissions.Add($"Permission.{module}.Approve");
+            permissions.Add($"Permission.{module}.PendingApprovals");
+        }
+        return permissions;
     }
 
     public static class Admin
@@ -113,5 +118,6 @@ public static class Permission
         public const string Create = "Permission.ApproverSetup.Create";
         public const string View = "Permission.ApproverSetup.View";
         public const string Edit = "Permission.ApproverSetup.Edit";
+        public const string PendingApprovals = "Permission.ApproverSetup.PendingApprovals";
     }
 }
