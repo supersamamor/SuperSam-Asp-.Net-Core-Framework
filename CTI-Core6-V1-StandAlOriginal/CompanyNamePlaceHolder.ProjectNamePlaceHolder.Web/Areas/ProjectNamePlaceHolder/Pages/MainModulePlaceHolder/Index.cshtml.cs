@@ -32,7 +32,7 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.Code,
                 e.LastModifiedDate,
-                Status = GetApprovalStatus(e.Id),
+                StatusBadge = GetApprovalStatus(e.Id),
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }

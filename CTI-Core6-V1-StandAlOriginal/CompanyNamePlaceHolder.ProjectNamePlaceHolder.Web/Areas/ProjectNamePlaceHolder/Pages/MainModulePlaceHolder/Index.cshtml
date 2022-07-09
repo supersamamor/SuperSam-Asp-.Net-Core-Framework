@@ -54,7 +54,7 @@
             },
             columns: [
                 { data: "code", name: "Code", responsivePriority: 1, title: '@Localizer["Code"]', searchable: true },
-                { data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+                { data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {
                     data: null,
                     searchable: false,
@@ -82,7 +82,7 @@
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
-                { data: "id", name: "Id", visible: false },
+                { data: "id", name: "Id", visible: false },              
             ],
             buttons: [
         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
