@@ -1,9 +1,11 @@
 using AspNetCoreHero.ToastNotification.Extensions;
-using CTI.Common.Web.Utility.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CTI.Common.Web.Utility.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
@@ -38,7 +40,8 @@ else
 services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
-
+services.AddScheduler(configuration);
+services.AddEmailSendingAService(configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

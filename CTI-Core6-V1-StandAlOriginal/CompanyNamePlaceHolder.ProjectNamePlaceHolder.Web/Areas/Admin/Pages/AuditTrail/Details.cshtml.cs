@@ -1,12 +1,11 @@
-using CTI.Common.Web.Utility.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.AuditTrail;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
+using CTI.Common.Web.Utility.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.AuditTrail;
 
 [Authorize(Policy = Permission.AuditTrail.View)]

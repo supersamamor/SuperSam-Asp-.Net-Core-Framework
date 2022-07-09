@@ -17,7 +17,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -78,6 +78,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApprovalRemarks")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ApproverUserId")
                         .IsRequired()
                         .HasMaxLength(450)
@@ -88,6 +91,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EmailSendingDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailSendingRemarks")
@@ -116,6 +122,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("StatusUpdateDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

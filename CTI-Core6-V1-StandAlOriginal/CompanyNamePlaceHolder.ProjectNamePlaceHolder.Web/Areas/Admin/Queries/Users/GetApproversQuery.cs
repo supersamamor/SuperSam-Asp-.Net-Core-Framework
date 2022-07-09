@@ -1,10 +1,10 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CTI.Common.Core.Queries;
 using CTI.Common.Utility.Extensions;
 using CTI.Common.Utility.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 
 public record GetApproversQuery(string CurrentSelectedApprover, IList<string> AllSelectedApprovers) : BaseQuery, IRequest<PagedListResponse<ApplicationUser>>

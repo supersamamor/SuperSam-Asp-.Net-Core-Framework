@@ -1,9 +1,10 @@
 using AspNetCoreHero.ToastNotification;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service;
 using CTI.Common.Services.Shared;
 using CTI.Common.Web.Utility.Annotations;
 using CTI.Common.Web.Utility.Authorization;
 using CTI.Common.Web.Utility.Logging;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,6 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Quartz;
 using System.Globalization;
 using System.Reflection;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 
@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
         });
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
-		services.AddTransient<DropdownServices>();
+        services.AddTransient<DropdownServices>();
     }
 
     public static IServiceCollection ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)

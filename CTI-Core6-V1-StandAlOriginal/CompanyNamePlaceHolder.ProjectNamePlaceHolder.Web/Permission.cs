@@ -26,6 +26,7 @@ public static class Permission
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
+            $"Permission.{module}.Approve",
         };
     }
 
@@ -91,6 +92,7 @@ public static class Permission
         public const string Create = "Permission.MainModulePlaceHolder.Create";
         public const string Edit = "Permission.MainModulePlaceHolder.Edit";
         public const string Delete = "Permission.MainModulePlaceHolder.Delete";
+        public const string Approve = "Permission.MainModulePlaceHolder.Approve";
     }
     public static class SubDetailItemPlaceHolder
     {

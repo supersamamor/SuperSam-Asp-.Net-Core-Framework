@@ -11,7 +11,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static LanguageExt.Prelude;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.ApproverSetup.Commands;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Approval.Commands;
 
 public record EditApproverSetupCommand : ApproverSetupState, IRequest<Validation<Error, ApproverSetupState>>;
 

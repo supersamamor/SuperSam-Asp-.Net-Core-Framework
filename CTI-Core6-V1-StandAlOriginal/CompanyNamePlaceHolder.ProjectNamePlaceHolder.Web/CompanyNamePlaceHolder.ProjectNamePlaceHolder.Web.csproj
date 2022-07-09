@@ -23,10 +23,10 @@
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.357" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
@@ -46,6 +46,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.csproj" />
   </ItemGroup>
 
   <ItemGroup>

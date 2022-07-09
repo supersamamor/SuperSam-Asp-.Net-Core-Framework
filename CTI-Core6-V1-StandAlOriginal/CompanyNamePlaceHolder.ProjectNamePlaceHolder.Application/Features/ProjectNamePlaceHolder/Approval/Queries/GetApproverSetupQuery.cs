@@ -4,7 +4,7 @@ using CTI.Common.Core.Queries;
 using CTI.Common.Utility.Models;
 using MediatR;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.ApproverSetup.Queries;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Approval.Queries;
 
 public record GetApproverSetupQuery : BaseQuery, IRequest<PagedListResponse<ApproverSetupState>>;
 

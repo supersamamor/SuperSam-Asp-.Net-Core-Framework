@@ -1,4 +1,5 @@
 using AutoMapper;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;
 using LanguageExt.Common;

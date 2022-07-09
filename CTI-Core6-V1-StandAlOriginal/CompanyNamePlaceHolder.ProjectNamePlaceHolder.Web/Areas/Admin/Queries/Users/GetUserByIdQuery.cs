@@ -1,9 +1,9 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static CTI.Common.Utility.Helpers.OptionHelper;
-
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 
 public record GetUserByIdQuery(string Id) : IRequest<Option<ApplicationUser>>;

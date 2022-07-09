@@ -1,11 +1,10 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CTI.Common.Web.Utility.Authorization;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using static LanguageExt.Prelude;
-
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 
 public static class IdentityExtensions

@@ -15,7 +15,11 @@
 <div class="row">
     <div class="col-12">
         <p>
-            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>        
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>      
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.Create)).Succeeded)
+            {
+                <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
+            }          
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.Edit)).Succeeded)
             {
                 <a asp-page="Edit" asp-route-id="@Model.ApproverSetup.Id" class="btn btn-primary">@Localizer["Edit"]</a>

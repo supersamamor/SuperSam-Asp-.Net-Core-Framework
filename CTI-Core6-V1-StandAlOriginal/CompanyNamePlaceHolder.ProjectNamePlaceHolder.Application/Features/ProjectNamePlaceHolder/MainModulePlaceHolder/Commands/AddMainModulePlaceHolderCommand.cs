@@ -66,7 +66,7 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
         {
             ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
             DataId = mainModulePlaceHolderId,
-            ApprovalList = new List<ApprovalState>(),
+            ApprovalList = new List<ApprovalState>()
         };
         foreach (var item in approverList)
         {
