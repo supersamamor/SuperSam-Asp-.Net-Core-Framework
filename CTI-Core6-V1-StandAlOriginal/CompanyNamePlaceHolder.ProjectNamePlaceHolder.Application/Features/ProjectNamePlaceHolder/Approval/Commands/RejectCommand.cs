@@ -23,9 +23,9 @@ public class RejectCommandHandler : IRequestHandler<RejectCommand, Validation<Er
     }
 
     public async Task<Validation<Error, RejectResult>> Handle(RejectCommand request, CancellationToken cancellationToken) =>
-        await Approve(request, cancellationToken);
+        await Reject(request, cancellationToken);
 
-    public async Task<Validation<Error, RejectResult>> Approve(RejectCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, RejectResult>> Reject(RejectCommand request, CancellationToken cancellationToken)
     {
         var entity = await (from a in _context.Approval
                             join b in _context.ApprovalRecord on a.ApprovalRecordId equals b.Id

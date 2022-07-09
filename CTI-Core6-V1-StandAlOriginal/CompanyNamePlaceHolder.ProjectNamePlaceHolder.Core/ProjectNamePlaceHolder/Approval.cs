@@ -23,6 +23,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
         {
             this.EmailSendingStatus = SendingStatus.Done;
             this.EmailSendingDateTime = DateTime.UtcNow;
+            this.EmailSendingRemarks = "";
             if (this.Status != ApprovalStatus.Approved)
             {
                 this.Status = ApprovalStatus.ForApproval;

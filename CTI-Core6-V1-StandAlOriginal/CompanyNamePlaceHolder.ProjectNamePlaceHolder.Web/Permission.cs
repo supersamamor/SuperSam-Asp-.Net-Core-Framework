@@ -27,7 +27,7 @@ public static class Permission
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
         };
-        if (module == "")
+        if (module == "ApproverSetup")
         {
             permissions.Add($"Permission.{module}.Approve");
             permissions.Add($"Permission.{module}.PendingApprovals");
