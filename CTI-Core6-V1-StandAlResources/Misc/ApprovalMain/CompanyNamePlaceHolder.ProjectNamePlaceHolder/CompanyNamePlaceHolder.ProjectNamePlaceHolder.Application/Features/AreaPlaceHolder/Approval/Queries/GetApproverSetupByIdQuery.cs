@@ -1,6 +1,6 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CTI.Common.Core.Queries;
+using CompanyNamePlaceHolder.Common.Core.Queries;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

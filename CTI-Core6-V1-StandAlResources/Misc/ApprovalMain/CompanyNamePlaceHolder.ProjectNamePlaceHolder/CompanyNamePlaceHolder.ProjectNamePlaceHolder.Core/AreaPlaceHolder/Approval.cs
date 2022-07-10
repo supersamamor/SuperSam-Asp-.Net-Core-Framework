@@ -1,4 +1,4 @@
-﻿using CTI.Common.Core.Base.Models;
+using CompanyNamePlaceHolder.Common.Core.Base.Models;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
 {
@@ -118,13 +118,5 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
         public const string Done = "Done";
         public const string Failed = "Failed";
     }
-    public static class ApprovalModule
-    {
-        public const string MainModulePlaceHolder = "MainModulePlaceHolder";
-        public static readonly List<string> MainModulePlaceHolderList =
-        new()
-        {
-            MainModulePlaceHolder,
-        };
-    }
+	Template:[ApprovalTableList]
 }

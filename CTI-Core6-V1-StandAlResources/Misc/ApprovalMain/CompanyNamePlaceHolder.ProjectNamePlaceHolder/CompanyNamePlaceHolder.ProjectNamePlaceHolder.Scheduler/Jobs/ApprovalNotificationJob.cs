@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;

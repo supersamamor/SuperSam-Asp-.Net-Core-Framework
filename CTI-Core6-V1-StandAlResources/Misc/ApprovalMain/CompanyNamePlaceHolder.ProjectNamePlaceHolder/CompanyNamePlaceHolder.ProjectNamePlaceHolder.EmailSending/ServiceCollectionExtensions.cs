@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

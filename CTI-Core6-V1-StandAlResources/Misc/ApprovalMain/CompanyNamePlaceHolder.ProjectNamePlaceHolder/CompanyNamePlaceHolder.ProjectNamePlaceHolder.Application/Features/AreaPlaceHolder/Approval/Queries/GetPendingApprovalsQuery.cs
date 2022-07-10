@@ -1,8 +1,8 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CTI.Common.Core.Queries;
-using CTI.Common.Utility.Extensions;
-using CTI.Common.Utility.Models;
+using CompanyNamePlaceHolder.Common.Core.Queries;
+using CompanyNamePlaceHolder.Common.Utility.Extensions;
+using CompanyNamePlaceHolder.Common.Utility.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,10 +45,7 @@ public class GetPendingApprovalsQueryHandler : IRequestHandler<GetPendingApprova
     private static string? GetRecordName(ApplicationContext context, string? tableName, string? dataId)
     {
         string? recordName = "";
-        if (tableName == ApprovalModule.MainModulePlaceHolder)
-        {
-            recordName = context.MainModulePlaceHolder.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.Code;
-        }
+		Template:[ApprovalPendingQuery]        
         return recordName;
     }
 }

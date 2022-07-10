@@ -12,5 +12,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
             _mediaTr = mediaTr;       
         }      
 		Template:[InsertNewGetDropdownMethodFromDropdownService]
+		Template:[ApprovalUserListDropdown]
     }
 }

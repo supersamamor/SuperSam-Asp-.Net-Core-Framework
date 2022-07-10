@@ -1,4 +1,4 @@
-﻿namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending
 {
     public enum SendingType
     {

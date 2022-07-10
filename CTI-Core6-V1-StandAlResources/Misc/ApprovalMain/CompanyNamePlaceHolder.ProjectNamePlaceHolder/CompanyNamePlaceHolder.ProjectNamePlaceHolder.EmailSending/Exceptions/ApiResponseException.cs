@@ -1,4 +1,4 @@
-﻿namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Exceptions
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Exceptions
 {
     public class ApiResponseException : Exception
     {

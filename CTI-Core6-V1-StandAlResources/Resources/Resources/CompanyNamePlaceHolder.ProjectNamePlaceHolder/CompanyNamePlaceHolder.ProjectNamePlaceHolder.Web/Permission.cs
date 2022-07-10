@@ -11,18 +11,20 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("Apis"))
             .Concat(GeneratePermissionsForModule("Applications"))
             .Concat(GeneratePermissionsForModule("AuditTrail"))
-            Template:[InsertNewPermissionGenerator];
+            Template:[InsertNewPermissionGenerator]Template:[ApprovalPermissionOne];
     }
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
-        return new List<string>()
+        var permissions = new List<string>()
         {
             $"Permission.{module}.Create",
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
         };
+		Template:[ApprovalPermissionTwo]
+		return permissions;
     }
 
     public static class Admin
@@ -82,4 +84,5 @@ public static class Permission
     }
 
     Template:[InsertNewPermissionTextHere]
+	Template:[ApprovalPermissionThree]
 }
