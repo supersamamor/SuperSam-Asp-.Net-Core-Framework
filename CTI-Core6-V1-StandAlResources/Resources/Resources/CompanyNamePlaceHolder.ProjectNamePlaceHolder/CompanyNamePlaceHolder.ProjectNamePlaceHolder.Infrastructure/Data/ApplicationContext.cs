@@ -16,7 +16,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     }
 
     Template:[InsertNewDataModelContextPropertyTextHere]
-
+	Template:[ApprovalContext]
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
@@ -43,6 +43,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         Template:[InsertNewEFFluentAttributesUniqueTextHere]
         Template:[InsertNewEFFluentAttributesStringLengthTextHere]
         Template:[InsertNewSubCollectionFluentApiTextHere]
+		Template:[ApprovalFluentEF]
         base.OnModelCreating(modelBuilder);
     }
 }

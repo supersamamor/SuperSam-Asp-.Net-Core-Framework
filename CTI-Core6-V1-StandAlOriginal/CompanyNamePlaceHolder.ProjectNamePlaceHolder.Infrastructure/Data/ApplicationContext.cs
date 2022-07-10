@@ -71,16 +71,18 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
         modelBuilder.Entity<ApproverSetupState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
         modelBuilder.Entity<ApproverAssignmentState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-
         modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.DataId);
         modelBuilder.Entity<ApprovalRecordState>().Property(e => e.DataId).HasMaxLength(450);
         modelBuilder.Entity<ApprovalRecordState>().Property(e => e.ApproverSetupId).HasMaxLength(450);
         modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.ApproverSetupId);
+		modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.Status);
         modelBuilder.Entity<ApprovalRecordState>().Property(e => e.Status).HasMaxLength(450);
-
         modelBuilder.Entity<ApprovalState>().HasIndex(l => l.ApproverUserId);
+		modelBuilder.Entity<ApprovalState>().HasIndex(l => l.Status);
+		modelBuilder.Entity<ApprovalState>().HasIndex(l => l.EmailSendingStatus);
         modelBuilder.Entity<ApprovalState>().Property(e => e.ApproverUserId).HasMaxLength(450);
         modelBuilder.Entity<ApprovalState>().Property(e => e.Status).HasMaxLength(450);
+		modelBuilder.Entity<ApprovalState>().Property(e => e.EmailSendingStatus).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.TableName).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.ApprovalType).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.EmailSubject).HasMaxLength(450);
