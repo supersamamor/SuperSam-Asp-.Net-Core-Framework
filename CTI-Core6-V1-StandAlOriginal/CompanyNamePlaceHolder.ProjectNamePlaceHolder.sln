@@ -26,9 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.csproj", "{778E217C-EF94-43B8-93A1-74D88A068865}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.csproj", "{778E217C-EF94-43B8-93A1-74D88A068865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.csproj", "{1A5F09F0-F25D-42DC-AC5B-E07D81DD5BCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.csproj", "{1A5F09F0-F25D-42DC-AC5B-E07D81DD5BCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

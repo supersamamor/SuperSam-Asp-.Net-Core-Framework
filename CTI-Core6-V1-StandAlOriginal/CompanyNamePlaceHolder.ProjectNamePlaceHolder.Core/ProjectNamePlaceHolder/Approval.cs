@@ -73,6 +73,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
     {
         public string TableName { get; init; } = "";
         public string ApprovalType { get; init; } = ApprovalTypes.InSequence;
+        public string EmailSubject { get; init; } = "";
+        public string EmailBody { get; init; } = "";
         public IList<ApproverAssignmentState>? ApproverAssignmentList { get; set; }
     }
     public record ApproverAssignmentState : BaseEntity

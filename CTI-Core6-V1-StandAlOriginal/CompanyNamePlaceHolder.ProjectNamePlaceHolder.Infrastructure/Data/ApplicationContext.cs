@@ -83,6 +83,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<ApprovalState>().Property(e => e.Status).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.TableName).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().Property(e => e.ApprovalType).HasMaxLength(450);
+        modelBuilder.Entity<ApproverSetupState>().Property(e => e.EmailSubject).HasMaxLength(450);
         modelBuilder.Entity<ApproverSetupState>().HasIndex(e => new { e.TableName, e.Entity }).IsUnique();
         modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
         modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId }).IsUnique();

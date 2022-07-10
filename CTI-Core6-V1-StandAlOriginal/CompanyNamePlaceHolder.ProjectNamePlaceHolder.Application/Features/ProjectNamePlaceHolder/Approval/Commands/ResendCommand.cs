@@ -15,11 +15,10 @@ public record ResendCommand(string ApprovalId) : IRequest<Validation<Error, Rese
 public class ResendCommandHandler : IRequestHandler<ResendCommand, Validation<Error, ResendResult>>
 {
     private readonly ApplicationContext _context;
-    private readonly IAuthenticatedUser _authenticatedUser;
-    public ResendCommandHandler(ApplicationContext context, IAuthenticatedUser authenticatedUser)
+
+    public ResendCommandHandler(ApplicationContext context)
     {
-        _context = context;
-        _authenticatedUser = authenticatedUser;
+        _context = context; 
     }
 
     public async Task<Validation<Error, ResendResult>> Handle(ResendCommand request, CancellationToken cancellationToken) =>
@@ -27,7 +26,7 @@ public class ResendCommandHandler : IRequestHandler<ResendCommand, Validation<Er
 
     public async Task<Validation<Error, ResendResult>> Resend(ResendCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Approval.Where(l => l.Id == request.ApprovalId).SingleAsync();
+        var entity = await _context.Approval.Where(l => l.Id == request.ApprovalId).SingleAsync(cancellationToken);
         entity.SetToPendingEmail();
         _context.Update(entity);
         _ = await _context.SaveChangesAsync(cancellationToken);

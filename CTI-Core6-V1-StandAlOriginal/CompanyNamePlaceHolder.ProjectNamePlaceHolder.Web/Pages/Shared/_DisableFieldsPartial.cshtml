@@ -3,6 +3,7 @@
 <script asp-add-nonce>
     $("#@Model select").prop("disabled", true);
     $('#@Model input').attr('readonly', true);
+    $('#@Model textarea').attr('readonly', true);
     $("#@Model input[type='checkbox']").prop("disabled", "disabled");
     $('#@Model .btn-field').attr('class', "btn-field btn btn-secondary");
 </script>

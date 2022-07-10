@@ -47,7 +47,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                                 || (item.ApproverSetup!.ApprovalType == ApprovalTypes.InSequence && approvalItem.Sequence == 1 && approvalItem.Status == ApprovalStatus.New))
                             {
                                 approvalItem.SendingDone();
-                                await SendApprovalNotification(item.DataId, user.Email);
+                                await SendApprovalNotification(item, user);
                             }
                         }
                         catch (Exception ex)
@@ -68,18 +68,38 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                     {
                         item.PartiallyApprove();
                     }
-                }               
+                }
                 _context.Update(item);
                 await _context.SaveChangesAsync();
             }
         }
-        private async Task SendApprovalNotification(string dataId, string approverEmail)
+        private async Task SendApprovalNotification(ApprovalRecordState approvalRecord, ApplicationUser user)
         {
-            string subject = $"Approval";
-            string message = "";
-            message += $"Access the ff. link for approval :";
-            message += $"<a href='{_baseUrl}/ProjectNamePlaceHolder/MainModulePlaceHolder/Approve?Id={dataId}'>Click this link</a>";
-            await _emailSender.SendEmailAsync(approverEmail, subject, message);
+            string subject = approvalRecord!.ApproverSetup!.EmailSubject;
+            string message = SetApproverName(approvalRecord!.ApproverSetup!.EmailBody, user);
+            message = SetApprovalUrl(message, approvalRecord);
+            await _emailSender.SendEmailAsync(user.Email, subject, message);
+        }
+        private static string SetApproverName(string message, ApplicationUser user)
+        {
+            if (message.Contains(EmailContentPlaceHolder.ApproverName))
+            {
+                message = message.Replace(EmailContentPlaceHolder.ApproverName, user.Name);
+            }
+            return message;
+        }
+        private string SetApprovalUrl(string message, ApprovalRecordState approvalRecord)
+        {
+            if (message.Contains(EmailContentPlaceHolder.ApprovalUrl))
+            {
+                message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/ProjectNamePlaceHolder/MainModulePlaceHolder/Approve?Id={approvalRecord.DataId}");
+            }
+            return message;
+        }
+        public static class EmailContentPlaceHolder
+        {
+            public const string ApproverName = "{ApproverName}";
+            public const string ApprovalUrl = "{ApprovalUrl}";
         }
     }
 }

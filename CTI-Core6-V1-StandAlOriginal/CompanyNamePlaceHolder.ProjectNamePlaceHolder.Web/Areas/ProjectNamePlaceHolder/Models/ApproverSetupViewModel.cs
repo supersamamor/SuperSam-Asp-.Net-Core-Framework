@@ -15,7 +15,13 @@ public record ApproverSetupViewModel : BaseViewModel
     public string ApprovalType { get; init; } = "";
 
     public DateTime LastModifiedDate { get; set; }
-
+    [Display(Name = "Email Subject")]
+    [Required]
+    [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string EmailSubject { get; init; } = "";
+    [Display(Name = "Email Body (Html)")]
+    [Required]
+    public string EmailBody { get; init; } = "";
     public IList<ApproverAssignmentViewModel>? ApproverAssignmentList { get; set; }
     public string SelectedApprovers
     {

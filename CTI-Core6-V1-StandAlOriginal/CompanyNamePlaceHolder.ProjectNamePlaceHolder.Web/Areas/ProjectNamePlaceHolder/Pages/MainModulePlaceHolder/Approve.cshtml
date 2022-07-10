@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-12">
             <p>
-                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Back"]</a>
                 @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalStatus.ForApproval)
                 {
                     <button type="submit" class="btn btn-primary" name="Handler" value="Approve">@Localizer["Approve"]</button>

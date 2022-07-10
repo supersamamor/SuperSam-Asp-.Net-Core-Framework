@@ -58,7 +58,7 @@ public class PendingApprovalsModel : BasePageModel<PendingApprovalsModel>
         }
         await Mediatr.Send(new ResendCommand(approvalId));
         NotyfService.Success(Localizer["Transaction successful"]);
-        return RedirectToPage("PendingApprovals", new { tableName = tableName });
+        return RedirectToPage("PendingApprovals", new { tableName });
     }
     private static string GetApprovalStatus(string approvalStatus)
     {    
