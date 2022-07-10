@@ -1,14 +1,13 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Approval.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Approval.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.ApproverSetup;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.ApproverSetup;
 
-[Authorize(Policy = Permission.ApproverSetup.Edit)]
-public class EditModel : BasePageModel<EditModel>
+[Authorize(Policy = Permission.ApproverSetup.Create)]
+public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]
     public ApproverSetupViewModel ApproverSetup { get; set; } = new();
@@ -18,22 +17,20 @@ public class EditModel : BasePageModel<EditModel>
     public string? AsyncAction { get; set; }
     [BindProperty]
     public string? MoveUpDownId { get; set; }
-    public async Task<IActionResult> OnGet(string? id)
+    public IActionResult OnGet()
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
-        return await PageFrom(async () => await Mediatr.Send(new GetApproverSetupByIdQuery(id)), ApproverSetup);
+
+        return Page();
     }
 
     public async Task<IActionResult> OnPost()
     {
+
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditApproverSetupCommand>(ApproverSetup)), "Details", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddApproverSetupCommand>(ApproverSetup)), "Details", true);
     }
     public IActionResult OnPostChangeFormValue()
     {

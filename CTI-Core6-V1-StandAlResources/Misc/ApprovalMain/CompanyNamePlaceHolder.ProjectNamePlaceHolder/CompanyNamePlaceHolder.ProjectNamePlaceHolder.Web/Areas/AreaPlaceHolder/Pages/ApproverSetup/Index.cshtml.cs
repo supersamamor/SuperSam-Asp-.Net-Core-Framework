@@ -6,7 +6,7 @@ using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.ApproverSetup;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.ApproverSetup;
 
 [Authorize(Policy = Permission.ApproverSetup.View)]
 public class IndexModel : BasePageModel<IndexModel>

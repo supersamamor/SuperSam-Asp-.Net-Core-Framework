@@ -1,6 +1,6 @@
 ﻿using CTI.Common.Core.Base.Models;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
 {
     public record ApprovalState : BaseEntity
     {

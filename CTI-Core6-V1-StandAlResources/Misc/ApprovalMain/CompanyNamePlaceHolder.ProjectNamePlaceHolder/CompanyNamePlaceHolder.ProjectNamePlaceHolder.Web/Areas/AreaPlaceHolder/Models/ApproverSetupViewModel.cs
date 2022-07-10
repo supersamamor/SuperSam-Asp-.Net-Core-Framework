@@ -1,7 +1,7 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models;
 
 public record ApproverSetupViewModel : BaseViewModel
 {
