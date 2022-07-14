@@ -1,3 +1,4 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

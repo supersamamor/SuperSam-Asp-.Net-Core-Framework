@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Core.Base\CompanyNamePlaceHolder.Common.Core.Base.csproj" />
   </ItemGroup>
 </Project>

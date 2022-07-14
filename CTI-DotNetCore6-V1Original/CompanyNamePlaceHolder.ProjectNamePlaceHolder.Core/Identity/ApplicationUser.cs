@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
 public class ApplicationUser : IdentityUser
