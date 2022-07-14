@@ -1,6 +1,10 @@
 @{
     var release = Configuration.GetValue<string>("Version:ReleaseName");
     var build = Configuration.GetValue<string>("Version:BuildNumber");
+    var appName = Configuration.GetValue<string>("Application");
+    var customerSupportEmail = Configuration.GetValue<string>("CustomerSupportEmail");
+    var companyName = Configuration.GetValue<string>("CompanyName");
+    var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +13,7 @@
     <link rel="stylesheet" href="~/lib/pace-progress/dist/themes/blue/pace-theme-flat-top.min.css" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewData["Title"] - CompanyNamePlaceHolder.ProjectNamePlaceHolder</title>
+    <title>@ViewData["Title"] - @appName</title>
     <partial name="_Styles" />
     @RenderSection("Styles", required: false)
     <script asp-add-nonce>
@@ -17,6 +21,10 @@
     </script>
 </head>
 <body class="hold-transition sidebar-mini">
+	<div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section"></div>
+    </div>
     <!-- Site wrapper -->
     <div class="wrapper">
         <partial name="_Navbar" />
@@ -50,9 +58,9 @@
             <div class="float-right p-1 d-none d-sm-block">
                 @await Html.PartialAsync("_SelectLanguagePartial")
             </div>
-            <strong>Copyright &copy; @System.DateTime.Now.Year - Corporate Technologies Inc.</strong> All rights reserved.
+            <strong>Copyright &copy; @System.DateTime.Now.Year - @companyName - <a href="mailto:@customerSupportEmail">@customerSupportEmail</a></strong> All rights reserved.
             Release @release Build @build
-            <a href="https://filinvest.com/privacy-policy">Privacy</a>
+            <a href="@privacyPolicyUrl" target="_blank">Privacy</a>        
         </footer>
     </div>
     <partial name="_Scripts" />

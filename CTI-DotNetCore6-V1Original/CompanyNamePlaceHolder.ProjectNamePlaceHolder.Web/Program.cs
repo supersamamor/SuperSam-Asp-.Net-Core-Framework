@@ -1,8 +1,10 @@
 using AspNetCoreHero.ToastNotification.Extensions;
-using CTI.Common.Web.Utility.Logging;
+using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Serilog;
@@ -16,10 +18,26 @@ builder.Host.UseSerilog((context, services, configuration) =>
                           .FromLogContext());
 
 // Add services to the container.
-var startup = new Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
-var identityStartup = new IdentityStartup(builder.Configuration);
-identityStartup.ConfigureServices(builder.Services);
+var configuration = builder.Configuration;
+var services = builder.Services;
+
+services.ConfigureIdentityServices(configuration);
+services.ConfigureDefaultServices(configuration);
+
+if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+{
+    services.AddDbContext<ApplicationContext>(options =>
+        options.UseInMemoryDatabase("ApplicationContext"));
+}
+else
+{
+    services.AddDbContext<ApplicationContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("ApplicationContext"),
+                             o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
+}
+services.AddHealthChecks()
+        .AddDbContextCheck<ApplicationContext>()
+        .AddDbContextCheck<IdentityContext>();
 
 var app = builder.Build();
 
@@ -77,12 +95,14 @@ app.MapHealthChecks("/health").AllowAnonymous();
 app.UseNotyf();
 
 // Seed the database
-Log.Information("Seeding database");
-var scope = app.Services.CreateScope();
-await DefaultEntity.Seed(scope.ServiceProvider);
-await DefaultRole.Seed(scope.ServiceProvider);
-await DefaultUser.Seed(scope.ServiceProvider);
-await DefaultClient.Seed(scope.ServiceProvider);
-Log.Information("Finished seeding database");
-
+if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
+{
+    Log.Information("Seeding database");
+    var scope = app.Services.CreateScope();
+    await DefaultEntity.Seed(scope.ServiceProvider);
+    await DefaultRole.Seed(scope.ServiceProvider);
+    await DefaultUser.Seed(scope.ServiceProvider);
+    await DefaultClient.Seed(scope.ServiceProvider);
+    Log.Information("Finished seeding database");
+}
 app.Run();

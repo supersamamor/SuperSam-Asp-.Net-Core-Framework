@@ -1,4 +1,4 @@
-using CTI.Common.Utility.Extensions;
+using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using System.ComponentModel.DataAnnotations;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;

@@ -1,4 +1,4 @@
-using CTI.Common.Web.Utility.Identity;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

@@ -1,6 +1,6 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Models;
+using CompanyNamePlaceHolder.Common.Data;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;

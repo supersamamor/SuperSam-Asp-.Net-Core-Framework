@@ -11,18 +11,29 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("Apis"))
             .Concat(GeneratePermissionsForModule("Applications"))
             .Concat(GeneratePermissionsForModule("AuditTrail"))
-            .Concat(GeneratePermissionsForModule("MainModulePlaceHolder"));
+            .Concat(GeneratePermissionsForModule("MainModule"))
+			.Concat(GeneratePermissionsForModule("ParentModule"))
+			.Concat(GeneratePermissionsForModule("SubDetailItem"))
+			.Concat(GeneratePermissionsForModule("SubDetailList"))
+			
+			.Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
-        return new List<string>()
+        var permissions = new List<string>()
         {
             $"Permission.{module}.Create",
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
         };
+		if (module == "ApproverSetup")
+		{
+			permissions.Add($"Permission.{module}.Approve");
+			permissions.Add($"Permission.{module}.PendingApprovals");
+		}
+		return permissions;
     }
 
     public static class Admin
@@ -81,11 +92,40 @@ public static class Permission
         public const string Delete = "Permission.AuditTrail.Delete";
     }
 
-    public static class MainModulePlaceHolder
-    {
-        public const string View = "Permission.MainModulePlaceHolder.View";
-        public const string Create = "Permission.MainModulePlaceHolder.Create";
-        public const string Edit = "Permission.MainModulePlaceHolder.Edit";
-        public const string Delete = "Permission.MainModulePlaceHolder.Delete";
-    }
+    public static class MainModule
+	{
+		public const string View = "Permission.MainModule.View";
+		public const string Create = "Permission.MainModule.Create";
+		public const string Edit = "Permission.MainModule.Edit";
+		public const string Delete = "Permission.MainModule.Delete";
+	}
+	public static class ParentModule
+	{
+		public const string View = "Permission.ParentModule.View";
+		public const string Create = "Permission.ParentModule.Create";
+		public const string Edit = "Permission.ParentModule.Edit";
+		public const string Delete = "Permission.ParentModule.Delete";
+	}
+	public static class SubDetailItem
+	{
+		public const string View = "Permission.SubDetailItem.View";
+		public const string Create = "Permission.SubDetailItem.Create";
+		public const string Edit = "Permission.SubDetailItem.Edit";
+		public const string Delete = "Permission.SubDetailItem.Delete";
+	}
+	public static class SubDetailList
+	{
+		public const string View = "Permission.SubDetailList.View";
+		public const string Create = "Permission.SubDetailList.Create";
+		public const string Edit = "Permission.SubDetailList.Edit";
+		public const string Delete = "Permission.SubDetailList.Delete";
+	}
+	
+	public static class ApproverSetup
+	{
+		public const string Create = "Permission.ApproverSetup.Create";
+		public const string View = "Permission.ApproverSetup.View";
+		public const string Edit = "Permission.ApproverSetup.Edit";
+		public const string PendingApprovals = "Permission.ApproverSetup.PendingApprovals";
+	}
 }

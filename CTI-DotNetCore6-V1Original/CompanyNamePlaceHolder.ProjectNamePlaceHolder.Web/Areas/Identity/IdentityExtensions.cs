@@ -1,4 +1,4 @@
-using CTI.Common.Web.Utility.Authorization;
+using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;
 using LanguageExt.Common;

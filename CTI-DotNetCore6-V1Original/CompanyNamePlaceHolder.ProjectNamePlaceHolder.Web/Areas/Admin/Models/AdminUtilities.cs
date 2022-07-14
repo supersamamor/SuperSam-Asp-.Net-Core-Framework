@@ -2,7 +2,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using static CTI.Common.Utility.Helpers.OptionHelper;
+using static CompanyNamePlaceHolder.Common.Utility.Helpers.OptionHelper;
 using static LanguageExt.Prelude;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
