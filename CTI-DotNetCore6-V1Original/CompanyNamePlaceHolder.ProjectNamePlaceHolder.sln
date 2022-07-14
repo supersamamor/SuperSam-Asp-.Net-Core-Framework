@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.csproj", "{B50CFBDB-36A4-4170-8261-EC0D79E7A6E9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.csproj", "{D7E66AFB-562C-423A-BF36-232F7B8C2523}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93924D64-6980-4F6F-ADD5-F96D94D39BAD}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines-api.yml = azure-pipelines-api.yml
@@ -45,8 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.csproj", "{D7E66AFB-562C-423A-BF36-232F7B8C2523}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
