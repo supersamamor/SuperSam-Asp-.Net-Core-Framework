@@ -92,7 +92,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
         {
             if (message.Contains(EmailContentPlaceHolder.ApprovalUrl))
             {
-                message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/AreaNamePlaceHolder/{approvalRecord!.ApproverSetup!.TableName}/Approve?Id={approvalRecord.DataId}");
+                message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/ProjectNamePlaceHolder/{approvalRecord!.ApproverSetup!.TableName}/Approve?Id={approvalRecord.DataId}");
             }
             return message;
         }
