@@ -7,7 +7,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Serilog;
+using Serilog;Template:[ApprovalProgramImport]
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +38,7 @@ else
 services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
-
+Template:[ApprovalProgramAddService]
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

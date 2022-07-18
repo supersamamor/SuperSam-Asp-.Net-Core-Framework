@@ -40,6 +40,7 @@
     <PackageReference Include="OpenIddict.Quartz" Version="3.1.1" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
+	Template:[ApprovalProjectWebPackages]
   </ItemGroup>
 
   <ItemGroup>
