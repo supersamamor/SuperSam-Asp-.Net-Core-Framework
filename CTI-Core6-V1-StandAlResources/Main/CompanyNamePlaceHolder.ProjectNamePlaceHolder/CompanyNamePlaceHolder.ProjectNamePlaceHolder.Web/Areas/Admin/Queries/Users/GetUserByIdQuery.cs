@@ -3,6 +3,7 @@ using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static CompanyNamePlaceHolder.Common.Utility.Helpers.OptionHelper;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 

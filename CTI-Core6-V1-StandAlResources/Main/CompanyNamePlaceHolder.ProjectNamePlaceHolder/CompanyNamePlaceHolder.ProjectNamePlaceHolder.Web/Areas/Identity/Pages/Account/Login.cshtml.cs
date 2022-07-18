@@ -1,5 +1,4 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.AuditTrail;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account;
 

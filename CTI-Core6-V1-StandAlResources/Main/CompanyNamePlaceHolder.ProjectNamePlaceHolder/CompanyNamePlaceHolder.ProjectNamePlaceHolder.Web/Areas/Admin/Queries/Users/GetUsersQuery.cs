@@ -4,6 +4,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CompanyNamePlaceHolder.Common.Core.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 

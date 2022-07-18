@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 using static CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.IdentityExtensions;
 using static LanguageExt.Prelude;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Users;
 
