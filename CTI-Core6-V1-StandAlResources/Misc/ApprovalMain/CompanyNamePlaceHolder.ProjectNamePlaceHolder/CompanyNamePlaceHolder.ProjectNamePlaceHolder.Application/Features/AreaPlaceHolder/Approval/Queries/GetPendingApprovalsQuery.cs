@@ -26,6 +26,7 @@ public class GetPendingApprovalsQueryHandler : IRequestHandler<GetPendingApprova
                     join b in _context.ApprovalRecord on a.ApprovalRecordId equals b.Id
                     where (a.Status == ApprovalStatus.ForApproval || a.Status == ApprovalStatus.PartiallyApproved)
                     && (a.EmailSendingStatus == SendingStatus.Failed || a.EmailSendingStatus == SendingStatus.Done)
+					&& b.ApproverSetup!.TableName == request.TableName
                     select new PendingApproval()
                     {
                         DataId = b.DataId,
