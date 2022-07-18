@@ -21,7 +21,7 @@ public static class Permission
             $"Permission.{module}.Create",
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
-            $"Permission.{module}.Delete",
+            $"Permission.{module}.Delete",Template:[ApprovalPermissionFour]
         };
 		Template:[ApprovalPermissionTwo]
 		return permissions;
