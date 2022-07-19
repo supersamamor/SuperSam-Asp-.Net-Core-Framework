@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -7,11 +7,8 @@
 		<Authors>Fred Songco</Authors>
 		<Company>Corporate Technologies, Inc.</Company>
 		<Description>A library containing features that can be used by web API projects.</Description>
-		<Copyright>Copyright 2022 Corporate Technologies, Inc.</Copyright>
-		<PackageProjectUrl>https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate</PackageProjectUrl>
-		<RepositoryUrl>https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate</RepositoryUrl>
+		<Copyright>Copyright 2022 Corporate Technologies, Inc.</Copyright>	
 		<Version>1.0.0</Version>
-		<PackageId>CompanyNamePlaceHolder.Common.API</PackageId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,8 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="AutoMapper" Version="11.0.1" />
-	  <PackageReference Include="LanguageExt.Core" Version="4.1.1" />
+	  <PackageReference Include="AutoMapper" Version="11.0.1" />	
+	  <PackageReference Include="LanguageExt.Core" Version="4.2.9" />
 	  <PackageReference Include="MediatR" Version="10.0.1" />
 	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
@@ -28,7 +25,7 @@
 	  <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="3.1.1" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
 	</ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Web.Utility\CompanyNamePlaceHolder.Common.Web.Utility.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CompanyNamePlaceHolder.Common.Web.Utility\CompanyNamePlaceHolder.Common.Web.Utility.csproj" />
+	</ItemGroup>
 </Project>

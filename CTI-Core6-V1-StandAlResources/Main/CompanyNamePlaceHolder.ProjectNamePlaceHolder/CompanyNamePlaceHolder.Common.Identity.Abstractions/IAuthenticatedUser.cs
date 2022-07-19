@@ -6,22 +6,22 @@ namespace CompanyNamePlaceHolder.Common.Identity.Abstractions;
 public interface IAuthenticatedUser
 {
     /// <summary>
-    /// Represents the tenant that this user belongs to. Used for multi-tenancy.
+    /// Represents the tenant that this user belongs to. Used for multi-tenant support.
     /// </summary>
     string? Entity { get; }
 
     /// <summary>
-    /// Unique identifier for this request
+    /// Unique identifier for the current request.
     /// </summary>
     string? TraceId { get; }
 
     /// <summary>
-    /// Id of this user
+    /// Id of this user.
     /// </summary>
     string? UserId { get; }
 
     /// <summary>
-    /// Username
+    /// Username of this user.
     /// </summary>
     string? Username { get; }
 }

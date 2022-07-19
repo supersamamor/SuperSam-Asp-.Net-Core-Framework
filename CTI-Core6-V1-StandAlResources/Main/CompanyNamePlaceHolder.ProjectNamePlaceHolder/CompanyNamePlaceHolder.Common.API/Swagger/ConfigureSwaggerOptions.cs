@@ -7,17 +7,29 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CompanyNamePlaceHolder.Common.API.Swagger;
 
+/// <summary>
+/// A class for applying default configuration for generating Swagger documentation.
+/// </summary>
 public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 {
     readonly IApiVersionDescriptionProvider _provider;
     readonly string _appName;
 
+    /// <summary>
+    /// Creates an instance of <see cref="ConfigureSwaggerOptions"/>.
+    /// </summary>
+    /// <param name="provider">Instance of <see cref="IApiVersionDescriptionProvider"/></param>
+    /// <param name="configuration">Instance of <see cref="IConfiguration"/></param>
     public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IConfiguration configuration)
     {
         _provider = provider;
         _appName = configuration.GetValue<string>("Application");
     }
 
+    /// <summary>
+    /// Configures the Swagger documentation.
+    /// </summary>
+    /// <param name="options">Instance of <see cref="SwaggerGenOptions"/></param>
     public void Configure(SwaggerGenOptions options)
     {
         foreach (var description in _provider.ApiVersionDescriptions)

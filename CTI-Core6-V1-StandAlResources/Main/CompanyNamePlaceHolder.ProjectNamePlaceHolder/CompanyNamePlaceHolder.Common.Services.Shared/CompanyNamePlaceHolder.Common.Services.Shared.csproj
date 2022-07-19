@@ -2,19 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Authors>Fred Songco</Authors>
 		<Company>Corporate Technologies, Inc.</Company>
-		<Description>A library containing common services such as email-sending, etc.</Description>
-		<Copyright>Copyright 2022 Corporate Technologies, Inc.</Copyright>
-		<PackageProjectUrl>https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate</PackageProjectUrl>
-		<RepositoryUrl>https://dev.azure.com/fai-dev-team/CTI%20Alabang%20Apps/_git/CTI.WebAppTemplate</RepositoryUrl>
-		<Version>1.0.0</Version>
-		<PackageId>CompanyNamePlaceHolder.Common.Services.Shared</PackageId>
+		<Description>A library containing cross-cutting services such as email-sending, etc.</Description>
+		<Copyright>Copyright 2022 Corporate Technologies, Inc.</Copyright>	
+		<Version>1.0.0</Version>	
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MailKit" Version="3.2.0" />
+		<PackageReference Include="MailKit" Version="3.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
 	</ItemGroup>
 

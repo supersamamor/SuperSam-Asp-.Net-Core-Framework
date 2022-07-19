@@ -3,8 +3,18 @@ using CompanyNamePlaceHolder.Common.Core.Base.Models;
 
 namespace CompanyNamePlaceHolder.Common.Core.Mapping;
 
+/// <summary>
+/// Extends the functionality of <see cref="AutoMapper"/>.
+/// </summary>
 public static class MappingExtensions
 {
+    /// <summary>
+    /// Ignore <see cref="BaseEntity"/> properties during mapping.
+    /// </summary>
+    /// <typeparam name="TSource"></typeparam>
+    /// <typeparam name="TDestination"></typeparam>
+    /// <param name="mapping"></param>
+    /// <returns></returns>
     public static IMappingExpression<TSource, TDestination> IgnoreBaseEntityProperties<TSource, TDestination>(this IMappingExpression<TSource, TDestination> mapping)
     where TSource : BaseEntity
     where TDestination : BaseEntity

@@ -8,15 +8,15 @@ using System.Reflection;
 namespace CompanyNamePlaceHolder.Common.Web.Utility.Annotations;
 
 /// <summary>
-/// Specifies that the value of the field should be less than or equal to the value of another field.
+/// Specifies that the value of the field should be less than the value of another field.
 /// </summary>
-public class LessThanEqualAttribute : BaseValidationAttribute
+public class LessThanAttribute : BaseValidationAttribute
 {
     /// <summary>
-    /// Initializes a new instance of <see cref="LessThanEqualAttribute"/>.
+    /// Initializes a new instance of <see cref="LessThanAttribute"/>.
     /// </summary>
     /// <param name="otherProperty">The name of the other field that this field should be compared to</param>
-    public LessThanEqualAttribute(string otherProperty)
+    public LessThanAttribute(string otherProperty)
     {
         OtherProperty = otherProperty;
     }
@@ -40,14 +40,14 @@ public class LessThanEqualAttribute : BaseValidationAttribute
     {
         if (ErrorMessage == null && ErrorMessageResourceName == null)
         {
-            ErrorMessage = "{0} must be less than or equal to {1}";
+            ErrorMessage = "{0} must be less than {1}";
         }
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name,
                              OtherPropertyDisplayName ?? OtherProperty);
     }
 
     /// <summary>
-    /// Validates if the value of this field is less than or equal to the value of the other field.
+    /// Validates if the value of this field is less than the value of the other field.
     /// </summary>
     /// <param name="value">The value of this field</param>
     /// <param name="validationContext"></param>
@@ -65,7 +65,7 @@ public class LessThanEqualAttribute : BaseValidationAttribute
         }
         OtherPropertyDisplayName = GetDisplayNameForProperty(otherPropertyInfo);
         var otherPropertyValue = otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
-        if (((IComparable)value).CompareTo(otherPropertyValue) > 0)
+        if (((IComparable)value).CompareTo(otherPropertyValue) >= 0)
         {
             return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
         }
@@ -74,16 +74,16 @@ public class LessThanEqualAttribute : BaseValidationAttribute
 }
 
 /// <summary>
-/// The attribute adapater for <see cref="LessThanEqualAttribute"/> to enable client-side validation.
+/// The attribute adapater for <see cref="LessThanAttribute"/> to enable client-side validation.
 /// </summary>
-public class LessThanEqualAttributeAdapter : AttributeAdapterBase<LessThanEqualAttribute>
+public class LessThanAttributeAdapter : AttributeAdapterBase<LessThanAttribute>
 {
     /// <summary>
-    /// Initializes a new instance of <see cref="LessThanEqualAttributeAdapter"/>.
+    /// Initializes a new instance of <see cref="LessThanAttributeAdapter"/>.
     /// </summary>
     /// <param name="attribute"></param>
     /// <param name="stringLocalizer"></param>
-    public LessThanEqualAttributeAdapter(LessThanEqualAttribute attribute, IStringLocalizer? stringLocalizer)
+    public LessThanAttributeAdapter(LessThanAttribute attribute, IStringLocalizer? stringLocalizer)
         : base(attribute, stringLocalizer)
     {
     }
@@ -95,9 +95,9 @@ public class LessThanEqualAttributeAdapter : AttributeAdapterBase<LessThanEqualA
     public override void AddValidation(ClientModelValidationContext context)
     {
         MergeAttribute(context.Attributes, "data-val", "true");
-        MergeAttribute(context.Attributes, "data-val-lessThanEqual", GetErrorMessage(context));
+        MergeAttribute(context.Attributes, "data-val-lessThan", GetErrorMessage(context));
         var property = Attribute.OtherProperty;
-        MergeAttribute(context.Attributes, "data-val-lessThanEqual-other", property);
+        MergeAttribute(context.Attributes, "data-val-lessThan-other", property);
     }
 
     /// <summary>

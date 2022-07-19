@@ -2,14 +2,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.Common.Data;
 
+/// <summary>
+/// A base class for contexts that automatically creates audit logs for transactions.
+/// </summary>
 public abstract class AuditableContext : DbContext
 {
+    /// <summary>
+    /// Creates an instance of <see cref="AuditableContext"/>
+    /// </summary>
+    /// <param name="options"></param>
     public AuditableContext(DbContextOptions options) : base(options)
     {
     }
 
+    /// <summary>
+    /// The audit logs table.
+    /// </summary>
     public DbSet<Audit> AuditLogs { get; set; } = default!;
 
+    /// <summary>
+    /// Create audit logs records based on the entities added/edited/deleted.
+    /// </summary>
+    /// <param name="userId">The id of the user doing the transaction</param>
+    /// <param name="traceId">Unique identifier for this transaction</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public virtual async Task<int> SaveChangesAsync(string? userId = null, string? traceId = null, CancellationToken cancellationToken = default)
     {
         var auditEntries = OnBeforeSaveChanges(userId, traceId);

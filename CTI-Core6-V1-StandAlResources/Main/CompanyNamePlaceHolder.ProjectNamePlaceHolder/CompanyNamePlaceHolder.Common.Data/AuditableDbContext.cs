@@ -4,20 +4,57 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.Common.Data;
 
-public class AuditableDbContext<T> : AuditableContext where T : DbContext
+/// <summary>
+/// A base class for contexts that automatically creates audit logs for transactions.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public abstract class AuditableDbContext<T> : AuditableContext where T : DbContext
 {
-    readonly IAuthenticatedUser _authenticatedUser;
+    /// <summary>
+    /// Represents the authenticated user doing the transaction.
+    /// </summary>
+    protected readonly IAuthenticatedUser AuthenticatedUser;
 
+    /// <summary>
+    /// Creates an instance of <see cref="AuditableDbContext{T}"/>.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="authenticatedUser"></param>
     public AuditableDbContext(DbContextOptions<T> options,
                             IAuthenticatedUser authenticatedUser) : base(options)
     {
-        _authenticatedUser = authenticatedUser;
+        AuthenticatedUser = authenticatedUser;
     }
 
+    /// <summary>
+    /// Override this method to further configure the model that was discovered by convention 
+    /// from the entity types exposed in <see cref="DbSet{TEntity}"/> properties on your 
+    /// derived context. The resulting model may be cached and re-used for subsequent instances 
+    /// of your derived context.
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        foreach (var property in modelBuilder.Model.GetEntityTypes()
+                                                   .SelectMany(t => t.GetProperties())
+                                                   .Where(p => p.ClrType == typeof(decimal)
+                                                               || p.ClrType == typeof(decimal?)))
+        {
+            property.SetColumnType("decimal(18,6)");
+        }
+
+        base.OnModelCreating(modelBuilder);
+    }
+
+    /// <summary>
+    /// Saves changes to the database.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        SetBaseFields(_authenticatedUser);
-        return base.SaveChangesAsync(_authenticatedUser.UserId, _authenticatedUser.TraceId);
+        SetBaseFields(AuthenticatedUser);
+        return base.SaveChangesAsync(AuthenticatedUser.UserId, AuthenticatedUser.TraceId, cancellationToken);
     }
 
     void SetBaseFields(IAuthenticatedUser authenticatedUser)

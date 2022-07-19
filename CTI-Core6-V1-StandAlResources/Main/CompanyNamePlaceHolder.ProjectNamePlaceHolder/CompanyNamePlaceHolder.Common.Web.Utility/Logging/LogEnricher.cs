@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace CompanyNamePlaceHolder.Common.Web.Utility.Logging
-{
-    public static class LogEnricher
+namespace CompanyNamePlaceHolder.Common.Web.Utility.Logging;
+
+/// <summary>
+/// Helper methods for enriching the Serilog logs.
+/// </summary>
+public static class LogEnricher
 {
     /// <summary>
     /// Enrich the logs with additional information from the <see cref="HttpContext"/>.
@@ -60,5 +60,4 @@ namespace CompanyNamePlaceHolder.Common.Web.Utility.Logging
 
         diagnosticContext.Set("TraceId", Activity.Current?.Id ?? httpContext?.TraceIdentifier);
     }
-}
 }
