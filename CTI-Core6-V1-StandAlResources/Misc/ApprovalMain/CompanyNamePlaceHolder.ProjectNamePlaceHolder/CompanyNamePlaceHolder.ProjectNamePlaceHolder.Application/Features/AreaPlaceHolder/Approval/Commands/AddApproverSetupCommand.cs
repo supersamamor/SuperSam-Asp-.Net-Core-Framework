@@ -24,13 +24,13 @@ public class AddApproverSetupCommandHandler : BaseCommandHandler<ApplicationCont
     }
 
     public async Task<Validation<Error, ApproverSetupState>> Handle(AddApproverSetupCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
+        await Validators.ValidateTAsync(request, cancellationToken).BindT(
             async request => await AddApproverSetup(request, cancellationToken));
 
 
     public async Task<Validation<Error, ApproverSetupState>> AddApproverSetup(AddApproverSetupCommand request, CancellationToken cancellationToken)
     {
-        ApproverSetupState entity = _mapper.Map<ApproverSetupState>(request);
+        ApproverSetupState entity = Mapper.Map<ApproverSetupState>(request);
         UpdateApproverAssignmentList(entity);
         _ = await Context.AddAsync(entity, cancellationToken);
         _ = await Context.SaveChangesAsync(cancellationToken);
