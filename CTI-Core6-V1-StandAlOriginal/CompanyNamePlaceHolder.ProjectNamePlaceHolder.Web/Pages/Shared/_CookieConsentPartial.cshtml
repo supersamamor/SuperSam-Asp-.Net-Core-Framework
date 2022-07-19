@@ -4,7 +4,7 @@
     var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
-    var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
+	var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
 }
 
 @if (showBanner)

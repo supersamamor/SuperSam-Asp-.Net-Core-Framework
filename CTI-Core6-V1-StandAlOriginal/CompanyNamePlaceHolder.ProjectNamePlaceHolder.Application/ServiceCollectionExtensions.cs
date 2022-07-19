@@ -1,4 +1,4 @@
-using CTI.Common.Utility.Validators;
+using CompanyNamePlaceHolder.Common.Utility.Validators;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

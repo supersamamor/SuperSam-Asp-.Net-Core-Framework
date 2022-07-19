@@ -1,6 +1,6 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CTI.Common.Core.Base.Models;
-using CTI.Common.Identity.Abstractions;
+using CompanyNamePlaceHolder.Common.Core.Base.Models;
+using CompanyNamePlaceHolder.Common.Identity.Abstractions;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;

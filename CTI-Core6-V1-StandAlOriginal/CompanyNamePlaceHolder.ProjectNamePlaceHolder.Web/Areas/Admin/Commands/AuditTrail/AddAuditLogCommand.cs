@@ -1,6 +1,6 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CTI.Common.Data;
+using CompanyNamePlaceHolder.Common.Data;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;

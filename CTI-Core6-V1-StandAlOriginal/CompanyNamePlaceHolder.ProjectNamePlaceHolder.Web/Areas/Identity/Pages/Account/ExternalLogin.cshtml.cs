@@ -1,7 +1,6 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Commands.AuditTrail;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
-using CTI.Common.Services.Shared.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +10,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]

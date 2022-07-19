@@ -167,4 +167,15 @@ $(document).ready(function () {
             })
             .fail(function () { });
     }
+	$.showAjaxLoaderOnClick = function (triggerElements)
+    {      
+        var triggerElementString = "";
+        for (let i = 0; i < triggerElements.length; i++) {
+            if (triggerElementString != "") { triggerElementString += ", "; }
+            triggerElementString += triggerElements[i];
+        }
+        $(triggerElementString).bind('click', function () {
+            $('body').removeClass('loaded');
+        });
+    }
 });

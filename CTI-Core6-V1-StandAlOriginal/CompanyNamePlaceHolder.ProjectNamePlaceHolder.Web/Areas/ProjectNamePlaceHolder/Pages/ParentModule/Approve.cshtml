@@ -1,0 +1,43 @@
+@page
+@model ApproveModel
+@{
+    ViewData["Title"] = Localizer["Approve ParentModule"];
+    ViewData["ActiveMainPage"] = "ParentModule";
+    ViewData["Level1"] = "ProjectNamePlaceHolder";
+}
+<form id="parentModule-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <partial name="_ApprovalStatusPartial" model="@Model.ApprovalStatus" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ParentModule" />
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Back"]</a>
+                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalStatus.ForApproval)
+                {
+                    <button type="submit" class="btn btn-primary" name="Handler" value="Approve">@Localizer["Approve"]</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" disabled>@Localizer["Approve"]</button>
+                }
+                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalStatus.ForApproval)
+                {
+                    <button type="submit" class="btn btn-danger" name="Handler" value="Reject">@Localizer["Reject"]</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" disabled>@Localizer["Reject"]</button>
+                }
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DisableFieldsPartial" model="@("parentModule-form")" />
+}

@@ -21,7 +21,7 @@
     </script>
 </head>
 <body class="hold-transition sidebar-mini">
-    <div id="loader-wrapper">
+	<div id="loader-wrapper">
         <div id="loader"></div>
         <div class="loader-section"></div>
     </div>
@@ -57,10 +57,10 @@
             </div>
             <div class="float-right p-1 d-none d-sm-block">
                 @await Html.PartialAsync("_SelectLanguagePartial")
-            </div>   
+            </div>
             <strong>Copyright &copy; @System.DateTime.Now.Year - @companyName - <a href="mailto:@customerSupportEmail">@customerSupportEmail</a></strong> All rights reserved.
             Release @release Build @build
-            <a href="@privacyPolicyUrl" target="_blank">Privacy</a>
+            <a href="@privacyPolicyUrl" target="_blank">Privacy</a>        
         </footer>
     </div>
     <partial name="_Scripts" />

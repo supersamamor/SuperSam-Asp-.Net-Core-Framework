@@ -1,15 +1,15 @@
 using AspNetCoreHero.ToastNotification.Extensions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
+using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CTI.Common.Web.Utility.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Serilog;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
 
 var builder = WebApplication.CreateBuilder(args);
 

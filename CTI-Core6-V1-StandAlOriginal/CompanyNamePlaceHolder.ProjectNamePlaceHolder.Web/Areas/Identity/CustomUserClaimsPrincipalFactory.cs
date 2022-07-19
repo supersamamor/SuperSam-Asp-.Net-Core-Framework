@@ -1,8 +1,9 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
-using CTI.Common.Web.Utility.Identity;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 
 public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>

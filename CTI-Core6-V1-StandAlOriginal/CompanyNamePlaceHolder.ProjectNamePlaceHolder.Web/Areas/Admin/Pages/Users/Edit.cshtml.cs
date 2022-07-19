@@ -1,9 +1,8 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
-using CTI.Common.Web.Utility.Extensions;
 using LanguageExt;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 using static CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.IdentityExtensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Users;
 
 [Authorize(Policy = Permission.Users.Edit)]

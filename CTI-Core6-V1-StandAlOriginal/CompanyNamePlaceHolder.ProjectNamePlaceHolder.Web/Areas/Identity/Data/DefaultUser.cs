@@ -1,6 +1,7 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 
 public static class DefaultUser

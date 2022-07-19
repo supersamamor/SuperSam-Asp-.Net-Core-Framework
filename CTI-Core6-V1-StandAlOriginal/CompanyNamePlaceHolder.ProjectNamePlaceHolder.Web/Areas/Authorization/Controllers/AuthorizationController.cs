@@ -1,9 +1,8 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.Common.Utility.Extensions;
+using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
-using CTI.Common.Utility.Extensions;
-using CTI.Common.Web.Utility.Helpers;
-using CTI.Common.Web.Utility.Identity;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +15,8 @@ using OpenIddict.Core;
 using OpenIddict.Server.AspNetCore;
 using System.Security.Claims;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Controllers;
 
 [Area("Authorization")]

@@ -1,16 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CTI.Common.Core.Base" Version="2.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Core.Base\CompanyNamePlaceHolder.Common.Core.Base.csproj" />
   </ItemGroup>
 </Project>

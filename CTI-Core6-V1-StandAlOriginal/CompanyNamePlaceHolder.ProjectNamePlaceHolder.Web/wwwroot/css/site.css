@@ -17,3 +17,8 @@ button.accept-policy {
     margin-left: 10px;
 	margin-top: 13px;
 }
+.fieldrequired::after {
+    content: " *";
+    font-weight: bold;
+    color: red;
+}

@@ -1,7 +1,7 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CTI.Common.Core.Queries;
-using CTI.Common.Utility.Models;
+using CompanyNamePlaceHolder.Common.Core.Queries;
+using CompanyNamePlaceHolder.Common.Utility.Models;
 using MediatR;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Approval.Queries;

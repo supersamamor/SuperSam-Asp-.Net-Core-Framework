@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Exceptions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Exceptions;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

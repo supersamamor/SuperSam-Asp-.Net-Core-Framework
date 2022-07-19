@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;

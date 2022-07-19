@@ -1,9 +1,9 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CTI.Common.Core.Commands;
-using CTI.Common.Data;
-using CTI.Common.Utility.Validators;
+using CompanyNamePlaceHolder.Common.Core.Commands;
+using CompanyNamePlaceHolder.Common.Data;
+using CompanyNamePlaceHolder.Common.Utility.Validators;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;

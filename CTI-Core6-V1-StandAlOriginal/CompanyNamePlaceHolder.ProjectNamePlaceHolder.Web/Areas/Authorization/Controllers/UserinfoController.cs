@@ -1,6 +1,5 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
-using CTI.Common.Web.Utility.Authorization;
-using CTI.Common.Web.Utility.Identity;
+using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Controllers;
 
 public class UserinfoController : Controller

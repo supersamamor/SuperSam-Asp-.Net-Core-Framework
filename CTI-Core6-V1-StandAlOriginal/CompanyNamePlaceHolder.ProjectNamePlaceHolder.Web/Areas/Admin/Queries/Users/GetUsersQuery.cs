@@ -1,10 +1,11 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.Common.Utility.Extensions;
+using CompanyNamePlaceHolder.Common.Utility.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CTI.Common.Core.Queries;
-using CTI.Common.Utility.Extensions;
-using CTI.Common.Utility.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using CompanyNamePlaceHolder.Common.Core.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 
 public record GetUsersQuery : BaseQuery, IRequest<PagedListResponse<ApplicationUser>>

@@ -1,4 +1,4 @@
-﻿using CTI.Common.Core.Base.Models;
+using CompanyNamePlaceHolder.Common.Core.Base.Models;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder
 {
@@ -118,13 +118,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
         public const string Done = "Done";
         public const string Failed = "Failed";
     }
-    public static class ApprovalModule
-    {
-        public const string MainModulePlaceHolder = "MainModulePlaceHolder";
-        public static readonly List<string> MainModulePlaceHolderList =
-        new()
-        {
-            MainModulePlaceHolder,
-        };
-    }
+	public static class ApprovalModule
+	{
+		public const string MainModule = "MainModule";
+		public const string ParentModule = "ParentModule";
+		public static readonly List<string> ApprovalTableList =
+		new()
+		{
+			MainModule,
+			ParentModule,
+		};
+	}
 }

@@ -1,12 +1,13 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.Common.Identity.Abstractions;
+using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
+using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
-using CTI.Common.Identity.Abstractions;
-using CTI.Common.Web.Utility.Authorization;
-using CTI.Common.Web.Utility.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
 
 public static class IdentityServiceCollectionExtensions

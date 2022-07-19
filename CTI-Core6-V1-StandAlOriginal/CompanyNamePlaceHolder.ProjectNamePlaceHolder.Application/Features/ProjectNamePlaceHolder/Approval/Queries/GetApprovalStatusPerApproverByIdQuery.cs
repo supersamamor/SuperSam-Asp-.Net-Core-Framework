@@ -2,7 +2,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using CTI.Common.Identity.Abstractions;
+using CompanyNamePlaceHolder.Common.Identity.Abstractions;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Approval.Queries;
 
