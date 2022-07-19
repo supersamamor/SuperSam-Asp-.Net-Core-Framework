@@ -25,6 +25,7 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
+		Template:[ApprovalStatusBadgeHelper]
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderQuery>());
         return new JsonResult(result.Data
             .Select(e => new

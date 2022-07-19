@@ -1,5 +1,5 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaNamePlaceHolder.Approval.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaNamePlaceHolder;
+﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Approval.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using MediatR;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Helper

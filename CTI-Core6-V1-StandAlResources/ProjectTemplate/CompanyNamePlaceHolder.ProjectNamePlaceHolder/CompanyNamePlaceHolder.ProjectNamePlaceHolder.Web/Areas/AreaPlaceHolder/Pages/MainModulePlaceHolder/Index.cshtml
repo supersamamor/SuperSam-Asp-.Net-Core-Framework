@@ -38,7 +38,7 @@
         var table = $('#mainModulePlaceHolder').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 2, 'desc' ]],
+            order: [[ Template:[ListingsSortingColumnNumber], 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/MainModulePlaceHolder/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
