@@ -5,6 +5,8 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+Template:[ApprovalStatusBadgeImport]
+
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.MainModulePlaceHolder;
 
@@ -28,7 +30,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                Template:[InsertNewJSONParameterForListingQueryTextHere]				              
+                Template:[InsertNewJSONParameterForListingQueryTextHere]		
+				Template:[ApprovalStatusBadge]
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

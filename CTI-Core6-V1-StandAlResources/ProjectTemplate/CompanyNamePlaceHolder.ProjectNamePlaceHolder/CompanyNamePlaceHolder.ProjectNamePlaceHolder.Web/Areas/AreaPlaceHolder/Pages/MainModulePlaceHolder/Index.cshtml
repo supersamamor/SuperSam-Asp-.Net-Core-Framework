@@ -16,7 +16,8 @@
                 <table id="mainModulePlaceHolder" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
-                            Template:[InsertNewTableHeader]                           
+                            Template:[InsertNewTableHeader]  
+							Template:[ApprovalStatusBadgeTableHeader]							
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -51,7 +52,8 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                Template:[InsertNewTableRowValue]               
+                Template:[InsertNewTableRowValue]   
+				Template:[ApprovalStatusBadgeTableColumn]
                 {
                     data: null,
                     searchable: false,
