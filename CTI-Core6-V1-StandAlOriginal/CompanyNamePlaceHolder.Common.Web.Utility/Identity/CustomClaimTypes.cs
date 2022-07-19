@@ -1,7 +1,12 @@
-namespace CompanyNamePlaceHolder.Common.Web.Utility.Identity
+namespace CompanyNamePlaceHolder.Common.Web.Utility.Identity;
+
+/// <summary>
+/// Custom claim types used by the system.
+/// </summary>
+public class CustomClaimTypes
 {
-    public class CustomClaimTypes
-    {
-        public const string Entity = "Entity";
-    }
+    /// <summary>
+    /// Claim type for the user entity. Used for multi-tenant support.
+    /// </summary>
+    public const string Entity = "Entity";
 }

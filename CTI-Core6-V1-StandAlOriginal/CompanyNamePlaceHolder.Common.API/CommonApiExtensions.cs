@@ -14,8 +14,16 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CompanyNamePlaceHolder.Common.API;
 
+/// <summary>
+/// A class containing extensions for enabling common API services.
+/// </summary>
 public static class CommonApiExtensions
 {
+    /// <summary>
+    /// Enables Swagger API documentation with common options.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
     public static WebApplication EnableSwagger(this WebApplication app)
     {
         var scope = app.Services.CreateScope();
@@ -35,6 +43,13 @@ public static class CommonApiExtensions
         return app;
     }
 
+    /// <summary>
+    /// Registers default API services. Optionally, you can call the other methods in this class
+    /// to register the services individually.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IServiceCollection AddDefaultApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
@@ -48,6 +63,11 @@ public static class CommonApiExtensions
         return services;
     }
 
+    /// <summary>
+    /// Registers services related to API versioning with default options.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureVersioning(this IServiceCollection services)
     {
         services.AddApiVersioning(options => options.ReportApiVersions = true);
@@ -55,6 +75,11 @@ public static class CommonApiExtensions
         return services;
     }
 
+    /// <summary>
+    /// Registers services related to Swagger documentation with default options defined in <see cref="ConfigureSwaggerOptions"/>
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
@@ -63,6 +88,12 @@ public static class CommonApiExtensions
         return services;
     }
 
+    /// <summary>
+    /// Registers services related to authentication.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         var issuer = new Uri(configuration.GetValue<string>("Authentication:Issuer"));
@@ -82,6 +113,12 @@ public static class CommonApiExtensions
         return services;
     }
 
+    /// <summary>
+    /// Registers services related to authorization. Uses <see cref="PermissionPolicyProvider"/>
+    /// and <see cref="PermissionAuthorizationHandler"/>.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection ConfigureAuthorization(this IServiceCollection services)
     {
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();

@@ -24,7 +24,7 @@ public class AddApproverSetupCommandHandler : BaseCommandHandler<ApplicationCont
     }
 
     public async Task<Validation<Error, ApproverSetupState>> Handle(AddApproverSetupCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
+        await Validators.ValidateTAsync(request, cancellationToken).BindT(
             async request => await AddApproverSetup(request, cancellationToken));
 
 

@@ -1,11 +1,17 @@
 using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace CompanyNamePlaceHolder.Common.Services.Shared.Interfaces
+namespace CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
+
+/// <summary>
+/// Represents an email sending service
+/// </summary>
+public interface IMailService
 {
-    public interface IMailService
-    {
-        Task SendAsync(MailRequest request, CancellationToken cancellationToken = default);
-    }
+    /// <summary>
+    /// Sends an email
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task SendAsync(MailRequest request, CancellationToken cancellationToken = default);
 }
