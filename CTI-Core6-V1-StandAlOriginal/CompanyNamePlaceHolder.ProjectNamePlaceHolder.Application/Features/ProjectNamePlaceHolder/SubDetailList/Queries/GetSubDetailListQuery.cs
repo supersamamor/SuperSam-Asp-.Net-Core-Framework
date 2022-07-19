@@ -16,7 +16,7 @@ public class GetSubDetailListQueryHandler : BaseQueryHandler<ApplicationContext,
     {
     }
 	public override async Task<PagedListResponse<SubDetailListState>> Handle(GetSubDetailListQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<SubDetailListState>().Include(l=>l.TestForeignKeyOne)
+		await Context.Set<SubDetailListState>().Include(l=>l.MainModule)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

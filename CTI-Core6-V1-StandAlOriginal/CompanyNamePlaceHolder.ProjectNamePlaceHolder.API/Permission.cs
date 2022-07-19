@@ -16,7 +16,6 @@ public static class Permission
 		public const string Create = "Permission.ParentModule.Create";
 		public const string Edit = "Permission.ParentModule.Edit";
 		public const string Delete = "Permission.ParentModule.Delete";
-		public const string Approve = "Permission.ParentModule.Approve";
 	}
 	public static class SubDetailItem
 	{
@@ -32,7 +31,6 @@ public static class Permission
 		public const string Create = "Permission.SubDetailList.Create";
 		public const string Edit = "Permission.SubDetailList.Edit";
 		public const string Delete = "Permission.SubDetailList.Delete";
-		public const string Approve = "Permission.SubDetailList.Approve";
 	}
 	
 }

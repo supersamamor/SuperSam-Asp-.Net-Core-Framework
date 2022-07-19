@@ -31,24 +31,14 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
 	public async Task<Validation<Error, MainModuleState>> AddMainModule(AddMainModuleCommand request, CancellationToken cancellationToken)
 	{
 		MainModuleState entity = Mapper.Map<MainModuleState>(request);
-		UpdateSubDetailListList(entity);
 		UpdateSubDetailItemList(entity);
+		UpdateSubDetailListList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		await AddApprovers(entity.Id, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, MainModuleState>(entity);
 	}
 	
-	private void UpdateSubDetailListList(MainModuleState entity)
-	{
-		if (entity.SubDetailListList?.Count > 0)
-		{
-			foreach (var subDetailList in entity.SubDetailListList!)
-			{
-				Context.Entry(subDetailList).State = EntityState.Added;
-			}
-		}
-	}
 	private void UpdateSubDetailItemList(MainModuleState entity)
 	{
 		if (entity.SubDetailItemList?.Count > 0)
@@ -56,6 +46,16 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
 			foreach (var subDetailItem in entity.SubDetailItemList!)
 			{
 				Context.Entry(subDetailItem).State = EntityState.Added;
+			}
+		}
+	}
+	private void UpdateSubDetailListList(MainModuleState entity)
+	{
+		if (entity.SubDetailListList?.Count > 0)
+		{
+			foreach (var subDetailList in entity.SubDetailListList!)
+			{
+				Context.Entry(subDetailList).State = EntityState.Added;
 			}
 		}
 	}

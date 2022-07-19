@@ -121,12 +121,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
 	public static class ApprovalModule
 	{
 		public const string MainModule = "MainModule";
-		public const string ParentModule = "ParentModule";
 		public static readonly List<string> ApprovalTableList =
 		new()
 		{
 			MainModule,
-			ParentModule,
 		};
 	}
 }

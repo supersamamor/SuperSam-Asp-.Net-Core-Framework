@@ -41,7 +41,7 @@
         var table = $('#subDetailList').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 2, 'desc' ]],
+            order: [[ 1, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/SubDetailList/Index", new { area = "ProjectNamePlaceHolder", handler = "ListAll" })',
@@ -81,6 +81,7 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteSubDetailList">@Localizer["Delete"]</a>';
                     </text>
                 }
+				   
                         return button;
                     },
                 },

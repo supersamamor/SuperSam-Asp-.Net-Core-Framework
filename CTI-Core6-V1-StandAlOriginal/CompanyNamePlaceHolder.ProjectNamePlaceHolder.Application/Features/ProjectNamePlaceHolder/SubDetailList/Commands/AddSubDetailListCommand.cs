@@ -23,18 +23,10 @@ public class AddSubDetailListCommandHandler : BaseCommandHandler<ApplicationCont
     {
     }
 
-    public async Task<Validation<Error, SubDetailListState>> Handle(AddSubDetailListCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, SubDetailListState>> Handle(AddSubDetailListCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await AddSubDetailList(request, cancellationToken));
-
-
-	public async Task<Validation<Error, SubDetailListState>> AddSubDetailList(AddSubDetailListCommand request, CancellationToken cancellationToken)
-	{
-		SubDetailListState entity = Mapper.Map<SubDetailListState>(request);
-		_ = await Context.AddAsync(entity, cancellationToken);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, SubDetailListState>(entity);
-	}
+			async request => await Add(request, cancellationToken));
 	
 	
 	

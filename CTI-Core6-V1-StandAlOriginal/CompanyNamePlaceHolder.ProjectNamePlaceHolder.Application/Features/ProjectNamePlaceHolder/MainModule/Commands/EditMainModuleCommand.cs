@@ -30,43 +30,15 @@ public class EditMainModuleCommandHandler : BaseCommandHandler<ApplicationContex
 
 	public async Task<Validation<Error, MainModuleState>> EditMainModule(EditMainModuleCommand request, CancellationToken cancellationToken)
 	{
-		var entity = await Context.MainModule.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
+		var entity = await Context.MainModule.Where(l => l.Id == request.Id).SingleAsync();
 		Mapper.Map(request, entity);
-		await UpdateSubDetailListList(entity, request, cancellationToken);
 		await UpdateSubDetailItemList(entity, request, cancellationToken);
+		await UpdateSubDetailListList(entity, request, cancellationToken);
 		Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, MainModuleState>(entity);
 	}
 	
-	private async Task UpdateSubDetailListList(MainModuleState entity, EditMainModuleCommand request, CancellationToken cancellationToken)
-	{
-		IList<SubDetailListState> subDetailListListForDeletion = new List<SubDetailListState>();
-		var querySubDetailListForDeletion = Context.SubDetailList.Where(l => l.TestForeignKeyOne == request.Id).AsNoTracking();
-		if (entity.SubDetailListList?.Count > 0)
-		{
-			querySubDetailListForDeletion = querySubDetailListForDeletion.Where(l => !(entity.SubDetailListList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		subDetailListListForDeletion = await querySubDetailListForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var subDetailList in subDetailListListForDeletion!)
-		{
-			Context.Entry(subDetailList).State = EntityState.Deleted;
-		}
-		if (entity.SubDetailListList?.Count > 0)
-		{
-			foreach (var subDetailList in entity.SubDetailListList.Where(l => !subDetailListListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<SubDetailListState>(x => x.Id == subDetailList.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(subDetailList).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(subDetailList).State = EntityState.Modified;
-				}
-			}
-		}
-	}
 	private async Task UpdateSubDetailItemList(MainModuleState entity, EditMainModuleCommand request, CancellationToken cancellationToken)
 	{
 		IList<SubDetailItemState> subDetailItemListForDeletion = new List<SubDetailItemState>();
@@ -75,7 +47,7 @@ public class EditMainModuleCommandHandler : BaseCommandHandler<ApplicationContex
 		{
 			querySubDetailItemForDeletion = querySubDetailItemForDeletion.Where(l => !(entity.SubDetailItemList.Select(l => l.Id).ToList().Contains(l.Id)));
 		}
-		subDetailItemListForDeletion = await querySubDetailItemForDeletion.ToListAsync(cancellationToken: cancellationToken);
+		subDetailItemListForDeletion = await querySubDetailItemForDeletion.ToListAsync();
 		foreach (var subDetailItem in subDetailItemListForDeletion!)
 		{
 			Context.Entry(subDetailItem).State = EntityState.Deleted;
@@ -91,6 +63,34 @@ public class EditMainModuleCommandHandler : BaseCommandHandler<ApplicationContex
 				else
 				{
 					Context.Entry(subDetailItem).State = EntityState.Modified;
+				}
+			}
+		}
+	}
+	private async Task UpdateSubDetailListList(MainModuleState entity, EditMainModuleCommand request, CancellationToken cancellationToken)
+	{
+		IList<SubDetailListState> subDetailListListForDeletion = new List<SubDetailListState>();
+		var querySubDetailListForDeletion = Context.SubDetailList.Where(l => l.TestForeignKeyOne == request.Id).AsNoTracking();
+		if (entity.SubDetailListList?.Count > 0)
+		{
+			querySubDetailListForDeletion = querySubDetailListForDeletion.Where(l => !(entity.SubDetailListList.Select(l => l.Id).ToList().Contains(l.Id)));
+		}
+		subDetailListListForDeletion = await querySubDetailListForDeletion.ToListAsync();
+		foreach (var subDetailList in subDetailListListForDeletion!)
+		{
+			Context.Entry(subDetailList).State = EntityState.Deleted;
+		}
+		if (entity.SubDetailListList?.Count > 0)
+		{
+			foreach (var subDetailList in entity.SubDetailListList.Where(l => !subDetailListListForDeletion.Select(l => l.Id).Contains(l.Id)))
+			{
+				if (await Context.NotExists<SubDetailListState>(x => x.Id == subDetailList.Id, cancellationToken: cancellationToken))
+				{
+					Context.Entry(subDetailList).State = EntityState.Added;
+				}
+				else
+				{
+					Context.Entry(subDetailList).State = EntityState.Modified;
 				}
 			}
 		}

@@ -23,45 +23,13 @@ public class AddParentModuleCommandHandler : BaseCommandHandler<ApplicationConte
     {
     }
 
-    public async Task<Validation<Error, ParentModuleState>> Handle(AddParentModuleCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, ParentModuleState>> Handle(AddParentModuleCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await AddParentModule(request, cancellationToken));
-
-
-	public async Task<Validation<Error, ParentModuleState>> AddParentModule(AddParentModuleCommand request, CancellationToken cancellationToken)
-	{
-		ParentModuleState entity = Mapper.Map<ParentModuleState>(request);
-		_ = await Context.AddAsync(entity, cancellationToken);
-		await AddApprovers(entity.Id, cancellationToken);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, ParentModuleState>(entity);
-	}
+			async request => await Add(request, cancellationToken));
 	
 	
-	private async Task AddApprovers(string parentModuleId, CancellationToken cancellationToken)
-	{
-		var approverList = await Context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.ParentModule).AsNoTracking().ToListAsync(cancellationToken);
-		var approvalRecord = new ApprovalRecordState()
-		{
-			ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
-			DataId = parentModuleId,
-			ApprovalList = new List<ApprovalState>()
-		};
-		foreach (var item in approverList)
-		{
-			var approval = new ApprovalState()
-			{
-				Sequence = item.Sequence,
-				ApproverUserId = item.ApproverUserId,
-			};
-			if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
-			{
-				approval.EmailSendingStatus = SendingStatus.Pending;
-			}
-			approvalRecord.ApprovalList.Add(approval);
-		}
-		await Context.AddAsync(approvalRecord, cancellationToken);
-	}
+	
 }
 
 public class AddParentModuleCommandValidator : AbstractValidator<AddParentModuleCommand>

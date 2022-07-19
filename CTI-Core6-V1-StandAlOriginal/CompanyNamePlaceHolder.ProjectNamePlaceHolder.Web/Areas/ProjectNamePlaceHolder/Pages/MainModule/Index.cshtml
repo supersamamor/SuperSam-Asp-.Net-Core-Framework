@@ -17,10 +17,10 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["ParentModuleId"]
+								@Localizer["Code"]
 							</th>
 							<th>
-								@Localizer["Code"]
+								@Localizer["ParentModuleId"]
 							</th>
 							  
 							<th>
@@ -60,8 +60,8 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "parentModuleId", name: "ParentModuleId", responsivePriority: 1, title: '@Localizer["ParentModuleId"]', searchable: true },
-				{ data: "code", name: "Code", responsivePriority: 1, title: '@Localizer["Code"]', searchable: true },
+                { data: "code", name: "Code", responsivePriority: 1, title: '@Localizer["Code"]', searchable: true },
+				{ data: "parentModuleId", name: "ParentModuleId", responsivePriority: 1, title: '@Localizer["ParentModuleId"]', searchable: true },
 				   
 				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {
@@ -87,6 +87,13 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteMainModule">@Localizer["Delete"]</a>';
                     </text>
                 }
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Approve)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/MainModule/Approve", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Approve"]</a>';
+					</text>
+				}   
                         return button;
                     },
                 },

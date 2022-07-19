@@ -20,9 +20,7 @@
 								@Localizer["Name"]
 							</th>
 							  
-							<th>
-								@Localizer["Status"]
-							</th> 							
+														
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -43,7 +41,7 @@
         var table = $('#parentModule').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 2, 'desc' ]],
+            order: [[ 1, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/ParentModule/Index", new { area = "ProjectNamePlaceHolder", handler = "ListAll" })',
@@ -59,7 +57,7 @@
 			columns: [
                 { data: "name", name: "Name", responsivePriority: 1, title: '@Localizer["Name"]', searchable: true },
 				   
-				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+				
                 {
                     data: null,
                     searchable: false,
@@ -83,6 +81,7 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteParentModule">@Localizer["Delete"]</a>';
                     </text>
                 }
+				   
                         return button;
                     },
                 },

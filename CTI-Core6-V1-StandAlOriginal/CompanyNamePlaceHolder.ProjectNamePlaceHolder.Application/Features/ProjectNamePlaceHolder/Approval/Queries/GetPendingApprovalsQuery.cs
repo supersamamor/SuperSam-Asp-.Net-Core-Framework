@@ -50,10 +50,6 @@ public class GetPendingApprovalsQueryHandler : IRequestHandler<GetPendingApprova
 		{
 			recordName = context.MainModule.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.Id;
 		}
-		if(tableName == ApprovalModule.ParentModule)
-		{
-			recordName = context.ParentModule.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.Name;
-		}
 		        
         return recordName;
     }

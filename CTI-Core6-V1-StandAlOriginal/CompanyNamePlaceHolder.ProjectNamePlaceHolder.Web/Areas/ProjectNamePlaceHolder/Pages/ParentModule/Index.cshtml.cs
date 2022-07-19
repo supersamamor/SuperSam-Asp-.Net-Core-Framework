@@ -5,7 +5,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Helper;
+
 
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.ParentModule;
@@ -25,7 +25,7 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		var approvalHelper = new ApprovalHelper(Mediatr);
+		
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetParentModuleQuery>());
         return new JsonResult(result.Data
             .Select(e => new
@@ -33,7 +33,7 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.Name,
 						
-				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
+				
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
