@@ -24,18 +24,18 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
     }
 
     public async Task<Validation<Error, MainModuleState>> Handle(AddMainModuleCommand request, CancellationToken cancellationToken) =>
-		await _validator.ValidateTAsync(request, cancellationToken).BindT(
+		await Validators.ValidateTAsync(request, cancellationToken).BindT(
 			async request => await AddMainModule(request, cancellationToken));
 
 
 	public async Task<Validation<Error, MainModuleState>> AddMainModule(AddMainModuleCommand request, CancellationToken cancellationToken)
 	{
-		MainModuleState entity = _mapper.Map<MainModuleState>(request);
+		MainModuleState entity = Mapper.Map<MainModuleState>(request);
 		UpdateSubDetailListList(entity);
 		UpdateSubDetailItemList(entity);
-		_ = await _context.AddAsync(entity, cancellationToken);
+		_ = await Context.AddAsync(entity, cancellationToken);
 		await AddApprovers(entity.Id, cancellationToken);
-		_ = await _context.SaveChangesAsync(cancellationToken);
+		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, MainModuleState>(entity);
 	}
 	
@@ -45,7 +45,7 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
 		{
 			foreach (var subDetailList in entity.SubDetailListList!)
 			{
-				_context.Entry(subDetailList).State = EntityState.Added;
+				Context.Entry(subDetailList).State = EntityState.Added;
 			}
 		}
 	}
@@ -55,14 +55,14 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
 		{
 			foreach (var subDetailItem in entity.SubDetailItemList!)
 			{
-				_context.Entry(subDetailItem).State = EntityState.Added;
+				Context.Entry(subDetailItem).State = EntityState.Added;
 			}
 		}
 	}
 	
 	private async Task AddApprovers(string mainModuleId, CancellationToken cancellationToken)
 	{
-		var approverList = await _context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.MainModule).AsNoTracking().ToListAsync(cancellationToken);
+		var approverList = await Context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.MainModule).AsNoTracking().ToListAsync(cancellationToken);
 		var approvalRecord = new ApprovalRecordState()
 		{
 			ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
@@ -82,7 +82,7 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
 			}
 			approvalRecord.ApprovalList.Add(approval);
 		}
-		await _context.AddAsync(approvalRecord, cancellationToken);
+		await Context.AddAsync(approvalRecord, cancellationToken);
 	}
 }
 

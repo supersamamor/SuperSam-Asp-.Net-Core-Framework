@@ -22,7 +22,7 @@ public class DeleteParentModuleCommandHandler : BaseCommandHandler<ApplicationCo
     }
 
     public async Task<Validation<Error, ParentModuleState>> Handle(DeleteParentModuleCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
+        await Validators.ValidateTAsync(request, cancellationToken).BindT(
             async request => await Delete(request.Id, cancellationToken));
 }
 

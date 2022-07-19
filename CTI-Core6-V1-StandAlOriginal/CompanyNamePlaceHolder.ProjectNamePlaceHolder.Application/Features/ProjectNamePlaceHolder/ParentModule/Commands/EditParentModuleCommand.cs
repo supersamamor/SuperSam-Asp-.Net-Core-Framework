@@ -25,7 +25,7 @@ public class EditParentModuleCommandHandler : BaseCommandHandler<ApplicationCont
 
     
 public async Task<Validation<Error, ParentModuleState>> Handle(EditParentModuleCommand request, CancellationToken cancellationToken) =>
-		await _validator.ValidateTAsync(request, cancellationToken).BindT(
+		await Validators.ValidateTAsync(request, cancellationToken).BindT(
 			async request => await Edit(request, cancellationToken));
 	
 	

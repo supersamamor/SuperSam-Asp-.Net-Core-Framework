@@ -25,7 +25,7 @@ public class EditSubDetailItemCommandHandler : BaseCommandHandler<ApplicationCon
 
     
 public async Task<Validation<Error, SubDetailItemState>> Handle(EditSubDetailItemCommand request, CancellationToken cancellationToken) =>
-		await _validator.ValidateTAsync(request, cancellationToken).BindT(
+		await Validators.ValidateTAsync(request, cancellationToken).BindT(
 			async request => await Edit(request, cancellationToken));
 	
 	

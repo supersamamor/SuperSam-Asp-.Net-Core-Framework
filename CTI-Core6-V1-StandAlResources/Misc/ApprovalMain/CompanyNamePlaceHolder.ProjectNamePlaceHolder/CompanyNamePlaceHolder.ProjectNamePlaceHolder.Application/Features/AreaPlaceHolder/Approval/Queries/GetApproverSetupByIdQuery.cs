@@ -17,7 +17,7 @@ public class GetApproverSetupByIdQueryHandler : BaseQueryByIdHandler<Application
 
     public override async Task<Option<ApproverSetupState>> Handle(GetApproverSetupByIdQuery request, CancellationToken cancellationToken = default)
     {
-        return await _context.ApproverSetup
+        return await Context.ApproverSetup
             .Include(l => l.ApproverAssignmentList)
             .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
     }

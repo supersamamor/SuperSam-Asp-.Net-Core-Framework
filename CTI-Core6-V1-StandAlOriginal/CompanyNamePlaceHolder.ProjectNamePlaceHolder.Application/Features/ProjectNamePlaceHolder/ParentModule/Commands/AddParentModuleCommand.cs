@@ -24,23 +24,23 @@ public class AddParentModuleCommandHandler : BaseCommandHandler<ApplicationConte
     }
 
     public async Task<Validation<Error, ParentModuleState>> Handle(AddParentModuleCommand request, CancellationToken cancellationToken) =>
-		await _validator.ValidateTAsync(request, cancellationToken).BindT(
+		await Validators.ValidateTAsync(request, cancellationToken).BindT(
 			async request => await AddParentModule(request, cancellationToken));
 
 
 	public async Task<Validation<Error, ParentModuleState>> AddParentModule(AddParentModuleCommand request, CancellationToken cancellationToken)
 	{
-		ParentModuleState entity = _mapper.Map<ParentModuleState>(request);
-		_ = await _context.AddAsync(entity, cancellationToken);
+		ParentModuleState entity = Mapper.Map<ParentModuleState>(request);
+		_ = await Context.AddAsync(entity, cancellationToken);
 		await AddApprovers(entity.Id, cancellationToken);
-		_ = await _context.SaveChangesAsync(cancellationToken);
+		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ParentModuleState>(entity);
 	}
 	
 	
 	private async Task AddApprovers(string parentModuleId, CancellationToken cancellationToken)
 	{
-		var approverList = await _context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.ParentModule).AsNoTracking().ToListAsync(cancellationToken);
+		var approverList = await Context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.ParentModule).AsNoTracking().ToListAsync(cancellationToken);
 		var approvalRecord = new ApprovalRecordState()
 		{
 			ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
@@ -60,7 +60,7 @@ public class AddParentModuleCommandHandler : BaseCommandHandler<ApplicationConte
 			}
 			approvalRecord.ApprovalList.Add(approval);
 		}
-		await _context.AddAsync(approvalRecord, cancellationToken);
+		await Context.AddAsync(approvalRecord, cancellationToken);
 	}
 }
 

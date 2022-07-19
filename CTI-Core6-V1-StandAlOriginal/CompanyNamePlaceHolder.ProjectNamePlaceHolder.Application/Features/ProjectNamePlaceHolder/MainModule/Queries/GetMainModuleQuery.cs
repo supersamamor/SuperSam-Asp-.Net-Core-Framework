@@ -16,7 +16,7 @@ public class GetMainModuleQueryHandler : BaseQueryHandler<ApplicationContext, Ma
     {
     }
 	public override async Task<PagedListResponse<MainModuleState>> Handle(GetMainModuleQuery request, CancellationToken cancellationToken = default) =>
-		await _context.Set<MainModuleState>().Include(l=>l.ParentModule)
+		await Context.Set<MainModuleState>().Include(l=>l.ParentModule)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

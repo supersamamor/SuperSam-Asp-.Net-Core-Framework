@@ -30,10 +30,10 @@ public class AddApproverSetupCommandHandler : BaseCommandHandler<ApplicationCont
 
     public async Task<Validation<Error, ApproverSetupState>> AddApproverSetup(AddApproverSetupCommand request, CancellationToken cancellationToken)
     {
-        ApproverSetupState entity = _mapper.Map<ApproverSetupState>(request);
+        ApproverSetupState entity = Mapper.Map<ApproverSetupState>(request);
         UpdateApproverAssignmentList(entity);
-        _ = await _context.AddAsync(entity, cancellationToken);
-        _ = await _context.SaveChangesAsync(cancellationToken);
+        _ = await Context.AddAsync(entity, cancellationToken);
+        _ = await Context.SaveChangesAsync(cancellationToken);
         return Success<Error, ApproverSetupState>(entity);
     }
 
@@ -43,7 +43,7 @@ public class AddApproverSetupCommandHandler : BaseCommandHandler<ApplicationCont
         {
             foreach (var approverAssignment in entity.ApproverAssignmentList!)
             {
-                _context.Entry(approverAssignment).State = EntityState.Added;
+                Context.Entry(approverAssignment).State = EntityState.Added;
             }
         }
     }

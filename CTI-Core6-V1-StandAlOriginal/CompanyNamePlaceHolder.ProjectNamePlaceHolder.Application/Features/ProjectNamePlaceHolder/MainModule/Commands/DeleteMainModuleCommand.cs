@@ -22,7 +22,7 @@ public class DeleteMainModuleCommandHandler : BaseCommandHandler<ApplicationCont
     }
 
     public async Task<Validation<Error, MainModuleState>> Handle(DeleteMainModuleCommand request, CancellationToken cancellationToken) =>
-        await _validator.ValidateTAsync(request, cancellationToken).BindT(
+        await Validators.ValidateTAsync(request, cancellationToken).BindT(
             async request => await Delete(request.Id, cancellationToken));
 }
 
