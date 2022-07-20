@@ -30,7 +30,7 @@ public class EditMainModuleCommandHandler : BaseCommandHandler<ApplicationContex
 
 	public async Task<Validation<Error, MainModuleState>> EditMainModule(EditMainModuleCommand request, CancellationToken cancellationToken)
 	{
-		var entity = await Context.MainModule.Where(l => l.Id == request.Id).SingleAsync();
+		var entity = await Context.MainModule.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
 		await UpdateSubDetailItemList(entity, request, cancellationToken);
 		await UpdateSubDetailListList(entity, request, cancellationToken);
@@ -47,7 +47,7 @@ public class EditMainModuleCommandHandler : BaseCommandHandler<ApplicationContex
 		{
 			querySubDetailItemForDeletion = querySubDetailItemForDeletion.Where(l => !(entity.SubDetailItemList.Select(l => l.Id).ToList().Contains(l.Id)));
 		}
-		subDetailItemListForDeletion = await querySubDetailItemForDeletion.ToListAsync();
+		subDetailItemListForDeletion = await querySubDetailItemForDeletion.ToListAsync(cancellationToken: cancellationToken);
 		foreach (var subDetailItem in subDetailItemListForDeletion!)
 		{
 			Context.Entry(subDetailItem).State = EntityState.Deleted;
@@ -75,7 +75,7 @@ public class EditMainModuleCommandHandler : BaseCommandHandler<ApplicationContex
 		{
 			querySubDetailListForDeletion = querySubDetailListForDeletion.Where(l => !(entity.SubDetailListList.Select(l => l.Id).ToList().Contains(l.Id)));
 		}
-		subDetailListListForDeletion = await querySubDetailListForDeletion.ToListAsync();
+		subDetailListListForDeletion = await querySubDetailListForDeletion.ToListAsync(cancellationToken: cancellationToken);
 		foreach (var subDetailList in subDetailListListForDeletion!)
 		{
 			Context.Entry(subDetailList).State = EntityState.Deleted;

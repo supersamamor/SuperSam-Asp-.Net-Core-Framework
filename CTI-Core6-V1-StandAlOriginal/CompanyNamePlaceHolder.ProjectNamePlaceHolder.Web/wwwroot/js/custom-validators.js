@@ -21,6 +21,15 @@ function appendModelPrefix(value, prefix) {
     return value;
 }
 
+$.validator.unobtrusive.adapters.add('lessThan', ['other'], function (options) {
+    var prefix = getModelPrefix(options.element.name),
+        other = options.params.other,
+        fullOtherName = appendModelPrefix(other, prefix),
+        element = $(options.form).find(":input").filter("[name='" + escapeAttributeValue(fullOtherName) + "']")[0];
+
+    setValidationValues(options, "lessThan", element);
+});
+
 $.validator.unobtrusive.adapters.add('lessThanEqual', ['other'], function (options) {
     var prefix = getModelPrefix(options.element.name),
         other = options.params.other,
@@ -28,6 +37,15 @@ $.validator.unobtrusive.adapters.add('lessThanEqual', ['other'], function (optio
         element = $(options.form).find(":input").filter("[name='" + escapeAttributeValue(fullOtherName) + "']")[0];
 
     setValidationValues(options, "lessThanEqual", element);
+});
+
+$.validator.unobtrusive.adapters.add('greaterThan', ['other'], function (options) {
+    var prefix = getModelPrefix(options.element.name),
+        other = options.params.other,
+        fullOtherName = appendModelPrefix(other, prefix),
+        element = $(options.form).find(":input").filter("[name='" + escapeAttributeValue(fullOtherName) + "']")[0];
+
+    setValidationValues(options, "greaterThan", element);
 });
 
 $.validator.unobtrusive.adapters.add('greaterThanEqual', ['other'], function (options) {
@@ -38,3 +56,4 @@ $.validator.unobtrusive.adapters.add('greaterThanEqual', ['other'], function (op
 
     setValidationValues(options, "greaterThanEqual", element);
 });
+

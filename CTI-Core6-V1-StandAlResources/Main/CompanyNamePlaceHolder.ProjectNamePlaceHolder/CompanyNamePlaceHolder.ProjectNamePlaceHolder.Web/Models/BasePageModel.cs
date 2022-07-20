@@ -35,6 +35,71 @@ public class BasePageModel<T> : PageModel where T : class
     protected IMapper Mapper => _mapper ??= HttpContext.RequestServices.GetService<IMapper>()!;
     protected string TraceId => _traceId ??= Activity.Current?.Id ?? HttpContext.TraceIdentifier;
 
+    /// <summary>
+    /// Maps <typeparamref name="TEntity"/> to <typeparamref name="TModel"/> and returns the page.
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TModel"></typeparam>
+    /// <param name="e"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    protected IActionResult MapAndReturnPage<TEntity, TModel>(TEntity e, TModel model)
+    {
+        Mapper.Map(e, model);
+        return Page();
+    }
+
+    /// <summary>
+    /// Executes the function <paramref name="f"/>. If the function throws an exception
+    /// or returns a validation error, return the page and display the errors.
+    /// Otherwise, redirect to the index page.
+    /// </summary>
+    /// <typeparam name="TEntity">An instance of <see cref="IEntity"/></typeparam>
+    /// <param name="f"></param>
+    /// <param name="pageName">The name of the index page. Defaults to "Index".</param>
+    /// <returns></returns>
+    protected async Task<IActionResult> TryThenRedirectToIndexPage<TEntity>(Func<Task<Validation<Error, TEntity>>> f, string pageName = "Index")
+        where TEntity : IEntity =>
+        await TryAsync(() => f()).ToValidation(ex => ToError(ex))
+                                 .BindT(t => t)
+                                 .ToActionResult(success: succ => NotifyAndRedirectToPage(succ, pageName), fail: errors => PageWithErrors(errors));
+
+    /// <summary>
+    /// Executes the function <paramref name="f"/>. If the function throws an exception
+    /// or returns a validation error, return the page and display the errors.
+    /// Otherwise, redirect to the details page.
+    /// </summary>
+    /// <typeparam name="TEntity">An instance of <see cref="IEntity"/></typeparam>
+    /// <param name="f"></param>
+    /// <param name="pageName">The name of the index page. Defaults to "Details".</param>
+    /// <returns></returns>
+    protected async Task<IActionResult> TryThenRedirectToDetailsPage<TEntity>(Func<Task<Validation<Error, TEntity>>> f, string pageName = "Details")
+        where TEntity : IEntity =>
+        await TryAsync(() => f()).ToValidation(ex => ToError(ex))
+                                 .BindT(t => t)
+                                 .ToActionResult(success: succ => NotifyAndRedirectToPage(succ, pageName, new { id = succ.Id }),
+                                                 fail: errors => PageWithErrors(errors));
+
+    private Error ToError(Exception ex)
+    {
+        Logger.LogError(ex, "Exception encountered");
+        return Error.New(Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
+    }
+
+    private IActionResult PageWithErrors(Seq<Error> errors)
+    {
+        Logger.LogError("Error encountered. Errors: {Errors}", errors.Join().ToString());
+        errors.Iter(error => ModelState.AddModelError("", error.ToString()));
+        return base.Page();
+    }
+
+    private IActionResult NotifyAndRedirectToPage<TEntity>(TEntity succ, string pageName, object? routeValues = null) where TEntity : IEntity
+    {
+        Logger.LogInformation("Details of affected record. ID: {ID}, Record: {Record}", succ.Id, succ.ToString());
+        NotyfService.Success(Localizer["Transaction successful"]);
+        return routeValues is null ? RedirectToPage(pageName) : RedirectToPage(pageName, routeValues);
+    }
+    #region Old Methods  
     protected async Task<IActionResult> PageFrom<TEntity, TModel>(Func<Task<Option<TEntity>>> f, TModel model) =>
         await f().ToActionResult(
             e =>
@@ -43,15 +108,6 @@ public class BasePageModel<T> : PageModel where T : class
                 return Page();
             },
             none: null);
-
-    protected async Task<DataTablesResponse<TModel>> ToDataTablesResponse<TEntity, TModel>(DataTablesRequest? request, Func<Task<PagedListResponse<TEntity>>> f)
-    {
-        var result = await f();
-        return ToDataTablesResponse<TEntity, TModel>(request, result);
-    }
-
-    protected DataTablesResponse<TModel> ToDataTablesResponse<TEntity, TModel>(DataTablesRequest? request, PagedListResponse<TEntity> result) =>
-        Mapper.Map<IEnumerable<TModel>>(result.Data).ToDataTablesResponse(request, result.TotalCount, result.MetaData.TotalItemCount);
 
     protected async Task<IActionResult> TryThenRedirectToPage<TEntity>(Func<Task<Validation<Error, TEntity>>> f, string pageName, bool isDetailsPage = false)
         where TEntity : IEntity =>
@@ -72,6 +128,7 @@ public class BasePageModel<T> : PageModel where T : class
                 Logger.LogError("Error encountered. Errors: {Errors}", errors.Join().ToString());
                 return Page();
             });
+    #endregion
 }
 
 public class BasePageModel<TContext, TPageModel> : BasePageModel<TPageModel>
@@ -81,10 +138,19 @@ public class BasePageModel<TContext, TPageModel> : BasePageModel<TPageModel>
     TContext? _context;
     protected TContext Context => _context ??= HttpContext.RequestServices.GetService<TContext>()!;
 
-    protected SelectList CreateDefaultOption<TEntity>(string id, Func<TEntity, SelectListItem> defaultItem)
+    /// <summary>
+    /// Create a <see cref="SelectList"/> based on <typeparamref name="TEntity"/>.
+    /// An instance of <typeparamref name="TEntity"/> whose Id is equal to the provided <paramref name="id"/> will be retrieved from the context
+    /// and will be set as the selected option.
+    /// </summary>
+    /// <typeparam name="TEntity">An instance of <see cref="BaseEntity"/></typeparam>
+    /// <param name="id">The Id of <typeparamref name="TEntity"/> that will be retrieved from the context</param>
+    /// <param name="defaultItem">The function to map <typeparamref name="TEntity"/> to <see cref="SelectListItem"/></param>
+    /// <returns></returns>
+    protected async Task<SelectList> CreateDefaultOption<TEntity>(string id, Func<TEntity, SelectListItem> defaultItem)
         where TEntity : BaseEntity =>
-        Context.GetSingle<TEntity>(e => e.Id == id, new()).Result.Match(
-            Some: e => new SelectList(new List<SelectListItem> { defaultItem(e) }, "Value", "Text", e.Id),
-            None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-            );
+        await Context.GetSingle<TEntity>(e => e.Id == id)
+                     .MatchAsync(Some: e => Task.FromResult(new SelectList(new List<SelectListItem> { defaultItem(e) }, "Value", "Text", e.Id)),
+                                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text"));
 }
+
