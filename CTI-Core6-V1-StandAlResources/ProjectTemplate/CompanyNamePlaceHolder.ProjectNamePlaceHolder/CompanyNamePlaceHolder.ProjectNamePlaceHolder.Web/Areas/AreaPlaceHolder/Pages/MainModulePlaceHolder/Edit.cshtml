@@ -27,4 +27,13 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 Template:[InsertNewSubDetailFieldValidationAndRemoveItemJavascript]
+<script asp-add-nonce>
+    $(document).ready(function () {
+		$('.DisableSelectDropdown').on('mousedown', function(e) {
+			e.preventDefault();
+			this.blur();
+			window.focus();
+		});
+    });
+</script>
 }
