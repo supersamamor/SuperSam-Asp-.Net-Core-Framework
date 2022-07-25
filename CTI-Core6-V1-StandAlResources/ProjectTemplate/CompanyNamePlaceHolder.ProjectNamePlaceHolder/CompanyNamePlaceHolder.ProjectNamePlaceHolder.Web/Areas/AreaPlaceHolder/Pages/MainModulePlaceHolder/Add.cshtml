@@ -26,14 +26,19 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-Template:[InsertNewSubDetailFieldValidationAndRemoveItemJavascript]
+Template:[NewSubDetailFieldValidationPartialJavascript]
 <script asp-add-nonce>
     $(document).ready(function () {
-		$('.DisableSelectDropdown').on('mousedown', function(e) {
-			e.preventDefault();
-			this.blur();
-			window.focus();
-		});
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			Template:[AddRemoveItemJavascript]
+		}	
+		InitializeForm();
     });
 </script>
 }
