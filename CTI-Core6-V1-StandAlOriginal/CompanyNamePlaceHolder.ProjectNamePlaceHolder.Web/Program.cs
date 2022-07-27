@@ -10,6 +10,7 @@ using Microsoft.Net.Http.Headers;
 using Serilog;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,22 @@ services.AddHealthChecks()
 services.AddScheduler(configuration);
 services.AddEmailSendingAService(configuration);
 var app = builder.Build();
-
+// Static Files
+var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+bool uploadFilesPathExists = System.IO.Directory.Exists(uploadFilesPath);
+if (!uploadFilesPathExists)
+    System.IO.Directory.CreateDirectory(uploadFilesPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        const int durationInSeconds = 60 * 60 * 24 * 365;
+        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+            "public,max-age=" + durationInSeconds;
+    },
+    FileProvider = new PhysicalFileProvider(uploadFilesPath),
+    RequestPath = "/UploadFilesPath"
+});
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

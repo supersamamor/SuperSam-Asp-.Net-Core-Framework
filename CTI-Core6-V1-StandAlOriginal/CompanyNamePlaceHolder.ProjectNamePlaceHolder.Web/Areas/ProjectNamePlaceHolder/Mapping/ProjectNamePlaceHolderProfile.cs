@@ -13,23 +13,23 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePla
 public class ProjectNamePlaceHolderProfile : Profile
 {
     public ProjectNamePlaceHolderProfile()
-    {
-        CreateMap<MainModuleViewModel, AddMainModuleCommand>();
-		CreateMap<MainModuleViewModel, EditMainModuleCommand>();
-		CreateMap<MainModuleState, MainModuleViewModel>().ReverseMap();
-		CreateMap<ParentModuleViewModel, AddParentModuleCommand>();
-		CreateMap<ParentModuleViewModel, EditParentModuleCommand>();
-		CreateMap<ParentModuleState, ParentModuleViewModel>().ReverseMap();
-		CreateMap<SubDetailItemViewModel, AddSubDetailItemCommand>();
-		CreateMap<SubDetailItemViewModel, EditSubDetailItemCommand>();
-		CreateMap<SubDetailItemState, SubDetailItemViewModel>().ReverseMap();
-		CreateMap<SubDetailListViewModel, AddSubDetailListCommand>();
-		CreateMap<SubDetailListViewModel, EditSubDetailListCommand>();
-		CreateMap<SubDetailListState, SubDetailListViewModel>().ReverseMap();
-		
-		CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();
-		CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
-		CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
-		CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
+    {      
+        CreateMap<MainModuleViewModel, AddMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => "\\MainModule\\" + s.Id + "\\" + nameof(s.FileUpload) + "\\" + s.FileUpload!.FileName));
+        CreateMap<MainModuleViewModel, EditMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => "\\MainModule\\" + s.Id + "\\" + nameof(s.FileUpload) + "\\" + s.FileUpload!.FileName));
+        CreateMap<MainModuleState, MainModuleViewModel>().ForMember(e => e.FileUpload, c => c.Ignore()).ReverseMap();
+        CreateMap<ParentModuleViewModel, AddParentModuleCommand>();
+        CreateMap<ParentModuleViewModel, EditParentModuleCommand>();
+        CreateMap<ParentModuleState, ParentModuleViewModel>().ReverseMap();
+        CreateMap<SubDetailItemViewModel, AddSubDetailItemCommand>();
+        CreateMap<SubDetailItemViewModel, EditSubDetailItemCommand>();
+        CreateMap<SubDetailItemState, SubDetailItemViewModel>().ReverseMap();
+        CreateMap<SubDetailListViewModel, AddSubDetailListCommand>();
+        CreateMap<SubDetailListViewModel, EditSubDetailListCommand>();
+        CreateMap<SubDetailListState, SubDetailListViewModel>().ReverseMap();
+
+        CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();
+        CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
+        CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
+        CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
     }
 }

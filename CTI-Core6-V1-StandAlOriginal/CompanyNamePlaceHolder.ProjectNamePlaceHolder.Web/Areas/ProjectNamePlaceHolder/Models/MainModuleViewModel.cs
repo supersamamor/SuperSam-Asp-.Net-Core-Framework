@@ -21,4 +21,7 @@ public record MainModuleViewModel : BaseViewModel
 	public IList<SubDetailItemViewModel>? SubDetailItemList { get; set; }
 	public IList<SubDetailListViewModel>? SubDetailListList { get; set; }
 	
+	[Display(Name = "File")]
+	public IFormFile? FileUpload { get; set; }
+
 }

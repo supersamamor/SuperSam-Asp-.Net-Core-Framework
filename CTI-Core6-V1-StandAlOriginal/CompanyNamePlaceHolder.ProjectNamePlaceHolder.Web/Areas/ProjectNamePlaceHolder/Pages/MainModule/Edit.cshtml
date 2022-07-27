@@ -5,7 +5,7 @@
     ViewData["ActiveMainPage"] = "MainModule";
     ViewData["Level1"] = "ProjectNamePlaceHolder";
 }
-<form id="mainModule-form" method="post">
+<form enctype="multipart/form-data" id="mainModule-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
 	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />

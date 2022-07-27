@@ -80,27 +80,33 @@ public class FileHelper
     public static async Task<Validation<Error, string>> ProcessFormFile<T>(IFormFile formFile,
         string[] permittedExtensions, long sizeLimit, string targetFilePath,
         CancellationToken cancellationToken = default) =>
-        await ProcessFormFile<T>(formFile, permittedExtensions, sizeLimit, cancellationToken).BindT(s =>
-        {
-            var trustedFileNameForFileStorage = Path.GetRandomFileName();
-            var filePath = Path.Combine(targetFilePath, trustedFileNameForFileStorage);
-            using var file = File.Create(filePath);
-            s.WriteTo(file);
-            return Success<Error, string>(filePath);
-        });
+        await ProcessFormFile<T, string>(formFile,
+                                         permittedExtensions,
+                                         sizeLimit,
+                                         cancellationToken: cancellationToken,
+                                         f: s =>
+                                         {
+                                             var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                                             var filePath = Path.Combine(targetFilePath, trustedFileNameForFileStorage);
+                                             using var file = File.Create(filePath);
+                                             s.WriteTo(file);
+                                             return filePath;
+                                         });
 
     /// <summary>
     /// Applies standard validations on the <see cref="IFormFile"/>
     /// then converts it to <see cref="Stream"/>.
     /// </summary>
     /// <typeparam name="T">Type of the model class containing the <see cref="IFormFile"/> property</typeparam>
+    /// <typeparam name="TRet">Type that will be returned by the specified parameter <paramref name="f"/></typeparam>
     /// <param name="formFile"></param>
     /// <param name="permittedExtensions">List of permitted file extensions</param>
     /// <param name="sizeLimit">Max file size limit</param>
+    /// <param name="f"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<Validation<Error, MemoryStream>> ProcessFormFile<T>(IFormFile formFile,
-        string[] permittedExtensions, long sizeLimit, CancellationToken cancellationToken = default)
+    public static async Task<Validation<Error, TRet>> ProcessFormFile<T, TRet>(IFormFile formFile,
+        string[] permittedExtensions, long sizeLimit, Func<MemoryStream, TRet> f, CancellationToken cancellationToken = default)
     {
         var fieldDisplayName = string.Empty;
 
@@ -151,7 +157,7 @@ public class FileHelper
             return Error.New($"{fieldDisplayName}({trustedFileNameForDisplay}) file type isn`t permitted or the file`s signature doesn`t match the file`s extension.");
         }
 
-        return memoryStream;
+        return f(memoryStream);
     }
 
     /// <summary>
