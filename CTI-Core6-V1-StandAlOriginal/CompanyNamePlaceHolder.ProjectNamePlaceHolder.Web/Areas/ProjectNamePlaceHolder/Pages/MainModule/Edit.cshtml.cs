@@ -32,7 +32,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-        if (MainModule.FileUpload != null && await UploadFile<MainModuleViewModel>("MainModule", nameof(MainModule.FileUpload), MainModule.Id, MainModule.FileUpload) == "") { return Page(); }
+        if (MainModule.FileUploadForm != null && await UploadFile<MainModuleViewModel>("MainModule", nameof(MainModule.FileUpload), MainModule.Id, MainModule.FileUploadForm) == "") { return Page(); }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModuleCommand>(MainModule)), "Details", true);
     }
     public IActionResult OnPostChangeFormValue()

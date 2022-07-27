@@ -22,13 +22,13 @@ public record MainModuleViewModel : BaseViewModel
     public IList<SubDetailListViewModel>? SubDetailListList { get; set; }
 
     [Display(Name = "File Upload")]
-    public IFormFile? FileUpload { get; set; }
-    public string FileUploadPath { get; set; } = "";
+    public string FileUpload { get; set; } = "";
+    public IFormFile? FileUploadForm { get; set; }
     public string GeneratedFileUploadPath
     {
         get
         {
-            return this.FileUpload?.FileName == null ? FileUploadPath : "\\MainModule\\" + this.Id + "\\" + nameof(this.FileUpload) + "\\" + this.FileUpload!.FileName;
+            return this.FileUploadForm?.FileName == null ? this.FileUpload : "\\MainModule\\" + this.Id + "\\" + nameof(this.FileUpload) + "\\" + this.FileUploadForm!.FileName;
         }
     }
 }
