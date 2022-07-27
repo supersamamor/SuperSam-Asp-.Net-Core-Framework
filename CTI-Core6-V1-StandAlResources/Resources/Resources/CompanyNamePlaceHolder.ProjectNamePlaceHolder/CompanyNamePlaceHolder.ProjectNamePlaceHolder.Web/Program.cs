@@ -7,6 +7,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.FileProviders;
 using Serilog;Template:[ApprovalProgramImport]
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +41,22 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 Template:[ApprovalProgramAddService]
 var app = builder.Build();
-
+// Static Files
+var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+bool uploadFilesPathExists = System.IO.Directory.Exists(uploadFilesPath);
+if (!uploadFilesPathExists)
+    System.IO.Directory.CreateDirectory(uploadFilesPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        const int durationInSeconds = 60 * 60 * 24 * 365;
+        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+            "public,max-age=" + durationInSeconds;
+    },
+    FileProvider = new PhysicalFileProvider(uploadFilesPath),
+    RequestPath = "/" + WebConstants.UploadFilesPath
+});
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

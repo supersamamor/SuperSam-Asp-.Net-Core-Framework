@@ -3,9 +3,8 @@ using AutoMapper;
 using CompanyNamePlaceHolder.Common.Core.Base.Models;
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Utility.Extensions;
-using CompanyNamePlaceHolder.Common.Utility.Models;
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
-using DataTables.AspNetCore.Mvc.Binder;
+using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
@@ -27,14 +26,15 @@ public class BasePageModel<T> : PageModel where T : class
     private IMediator? _mediatr;
     private IMapper? _mapper;
     private string? _traceId;
-
+    private IConfiguration? _configuration;
+	
     protected ILogger<T> Logger => _logger ??= HttpContext.RequestServices.GetService<ILogger<T>>()!;
     protected IStringLocalizer<SharedResource> Localizer => _localizer ??= HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>()!;
     protected INotyfService NotyfService => _notyfService ??= HttpContext.RequestServices.GetService<INotyfService>()!;
     protected IMediator Mediatr => _mediatr ??= HttpContext.RequestServices.GetService<IMediator>()!;
     protected IMapper Mapper => _mapper ??= HttpContext.RequestServices.GetService<IMapper>()!;
     protected string TraceId => _traceId ??= Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-
+	protected IConfiguration Configuration => _configuration ??= HttpContext.RequestServices.GetService<IConfiguration>()!;
     /// <summary>
     /// Maps <typeparamref name="TEntity"/> to <typeparamref name="TModel"/> and returns the page.
     /// </summary>
@@ -129,6 +129,44 @@ public class BasePageModel<T> : PageModel where T : class
                 return Page();
             });
     #endregion
+	protected async Task<string> UploadFile<TUploadModel>(string moduleName, string fieldName, string id, IFormFile? formFile)
+    {
+        string filePath = "";
+        if (formFile != null)
+        {
+            var permittedExtensions = Configuration.GetValue<string>("UsersUpload:DocumentPermitedExtensions").Split(',').ToArray();
+            var fileSizeLimit = Configuration.GetValue<long>("UsersUpload:FileSizeLimit");
+            var targetFilePath = Configuration.GetValue<string>("UsersUpload:UploadFilesPath") + "\\" + moduleName + "\\" + id + "\\" + fieldName;
+            filePath = Path.Combine(targetFilePath, formFile.FileName);
+            bool exists = System.IO.Directory.Exists(targetFilePath);
+            if (!exists)
+                System.IO.Directory.CreateDirectory(targetFilePath);
+            (await FileHelper.ProcessFormFile<TUploadModel, string>(formFile!,
+                permittedExtensions,
+                fileSizeLimit,
+                cancellationToken: new CancellationToken(),
+                f: s =>
+                {
+                    byte[] bytes = s.ToArray();
+                    using (var fileStream = System.IO.File.Create(filePath))
+                        fileStream.Write(bytes);
+                    return filePath;
+                })).Match(Succ: succ =>
+                    {                      
+                        Logger.LogInformation("Successfully uploaded the file: {File}}", succ);
+                        filePath = succ;
+                    },
+                    Fail: errors =>
+                    {
+                        errors.Iter(error => ModelState.AddModelError("", error.ToString()));
+                        Logger.LogError("Error encountered. Errors: {Errors}", errors.Join().ToString());
+                        NotyfService.Error($"Error encountered. Errors: {errors.Join()}");
+                        filePath = "";
+                    });
+
+        }
+        return filePath;
+    }
 }
 
 public class BasePageModel<TContext, TPageModel> : BasePageModel<TPageModel>
