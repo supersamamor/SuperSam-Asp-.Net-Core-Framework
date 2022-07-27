@@ -16,7 +16,7 @@ public class ProjectNamePlaceHolderProfile : Profile
     {
         CreateMap<MainModuleViewModel, AddMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => s.GeneratedFileUploadPath));
         CreateMap<MainModuleViewModel, EditMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => s.GeneratedFileUploadPath));
-        CreateMap<MainModuleState, MainModuleViewModel>().ForMember(e => e.FileUpload, c => c.Ignore()).ForPath(e => e.FileUpload, c => c.MapFrom(s => s.FileUpload)).ReverseMap();
+        CreateMap<MainModuleState, MainModuleViewModel>().ReverseMap();
         CreateMap<ParentModuleViewModel, AddParentModuleCommand>();
         CreateMap<ParentModuleViewModel, EditParentModuleCommand>();
         CreateMap<ParentModuleState, ParentModuleViewModel>().ReverseMap();
