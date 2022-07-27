@@ -11,11 +11,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePla
 [Authorize(Policy = Permission.MainModule.Edit)]
 public class EditModel : BasePageModel<EditModel>
 {
-    private readonly IConfiguration _configuration;
-    public EditModel(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
     [BindProperty]
     public MainModuleViewModel MainModule { get; set; } = new();
     [BindProperty]
@@ -37,7 +32,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-        await UploadFile("MainModule", "FieldName", MainModule.Id, MainModule.FileUpload);
+        if (MainModule.FileUpload != null && await UploadFile<MainModuleViewModel>("MainModule", nameof(MainModule.FileUpload), MainModule.Id, MainModule.FileUpload) == "") { return Page(); }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModuleCommand>(MainModule)), "Details", true);
     }
     public IActionResult OnPostChangeFormValue()
@@ -68,33 +63,5 @@ public class EditModel : BasePageModel<EditModel>
         ModelState.Clear();
         MainModule.SubDetailListList = MainModule!.SubDetailListList!.Where(l => l.Id != RemoveSubDetailId).ToList();
         return Partial("_InputFieldsPartial", MainModule);
-    }
-    public async Task<string> UploadFile(string moduleName, string fieldName, string id, IFormFile? formFile)
-    {
-        string filePath = "";
-        if (formFile != null)
-        {
-            var permittedExtensions = _configuration.GetValue<string>("UsersUpload:DocumentPermitedExtensions").Split(',').ToArray();
-            var fileSizeLimit = _configuration.GetValue<long>("UsersUpload:FileSizeLimit");
-            var _targetFilePath = _configuration.GetValue<string>("UsersUpload:UploadFilesPath") + "\\" + moduleName + "\\" + id + "\\" + fieldName;
-            bool exists = System.IO.Directory.Exists(_targetFilePath);
-            if (!exists)
-                System.IO.Directory.CreateDirectory(_targetFilePath);
-            _ = (await FileHelper.ProcessFormFile<MainModuleViewModel, string>(formFile!,
-                                             permittedExtensions,
-                                             fileSizeLimit,
-                                             cancellationToken: new CancellationToken(),
-                                             f: s =>
-                                             {
-                                                 var trustedFileNameForFileStorage = Path.GetRandomFileName();
-                                                 var filePath = Path.Combine(_targetFilePath, trustedFileNameForFileStorage);
-                                                 using (var file = System.IO.File.Create(filePath))
-                                                 {
-                                                     s.WriteTo(file);
-                                                 }                                                   
-                                                 return filePath;
-                                             })).Select(l => filePath = l);
-        }
-        return filePath;
-    }
+    }    
 }

@@ -13,10 +13,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePla
 public class ProjectNamePlaceHolderProfile : Profile
 {
     public ProjectNamePlaceHolderProfile()
-    {      
-        CreateMap<MainModuleViewModel, AddMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => "\\MainModule\\" + s.Id + "\\" + nameof(s.FileUpload) + "\\" + s.FileUpload!.FileName));
-        CreateMap<MainModuleViewModel, EditMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => "\\MainModule\\" + s.Id + "\\" + nameof(s.FileUpload) + "\\" + s.FileUpload!.FileName));
-        CreateMap<MainModuleState, MainModuleViewModel>().ForMember(e => e.FileUpload, c => c.Ignore()).ReverseMap();
+    {
+        CreateMap<MainModuleViewModel, AddMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => s.GeneratedFileUploadPath));
+        CreateMap<MainModuleViewModel, EditMainModuleCommand>().ForPath(e => e.FileUpload, o => o.MapFrom(s => s.GeneratedFileUploadPath));
+        CreateMap<MainModuleState, MainModuleViewModel>().ForMember(e => e.FileUpload, c => c.Ignore()).ForPath(e => e.FileUploadPath, c => c.MapFrom(s => s.FileUpload)).ReverseMap();
         CreateMap<ParentModuleViewModel, AddParentModuleCommand>();
         CreateMap<ParentModuleViewModel, EditParentModuleCommand>();
         CreateMap<ParentModuleState, ParentModuleViewModel>().ReverseMap();

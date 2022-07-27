@@ -130,7 +130,7 @@ public class BasePageModel<T> : PageModel where T : class
                 return Page();
             });
     #endregion
-    public async Task<string> UploadFile<T>(string moduleName, string fieldName, string id, IFormFile? formFile)
+    protected async Task<string> UploadFile<TUploadModel>(string moduleName, string fieldName, string id, IFormFile? formFile)
     {
         string filePath = "";
         if (formFile != null)
@@ -138,22 +138,32 @@ public class BasePageModel<T> : PageModel where T : class
             var permittedExtensions = Configuration.GetValue<string>("UsersUpload:DocumentPermitedExtensions").Split(',').ToArray();
             var fileSizeLimit = Configuration.GetValue<long>("UsersUpload:FileSizeLimit");
             var targetFilePath = Configuration.GetValue<string>("UsersUpload:UploadFilesPath") + "\\" + moduleName + "\\" + id + "\\" + fieldName;
+            filePath = Path.Combine(targetFilePath, formFile.FileName);
             bool exists = System.IO.Directory.Exists(targetFilePath);
             if (!exists)
                 System.IO.Directory.CreateDirectory(targetFilePath);
-            (await FileHelper.ProcessFormFile<T, string>(formFile!,
-                                             permittedExtensions,
-                                             fileSizeLimit,
-                                             cancellationToken: new CancellationToken(),
-                                             f: s =>
-                                             {
-                                                 var filePath = Path.Combine(targetFilePath, formFile.FileName);
-                                                 byte[] bytes = s.ToArray();
-                                                 using (var fileStream = System.IO.File.Create(filePath))
-                                                     fileStream.Write(bytes);
-                                                 return filePath;
-                                             })).Match(Succ: null,
-                                                       Fail: null);
+            (await FileHelper.ProcessFormFile<TUploadModel, string>(formFile!,
+                permittedExtensions,
+                fileSizeLimit,
+                cancellationToken: new CancellationToken(),
+                f: s =>
+                {
+                    byte[] bytes = s.ToArray();
+                    using (var fileStream = System.IO.File.Create(filePath))
+                        fileStream.Write(bytes);
+                    return filePath;
+                })).Match(Succ: succ =>
+                    {                      
+                        Logger.LogInformation("Successfully uploaded the file: {File}}", succ);
+                        filePath = succ;
+                    },
+                    Fail: errors =>
+                    {
+                        errors.Iter(error => ModelState.AddModelError("", error.ToString()));
+                        Logger.LogError("Error encountered. Errors: {Errors}", errors.Join().ToString());
+                        NotyfService.Error($"Error encountered. Errors: {errors.Join()}");
+                        filePath = "";
+                    });
 
         }
         return filePath;

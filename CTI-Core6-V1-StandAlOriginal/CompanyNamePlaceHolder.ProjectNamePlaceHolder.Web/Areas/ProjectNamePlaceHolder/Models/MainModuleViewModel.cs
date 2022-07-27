@@ -6,22 +6,29 @@ using System.ComponentModel.DataAnnotations;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
 
 public record MainModuleViewModel : BaseViewModel
-{	
-	[Display(Name = "Code")]
-	[Required]
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Code { get; init; } = "";
-	[Display(Name = "ParentModuleId")]
-	[Required]
-	public string ParentModuleId { get; init; } = "";
-	
-	public DateTime LastModifiedDate { get; set; }
-	public ParentModuleViewModel? ParentModule { get; init; }
-		
-	public IList<SubDetailItemViewModel>? SubDetailItemList { get; set; }
-	public IList<SubDetailListViewModel>? SubDetailListList { get; set; }
-	
-	[Display(Name = "File")]
-	public IFormFile? FileUpload { get; set; }
+{
+    [Display(Name = "Code")]
+    [Required]
+    [StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string Code { get; init; } = "";
+    [Display(Name = "ParentModuleId")]
+    [Required]
+    public string ParentModuleId { get; init; } = "";
 
+    public DateTime LastModifiedDate { get; set; }
+    public ParentModuleViewModel? ParentModule { get; init; }
+
+    public IList<SubDetailItemViewModel>? SubDetailItemList { get; set; }
+    public IList<SubDetailListViewModel>? SubDetailListList { get; set; }
+
+    [Display(Name = "File Upload")]
+    public IFormFile? FileUpload { get; set; }
+    public string FileUploadPath { get; set; } = "";
+    public string GeneratedFileUploadPath
+    {
+        get
+        {
+            return this.FileUpload?.FileName == null ? FileUploadPath : "\\MainModule\\" + this.Id + "\\" + nameof(this.FileUpload) + "\\" + this.FileUpload!.FileName;
+        }
+    }
 }

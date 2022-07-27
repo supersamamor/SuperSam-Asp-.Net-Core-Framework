@@ -58,7 +58,7 @@ app.UseStaticFiles(new StaticFileOptions
             "public,max-age=" + durationInSeconds;
     },
     FileProvider = new PhysicalFileProvider(uploadFilesPath),
-    RequestPath = "/UploadFilesPath"
+    RequestPath = "/" + WebConstants.UploadFilesPath
 });
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
