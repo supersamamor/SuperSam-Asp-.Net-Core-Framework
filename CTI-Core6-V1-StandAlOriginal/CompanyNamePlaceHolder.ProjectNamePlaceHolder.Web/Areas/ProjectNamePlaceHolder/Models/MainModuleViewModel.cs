@@ -28,7 +28,7 @@ public record MainModuleViewModel : BaseViewModel
     {
         get
         {
-            return this.FileUploadForm?.FileName == null ? this.FileUpload : "\\MainModule\\" + this.Id + "\\" + nameof(this.FileUpload) + "\\" + this.FileUploadForm!.FileName;
+            return this.FileUploadForm?.FileName == null ? this.FileUpload : "\\" + WebConstants.MainModule+ "\\" + this.Id + "\\" + nameof(this.FileUpload) + "\\" + this.FileUploadForm!.FileName;
         }
     }
 }

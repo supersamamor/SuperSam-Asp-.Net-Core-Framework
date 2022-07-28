@@ -31,6 +31,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
+		Template:[FileUploadModelUploaderMethod]
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()

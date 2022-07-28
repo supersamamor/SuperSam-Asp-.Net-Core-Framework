@@ -28,6 +28,7 @@ public class AddModel : BasePageModel<AddModel>
         {
             return Page();
         }
+		Template:[FileUploadModelUploaderMethod]
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddMainModulePlaceHolderCommand>(MainModulePlaceHolder)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()
