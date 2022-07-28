@@ -1,7 +1,7 @@
 @model string
 
 <script asp-add-nonce>
-    $("#@Model select").prop("readonly", true);
+    $("#@Model select").prop("disabled", true);
     $('#@Model input').attr('readonly', true);
 	$('#@Model textarea').attr('readonly', true);
     $("#@Model input[type='checkbox']").prop("disabled", "disabled");
