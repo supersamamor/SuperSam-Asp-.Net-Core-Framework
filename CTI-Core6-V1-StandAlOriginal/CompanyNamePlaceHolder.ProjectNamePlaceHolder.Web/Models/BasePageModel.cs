@@ -3,10 +3,8 @@ using AutoMapper;
 using CompanyNamePlaceHolder.Common.Core.Base.Models;
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Utility.Extensions;
-using CompanyNamePlaceHolder.Common.Utility.Models;
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
-using DataTables.AspNetCore.Mvc.Binder;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
@@ -29,13 +27,14 @@ public class BasePageModel<T> : PageModel where T : class
     private IMapper? _mapper;
     private string? _traceId;
     private IConfiguration? _configuration;
+	
     protected ILogger<T> Logger => _logger ??= HttpContext.RequestServices.GetService<ILogger<T>>()!;
     protected IStringLocalizer<SharedResource> Localizer => _localizer ??= HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>()!;
     protected INotyfService NotyfService => _notyfService ??= HttpContext.RequestServices.GetService<INotyfService>()!;
     protected IMediator Mediatr => _mediatr ??= HttpContext.RequestServices.GetService<IMediator>()!;
     protected IMapper Mapper => _mapper ??= HttpContext.RequestServices.GetService<IMapper>()!;
     protected string TraceId => _traceId ??= Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-    protected IConfiguration Configuration => _configuration ??= HttpContext.RequestServices.GetService<IConfiguration>()!;
+	protected IConfiguration Configuration => _configuration ??= HttpContext.RequestServices.GetService<IConfiguration>()!;
     /// <summary>
     /// Maps <typeparamref name="TEntity"/> to <typeparamref name="TModel"/> and returns the page.
     /// </summary>
@@ -130,7 +129,7 @@ public class BasePageModel<T> : PageModel where T : class
                 return Page();
             });
     #endregion
-    protected async Task<string> UploadFile<TUploadModel>(string moduleName, string fieldName, string id, IFormFile? formFile)
+	protected async Task<string> UploadFile<TUploadModel>(string moduleName, string fieldName, string id, IFormFile? formFile)
     {
         string filePath = "";
         if (formFile != null)

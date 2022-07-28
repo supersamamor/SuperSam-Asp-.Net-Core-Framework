@@ -1,9 +1,9 @@
 @model string
 
 <script asp-add-nonce>
-    $("#@Model select").prop("readonly", true);
+    $("#@Model select").prop("disabled", true);
     $('#@Model input').attr('readonly', true);
-    $('#@Model textarea').attr('readonly', true);
+	$('#@Model textarea').attr('readonly', true);
     $("#@Model input[type='checkbox']").prop("disabled", "disabled");
     $('#@Model .btn-field').attr('class', "btn-field btn btn-secondary");
     $('#@Model select').on('mousedown', function(e) {
@@ -11,6 +11,5 @@
        this.blur();
        window.focus();
     });
-    $('#@Model select').attr('readonly', true);
-    $("#@Model .file-upload-control").attr("style", "display:none;");
+	$("#@Model .file-upload-control").attr("style", "display:none;");
 </script>

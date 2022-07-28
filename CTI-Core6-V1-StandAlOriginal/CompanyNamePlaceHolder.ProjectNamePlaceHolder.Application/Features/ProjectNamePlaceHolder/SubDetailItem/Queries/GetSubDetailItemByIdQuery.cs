@@ -14,5 +14,11 @@ public class GetSubDetailItemByIdQueryHandler : BaseQueryByIdHandler<Application
     public GetSubDetailItemByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
-		
+	
+	public override async Task<Option<SubDetailItemState>> Handle(GetSubDetailItemByIdQuery request, CancellationToken cancellationToken = default)
+	{
+		return await Context.SubDetailItem.Include(l=>l.MainModule)
+			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+	}
+	
 }

@@ -22,3 +22,6 @@ button.accept-policy {
     font-weight: bold;
     color: red;
 }
+.select2-container {
+    width: 100% !important;
+}

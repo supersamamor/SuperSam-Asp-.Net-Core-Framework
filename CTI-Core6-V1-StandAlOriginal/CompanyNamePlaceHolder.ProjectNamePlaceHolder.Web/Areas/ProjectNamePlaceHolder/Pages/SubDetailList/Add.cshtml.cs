@@ -28,6 +28,7 @@ public class AddModel : BasePageModel<AddModel>
         {
             return Page();
         }
+		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddSubDetailListCommand>(SubDetailList)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()

@@ -27,4 +27,18 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+		}	
+		InitializeForm();
+    });
+</script>
 }

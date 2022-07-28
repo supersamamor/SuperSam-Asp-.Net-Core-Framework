@@ -63,26 +63,29 @@ public class AddMainModuleCommandHandler : BaseCommandHandler<ApplicationContext
 	private async Task AddApprovers(string mainModuleId, CancellationToken cancellationToken)
 	{
 		var approverList = await Context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.MainModule).AsNoTracking().ToListAsync(cancellationToken);
-		var approvalRecord = new ApprovalRecordState()
+		if (approverList.Count > 0)
 		{
-			ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
-			DataId = mainModuleId,
-			ApprovalList = new List<ApprovalState>()
-		};
-		foreach (var item in approverList)
-		{
-			var approval = new ApprovalState()
+			var approvalRecord = new ApprovalRecordState()
 			{
-				Sequence = item.Sequence,
-				ApproverUserId = item.ApproverUserId,
+				ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
+				DataId = mainModuleId,
+				ApprovalList = new List<ApprovalState>()
 			};
-			if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
+			foreach (var item in approverList)
 			{
-				approval.EmailSendingStatus = SendingStatus.Pending;
+				var approval = new ApprovalState()
+				{
+					Sequence = item.Sequence,
+					ApproverUserId = item.ApproverUserId,
+				};
+				if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
+				{
+					approval.EmailSendingStatus = SendingStatus.Pending;
+				}
+				approvalRecord.ApprovalList.Add(approval);
 			}
-			approvalRecord.ApprovalList.Add(approval);
+			await Context.AddAsync(approvalRecord, cancellationToken);
 		}
-		await Context.AddAsync(approvalRecord, cancellationToken);
 	}
 }
 

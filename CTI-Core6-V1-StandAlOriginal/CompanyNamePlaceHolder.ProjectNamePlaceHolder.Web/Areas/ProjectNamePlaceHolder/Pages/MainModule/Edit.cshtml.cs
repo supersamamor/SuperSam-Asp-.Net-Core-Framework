@@ -1,4 +1,3 @@
-using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.MainModule.Commands;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.MainModule.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
@@ -27,41 +26,43 @@ public class EditModel : BasePageModel<EditModel>
     }
 
     public async Task<IActionResult> OnPost()
-    {
+    {		
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        if (MainModule.FileUploadForm != null && await UploadFile<MainModuleViewModel>(WebConstants.MainModule, nameof(MainModule.FileUpload), MainModule.Id, MainModule.FileUploadForm) == "") { return Page(); }
+		if (MainModule.FileUploadForm != null && await UploadFile<MainModuleViewModel>(WebConstants.MainModule, nameof(MainModule.FileUpload), MainModule.Id, MainModule.FileUploadForm) == "") { return Page(); }
+		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditMainModuleCommand>(MainModule)), "Details", true);
-    }
-    public IActionResult OnPostChangeFormValue()
+    }	
+	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-        if (AsyncAction == "AddSubDetailList")
-        {
-            return AddSubDetailList();
-        }
-        if (AsyncAction == "RemoveSubDetailList")
-        {
-            return RemoveSubDetailList();
-        }
-
-
+		if (AsyncAction == "AddSubDetailList")
+		{
+			return AddSubDetailList();
+		}
+		if (AsyncAction == "RemoveSubDetailList")
+		{
+			return RemoveSubDetailList();
+		}
+		
+		
         return Partial("_InputFieldsPartial", MainModule);
     }
-
-    private IActionResult AddSubDetailList()
-    {
-        ModelState.Clear();
-        if (MainModule!.SubDetailListList == null) { MainModule!.SubDetailListList = new List<SubDetailListViewModel>(); }
-        MainModule!.SubDetailListList!.Add(new SubDetailListViewModel() { TestForeignKeyOne = MainModule.Id });
-        return Partial("_InputFieldsPartial", MainModule);
-    }
-    private IActionResult RemoveSubDetailList()
-    {
-        ModelState.Clear();
-        MainModule.SubDetailListList = MainModule!.SubDetailListList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-        return Partial("_InputFieldsPartial", MainModule);
-    }    
+	
+	private IActionResult AddSubDetailList()
+	{
+		ModelState.Clear();
+		if (MainModule!.SubDetailListList == null) { MainModule!.SubDetailListList = new List<SubDetailListViewModel>(); }
+		MainModule!.SubDetailListList!.Add(new SubDetailListViewModel() { TestForeignKeyOne = MainModule.Id });
+		return Partial("_InputFieldsPartial", MainModule);
+	}
+	private IActionResult RemoveSubDetailList()
+	{
+		ModelState.Clear();
+		MainModule.SubDetailListList = MainModule!.SubDetailListList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", MainModule);
+	}
+	
 }

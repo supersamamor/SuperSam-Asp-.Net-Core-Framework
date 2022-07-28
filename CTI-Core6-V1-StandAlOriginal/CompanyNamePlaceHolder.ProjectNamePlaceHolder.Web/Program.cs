@@ -7,10 +7,10 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
-using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 

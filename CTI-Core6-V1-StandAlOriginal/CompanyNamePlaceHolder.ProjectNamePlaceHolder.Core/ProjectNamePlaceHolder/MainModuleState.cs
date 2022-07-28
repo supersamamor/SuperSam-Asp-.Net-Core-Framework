@@ -5,9 +5,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
 
 public record MainModuleState : BaseEntity
 {
-	public string Code { get; init; } = "";
 	public string ParentModuleId { get; init; } = "";
-	public string? FileUpload { get; init; } = "";
+	public string FileUpload { get; init; }
+	public string Code { get; init; } = "";
+	
 	public ParentModuleState? ParentModule { get; init; }
 	
 	public IList<SubDetailItemState>? SubDetailItemList { get; set; }

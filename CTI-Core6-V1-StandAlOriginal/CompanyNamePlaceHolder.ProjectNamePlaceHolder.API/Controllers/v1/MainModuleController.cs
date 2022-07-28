@@ -44,9 +44,11 @@ public class MainModuleController : BaseApiController<MainModuleController>
 public record MainModuleViewModel
 {
     [Required]
+	public string ParentModuleId { get;set; } = "";
+	[Required]
+	public string FileUpload { get;set; }
+	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Code { get;set; } = "";
-	[Required]
-	public string ParentModuleId { get;set; } = "";
 	   
 }

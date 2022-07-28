@@ -31,8 +31,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.Code,
-				ParentModuleId = e.ParentModule?.Name,
+                ParentModuleId = e.ParentModule?.Name,
+				e.Code,
 						
 				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 e.LastModifiedDate

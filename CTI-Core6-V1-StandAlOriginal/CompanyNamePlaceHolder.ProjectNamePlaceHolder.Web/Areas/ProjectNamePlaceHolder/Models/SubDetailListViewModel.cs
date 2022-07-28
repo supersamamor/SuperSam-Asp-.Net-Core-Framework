@@ -14,6 +14,7 @@ public record SubDetailListViewModel : BaseViewModel
 	[Display(Name = "MainModulePlaceHolder")]
 	[Required]
 	public string TestForeignKeyOne { get; init; } = "";
+	public string?  ForeignKeyMainModule { get; set; }
 	
 	public DateTime LastModifiedDate { get; set; }
 	public MainModuleViewModel? MainModule { get; init; }

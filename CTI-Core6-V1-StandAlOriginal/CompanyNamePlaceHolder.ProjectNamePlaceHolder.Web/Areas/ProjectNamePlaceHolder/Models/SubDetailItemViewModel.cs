@@ -10,6 +10,7 @@ public record SubDetailItemViewModel : BaseViewModel
 	[Display(Name = "MainModulePlaceHolder")]
 	[Required]
 	public string TestForeignKeyTwo { get; init; } = "";
+	public string?  ForeignKeyMainModule { get; set; }
 	[Display(Name = "Code")]
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]

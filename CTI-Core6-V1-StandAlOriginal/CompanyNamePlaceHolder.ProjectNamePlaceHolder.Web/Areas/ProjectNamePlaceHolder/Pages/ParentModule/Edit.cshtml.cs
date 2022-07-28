@@ -31,6 +31,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
+		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditParentModuleCommand>(ParentModule)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()

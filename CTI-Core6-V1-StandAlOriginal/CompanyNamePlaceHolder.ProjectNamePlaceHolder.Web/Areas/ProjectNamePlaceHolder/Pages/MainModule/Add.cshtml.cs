@@ -29,6 +29,8 @@ public class AddModel : BasePageModel<AddModel>
         {
             return Page();
         }
+		if (MainModule.FileUploadForm != null && await UploadFile<MainModuleViewModel>(WebConstants.MainModule, nameof(MainModule.FileUpload), MainModule.Id, MainModule.FileUploadForm) == "") { return Page(); }
+		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddMainModuleCommand>(MainModule)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()

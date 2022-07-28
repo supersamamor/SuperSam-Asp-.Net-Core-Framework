@@ -28,10 +28,17 @@
 <partial name="_ValidationScriptsPartial" />
 <partial name="_SubDetailItemListValidationPartial" model="@Model.MainModule" />
 <partial name="_SubDetailListListValidationPartial" model="@Model.MainModule" />
+
 <script asp-add-nonce>
-	$(document).ready(function () {
+    $(document).ready(function () {
 		function InitializeForm()
 		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
 			$.InitializeSubDetailItemFieldValidations($('#SubDetailItemCount').val());
 			$('.RemoveSubDetailItemButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));
@@ -56,9 +63,20 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
 			});
 
-		}
-		InitializeForm();
-	});
-</script>
+			$.fn.parentmoduleSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ParentModule/Index", new { area = "ProjectNamePlaceHolder", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ParentModuleId").parentmoduleSelect();
 
+		}	
+		InitializeForm();
+    });
+</script>
 }

@@ -1,26 +1,35 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.ParentModule.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.MainModule.Queries;
-
-using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
+using MediatR;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 {
     public class DropdownServices
     {
-        private readonly IMediator _mediaTr;  
-        public DropdownServices(IMediator mediaTr)
-        {
-            _mediaTr = mediaTr;       
-        }      
-		public async Task<IEnumerable<SelectListItem>> GetParentModuleList()
+		private readonly ApplicationContext _context;
+		private readonly IMediator _mediaTr;
+
+		public DropdownServices(ApplicationContext context, IMediator mediaTr)
+		{            
+			_context = context;
+			_mediaTr = mediaTr;
+		}       
+		public SelectList GetParentModuleList(string id)
 		{
-			return (await _mediaTr.Send(new GetParentModuleQuery())).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+			return _context.GetSingle<ParentModuleState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Name } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
 		}
-		public async Task<IEnumerable<SelectListItem>> GetMainModuleList()
+		public SelectList GetMainModuleList(string id)
 		{
-			return (await _mediaTr.Send(new GetMainModuleQuery())).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Id });
+			return _context.GetSingle<MainModuleState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
 		}
 		
 		public async Task<IEnumerable<SelectListItem>> GetUserList(string currentSelectedApprover, IList<string> allSelectedApprovers)

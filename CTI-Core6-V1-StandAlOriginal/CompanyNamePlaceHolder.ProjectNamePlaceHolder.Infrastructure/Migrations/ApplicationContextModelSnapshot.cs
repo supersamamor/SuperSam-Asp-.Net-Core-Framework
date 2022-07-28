@@ -287,6 +287,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FileUpload")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")

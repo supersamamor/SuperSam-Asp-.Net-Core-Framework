@@ -17,7 +17,7 @@ public class GetMainModuleByIdQueryHandler : BaseQueryByIdHandler<ApplicationCon
 	
 	public override async Task<Option<MainModuleState>> Handle(GetMainModuleByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.MainModule
+		return await Context.MainModule.Include(l=>l.ParentModule)
 			.Include(l=>l.SubDetailItemList)
 			.Include(l=>l.SubDetailListList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
