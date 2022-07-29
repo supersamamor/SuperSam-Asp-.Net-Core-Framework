@@ -1,0 +1,28 @@
+@using Models
+@model LevelViewModel
+
+<div class="col-md-6">
+	<label asp-for="@Model.Name" class="fieldrequired"></label>
+	<input asp-for="@Model.Name" class="form-control" maxlength="255"  readonly/>
+	<span asp-validation-for="@Model.Name" class="text-danger"></span>
+	
+</div>
+<div class="col-md-4">
+	<label asp-for="@Model.ProjectId" class="fieldrequired"></label>
+	<input  asp-for="ForeignKeyProject" class="form-control"   readonly />
+	<span asp-validation-for="@Model.ProjectId" class="text-danger"></span>
+	<input type="hidden" asp-for="@Model.ProjectId"/>
+</div>
+<div class="col-md-4">
+	<label asp-for="@Model.HasPercentageSalesTenant" class="fieldrequired"></label>
+	<input asp-for="@Model.HasPercentageSalesTenant" class="custom-checkbox-label" readonly/>
+	<span asp-validation-for="@Model.HasPercentageSalesTenant" class="text-danger"></span>
+	
+</div>
+<div class="col-md-4">
+	<label asp-for="@Model.IsDisabled" class=""></label>
+	<input asp-for="@Model.IsDisabled" class="custom-checkbox-label" readonly/>
+	<span asp-validation-for="@Model.IsDisabled" class="text-danger"></span>
+	
+</div>
+

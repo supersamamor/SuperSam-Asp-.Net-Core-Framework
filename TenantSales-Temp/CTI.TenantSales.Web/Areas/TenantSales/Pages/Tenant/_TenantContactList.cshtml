@@ -1,0 +1,85 @@
+@using Models
+@model TenantViewModel
+<input type="hidden" id="TenantContactCount" value="@Model?.TenantContactList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Contact"]</h5>
+                    </button>
+                    <button type="button" id="btnAddTenantContact" class="btn-field btn btn-primary cancel">
+                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
+                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
+                    </button>
+                    <button class="cancel" type="button" id="btnRemoveTenantContact" value="RemoveTenantContact" style="display:none;"></button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+                <table id="tenantContact" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+							<th style="display:none;"></th>
+                            <th>
+								@Localizer["Group"]
+							</th>
+							<th>
+								@Localizer["Type"]
+							</th>
+							<th>
+								@Localizer["Detail"]
+							</th>
+							
+                            <th>
+                                @Localizer["Action"]
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.TenantContactList != null)
+                        {
+                            int counter = 0;
+                            foreach (var item in Model.TenantContactList)
+                            {
+                                <tr>
+									<td style="display:none;">
+                                        <input type="hidden" name="TenantContactList[@counter].Id" value="@item.Id" />
+                                        <input type="hidden" name="TenantContactList[@counter].TenantId" value="@item.TenantId" />                                      
+                                    </td>
+                                    <td>
+										<input  asp-for="@item.Group" name="TenantContactList[@counter].Group" class="form-control"  />
+										<span data-valmsg-for="TenantContactList[@counter].Group" asp-validation-for="@item.Group" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Type" name="TenantContactList[@counter].Type" class="form-control"  />
+										<span data-valmsg-for="TenantContactList[@counter].Type" asp-validation-for="@item.Type" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Detail" name="TenantContactList[@counter].Detail" class="form-control" maxlength="50" />
+										<span data-valmsg-for="TenantContactList[@counter].Detail" asp-validation-for="@item.Detail" class="text-danger"></span>
+										
+									</td>
+									
+                                    <td>
+                                        <button type="button" class="btn-field btn btn-danger RemoveTenantContactButton cancel" title="@Localizer["Remove TenantContact"]" removeId="@(item.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

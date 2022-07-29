@@ -1,0 +1,22 @@
+@using Models
+@model TenantLotViewModel
+
+<div class="col-md-12">
+	<label asp-for="@Model.Area" class="fieldrequired"></label>
+	<input asp-for="@Model.Area" class="form-control"   readonly/>
+	<span asp-validation-for="@Model.Area" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.LotNo" class=""></label>
+	<input asp-for="@Model.LotNo" class="form-control" maxlength="255"  readonly/>
+	<span asp-validation-for="@Model.LotNo" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.TenantId" class="fieldrequired"></label>
+	<input  asp-for="ForeignKeyTenant" class="form-control"   readonly />
+	<span asp-validation-for="@Model.TenantId" class="text-danger"></span>
+	<input type="hidden" asp-for="@Model.TenantId"/>
+</div>
+

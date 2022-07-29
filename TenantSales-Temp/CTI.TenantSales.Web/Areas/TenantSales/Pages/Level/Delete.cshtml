@@ -1,0 +1,36 @@
+@page
+@model DeleteModel
+@{
+    ViewData["Title"] = Localizer["Delete Level"];
+    ViewData["ActiveMainPage"] = "Level";
+    ViewData["Level1"] = "TenantSales";
+}
+<div class=row>
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            @Localizer["Are you sure you want to delete this level?"]
+        </div>
+    </div>
+</div>
+<form id="level-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Level" />
+    </div> 
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DisableFieldsPartial" model="@("level-form")" />
+}

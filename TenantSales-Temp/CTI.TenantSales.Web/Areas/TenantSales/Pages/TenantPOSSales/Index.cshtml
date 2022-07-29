@@ -1,0 +1,214 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Sales List"];
+    ViewData["ActiveMainPage"] = "TenantPOSSales";
+    ViewData["Level1"] = "TenantSales";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="tenantPOSSales" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Sales Category"]
+							</th>
+							<th>
+								@Localizer["Sales Date"]
+							</th>
+							<th>
+								@Localizer["Is Auto-Compute"]
+							</th>
+							<th>
+								@Localizer["Sales Amount"]
+							</th>
+							<th>
+								@Localizer["Old Accumulated Total"]
+							</th>
+							<th>
+								@Localizer["New Accumulated Total"]
+							</th>
+							<th>
+								@Localizer["Taxable Sales Amount"]
+							</th>
+							<th>
+								@Localizer["Non Taxable Sales Amount"]
+							</th>
+							<th>
+								@Localizer["Senior Citizen Discount"]
+							</th>
+							<th>
+								@Localizer["Promo Discount"]
+							</th>
+							<th>
+								@Localizer["Other Discount"]
+							</th>
+							<th>
+								@Localizer["Refund Discount"]
+							</th>
+							<th>
+								@Localizer["Void Amount"]
+							</th>
+							<th>
+								@Localizer["Adjustment Amount"]
+							</th>
+							<th>
+								@Localizer["Total Service Charge"]
+							</th>
+							<th>
+								@Localizer["Total Tax"]
+							</th>
+							<th>
+								@Localizer["No Of Sales Transactions"]
+							</th>
+							<th>
+								@Localizer["NoOfTransactions"]
+							</th>
+							<th>
+								@Localizer["Total Net Sales"]
+							</th>
+							<th>
+								@Localizer["Control Number"]
+							</th>
+							<th>
+								@Localizer["Validation Status"]
+							</th>
+							<th>
+								@Localizer["Validation Remarks"]
+							</th>
+							<th>
+								@Localizer["Autocalculated New Accumulated Total"]
+							</th>
+							<th>
+								@Localizer["Autocalculated Old Accumulated Total"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#tenantPOSSales').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 24, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/TenantPOSSales/Index", new { area = "TenantSales", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "salesCategory", name: "SalesCategory", responsivePriority: 1, title: '@Localizer["Sales Category"]', searchable: false },
+				{ data: "salesDate", name: "SalesDate", responsivePriority: 1, title: '@Localizer["Sales Date"]', searchable: false },
+				{ data: "isAutoCompute", name: "IsAutoCompute", responsivePriority: 1, title: '@Localizer["Is Auto-Compute"]', searchable: false },
+				{ data: "salesAmount", name: "SalesAmount", responsivePriority: 1, title: '@Localizer["Sales Amount"]', searchable: false },
+				{ data: "oldAccumulatedTotal", name: "OldAccumulatedTotal", responsivePriority: 1, title: '@Localizer["Old Accumulated Total"]', searchable: false },
+				{ data: "newAccumulatedTotal", name: "NewAccumulatedTotal", responsivePriority: 1, title: '@Localizer["New Accumulated Total"]', searchable: false },
+				{ data: "taxableSalesAmount", name: "TaxableSalesAmount", responsivePriority: 1, title: '@Localizer["Taxable Sales Amount"]', searchable: false },
+				{ data: "nonTaxableSalesAmount", name: "NonTaxableSalesAmount", responsivePriority: 1, title: '@Localizer["Non Taxable Sales Amount"]', searchable: false },
+				{ data: "seniorCitizenDiscount", name: "SeniorCitizenDiscount", responsivePriority: 1, title: '@Localizer["Senior Citizen Discount"]', searchable: false },
+				{ data: "promoDiscount", name: "PromoDiscount", responsivePriority: 1, title: '@Localizer["Promo Discount"]', searchable: false },
+				{ data: "otherDiscount", name: "OtherDiscount", responsivePriority: 1, title: '@Localizer["Other Discount"]', searchable: false },
+				{ data: "refundDiscount", name: "RefundDiscount", responsivePriority: 1, title: '@Localizer["Refund Discount"]', searchable: false },
+				{ data: "voidAmount", name: "VoidAmount", responsivePriority: 1, title: '@Localizer["Void Amount"]', searchable: false },
+				{ data: "adjustmentAmount", name: "AdjustmentAmount", responsivePriority: 1, title: '@Localizer["Adjustment Amount"]', searchable: false },
+				{ data: "totalServiceCharge", name: "TotalServiceCharge", responsivePriority: 1, title: '@Localizer["Total Service Charge"]', searchable: false },
+				{ data: "totalTax", name: "TotalTax", responsivePriority: 1, title: '@Localizer["Total Tax"]', searchable: false },
+				{ data: "noOfSalesTransactions", name: "NoOfSalesTransactions", responsivePriority: 1, title: '@Localizer["No Of Sales Transactions"]', searchable: false },
+				{ data: "noOfTransactions", name: "NoOfTransactions", responsivePriority: 1, title: '@Localizer["NoOfTransactions"]', searchable: false },
+				{ data: "totalNetSales", name: "TotalNetSales", responsivePriority: 1, title: '@Localizer["Total Net Sales"]', searchable: false },
+				{ data: "controlNumber", name: "ControlNumber", responsivePriority: 1, title: '@Localizer["Control Number"]', searchable: false },
+				{ data: "validationStatus", name: "ValidationStatus", responsivePriority: 1, title: '@Localizer["Validation Status"]', searchable: false },
+				{ data: "validationRemarks", name: "ValidationRemarks", responsivePriority: 1, title: '@Localizer["Validation Remarks"]', searchable: false },
+				{ data: "autocalculatedNewAccumulatedTotal", name: "AutocalculatedNewAccumulatedTotal", responsivePriority: 1, title: '@Localizer["Autocalculated New Accumulated Total"]', searchable: false },
+				{ data: "autocalculatedOldAccumulatedTotal", name: "AutocalculatedOldAccumulatedTotal", responsivePriority: 1, title: '@Localizer["Autocalculated Old Accumulated Total"]', searchable: false },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/TenantPOSSales/Details", new { area = "TenantSales" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewTenantPOSSales">@Localizer["View"]</a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/TenantPOSSales/Edit", new { area = "TenantSales" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditTenantPOSSales">@Localizer["Edit"]</a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/TenantPOSSales/Delete", new { area = "TenantSales" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteTenantPOSSales">@Localizer["Delete"]</a>';
+                    </text>
+                }
+				   
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/TenantPOSSales/Add", new { area = "TenantSales" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#tenantPOSSales tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddTenantPOSSales",".btnEditTenantPOSSales",".btnViewTenantPOSSales",".btnDeleteTenantPOSSales"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddTenantPOSSales",".btnEditTenantPOSSales",".btnViewTenantPOSSales",".btnDeleteTenantPOSSales"]);
+    });
+</script>
+}

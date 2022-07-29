@@ -1,0 +1,93 @@
+@using Models
+@model TenantViewModel
+<input type="hidden" id="SalesCategoryCount" value="@Model?.SalesCategoryList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Sales Category"]</h5>
+                    </button>
+                    <button type="button" id="btnAddSalesCategory" class="btn-field btn btn-primary cancel">
+                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
+                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
+                    </button>
+                    <button class="cancel" type="button" id="btnRemoveSalesCategory" value="RemoveSalesCategory" style="display:none;"></button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+                <table id="salesCategory" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+							<th style="display:none;"></th>
+                            <th>
+								@Localizer["Code"]
+							</th>
+							<th>
+								@Localizer["Name"]
+							</th>
+							<th>
+								@Localizer["Rate"]
+							</th>
+							<th>
+								@Localizer["Disabled"]
+							</th>
+							
+                            <th>
+                                @Localizer["Action"]
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.SalesCategoryList != null)
+                        {
+                            int counter = 0;
+                            foreach (var item in Model.SalesCategoryList)
+                            {
+                                <tr>
+									<td style="display:none;">
+                                        <input type="hidden" name="SalesCategoryList[@counter].Id" value="@item.Id" />
+                                        <input type="hidden" name="SalesCategoryList[@counter].TenantId" value="@item.TenantId" />                                      
+                                    </td>
+                                    <td>
+										<input  asp-for="@item.Code" name="SalesCategoryList[@counter].Code" class="form-control" maxlength="20" readonly/>
+										<span data-valmsg-for="SalesCategoryList[@counter].Code" asp-validation-for="@item.Code" class="text-danger"></span>
+										<input type="hidden" asp-for="@item.Code"  name="SalesCategoryList[@counter].Code"/>
+									</td>
+									<td>
+										<input  asp-for="@item.Name" name="SalesCategoryList[@counter].Name" class="form-control" maxlength="100" readonly/>
+										<span data-valmsg-for="SalesCategoryList[@counter].Name" asp-validation-for="@item.Name" class="text-danger"></span>
+										<input type="hidden" asp-for="@item.Name"  name="SalesCategoryList[@counter].Name"/>
+									</td>
+									<td>
+										<input  asp-for="@item.Rate" name="SalesCategoryList[@counter].Rate" class="form-control"  readonly/>
+										<span data-valmsg-for="SalesCategoryList[@counter].Rate" asp-validation-for="@item.Rate" class="text-danger"></span>
+										<input type="hidden" asp-for="@item.Rate"  name="SalesCategoryList[@counter].Rate"/>
+									</td>
+									<td>
+										<input asp-for="@item.IsDisabled" name="SalesCategoryList[@counter].IsDisabled" class="form-control" />
+										<span data-valmsg-for="SalesCategoryList[@counter].IsDisabled" asp-validation-for="@item.IsDisabled" class="text-danger"></span>
+										
+									</td>
+									
+                                    <td>
+                                        <button type="button" class="btn-field btn btn-danger RemoveSalesCategoryButton cancel" title="@Localizer["Remove SalesCategory"]" removeId="@(item.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

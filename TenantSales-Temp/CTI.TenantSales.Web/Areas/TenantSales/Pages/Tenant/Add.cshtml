@@ -1,0 +1,132 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Tenant"];
+    ViewData["ActiveMainPage"] = "Tenant";
+    ViewData["Level1"] = "TenantSales";
+}
+<form id="tenant-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Tenant" />
+    </div>    
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_TenantLotListValidationPartial" model="@Model.Tenant" />
+<partial name="_SalesCategoryListValidationPartial" model="@Model.Tenant" />
+<partial name="_TenantContactListValidationPartial" model="@Model.Tenant" />
+<partial name="_TenantPOSListValidationPartial" model="@Model.Tenant" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeTenantLotFieldValidations($('#TenantLotCount').val());
+			$('.RemoveTenantLotButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTenantLot');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddTenantLot').on( 'click', function () {
+				$('#AsyncAction').val('AddTenantLot');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$.InitializeSalesCategoryFieldValidations($('#SalesCategoryCount').val());
+			$('.RemoveSalesCategoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveSalesCategory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddSalesCategory').on( 'click', function () {
+				$('#AsyncAction').val('AddSalesCategory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$.InitializeTenantContactFieldValidations($('#TenantContactCount').val());
+			$('.RemoveTenantContactButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTenantContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddTenantContact').on( 'click', function () {
+				$('#AsyncAction').val('AddTenantContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$.InitializeTenantPOSFieldValidations($('#TenantPOSCount').val());
+			$('.RemoveTenantPOSButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTenantPOS');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddTenantPOS').on( 'click', function () {
+				$('#AsyncAction').val('AddTenantPOS');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$.fn.levelSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Level/Index", new { area = "TenantSales", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LevelId").levelSelect();
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "TenantSales", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectId").projectSelect();
+
+			$.fn.rentaltypeSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/RentalType/Index", new { area = "TenantSales", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#RentalTypeId").rentaltypeSelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}
