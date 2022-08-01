@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CTI.TenantSales.Core\CTI.TenantSales.Core.csproj" />
     <ProjectReference Include="..\CTI.TenantSales.Infrastructure\CTI.TenantSales.Infrastructure.csproj" />
   </ItemGroup>
 

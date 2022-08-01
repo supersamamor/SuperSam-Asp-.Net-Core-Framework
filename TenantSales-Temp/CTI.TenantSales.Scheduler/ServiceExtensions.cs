@@ -1,3 +1,4 @@
+using CTI.TenantSales.Scheduler.Helper;
 using CTI.TenantSales.Scheduler.Jobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace CTI.TenantSales.Scheduler
             });
             services.AddTransient<FileScanJob>();
             services.AddTransient<ApprovalNotificationJob>();
+            services.AddTransient<SalesFileHelper>();            
         }
     }
 }
