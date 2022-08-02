@@ -85,7 +85,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                                         //Validate Sales Category
                                         _tenantPOSSalesList = processRepo.ProcessingMethod.ValidateSalesCategory(tenant!.SalesCategoryList!.Select(l => l.Code).ToList()
                                             , _tenantPOSSalesList);
-                                    }
+                                    }                          
                                     //Save Sales File
                                     var saveResult = await SavePosSales(_tenantPOSSalesList);
                                     //If Api Cannot Insert the sales file, Call Api for Updating 
@@ -258,24 +258,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                     && l.SalesDate == salesDate
                     && l.SalesCategory == salesCategory).AsNoTracking().FirstOrDefaultAsync();
         }
-        private async Task<bool> SavePosSales(POSSales posSales)
-        {
-            foreach (var salesItem in posSales.SalesList)
-            {
-                await _context.AddAsync(salesItem);
-            }
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        private async Task<bool> UpdateFailedPOSSales(POSSales posSales)
-        {
-            foreach (var salesItem in posSales.SalesList)
-            {
-                _context.Entry(salesItem).State = EntityState.Modified;
-            }
-            await _context.SaveChangesAsync();
-            return true;
-        }
+ 
         private async Task<IList<TenantState>> GetActiveTenants(string projectId, string? tenantCode)
         {
             var query = _context.Tenant.Where(l => l.ProjectId == projectId && l.IsDisabled == false).AsNoTracking();
@@ -312,6 +295,23 @@ namespace CTI.TenantSales.Scheduler.Jobs
                 query = query.Where(l => l.TenantPOS!.Tenant!.Code == tenantCode);
             }
             return await query.ToListAsync();
+        }
+        private async Task<bool> SavePosSales(POSSales posSales)
+        {
+            foreach (var salesItem in posSales.SalesList)
+            {
+                await _context.AddAsync(salesItem);
+            }
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        private async Task UpdateFailedPOSSales(POSSales posSales)
+        {
+            foreach (var salesItem in posSales.SalesList)
+            {
+                _context.Entry(salesItem).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();         
         }
     }
 }
