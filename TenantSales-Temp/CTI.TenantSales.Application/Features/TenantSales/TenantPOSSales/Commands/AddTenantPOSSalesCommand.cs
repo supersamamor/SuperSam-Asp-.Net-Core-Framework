@@ -2,6 +2,7 @@ using AutoMapper;
 using CTI.Common.Core.Commands;
 using CTI.Common.Data;
 using CTI.Common.Utility.Validators;
+using CTI.TenantSales.Application.Repositories;
 using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.Infrastructure.Data;
 using FluentValidation;
@@ -20,12 +21,15 @@ public class AddTenantPOSSalesCommandHandler : BaseCommandHandler<ApplicationCon
 {
     private readonly decimal _taxRate;
     private readonly decimal _salesAmountThreshold;
+    private readonly TenantPOSSalesRepository _tenantPOSSalesRepository;
     public AddTenantPOSSalesCommandHandler(ApplicationContext context,
                                     IMapper mapper,
-                                    CompositeValidator<AddTenantPOSSalesCommand> validator, IConfiguration configuration) : base(context, mapper, validator)
+                                    CompositeValidator<AddTenantPOSSalesCommand> validator, IConfiguration configuration,
+                                    TenantPOSSalesRepository tenantPOSSalesRepository) : base(context, mapper, validator)
     {
         _taxRate = configuration.GetValue<decimal>("TaxRate");
         _salesAmountThreshold = configuration.GetValue<decimal>("SalesAmountThreshold");
+        _tenantPOSSalesRepository = tenantPOSSalesRepository;
     }
 
 
@@ -38,25 +42,15 @@ public class AddTenantPOSSalesCommandHandler : BaseCommandHandler<ApplicationCon
     {
         var entity = Mapper.Map<TenantPOSSalesState>(request);
         //Get Previous Sales
-        var previousSale = await GetPreviousSales(entity);
+        var previousSale = await _tenantPOSSalesRepository.GetPreviousDaySales(entity);
         //Validate Daily Sales      
         entity.ProcessPreviousDaySales(previousSale, _taxRate, _salesAmountThreshold);
-        entity.SetEntity(await GetTenantPOSEntity(entity.TenantPOSId));
+        entity.SetEntity(await _tenantPOSSalesRepository.GetTenantPOSEntity(entity.TenantPOSId));
         Context.Add(entity);
         _ = await Context.SaveChangesAsync(cancellationToken);
         return Success<Error, TenantPOSSalesState>(entity);
     }
-    private async Task<TenantPOSSalesState?> GetPreviousSales(TenantPOSSalesState currentSales)
-    {
-        return await Context.TenantPOSSales.IgnoreQueryFilters()
-             .Where(l => l.TenantPOSId == currentSales.TenantPOSId && l.SalesType == currentSales.SalesType && l.SalesDate == currentSales.SalesDate.AddDays(-1) && l.SalesCategory == currentSales.SalesCategory!.Trim() && l.HourCode == currentSales.HourCode)
-             .AsNoTracking().FirstOrDefaultAsync();
-    }
-    private async Task<string?> GetTenantPOSEntity(string posId)
-    {
-        return (await Context.TenantPOS.IgnoreQueryFilters()
-             .Where(l => l.Id == posId).AsNoTracking().FirstOrDefaultAsync())!.Entity;
-    }
+   
 }
 
 public class AddTenantPOSSalesCommandValidator : AbstractValidator<AddTenantPOSSalesCommand>
