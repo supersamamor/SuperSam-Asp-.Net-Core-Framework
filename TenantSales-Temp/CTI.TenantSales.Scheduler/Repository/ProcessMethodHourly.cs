@@ -1,9 +1,5 @@
-﻿using CTI.TenantSales.Scheduler.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CTI.TenantSales.Core.TenantSales;
+using CTI.TenantSales.Scheduler.Models;
 
 namespace CTI.TenantSales.Scheduler.Repository
 {
@@ -11,8 +7,8 @@ namespace CTI.TenantSales.Scheduler.Repository
     {
         public POSSales ProcessSalesFile(StreamReader _fileStream, string fileName)
         {
-            POSSales posSales = new();          
-            SalesItem _tenantPOSSales = new();
+            POSSales posSales = new();
+            TenantPOSSalesState _tenantPOSSales = new();
             decimal validateSalesAmount = 0;
             decimal validateNoOfSalesTransactions = 0;
             DateTime? salesDate = null;
@@ -54,7 +50,7 @@ namespace CTI.TenantSales.Scheduler.Repository
                         break;
                     case 4:
                         //New Instance
-                        _tenantPOSSales = new SalesItem { };
+                        _tenantPOSSales = new TenantPOSSalesState { };
                         _tenantPOSSales.HourCode = Convert.ToInt32(_string[2..]);
                         break;
                     case 5:
@@ -81,8 +77,8 @@ namespace CTI.TenantSales.Scheduler.Repository
             posSales.SalesList.ToList().ForEach(c => c.IsAutoCompute = false);
             posSales.SalesList.ToList().ForEach(c => c.ValidationStatus = Convert.ToInt32(Core.Constants.ValidationStatusEnum.Passed));
             posSales.SalesList.ToList().ForEach(c => c.ValidationRemarks = null);
-            posSales.SalesList.ToList().ForEach(c => c.ValidateSalesAmount = validateSalesAmount);
-            posSales.SalesList.ToList().ForEach(c => c.ValidateNoOfSalesTransactions = validateNoOfSalesTransactions);
+            //posSales.SalesList.ToList().ForEach(c => c.ValidateSalesAmount = validateSalesAmount);
+            //posSales.SalesList.ToList().ForEach(c => c.ValidateNoOfSalesTransactions = validateNoOfSalesTransactions);
             return posSales;
         }
         public POSSales ValidateSalesCategory(IList<string> tenantSalesCategoryList, POSSales salesList) { return salesList; }

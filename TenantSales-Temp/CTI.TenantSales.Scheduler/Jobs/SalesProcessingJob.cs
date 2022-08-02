@@ -33,7 +33,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
             _salesUploadErrorPath = configuration.GetValue<string>("SalesUploadPath:ErrorPath");
             _disableHourly = configuration.GetValue<bool>("DisableHourly");
             _cutOffFrom = configuration.GetValue<int>("CutOff:From");
-            _cutOffTo = configuration.GetValue<int>("CutOff:To");        
+            _cutOffTo = configuration.GetValue<int>("CutOff:To");
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -67,42 +67,32 @@ namespace CTI.TenantSales.Scheduler.Jobs
                                 {
                                     fileCode = file.Name.Substring(1, 4);
                                     fileName = file.Name;
+                                    string _salesType = file.Name[..1];
                                     TenantPOSState? pos = new();
                                     TenantState? tenant = new();
                                     using (FileStream? fileStream = File.OpenRead(fileDirectory))
                                     {
                                         var _streamReader = new StreamReader(fileStream);
-                                        string _salesType = file.Name[..1];
                                         if (_disableHourly == true && _salesType == Core.Constants.SalesType.SALESTYPE_HOURLY) { continue; }
                                         using var processRepo = new ProcessingMethodFactory(_salesType);
                                         _tenantPOSSalesList = processRepo.ProcessingMethod!.ProcessSalesFile(_streamReader, fileDirectory);
                                         pos = await GetPOS(projectItem.Id, _tenantPOSSalesList.TenantCode, _tenantPOSSalesList.POSCode);
                                         tenant = pos?.Tenant;
-                                        //Set CompanyId, ProjectCode, TenantId, TenantCode, TenantPOSCode, Pos ID of List
-                                        _ = _tenantPOSSalesList.SalesList.Select(c => { c.ProjectId = projectItem.Id; return c; }).ToList();
-                                        _ = _tenantPOSSalesList.SalesList.Select(c => { c.TenantId = pos!.TenantId; return c; }).ToList();
+                                        //Set CompanyId, ProjectCode, TenantId, TenantCode, TenantPOSCode, Pos ID of List                          
                                         _ = _tenantPOSSalesList.SalesList.Select(c => { c.TenantPOSId = pos!.Id; return c; }).ToList();
                                         //Validate Sales Category
                                         _tenantPOSSalesList = processRepo.ProcessingMethod.ValidateSalesCategory(tenant!.SalesCategoryList!.Select(l => l.Code).ToList()
                                             , _tenantPOSSalesList);
-                                    }                          
+                                    }
                                     //Save Sales File
-                                    var saveResult = await SavePosSales(_tenantPOSSalesList);
-                                    //If Api Cannot Insert the sales file, Call Api for Updating 
-                                    if (saveResult == false)
+                                    var existingSales = GetPOSSales(pos!.Id, SalesType.SalesTypeToInt(_salesType), _tenantPOSSalesList.SalesList.FirstOrDefault()!.SalesDate, _tenantPOSSalesList.SalesList.FirstOrDefault()!.SalesCategory!);
+                                    if (existingSales != null)
                                     {
-                                        //Get Pos ID for Updating
-                                        foreach (var item in _tenantPOSSalesList.SalesList)
-                                        {
-                                            var res = await GetPOSSalesId(pos!.Id, item.SalesType, item.SalesDate, item.SalesCategory);
-                                            if (res != null)
-                                            {
-                                                item.Id = res.Id;
-                                                item.ValidationStatus = res.ValidationStatus;
-                                            }
-                                        }
-                                        //Update Sales File                                      
                                         await UpdateFailedPOSSales(_tenantPOSSalesList);
+                                    }
+                                    else
+                                    {
+                                        await SavePosSales(_tenantPOSSalesList);
                                     }
                                     //Move To Success			
                                     _salesFileHelper.MoveSalesFile(fileDirectory, _salesUploadBasePath
@@ -142,7 +132,6 @@ namespace CTI.TenantSales.Scheduler.Jobs
             if (_salesDate != null)
             {
                 dateToValidate = (DateTime)_salesDate;
-              
             }
             if (dateFrom == null)
             {
@@ -173,11 +162,11 @@ namespace CTI.TenantSales.Scheduler.Jobs
                                     //Fetch only active sales category
                                     foreach (var salesCategoryCode in tenantItem!.SalesCategoryList!.Where(l => l.IsDisabled == false))
                                     {
-                                        var salesItem = GetPOSSales(posItem.Code, salesType, dateToValidate, salesCategoryCode!.Code);
+                                        var salesItem = GetPOSSales(posItem.Id, salesType, dateToValidate, salesCategoryCode!.Code);
                                         //If no existing Sales for the end of the day, insert a sale with Zero, Null and Default values..
                                         if (salesItem == null)
                                         {
-                                            SalesItem saleItem = new()
+                                            TenantPOSSalesState saleItem = new()
                                             {
                                                 SalesType = salesType,
                                                 HourCode = 0,
@@ -204,8 +193,6 @@ namespace CTI.TenantSales.Scheduler.Jobs
                                                 FileName = null,
                                                 ValidationStatus = Convert.ToInt32(ValidationStatusEnum.Failed),
                                                 ValidationRemarks = "No submitted sales file.,Sales amount is zero. If this is fine please tick the 'Manually Checked' checkbox otherwise put a value on sales amount.",
-                                                ProjectId = projectItem.Id,
-                                                TenantId = tenantItem.Id,
                                                 TenantPOSId = posItem.Id,
                                             };
                                             POSSales _salesList = new();
@@ -218,14 +205,16 @@ namespace CTI.TenantSales.Scheduler.Jobs
                         }
                     }
                     //Get All Failed Day Sales Per Projects order by date for revalidation
-                    var failedSalesList = await GetPOSDailyFailedSales(projectItem.Id, dateFrom, dateTo, tenantCode);
+                    var failedSalesList = await GetPOSDailySales(projectItem.Id, dateFrom, dateTo, tenantCode, ValidationStatusEnum.Failed);
                     if (failedSalesList != null)
                     {
                         foreach (var failedSalesItem in failedSalesList)
                         {
                             POSSales salesToValidate = new();
-                            salesToValidate.SalesList = new List<SalesItem>();
-                            //salesToValidate.SalesList.Add(failedSalesItem); //Todo :: Fix This
+                            salesToValidate.SalesList = new List<TenantPOSSalesState>
+                            {
+                                failedSalesItem
+                            };
                             try
                             {
                                 await UpdateFailedPOSSales(salesToValidate);
@@ -258,7 +247,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                     && l.SalesDate == salesDate
                     && l.SalesCategory == salesCategory).AsNoTracking().FirstOrDefaultAsync();
         }
- 
+
         private async Task<IList<TenantState>> GetActiveTenants(string projectId, string? tenantCode)
         {
             var query = _context.Tenant.Where(l => l.ProjectId == projectId && l.IsDisabled == false).AsNoTracking();
@@ -275,9 +264,13 @@ namespace CTI.TenantSales.Scheduler.Jobs
                  l.TenantPOSId == posId && l.SalesType == salesType && l.SalesDate == dateToValidate && l.SalesCategory == catCode)
                  .AsNoTracking().FirstOrDefaultAsync();
         }
-        private async Task<IList<TenantPOSSalesState>> GetPOSDailyFailedSales(string? projectId, DateTime? dateFrom, DateTime? dateTo, string? tenantCode)
+        private async Task<IList<TenantPOSSalesState>> GetPOSDailySales(string? projectId, DateTime? dateFrom, DateTime? dateTo, string? tenantCode, ValidationStatusEnum? validationStatus)
         {
-            var query = _context.TenantPOSSales.Where(l => l.ValidationStatus == Convert.ToInt32(ValidationStatusEnum.Failed)).AsNoTracking();
+            var query = _context.TenantPOSSales.AsNoTracking();
+            if (validationStatus != null)
+            {
+                query = query.Where(l => l.ValidationStatus == Convert.ToInt32(ValidationStatusEnum.Failed));
+            }
             if (!string.IsNullOrEmpty(projectId))
             {
                 query = query.Where(l => l.TenantPOS!.Tenant!.ProjectId == projectId);
@@ -296,22 +289,27 @@ namespace CTI.TenantSales.Scheduler.Jobs
             }
             return await query.ToListAsync();
         }
-        private async Task<bool> SavePosSales(POSSales posSales)
+        private async Task SavePosSales(POSSales posSales)
         {
             foreach (var salesItem in posSales.SalesList)
             {
                 await _context.AddAsync(salesItem);
             }
             await _context.SaveChangesAsync();
-            return true;
         }
         private async Task UpdateFailedPOSSales(POSSales posSales)
         {
-            foreach (var salesItem in posSales.SalesList)
+            //Get Pos ID for Updating
+            foreach (var item in posSales.SalesList)
             {
-                _context.Entry(salesItem).State = EntityState.Modified;
+                var res = await GetPOSSalesId(item!.TenantPOSId, item.SalesType, item.SalesDate, item!.SalesCategory!);
+                if (res != null)
+                {
+                    res.UpdateFrom(item);
+                    _context.Entry(res).State = EntityState.Modified;
+                }
             }
-            await _context.SaveChangesAsync();         
+            await _context.SaveChangesAsync();
         }
     }
 }

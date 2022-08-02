@@ -1,12 +1,13 @@
-﻿using CTI.TenantSales.Scheduler.Models;
+﻿using CTI.TenantSales.Core.TenantSales;
+using CTI.TenantSales.Scheduler.Models;
 namespace CTI.TenantSales.Scheduler.Repository
 {
     public class ProcessMethodDaily : IProcessingMethod
     {
         public POSSales ProcessSalesFile(StreamReader _fileStream, string fileName)
         {
-            POSSales posSales = new();         
-            SalesItem _tenantPOSSales = new() { };
+            POSSales posSales = new();
+            TenantPOSSalesState _tenantPOSSales = new() { };
             _tenantPOSSales.SalesAmount = 0;
             _tenantPOSSales.IsAutoCompute = false;
             _tenantPOSSales.FileName = fileName;
@@ -103,7 +104,7 @@ namespace CTI.TenantSales.Scheduler.Repository
         }
         public POSSales ValidateSalesCategory(IList<string> tenantSalesCategoryList, POSSales salesList)
         {
-            if (!tenantSalesCategoryList.Contains(salesList.SalesList.FirstOrDefault()!.SalesCategory))
+            if (!tenantSalesCategoryList.Contains(salesList.SalesList.FirstOrDefault()!.SalesCategory!))
             {
                 throw new Exception("Sales category is not valid!");
             }

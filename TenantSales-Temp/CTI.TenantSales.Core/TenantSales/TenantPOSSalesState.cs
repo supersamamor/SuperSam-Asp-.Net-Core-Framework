@@ -1,40 +1,63 @@
 using CTI.Common.Core.Base.Models;
-using System.ComponentModel;
+
 
 namespace CTI.TenantSales.Core.TenantSales;
 
 public record TenantPOSSalesState : BaseEntity
 {
-	public int SalesType { get; init; }
-	public int HourCode { get; init; }
-	public string? SalesCategory { get; init; }
-	public DateTime SalesDate { get; init; }
-	public bool IsAutoCompute { get; init; }
-	public decimal SalesAmount { get; init; }
-	public decimal OldAccumulatedTotal { get; init; }
-	public decimal NewAccumulatedTotal { get; init; }
-	public decimal TaxableSalesAmount { get; init; }
-	public decimal NonTaxableSalesAmount { get; init; }
-	public decimal SeniorCitizenDiscount { get; init; }
-	public decimal PromoDiscount { get; init; }
-	public decimal OtherDiscount { get; init; }
-	public decimal RefundDiscount { get; init; }
-	public decimal VoidAmount { get; init; }
-	public decimal AdjustmentAmount { get; init; }
-	public decimal TotalServiceCharge { get; init; }
-	public decimal TotalTax { get; init; }
-	public decimal NoOfSalesTransactions { get; init; }
-	public decimal NoOfTransactions { get; init; }
-	public decimal TotalNetSales { get; init; }
-	public int ControlNumber { get; init; }
-	public string? FileName { get; init; }
-	public string TenantPOSId { get; init; } = "";
-	public int ValidationStatus { get; init; }
-	public string? ValidationRemarks { get; init; }
+	public int SalesType { get; set; }
+	public int HourCode { get; set; }
+	public string? SalesCategory { get; set; }
+	public DateTime SalesDate { get; set; }
+	public bool IsAutoCompute { get; set; }
+	public decimal SalesAmount { get; set; }
+	public decimal OldAccumulatedTotal { get; set; }
+	public decimal NewAccumulatedTotal { get; set; }
+	public decimal TaxableSalesAmount { get; set; }
+	public decimal NonTaxableSalesAmount { get; set; }
+	public decimal SeniorCitizenDiscount { get; set; }
+	public decimal PromoDiscount { get; set; }
+	public decimal OtherDiscount { get; set; }
+	public decimal RefundDiscount { get; set; }
+	public decimal VoidAmount { get; set; }
+	public decimal AdjustmentAmount { get; set; }
+	public decimal TotalServiceCharge { get; set; }
+	public decimal TotalTax { get; set; }
+	public decimal NoOfSalesTransactions { get; set; }
+	public decimal NoOfTransactions { get; set; }
+	public decimal TotalNetSales { get; set; }
+	public int ControlNumber { get; set; }
+	public string? FileName { get; set; }
+	public string TenantPOSId { get; set; } = "";
+	public int ValidationStatus { get; set; }
+	public string? ValidationRemarks { get; set; }
 	public decimal AutocalculatedNewAccumulatedTotal { get; init; }
-	public decimal AutocalculatedOldAccumulatedTotal { get; init; }
-	
+	public decimal AutocalculatedOldAccumulatedTotal { get; init; }	
 	public TenantPOSState? TenantPOS { get; init; }
-	
-	
+	public void UpdateFrom(TenantPOSSalesState sales)
+	{
+		SalesType = sales.SalesType;
+		HourCode = sales.HourCode;
+		SalesCategory = sales.SalesCategory;
+		SalesDate = sales.SalesDate;
+		IsAutoCompute = sales.IsAutoCompute;
+		SalesAmount = sales.SalesAmount;
+		OldAccumulatedTotal = sales.OldAccumulatedTotal;
+		NewAccumulatedTotal = sales.NewAccumulatedTotal;
+		TaxableSalesAmount = sales.TaxableSalesAmount;
+		NonTaxableSalesAmount = sales.NonTaxableSalesAmount;
+		SeniorCitizenDiscount = sales.SeniorCitizenDiscount;
+		PromoDiscount = sales.PromoDiscount;
+		OtherDiscount = sales.OtherDiscount;
+		RefundDiscount = sales.RefundDiscount;
+		VoidAmount = sales.VoidAmount;
+		AdjustmentAmount = sales.AdjustmentAmount;
+		TotalServiceCharge = sales.TotalServiceCharge;
+		TotalTax = sales.TotalTax;
+		NoOfSalesTransactions = sales.NoOfSalesTransactions;
+		NoOfTransactions = sales.NoOfTransactions;
+		TotalNetSales = sales.TotalNetSales;
+		ControlNumber = sales.ControlNumber;
+		FileName = sales.FileName;
+	}
 }
