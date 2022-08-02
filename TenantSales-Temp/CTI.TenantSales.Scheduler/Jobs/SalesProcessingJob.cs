@@ -20,7 +20,6 @@ namespace CTI.TenantSales.Scheduler.Jobs
         private readonly string _salesUploadSuccessPath;
         private readonly string _salesUploadErrorPath;
         private readonly bool _disableHourly;
-        private readonly bool _isCutoffOnly = true;
         private readonly int _cutOffFrom = 26;
         private readonly int _cutOffTo = 25;
         public SalesProcessingJob(ApplicationContext context, ILogger<ApprovalNotificationJob> logger, SalesFileHelper salesFileHelper,
@@ -33,6 +32,8 @@ namespace CTI.TenantSales.Scheduler.Jobs
             _salesUploadSuccessPath = configuration.GetValue<string>("SalesUploadPath:SuccessPath");
             _salesUploadErrorPath = configuration.GetValue<string>("SalesUploadPath:ErrorPath");
             _disableHourly = configuration.GetValue<bool>("DisableHourly");
+            _cutOffFrom = configuration.GetValue<int>("CutOff:From");
+            _cutOffTo = configuration.GetValue<int>("CutOff:To");        
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -136,22 +137,20 @@ namespace CTI.TenantSales.Scheduler.Jobs
         private async Task ValidateDailyTenantSales(DateTime? _salesDate, string? tenantCode)
         {
             var dateToValidate = DateTime.Now.Date.AddDays(-1);
+            DateTime? dateFrom = null;
+            DateTime? dateTo = null;
             if (_salesDate != null)
             {
                 dateToValidate = (DateTime)_salesDate;
+              
             }
-            DateTime? dateFrom = null;
-            DateTime? dateTo = null;
-            if (_isCutoffOnly)
+            if (dateFrom == null)
             {
-                if (dateFrom == null)
-                {
-                    dateFrom = new DateTime(dateToValidate.AddMonths(-1).Year, dateToValidate.AddMonths(-1).Month, _cutOffFrom);
-                }
-                if (dateTo == null)
-                {
-                    dateTo = new DateTime(dateToValidate.Year, dateToValidate.Month, _cutOffTo);
-                }
+                dateFrom = new DateTime(dateToValidate.AddMonths(-1).Year, dateToValidate.AddMonths(-1).Month, _cutOffFrom);
+            }
+            if (dateTo == null)
+            {
+                dateTo = new DateTime(dateToValidate.Year, dateToValidate.Month, _cutOffTo);
             }
             var salesType = Convert.ToInt32(SalesTypeEnum.Daily);
             //Get Active Projects
