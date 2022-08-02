@@ -20,8 +20,8 @@ namespace CTI.TenantSales.Scheduler.Jobs
         private readonly string _salesUploadSuccessPath;
         private readonly string _salesUploadErrorPath;
         private readonly bool _disableHourly;
-        private readonly int _cutOffFrom = 26;
-        private readonly int _cutOffTo = 25;
+        private readonly int _cutOffFrom;
+        private readonly int _cutOffTo;
         public SalesProcessingJob(ApplicationContext context, ILogger<ApprovalNotificationJob> logger, SalesFileHelper salesFileHelper,
             IConfiguration configuration)
         {
