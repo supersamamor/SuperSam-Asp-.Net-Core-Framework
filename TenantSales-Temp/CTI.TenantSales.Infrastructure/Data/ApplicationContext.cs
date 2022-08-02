@@ -180,6 +180,6 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverSetupState>().HasIndex(e => new { e.TableName, e.Entity }).IsUnique();
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId }).IsUnique();
-        base.OnModelCreating(modelBuilder);
+		base.OnModelCreating(modelBuilder);
     }
 }

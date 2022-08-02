@@ -49,6 +49,18 @@
 			};
 			$("#TenantPOSId").tenantposSelect();
 
+			$.fn.salescategorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/SalesCategory/Index", new { area = "TenantSales", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#SalesCategory").salescategorySelect();
+
 		}	
 		InitializeForm();
     });

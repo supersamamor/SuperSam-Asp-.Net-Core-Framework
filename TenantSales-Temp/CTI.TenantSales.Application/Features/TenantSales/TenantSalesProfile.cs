@@ -41,8 +41,11 @@ public class TenantSalesProfile : Profile
 		CreateMap <EditThemeCommand, ThemeState>().IgnoreBaseEntityProperties();
 		CreateMap<AddTenantCommand, TenantState>();
 		CreateMap <EditTenantCommand, TenantState>().IgnoreBaseEntityProperties();
-		CreateMap<AddTenantPOSSalesCommand, TenantPOSSalesState>();
+		CreateMap<AddTenantPOSSalesCommand, TenantPOSSalesState>()
+			.ForMember(e => e.SalesType, c => c.Ignore());
+
 		CreateMap <EditTenantPOSSalesCommand, TenantPOSSalesState>().IgnoreBaseEntityProperties();
+
 		CreateMap<AddClassificationCommand, ClassificationState>();
 		CreateMap <EditClassificationCommand, ClassificationState>().IgnoreBaseEntityProperties();
 		CreateMap<AddCategoryCommand, CategoryState>();

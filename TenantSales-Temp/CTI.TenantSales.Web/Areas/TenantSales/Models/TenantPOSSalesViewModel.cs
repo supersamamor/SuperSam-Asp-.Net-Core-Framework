@@ -8,14 +8,10 @@ namespace CTI.TenantSales.Web.Areas.TenantSales.Models;
 public record TenantPOSSalesViewModel : BaseViewModel
 {	
 	[Display(Name = "Sales Type")]
-	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+	[Range(0, 2)]	
 	public int SalesType { get; init; }
 	[Display(Name = "HourCode")]
-	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+	[Range(0, 23)]
 	public int HourCode { get; init; }
 	[Display(Name = "Sales Category")]
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
@@ -105,10 +101,9 @@ public record TenantPOSSalesViewModel : BaseViewModel
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal TotalNetSales { get; init; }
-	[Display(Name = "Control Number")]
-	[Required]
+	[Display(Name = "Control Number")]	
 	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+	
 	public int ControlNumber { get; init; }
 	[Display(Name = "File Name")]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
@@ -120,8 +115,7 @@ public record TenantPOSSalesViewModel : BaseViewModel
 	public string?  ForeignKeyTenantPOS { get; set; }
 	[Display(Name = "Validation Status")]
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+
 	public int ValidationStatus { get; init; }
 	[Display(Name = "Validation Remarks")]
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]

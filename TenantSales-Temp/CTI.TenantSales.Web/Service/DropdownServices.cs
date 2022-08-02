@@ -4,6 +4,7 @@ using CTI.TenantSales.Core.TenantSales;
 using CTI.Common.Data;
 using CTI.TenantSales.Web.Areas.Admin.Queries.Users;
 using MediatR;
+using System.Linq;
 
 namespace CTI.TenantSales.Web.Service
 {
@@ -87,7 +88,19 @@ namespace CTI.TenantSales.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		
+		public SelectList GetSalesCategoryList(string? salesCategoryCode)
+		{
+			var salesCategory = _context.SalesCategory.Where(e => e.Code == salesCategoryCode).FirstOrDefault();
+			if (salesCategory == null)
+			{
+				return new SelectList(new List<SelectListItem>(), "Value", "Text");
+			}
+			else
+			{
+				return new SelectList(new List<SelectListItem> { new() { Value = salesCategory.Code, Text = salesCategory.Code } }, "Value", "Text", salesCategory.Code);
+			}		
+		}
+
 		public async Task<IEnumerable<SelectListItem>> GetUserList(string currentSelectedApprover, IList<string> allSelectedApprovers)
 		{
 			return (await _mediaTr.Send(new GetApproversQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });

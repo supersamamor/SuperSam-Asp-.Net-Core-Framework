@@ -37,6 +37,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
         }
         public async Task Execute(IJobExecutionContext context)
         {
+            await TenantSalesValidate();
             await ProcessSalesFile();
         }
 
@@ -124,7 +125,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
             }
         }
 
-        private async Task ValidateDailyTenantSales(DateTime? _salesDate, string? tenantCode)
+        private async Task TenantSalesValidate(DateTime? _salesDate = null, string? tenantCode = null)
         {
             var dateToValidate = DateTime.Now.Date.AddDays(-1);
             DateTime? dateFrom = null;
@@ -230,19 +231,19 @@ namespace CTI.TenantSales.Scheduler.Jobs
         }
         private async Task<IList<ProjectState>> GetProjectList()
         {
-            return await _context.Project.Where(l => l.IsDisabled == false
+            return await _context.Project.IgnoreQueryFilters().Where(l => l.IsDisabled == false
                    && l.Company!.IsDisabled == false
                    && l.Company.DatabaseConnectionSetup!.IsDisabled == false).AsNoTracking().ToListAsync();
         }
         private async Task<TenantPOSState?> GetPOS(string projectId, string tenantCode, string posCode)
         {
-            return await _context.TenantPOS.Where(l => l.Tenant!.ProjectId == projectId
+            return await _context.TenantPOS.IgnoreQueryFilters().Where(l => l.Tenant!.ProjectId == projectId
                     && l.Tenant.Code == tenantCode
                     && l.Code == posCode).Include(l => l.Tenant).AsNoTracking().FirstOrDefaultAsync();
         }
         private async Task<TenantPOSSalesState?> GetPOSSalesId(string posId, int salesType, DateTime salesDate, string salesCategory)
         {
-            return await _context.TenantPOSSales.Where(l => l.TenantPOSId == posId
+            return await _context.TenantPOSSales.IgnoreQueryFilters().Where(l => l.TenantPOSId == posId
                     && l.SalesType == salesType
                     && l.SalesDate == salesDate
                     && l.SalesCategory == salesCategory).AsNoTracking().FirstOrDefaultAsync();
@@ -250,7 +251,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
 
         private async Task<IList<TenantState>> GetActiveTenants(string projectId, string? tenantCode)
         {
-            var query = _context.Tenant.Where(l => l.ProjectId == projectId && l.IsDisabled == false).AsNoTracking();
+            var query = _context.Tenant.IgnoreQueryFilters().Where(l => l.ProjectId == projectId && l.IsDisabled == false).AsNoTracking();
             if (!string.IsNullOrEmpty(tenantCode))
             {
                 query = query.Where(l => l.Code == tenantCode);
@@ -260,13 +261,13 @@ namespace CTI.TenantSales.Scheduler.Jobs
 
         private async Task<TenantPOSSalesState?> GetPOSSales(string posId, int salesType, DateTime dateToValidate, string catCode)
         {
-            return await _context.TenantPOSSales.Where(l =>
+            return await _context.TenantPOSSales.IgnoreQueryFilters().Where(l =>
                  l.TenantPOSId == posId && l.SalesType == salesType && l.SalesDate == dateToValidate && l.SalesCategory == catCode)
                  .AsNoTracking().FirstOrDefaultAsync();
         }
         private async Task<IList<TenantPOSSalesState>> GetPOSDailySales(string? projectId, DateTime? dateFrom, DateTime? dateTo, string? tenantCode, ValidationStatusEnum? validationStatus)
         {
-            var query = _context.TenantPOSSales.AsNoTracking();
+            var query = _context.TenantPOSSales.IgnoreQueryFilters().AsNoTracking();
             if (validationStatus != null)
             {
                 query = query.Where(l => l.ValidationStatus == Convert.ToInt32(ValidationStatusEnum.Failed));

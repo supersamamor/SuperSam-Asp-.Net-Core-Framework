@@ -52,8 +52,11 @@ public class TenantSalesProfile : Profile
 		CreateMap<TenantViewModel, TenantState>();
 		CreateMap<TenantPOSSalesViewModel, AddTenantPOSSalesCommand>();
 		CreateMap<TenantPOSSalesViewModel, EditTenantPOSSalesCommand>();
+
 		CreateMap<TenantPOSSalesState, TenantPOSSalesViewModel>().ForPath(e => e.ForeignKeyTenantPOS, o => o.MapFrom(s => s.TenantPOS!.Id));
+		
 		CreateMap<TenantPOSSalesViewModel, TenantPOSSalesState>();
+
 		CreateMap<ClassificationViewModel, AddClassificationCommand>();
 		CreateMap<ClassificationViewModel, EditClassificationCommand>();
 		CreateMap<ClassificationState, ClassificationViewModel>().ForPath(e => e.ForeignKeyTheme, o => o.MapFrom(s => s.Theme!.Code));
