@@ -6,102 +6,23 @@
     ViewData["ActiveMainPage"] = "DailySales";
     ViewData["Level1"] = "Reports";
 }
-
-<div class="box-header">
-    <div class="container-fluid">
-        <div class="row" style="margin-bottom:10px;">
-            <div class="col-xs-12 col-sm-3 col-lg-3">
-                <div class="input-group form-group-padding">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Type"]</span>
-                    </div>
-                    <div class="input-sm form-control">
-                        @if (Model.Input.ReportType == (int)ReportTypeEnum.Daily)
-                        {
-                            <input asp-for="Input.ReportType" type="radio" value="@((int)ReportTypeEnum.Daily)" checked /> <label>&nbsp;@Localizer["Daily"]</label> <text>&nbsp;&nbsp;  </text>
-                            <input asp-for="Input.ReportType" type="radio" value="@((int)ReportTypeEnum.Weekly)" disabled /> <label>&nbsp;@Localizer["Weekly"]</label>
-                        }
-                        else
-                        {
-                            <input asp-for="Input.ReportType" type="radio" value="@((int)ReportTypeEnum.Daily)" /> <label>&nbsp;@Localizer["Daily"]</label> <text>&nbsp;&nbsp;  </text>
-                            <input asp-for="Input.ReportType" type="radio" value="@((int)ReportTypeEnum.Weekly)" checked /> <label>&nbsp;@Localizer["Weekly"]</label>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-3 col-lg-3">
-                <div class="input-group form-group-padding">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Output Type"]</span>
-                    </div>
-                    <div class="input-sm form-control">
-                        @if (Model.Input.OutputType == (int)ReportOutputTypeEnum.Excel)
-                        {
-                            <input asp-for="Input.OutputType" type="radio" value="@((int)ReportOutputTypeEnum.PDF)" /> <label>&nbsp;@Localizer["Pdf"]</label>
-                            <input asp-for="Input.OutputType" type="radio" value="@((int)ReportOutputTypeEnum.Excel)" checked /> <label>&nbsp;@Localizer["Excel"]</label> <text>&nbsp;&nbsp;  </text>
-
-                        }
-                        else
-                        {
-                            <input asp-for="Input.OutputType" type="radio" value="@((int)ReportOutputTypeEnum.PDF)" checked /> <label>&nbsp;@Localizer["Pdf"]</label>
-                            <input asp-for="Input.OutputType" type="radio" value="@((int)ReportOutputTypeEnum.Excel)" /> <label>&nbsp;@Localizer["Excel"]</label> <text>&nbsp;&nbsp;  </text>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="">
-            <div class="col-xs-12 col-sm-3 col-lg-3">
-                <div class="input-group form-group-padding" style="margin-bottom:10px;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Year"]</span>
-                    </div>
-                    <select asp-for="@Model.Input.Year" class="input-sm form-control" asp-items="@(dropdownService.YearList)"><option value="">- Select Year -</option></select>
-                </div>
-                @if (Model.Input.ReportType == (int)ReportTypeEnum.Daily)
-                {
-                    <div class="input-group form-group-padding" style="margin-bottom:10px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@Localizer["Month"]</span>
-                        </div>
-                        <select asp-for="@Model.Input.Month" class="input-sm form-control" asp-items="@(dropdownService.Month)"><option value="">- Select Month -</option></select>
-                    </div>
-                }
-                else
-                {
-                    <div class="input-group form-group-padding" style="margin-bottom:10px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@Localizer["Week"]</span>
-                        </div>
-                        <select asp-for="@Model.Input.WeekStartDate" class="input-sm form-control" asp-items="@(dropdownService.WorkWeek(Model.Input.Year))"><option value="">- Select Work Week -</option></select>
-                    </div>
-                }
-            </div>
-            <div class="col-xs-12 col-sm-3 col-lg-3">
-                <div class="input-group form-group-padding" style="margin-bottom:10px;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Project"]</span>
-                    </div>
-                    //
-                </div>
-                <div class="input-group form-group-padding" style="margin-bottom:10px;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Level"]</span>
-                    </div>
-                    //
-                </div>
-                <div class="input-group form-group-padding">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Tenant"]</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <button type="button" title="@Localizer["Generate"]" class="btn btn-success col-xs-12 col-sm-3 col-lg-3" aria-label="Left Align">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span>
-                <span>&nbsp; @Localizer["Generate"]</span>
-            </button>
-        </div>
-    </div>
-</div>
+<form id="dailysales-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Input" />
+    </div>    
+</form>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('#ProjectId, #Year').on( 'change', function () {
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#dailysales-form', InitializeForm);
+            });
+        }
+        InitializeForm();
+    });
+</script>
+}

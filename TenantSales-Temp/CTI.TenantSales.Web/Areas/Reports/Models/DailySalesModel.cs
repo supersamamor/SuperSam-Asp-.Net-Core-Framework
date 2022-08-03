@@ -6,8 +6,9 @@
         public int Year { get; set; } = DateTime.Today.Year;
         public int Month { get; set; } = DateTime.Today.Month - 1;
         public DateTime? WeekStartDate { get; set; }
-        public string? LevelName { get; set; }
+        public string? LevelId { get; set; }
         public string? TenantId { get; set; }
+        public string? ProjectId { get; set; }
         public int OutputType { get; set; }
         public string? ExcelPath { get; set; }
     }

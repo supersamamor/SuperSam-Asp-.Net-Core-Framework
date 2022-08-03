@@ -11,8 +11,14 @@ namespace CTI.TenantSales.Web.Areas.Reports.Pages.DailySales
     {
         [BindProperty]
         public DailySalesModel Input { get; set; } = new();
-        public void OnGet()
+		public IActionResult OnGet()
         {
+            return Page();
         }
-    }
+		public IActionResult OnPostChangeFormValue()
+		{
+			ModelState.Clear();
+			return Partial("_InputFieldsPartial", Input);
+		}
+	}
 }
