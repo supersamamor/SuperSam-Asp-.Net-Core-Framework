@@ -24,8 +24,7 @@ public class IndexModel : BasePageModel<IndexModel>
     }
 
     public async Task<IActionResult> OnPostListAllAsync()
-    {
-		
+    {		
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetProjectQuery>());
         return new JsonResult(result.Data
             .Select(e => new
@@ -45,7 +44,9 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetProjectQuery>(nameof(ProjectState.Id)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
+        var query = request.ToQuery<GetProjectQuery>(nameof(ProjectState.Id));
+        query.IsActiveOnly = true;
+        var result = await Mediatr.Send(query);
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
     }
 }

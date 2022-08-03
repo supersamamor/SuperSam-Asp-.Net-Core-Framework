@@ -7,7 +7,7 @@ namespace CTI.TenantSales.PdfGenerator.Services
 {
     public class DailySalesReportToPdf
     {
-        public async Task GeneratePdf(DailySalesReportModel dailySalesReport, Microsoft.AspNetCore.Mvc.ActionContext pageContext)
+        public async Task GeneratePdf(string generationFileNamePath, DailySalesReportModel dailySalesReport, Microsoft.AspNetCore.Mvc.ActionContext pageContext)
         {
             var dailySalesReportFile = new ViewAsPdf($"..\\Pdf\\DailySalesReport", dailySalesReport)
             {
@@ -18,7 +18,7 @@ namespace CTI.TenantSales.PdfGenerator.Services
                 CustomSwitches = "--page-offset 0 --footer-center [page]/[topage] --footer-font-size 8",
             };
             var byteArray = await dailySalesReportFile.BuildFile(pageContext);
-            using var fileStream = new FileStream("path", FileMode.Create, FileAccess.Write);
+            using var fileStream = new FileStream(generationFileNamePath, FileMode.Create, FileAccess.Write);
             fileStream.Write(byteArray, 0, byteArray.Length);
             fileStream.Close();
         }

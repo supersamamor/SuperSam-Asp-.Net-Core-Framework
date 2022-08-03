@@ -5,6 +5,7 @@ using CTI.Common.Data;
 using CTI.TenantSales.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using System.Linq;
+using System.Globalization;
 
 namespace CTI.TenantSales.Web.Service
 {
@@ -48,10 +49,15 @@ namespace CTI.TenantSales.Web.Service
 		}
 		public SelectList GetProjectList(string id)
 		{
-			return _context.GetSingle<ProjectState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
+			var project = _context.Project.Where(e => e.Id == id).FirstOrDefault();
+			if (project == null)
+			{
+				return new SelectList(new List<SelectListItem>(), "Value", "Text");
+			}
+			else
+			{
+				return new SelectList(new List<SelectListItem> { new() { Value = project.Id, Text = project.Name } }, "Value", "Text", project.Id);
+			}		
 		}
 		public SelectList GetRentalTypeList(string id)
 		{
@@ -105,5 +111,59 @@ namespace CTI.TenantSales.Web.Service
 		{
 			return (await _mediaTr.Send(new GetApproversQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
 		}
-    }
+
+
+		public IEnumerable<SelectListItem> YearList
+		{
+			get
+			{
+				IList<SelectListItem> items = new List<SelectListItem>();
+				var currentYear = DateTime.Today.Year;
+				for (int i = DateTime.Today.Year; i >= currentYear - 10; i--)
+				{
+					items.Add(new SelectListItem { Text = (i).ToString(), Value = (i).ToString(), Selected = (i == DateTime.Today.Year) });
+				}
+				return items;
+			}
+		}
+
+		public IEnumerable<SelectListItem> Month
+		{
+			get
+			{
+				IList<SelectListItem> items = new List<SelectListItem>();
+				for (int i = 0; i < 12; i++)
+				{
+					items.Add(new SelectListItem { Text = CultureInfo.CurrentUICulture.DateTimeFormat.MonthNames[i], Value = (i).ToString(), Selected = (i == DateTime.Today.Month - 1) });
+				}
+
+				return items;
+			}
+		}
+
+		public IEnumerable<SelectListItem> WorkWeek(int year)
+		{
+			if (year == 0) { year = DateTime.Today.Year; }
+
+			IList<SelectListItem> items = new List<SelectListItem>();
+			DateTime startDate = new(year, 1, 1);
+			startDate = startDate.AddDays(1 - (int)startDate.DayOfWeek);
+			DateTime endDate = startDate.AddDays(6);
+			int weekNo = 1;
+			while (startDate.Year < 1 + year)
+			{
+				items.Add(new SelectListItem
+				{
+					Text = string.Format("Week " + weekNo + ": From {0:MM/dd/yyyy} to {1:MM/dd/yyyy}", startDate, endDate),
+					Value = string.Format("{0:MM/dd/yyyy}", startDate)
+				});
+				startDate = startDate.AddDays(7);
+				endDate = endDate.AddDays(7);
+				weekNo++;
+				if (weekNo >= 53) { break; };
+			}
+			return items;
+		}
+
+	}
 }
