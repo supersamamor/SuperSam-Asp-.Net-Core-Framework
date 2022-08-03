@@ -125,7 +125,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
             }
         }
 
-        private async Task TenantSalesValidate(DateTime? _salesDate = null, string? tenantCode = null)
+        private async Task TenantSalesValidate(DateTime? _salesDate = null, string? projectId = null, string? tenantId = null)
         {
             var dateToValidate = DateTime.Now.Date.AddDays(-1);
             DateTime? dateFrom = null;
@@ -144,13 +144,13 @@ namespace CTI.TenantSales.Scheduler.Jobs
             }
             var salesType = Convert.ToInt32(SalesTypeEnum.Daily);
             //Get Active Projects
-            var projectList = await GetProjectList();
+            var projectList = await GetProjectList(projectId);
             if (projectList != null)
             {
                 foreach (var projectItem in projectList)
                 {
                     //Get Active Tenant Per Projects   
-                    var activeTenants = await GetActiveTenants(projectItem.Id, tenantCode);
+                    var activeTenants = await GetActiveTenants(projectItem.Id, tenantId);
                     if (activeTenants != null)
                     {
                         foreach (var tenantItem in activeTenants)
@@ -206,7 +206,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                         }
                     }
                     //Get All Failed Day Sales Per Projects order by date for revalidation
-                    var failedSalesList = await GetPOSDailySales(projectItem.Id, dateFrom, dateTo, tenantCode, ValidationStatusEnum.Failed);
+                    var failedSalesList = await GetPOSDailySales(projectItem.Id, dateFrom, dateTo, tenantId, ValidationStatusEnum.Failed);
                     if (failedSalesList != null)
                     {
                         foreach (var failedSalesItem in failedSalesList)
@@ -229,11 +229,16 @@ namespace CTI.TenantSales.Scheduler.Jobs
                 }
             }
         }
-        private async Task<IList<ProjectState>> GetProjectList()
+        private async Task<IList<ProjectState>> GetProjectList(string? projectId = null)
         {
-            return await _context.Project.IgnoreQueryFilters().Where(l => l.IsDisabled == false
+            var query = _context.Project.IgnoreQueryFilters().Where(l => l.IsDisabled == false
                    && l.Company!.IsDisabled == false
-                   && l.Company.DatabaseConnectionSetup!.IsDisabled == false).AsNoTracking().ToListAsync();
+                   && l.Company.DatabaseConnectionSetup!.IsDisabled == false).AsNoTracking();
+            if (!string.IsNullOrEmpty(projectId?.Trim()))
+            {
+                query = query.Where(l => l.Id == projectId);
+            }
+            return await query.ToListAsync();
         }
         private async Task<TenantPOSState?> GetPOS(string projectId, string tenantCode, string posCode)
         {
@@ -249,12 +254,12 @@ namespace CTI.TenantSales.Scheduler.Jobs
                     && l.SalesCategory == salesCategory).AsNoTracking().FirstOrDefaultAsync();
         }
 
-        private async Task<IList<TenantState>> GetActiveTenants(string projectId, string? tenantCode)
+        private async Task<IList<TenantState>> GetActiveTenants(string projectId, string? tenantId)
         {
             var query = _context.Tenant.IgnoreQueryFilters().Where(l => l.ProjectId == projectId && l.IsDisabled == false).AsNoTracking();
-            if (!string.IsNullOrEmpty(tenantCode))
+            if (!string.IsNullOrEmpty(tenantId?.Trim()))
             {
-                query = query.Where(l => l.Code == tenantCode);
+                query = query.Where(l => l.Id == tenantId);
             }
             return await query.Include(l => l.TenantPOSList).Include(l => l.SalesCategoryList).ToListAsync();
         }
@@ -265,7 +270,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                  l.TenantPOSId == posId && l.SalesType == salesType && l.SalesDate == dateToValidate && l.SalesCategory == catCode)
                  .AsNoTracking().FirstOrDefaultAsync();
         }
-        private async Task<IList<TenantPOSSalesState>> GetPOSDailySales(string? projectId, DateTime? dateFrom, DateTime? dateTo, string? tenantCode, ValidationStatusEnum? validationStatus)
+        private async Task<IList<TenantPOSSalesState>> GetPOSDailySales(string? projectId, DateTime? dateFrom, DateTime? dateTo, string? tenantId, ValidationStatusEnum? validationStatus)
         {
             var query = _context.TenantPOSSales.IgnoreQueryFilters().AsNoTracking();
             if (validationStatus != null)
@@ -284,9 +289,9 @@ namespace CTI.TenantSales.Scheduler.Jobs
             {
                 query = query.Where(l => l.SalesDate <= dateTo);
             }
-            if (!string.IsNullOrEmpty(tenantCode))
+            if (!string.IsNullOrEmpty(tenantId?.Trim()))
             {
-                query = query.Where(l => l.TenantPOS!.Tenant!.Code == tenantCode);
+                query = query.Where(l => l.TenantPOS!.Tenant!.Id == tenantId);
             }
             return await query.ToListAsync();
         }
