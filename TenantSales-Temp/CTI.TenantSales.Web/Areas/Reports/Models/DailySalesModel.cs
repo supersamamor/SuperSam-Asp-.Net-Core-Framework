@@ -10,7 +10,7 @@
         public string? TenantId { get; set; }
         public string? ProjectId { get; set; }
         public int OutputType { get; set; }
-        public string? ExcelPath { get; set; }
+        public string? FilePath { get; set; }
     }
     public enum ReportTypeEnum
     {

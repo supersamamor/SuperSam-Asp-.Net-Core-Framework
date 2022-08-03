@@ -12,6 +12,7 @@ using Serilog;
 using CTI.TenantSales.Scheduler;
 using CTI.TenantSales.EmailSending;
 using CTI.TenantSales.PdfGenerator;
+using CTI.TenantSales.ExcelProcessor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,8 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddScheduler(configuration);
 services.AddEmailSendingAService(configuration);
+services.AddExcelProcessor();
+services.AddPdfGenerator();
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");

@@ -8,7 +8,7 @@ namespace CTI.TenantSales.ExcelProcessor.Services
 {
     public class ExportDailySalesReportService
     {
-        public string Export(DailySalesReportModel input, IList<TenantPOSSalesState> salesList)
+        public string Export(DateTime dateFrom, DateTime dateTo, IList<TenantPOSSalesState> salesList)
         {
             var file = new ExportDailySalesReport("ExcelFiles", "DailySalesReport", "xlsx");
 
@@ -17,8 +17,8 @@ namespace CTI.TenantSales.ExcelProcessor.Services
                 var workSheet = package.Workbook.Worksheets.Add("Sheet1");
                 #region Header
                 workSheet.Cells["A1:A1"].Value = @"Daily Sales Report from "
-                                     + input.DateFrom.ToString("MM/dd/yyyy") + @" to "
-                                     + input.DateTo.ToString("MM/dd/yyyy");
+                                     + dateFrom.ToString("MM/dd/yyyy") + @" to "
+                                     + dateTo.ToString("MM/dd/yyyy");
                 workSheet.Cells["A1:X1"].Merge = true;
                 workSheet.Column(6).Style.Numberformat.Format = "mm/dd/yyyy";
                 workSheet.Column(8).Style.Numberformat.Format = "#,##0.00";
@@ -71,12 +71,12 @@ namespace CTI.TenantSales.ExcelProcessor.Services
                 foreach (var salesItem in salesList)
                 {
                     if (salesItem.TotalNetSales != 0)
-                    {                   
+                    {
                         workSheet.Cells[sheet1Row, 1].Value = salesItem?.TenantPOS?.Tenant?.Project?.Name;
                         workSheet.Cells[sheet1Row, 2].Value = salesItem?.TenantPOS?.Tenant?.Code;
                         workSheet.Cells[sheet1Row, 3].Value = salesItem?.TenantPOS?.Tenant?.Name;
                         workSheet.Cells[sheet1Row, 4].Value = salesItem?.TenantPOS?.Code;
-                        workSheet.Cells[sheet1Row, 5].Value = salesItem?.SetDayNumber(input.DateFrom);
+                        workSheet.Cells[sheet1Row, 5].Value = salesItem?.SetDayNumber(dateFrom);
                         workSheet.Cells[sheet1Row, 6].Value = salesItem?.SalesDate;
                         workSheet.Cells[sheet1Row, 7].Value = salesItem?.SalesCategory;
                         workSheet.Cells[sheet1Row, 8].Value = salesItem?.OldAccumulatedTotal;
