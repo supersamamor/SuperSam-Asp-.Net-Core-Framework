@@ -57,8 +57,6 @@ public record DatabaseConnectionSetupViewModel
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? SystemConnectionString { get;set; }
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int SystemSource { get;set; }
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ExhibitThemeCodes { get;set; }

@@ -1,17 +1,17 @@
 @page
-@model EditModel
+@model AddModel
 @{
-    ViewData["Title"] = Localizer["Edit Project Business Unit"];
-    ViewData["ActiveMainPage"] = "ProjectBusinessUnit";
+    ViewData["Title"] = Localizer["Add Re-validate Sales"];
+    ViewData["ActiveMainPage"] = "Revalidate";
     ViewData["Level1"] = "TenantSales";
 }
-<form id="projectBusinessUnit-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
+<form id="revalidate-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
 	<div id="PartialLoaderContainer">
-        <partial name="_InputFieldsPartial" model="Model.ProjectBusinessUnit" />
-    </div> 
+        <partial name="_InputFieldsPartial" model="Model.Revalidate" />
+    </div>    
     <div class="row">
         <div class="col-12">
             <p>
@@ -49,17 +49,17 @@
 			};
 			$("#ProjectId").projectSelect();
 
-			$.fn.businessunitSelect = function() {
+			$.fn.tenantSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/BusinessUnit/Index", new { area = "TenantSales", handler = "Select2Data" })',
+							url: '@Url.Page("/Tenant/Index", new { area = "TenantSales", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#BusinessUnitId").businessunitSelect();
+			$("#TenantId").tenantSelect();
 
 		}	
 		InitializeForm();

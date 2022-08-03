@@ -105,17 +105,9 @@ public record ProjectViewModel
 	public bool EnableMeterReadingApp { get;set; }
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? CurrencyCode { get;set; }
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int? CurrencyRate { get;set; }
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int? GasCutOff { get;set; }
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int? PowerCutOff { get;set; }
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int? WaterCutOff { get;set; }
 	   
 }

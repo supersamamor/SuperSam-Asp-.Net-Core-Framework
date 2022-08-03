@@ -191,6 +191,17 @@
 								</a>
 							</li>
 						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TenantSales/Revalidate" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Revalidate")">
+									<i class="fas fa-circle nav-icon"></i>
+									<p>
+										@Localizer["Re-validate Sales"]
+									</p>
+								</a>
+							</li>
+						}
 						
                     </ul>
                 </li>

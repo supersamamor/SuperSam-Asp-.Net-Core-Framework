@@ -16,7 +16,7 @@ public class GetTenantQueryHandler : BaseQueryHandler<ApplicationContext, Tenant
     {
     }
 	public override async Task<PagedListResponse<TenantState>> Handle(GetTenantQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<TenantState>().Include(l=>l.Level).Include(l=>l.Project).Include(l=>l.RentalType)
+		await Context.Set<TenantState>().Include(l=>l.Project).Include(l=>l.Level).Include(l=>l.RentalType)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

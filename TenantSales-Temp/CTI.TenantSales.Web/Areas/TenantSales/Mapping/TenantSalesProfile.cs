@@ -18,7 +18,7 @@ using CTI.TenantSales.Application.Features.TenantSales.Level.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.SalesCategory.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.TenantContact.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.TenantPOS.Commands;
-
+using CTI.TenantSales.Application.Features.TenantSales.Revalidate.Commands;
 
 namespace CTI.TenantSales.Web.Areas.TenantSales.Mapping;
 
@@ -89,10 +89,15 @@ public class TenantSalesProfile : Profile
 		CreateMap<TenantPOSViewModel, EditTenantPOSCommand>();
 		CreateMap<TenantPOSState, TenantPOSViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
 		CreateMap<TenantPOSViewModel, TenantPOSState>();
-		
+		CreateMap<RevalidateViewModel, AddRevalidateCommand>();
+		CreateMap<RevalidateViewModel, EditRevalidateCommand>();
+		CreateMap<RevalidateState, RevalidateViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
+		CreateMap<RevalidateViewModel, RevalidateState>();
+
 		CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();
 		CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
 		CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
 		CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
+
     }
 }

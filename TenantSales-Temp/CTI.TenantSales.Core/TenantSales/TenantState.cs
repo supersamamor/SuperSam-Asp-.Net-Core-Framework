@@ -28,5 +28,6 @@ public record TenantState : BaseEntity
 	public IList<SalesCategoryState>? SalesCategoryList { get; set; }
 	public IList<TenantContactState>? TenantContactList { get; set; }
 	public IList<TenantPOSState>? TenantPOSList { get; set; }
+	public IList<RevalidateState>? RevalidateList { get; set; }
 	
 }

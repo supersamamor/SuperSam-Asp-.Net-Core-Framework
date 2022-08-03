@@ -115,5 +115,12 @@ public static class Permission
 		public const string Edit = "Permission.TenantPOS.Edit";
 		public const string Delete = "Permission.TenantPOS.Delete";
 	}
+	public static class Revalidate
+	{
+		public const string View = "Permission.Revalidate.View";
+		public const string Create = "Permission.Revalidate.Create";
+		public const string Edit = "Permission.Revalidate.Edit";
+		public const string Delete = "Permission.Revalidate.Delete";
+	}
 	
 }

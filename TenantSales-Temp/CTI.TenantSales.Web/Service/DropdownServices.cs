@@ -25,7 +25,7 @@ namespace CTI.TenantSales.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetTenantList(string id)
+		public SelectList GetTenantList(string? id)
 		{
 			return _context.GetSingle<TenantState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),

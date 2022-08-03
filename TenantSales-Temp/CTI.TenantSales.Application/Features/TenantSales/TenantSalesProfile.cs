@@ -18,8 +18,7 @@ using CTI.TenantSales.Application.Features.TenantSales.Level.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.SalesCategory.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.TenantContact.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.TenantPOS.Commands;
-
-
+using CTI.TenantSales.Application.Features.TenantSales.Revalidate.Commands;
 
 namespace CTI.TenantSales.Application.Features.TenantSales;
 
@@ -62,7 +61,9 @@ public class TenantSalesProfile : Profile
 		CreateMap <EditTenantContactCommand, TenantContactState>().IgnoreBaseEntityProperties();
 		CreateMap<AddTenantPOSCommand, TenantPOSState>();
 		CreateMap <EditTenantPOSCommand, TenantPOSState>().IgnoreBaseEntityProperties();
-		
+		CreateMap<AddRevalidateCommand, RevalidateState>();
+		CreateMap<EditRevalidateCommand, RevalidateState>().IgnoreBaseEntityProperties();
+
 		CreateMap<EditApproverSetupCommand, ApproverSetupState>().IgnoreBaseEntityProperties();
 		CreateMap<AddApproverSetupCommand, ApproverSetupState>().IgnoreBaseEntityProperties();
 		CreateMap<ApproverAssignmentState, ApproverAssignmentState>().IgnoreBaseEntityProperties();

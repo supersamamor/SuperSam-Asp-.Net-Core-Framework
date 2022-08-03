@@ -44,12 +44,8 @@ public class TenantContactController : BaseApiController<TenantContactController
 public record TenantContactViewModel
 {
     [Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int Group { get;set; }
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int Type { get;set; }
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? Detail { get;set; }

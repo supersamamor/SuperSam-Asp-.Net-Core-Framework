@@ -17,7 +17,7 @@ public class GetTenantByIdQueryHandler : BaseQueryByIdHandler<ApplicationContext
 	
 	public override async Task<Option<TenantState>> Handle(GetTenantByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.Tenant.Include(l=>l.Level).Include(l=>l.Project).Include(l=>l.RentalType)
+		return await Context.Tenant.Include(l=>l.Project).Include(l=>l.Level).Include(l=>l.RentalType)
 			.Include(l=>l.TenantLotList)
 			.Include(l=>l.SalesCategoryList)
 			.Include(l=>l.TenantContactList)

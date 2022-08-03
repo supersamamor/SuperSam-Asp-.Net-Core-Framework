@@ -89,18 +89,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
 			});
 
-			$.fn.levelSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Level/Index", new { area = "TenantSales", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LevelId").levelSelect();
-
 			$.fn.projectSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -112,6 +100,18 @@
 				return this;
 			};
 			$("#ProjectId").projectSelect();
+
+			$.fn.levelSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Level/Index", new { area = "TenantSales", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LevelId").levelSelect();
 
 			$.fn.rentaltypeSelect = function() {
 				this.filter("select").each(function() {

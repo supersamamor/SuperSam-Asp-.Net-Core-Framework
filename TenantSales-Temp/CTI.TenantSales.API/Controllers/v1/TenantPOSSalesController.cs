@@ -44,12 +44,8 @@ public class TenantPOSSalesController : BaseApiController<TenantPOSSalesControll
 public record TenantPOSSalesViewModel
 {
     [Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int SalesType { get;set; }
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int HourCode { get;set; }
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? SalesCategory { get;set; }
@@ -121,8 +117,6 @@ public record TenantPOSSalesViewModel
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal TotalNetSales { get;set; }
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int ControlNumber { get;set; }
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? FileName { get;set; }
@@ -130,8 +124,6 @@ public record TenantPOSSalesViewModel
 	
 	public string TenantPOSId { get;set; } = "";
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int ValidationStatus { get;set; }
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ValidationRemarks { get;set; }

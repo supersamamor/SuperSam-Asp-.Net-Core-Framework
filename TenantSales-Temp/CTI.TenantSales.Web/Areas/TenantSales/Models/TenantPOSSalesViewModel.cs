@@ -15,6 +15,7 @@ public record TenantPOSSalesViewModel : BaseViewModel
 	public int HourCode { get; init; }
 	[Display(Name = "Sales Category")]
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
+	[Required]
 	public string? SalesCategory { get; init; }
 	[Display(Name = "Sales Date")]
 	[Required]

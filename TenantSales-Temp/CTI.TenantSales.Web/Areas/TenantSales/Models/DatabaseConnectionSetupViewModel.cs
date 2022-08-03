@@ -27,8 +27,6 @@ public record DatabaseConnectionSetupViewModel : BaseViewModel
 	public string? SystemConnectionString { get; init; }
 	[Display(Name = "System Source")]
 	[Required]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public int SystemSource { get; init; }
 	[Display(Name = "Exhibit Theme Codes")]
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]

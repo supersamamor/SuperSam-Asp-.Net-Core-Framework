@@ -16,7 +16,7 @@ public class GetProjectBusinessUnitQueryHandler : BaseQueryHandler<ApplicationCo
     {
     }
 	public override async Task<PagedListResponse<ProjectBusinessUnitState>> Handle(GetProjectBusinessUnitQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<ProjectBusinessUnitState>().Include(l=>l.BusinessUnit).Include(l=>l.Project)
+		await Context.Set<ProjectBusinessUnitState>().Include(l=>l.Project).Include(l=>l.BusinessUnit)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

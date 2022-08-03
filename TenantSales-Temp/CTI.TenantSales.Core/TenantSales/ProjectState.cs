@@ -43,5 +43,6 @@ public record ProjectState : BaseEntity
 	public IList<TenantState>? TenantList { get; set; }
 	public IList<ProjectBusinessUnitState>? ProjectBusinessUnitList { get; set; }
 	public IList<LevelState>? LevelList { get; set; }
+	public IList<RevalidateState>? RevalidateList { get; set; }
 	
 }

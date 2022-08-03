@@ -16,6 +16,7 @@ using CTI.TenantSales.Application.Features.TenantSales.Level.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.SalesCategory.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.TenantContact.Commands;
 using CTI.TenantSales.Application.Features.TenantSales.TenantPOS.Commands;
+using CTI.TenantSales.Application.Features.TenantSales.Revalidate.Commands;
 
 
 namespace CTI.TenantSales.API;
@@ -56,6 +57,8 @@ public class MappingProfile : Profile
 		CreateMap <TenantContactViewModel, EditTenantContactCommand>();
 		CreateMap<TenantPOSViewModel, AddTenantPOSCommand>();
 		CreateMap <TenantPOSViewModel, EditTenantPOSCommand>();
+		CreateMap<RevalidateViewModel, AddRevalidateCommand>();
+		CreateMap <RevalidateViewModel, EditRevalidateCommand>();
 		
     }
 }

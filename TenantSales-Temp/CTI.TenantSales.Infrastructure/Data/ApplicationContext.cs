@@ -31,6 +31,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 	public DbSet<SalesCategoryState> SalesCategory { get; set; } = default!;
 	public DbSet<TenantContactState> TenantContact { get; set; } = default!;
 	public DbSet<TenantPOSState> TenantPOS { get; set; } = default!;
+	public DbSet<RevalidateState> Revalidate { get; set; } = default!;
 	
 	public DbSet<ApprovalState> Approval { get; set; } = default!;
 	public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
@@ -74,6 +75,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<SalesCategoryState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SalesCategoryState>().HasIndex(p => p.Entity);modelBuilder.Entity<SalesCategoryState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<TenantContactState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<TenantContactState>().HasIndex(p => p.Entity);modelBuilder.Entity<TenantContactState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<TenantPOSState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<TenantPOSState>().HasIndex(p => p.Entity);modelBuilder.Entity<TenantPOSState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<RevalidateState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<RevalidateState>().HasIndex(p => p.Entity);modelBuilder.Entity<RevalidateState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 		
         modelBuilder.Entity<DatabaseConnectionSetupState>().HasIndex(p => p.Code).IsUnique();
 		modelBuilder.Entity<DatabaseConnectionSetupState>().HasIndex(p => p.Name).IsUnique();
@@ -141,6 +143,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<TenantContactState>().Property(e => e.Detail).HasMaxLength(50);
 		modelBuilder.Entity<TenantPOSState>().Property(e => e.Code).HasMaxLength(255);
 		modelBuilder.Entity<TenantPOSState>().Property(e => e.SerialNumber).HasMaxLength(255);
+		modelBuilder.Entity<RevalidateState>().Property(e => e.Status).HasMaxLength(50);
 		
         modelBuilder.Entity<DatabaseConnectionSetupState>().HasMany(t => t.CompanyList).WithOne(l => l.DatabaseConnectionSetup).HasForeignKey(t => t.DatabaseConnectionSetupId);
 		modelBuilder.Entity<CompanyState>().HasMany(t => t.ProjectList).WithOne(l => l.Company).HasForeignKey(t => t.CompanyId);
@@ -157,6 +160,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<TenantState>().HasMany(t => t.SalesCategoryList).WithOne(l => l.Tenant).HasForeignKey(t => t.TenantId);
 		modelBuilder.Entity<TenantState>().HasMany(t => t.TenantContactList).WithOne(l => l.Tenant).HasForeignKey(t => t.TenantId);
 		modelBuilder.Entity<TenantState>().HasMany(t => t.TenantPOSList).WithOne(l => l.Tenant).HasForeignKey(t => t.TenantId);
+		modelBuilder.Entity<ProjectState>().HasMany(t => t.RevalidateList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectId);
+		modelBuilder.Entity<TenantState>().HasMany(t => t.RevalidateList).WithOne(l => l.Tenant).HasForeignKey(t => t.TenantId);
 		
 		modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
@@ -180,6 +185,6 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverSetupState>().HasIndex(e => new { e.TableName, e.Entity }).IsUnique();
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId }).IsUnique();
-		base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder);
     }
 }

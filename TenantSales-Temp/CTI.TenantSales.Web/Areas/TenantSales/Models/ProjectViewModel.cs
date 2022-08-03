@@ -51,5 +51,6 @@ public record ProjectViewModel : BaseViewModel
 	public IList<TenantViewModel>? TenantList { get; set; }
 	public IList<ProjectBusinessUnitViewModel>? ProjectBusinessUnitList { get; set; }
 	public IList<LevelViewModel>? LevelList { get; set; }
+	public IList<RevalidateViewModel>? RevalidateList { get; set; }
 	
 }

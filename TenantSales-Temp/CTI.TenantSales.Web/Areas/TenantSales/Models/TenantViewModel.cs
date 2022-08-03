@@ -65,5 +65,6 @@ public record TenantViewModel : BaseViewModel
 	public IList<SalesCategoryViewModel>? SalesCategoryList { get; set; }
 	public IList<TenantContactViewModel>? TenantContactList { get; set; }
 	public IList<TenantPOSViewModel>? TenantPOSList { get; set; }
+	public IList<RevalidateViewModel>? RevalidateList { get; set; }
 	
 }
