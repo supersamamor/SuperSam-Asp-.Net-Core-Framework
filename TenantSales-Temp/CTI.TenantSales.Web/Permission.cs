@@ -28,11 +28,10 @@ public static class Permission
 			.Concat(GeneratePermissionsForModule("TenantContact"))
 			.Concat(GeneratePermissionsForModule("TenantPOS"))
 			.Concat(GeneratePermissionsForModule("Revalidate"))
-			
+			.Concat(GeneratePermissionsForModule("Reports"))
 			.Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
-
-    public static IEnumerable<string> GeneratePermissionsForModule(string module)
+	public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
         var permissions = new List<string>()
         {
@@ -45,6 +44,11 @@ public static class Permission
 		if (module == "ApproverSetup")
 		{
 			permissions.Add($"Permission.{module}.PendingApprovals");
+		}
+		if (module == "Reports")
+		{
+			permissions.Add($"Permission.{module}.DailySales");
+			permissions.Add($"Permission.{module}.SalesGrowth");
 		}
 		return permissions;
     }
@@ -232,5 +236,12 @@ public static class Permission
 		public const string View = "Permission.ApproverSetup.View";
 		public const string Edit = "Permission.ApproverSetup.Edit";
 		public const string PendingApprovals = "Permission.ApproverSetup.PendingApprovals";
+	}
+	public static class Reports
+	{
+	
+		public const string View = "Permission.Reports.View";
+		public const string DailySales = "Permission.Reports.DailySales";
+		public const string SalesGrowth = "Permission.Reports.SalesGrowth";
 	}
 }

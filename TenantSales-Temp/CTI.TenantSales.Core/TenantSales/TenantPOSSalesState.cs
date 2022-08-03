@@ -141,4 +141,8 @@ public record TenantPOSSalesState : BaseEntity
     {
         this.Entity = entity;
     }
+    public int SetDayNumber(DateTime dateFrom)
+    {
+        return (int)((this.SalesDate - dateFrom).TotalDays) + 1;
+    }
 }
