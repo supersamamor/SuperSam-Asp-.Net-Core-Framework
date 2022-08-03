@@ -1,0 +1,64 @@
+﻿@*@model TenantSales.Web.Models.ReportViewModels.DailySales
+@using TenantSales.Web.Enums
+<tr>
+    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+        @if (Model.ValidationStatus == Convert.ToInt32(ValidatedStatusEnum.Passed))
+        {
+            <a class="glyphicon glyphicon-ok" href="#" title="Passed" style="color:green;"></a>
+        }
+        else
+        {
+            <a class="glyphicon glyphicon-warning-sign" href="#" title="@Model.ValidationRemarks" style="color:red;"></a>
+        }
+    </td>
+    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+        @Html.DisplayFor(modelItem => Model.DayNumber)
+    </td>
+    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+        @Model.SalesDateFormatted
+    </td>
+    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+        @Html.DisplayFor(modelItem => Model.SalesCategory)
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.OldAccumulatedTotalFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.NewAccumulatedTotalFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.TaxableSalesAmountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.NonTaxableSalesAmountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.TotalServiceChargeFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.TotalTaxFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.TotalNetSalesFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.RefundDiscountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.AdjustmentAmountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.VoidAmountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.SeniorCitizenDiscountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.PromoDiscountFormatted
+    </td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+        @Model.OtherDiscountFormatted
+    </td>       
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">@Model.NoOfTransactionsFormatted</td>
+    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">@Model.NoOfSalesTransactionsFormatted</td>
+</tr>*@

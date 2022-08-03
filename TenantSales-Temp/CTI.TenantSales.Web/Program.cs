@@ -11,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using CTI.TenantSales.Scheduler;
 using CTI.TenantSales.EmailSending;
+using CTI.TenantSales.PdfGenerator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,7 +113,7 @@ app.MapControllers();
 app.MapRazorPages();
 app.MapHealthChecks("/health").AllowAnonymous();
 app.UseNotyf();
-
+RotativaConfigurationSetup.Setup(app.Environment.WebRootPath);
 // Seed the database
 if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
 {
