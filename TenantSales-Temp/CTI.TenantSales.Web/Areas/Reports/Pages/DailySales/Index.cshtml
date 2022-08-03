@@ -18,7 +18,7 @@
     $(document).ready(function () {
         function InitializeForm()
         {
-            $('#ProjectId, #Year').on( 'change', function () {
+            $('#ProjectId, #LevelId, #Year').on( 'change', function () {
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#dailysales-form', InitializeForm);
             });
 
@@ -45,6 +45,18 @@
                 return this;
             };
             $("#LevelId").levelSelect();
+
+            $.fn.tenantSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Tenant/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&projectId=' + $('#ProjectId').val() + '&levelId=' + $('#LevelId').val(),
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#TenantId").tenantSelect();
         }
         InitializeForm();
     });

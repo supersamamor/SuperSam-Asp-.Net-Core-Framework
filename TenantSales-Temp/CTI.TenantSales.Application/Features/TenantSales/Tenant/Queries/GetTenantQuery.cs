@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CTI.TenantSales.Application.Features.TenantSales.Tenant.Queries;
 
-public record GetTenantQuery : BaseQuery, IRequest<PagedListResponse<TenantState>>;
+public record GetTenantQuery : BaseQuery, IRequest<PagedListResponse<TenantState>>
+{
+	public string? ProjectId { get; set; }
+	public string? LevelId { get; set; }
+}
 
 public class GetTenantQueryHandler : BaseQueryHandler<ApplicationContext, TenantState, GetTenantQuery>, IRequestHandler<GetTenantQuery, PagedListResponse<TenantState>>
 {
@@ -17,7 +21,9 @@ public class GetTenantQueryHandler : BaseQueryHandler<ApplicationContext, Tenant
     }
 	public override async Task<PagedListResponse<TenantState>> Handle(GetTenantQuery request, CancellationToken cancellationToken = default) =>
 		await Context.Set<TenantState>().Include(l=>l.Project).Include(l=>l.Level).Include(l=>l.RentalType)
-		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
+		.Where(l => ((!string.IsNullOrEmpty(request.LevelId) && l.LevelId == request.LevelId) || (string.IsNullOrEmpty(request.LevelId)))
+		&& ((!string.IsNullOrEmpty(request.ProjectId) && l.ProjectId == request.ProjectId) || (string.IsNullOrEmpty(request.ProjectId)))
+		).AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,
 			cancellationToken);	

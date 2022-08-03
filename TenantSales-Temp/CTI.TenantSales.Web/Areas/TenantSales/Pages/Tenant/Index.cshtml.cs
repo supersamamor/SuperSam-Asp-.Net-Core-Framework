@@ -25,27 +25,30 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
+
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetTenantQuery>());
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
                 e.Name,
-				e.Code,
-				DateFrom = e.DateFrom.ToString("MMM dd, yyyy"),
-				DateTo = e.DateTo.ToString("MMM dd, yyyy"),
-				Opening = e.Opening.ToString("MMM dd, yyyy"),
-						
-				
+                e.Code,
+                DateFrom = e.DateFrom.ToString("MMM dd, yyyy"),
+                DateTo = e.DateTo.ToString("MMM dd, yyyy"),
+                Opening = e.Opening.ToString("MMM dd, yyyy"),
+
+
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+    }
+
+    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request, string? projectId, string? levelId)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetTenantQuery>(nameof(TenantState.Id)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
+        var query = request.ToQuery<GetTenantQuery>(nameof(TenantState.Name));
+        query.ProjectId = projectId;
+        query.LevelId = levelId;
+        var result = await Mediatr.Send(query);
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Code + " - " + e.Name }));
     }
 }
