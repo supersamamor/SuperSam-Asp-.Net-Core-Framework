@@ -10,7 +10,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.Input" />
-    </div>    
+    </div>
 </form>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
@@ -21,6 +21,30 @@
             $('#ProjectId, #Year').on( 'change', function () {
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#dailysales-form', InitializeForm);
             });
+
+            $.fn.projectSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Project/Index", new { area = "TenantSales", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#ProjectId").projectSelect();
+
+            $.fn.levelSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Level/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&projectId=' + $('#ProjectId').val(),
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#LevelId").levelSelect();
         }
         InitializeForm();
     });

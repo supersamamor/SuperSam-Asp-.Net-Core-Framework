@@ -7,7 +7,7 @@ namespace CTI.TenantSales.Web.Models;
 public record Select2Request
 {
     public string Term { get; init; } = "";
-    public int Page { get; init; } = 1;
+    public int Page { get; init; } = 1; 
 }
 
 public record Select2Result

@@ -44,7 +44,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var query = request.ToQuery<GetProjectQuery>(nameof(ProjectState.Id));
+        var query = request.ToQuery<GetProjectQuery>(nameof(ProjectState.Name));
         query.IsActiveOnly = true;
         var result = await Mediatr.Send(query);
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));

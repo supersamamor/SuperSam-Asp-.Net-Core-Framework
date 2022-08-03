@@ -39,9 +39,11 @@ public class IndexModel : BasePageModel<IndexModel>
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     } 
 	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request, string? projectId)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetLevelQuery>(nameof(LevelState.Id)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
+        var query = request.ToQuery<GetLevelQuery>(nameof(LevelState.Name));
+        query.ProjectId = projectId;
+        var result = await Mediatr.Send(query);
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
     }
 }
