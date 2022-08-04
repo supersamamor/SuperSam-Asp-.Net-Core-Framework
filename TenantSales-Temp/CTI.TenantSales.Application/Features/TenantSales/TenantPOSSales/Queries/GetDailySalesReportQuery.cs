@@ -42,6 +42,6 @@ public class GetDailySalesReportQueryHandler : IRequestHandler<GetDailySalesRepo
             .ThenBy(l => l.TenantPOS!.Tenant!.Name)
              .ThenBy(l => l.TenantPOS!.Code)
              .ThenBy(l => l.SalesCategory)
-             .ThenBy(l => l.SalesDate).ToListAsync();
+             .ThenBy(l => l.SalesDate).ToListAsync(cancellationToken: cancellationToken);
     }
 }

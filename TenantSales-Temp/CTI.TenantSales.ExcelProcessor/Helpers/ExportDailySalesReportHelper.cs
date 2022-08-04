@@ -4,11 +4,11 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
 
-namespace CTI.TenantSales.ExcelProcessor.Services
+namespace CTI.TenantSales.ExcelProcessor.Helpers
 {
-    public class ExportDailySalesReportService
+    public static class ExportDailySalesReportHelper
     {
-        public string Export(DateTime dateFrom, DateTime dateTo, IList<TenantPOSSalesState> salesList)
+        public static string Export(DateTime dateFrom, DateTime dateTo, IList<TenantPOSSalesState> salesList)
         {
             var file = new ExportDailySalesReport("ExcelFiles", "DailySalesReport", "xlsx");
 

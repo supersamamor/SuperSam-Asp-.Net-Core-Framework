@@ -1,5 +1,5 @@
 using CTI.TenantSales.Application.Features.TenantSales.TenantPOSSales.Queries;
-using CTI.TenantSales.ExcelProcessor.Services;
+using CTI.TenantSales.ExcelProcessor.Helpers;
 using CTI.TenantSales.Web.Areas.Reports.Models;
 using CTI.TenantSales.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,12 +11,10 @@ namespace CTI.TenantSales.Web.Areas.Reports.Pages.DailySales
     [Authorize(Policy = Permission.Reports.DailySales)]
     public class IndexModel : BasePageModel<IndexModel>
     {
-        private readonly ExportDailySalesReportService _exportDailySalesReportService;
         private readonly int _cutOffFrom;
         private readonly int _cutOffTo;
-        public IndexModel(ExportDailySalesReportService exportDailySalesReportService, IConfiguration configuration)
-        {
-            _exportDailySalesReportService = exportDailySalesReportService;
+        public IndexModel(IConfiguration configuration)
+        {      
             _cutOffFrom = configuration.GetValue<int>("CutOff:From");
             _cutOffTo = configuration.GetValue<int>("CutOff:To");
         }
@@ -33,7 +31,7 @@ namespace CTI.TenantSales.Web.Areas.Reports.Pages.DailySales
             DateTime dateFrom = new(reportDate.AddMonths(-1).Year, reportDate.AddMonths(-1).Month, _cutOffFrom);
             DateTime dateTo = new(reportDate.Year, reportDate.Month, _cutOffTo);
             var tenantPOSList = await Mediatr.Send(new GetDailySalesReportQuery(dateFrom, dateTo, Input.TenantId, Input.LevelId, Input.ProjectId));
-            Input.FilePath = _exportDailySalesReportService.Export(dateFrom, dateTo, tenantPOSList);
+            Input.FilePath = ExportDailySalesReportHelper.Export(dateFrom, dateTo, tenantPOSList);
             return Partial("_InputFieldsPartial", Input);
         }
         public IActionResult OnPostChangeFormValue()
