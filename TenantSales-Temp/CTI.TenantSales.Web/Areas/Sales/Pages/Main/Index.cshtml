@@ -1,0 +1,71 @@
+﻿@page
+@model CTI.TenantSales.Web.Areas.Sales.Pages.Main.IndexModel
+@{
+    ViewData["Title"] = Localizer["Tenant Sales"];
+    ViewData["ActiveMainPage"] = "Sales";
+    ViewData["Level1"] = "Sales";
+}
+<form id="dailysales-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Input" />
+    </div>
+     <a href="../@Model.Input.FilePath" target="_blank" style="display:none;" id="btnDownload">@Model.Input.FilePath</a>
+</form>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        @if(!string.IsNullOrEmpty(Model.Input.FilePath))
+        {
+            <text>
+                $('#btnDownload').get(0).click();
+            </text>
+        }
+        function InitializeForm()
+        {
+            $('#ProjectId, #LevelId, #Year').on( 'change', function () {
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#dailysales-form', InitializeForm);
+            });
+
+            $.fn.projectSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Project/Index", new { area = "TenantSales", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#ProjectId").projectSelect();
+
+            $.fn.levelSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Level/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&projectId=' + $('#ProjectId').val(),
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#LevelId").levelSelect();
+
+            $.fn.tenantSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Tenant/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&projectId=' + $('#ProjectId').val() + '&levelId=' + $('#LevelId').val(),
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#TenantId").tenantSelect();
+        }
+        InitializeForm();
+    });
+</script>
+}

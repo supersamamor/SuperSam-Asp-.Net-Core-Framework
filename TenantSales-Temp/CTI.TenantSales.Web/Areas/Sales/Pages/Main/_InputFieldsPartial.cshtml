@@ -1,0 +1,90 @@
+﻿@using CTI.TenantSales.Web.Areas.Sales.Models;
+@model CTI.TenantSales.Web.Areas.Sales.Models.TenantSalesModel
+@{
+}
+<style>
+    .input-group > .select2-container--bootstrap {
+        width: auto;
+        flex: 1 1 auto;
+    }
+
+        .input-group > .select2-container--bootstrap .select2-selection--single {
+            height: 100%;
+            line-height: inherit;
+            padding: 0.5rem 1rem;
+        }
+
+</style>
+<div class="box-header">
+    <div class="container-fluid">
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-xs-12 col-sm-4 col-lg-4">
+                <div class="input-group form-group-padding">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Project"]</span>
+                    </div>
+                    <div class="input-sm form-control">
+                        <select asp-for="@Model.ProjectId" class="input-sm form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectId))"><option value="">- Select Project -</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-lg-4">
+                <div class="input-group form-group-padding">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Date From"]</span>
+                    </div>
+                    <div class="input-sm form-control">
+                        <input asp-for="@Model.DateFrom" type="date" class="input-sm form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-lg-4">
+                <div class="input-group form-group-padding">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Date To"]</span>
+                    </div>
+                    <div class="input-sm form-control">
+                        <input asp-for="@Model.DateTo" type="date" class="input-sm form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-xs-12 col-sm-4 col-lg-4">
+                <div class="input-group form-group-padding">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Level"]</span>
+                    </div>
+                    <div class="input-sm form-control">
+                        <select asp-for="@Model.LevelId" class="input-sm form-control" asp-items="@(dropdownService.GetLevelList(Model.LevelId))"><option value="">- Select Level -</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-lg-4">
+                <div class="input-group form-group-padding">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Tenant"]</span>
+                    </div>
+                    <div class="input-sm form-control">
+                        <select asp-for="@Model.TenantId" class="input-sm form-control" asp-items="@(dropdownService.GetTenantList(Model.TenantId))"><option value="">- Select Tenant -</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-lg-4">
+                <div class="input-group form-group-padding">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Sales Category"]</span>
+                    </div>
+                    <div class="input-sm form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" title="@Localizer["Generate"]" class="btn btn-success col-xs-12 col-sm-3 col-lg-3" aria-label="Left Align">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span>
+                <span>&nbsp; @Localizer["Generate"]</span>
+            </button>
+        </div>
+    </div>
+</div>
