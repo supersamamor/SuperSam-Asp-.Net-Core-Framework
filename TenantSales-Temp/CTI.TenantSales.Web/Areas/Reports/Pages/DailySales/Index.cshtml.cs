@@ -2,6 +2,7 @@ using CTI.TenantSales.Application.Features.TenantSales.TenantPOSSales.Queries;
 using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.ExcelProcessor.Helpers;
 using CTI.TenantSales.ExcelProcessor.Models;
+using CTI.TenantSales.PdfGenerator.Helper;
 using CTI.TenantSales.Web.Areas.Reports.Models;
 using CTI.TenantSales.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -36,21 +37,22 @@ namespace CTI.TenantSales.Web.Areas.Reports.Pages.DailySales
             DateTime dateTo = new(reportDate.Year, reportDate.Month, _cutOffTo);
             if (Input.OutputType == (int)ReportOutputTypeEnum.Excel)
             {
+                var tenantSalesData = Mapper.Map<IList<TenantState>, IList<TenantDailySales>>(await Mediatr.Send(new GetDailySalesReportQuery(dateFrom, dateTo, Input.TenantId, Input.LevelId, Input.ProjectId)));
                 Input.FilePath = ExportDailySalesReportHelper.Export(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
-                    _uploadPath + "\\" + WebConstants.ReportFolder, dateFrom, dateTo, await GetDailySalesReportData(dateFrom, dateTo));
+                    _uploadPath + "\\" + WebConstants.ReportFolder, dateFrom, dateTo, tenantSalesData);
             }
-         
+            else
+            {
+                var tenantSalesData = Mapper.Map<IList<TenantState>, IList<PdfGenerator.Models.TenantDailySales>>(await Mediatr.Send(new GetDailySalesReportQuery(dateFrom, dateTo, Input.TenantId, Input.LevelId, Input.ProjectId)));
+                Input.FilePath = await DailySalesReportToPdf.GeneratePdf(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
+                   _uploadPath + "\\" + WebConstants.ReportFolder, new PdfGenerator.Models.DailySalesModel(dateFrom, dateTo, tenantSalesData), PageContext);
+            }
             return Page();
         }
         public IActionResult OnPostChangeFormValue()
         {
             ModelState.Clear();
             return Partial("_InputFieldsPartial", Input);
-        }
-        private async Task<IList<TenantDailySales>> GetDailySalesReportData(DateTime dateFrom, DateTime dateTo)
-        {
-            return Mapper.Map<IList<TenantState>, IList<TenantDailySales>>
-                (await Mediatr.Send(new GetDailySalesReportQuery(dateFrom, dateTo, Input.TenantId, Input.LevelId, Input.ProjectId)));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@*@model TenantSales.Web.Models.ReportViewModels.DailySalesReportModel
+﻿@model CTI.TenantSales.PdfGenerator.Models.DailySalesModel
 
 @{
     Layout = null;
@@ -32,7 +32,7 @@
 <body style="">
     @if (Model != null)
     {
-        @foreach (var tenantItem in Model.TenantList)
+        @foreach (var tenantItem in Model.TenantDailySales)
         {
             @foreach (var posItem in tenantItem.TenantPOSList)
             {
@@ -44,7 +44,7 @@
                                 <div style="float:left;padding-left:10px;">
                                     <span><b>Daily Sales Report</b> / @tenantItem.ProjectName </span>
                                     <br />
-                                    <span><b>Pos No. :</b> @posItem.Code / <b>For the period :</b> @Model.DateFrom.ToString(Resource.FormatDate) - @Model.DateTo.ToString(Resource.FormatDate)</span>
+                                    <span><b>Pos No. :</b> @posItem.Code / <b>For the period :</b> @Model.DateFrom.ToString("MM/dd/yyyy") - @Model.DateTo.ToString("MM/dd/yyyy")</span>
                                 </div>
                                 <div style="float:right;padding-right:10px;">
                                     <span><b>Tenant : </b>@tenantItem.TenantCode / @tenantItem.TenantName </span>
@@ -56,37 +56,37 @@
                             <thead>
                                 <tr>
                                     <th class="TenantSales_TableHeader"></th>
-                                    <th class="TenantSales_TableHeader">@Resource.LabelDay</th>
-                                    <th class="TenantSales_TableHeader">@Resource.LabelSalesDate</th>
-                                    <th class="TenantSales_TableHeader">@Resource.LabelSalesCategory</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelOldAccumulatedTotal</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelNewAccumulatedTotal</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelTaxableSalesAmount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelNonTaxableSalesAmount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelServiceCharge</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelTaxAmount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelTotalSales</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelRefundAmount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelAdjustmentAmount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelVoidAmount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelSeniorDiscount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelPromoDiscount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelOtherDiscount</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelCountOfAllTransaction</th>
-                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Resource.LabelCountOfSalesTransaction</th>
+                                    <th class="TenantSales_TableHeader">@Localizer["Day"]</th>
+                                    <th class="TenantSales_TableHeader">@Localizer["Sales Date"]</th>
+                                    <th class="TenantSales_TableHeader">@Localizer["Sales Category"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["OldAccumulatedTotal"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["NewAccumulatedTotal"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["TaxableSalesAmount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["NonTaxableSalesAmount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["ServiceCharge"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["TaxAmount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["TotalSales"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["RefundAmount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["AdjustmentAmount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["VoidAmount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["SeniorDiscount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["PromoDiscount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["OtherDiscount"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["CountOfAllTransaction"]</th>
+                                    <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["CountOfSalesTransaction"]</th>
                                 </tr>
                             </thead>
                             <tbody id="TenantSalesTableContent">
 
-                                @foreach (var item in posItem.SortedDailySalesReport)
+                                @foreach (var item in posItem.TenantPOSSalesList.OrderBy(l=>l.SalesDate).ToList())
                                 {
                                     item.SetDayNumber(Model.DateFrom);
-                                    @await Html.PartialAsync("DailySalesReportItem", item)
+                                    @await Html.PartialAsync("..\\DailySales\\Pdf\\DailySalesReportItem", item)
                                 }
 
-                                @if (posItem.SortedDailySalesReport.Count > 0)
+                                @if (posItem.TenantPOSSalesList.Count > 0)
                                 {
-                                    @await Html.PartialAsync("DailySalesReportSummary", posItem)
+                                    @await Html.PartialAsync("..\\DailySales\\Pdf\\DailySalesReportSummary", posItem)
                                 }
                             </tbody>
                         </table>
@@ -95,11 +95,10 @@
             }
             @if (tenantItem.ShowSalesSummary)
             {
-                @await Html.PartialAsync("DailySalesReportSummaryPerTenant", tenantItem)
+                @await Html.PartialAsync("..\\DailySales\\Pdf\\DailySalesReportSummaryPerTenant", tenantItem)
             }
         }
     }
 
 </body>
 </html>
-*@

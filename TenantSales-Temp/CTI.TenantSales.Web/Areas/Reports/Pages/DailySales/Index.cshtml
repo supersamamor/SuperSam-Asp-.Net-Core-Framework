@@ -11,11 +11,18 @@
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.Input" />
     </div>
+     <a href="../@Model.Input.FilePath" target="_blank" style="display:none;" id="btnDownloadDailySalesReport">@Model.Input.FilePath</a>
 </form>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <script asp-add-nonce>
     $(document).ready(function () {
+        @if(!string.IsNullOrEmpty(Model.Input.FilePath))
+        {
+            <text>
+                $('#btnDownloadDailySalesReport').get(0).click();
+            </text>
+        }
         function InitializeForm()
         {
             $('#ProjectId, #LevelId, #Year').on( 'change', function () {

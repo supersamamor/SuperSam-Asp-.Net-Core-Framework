@@ -45,7 +45,6 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddScheduler(configuration);
 services.AddEmailSendingAService(configuration);
-services.AddPdfGenerator();
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
