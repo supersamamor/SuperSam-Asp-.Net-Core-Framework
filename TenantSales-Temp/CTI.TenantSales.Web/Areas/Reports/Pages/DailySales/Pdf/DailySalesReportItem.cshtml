@@ -1,14 +1,14 @@
-﻿@*@model TenantSales.Web.Models.ReportViewModels.DailySales
-@using TenantSales.Web.Enums
+﻿@model CTI.TenantSales.PdfGenerator.Models.DailySales
+@using CTI.TenantSales.Core.Constants
 <tr>
     <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
-        @if (Model.ValidationStatus == Convert.ToInt32(ValidatedStatusEnum.Passed))
-        {
-            <a class="glyphicon glyphicon-ok" href="#" title="Passed" style="color:green;"></a>
+        @if (Model.ValidationStatus == Convert.ToInt32(ValidationStatusEnum.Passed))
+        {          
+            <i class="bi bi-check-lg" title="Passed" style="color:green;">Passed</i>
         }
         else
-        {
-            <a class="glyphicon glyphicon-warning-sign" href="#" title="@Model.ValidationRemarks" style="color:red;"></a>
+        {           
+            <i class="bi bi-check-lg" title="Failed" title="@Model.ValidationRemarks" style="color:red;">Failed</i>
         }
     </td>
     <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
@@ -58,7 +58,7 @@
     </td>
     <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
         @Model.OtherDiscountFormatted
-    </td>       
+    </td>
     <td class="TenantSales_Row Align-Right" style="cursor:pointer;">@Model.NoOfTransactionsFormatted</td>
     <td class="TenantSales_Row Align-Right" style="cursor:pointer;">@Model.NoOfSalesTransactionsFormatted</td>
-</tr>*@
+</tr>

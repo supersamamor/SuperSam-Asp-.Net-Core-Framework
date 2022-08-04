@@ -48,10 +48,9 @@
                                 </div>
                                 <div style="float:right;padding-right:10px;">
                                     <span><b>Tenant : </b>@tenantItem.TenantCode / @tenantItem.TenantName </span>
-                                </div>
-                            </div>
+                                </div>                              
+                            </div>                         
                         </div>
-
                         <table class="table table-hover tablesorter" style="border:1px solid #ddd;">
                             <thead>
                                 <tr>
@@ -78,7 +77,7 @@
                             </thead>
                             <tbody id="TenantSalesTableContent">
 
-                                @foreach (var item in posItem.TenantPOSSalesList.OrderBy(l=>l.SalesDate).ToList())
+                                @foreach (var item in posItem.TenantPOSSalesList.OrderBy(l => l.SalesDate).ToList())
                                 {
                                     item.SetDayNumber(Model.DateFrom);
                                     @await Html.PartialAsync("..\\DailySales\\Pdf\\DailySalesReportItem", item)
@@ -89,7 +88,7 @@
                                     @await Html.PartialAsync("..\\DailySales\\Pdf\\DailySalesReportSummary", posItem)
                                 }
                             </tbody>
-                        </table>
+                        </table>                     
                     </div>
                 }
             }

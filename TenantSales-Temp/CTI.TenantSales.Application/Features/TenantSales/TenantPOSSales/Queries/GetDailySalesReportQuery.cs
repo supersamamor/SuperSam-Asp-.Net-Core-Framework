@@ -13,14 +13,14 @@ public class GetDailySalesReportQueryHandler : IRequestHandler<GetDailySalesRepo
     private readonly ApplicationContext _context;
     public GetDailySalesReportQueryHandler(ApplicationContext context)
     {
-        _context = context;  
+        _context = context;
     }
     public async Task<IList<TenantState>> Handle(GetDailySalesReportQuery request, CancellationToken cancellationToken = default)
     {
         var query = _context.Tenant
             .Include(l => l.Project)
             .Include(l => l.Level)
-            .IncludeFilter(a => a.TenantPOSList!.SelectMany(b => b.TenantPOSSalesList!.Where(c => c.SalesDate >= request.DateFrom && c.SalesDate <= request.DateTo)));
+            .IncludeFilter(a => a.TenantPOSList!.SelectMany(b => b.TenantPOSSalesList!.Where(c => c.SalesDate >= request.DateFrom && c.SalesDate <= request.DateTo && c.SalesType == Convert.ToInt32(Core.Constants.SalesTypeEnum.Daily))));
 
         if (!string.IsNullOrEmpty(request.TenantId))
         {
@@ -35,6 +35,6 @@ public class GetDailySalesReportQueryHandler : IRequestHandler<GetDailySalesRepo
             query = query.Where(l => l.ProjectId == request.ProjectId);
         }
         return await query.OrderBy(l => l.Project!.Name)
-           .ThenBy(l => l.Name).ToListAsync(cancellationToken: cancellationToken);      
-    } 
+           .ThenBy(l => l.Name).ToListAsync(cancellationToken: cancellationToken);
+    }
 }
