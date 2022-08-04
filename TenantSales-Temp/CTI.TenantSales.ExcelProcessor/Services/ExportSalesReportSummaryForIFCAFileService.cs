@@ -15,11 +15,11 @@ namespace CTI.TenantSales.ExcelProcessor.Services
         public string Export(SalesSummaryForIFCA input, IList<SalesSummaryForIFCAItem> salesSummaryList)
         {
             var file = new ExportSalesSummaryForIFCAFile("ExcelFiles", "SalesReportForIFCA", "xlsx");
-
+        
             using (var package = new ExcelPackage(file.File))
             {
                 var workSheet = package.Workbook.Worksheets.Add("Sheet1");
-                //workSheet.Cells.LoadFromCollectionFiltered(salesSummaryList);
+                workSheet.Cells.LoadFromCollection(salesSummaryList);
 
                 #region Format the Excel File
                 workSheet.Column(4).Style.Numberformat.Format = "mm/dd/yyyy";

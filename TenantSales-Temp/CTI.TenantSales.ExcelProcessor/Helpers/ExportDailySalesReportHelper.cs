@@ -8,11 +8,10 @@ namespace CTI.TenantSales.ExcelProcessor.Helpers
 {
     public static class ExportDailySalesReportHelper
     {
-        public static string Export(DateTime dateFrom, DateTime dateTo, IList<TenantPOSSalesState> salesList)
+        public static string Export(string staticPath, string fullFilePath, DateTime dateFrom, DateTime dateTo, IList<TenantDailySales> tenantList)
         {
-            var file = new ExportDailySalesReport("ExcelFiles", "DailySalesReport", "xlsx");
-
-            using (var package = new ExcelPackage(file.File))
+            var fileName = "DailySalesReport-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xlsx";
+            using (var package = new ExcelPackage(new FileInfo(Path.Combine(fullFilePath, fileName))))
             {
                 var workSheet = package.Workbook.Worksheets.Add("Sheet1");
                 #region Header
@@ -68,35 +67,42 @@ namespace CTI.TenantSales.ExcelProcessor.Helpers
                 #endregion
                 #region Fill Values
                 var sheet1Row = 3;
-                foreach (var salesItem in salesList)
+                foreach (var tenantItem in tenantList)
                 {
-                    if (salesItem.TotalNetSales != 0)
+                    foreach (var posItem in tenantItem.TenantPOSList)
                     {
-                        workSheet.Cells[sheet1Row, 1].Value = salesItem?.TenantPOS?.Tenant?.Project?.Name;
-                        workSheet.Cells[sheet1Row, 2].Value = salesItem?.TenantPOS?.Tenant?.Code;
-                        workSheet.Cells[sheet1Row, 3].Value = salesItem?.TenantPOS?.Tenant?.Name;
-                        workSheet.Cells[sheet1Row, 4].Value = salesItem?.TenantPOS?.Code;
-                        workSheet.Cells[sheet1Row, 5].Value = salesItem?.SetDayNumber(dateFrom);
-                        workSheet.Cells[sheet1Row, 6].Value = salesItem?.SalesDate;
-                        workSheet.Cells[sheet1Row, 7].Value = salesItem?.SalesCategory;
-                        workSheet.Cells[sheet1Row, 8].Value = salesItem?.OldAccumulatedTotal;
-                        workSheet.Cells[sheet1Row, 9].Value = salesItem?.NewAccumulatedTotal;
-                        workSheet.Cells[sheet1Row, 10].Value = salesItem?.TaxableSalesAmount;
-                        workSheet.Cells[sheet1Row, 11].Value = salesItem?.NonTaxableSalesAmount;
-                        workSheet.Cells[sheet1Row, 12].Value = salesItem?.TotalServiceCharge;
-                        workSheet.Cells[sheet1Row, 13].Value = salesItem?.TotalTax;
-                        workSheet.Cells[sheet1Row, 14].Value = salesItem?.TotalNetSales;
-                        workSheet.Cells[sheet1Row, 15].Value = salesItem?.RefundDiscount;
-                        workSheet.Cells[sheet1Row, 16].Value = salesItem?.AdjustmentAmount;
-                        workSheet.Cells[sheet1Row, 17].Value = salesItem?.VoidAmount;
-                        workSheet.Cells[sheet1Row, 18].Value = salesItem?.SeniorCitizenDiscount;
-                        workSheet.Cells[sheet1Row, 19].Value = salesItem?.PromoDiscount;
-                        workSheet.Cells[sheet1Row, 20].Value = salesItem?.OtherDiscount;
-                        workSheet.Cells[sheet1Row, 21].Value = salesItem?.NoOfTransactions;
-                        workSheet.Cells[sheet1Row, 22].Value = salesItem?.NoOfSalesTransactions;
-                        workSheet.Cells[sheet1Row, 23].Value = salesItem?.ValidationStatus == Convert.ToInt32(Core.Constants.ValidationStatusEnum.Passed) ? "Passed" : "Failed";
-                        workSheet.Cells[sheet1Row, 24].Value = salesItem?.ValidationRemarks;
-                        sheet1Row++;
+                        if (posItem.ShowSales)
+                        {
+                            foreach (var item in posItem.TenantPOSSalesList.OrderBy(l=>l.SalesDate).ToList())
+                            {
+                                item.SetDayNumber(dateFrom);
+                                workSheet.Cells[sheet1Row, 1].Value = tenantItem.ProjectName;
+                                workSheet.Cells[sheet1Row, 2].Value = tenantItem.TenantCode;
+                                workSheet.Cells[sheet1Row, 3].Value = tenantItem.TenantName;
+                                workSheet.Cells[sheet1Row, 4].Value = posItem.Code;
+                                workSheet.Cells[sheet1Row, 5].Value = item.DayNumber;
+                                workSheet.Cells[sheet1Row, 6].Value = item.SalesDate;
+                                workSheet.Cells[sheet1Row, 7].Value = item.SalesCategory;
+                                workSheet.Cells[sheet1Row, 8].Value = item.OldAccumulatedTotal;
+                                workSheet.Cells[sheet1Row, 9].Value = item.NewAccumulatedTotal;
+                                workSheet.Cells[sheet1Row, 10].Value = item.TaxableSalesAmount;
+                                workSheet.Cells[sheet1Row, 11].Value = item.NonTaxableSalesAmount;
+                                workSheet.Cells[sheet1Row, 12].Value = item.TotalServiceCharge;
+                                workSheet.Cells[sheet1Row, 13].Value = item.TotalTax;
+                                workSheet.Cells[sheet1Row, 14].Value = item.TotalNetSales;
+                                workSheet.Cells[sheet1Row, 15].Value = item.RefundDiscount;
+                                workSheet.Cells[sheet1Row, 16].Value = item.AdjustmentAmount;
+                                workSheet.Cells[sheet1Row, 17].Value = item.VoidAmount;
+                                workSheet.Cells[sheet1Row, 18].Value = item.SeniorCitizenDiscount;
+                                workSheet.Cells[sheet1Row, 19].Value = item.PromoDiscount;
+                                workSheet.Cells[sheet1Row, 20].Value = item.OtherDiscount;
+                                workSheet.Cells[sheet1Row, 21].Value = item.NoOfTransactions;
+                                workSheet.Cells[sheet1Row, 22].Value = item.NoOfSalesTransactions;
+                                workSheet.Cells[sheet1Row, 23].Value = item.ValidationStatus == Convert.ToInt32(Core.Constants.ValidationStatusEnum.Passed) ? "Passed" : "Failed";
+                                workSheet.Cells[sheet1Row, 24].Value = item.ValidationRemarks;
+                                sheet1Row++;
+                            }
+                        }
                     }
                 }
                 #endregion
@@ -112,7 +118,7 @@ namespace CTI.TenantSales.ExcelProcessor.Helpers
                 workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
                 package.Save();
             }
-            return file.DownloadUrl;
+            return staticPath + "\\" + fileName;
         }
     }
 }
