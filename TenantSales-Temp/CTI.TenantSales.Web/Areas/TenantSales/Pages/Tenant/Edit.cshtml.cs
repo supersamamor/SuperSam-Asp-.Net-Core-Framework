@@ -52,11 +52,7 @@ public class EditModel : BasePageModel<EditModel>
 		if (AsyncAction == "RemoveSalesCategory")
 		{
 			return RemoveSalesCategory();
-		}
-		if (AsyncAction == "AddTenantContact")
-		{
-			return AddTenantContact();
-		}
+		}		
 		if (AsyncAction == "RemoveTenantContact")
 		{
 			return RemoveTenantContact();
@@ -69,9 +65,19 @@ public class EditModel : BasePageModel<EditModel>
 		{
 			return RemoveTenantPOS();
 		}
-		
-		
-        return Partial("_InputFieldsPartial", Tenant);
+		if (AsyncAction == "AddTenantBranchContact")
+		{
+			return AddTenantContact(Convert.ToInt32(Core.TenantSales.ContactGroup.Branch));
+		}
+		if (AsyncAction == "AddTenantITSupportContact")
+		{
+			return AddTenantContact(Convert.ToInt32(Core.TenantSales.ContactGroup.ITSupport));
+		}
+		if (AsyncAction == "AddTenantHeadOfficeContact")
+		{
+			return AddTenantContact(Convert.ToInt32(Core.TenantSales.ContactGroup.HeadOffice));
+		}
+		return Partial("_InputFieldsPartial", Tenant);
     }
 	
 	private IActionResult AddTenantLot()
@@ -101,14 +107,7 @@ public class EditModel : BasePageModel<EditModel>
 		Tenant.SalesCategoryList = Tenant!.SalesCategoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Tenant);
 	}
-
-	private IActionResult AddTenantContact()
-	{
-		ModelState.Clear();
-		if (Tenant!.TenantContactList == null) { Tenant!.TenantContactList = new List<TenantContactViewModel>(); }
-		Tenant!.TenantContactList!.Add(new TenantContactViewModel() { TenantId = Tenant.Id });
-		return Partial("_InputFieldsPartial", Tenant);
-	}
+	
 	private IActionResult RemoveTenantContact()
 	{
 		ModelState.Clear();
@@ -129,5 +128,11 @@ public class EditModel : BasePageModel<EditModel>
 		Tenant.TenantPOSList = Tenant!.TenantPOSList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Tenant);
 	}
-	
+	private IActionResult AddTenantContact(int group)
+	{
+		ModelState.Clear();
+		if (Tenant!.TenantContactList == null) { Tenant!.TenantContactList = new List<TenantContactViewModel>(); }
+		Tenant!.TenantContactList!.Add(new TenantContactViewModel() { TenantId = Tenant.Id, Group = group });
+		return Partial("_InputFieldsPartial", Tenant);
+	}
 }

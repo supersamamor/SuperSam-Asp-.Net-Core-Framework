@@ -156,10 +156,8 @@ public static class Permission
     }
     public static class Tenant
     {
-        public const string View = "Permission.Tenant.View";
-        public const string Create = "Permission.Tenant.Create";
+        public const string View = "Permission.Tenant.View";      
         public const string Edit = "Permission.Tenant.Edit";
-        public const string Delete = "Permission.Tenant.Delete";
     }
     public static class TenantPOSSales
     {

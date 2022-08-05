@@ -6,13 +6,7 @@
     ViewData["Level1"] = "TenantSales";
 }
 <form id="tenant-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
-    <input type="hidden" asp-for="@Model.AsyncAction" />
-	<div id="PartialLoaderContainer">
-        <partial name="_InputFieldsPartial" model="Model.Tenant" />
-    </div>    
-    <div class="row">
+	 <div class="row">
         <div class="col-12">
             <p>
                 <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
@@ -20,6 +14,13 @@
             </p>
         </div>
     </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Tenant" />
+    </div>    
+   
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
@@ -63,19 +64,7 @@
 			$('#btnAddSalesCategory').on( 'click', function () {
 				$('#AsyncAction').val('AddSalesCategory');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
-			});
-
-			$.InitializeTenantContactFieldValidations($('#TenantContactCount').val());
-			$('.RemoveTenantContactButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveTenantContact');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
-			});
-
-			$('#btnAddTenantContact').on( 'click', function () {
-				$('#AsyncAction').val('AddTenantContact');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
-			});
+			});	
 
 			$.InitializeTenantPOSFieldValidations($('#TenantPOSCount').val());
 			$('.RemoveTenantPOSButton ').on( 'click', function () {
@@ -125,6 +114,27 @@
 			};
 			$("#RentalTypeId").rentaltypeSelect();
 
+			$.InitializeTenantContactFieldValidations($('#TenantContactCount').val());
+			$('.RemoveTenantContactButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTenantContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddTenantBranchContact').on( 'click', function () {
+				$('#AsyncAction').val('AddTenantBranchContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddTenantITSupportContact').on( 'click', function () {
+				$('#AsyncAction').val('AddTenantITSupportContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
+
+			$('#btnAddTenantHeadOfficeContact').on( 'click', function () {
+				$('#AsyncAction').val('AddTenantHeadOfficeContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+			});
 		}	
 		InitializeForm();
     });

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CTI.TenantSales.Web.Areas.TenantSales.Pages.Tenant;
 
-[Authorize(Policy = Permission.Tenant.Delete)]
+//[Authorize(Policy = Permission.Tenant.Delete)]
 public class DeleteModel : BasePageModel<DeleteModel>
 {
     [BindProperty]

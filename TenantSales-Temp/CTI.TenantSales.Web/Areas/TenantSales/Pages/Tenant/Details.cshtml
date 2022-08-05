@@ -5,6 +5,17 @@
     ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
+<div class="row">
+    <div class="col-12">
+        <p>
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>   
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.Edit)).Succeeded)
+            {
+                <a asp-page="Edit" asp-route-id="@Model.Tenant.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+            }     
+        </p>
+    </div>
+</div>
 <div class="container-fluid" id="tenant-container">
     <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
@@ -12,25 +23,7 @@
         <partial name="_InputFieldsPartial" model="Model.Tenant" />
     </div> 
 </div>
-<div class="row">
-    <div class="col-12">
-        <p>
-            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.Create)).Succeeded)
-            {
-                <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.Edit)).Succeeded)
-            {
-                <a asp-page="Edit" asp-route-id="@Model.Tenant.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.Delete)).Succeeded)
-            {
-                <a asp-page="Delete" asp-route-id="@Model.Tenant.Id" class="btn btn-danger">@Localizer["Delete"]</a>
-            }
-        </p>
-    </div>
-</div>
+
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>

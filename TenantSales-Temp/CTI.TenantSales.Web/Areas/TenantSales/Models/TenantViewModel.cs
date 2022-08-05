@@ -66,5 +66,12 @@ public record TenantViewModel : BaseViewModel
 	public IList<TenantContactViewModel>? TenantContactList { get; set; }
 	public IList<TenantPOSViewModel>? TenantPOSList { get; set; }
 	public IList<RevalidateViewModel>? RevalidateList { get; set; }
-	
+	public IList<TenantContactViewModel>? TenantBranchContactList 
+	{
+		get
+		{
+			return TenantContactList != null ? this.TenantContactList
+				.Where(l => l.Group == Convert.ToInt32(Core.TenantSales.ContactGroup.Branch)).ToList() : null;
+		}
+	}
 }

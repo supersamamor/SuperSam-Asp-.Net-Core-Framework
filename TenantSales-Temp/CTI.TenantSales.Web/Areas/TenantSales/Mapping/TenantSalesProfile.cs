@@ -41,20 +41,20 @@ public class TenantSalesProfile : Profile
 		CreateMap<CompanyViewModel, CompanyState>();
 		CreateMap<ProjectViewModel, AddProjectCommand>();
 		CreateMap<ProjectViewModel, EditProjectCommand>();
-		CreateMap<ProjectState, ProjectViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.Id));
+		CreateMap<ProjectState, ProjectViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.Name));
 		CreateMap<ProjectViewModel, ProjectState>();
 		CreateMap<ThemeViewModel, AddThemeCommand>();
 		CreateMap<ThemeViewModel, EditThemeCommand>();
 		CreateMap<ThemeState, ThemeViewModel>().ReverseMap();
 		CreateMap<TenantViewModel, AddTenantCommand>();
 		CreateMap<TenantViewModel, EditTenantCommand>();
-		CreateMap<TenantState, TenantViewModel>().ForPath(e => e.ForeignKeyLevel, o => o.MapFrom(s => s.Level!.Id)).ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyRentalType, o => o.MapFrom(s => s.RentalType!.Name));
+		CreateMap<TenantState, TenantViewModel>().ForPath(e => e.ForeignKeyLevel, o => o.MapFrom(s => s.Level!.Name)).ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Name)).ForPath(e => e.ForeignKeyRentalType, o => o.MapFrom(s => s.RentalType!.Name));
 		CreateMap<TenantViewModel, TenantState>();
 		CreateMap<TenantPOSSalesViewModel, AddTenantPOSSalesCommand>();
 		CreateMap<TenantPOSSalesViewModel, EditTenantPOSSalesCommand>();
 
 		CreateMap<TenantPOSSalesState, TenantPOSSalesViewModel>()
-			.ForPath(e => e.ForeignKeyTenantPOS, o => o.MapFrom(s => s.TenantPOS!.Id))
+			.ForPath(e => e.ForeignKeyTenantPOS, o => o.MapFrom(s => s.TenantPOS!.Code))
 			.ForPath(e => e.TenantId, o => o.MapFrom(s => s.TenantPOS!.TenantId));
 		
 		CreateMap<TenantPOSSalesViewModel, TenantPOSSalesState>();
@@ -65,35 +65,35 @@ public class TenantSalesProfile : Profile
 		CreateMap<ClassificationViewModel, ClassificationState>();
 		CreateMap<CategoryViewModel, AddCategoryCommand>();
 		CreateMap<CategoryViewModel, EditCategoryCommand>();
-		CreateMap<CategoryState, CategoryViewModel>().ForPath(e => e.ForeignKeyClassification, o => o.MapFrom(s => s.Classification!.Id));
+		CreateMap<CategoryState, CategoryViewModel>().ForPath(e => e.ForeignKeyClassification, o => o.MapFrom(s => s.Classification!.Code));
 		CreateMap<CategoryViewModel, CategoryState>();
 		CreateMap<ProjectBusinessUnitViewModel, AddProjectBusinessUnitCommand>();
 		CreateMap<ProjectBusinessUnitViewModel, EditProjectBusinessUnitCommand>();
-		CreateMap<ProjectBusinessUnitState, ProjectBusinessUnitViewModel>().ForPath(e => e.ForeignKeyBusinessUnit, o => o.MapFrom(s => s.BusinessUnit!.Name)).ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id));
+		CreateMap<ProjectBusinessUnitState, ProjectBusinessUnitViewModel>().ForPath(e => e.ForeignKeyBusinessUnit, o => o.MapFrom(s => s.BusinessUnit!.Name)).ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Name));
 		CreateMap<ProjectBusinessUnitViewModel, ProjectBusinessUnitState>();
 		CreateMap<TenantLotViewModel, AddTenantLotCommand>();
 		CreateMap<TenantLotViewModel, EditTenantLotCommand>();
-		CreateMap<TenantLotState, TenantLotViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
+		CreateMap<TenantLotState, TenantLotViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<TenantLotViewModel, TenantLotState>();
 		CreateMap<LevelViewModel, AddLevelCommand>();
 		CreateMap<LevelViewModel, EditLevelCommand>();
-		CreateMap<LevelState, LevelViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id));
+		CreateMap<LevelState, LevelViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Name));
 		CreateMap<LevelViewModel, LevelState>();
 		CreateMap<SalesCategoryViewModel, AddSalesCategoryCommand>();
 		CreateMap<SalesCategoryViewModel, EditSalesCategoryCommand>();
-		CreateMap<SalesCategoryState, SalesCategoryViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
+		CreateMap<SalesCategoryState, SalesCategoryViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<SalesCategoryViewModel, SalesCategoryState>();
 		CreateMap<TenantContactViewModel, AddTenantContactCommand>();
 		CreateMap<TenantContactViewModel, EditTenantContactCommand>();
-		CreateMap<TenantContactState, TenantContactViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
+		CreateMap<TenantContactState, TenantContactViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<TenantContactViewModel, TenantContactState>();
 		CreateMap<TenantPOSViewModel, AddTenantPOSCommand>();
 		CreateMap<TenantPOSViewModel, EditTenantPOSCommand>();
-		CreateMap<TenantPOSState, TenantPOSViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
+		CreateMap<TenantPOSState, TenantPOSViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<TenantPOSViewModel, TenantPOSState>();
 		CreateMap<RevalidateViewModel, AddRevalidateCommand>();
 		CreateMap<RevalidateViewModel, EditRevalidateCommand>();
-		CreateMap<RevalidateState, RevalidateViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Id));
+		CreateMap<RevalidateState, RevalidateViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Name)).ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<RevalidateViewModel, RevalidateState>();
 
 		CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();
