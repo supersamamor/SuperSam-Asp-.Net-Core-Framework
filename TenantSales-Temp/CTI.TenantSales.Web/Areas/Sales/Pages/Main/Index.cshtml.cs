@@ -1,15 +1,24 @@
 using CTI.TenantSales.Web.Areas.Sales.Models;
+using CTI.TenantSales.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+
 
 namespace CTI.TenantSales.Web.Areas.Sales.Pages.Main
 {
-    public class IndexModel : PageModel
+    [Authorize(Policy = Permission.Sales.View)]
+    public class IndexModel : BasePageModel<IndexModel>
     {
         [BindProperty]
         public TenantSalesModel Input { get; set; } = new();
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
+        }
+        public IActionResult OnPostChangeFormValue()
+        {
+            ModelState.Clear();
+            return Partial("_InputFieldsPartial", Input);
         }
     }
 }

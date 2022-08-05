@@ -44,5 +44,11 @@ public record ProjectState : BaseEntity
 	public IList<ProjectBusinessUnitState>? ProjectBusinessUnitList { get; set; }
 	public IList<LevelState>? LevelList { get; set; }
 	public IList<RevalidateState>? RevalidateList { get; set; }
-	
+	public string? DisplayDescription 
+	{
+		get
+		{
+			return this.Company?.DatabaseConnectionSetup?.Code + "/" + this.Company?.Code + "/" + this.Code + " - " + this.Name;
+		}
+	}
 }

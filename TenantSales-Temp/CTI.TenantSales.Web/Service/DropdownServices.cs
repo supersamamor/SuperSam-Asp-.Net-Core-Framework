@@ -6,6 +6,7 @@ using CTI.TenantSales.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using System.Linq;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace CTI.TenantSales.Web.Service
 {
@@ -49,14 +50,14 @@ namespace CTI.TenantSales.Web.Service
         }
         public SelectList GetProjectList(string? id)
         {
-            var project = _context.Project.Where(e => e.Id == id).FirstOrDefault();
+            var project = _context.Project.Include(l=>l.Company).ThenInclude(l => l.DatabaseConnectionSetup).Where(e => e.Id == id).FirstOrDefault();
             if (project == null)
             {
                 return new SelectList(new List<SelectListItem>(), "Value", "Text");
             }
             else
             {
-                return new SelectList(new List<SelectListItem> { new() { Value = project.Id, Text = project.Name } }, "Value", "Text", project.Id);
+                return new SelectList(new List<SelectListItem> { new() { Value = project.Id, Text =  project.DisplayDescription } }, "Value", "Text", project.Id);
             }
         }
         public SelectList GetRentalTypeList(string id)
@@ -82,10 +83,15 @@ namespace CTI.TenantSales.Web.Service
         }
         public SelectList GetCompanyList(string id)
         {
-            return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
-                Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Name } }, "Value", "Text", e.Id),
-                None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-            );
+            var company = _context.Company.Include(l => l.DatabaseConnectionSetup).Where(e => e.Id == id).FirstOrDefault();
+            if (company == null)
+            {
+                return new SelectList(new List<SelectListItem>(), "Value", "Text");
+            }
+            else
+            {
+                return new SelectList(new List<SelectListItem> { new() { Value = company.Id, Text = company.DisplayDescription } }, "Value", "Text", company.Id);
+            }
         }
         public SelectList GetTenantPOSList(string id)
         {
