@@ -32,13 +32,15 @@ public record TenantPOSSalesState : BaseEntity
     public int ValidationStatus { get; set; }
     public string? ValidationRemarks { get; set; }
     public decimal AutocalculatedNewAccumulatedTotal { get; private set; }
-    public decimal AutocalculatedOldAccumulatedTotal { get; private set; }  
+    public decimal AutocalculatedOldAccumulatedTotal { get; private set; }
+    public decimal AutoCalculatedTotalNetSales { get; private set; }
     public TenantPOSState? TenantPOS { get; init; }
     #region Derived Property
     #endregion
-    public decimal AutoCalculatedTotalNetSales(decimal taxRate)
+    public decimal CalculateTotalNetSales(decimal taxRate)
     {
-        return taxRate == 0 ? 0 : Math.Round((this.TaxableSalesAmount - this.TotalServiceCharge) / taxRate, 2) + this.NonTaxableSalesAmount;
+        this.AutoCalculatedTotalNetSales = taxRate == 0 ? 0 : Math.Round((this.TaxableSalesAmount - this.TotalServiceCharge) / taxRate, 2) + this.NonTaxableSalesAmount;
+        return this.AutoCalculatedTotalNetSales;
     }
     public void UpdateFrom(TenantPOSSalesState sales)
     {
@@ -107,7 +109,7 @@ public record TenantPOSSalesState : BaseEntity
                     }
                 }
             }
-            if (Math.Abs(this.TotalNetSales - this.AutoCalculatedTotalNetSales(taxRate)) > salesAmountThreshold)
+            if (Math.Abs(this.TotalNetSales - this.CalculateTotalNetSales(taxRate)) > salesAmountThreshold)
             {
                 this.ValidationStatus = Convert.ToInt32(ValidationStatusEnum.Failed);
                 this.ValidationRemarks += "\\Total net sales is not equal based on AutoCalculated.";
@@ -124,12 +126,12 @@ public record TenantPOSSalesState : BaseEntity
                 throw new Exception("Invalid previous sales");
             }
             this.AutocalculatedOldAccumulatedTotal = prevSales.AutocalculatedNewAccumulatedTotal;
-            this.AutocalculatedNewAccumulatedTotal = prevSales.AutocalculatedNewAccumulatedTotal + this.AutoCalculatedTotalNetSales(taxRate);
+            this.AutocalculatedNewAccumulatedTotal = prevSales.AutocalculatedNewAccumulatedTotal + this.CalculateTotalNetSales(taxRate);
         }
         else if (prevSales == null)
         {
             this.AutocalculatedOldAccumulatedTotal = this.OldAccumulatedTotal;
-            this.AutocalculatedNewAccumulatedTotal = this.OldAccumulatedTotal + this.AutoCalculatedTotalNetSales(taxRate);
+            this.AutocalculatedNewAccumulatedTotal = this.OldAccumulatedTotal + this.CalculateTotalNetSales(taxRate);
         }
     }
     public void ProcessPreviousDaySales(TenantPOSSalesState? prevSales, decimal taxRate, decimal salesAmountThreshold)

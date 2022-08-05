@@ -131,15 +131,16 @@ public record TenantPOSSalesViewModel : BaseViewModel
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal AutocalculatedOldAccumulatedTotal { get; init; }
-
+    [Display(Name = "Autocalculated Total Net Sales")]
+    [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+    public decimal AutoCalculatedTotalNetSales { get; init; }
     public DateTime LastModifiedDate { get; set; }
     public TenantPOSViewModel? TenantPOS { get; init; }
     public string? TenantId { get; init; }
     public int SetDayNumber(DateTime dateFrom)
     {
         return (int)((this.SalesDate - dateFrom).TotalDays) + 1;
-    }
-    public decimal AutoCalculatedTotalNetSales { get; set; }
+    } 
     public string TenantPOSCode { get; init; } = "";
     public string TenantName { get; init; } = "";
     public string TenantCode { get; init; } = "";

@@ -100,7 +100,7 @@
                 {
                     <text>
                         url = '@Url.Page("/TenantPOSSales/Edit", new { area = "TenantSales" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditTenantPOSSales">@Localizer["Edit"]</a>';
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditTenantPOSSales" target="popup">@Localizer["Edit"]</a>';
                     </text>
                 }
                         return button;
@@ -116,6 +116,7 @@
         $('.btn-table_filter').on('click', function(e) {
             table.ajax.reload(null, false);
         });
+
         function BindTableRowCollapseEvent()
         {
             $('#tenantPOSSales tbody').on('click', 'td.dtr-control', function () {
@@ -123,6 +124,10 @@
             });
         }
         $.showAjaxLoaderOnClick([".btnAddTenantPOSSales",".btnEditTenantPOSSales",".btnViewTenantPOSSales",".btnDeleteTenantPOSSales"]);
+
+        $('#DateFrom, #DateTo').on('change', function(e) {
+            table.ajax.reload(null, false);
+        });
     });
 </script>
 }
