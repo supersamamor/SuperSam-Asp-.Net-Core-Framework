@@ -9,9 +9,13 @@
     ViewData["Title"] = $"Tenant - {Model.Tenant} (Sales List)";
     ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
+    var cutOffFrom = Configuration.GetValue<int>("CutOff:From");
+    var cutOffTo = Configuration.GetValue<int>("CutOff:To");
+    DateTime dateFrom = new(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month, cutOffFrom);
+    DateTime dateTo = new(DateTime.Now.Year, DateTime.Now.Month, cutOffTo);
 }
 
-<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.TenantId, "SalesList"))" />
+<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.TenantId, "SalesList",dateFrom,dateTo))" />
 <input type="hidden" id="TenantId" value="@Model.TenantId" />
 <div class="row">
     <div class="col-12">
@@ -69,6 +73,8 @@
                 },
                 data: function(d) {
                      d.tenantId = $("#TenantId").val();
+                     d.dateFrom = $("#DateFrom").val();
+                     d.dateTo = $("#DateTo").val();
                 },
             },
             initComplete: function( settings, json ) {
@@ -103,9 +109,7 @@
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: [
-                'excel', 'pdf', 'pageLength',
-            ],
+            buttons: [],
         });
         var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
 

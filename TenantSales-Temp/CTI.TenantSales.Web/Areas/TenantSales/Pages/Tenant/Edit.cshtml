@@ -6,13 +6,12 @@
     ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
-<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.Tenant.Id, "TenantProfile"))" />
+<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.Tenant.Id, "TenantProfile",null,null))" />
 <form id="tenant-form" method="post">
     <div class="row">
         <div class="col-12">
             <p>
-                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
-                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>                
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
             </p>
         </div>
     </div>

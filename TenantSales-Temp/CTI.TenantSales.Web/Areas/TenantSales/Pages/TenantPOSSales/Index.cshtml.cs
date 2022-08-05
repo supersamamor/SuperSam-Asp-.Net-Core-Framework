@@ -27,10 +27,12 @@ public class IndexModel : BasePageModel<IndexModel>
         return Page();
     }
 
-    public async Task<IActionResult> OnPostListAllAsync(string tenantId)
+    public async Task<IActionResult> OnPostListAllAsync(string tenantId, DateTime dateFrom, DateTime dateTo)
     {
         var getTableQuery = DataRequest!.ToQuery<GetTenantPOSSalesQuery>();
         getTableQuery.TenantId = tenantId;
+        getTableQuery.DateFrom = dateFrom;
+        getTableQuery.DateTo = dateTo;
         var result = await Mediatr.Send(getTableQuery);
         return new JsonResult(result.Data
             .Select(e => new

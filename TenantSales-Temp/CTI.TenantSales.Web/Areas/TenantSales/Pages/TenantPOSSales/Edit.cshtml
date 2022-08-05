@@ -7,21 +7,20 @@
     ViewData["Level1"] = "TenantSales";
 }
 <partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model!.TenantPOSSales!.TenantId!, "SalesItem",
-					Model.TenantPOSSales.SalesCategory,Model.TenantPOSSales.TenantPOSCode,Model.TenantPOSSales.SalesDate))" />
+					null,null, Model.TenantPOSSales.SalesCategory,Model.TenantPOSSales.TenantPOSCode,Model.TenantPOSSales.SalesDate))" />
 <form id="tenantPOSSales-form" method="post">
+    <div class="row">
+        <div class="col-12">
+            <p>               
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.TenantPOSSales" />
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <p>
-                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
-                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
-            </p>
-        </div>
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
