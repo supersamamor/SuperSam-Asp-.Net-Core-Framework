@@ -20,7 +20,7 @@ public record TenantPOSSalesViewModel : BaseViewModel
     [Display(Name = "Sales Date")]
     [Required]
     public DateTime SalesDate { get; init; } = DateTime.Now.Date;
-    [Display(Name = "Is Auto-Compute")]
+    [Display(Name = "Manually Checked")]
     public bool IsAutoCompute { get; init; }
     [Display(Name = "Sales Amount")]
     [Required]
@@ -144,4 +144,6 @@ public record TenantPOSSalesViewModel : BaseViewModel
     public string TenantPOSCode { get; init; } = "";
     public string TenantName { get; init; } = "";
     public string TenantCode { get; init; } = "";
+    public string UpdatedByName { get; init; } = "";
+    public string UpdatedDate { get; init; } = "";
 }
