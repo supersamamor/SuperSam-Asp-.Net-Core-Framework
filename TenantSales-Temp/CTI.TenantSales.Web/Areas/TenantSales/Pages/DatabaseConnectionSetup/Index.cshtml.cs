@@ -33,8 +33,7 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.Code,
 				e.Name,
-				e.DatabaseAndServerName,
-						
+				e.DatabaseAndServerName,						
 				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 e.LastModifiedDate
             })

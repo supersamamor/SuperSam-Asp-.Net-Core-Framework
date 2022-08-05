@@ -5,23 +5,18 @@
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Sales List"];
-    ViewData["ActiveMainPage"] = "TenantPOSSales";
+	ViewData["Title"] = $"Tenant - {Model.Tenant} (Sales List)";
+    ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
+<input type="hidden" id="TenantId" value="@Model.TenantId" />
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <table id="tenantPOSSales" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
-                        <tr>
-							<th>
-								@Localizer["Tenant Code"]
-							</th>
-							<th>
-								@Localizer["Tenant Name"]
-							</th>
+                        <tr>							
 							<th>
 								@Localizer["POS Code"]
 							</th>
@@ -30,75 +25,16 @@
 							</th>
 							<th>
 								@Localizer["Sales Date"]
-							</th>
-							<th>
-								@Localizer["Is Auto-Compute"]
-							</th>
+							</th>							
 							<th>
 								@Localizer["Sales Amount"]
-							</th>
-							<th>
-								@Localizer["Old Accumulated Total"]
-							</th>
-							<th>
-								@Localizer["New Accumulated Total"]
-							</th>
-							<th>
-								@Localizer["Taxable Sales Amount"]
-							</th>
-							<th>
-								@Localizer["Non Taxable Sales Amount"]
-							</th>
-							<th>
-								@Localizer["Senior Citizen Discount"]
-							</th>
-							<th>
-								@Localizer["Promo Discount"]
-							</th>
-							<th>
-								@Localizer["Other Discount"]
-							</th>
-							<th>
-								@Localizer["Refund Discount"]
-							</th>
-							<th>
-								@Localizer["Void Amount"]
-							</th>
-							<th>
-								@Localizer["Adjustment Amount"]
-							</th>
-							<th>
-								@Localizer["Total Service Charge"]
-							</th>
-							<th>
-								@Localizer["Total Tax"]
-							</th>
-							<th>
-								@Localizer["No Of Sales Transactions"]
-							</th>
-							<th>
-								@Localizer["NoOfTransactions"]
-							</th>
+							</th>							
 							<th>
 								@Localizer["Total Net Sales"]
-							</th>
-							<th>
-								@Localizer["Control Number"]
-							</th>
+							</th>							
 							<th>
 								@Localizer["Validation Status"]
-							</th>
-							<th>
-								@Localizer["Validation Remarks"]
-							</th>
-							<th>
-								@Localizer["Autocalculated New Accumulated Total"]
-							</th>
-							<th>
-								@Localizer["Autocalculated Old Accumulated Total"]
-							</th>
-							  
-														
+							</th>												
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -119,7 +55,7 @@
         var table = $('#tenantPOSSales').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 24, 'desc' ]],
+            order: [[ 2, 'asc' ]],
             ajax:
             {
                 url: '@Url.Page("/TenantPOSSales/Index", new { area = "TenantSales", handler = "ListAll" })',
@@ -128,40 +64,20 @@
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
+				data: function(d) {
+                     d.tenantId = $("#TenantId").val();
+                },
             },
 			initComplete: function( settings, json ) {
                 BindTableRowCollapseEvent();
             },
-			columns: [
-				{ data: "tenantCode", name: "TenantPOS.Tenant.Code", responsivePriority: 1, title: '@Localizer["Tenant Code"]', searchable: true },
-				{ data: "tenantName", name: "TenantPOS.Tenant.Name", responsivePriority: 1, title: '@Localizer["Tenant Name"]', searchable: true },
+			columns: [				
 				{ data: "posCode", name: "TenantPOS.Code", responsivePriority: 1, title: '@Localizer["POS Code"]', searchable: true },
                 { data: "salesCategory", name: "SalesCategory", responsivePriority: 1, title: '@Localizer["Sales Category"]', searchable: false },
-				{ data: "salesDate", name: "SalesDate", responsivePriority: 1, title: '@Localizer["Sales Date"]', searchable: false },
-				{ data: "isAutoCompute", name: "IsAutoCompute", responsivePriority: 1, title: '@Localizer["Is Auto-Compute"]', searchable: false },
-				{ data: "salesAmount", name: "SalesAmount", responsivePriority: 1, title: '@Localizer["Sales Amount"]', searchable: false },
-				{ data: "oldAccumulatedTotal", name: "OldAccumulatedTotal", responsivePriority: 1, title: '@Localizer["Old Accumulated Total"]', searchable: false },
-				{ data: "newAccumulatedTotal", name: "NewAccumulatedTotal", responsivePriority: 1, title: '@Localizer["New Accumulated Total"]', searchable: false },
-				{ data: "taxableSalesAmount", name: "TaxableSalesAmount", responsivePriority: 1, title: '@Localizer["Taxable Sales Amount"]', searchable: false },
-				{ data: "nonTaxableSalesAmount", name: "NonTaxableSalesAmount", responsivePriority: 1, title: '@Localizer["Non Taxable Sales Amount"]', searchable: false },
-				{ data: "seniorCitizenDiscount", name: "SeniorCitizenDiscount", responsivePriority: 1, title: '@Localizer["Senior Citizen Discount"]', searchable: false },
-				{ data: "promoDiscount", name: "PromoDiscount", responsivePriority: 1, title: '@Localizer["Promo Discount"]', searchable: false },
-				{ data: "otherDiscount", name: "OtherDiscount", responsivePriority: 1, title: '@Localizer["Other Discount"]', searchable: false },
-				{ data: "refundDiscount", name: "RefundDiscount", responsivePriority: 1, title: '@Localizer["Refund Discount"]', searchable: false },
-				{ data: "voidAmount", name: "VoidAmount", responsivePriority: 1, title: '@Localizer["Void Amount"]', searchable: false },
-				{ data: "adjustmentAmount", name: "AdjustmentAmount", responsivePriority: 1, title: '@Localizer["Adjustment Amount"]', searchable: false },
-				{ data: "totalServiceCharge", name: "TotalServiceCharge", responsivePriority: 1, title: '@Localizer["Total Service Charge"]', searchable: false },
-				{ data: "totalTax", name: "TotalTax", responsivePriority: 1, title: '@Localizer["Total Tax"]', searchable: false },
-				{ data: "noOfSalesTransactions", name: "NoOfSalesTransactions", responsivePriority: 1, title: '@Localizer["No Of Sales Transactions"]', searchable: false },
-				{ data: "noOfTransactions", name: "NoOfTransactions", responsivePriority: 1, title: '@Localizer["NoOfTransactions"]', searchable: false },
-				{ data: "totalNetSales", name: "TotalNetSales", responsivePriority: 1, title: '@Localizer["Total Net Sales"]', searchable: false },
-				{ data: "controlNumber", name: "ControlNumber", responsivePriority: 1, title: '@Localizer["Control Number"]', searchable: false },
-				{ data: "validationStatus", name: "ValidationStatus", responsivePriority: 1, title: '@Localizer["Validation Status"]', searchable: false },
-				{ data: "validationRemarks", name: "ValidationRemarks", responsivePriority: 1, title: '@Localizer["Validation Remarks"]', searchable: false },
-				{ data: "autocalculatedNewAccumulatedTotal", name: "AutocalculatedNewAccumulatedTotal", responsivePriority: 1, title: '@Localizer["Autocalculated New Accumulated Total"]', searchable: false },
-				{ data: "autocalculatedOldAccumulatedTotal", name: "AutocalculatedOldAccumulatedTotal", responsivePriority: 1, title: '@Localizer["Autocalculated Old Accumulated Total"]', searchable: false },
-				   
-				
+				{ data: "salesDate", name: "SalesDate", responsivePriority: 1, title: '@Localizer["Sales Date"]', searchable: false },				
+				{ data: "salesAmount", name: "SalesAmount", responsivePriority: 1, title: '@Localizer["Sales Amount"]', searchable: false },			
+				{ data: "totalNetSales", name: "TotalNetSales", responsivePriority: 1, title: '@Localizer["Total Net Sales"]', searchable: false },				
+				{ data: "validationStatusBadge", name: "ValidationStatus", responsivePriority: 1, title: '@Localizer["Validation Status"]', searchable: false },                
                 {
                     data: null,
                     searchable: false,
