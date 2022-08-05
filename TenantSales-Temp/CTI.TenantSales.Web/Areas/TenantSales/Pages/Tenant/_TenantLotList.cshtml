@@ -8,11 +8,7 @@
                 <div class="card-title flex-grow-1">
                     <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
                         <h5>@Localizer["Tenant Lot"]</h5>
-                    </button>
-                    <button type="button" id="btnAddTenantLot" class="btn-field btn btn-primary cancel">
-                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
-                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
-                    </button>
+                    </button>                   
                     <button class="cancel" type="button" id="btnRemoveTenantLot" value="RemoveTenantLot" style="display:none;"></button>
                 </div>
                 <div class="card-tools">
@@ -32,10 +28,6 @@
 							<th>
 								@Localizer["LotNo"]
 							</th>
-							
-                            <th>
-                                @Localizer["Action"]
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,13 +50,8 @@
 										<input  asp-for="@item.LotNo" name="TenantLotList[@counter].LotNo" class="form-control" maxlength="255" readonly/>
 										<span data-valmsg-for="TenantLotList[@counter].LotNo" asp-validation-for="@item.LotNo" class="text-danger"></span>
 										<input type="hidden" asp-for="@item.LotNo"  name="TenantLotList[@counter].LotNo"/>
-									</td>
-									
-                                    <td>
-                                        <button type="button" class="btn-field btn btn-danger RemoveTenantLotButton cancel" title="@Localizer["Remove TenantLot"]" removeId="@(item.Id)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
+									</td>							
+                                  
                                 </tr>
                                 counter++;
                             }

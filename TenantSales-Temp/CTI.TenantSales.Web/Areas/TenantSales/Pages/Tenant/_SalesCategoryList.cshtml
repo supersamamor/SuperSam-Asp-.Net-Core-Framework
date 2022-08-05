@@ -8,11 +8,7 @@
                 <div class="card-title flex-grow-1">
                     <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
                         <h5>@Localizer["Sales Category"]</h5>
-                    </button>
-                    <button type="button" id="btnAddSalesCategory" class="btn-field btn btn-primary cancel">
-                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
-                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
-                    </button>
+                    </button>                  
                     <button class="cancel" type="button" id="btnRemoveSalesCategory" value="RemoveSalesCategory" style="display:none;"></button>
                 </div>
                 <div class="card-tools">
@@ -37,11 +33,7 @@
 							</th>
 							<th>
 								@Localizer["Disabled"]
-							</th>
-							
-                            <th>
-                                @Localizer["Action"]
-                            </th>
+							</th>	
                         </tr>
                     </thead>
                     <tbody>
@@ -74,13 +66,7 @@
 										<input asp-for="@item.IsDisabled" name="SalesCategoryList[@counter].IsDisabled" class="form-control" />
 										<span data-valmsg-for="SalesCategoryList[@counter].IsDisabled" asp-validation-for="@item.IsDisabled" class="text-danger"></span>
 										
-									</td>
-									
-                                    <td>
-                                        <button type="button" class="btn-field btn btn-danger RemoveSalesCategoryButton cancel" title="@Localizer["Remove SalesCategory"]" removeId="@(item.Id)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
+									</td>	
                                 </tr>
                                 counter++;
                             }

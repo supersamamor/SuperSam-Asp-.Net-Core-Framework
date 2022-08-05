@@ -36,6 +36,11 @@
     $(document).ready(function () {
 		function InitializeForm()
 		{
+			$('.select-contacttype').on( 'change', function () {
+				$('#AsyncAction').val('');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tenant-form', InitializeForm);
+            });
+
 			$('.DisableSelectDropdown').on('mousedown', function(e) {
 				e.preventDefault();
 				this.blur();

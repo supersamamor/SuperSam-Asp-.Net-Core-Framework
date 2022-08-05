@@ -74,4 +74,20 @@ public record TenantViewModel : BaseViewModel
 				.Where(l => l.Group == Convert.ToInt32(Core.TenantSales.ContactGroup.Branch)).ToList() : null;
 		}
 	}
+	public IList<TenantContactViewModel>? TenantITSupportContactList
+	{
+		get
+		{
+			return TenantContactList != null ? this.TenantContactList
+				.Where(l => l.Group == Convert.ToInt32(Core.TenantSales.ContactGroup.ITSupport)).ToList() : null;
+		}
+	}
+	public IList<TenantContactViewModel>? TenantHeadOfficeContactList
+	{
+		get
+		{
+			return TenantContactList != null ? this.TenantContactList
+				.Where(l => l.Group == Convert.ToInt32(Core.TenantSales.ContactGroup.HeadOffice)).ToList() : null;
+		}
+	}
 }

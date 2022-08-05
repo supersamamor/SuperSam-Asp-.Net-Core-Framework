@@ -4,12 +4,12 @@
 <div class="container-fluid" style="margin-bottom:10px;margin-top:10px;border-top:1px solid #ddd">
     <div class="row">
         <div class="col-md-9">
-            <label asp-for="@Model!.BranchContact" class=""></label>
-            <input asp-for="@Model!.BranchContact" class="form-control" maxlength="255" />
-            <span asp-validation-for="@Model!.BranchContact" class="text-danger"></span>
+            <label asp-for="@Model!.HeadOfficeContact" class=""></label>
+            <input asp-for="@Model!.HeadOfficeContact" class="form-control" maxlength="255" />
+            <span asp-validation-for="@Model!.HeadOfficeContact" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <button type="button" id="btnAddTenantBranchContact" class="btn-field btn btn-primary btn-sm cancel" style="margin-top:25px;">
+            <button type="button" id="btnAddTenantHeadOfficeContact" class="btn-field btn btn-primary btn-sm cancel" style="margin-top:25px;">
                 <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
                 <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
             </button>
@@ -34,16 +34,16 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model?.TenantBranchContactList != null)
+        @if (Model?.TenantHeadOfficeContactList != null)
         {
-            int counter = 0;
-            foreach (var item in Model.TenantBranchContactList)
+            int counter =  Model!.TenantBranchContactList != null ? Model!.TenantBranchContactList!.Count  : 0;
+            foreach (var item in Model.TenantHeadOfficeContactList)
             {
                 <tr>
                     <td style="display:none;">
                         <input type="hidden" name="TenantContactList[@counter].Id" value="@item.Id" />
                         <input type="hidden" name="TenantContactList[@counter].TenantId" value="@item.TenantId" />
-                        <input value="@Convert.ToInt32(CTI.TenantSales.Core.TenantSales.ContactGroup.Branch)" type="hidden" name="TenantContactList[@counter].Group" />
+                        <input value="@Convert.ToInt32(CTI.TenantSales.Core.TenantSales.ContactGroup.HeadOffice)" type="hidden" name="TenantContactList[@counter].Group" />
                     </td>
                     <td>
                         <select asp-for="@item.Type" name="TenantContactList[@counter].Type" asp-items="@Html.GetEnumSelectList<CTI.TenantSales.Core.TenantSales.ContactTypeEnum>()" class="form-control select-contacttype">
