@@ -82,7 +82,7 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/Tenant/Details", new { area = "TenantSales" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewTenant">@Localizer["View"]</a>';
+                        var button = '';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.Edit)).Succeeded)
                 {
                     <text>
