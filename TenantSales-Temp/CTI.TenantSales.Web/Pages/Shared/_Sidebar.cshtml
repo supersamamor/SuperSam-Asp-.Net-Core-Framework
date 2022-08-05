@@ -193,7 +193,7 @@
                                     </a>
                                 </li>
                             }*@
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.View)).Succeeded)
+                            @*@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.View)).Succeeded)
                             {
                                 <li class="nav-item">
                                     <a href="/TenantSales/Revalidate" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Revalidate")">
@@ -203,12 +203,12 @@
                                         </p>
                                     </a>
                                 </li>
-                            }
+                            }*@
 
                         </ul>
                     </li>
                 }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Sales.View)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.View)).Succeeded)
                 {
                     <li class="nav-item @ManageNavPages.Level1Class(ViewContext, "Sales") @ManageNavPages.PageNavClass(ViewContext, "Sales")">
                         <a href="/Sales/Main" class="nav-link ">

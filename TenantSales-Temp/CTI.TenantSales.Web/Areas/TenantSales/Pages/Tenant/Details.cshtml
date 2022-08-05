@@ -1,27 +1,29 @@
 @page
+@using Models
 @model DetailsModel
 @{
-    ViewData["Title"] = Localizer["View Tenant"];
+    ViewData["Title"] = $"Tenant - {Model.Tenant.Name} - {Model.Tenant.Code} (Profile)";
     ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
+<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.Tenant.Id, "TenantProfile"))" />
 <div class="row">
     <div class="col-12">
         <p>
-            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>   
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.Edit)).Succeeded)
             {
                 <a asp-page="Edit" asp-route-id="@Model.Tenant.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-            }     
+            }
         </p>
     </div>
 </div>
 <div class="container-fluid" id="tenant-container">
     <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
-	<div id="PartialLoaderContainer">
+    <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.Tenant" />
-    </div> 
+    </div>
 </div>
 
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">

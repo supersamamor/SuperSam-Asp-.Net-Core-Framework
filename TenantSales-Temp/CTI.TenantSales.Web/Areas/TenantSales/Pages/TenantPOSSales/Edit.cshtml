@@ -1,17 +1,20 @@
 @page
+@using Models
 @model EditModel
 @{
-    ViewData["Title"] = Localizer["Edit Sales"];
-    ViewData["ActiveMainPage"] = "TenantPOSSales";
+    ViewData["Title"] = $"Tenant - {Model.TenantPOSSales.TenantName} - {Model.TenantPOSSales.TenantCode} (Edit Sales)";
+    ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
+<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model!.TenantPOSSales!.TenantId!, "SalesItem",
+					Model.TenantPOSSales.SalesCategory,Model.TenantPOSSales.TenantPOSCode,Model.TenantPOSSales.SalesDate))" />
 <form id="tenantPOSSales-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
-	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
-	<div id="PartialLoaderContainer">
+    <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.TenantPOSSales" />
-    </div> 
+    </div>
     <div class="row">
         <div class="col-12">
             <p>
@@ -29,40 +32,40 @@
 
 <script asp-add-nonce>
     $(document).ready(function () {
-		function InitializeForm()
-		{
-			$('.DisableSelectDropdown').on('mousedown', function(e) {
-				e.preventDefault();
-				this.blur();
-				window.focus();
-			});
-			
-			$.fn.tenantposSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/TenantPOS/Index", new { area = "TenantSales", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#TenantPOSId").tenantposSelect();
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
 
-			$.fn.salescategorySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/SalesCategory/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&tenantId=' + $('#TenantId').val(),
-						}
-					});
-				});
-				return this;
-			};
-			$("#SalesCategory").salescategorySelect();
+            $.fn.tenantposSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/TenantPOS/Index", new { area = "TenantSales", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#TenantPOSId").tenantposSelect();
 
-		}	
-		InitializeForm();
+            $.fn.salescategorySelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/SalesCategory/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&tenantId=' + $('#TenantId').val(),
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#SalesCategory").salescategorySelect();
+
+        }
+        InitializeForm();
     });
 </script>
 }

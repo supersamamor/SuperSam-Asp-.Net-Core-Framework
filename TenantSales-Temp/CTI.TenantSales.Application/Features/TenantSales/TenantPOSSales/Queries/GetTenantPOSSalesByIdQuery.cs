@@ -14,11 +14,11 @@ public class GetTenantPOSSalesByIdQueryHandler : BaseQueryByIdHandler<Applicatio
     public GetTenantPOSSalesByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	
-	public override async Task<Option<TenantPOSSalesState>> Handle(GetTenantPOSSalesByIdQuery request, CancellationToken cancellationToken = default)
-	{
-		return await Context.TenantPOSSales.Include(l=>l.TenantPOS)
-			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-	}
-	
+
+    public override async Task<Option<TenantPOSSalesState>> Handle(GetTenantPOSSalesByIdQuery request, CancellationToken cancellationToken = default)
+    {
+        return await Context.TenantPOSSales.Include(l => l.TenantPOS).ThenInclude(l => l!.Tenant)
+            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+    }
+
 }

@@ -20,17 +20,9 @@
                     </div>
                     <div class="card-body">
                         <input type="hidden" asp-for="@Model.Id" name="Id" />
+                        <input type="hidden" asp-for="@Model.Name" readonly />
+                        <input type="hidden" asp-for="@Model.Code" readonly />
                         <div class="row">
-                            <div class="col-md-6">
-                                <label asp-for="@Model.Name" class="fieldrequired"></label>
-                                <input asp-for="@Model.Name" class="form-control" maxlength="255" readonly />
-                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="@Model.Code" class="fieldrequired"></label>
-                                <input asp-for="@Model.Code" class="form-control" maxlength="255" readonly />
-                                <span asp-validation-for="@Model.Code" class="text-danger"></span>
-                            </div>
                             <div class="col-md-6">
                                 <label asp-for="@Model.RentalTypeId" class="fieldrequired"></label>
                                 <input asp-for="ForeignKeyRentalType" class="form-control" readonly />

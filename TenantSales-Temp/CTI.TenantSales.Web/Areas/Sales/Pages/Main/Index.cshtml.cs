@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CTI.TenantSales.Web.Areas.Sales.Pages.Main
 {
-    [Authorize(Policy = Permission.Sales.View)]
+    [Authorize(Policy = Permission.TenantPOSSales.View)]
     public class IndexModel : BasePageModel<IndexModel>
     {
         private readonly int _cutOffFrom;

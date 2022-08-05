@@ -1,36 +1,17 @@
 @page
+@using Models
 @model IndexModel
 
 @section Styles {
 <partial name="_DataTableStyles" />
 }
 @{
-	ViewData["Title"] = $"Tenant - {Model.Tenant} (Sales List)";
+    ViewData["Title"] = $"Tenant - {Model.Tenant} (Sales List)";
     ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <a class="navbar-brand" href="#">Navbar w/ text</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-    </ul>
-    <span class="navbar-text">
-      Navbar text with an inline element
-    </span>
-  </div>
-</nav>
+
+<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.TenantId, "SalesList"))" />
 <input type="hidden" id="TenantId" value="@Model.TenantId" />
 <div class="row">
     <div class="col-12">
@@ -38,25 +19,25 @@
             <div class="card-body">
                 <table id="tenantPOSSales" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
-                        <tr>							
-							<th>
-								@Localizer["POS Code"]
-							</th>
+                        <tr>
                             <th>
-								@Localizer["Sales Category"]
-							</th>
-							<th>
-								@Localizer["Sales Date"]
-							</th>							
-							<th>
-								@Localizer["Sales Amount"]
-							</th>							
-							<th>
-								@Localizer["Total Net Sales"]
-							</th>							
-							<th>
-								@Localizer["Validation Status"]
-							</th>												
+                                @Localizer["POS Code"]
+                            </th>
+                            <th>
+                                @Localizer["Sales Category"]
+                            </th>
+                            <th>
+                                @Localizer["Sales Date"]
+                            </th>
+                            <th>
+                                @Localizer["Sales Amount"]
+                            </th>
+                            <th>
+                                @Localizer["Total Net Sales"]
+                            </th>
+                            <th>
+                                @Localizer["Validation Status"]
+                            </th>
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -86,20 +67,20 @@
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
-				data: function(d) {
+                data: function(d) {
                      d.tenantId = $("#TenantId").val();
                 },
             },
-			initComplete: function( settings, json ) {
+            initComplete: function( settings, json ) {
                 BindTableRowCollapseEvent();
             },
-			columns: [				
-				{ data: "posCode", name: "TenantPOS.Code", responsivePriority: 1, title: '@Localizer["POS Code"]', searchable: true },
+            columns: [
+                { data: "posCode", name: "TenantPOS.Code", responsivePriority: 1, title: '@Localizer["POS Code"]', searchable: true },
                 { data: "salesCategory", name: "SalesCategory", responsivePriority: 1, title: '@Localizer["Sales Category"]', searchable: false },
-				{ data: "salesDate", name: "SalesDate", responsivePriority: 1, title: '@Localizer["Sales Date"]', searchable: false },				
-				{ data: "salesAmount", name: "SalesAmount", responsivePriority: 1, title: '@Localizer["Sales Amount"]', searchable: false },			
-				{ data: "totalNetSales", name: "TotalNetSales", responsivePriority: 1, title: '@Localizer["Total Net Sales"]', searchable: false },				
-				{ data: "validationStatusBadge", name: "ValidationStatus", responsivePriority: 1, title: '@Localizer["Validation Status"]', searchable: false },                
+                { data: "salesDate", name: "SalesDate", responsivePriority: 1, title: '@Localizer["Sales Date"]', searchable: false },
+                { data: "salesAmount", name: "SalesAmount", responsivePriority: 1, title: '@Localizer["Sales Amount"]', searchable: false },
+                { data: "totalNetSales", name: "TotalNetSales", responsivePriority: 1, title: '@Localizer["Total Net Sales"]', searchable: false },
+                { data: "validationStatusBadge", name: "ValidationStatus", responsivePriority: 1, title: '@Localizer["Validation Status"]', searchable: false },
                 {
                     data: null,
                     searchable: false,
@@ -115,14 +96,14 @@
                         url = '@Url.Page("/TenantPOSSales/Edit", new { area = "TenantSales" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditTenantPOSSales">@Localizer["Edit"]</a>';
                     </text>
-                }   
+                }
                         return button;
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: [     
+            buttons: [
                 'excel', 'pdf', 'pageLength',
             ],
         });
@@ -131,7 +112,7 @@
         $('.btn-table_filter').on('click', function(e) {
             table.ajax.reload(null, false);
         });
-		function BindTableRowCollapseEvent()
+        function BindTableRowCollapseEvent()
         {
             $('#tenantPOSSales tbody').on('click', 'td.dtr-control', function () {
                 $.showAjaxLoaderOnClick([".btnAddTenantPOSSales",".btnEditTenantPOSSales",".btnViewTenantPOSSales",".btnDeleteTenantPOSSales"]);

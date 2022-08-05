@@ -55,7 +55,10 @@ public class TenantSalesProfile : Profile
 
 		CreateMap<TenantPOSSalesState, TenantPOSSalesViewModel>()
 			.ForPath(e => e.ForeignKeyTenantPOS, o => o.MapFrom(s => s.TenantPOS!.Code))
-			.ForPath(e => e.TenantId, o => o.MapFrom(s => s.TenantPOS!.TenantId));
+			.ForPath(e => e.TenantId, o => o.MapFrom(s => s.TenantPOS!.TenantId))
+			.ForPath(e => e.TenantPOSCode, o => o.MapFrom(s => s.TenantPOS!.Code))
+			.ForPath(e => e.TenantCode, o => o.MapFrom(s => s.TenantPOS!.Tenant!.Name))
+			.ForPath(e => e.TenantName, o => o.MapFrom(s => s.TenantPOS!.Tenant!.Code));
 		
 		CreateMap<TenantPOSSalesViewModel, TenantPOSSalesState>();
 

@@ -29,8 +29,7 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("TenantPOS"))
             .Concat(GeneratePermissionsForModule("Revalidate"))
             .Concat(GeneratePermissionsForModule("Reports"))
-            .Concat(GeneratePermissionsForModule("MasterFile"))
-            .Concat(GeneratePermissionsForModule("Sales"))
+            .Concat(GeneratePermissionsForModule("MasterFile"))   
             .Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
@@ -245,9 +244,5 @@ public static class Permission
     public static class MasterFile
     {
         public const string View = "Permission.MasterFile.View";
-    }
-    public static class Sales
-    {
-        public const string View = "Permission.Sales.View";
     }
 }

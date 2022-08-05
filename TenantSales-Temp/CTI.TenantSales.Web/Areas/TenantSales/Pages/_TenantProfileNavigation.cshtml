@@ -1,0 +1,23 @@
+@using Models
+@model TenantProfileNavigationModel
+<nav class="navbar navbar-expand-lg navbar-light" style="margin-bottom:10px;border-radius:5px;border:1px solid #d7d7d7;">
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.View)).Succeeded)
+    {
+        <a href="/TenantSales/Tenant/Edit?Id=@Model.TenantId"
+            class="btn @if(Model.ActiveButton == "TenantProfile"){<text>btn-secondary</text>}else{<text>btn-dark</text>}" style="margin-right:10px;">
+            @Localizer["Profile"]
+        </a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.View)).Succeeded)
+    {
+        <a href="/TenantSales/TenantPOSSales/Index?tenantId=@Model.TenantId" class="btn @if(Model.ActiveButton == "SalesList"){<text>btn-secondary</text>}else{<text>btn-dark</text>}" style="margin-right:10px;">
+            @Localizer["Sales List"]
+        </a>
+    }
+    @if (!string.IsNullOrEmpty(Model.SelecteSalesCategoryDatePosCode))
+    {
+        <a href="#" class="btn @if(Model.ActiveButton == "SalesItem"){<text>btn-secondary</text>}else{<text>btn-dark</text>}">
+            @Model.SelecteSalesCategoryDatePosCode
+        </a>
+    }
+</nav>

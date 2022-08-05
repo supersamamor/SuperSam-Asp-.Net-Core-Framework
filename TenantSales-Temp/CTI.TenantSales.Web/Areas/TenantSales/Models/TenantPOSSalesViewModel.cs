@@ -140,4 +140,7 @@ public record TenantPOSSalesViewModel : BaseViewModel
         return (int)((this.SalesDate - dateFrom).TotalDays) + 1;
     }
     public decimal AutoCalculatedTotalNetSales { get; set; }
+    public string TenantPOSCode { get; init; } = "";
+    public string TenantName { get; init; } = "";
+    public string TenantCode { get; init; } = "";
 }

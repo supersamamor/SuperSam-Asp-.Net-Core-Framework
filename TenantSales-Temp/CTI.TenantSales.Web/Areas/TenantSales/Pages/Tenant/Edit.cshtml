@@ -1,20 +1,18 @@
 @page
+@using Models
 @model EditModel
 @{
-    ViewData["Title"] = Localizer["Edit Tenant"];
+    ViewData["Title"] = $"Tenant - {Model.Tenant.Name} - {Model.Tenant.Code} (Profile)";
     ViewData["ActiveMainPage"] = "Tenant";
     ViewData["Level1"] = "TenantSales";
 }
+<partial name="_TenantProfileNavigation" model="@(new TenantProfileNavigationModel(Model.Tenant.Id, "TenantProfile"))" />
 <form id="tenant-form" method="post">
     <div class="row">
         <div class="col-12">
             <p>
                 <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
-                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.View)).Succeeded)
-                {
-                    <a href="/TenantSales/TenantPOSSales/Index?tenantId=@Model.Tenant.Id" class="btn btn-primary">@Localizer["View Sales"]</a>
-                }
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>                
             </p>
         </div>
     </div>
