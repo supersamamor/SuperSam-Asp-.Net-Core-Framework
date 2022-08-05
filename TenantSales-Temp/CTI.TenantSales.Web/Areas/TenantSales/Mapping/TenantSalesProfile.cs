@@ -24,7 +24,7 @@ namespace CTI.TenantSales.Web.Areas.TenantSales.Mapping;
 
 public class TenantSalesProfile : Profile
 {
-    public TenantSalesProfile()
+	public TenantSalesProfile()
     {
         CreateMap<DatabaseConnectionSetupViewModel, AddDatabaseConnectionSetupCommand>();
 		CreateMap<DatabaseConnectionSetupViewModel, EditDatabaseConnectionSetupCommand>();
@@ -53,7 +53,9 @@ public class TenantSalesProfile : Profile
 		CreateMap<TenantPOSSalesViewModel, AddTenantPOSSalesCommand>();
 		CreateMap<TenantPOSSalesViewModel, EditTenantPOSSalesCommand>();
 
-		CreateMap<TenantPOSSalesState, TenantPOSSalesViewModel>().ForPath(e => e.ForeignKeyTenantPOS, o => o.MapFrom(s => s.TenantPOS!.Id));
+		CreateMap<TenantPOSSalesState, TenantPOSSalesViewModel>()
+			.ForPath(e => e.ForeignKeyTenantPOS, o => o.MapFrom(s => s.TenantPOS!.Id))
+			.ForPath(e => e.TenantId, o => o.MapFrom(s => s.TenantPOS!.TenantId));
 		
 		CreateMap<TenantPOSSalesViewModel, TenantPOSSalesState>();
 

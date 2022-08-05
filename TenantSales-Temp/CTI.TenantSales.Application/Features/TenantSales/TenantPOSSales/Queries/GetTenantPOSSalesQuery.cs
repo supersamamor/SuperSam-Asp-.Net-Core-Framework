@@ -16,8 +16,8 @@ public class GetTenantPOSSalesQueryHandler : BaseQueryHandler<ApplicationContext
     {
     }
 	public override async Task<PagedListResponse<TenantPOSSalesState>> Handle(GetTenantPOSSalesQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<TenantPOSSalesState>().Include(l=>l.TenantPOS)
-		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
+		await Context.Set<TenantPOSSalesState>().Include(l=>l.TenantPOS).ThenInclude(l => l.Tenant)
+		.Where(c=>c.SalesType == Convert.ToInt32(Core.Constants.SalesTypeEnum.Daily)).AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,
 			cancellationToken);	

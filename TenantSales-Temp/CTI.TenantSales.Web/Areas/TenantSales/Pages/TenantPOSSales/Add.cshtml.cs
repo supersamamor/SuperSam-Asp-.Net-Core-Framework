@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CTI.TenantSales.Web.Areas.TenantSales.Pages.TenantPOSSales;
 
-[Authorize(Policy = Permission.TenantPOSSales.Create)]
+//[Authorize(Policy = Permission.TenantPOSSales.Create)]
 public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]

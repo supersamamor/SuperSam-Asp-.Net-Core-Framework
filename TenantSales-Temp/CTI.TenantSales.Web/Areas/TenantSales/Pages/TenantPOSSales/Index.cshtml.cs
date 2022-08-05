@@ -55,9 +55,10 @@ public class IndexModel : BasePageModel<IndexModel>
 				e.ValidationRemarks,
 				AutocalculatedNewAccumulatedTotal = e.AutocalculatedNewAccumulatedTotal.ToString("##,##.00"),
 				AutocalculatedOldAccumulatedTotal = e.AutocalculatedOldAccumulatedTotal.ToString("##,##.00"),
-						
-				
-                e.LastModifiedDate
+				TenantCode = e.TenantPOS?.Tenant?.Code,
+				TenantName = e.TenantPOS?.Tenant?.Name,
+				PosCode = e.TenantPOS?.Code,
+				e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     } 

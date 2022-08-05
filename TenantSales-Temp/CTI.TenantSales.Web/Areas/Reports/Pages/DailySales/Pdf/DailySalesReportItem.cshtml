@@ -3,12 +3,12 @@
 <tr>
     <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
         @if (Model.ValidationStatus == Convert.ToInt32(ValidationStatusEnum.Passed))
-        {          
+        {
             <i class="bi bi-check-lg" title="Passed" style="color:green;">Passed</i>
         }
         else
-        {           
-            <i class="bi bi-check-lg" title="Failed" title="@Model.ValidationRemarks" style="color:red;">Failed</i>
+        {
+            <i class="bi bi-check-lg" title="@Model.ValidationRemarks" style="color:red;">Failed</i>
         }
     </td>
     <td class="TenantSales_Row Align-Left" style="cursor:pointer;">

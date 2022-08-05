@@ -21,9 +21,10 @@
             <div class="col-xs-12 col-sm-6 col-lg-6">
                 <div class="input-group form-group-padding">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Project"]</span>
+                        <span class="input-group-text fieldrequired" id="basic-addon1">@Localizer["Project"]</span>
                     </div>
-                    <select asp-for="@Model.ProjectId" class="input-sm form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectId))"><option value="">- Select Project -</option></select>
+                    <select asp-for="@Model.ProjectId" class="input-sm form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectId))" required><option value="">- Select Project -</option></select>
+                    <span asp-validation-for="@Model.ProjectId" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-3 col-lg-3">
@@ -65,15 +66,18 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">@Localizer["Sales Category"]</span>
                     </div>
-                    <div class="input-sm form-control">
-                    </div>
+                    <select asp-for="@Model.SalesCategoryCode" class="input-sm form-control" asp-items="@(await dropdownService.GetSalesCategoryList(Model.TenantId, Model.SalesCategoryCode))"><option value="">- Select Sales Category -</option></select>
                 </div>
             </div>
         </div>
         <div class="row">
-            <button type="submit" title="@Localizer["Generate"]" class="btn btn-success col-xs-12 col-sm-3 col-lg-3" aria-label="Left Align">
+            <button type="submit" title="@Localizer["Apply"]" class="btn btn-success col-xs-12 col-sm-3 col-lg-3" aria-label="Left Align">
                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span>
-                <span>&nbsp; @Localizer["Generate"]</span>
+                <span>&nbsp; @Localizer["Apply"]</span>
+            </button>
+            <button type="submit" title="@Localizer["Export"]" class="btn btn-success col-xs-12 col-sm-3 col-lg-3" aria-label="Left Align" style="margin-left:10px;">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span>
+                <span>&nbsp; @Localizer["Export"]</span>
             </button>
         </div>
     </div>

@@ -16,6 +16,15 @@
                 <table id="tenantPOSSales" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
+							<th>
+								@Localizer["Tenant Code"]
+							</th>
+							<th>
+								@Localizer["Tenant Name"]
+							</th>
+							<th>
+								@Localizer["POS Code"]
+							</th>
                             <th>
 								@Localizer["Sales Category"]
 							</th>
@@ -124,6 +133,9 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
+				{ data: "tenantCode", name: "TenantPOS.Tenant.Code", responsivePriority: 1, title: '@Localizer["Tenant Code"]', searchable: true },
+				{ data: "tenantName", name: "TenantPOS.Tenant.Name", responsivePriority: 1, title: '@Localizer["Tenant Name"]', searchable: true },
+				{ data: "posCode", name: "TenantPOS.Code", responsivePriority: 1, title: '@Localizer["POS Code"]', searchable: true },
                 { data: "salesCategory", name: "SalesCategory", responsivePriority: 1, title: '@Localizer["Sales Category"]', searchable: false },
 				{ data: "salesDate", name: "SalesDate", responsivePriority: 1, title: '@Localizer["Sales Date"]', searchable: false },
 				{ data: "isAutoCompute", name: "IsAutoCompute", responsivePriority: 1, title: '@Localizer["Is Auto-Compute"]', searchable: false },
@@ -165,35 +177,14 @@
                         url = '@Url.Page("/TenantPOSSales/Edit", new { area = "TenantSales" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditTenantPOSSales">@Localizer["Edit"]</a>';
                     </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/TenantPOSSales/Delete", new { area = "TenantSales" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteTenantPOSSales">@Localizer["Delete"]</a>';
-                    </text>
-                }
-				   
+                }   
                         return button;
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: [
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Create)).Succeeded)
-        {
-            <text>
-                {
-                    text: '@Localizer["Add"]',
-                    action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/TenantPOSSales/Add", new { area = "TenantSales" })';
-                        window.location.href = url;
-                    },
-                    className: 'btn btn-success',
-                },
-            </text>
-        }
+            buttons: [     
                 'excel', 'pdf', 'pageLength',
             ],
         });

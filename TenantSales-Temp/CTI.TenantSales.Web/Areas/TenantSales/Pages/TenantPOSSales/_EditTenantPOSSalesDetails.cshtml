@@ -1,6 +1,6 @@
 @using Models
 @model TenantPOSSalesViewModel
-
+<input type="hidden" asp-for="@Model.TenantId" class="form-control" readonly />
 <div class="col-md-12">
     <label asp-for="@Model.SalesType" class="fieldrequired"></label>
     <input asp-for="@Model.SalesType" class="form-control" readonly />
@@ -17,8 +17,8 @@
     <span asp-validation-for="@Model.SalesDate" class="text-danger"></span>
 </div>
 <div class="col-md-12">
-    <label asp-for="@Model.SalesCategory" class="fieldrequired"></label> 
-    <select asp-for="@Model.SalesCategory" class="form-control" asp-items="@(dropdownService.GetSalesCategoryList(Model.SalesCategory))"><option value="">- Select Sales Category -</option></select>
+    <label asp-for="@Model.SalesCategory" class="fieldrequired"></label>
+    <select asp-for="@Model.SalesCategory" class="form-control" asp-items="@(await dropdownService.GetSalesCategoryList(Model.TenantId, Model.SalesCategory))"><option value="">- Select Sales Category -</option></select>
     <span asp-validation-for="@Model.SalesCategory" class="text-danger"></span>
 </div>
 <div class="col-md-12">

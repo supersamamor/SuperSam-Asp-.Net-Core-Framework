@@ -100,9 +100,14 @@ namespace CTI.TenantSales.Web.Service
                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
             );
         }
-        public SelectList GetSalesCategoryList(string? salesCategoryCode)
+        public async Task<SelectList> GetSalesCategoryList(string? tenantId, string? salesCategoryCode)
         {
-            var salesCategory = _context.SalesCategory.Where(e => e.Code == salesCategoryCode).FirstOrDefault();
+            var query = _context.SalesCategory.Where(e => e.Code == salesCategoryCode).AsNoTracking();
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                query = query.Where(l=>l.TenantId == tenantId);
+            }
+            var salesCategory = await query.FirstOrDefaultAsync();
             if (salesCategory == null)
             {
                 return new SelectList(new List<SelectListItem>(), "Value", "Text");

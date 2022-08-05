@@ -10,6 +10,9 @@
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.Input" />
     </div>
+    <div id="PartialLoaderContainer">
+        <partial name="_TenantSalesList" model="Model" />
+    </div>
      <a href="../@Model.Input.FilePath" target="_blank" style="display:none;" id="btnDownload">@Model.Input.FilePath</a>
 </form>
 
@@ -25,7 +28,7 @@
         }
         function InitializeForm()
         {
-            $('#ProjectId, #LevelId, #Year').on( 'change', function () {
+            $('#ProjectId, #LevelId, #TenantId').on( 'change', function () {
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#dailysales-form', InitializeForm);
             });
 
@@ -64,6 +67,18 @@
                 return this;
             };
             $("#TenantId").tenantSelect();
+
+             $.fn.salesCategorySelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/SalesCategory/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&tenantId=' + $('#TenantId').val(),
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#SalesCategoryCode").salesCategorySelect();
         }
         InitializeForm();
     });

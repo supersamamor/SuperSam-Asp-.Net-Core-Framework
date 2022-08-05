@@ -1,0 +1,354 @@
+﻿@model CTI.TenantSales.Web.Areas.Sales.Pages.Main.IndexModel
+@{
+}
+<style>
+    .TenantSales_TableHeader {
+        text-align: center;
+    }
+
+    .Align-Right {
+        text-align: right;
+    }
+
+    .Align-Left {
+        text-align: left;
+    }
+
+    .Align-Center {
+        text-align: center;
+    }
+</style>
+
+@foreach (var tenantItem in Model.TenantSalesList)
+{
+    if (tenantItem.TenantPOSList != null && (tenantItem.TenantPOSList.SelectMany(l => l.TenantPOSSalesList).Where(l => l.ValidationStatus == Convert.ToInt32(CTI.TenantSales.Core.Constants.ValidationStatusEnum.Passed)).Count() != tenantItem.TenantPOSList.SelectMany(l => l.TenantPOSSalesList).Count()
+                           || tenantItem.TenantPOSList.SelectMany(l => l.TenantPOSSalesList).Where(l => l.TotalNetSales == 0).Count() != tenantItem.TenantPOSList.SelectMany(l => l.TenantPOSSalesList).Count()))
+    {
+        if (tenantItem?.TenantPOSList != null)
+        {
+            foreach (var posItem in tenantItem!.TenantPOSList)
+            {
+                <div class="box-body no-padding table-responsive" style="min-height:200px;margin-bottom:0px;border:1px solid #ddd;">
+                    <div>
+                        <div class="form-group">
+                            <hr>
+                            <div class="box-body no-padding" id="TenantSalesListBox">
+                                <h4 class="col-lg-12" style="border-bottom:1px solid #ddd;padding-bottom:10px;" id="TenantSalesLabel">
+                                    @tenantItem.Name  - @tenantItem.Code - @posItem?.TenantPOSSalesList?.FirstOrDefault()?.SalesCategory
+                                </h4>
+                                <table class="table table-hover tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th class="TenantSales_TableHeader"></th>
+                                            <th class="TenantSales_TableHeader">@Localizer["Day"]</th>
+                                            <th class="TenantSales_TableHeader">@Localizer["Sales Date"]</th>
+                                            <th class="TenantSales_TableHeader">@Localizer["Pos Number"]</th>
+                                            <th class="TenantSales_TableHeader">@Localizer["Sales Category"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["Total Sales"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["Autocalculated Total Net Sales"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:170px;">@Localizer["Old Accumulated Total"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:185px;">@Localizer["New Accumulated Total"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:170px;">@Localizer["Taxable Sales Amount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:200px;">@Localizer["Non Taxable Sales Amount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Senior Discount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Promo Discount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Other Discount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Adjustment Amount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Refund Amount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Void Amount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Control Number"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Count Of Sales Transaction"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Count Of All Transaction"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Net Of Vat Sales"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:100px;">@Localizer["Tax Amount"]</th>
+                                            <th class="TenantSales_TableHeader" style="min-width:130px;">@Localizer["Service Charge"]</th>
+                                        </tr>
+                                    </thead>
+                                    @if (posItem?.TenantPOSSalesList != null)
+                                    {
+                                        foreach (var salesItem in posItem!.TenantPOSSalesList.OrderBy(l => l.SalesDate))
+                                        {
+                                            <tbody id="TenantSalesTableContent">
+                                                <tr>
+                                                    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+                                                        @if (salesItem.ValidationStatus == Convert.ToInt32(CTI.TenantSales.Core.Constants.ValidationStatusEnum.Passed))
+                                                        {
+                                                            <a href="#" title="Passed" style="color:green;">
+                                                                <i class="fas fa-check"></i>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" title="@salesItem.ValidationRemarks" style="color:red;">
+                                                                <i class="fas fa-times"></i>
+                                                            </a>
+                                                        }
+                                                    </td>
+                                                    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+                                                        @salesItem.SetDayNumber(Model.Input.DateFrom)
+                                                    </td>
+                                                    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+                                                        @salesItem.SalesDate.ToString("MM/dd/yyyy")
+                                                    </td>
+                                                    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+                                                        @Html.DisplayFor(modelItem => posItem.Code)
+                                                    </td>
+                                                    <td class="TenantSales_Row Align-Left" style="cursor:pointer;">
+                                                        @Html.DisplayFor(modelItem => salesItem.SalesCategory)
+                                                    </td>
+                                                    @if (salesItem.TotalNetSales == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+                                                                @salesItem.TotalNetSales.ToString("##,##.00")
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    @if (salesItem.AutoCalculatedTotalNetSales == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+                                                                @salesItem.AutoCalculatedTotalNetSales.ToString("##,##.00")
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    @if (salesItem.OldAccumulatedTotal == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">     @salesItem.OldAccumulatedTotal.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.NewAccumulatedTotal == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;"> @salesItem.NewAccumulatedTotal.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.TaxableSalesAmount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.TaxableSalesAmount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.NonTaxableSalesAmount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">   @salesItem.NonTaxableSalesAmount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.SeniorCitizenDiscount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.SeniorCitizenDiscount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.PromoDiscount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.PromoDiscount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+                                                    @if (salesItem.OtherDiscount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">   @salesItem.OtherDiscount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+                                                    @if (salesItem.AdjustmentAmount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.AdjustmentAmount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+                                                    @if (salesItem.RefundDiscount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.RefundDiscount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.VoidAmount == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.VoidAmount.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+                                                    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">
+                                                        @Html.DisplayFor(modelItem => salesItem.ControlNumber)
+                                                    </td>
+
+                                                    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.NoOfSalesTransactions.ToString("0.##")</td>
+
+                                                    <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.NoOfTransactions.ToString("0.##")</td>
+
+                                                    @if (salesItem.TotalNetSales == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">    @salesItem.TotalNetSales.ToString("##,##.00")</td>
+
+                                                        </text>
+                                                    }
+
+
+                                                    @if (salesItem.TotalTax == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.TotalTax.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+
+                                                    @if (salesItem.TotalServiceCharge == 0)
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Center" style="cursor:pointer;">
+                                                            -
+                                                        </td>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>
+                                                        <td class="TenantSales_Row Align-Right" style="cursor:pointer;">  @salesItem.TotalServiceCharge.ToString("##,##.00")</td>
+                                                        </text>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+    }
+}

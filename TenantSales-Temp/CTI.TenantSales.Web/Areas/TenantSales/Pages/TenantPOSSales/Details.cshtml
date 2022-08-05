@@ -15,19 +15,11 @@
 <div class="row">
     <div class="col-12">
         <p>
-            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Create)).Succeeded)
-            {
-                <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
-            }
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>        
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Edit)).Succeeded)
             {
                 <a asp-page="Edit" asp-route-id="@Model.TenantPOSSales.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TenantPOSSales.Delete)).Succeeded)
-            {
-                <a asp-page="Delete" asp-route-id="@Model.TenantPOSSales.Id" class="btn btn-danger">@Localizer["Delete"]</a>
-            }
+            }         
         </p>
     </div>
 </div>

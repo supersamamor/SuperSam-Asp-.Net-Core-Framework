@@ -40,9 +40,11 @@ public class IndexModel : BasePageModel<IndexModel>
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     } 
 	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request, string? tenantId)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetSalesCategoryQuery>(nameof(SalesCategoryState.Id)));
+        var query = request.ToQuery<GetSalesCategoryQuery>(nameof(SalesCategoryState.Name));
+        query.TenantId = tenantId;
+        var result = await Mediatr.Send(query);
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Code, Text = e.Code }));
     }
 }

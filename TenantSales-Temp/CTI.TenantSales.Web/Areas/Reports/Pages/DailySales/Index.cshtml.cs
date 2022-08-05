@@ -37,13 +37,13 @@ namespace CTI.TenantSales.Web.Areas.Reports.Pages.DailySales
             DateTime dateTo = new(reportDate.Year, reportDate.Month, _cutOffTo);
             if (Input.OutputType == (int)ReportOutputTypeEnum.Excel)
             {
-                var tenantSalesData = Mapper.Map<IList<TenantState>, IList<TenantDailySales>>(await Mediatr.Send(new GetDailySalesReportQuery(dateFrom, dateTo, Input.TenantId, Input.LevelId, Input.ProjectId)));
+                var tenantSalesData = Mapper.Map<IList<TenantState>, IList<TenantDailySales>>(await Mediatr.Send(new GetSalesReportQuery(dateFrom, dateTo, Input.ProjectId, Input.LevelId, Input.TenantId)));
                 Input.FilePath = ExportDailySalesReportHelper.Export(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
                     _uploadPath + "\\" + WebConstants.ReportFolder, dateFrom, dateTo, tenantSalesData);
             }
             else
             {
-                var tenantSalesData = Mapper.Map<IList<TenantState>, IList<PdfGenerator.Models.TenantDailySales>>(await Mediatr.Send(new GetDailySalesReportQuery(dateFrom, dateTo, Input.TenantId, Input.LevelId, Input.ProjectId)));
+                var tenantSalesData = Mapper.Map<IList<TenantState>, IList<PdfGenerator.Models.TenantDailySales>>(await Mediatr.Send(new GetSalesReportQuery(dateFrom, dateTo, Input.ProjectId, Input.LevelId, Input.TenantId)));
                 Input.FilePath = await DailySalesReportToPdf.GeneratePdf(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
                    _uploadPath + "\\" + WebConstants.ReportFolder, new PdfGenerator.Models.DailySalesModel(dateFrom, dateTo, tenantSalesData), PageContext);
             }
