@@ -1,5 +1,7 @@
 using CTI.TenantSales.Application.Features.TenantSales.TenantPOSSales.Queries;
 using CTI.TenantSales.Core.TenantSales;
+using CTI.TenantSales.ExcelProcessor.Helper;
+using CTI.TenantSales.ExcelProcessor.Models;
 using CTI.TenantSales.Web.Areas.Sales.Models;
 using CTI.TenantSales.Web.Areas.TenantSales.Models;
 using CTI.TenantSales.Web.Models;
@@ -14,10 +16,12 @@ namespace CTI.TenantSales.Web.Areas.Sales.Pages.Main
     {
         private readonly int _cutOffFrom;
         private readonly int _cutOffTo;
+        private readonly string _uploadPath;
         public IndexModel(IConfiguration configuration)
         {
             _cutOffFrom = configuration.GetValue<int>("CutOff:From");
             _cutOffTo = configuration.GetValue<int>("CutOff:To");
+            _uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
         }
         [BindProperty]
         public TenantSalesModel Input { get; set; } = new();
@@ -43,10 +47,11 @@ namespace CTI.TenantSales.Web.Areas.Sales.Pages.Main
             ModelState.Clear();
             var tenantSales = await Mediatr.Send(new GetSalesReportQuery(Input.DateFrom, Input.DateTo, Input.ProjectId, Input.LevelId, Input.TenantId, Input.SalesCategoryCode));
             TenantSalesList = Mapper.Map<IList<TenantState>, IList<TenantViewModel>>(tenantSales);
-            if (handler == "Extract")
-            {
-                Input.FilePath = "";
-            }        
+            if (handler == "Export")
+            {        
+                Input.FilePath = ExportSalesToCSVReportSummaryForIFCAFileHelper.Export(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
+                   _uploadPath + "\\" + WebConstants.ReportFolder, Input.DateFrom, Input.DateTo, tenantSales);              
+            }
             return Page();
         }
     }

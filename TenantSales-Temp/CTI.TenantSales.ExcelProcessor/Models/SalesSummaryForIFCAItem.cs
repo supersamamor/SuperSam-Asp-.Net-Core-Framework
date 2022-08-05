@@ -8,6 +8,17 @@ namespace CTI.TenantSales.ExcelProcessor.Models
 {
     public class SalesSummaryForIFCAItem
     {
+        public SalesSummaryForIFCAItem(string entityCode, string projectCode, string tenantCode, DateTime salesDate, string salesCategory,
+                            string tenantName, decimal totalMonthlySales)
+        {
+            this.EntityCode = entityCode;
+            this.ProjectCode = projectCode;
+            this.TenantCode = tenantCode;
+            this.SalesDate = salesDate;
+            this.SalesCategory = salesCategory;
+            this.TenantName = tenantName;
+            this.TotalMonthlySales = totalMonthlySales;
+        }
         public string TenantCode { get; set; } = "";
         public string ProjectCode { get; set; } = "";
         public string EntityCode { get; set; } = "";

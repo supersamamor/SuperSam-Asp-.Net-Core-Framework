@@ -237,7 +237,7 @@
                                     </a>
                                 </li>
                             }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Reports.SalesGrowth)).Succeeded)
+                            @*@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Reports.SalesGrowth)).Succeeded)
                             {
                                 <li class="nav-item">
                                     <a href="/Reports/SalesGrowth" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "SalesGrowth")">
@@ -245,7 +245,7 @@
                                         <p>@Localizer["Sales Growth Report"]</p>
                                     </a>
                                 </li>
-                            }
+                            }*@
                         </ul>
                     </li>
                 }

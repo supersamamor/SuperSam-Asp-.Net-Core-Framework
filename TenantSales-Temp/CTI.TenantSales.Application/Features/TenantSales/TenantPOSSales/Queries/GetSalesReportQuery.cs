@@ -18,6 +18,7 @@ public class GetDailySalesReportQueryHandler : IRequestHandler<GetSalesReportQue
     {
         var query = _context.Tenant
             .Include(l => l.Project)
+            .ThenInclude(l => l!.Company).ThenInclude(l => l!.DatabaseConnectionSetup)
             .Include(l => l.Level)
             .IncludeFilter(a =>
                 a.TenantPOSList!.SelectMany(b => b.TenantPOSSalesList!
