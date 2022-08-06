@@ -6,6 +6,6 @@ namespace CTI.TenantSales.Scheduler.Models
     {
         public string TenantCode { get; set; } = "";
         public string POSCode { get; set; } = "";
-        public IList<TenantPOSSalesState> SalesList { get; set; } = new List<TenantPOSSalesState>();
+        public IList<SalesItem> SalesList { get; set; } = new List<SalesItem>();
     }
 }

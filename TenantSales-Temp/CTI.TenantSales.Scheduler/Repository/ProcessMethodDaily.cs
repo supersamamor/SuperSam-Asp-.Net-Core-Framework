@@ -7,7 +7,7 @@ namespace CTI.TenantSales.Scheduler.Repository
         public POSSales ProcessSalesFile(StreamReader _fileStream, string fileName)
         {
             POSSales posSales = new();
-            TenantPOSSalesState _tenantPOSSales = new() { };
+            SalesItem _tenantPOSSales = new() { };
             _tenantPOSSales.SalesAmount = 0;
             _tenantPOSSales.IsAutoCompute = false;
             _tenantPOSSales.FileName = fileName;

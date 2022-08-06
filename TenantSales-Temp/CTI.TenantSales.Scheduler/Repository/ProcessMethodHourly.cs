@@ -8,7 +8,7 @@ namespace CTI.TenantSales.Scheduler.Repository
         public POSSales ProcessSalesFile(StreamReader _fileStream, string fileName)
         {
             POSSales posSales = new();
-            TenantPOSSalesState _tenantPOSSales = new();
+            SalesItem _tenantPOSSales = new();
             decimal validateSalesAmount = 0;
             decimal validateNoOfSalesTransactions = 0;
             DateTime? salesDate = null;
@@ -50,7 +50,7 @@ namespace CTI.TenantSales.Scheduler.Repository
                         break;
                     case 4:
                         //New Instance
-                        _tenantPOSSales = new TenantPOSSalesState { };
+                        _tenantPOSSales = new SalesItem { };
                         _tenantPOSSales.HourCode = Convert.ToInt32(_string[2..]);
                         break;
                     case 5:

@@ -1,9 +1,12 @@
+using AutoMapper;
+using CTI.TenantSales.Application.Features.TenantSales.TenantPOSSales.Commands;
 using CTI.TenantSales.Core.Constants;
 using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.Infrastructure.Data;
 using CTI.TenantSales.Scheduler.Helper;
 using CTI.TenantSales.Scheduler.Models;
 using CTI.TenantSales.Scheduler.Repository;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -22,8 +25,10 @@ namespace CTI.TenantSales.Scheduler.Jobs
         private readonly bool _disableHourly;
         private readonly int _cutOffFrom;
         private readonly int _cutOffTo;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         public SalesProcessingJob(ApplicationContext context, ILogger<ApprovalNotificationJob> logger, SalesFileHelper salesFileHelper,
-            IConfiguration configuration)
+            IConfiguration configuration, IMapper mapper, IMediator mediator)
         {
             _context = context;
             _logger = logger;
@@ -34,6 +39,8 @@ namespace CTI.TenantSales.Scheduler.Jobs
             _disableHourly = configuration.GetValue<bool>("DisableHourly");
             _cutOffFrom = configuration.GetValue<int>("CutOff:From");
             _cutOffTo = configuration.GetValue<int>("CutOff:To");
+            _mapper = mapper;
+            _mediator = mediator;
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -167,7 +174,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                                         //If no existing Sales for the end of the day, insert a sale with Zero, Null and Default values..
                                         if (salesItem == null)
                                         {
-                                            TenantPOSSalesState saleItem = new()
+                                            SalesItem saleItem = new()
                                             {
                                                 SalesType = salesType,
                                                 HourCode = 0,
@@ -207,12 +214,13 @@ namespace CTI.TenantSales.Scheduler.Jobs
                     }
                     //Get All Failed Day Sales Per Projects order by date for revalidation
                     var failedSalesList = await GetPOSDailySales(projectItem.Id, dateFrom, dateTo, tenantId, ValidationStatusEnum.Failed);
+                    var mappedFailedSalesList = _mapper.Map<IList<SalesItem>>(failedSalesList);                   
                     if (failedSalesList != null)
                     {
-                        foreach (var failedSalesItem in failedSalesList)
+                        foreach (var failedSalesItem in mappedFailedSalesList)
                         {
                             POSSales salesToValidate = new();
-                            salesToValidate.SalesList = new List<TenantPOSSalesState>
+                            salesToValidate.SalesList = new List<SalesItem>
                             {
                                 failedSalesItem
                             };
@@ -298,10 +306,9 @@ namespace CTI.TenantSales.Scheduler.Jobs
         private async Task SavePosSales(POSSales posSales)
         {
             foreach (var salesItem in posSales.SalesList)
-            {
-                await _context.AddAsync(salesItem);
-            }
-            await _context.SaveChangesAsync();
+            {              
+                await _mediator.Send(_mapper.Map<AddTenantPOSSalesCommand>(salesItem));
+            }           
         }
         private async Task UpdateFailedPOSSales(POSSales posSales)
         {
@@ -311,11 +318,9 @@ namespace CTI.TenantSales.Scheduler.Jobs
                 var res = await GetPOSSalesId(item!.TenantPOSId, item.SalesType, item.SalesDate, item!.SalesCategory!);
                 if (res != null)
                 {
-                    res.UpdateFrom(item);
-                    _context.Entry(res).State = EntityState.Modified;
+                   await _mediator.Send(_mapper.Map<EditFailedTenantPOSSalesCommand>(item));                  
                 }
             }
-            await _context.SaveChangesAsync();
         }
     }
 }

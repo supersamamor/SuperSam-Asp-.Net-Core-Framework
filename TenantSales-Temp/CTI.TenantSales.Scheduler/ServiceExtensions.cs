@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Job;
+using System.Reflection;
+
 namespace CTI.TenantSales.Scheduler
 {
     public static class ServiceExtensions
@@ -21,9 +23,11 @@ namespace CTI.TenantSales.Scheduler
             {
                 options.WaitForJobsToComplete = true;
             });
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<FileScanJob>();
             services.AddTransient<ApprovalNotificationJob>();
-            services.AddTransient<SalesFileHelper>();            
+            services.AddTransient<SalesFileHelper>();
+            services.AddTransient<SalesProcessingJob>();
         }
     }
 }
