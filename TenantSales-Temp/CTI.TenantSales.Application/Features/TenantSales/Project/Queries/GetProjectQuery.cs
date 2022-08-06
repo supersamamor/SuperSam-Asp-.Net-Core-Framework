@@ -19,7 +19,7 @@ public class GetProjectQueryHandler : BaseQueryHandler<ApplicationContext, Proje
     {
     }
     public override async Task<PagedListResponse<ProjectState>> Handle(GetProjectQuery request, CancellationToken cancellationToken = default) =>
-        await Context.Set<ProjectState>().Include(l => l.Company).ThenInclude(l => l.DatabaseConnectionSetup)
+        await Context.Set<ProjectState>().Include(l => l.Company).ThenInclude(l => l!.DatabaseConnectionSetup)
         .Where(l => (request.IsActiveOnly == true && l.IsDisabled == false) || (!request.IsActiveOnly)).AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
             request.SortColumn, request.SortOrder,
             request.PageNumber, request.PageSize,

@@ -50,7 +50,7 @@ namespace CTI.TenantSales.Web.Service
         }
         public SelectList GetProjectList(string? id)
         {
-            var project = _context.Project.Include(l=>l.Company).ThenInclude(l => l.DatabaseConnectionSetup).Where(e => e.Id == id).FirstOrDefault();
+            var project = _context.Project.Include(l=>l.Company).ThenInclude(l => l!.DatabaseConnectionSetup).Where(e => e.Id == id).FirstOrDefault();
             if (project == null)
             {
                 return new SelectList(new List<SelectListItem>(), "Value", "Text");

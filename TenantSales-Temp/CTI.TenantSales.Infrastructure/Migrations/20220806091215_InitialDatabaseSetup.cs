@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CTI.TenantSales.Infrastructure.Migrations
 {
-    public partial class InitialDatabaseStructure : Migration
+    public partial class InitialDatabaseSetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -418,6 +418,8 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                     BranchContact = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     HeadOfficeContact = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ITSupportContact = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Area = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -427,6 +429,11 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tenant", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tenant_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tenant_Level_LevelId",
                         column: x => x.LevelId,
@@ -444,6 +451,118 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                         principalTable: "RentalType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReportSalesGrowthPerformance",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Jan = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Feb = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Mar = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Apr = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    May = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Jun = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Jul = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Aug = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Sep = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Oct = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Nov = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Dec = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    JanCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    FebCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    MarCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    AprCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    MayCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    JunCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    JulCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    AugCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    SeptCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    OctCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    NovCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    DecCAMCAirConEffRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReportSalesGrowthPerformance", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReportSalesGrowthPerformance_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReportSalesGrowthPerformanceMonth",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Month = table.Column<int>(type: "int", nullable: false),
+                    PrevYearYTD = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    CurrentYearYTD = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    PercentVariance = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    PercRentAirConCAMCOverCurrentMonthSales = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    PercRentAirConCAMCOverCurrentYTDSales = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Jan = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Feb = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Mar = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Apr = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    May = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Jun = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Jul = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Aug = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Sep = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Oct = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Nov = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Dec = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReportSalesGrowthPerformanceMonth", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReportSalesGrowthPerformanceMonth_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Revalidate",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SalesDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ProcessingRemarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Revalidate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Revalidate_Project_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Project",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Revalidate_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -467,6 +586,31 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                     table.PrimaryKey("PK_SalesCategory", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SalesCategory_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenantARDetailsMonthYear",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Month = table.Column<int>(type: "int", nullable: false),
+                    CAMCRate = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    AirConRate = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    SalesAmount = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    MBaseAmount = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    EffectiveRent = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantARDetailsMonthYear", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenantARDetailsMonthYear_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "Id",
@@ -518,6 +662,28 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                     table.PrimaryKey("PK_TenantLot", x => x.Id);
                     table.ForeignKey(
                         name: "FK_TenantLot_Tenant_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenant",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenantLotMonthYear",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Month = table.Column<int>(type: "int", nullable: false),
+                    LotNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Area = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    TenantId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantLotMonthYear", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenantLotMonthYear_Tenant_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenant",
                         principalColumn: "Id",
@@ -583,6 +749,7 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                     ValidationRemarks = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     AutocalculatedNewAccumulatedTotal = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     AutocalculatedOldAccumulatedTotal = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    AutoCalculatedTotalNetSales = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -803,6 +970,36 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReportSalesGrowthPerformance_TenantId",
+                table: "ReportSalesGrowthPerformance",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReportSalesGrowthPerformanceMonth_TenantId",
+                table: "ReportSalesGrowthPerformanceMonth",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Revalidate_Entity",
+                table: "Revalidate",
+                column: "Entity");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Revalidate_LastModifiedDate",
+                table: "Revalidate",
+                column: "LastModifiedDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Revalidate_ProjectId",
+                table: "Revalidate",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Revalidate_TenantId",
+                table: "Revalidate",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SalesCategory_Entity",
                 table: "SalesCategory",
                 column: "Entity");
@@ -816,6 +1013,11 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 name: "IX_SalesCategory_TenantId",
                 table: "SalesCategory",
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tenant_CategoryId",
+                table: "Tenant",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tenant_Entity",
@@ -841,6 +1043,11 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 name: "IX_Tenant_RentalTypeId",
                 table: "Tenant",
                 column: "RentalTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenantARDetailsMonthYear_TenantId",
+                table: "TenantARDetailsMonthYear",
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TenantContact_Entity",
@@ -870,6 +1077,11 @@ namespace CTI.TenantSales.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TenantLot_TenantId",
                 table: "TenantLot",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenantLotMonthYear_TenantId",
+                table: "TenantLotMonthYear",
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
@@ -937,13 +1149,22 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 name: "AuditLogs");
 
             migrationBuilder.DropTable(
-                name: "Category");
-
-            migrationBuilder.DropTable(
                 name: "ProjectBusinessUnit");
 
             migrationBuilder.DropTable(
+                name: "ReportSalesGrowthPerformance");
+
+            migrationBuilder.DropTable(
+                name: "ReportSalesGrowthPerformanceMonth");
+
+            migrationBuilder.DropTable(
+                name: "Revalidate");
+
+            migrationBuilder.DropTable(
                 name: "SalesCategory");
+
+            migrationBuilder.DropTable(
+                name: "TenantARDetailsMonthYear");
 
             migrationBuilder.DropTable(
                 name: "TenantContact");
@@ -952,13 +1173,13 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 name: "TenantLot");
 
             migrationBuilder.DropTable(
+                name: "TenantLotMonthYear");
+
+            migrationBuilder.DropTable(
                 name: "TenantPOSSales");
 
             migrationBuilder.DropTable(
                 name: "ApprovalRecord");
-
-            migrationBuilder.DropTable(
-                name: "Classification");
 
             migrationBuilder.DropTable(
                 name: "BusinessUnit");
@@ -970,10 +1191,10 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 name: "ApproverSetup");
 
             migrationBuilder.DropTable(
-                name: "Theme");
+                name: "Tenant");
 
             migrationBuilder.DropTable(
-                name: "Tenant");
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Level");
@@ -982,7 +1203,13 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                 name: "RentalType");
 
             migrationBuilder.DropTable(
+                name: "Classification");
+
+            migrationBuilder.DropTable(
                 name: "Project");
+
+            migrationBuilder.DropTable(
+                name: "Theme");
 
             migrationBuilder.DropTable(
                 name: "Company");

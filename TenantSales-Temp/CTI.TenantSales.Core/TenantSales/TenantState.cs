@@ -19,11 +19,12 @@ public record TenantState : BaseEntity
 	public string? BranchContact { get; init; }
 	public string? HeadOfficeContact { get; init; }
 	public string? ITSupportContact { get; init; }
-	
+	public string? CategoryId { get; init; }
+	public decimal Area { get; init; }	
 	public RentalTypeState? RentalType { get; init; }
 	public ProjectState? Project { get; init; }
 	public LevelState? Level { get; init; }
-	
+	public CategoryState? Category { get; init; }
 	public IList<TenantLotState>? TenantLotList { get; set; }
 	public IList<SalesCategoryState>? SalesCategoryList { get; set; }
 	public IList<TenantContactState>? TenantContactList { get; set; }

@@ -1,5 +1,6 @@
 using CTI.Common.Data;
 using CTI.Common.Identity.Abstractions;
+using CTI.TenantSales.Core.Reports;
 using CTI.TenantSales.Core.TenantSales;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,7 +38,11 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 	public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
 	public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
 	public DbSet<ApprovalRecordState> ApprovalRecord { get; set; } = default!;
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	public DbSet<ReportSalesGrowthPerformance> ReportSalesGrowthPerformance { get; set; } = default!;
+	public DbSet<ReportSalesGrowthPerformanceMonth> ReportSalesGrowthPerformanceMonth { get; set; } = default!;
+	public DbSet<TenantARDetailsMonthYear> TenantARDetailsMonthYear { get; set; } = default!;
+	public DbSet<TenantLotMonthYear> TenantLotMonthYear { get; set; } = default!;
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
                                                    .SelectMany(t => t.GetProperties())
@@ -185,6 +190,15 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverSetupState>().HasIndex(e => new { e.TableName, e.Entity }).IsUnique();
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId }).IsUnique();
-        base.OnModelCreating(modelBuilder);
+
+		modelBuilder.Entity<ReportSalesGrowthPerformance>().Property(f => f.Id).ValueGeneratedOnAdd();
+		modelBuilder.Entity<ReportSalesGrowthPerformance>().HasKey(f => f.Id);
+		modelBuilder.Entity<ReportSalesGrowthPerformanceMonth>().Property(f => f.Id).ValueGeneratedOnAdd();
+		modelBuilder.Entity<ReportSalesGrowthPerformanceMonth>().HasKey(f => f.Id);
+		modelBuilder.Entity<TenantARDetailsMonthYear>().Property(f => f.Id).ValueGeneratedOnAdd();
+		modelBuilder.Entity<TenantARDetailsMonthYear>().HasKey(f => f.Id);
+		modelBuilder.Entity<TenantLotMonthYear>().Property(f => f.Id).ValueGeneratedOnAdd();
+		modelBuilder.Entity<TenantLotMonthYear>().HasKey(f => f.Id);
+		base.OnModelCreating(modelBuilder);
     }
 }

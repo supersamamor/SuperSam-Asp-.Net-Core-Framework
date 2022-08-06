@@ -65,6 +65,240 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                     b.ToTable("AuditLogs");
                 });
 
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.ReportSalesGrowthPerformance", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Apr")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("AprCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Aug")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("AugCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Dec")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("DecCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Feb")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("FebCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Jan")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("JanCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Jul")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("JulCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Jun")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("JunCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Mar")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("MarCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("May")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("MayCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Nov")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("NovCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Oct")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("OctCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Sep")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("SeptCAMCAirConEffRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ReportSalesGrowthPerformance");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.ReportSalesGrowthPerformanceMonth", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Apr")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Aug")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("CurrentYearYTD")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Dec")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Feb")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Jan")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Jul")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Jun")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Mar")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("May")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Nov")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Oct")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("PercRentAirConCAMCOverCurrentMonthSales")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("PercRentAirConCAMCOverCurrentYTDSales")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("PercentVariance")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("PrevYearYTD")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("Sep")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ReportSalesGrowthPerformanceMonth");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.TenantARDetailsMonthYear", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("AirConRate")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("CAMCRate")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("EffectiveRent")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("MBaseAmount")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SalesAmount")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TenantARDetailsMonthYear");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.TenantLotMonthYear", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Area")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<string>("LotNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TenantLotMonthYear");
+                });
+
             modelBuilder.Entity("CTI.TenantSales.Core.TenantSales.ApprovalRecordState", b =>
                 {
                     b.Property<string>("Id")
@@ -1171,9 +1405,15 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("Area")
+                        .HasColumnType("decimal(18,6)");
+
                     b.Property<string>("BranchContact")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -1241,6 +1481,8 @@ namespace CTI.TenantSales.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("Entity");
 
                     b.HasIndex("LastModifiedDate");
@@ -1297,6 +1539,50 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Theme");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.ReportSalesGrowthPerformance", b =>
+                {
+                    b.HasOne("CTI.TenantSales.Core.TenantSales.TenantState", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.ReportSalesGrowthPerformanceMonth", b =>
+                {
+                    b.HasOne("CTI.TenantSales.Core.TenantSales.TenantState", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.TenantARDetailsMonthYear", b =>
+                {
+                    b.HasOne("CTI.TenantSales.Core.TenantSales.TenantState", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("CTI.TenantSales.Core.Reports.TenantLotMonthYear", b =>
+                {
+                    b.HasOne("CTI.TenantSales.Core.TenantSales.TenantState", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("CTI.TenantSales.Core.TenantSales.ApprovalRecordState", b =>
@@ -1480,6 +1766,10 @@ namespace CTI.TenantSales.Infrastructure.Migrations
 
             modelBuilder.Entity("CTI.TenantSales.Core.TenantSales.TenantState", b =>
                 {
+                    b.HasOne("CTI.TenantSales.Core.TenantSales.CategoryState", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("CTI.TenantSales.Core.TenantSales.LevelState", "Level")
                         .WithMany("TenantList")
                         .HasForeignKey("LevelId");
@@ -1495,6 +1785,8 @@ namespace CTI.TenantSales.Infrastructure.Migrations
                         .HasForeignKey("RentalTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Level");
 
