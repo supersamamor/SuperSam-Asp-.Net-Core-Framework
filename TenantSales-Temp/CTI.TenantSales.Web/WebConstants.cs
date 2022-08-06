@@ -5,4 +5,9 @@ namespace CTI.TenantSales.Web
         public const string UploadFilesPath = "UploadFilesPath";
         public const string ReportFolder = "Report";
     }
+    public static class Roles
+    {
+        public const string Admin = "Admin";   
+        public const string User = "User";
+    }
 }

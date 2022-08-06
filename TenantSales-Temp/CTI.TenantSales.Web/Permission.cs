@@ -46,6 +46,10 @@ public static class Permission
         {
             permissions.Add($"Permission.{module}.PendingApprovals");
         }
+        if (module == "TenantPOSSales")
+        {
+            permissions.Add($"Permission.{module}.Export");
+        }
         if (module == "Reports")
         {
             permissions.Add($"Permission.{module}.DailySales");
@@ -161,7 +165,8 @@ public static class Permission
     public static class TenantPOSSales
     {
         public const string View = "Permission.TenantPOSSales.View";   
-        public const string Edit = "Permission.TenantPOSSales.Edit";    
+        public const string Edit = "Permission.TenantPOSSales.Edit";
+        public const string Export = "Permission.TenantPOSSales.Export";        
     }
     public static class Classification
     {
