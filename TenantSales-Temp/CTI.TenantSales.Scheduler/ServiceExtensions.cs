@@ -28,6 +28,8 @@ namespace CTI.TenantSales.Scheduler
             services.AddTransient<ApprovalNotificationJob>();
             services.AddTransient<SalesFileHelper>();
             services.AddTransient<SalesProcessingJob>();
+            services.AddTransient<MasterfileSynchronizationJob>();
+            services.AddTransient<ReportDataSynchronizationJob>();
         }
     }
 }

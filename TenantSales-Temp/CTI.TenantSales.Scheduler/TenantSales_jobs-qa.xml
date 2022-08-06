@@ -44,7 +44,47 @@
 				<description>Run Sales Processing Notification Job</description>
 				<job-name>Sales Processing Notification Job</job-name>
 				<job-group>Sales Processing Job</job-group>
-				<cron-expression>0 0 4 * * ?</cron-expression>
+				<cron-expression>0 0 0/4 * * ?</cron-expression>
+			</cron>
+		</trigger>
+		<!--Jobs-->
+		<job>
+			<name>Masterfile Synchronization Notification Job</name>
+			<group>Masterfile Synchronization Job</group>
+			<description>Scheduled Job for Masterfile Synchronization</description>
+			<job-type>CTI.TenantSales.Scheduler.Jobs.MasterfileSynchronizationJob, CTI.TenantSales.Scheduler</job-type>
+			<durable>true</durable>
+			<recover>false</recover>
+		</job>
+		<!--Triggers-->
+		<trigger>
+			<cron>
+				<name>Trigger for Masterfile Synchronization Notification Job</name>
+				<group>Masterfile Synchronization Job</group>
+				<description>Run Masterfile Synchronization Notification Job</description>
+				<job-name>Masterfile Synchronization Notification Job</job-name>
+				<job-group>Masterfile Synchronization Job</job-group>
+				<cron-expression>0 0 0 0/1 * ?</cron-expression>
+			</cron>
+		</trigger>
+		<!--Jobs-->
+		<job>
+			<name>Report Data Synchronization Notification Job</name>
+			<group>Report Data Synchronization Job</group>
+			<description>Scheduled Job for Report Data Synchronization</description>
+			<job-type>CTI.TenantSales.Scheduler.Jobs.ReportDataSynchronizationJob, CTI.TenantSales.Scheduler</job-type>
+			<durable>true</durable>
+			<recover>false</recover>
+		</job>
+		<!--Triggers-->
+		<trigger>
+			<cron>
+				<name>Trigger for Report Data Synchronization Notification Job</name>
+				<group>Report Data Synchronization Job</group>
+				<description>Run Report Data Synchronization Notification Job</description>
+				<job-name>Report Data Synchronization Notification Job</job-name>
+				<job-group>Report Data Synchronization Job</job-group>
+				<cron-expression>0 0 0 0/1 * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>

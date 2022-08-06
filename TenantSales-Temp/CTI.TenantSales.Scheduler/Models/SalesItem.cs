@@ -30,6 +30,6 @@ namespace CTI.TenantSales.Scheduler.Models
         public string? FileName { get; set; }
         public string TenantPOSId { get; set; } = "";
         public int ValidationStatus { get; set; } 
-        public string ValidationRemarks { get; set; } = "";
+        public string? ValidationRemarks { get; set; } 
     }
 }
