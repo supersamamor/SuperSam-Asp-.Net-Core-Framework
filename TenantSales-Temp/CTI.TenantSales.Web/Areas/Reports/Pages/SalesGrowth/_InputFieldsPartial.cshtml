@@ -16,7 +16,17 @@
 
 </style>
 <div class="box-header">
-    <div class="container-fluid">       
+    <div class="container-fluid">
+        <div class="row" style="">
+            <div class="col-xs-12 col-sm-6 col-lg-6">
+                <div class="input-group form-group-padding" style="margin-bottom:10px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@Localizer["Project"]</span>
+                    </div>
+                    <select asp-for="@Model.ProjectId" class="input-sm form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectId))"><option value="">- Select Project -</option></select>
+                </div>
+            </div>
+        </div>
         <div class="row" style="">
             <div class="col-xs-12 col-sm-3 col-lg-3">
                 <div class="input-group form-group-padding" style="margin-bottom:10px;">
@@ -25,20 +35,14 @@
                     </div>
                     <select asp-for="@Model.Year" class="input-sm form-control" asp-items="@(dropdownService.YearList)"><option value="">- Select Year -</option></select>
                 </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-lg-3">
                 <div class="input-group form-group-padding" style="margin-bottom:10px;">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">@Localizer["Month"]</span>
                     </div>
                     <select asp-for="@Model.Month" class="input-sm form-control" asp-items="@(dropdownService.Month)"><option value="">- Select Month -</option></select>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-9 col-lg-9">
-                <div class="input-group form-group-padding" style="margin-bottom:10px;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@Localizer["Project"]</span>
-                    </div>
-                    <select asp-for="@Model.ProjectId" class="input-sm form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectId))"><option value="">- Select Project -</option></select>
-                </div>              
             </div>
         </div>
         <div class="row">
