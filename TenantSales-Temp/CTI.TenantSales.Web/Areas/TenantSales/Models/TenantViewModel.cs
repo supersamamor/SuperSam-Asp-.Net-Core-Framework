@@ -46,13 +46,13 @@ public record TenantViewModel : BaseViewModel
 	public string?  ForeignKeyLevel { get; set; }
 	[Display(Name = "Disabled")]
 	public bool IsDisabled { get; init; }
-	[Display(Name = "Branch Contact")]
+	[Display(Name = "Branch")]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? BranchContact { get; init; }
-	[Display(Name = "Head Office Contact")]
+	[Display(Name = "Head Office")]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? HeadOfficeContact { get; init; }
-	[Display(Name = "IT Support Contact")]
+	[Display(Name = "IT Support")]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ITSupportContact { get; init; }
 	

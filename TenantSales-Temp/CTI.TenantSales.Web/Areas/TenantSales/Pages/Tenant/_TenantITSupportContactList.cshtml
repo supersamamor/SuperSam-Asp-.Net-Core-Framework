@@ -1,24 +1,25 @@
 @using Models
 @model TenantViewModel
 
-<div class="container-fluid" style="margin-bottom:10px;margin-top:10px;border-top:1px solid #ddd">
+
+<div class="container-fluid" style="margin-bottom:10px;margin-top:10px;">
     <div class="row">
-        <div class="col-md-9">
-            <label asp-for="@Model!.ITSupportContact" class=""></label>
-            <input asp-for="@Model!.ITSupportContact" class="form-control" maxlength="255" />
-            <span asp-validation-for="@Model!.ITSupportContact" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <button type="button" id="btnAddTenantITSupportContact" class="btn-field btn btn-primary btn-sm cancel" style="margin-top:25px;">
-                <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
-                <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
+        <div class="input-group form-group-padding">
+            <div class="input-group-prepend">
+                <label asp-for="@Model!.ITSupportContact" class="input-group-text"></label>
+            </div>
+            <input asp-for="@Model!.ITSupportContact" class="input-sm form-control" maxlength="255" />
+            <button type="button" id="btnAddTenantITSupportContact" class="btn btn-primary cancel">
+                <i class="fas fa-plus"></i>
+                @Localizer["Add"]
             </button>
+            <span asp-validation-for="@Model!.ITSupportContact" class="text-danger"></span>
         </div>
     </div>
 </div>
 <hr />
 <table id="tenantContact" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
-    <thead>
+    <thead style="display:none;">
         <tr>
             <th style="display:none;"></th>
             <th>
@@ -36,8 +37,8 @@
     <tbody>
         @if (Model?.TenantITSupportContactList != null)
         {
-            int counter = (Model!.TenantBranchContactList != null ? Model!.TenantBranchContactList!.Count : 0) + 
-                                (Model!.TenantHeadOfficeContactList != null ? Model!.TenantHeadOfficeContactList!.Count : 0);
+            int counter = (Model!.TenantBranchContactList != null ? Model!.TenantBranchContactList!.Count : 0) +
+            (Model!.TenantHeadOfficeContactList != null ? Model!.TenantHeadOfficeContactList!.Count : 0);
             foreach (var item in Model.TenantITSupportContactList)
             {
                 <tr>
@@ -55,11 +56,11 @@
                     <td>
                         @if (item.Type == Convert.ToInt32(CTI.TenantSales.Core.TenantSales.ContactTypeEnum.Email))
                         {
-                            <input type="email" asp-for="@item.Detail" name="TenantContactList[@counter].Detail" class="form-control" maxlength="50" />
+                            <input type="email" asp-for="@item.Detail" name="TenantContactList[@counter].Detail" class="form-control" placeholder="@Localizer["Email Address"]" maxlength="50" />
                         }
                         else
                         {
-                            <input type="number" asp-for="@item.Detail" name="TenantContactList[@counter].Detail" class="form-control" maxlength="50" />
+                            <input type="number" asp-for="@item.Detail" name="TenantContactList[@counter].Detail" class="form-control" placeholder="@Localizer["Contact Number"]" maxlength="50" />
                         }
                         <span data-valmsg-for="TenantContactList[@counter].Detail" asp-validation-for="@item.Detail" class="text-danger"></span>
                     </td>
@@ -74,3 +75,4 @@
         }
     </tbody>
 </table>
+<div style="border-bottom:5px solid #ddd;margin-bottom:20px;width:100%;"></div>
