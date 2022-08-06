@@ -1,0 +1,66 @@
+﻿@*@using TenantSales.Web.Models.ReportViewModels
+@model SalesGrowthPerformanceMonthlyModel
+<tr class="ReportBorder">
+    <td class="ReportBorder" colspan="2" style="text-transform:uppercase;font-size:18px !important;">
+        <b>@Model.Label</b>
+    </td>
+    <td class="Align-Right ReportBorder" style="cursor:pointer;">
+        @Model.AreaFormatted
+    </td>
+    <td class="Align-Right ReportBorder" style="cursor:pointer;">
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideJan) { <text>display:none;</text>}">
+        @Model.JanFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideFeb) { <text>display:none;</text>}">
+        @Model.FebFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideMar) { <text>display:none;</text>}">
+        @Model.MarFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideApr) { <text>display:none;</text>}">
+        @Model.AprFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideMay) { <text>display:none;</text>}">
+        @Model.MayFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideJun) { <text>display:none;</text>}">
+        @Model.JunFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideJul) { <text>display:none;</text>}">
+        @Model.JulFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideAug) { <text>display:none;</text>}">
+        @Model.AugFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideSep) { <text>display:none;</text>}">
+        @Model.SepFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideOct) { <text>display:none;</text>}">
+        @Model.OctFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideNov) { <text>display:none;</text>}">
+        @Model.NovFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;@if (Model.HideColumn.HideDec) { <text>display:none;</text>}">
+        @Model.DecFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;">
+        @Model.CurrentYearYTDFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;">
+        @Model.PrevYearYTDFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;">
+        @Model.PercentVarianceFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;">
+        @Model.PercRentAirConCAMCOverCurrentMonthSalesFormatted
+    </td>
+    <td class="ReportBorder Align-Right" style="cursor:pointer;">
+        @Model.PercRentAirConCAMCOverCurrentYTDSalesFormatted
+    </td>
+</tr>
+
+
+*@

@@ -1,0 +1,94 @@
+﻿@*@using TenantSales.Web.Models.ReportViewModels
+@model SalesGrowthPerformanceReportModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/rotativareport.css" />
+</head>
+@if (Model != null)
+{
+    <body class="ReportBorder">
+        <div>
+            <div style="page-break-inside:avoid !important;padding:20px;width:100%;" class="ReportBorder">
+                <center>
+                    <span style="font-size:20px !important;"><b>Sales Growth Performance Report /@Model.ProjectName </b> </span><br />
+                    <span style="font-size:20px !important;"><b>Sales / Sqm. - @Model.Year</b> </span><br />
+                    <span style="font-size:20px !important;"><b>Reposted Gross Sales - Net of VAT</b> </span>
+                </center>
+            </div>
+            <table class="RotativaReportTable ItemBorder" style="">
+                <thead class="ReportBorder">
+                    <tr class="">
+                        <th class="Report_TableHeader ReportBorder" style="max-width:400px !important;">@Resource.LabelMerchants</th>
+                        <th class="Report_TableHeader ReportBorder">@Resource.LabelDateOpened</th>
+                        <th class="Report_TableHeader ReportBorder">@Resource.LabelArea</th>
+                        <th class="Report_TableHeader ReportBorder">@Resource.LabelFloorArea</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJan) { <text>display:none;</text>}">@Resource.LabelJan</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideFeb) { <text>display:none;</text>}">@Resource.LabelFeb</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideMar) { <text>display:none;</text>}">@Resource.LabelMar</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideApr) { <text>display:none;</text>}">@Resource.LabelApr</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideMay) { <text>display:none;</text>}">@Resource.LabelMay</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJun) { <text>display:none;</text>}">@Resource.LabelJun</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJul) { <text>display:none;</text>}">@Resource.LabelJul</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideAug) { <text>display:none;</text>}">@Resource.LabelAug</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideSep) { <text>display:none;</text>}">@Resource.LabelSep</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideOct) { <text>display:none;</text>}">@Resource.LabelOct</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideNov) { <text>display:none;</text>}">@Resource.LabelNov</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideDec) { <text>display:none;</text>}">@Resource.LabelDec</th>
+                        <th class="Report_TableHeader ReportBorder">@Model.Year @Resource.LabelYtd</th>
+                        <th class="Report_TableHeader ReportBorder">@Model.PrevYear @Resource.LabelYtd</th>
+                        <th class="Report_TableHeader ReportBorder">@Resource.LabelPercentVariance</th>
+                        <th class="Report_TableHeader ReportBorder">@Resource.LabelPercRentAirConCAMCOverSales @Model.MonthName @Model.Year</th>
+                        <th class="Report_TableHeader ReportBorder">@Resource.LabelPercRentAirConCAMCOverSales @Model.MonthName @Model.Year @Resource.LabelYtd</th>
+                    </tr>
+                </thead>
+                <tbody id="TenantSalesTableContent">
+
+                    @foreach (var themeItem in Model.TenantThemeList)
+                    {
+                        if (themeItem.DisplaySalesGrowthByTheme)
+                        {
+                            <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;font-size:28px !important;"><b>Type of Operation : @themeItem.Name</b></td></tr>
+                            foreach (var classItem in themeItem.TenantClassList)
+                            {
+                                if (classItem.Show)
+                                {
+                                    foreach (var catItem in classItem.TenantCategoryList)
+                                    {
+                                        if (catItem.Show)
+                                        {
+                                            <tr class="ReportBorder"><td class="ReportBorder" colspan="21" style="text-transform:uppercase;"><b>@catItem.Name</b></td></tr>
+                                            @foreach (var tenantSalesGrowthItem in catItem.TenantList)
+                                            {
+                                                if (tenantSalesGrowthItem.Show)
+                                                {
+                                                    @await Html.PartialAsync("SalesGrowthPerformanceReportItem", tenantSalesGrowthItem)
+                                                }
+                                            }
+                                            @await Html.PartialAsync("SalesGrowthPerformanceReportSummary", catItem.SalesGrowthSummary)
+                                            <tr class="ReportBorder"><td colspan="21" class="ReportBorder" style="text-transform:uppercase;"></td></tr>
+                                        }
+                                    }
+                                    @await Html.PartialAsync("SalesGrowthPerformanceReportSummary", classItem.SalesGrowthSummary)
+                                    <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;"></td></tr>
+                                    <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;"></td></tr>
+                                    <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;"></td></tr>
+                                }
+                            }
+                        }
+
+                    }
+                    @if (Model.TenantThemeList.Count > 0)
+                    {
+                        @await Html.PartialAsync("SalesGrowthPerformanceReportSummary", Model.SalesGrowthGrandSummary)
+                    }
+                </tbody>
+            </table>
+        </div>
+    </body>
+}
+</html>
+*@

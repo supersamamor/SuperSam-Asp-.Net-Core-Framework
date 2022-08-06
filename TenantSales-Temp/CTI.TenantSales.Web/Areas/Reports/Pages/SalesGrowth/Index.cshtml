@@ -5,3 +5,38 @@
     ViewData["ActiveMainPage"] = "SalesGrowth";
     ViewData["Level1"] = "Reports";
 }
+<form id="dailysales-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Input" />
+    </div>
+     <a href="..\@Model.Input.FilePath" target="_blank" style="display:none;" id="btnDownloadSalesGrowthReport">@Model.Input.FilePath</a>
+</form>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        @if(!string.IsNullOrEmpty(Model.Input.FilePath))
+        {
+            <text>
+                $('#btnDownloadSalesGrowthReport').get(0).click();
+            </text>
+        }
+        function InitializeForm()
+        {
+            $.fn.projectSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Project/Index", new { area = "TenantSales", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#ProjectId").projectSelect();          
+        }
+        InitializeForm();
+    });
+</script>
+}
