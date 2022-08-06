@@ -92,7 +92,7 @@ public record TenantPOSSalesViewModel : BaseViewModel
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal NoOfSalesTransactions { get; init; }
-    [Display(Name = "NoOfTransactions")]
+    [Display(Name = "No Of Transactions")]
     [Required]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]

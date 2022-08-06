@@ -38,12 +38,7 @@ namespace CTI.TenantSales.Application.Repositories
             await UpdateSucceedingDaysAutocalculatedTotalAccumulatedSales(sale);
         }
         private async Task UpdateSucceedingDaysAutocalculatedTotalAccumulatedSales(TenantPOSSalesState sale)
-        {
-            //Get Previous Sales
-            var previousSale = await GetPreviousDaySales(sale);
-            //Validate Daily Sales      
-            sale.ProcessPreviousDaySales(previousSale, _taxRate, _salesAmountThreshold);
-            _context.Update(sale);
+        {          
             int day = 1;
             var prevSales = sale;
             var nextDay = await GetNextDaySales(sale, day);
