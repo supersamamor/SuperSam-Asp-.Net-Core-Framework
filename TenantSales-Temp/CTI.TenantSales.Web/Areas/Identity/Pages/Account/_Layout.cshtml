@@ -1,11 +1,13 @@
+<!DOCTYPE html>
 @{
     var appName = Configuration.GetValue<string>("Application");
 }
-<!DOCTYPE html>
-<html lang="en">
+
+@inject SignInManager<ApplicationUser> SignInManager
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @appName</title>
 
     <link rel="stylesheet" href="~/lib/icheck-bootstrap/icheck-bootstrap.min.css" />
@@ -17,24 +19,43 @@
     <script asp-add-nonce>
         @Html.Raw(JavaScriptSnippet.ScriptBody)
     </script>
+    <style>
+        .navbar-brand {
+            color: #9d9d9d !important;
+        }
+
+            .navbar-brand:hover {
+                color: #fff !important;
+            }
+
+       
+    </style>
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a href="/Index" class="h1"><b>@appName</b></a>
-            </div>
-            <div class="card-body">
-                @RenderBody()
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-inverse bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">@appName</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
             </div>
         </div>
+    </nav>
+    <div class="container-fluid body-content">
+        <br />
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2019 - @appName</p>
+        </footer>
     </div>
-
     <script asp-add-nonce src="~/lib/jquery/dist/jquery.min.js"></script>
     <script asp-add-nonce src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script asp-add-nonce src="~/lib/select2/dist/js/select2.min.js"></script>
     <script asp-add-nonce src="~/lib/admin-lte/dist/js/adminlte.min.js"></script>
     <script asp-add-nonce src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
