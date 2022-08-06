@@ -8,7 +8,6 @@
 <input type="hidden" asp-for="@Model.SalesCategory" />
 <input type="hidden" asp-for="@Model.TenantPOSId" />
 <input type="hidden" asp-for="@Model.ControlNumber" />
-<input type="hidden" asp-for="@Model.FileName" />
 <input type="hidden" asp-for="@Model.ValidationStatus" />
 <input type="hidden" asp-for="@Model.ValidationRemarks" />
 <div class="row">
@@ -268,6 +267,17 @@
                                         <label asp-for="@Model.OtherDiscount" class="input-group-text"></label>
                                     </div>
                                     <input asp-for="@Model.OtherDiscount" class="input-sm form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding-bottom:10px;">
+                            <div class="col-xs-12 col-sm-12 col-lg-12">
+                                <span asp-validation-for="@Model.FileName" class="text-danger"></span>
+                                <div class="input-group form-group-padding">
+                                    <div class="input-group-prepend">
+                                        <label asp-for="@Model.FileName" class="input-group-text"></label>
+                                    </div>
+                                    <input asp-for="@Model.FileName" class="input-sm form-control" readonly />
                                 </div>
                             </div>
                         </div>

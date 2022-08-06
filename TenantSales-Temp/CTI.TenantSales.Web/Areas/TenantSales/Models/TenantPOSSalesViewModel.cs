@@ -144,6 +144,6 @@ public record TenantPOSSalesViewModel : BaseViewModel
     public string TenantPOSCode { get; init; } = "";
     public string TenantName { get; init; } = "";
     public string TenantCode { get; init; } = "";
-    public string UpdatedByName { get; init; } = "";
-    public string UpdatedDate { get; init; } = "";
+    public string? UpdatedByName { get; set; } = "";
+    public string UpdatedDate { get; set; } = "";
 }
