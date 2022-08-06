@@ -11,4 +11,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CTI.Common.Services.Shared\CTI.Common.Services.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

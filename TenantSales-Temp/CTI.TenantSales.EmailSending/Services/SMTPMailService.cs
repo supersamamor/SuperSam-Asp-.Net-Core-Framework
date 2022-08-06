@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Identity.UI.Services;
+using CTI.Common.Services.Shared.Interfaces;
+using CTI.Common.Services.Shared.Models.Mail;
 using Microsoft.Extensions.Options;
 using System.Net.Mail;
 
 namespace CTI.TenantSales.EmailSending.Services
 {
-    public class SMTPEmailService : IEmailSender
+    public class SMTPEmailService : IMailService
     {
         private readonly MailSettings _settings;
         public SMTPEmailService(IOptions<MailSettings> settings)
@@ -12,9 +13,9 @@ namespace CTI.TenantSales.EmailSending.Services
             _settings = settings.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
-        {
-            var mailMessage = new MailMessage(_settings.SMTPEmail!, email, subject, message)
+        public async Task SendAsync(MailRequest mailrequest, CancellationToken cancellationToken)
+        {           
+            var mailMessage = new MailMessage(_settings.SMTPEmail!, mailrequest.To, mailrequest.Subject, mailrequest.Body)
             {
                 IsBodyHtml = true
             };
@@ -25,7 +26,7 @@ namespace CTI.TenantSales.EmailSending.Services
             client.UseDefaultCredentials = false;
             client.EnableSsl = true;
             client.Credentials = new System.Net.NetworkCredential(_settings.SMTPEmail!, _settings.SMTPEmailPassword);
-            await client.SendMailAsync(mailMessage);
+            await client.SendMailAsync(mailMessage, cancellationToken);
         }
     }
 }
