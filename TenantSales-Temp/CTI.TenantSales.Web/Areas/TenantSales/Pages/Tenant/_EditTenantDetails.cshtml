@@ -49,7 +49,15 @@
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="@Model.IsDisabled" class=""></label>
-                                <input asp-for="@Model.IsDisabled" class="custom-checkbox-label" />
+                                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.ActivateDeactivate)).Succeeded)
+                                {
+                                    <input asp-for="@Model.IsDisabled" class="custom-checkbox-label" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="@Model.IsDisabled" />
+                                    <input asp-for="@Model.IsDisabled" name="IsDisabledDisplayValue" class="custom-checkbox-label" disabled />
+                                }
                                 <span asp-validation-for="@Model.IsDisabled" class="text-danger"></span>
                             </div>
                         </div>

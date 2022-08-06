@@ -50,6 +50,10 @@ public static class Permission
         {
             permissions.Add($"Permission.{module}.Export");
         }
+        if (module == "Tenant")
+        {
+            permissions.Add($"Permission.{module}.ActivateDeactivate");
+        }
         if (module == "Reports")
         {
             permissions.Add($"Permission.{module}.DailySales");
@@ -57,7 +61,7 @@ public static class Permission
         }
         return permissions;
     }
-
+    
     public static class Admin
     {
         public const string View = "Permission.Admin.View";
@@ -161,6 +165,7 @@ public static class Permission
     {
         public const string View = "Permission.Tenant.View";      
         public const string Edit = "Permission.Tenant.Edit";
+        public const string ActivateDeactivate = "Permission.Tenant.ActivateDeactivate";
     }
     public static class TenantPOSSales
     {
