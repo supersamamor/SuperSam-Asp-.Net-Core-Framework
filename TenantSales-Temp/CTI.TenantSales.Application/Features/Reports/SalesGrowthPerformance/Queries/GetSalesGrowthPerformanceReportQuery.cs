@@ -20,8 +20,9 @@ public class GetSalesGrowthPerformanceReportQueryHandler : IRequestHandler<GetSa
           .IncludeFilter(a => a.ClassificationList!.Select(b => b))
           .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!))
           .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!.SelectMany(d => d.TenantList!.Where(l => l.ProjectId == request.ProjectId))))
-          .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!.SelectMany(d => d.TenantList!.SelectMany(e => e.ReportSalesGrowthPerformanceMonth!.Where(m => m.Year == request.Year && m.Month == request.Month)))))
-          .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!.SelectMany(d => d.TenantList!.SelectMany(e => e.TenantLotMonthYear!.Where(l => l.Year == request.Year && l.Month == request.Month)))));
-        return await query.ToListAsync(cancellationToken);    
+          .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!.SelectMany(d => d.TenantList!.SelectMany(e => e.ReportSalesGrowthPerformanceMonthList!.Where(m => m.Year == request.Year && m.Month == request.Month)))))
+          .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!.SelectMany(d => d.TenantList!.SelectMany(e => e.TenantLotMonthYearList!.Where(l => l.Year == request.Year && l.Month == request.Month)))))
+          .IncludeFilter(a => a.ClassificationList!.SelectMany(c => c.CategoryList!.SelectMany(d => d.TenantList!).Select(l => l.Project)));
+        return await query.ToListAsync(cancellationToken);
     }
 }

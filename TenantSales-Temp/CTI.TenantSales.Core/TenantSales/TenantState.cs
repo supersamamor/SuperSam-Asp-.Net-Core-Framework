@@ -31,9 +31,9 @@ public record TenantState : BaseEntity
 	public IList<TenantContactState>? TenantContactList { get; set; }
 	public IList<TenantPOSState>? TenantPOSList { get; set; }
 	public IList<RevalidateState>? RevalidateList { get; set; }
-	public IList<ReportSalesGrowthPerformance>? ReportSalesGrowthPerformance { get; set; }
-	public IList<ReportSalesGrowthPerformanceMonth>? ReportSalesGrowthPerformanceMonth { get; set; }
-	public IList<TenantARDetailsMonthYear>? TenantARDetailsMonthYear { get; set; }
-	public IList<TenantLotMonthYear>? TenantLotMonthYear { get; set; }
+	public IList<ReportSalesGrowthPerformance>? ReportSalesGrowthPerformanceList { get; set; }
+	public IList<ReportSalesGrowthPerformanceMonth>? ReportSalesGrowthPerformanceMonthList { get; set; }
+	public IList<TenantARDetailsMonthYear>? TenantARDetailsMonthYearList { get; set; }
+	public IList<TenantLotMonthYear>? TenantLotMonthYearList { get; set; }
 
 }
