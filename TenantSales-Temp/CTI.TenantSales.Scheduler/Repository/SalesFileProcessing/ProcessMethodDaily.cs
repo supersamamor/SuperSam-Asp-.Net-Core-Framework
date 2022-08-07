@@ -1,6 +1,5 @@
-﻿using CTI.TenantSales.Core.TenantSales;
-using CTI.TenantSales.Scheduler.Models;
-namespace CTI.TenantSales.Scheduler.Repository
+﻿using CTI.TenantSales.Scheduler.Models;
+namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
 {
     public class ProcessMethodDaily : IProcessingMethod
     {

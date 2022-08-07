@@ -1,5 +1,5 @@
 ﻿using CTI.TenantSales.Scheduler.Models;
-namespace CTI.TenantSales.Scheduler.Repository
+namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
 {
     public interface IProcessingMethod
     {

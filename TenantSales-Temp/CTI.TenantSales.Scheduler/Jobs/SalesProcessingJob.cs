@@ -5,7 +5,7 @@ using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.Infrastructure.Data;
 using CTI.TenantSales.Scheduler.Helper;
 using CTI.TenantSales.Scheduler.Models;
-using CTI.TenantSales.Scheduler.Repository;
+using CTI.TenantSales.Scheduler.Repository.SalesFileProcessing;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
