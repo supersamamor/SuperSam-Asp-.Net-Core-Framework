@@ -53,7 +53,7 @@
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Tenant/Index", new { area = "TenantSales", handler = "Select2Data" })',
+							url: '@Url.Page("/Tenant/Index", new { area = "TenantSales", handler = "Select2Data" })' + '&projectId=' + $('#ProjectId').val(),
 						}
 					});
 				});
