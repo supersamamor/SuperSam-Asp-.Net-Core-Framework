@@ -23,7 +23,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
         }
         private async Task ProcessMasterFileSynchronization()
         {
-            var databaseConnectionSetupList = await _context.DatabaseConnectionSetup.Where(l => l.IsDisabled == false).AsNoTracking().ToListAsync();
+            var databaseConnectionSetupList = await _context.DatabaseConnectionSetup.Where(l => l.IsDisabled == false).IgnoreQueryFilters().AsNoTracking().ToListAsync();
             foreach (var databaseConnectionItem in databaseConnectionSetupList)
             {
                 await _masterfileSynchronizationRepository.RunMasterFileSynchronizationScript(databaseConnectionItem.Id);

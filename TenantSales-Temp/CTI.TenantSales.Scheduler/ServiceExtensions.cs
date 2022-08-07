@@ -1,6 +1,7 @@
 using CTI.TenantSales.Scheduler.Helper;
 using CTI.TenantSales.Scheduler.Jobs;
 using CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository;
+using CTI.TenantSales.Scheduler.Repository.SalesFileProcessing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
@@ -27,12 +28,14 @@ namespace CTI.TenantSales.Scheduler
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<MasterfileSynchronizationRepository>();
             services.AddTransient<ReportDataSynchronizationRepository>();
+            services.AddTransient<SalesProcessingRepository>();            
             services.AddTransient<FileScanJob>();
             services.AddTransient<ApprovalNotificationJob>();
             services.AddTransient<SalesFileHelper>();
             services.AddTransient<SalesProcessingJob>();
             services.AddTransient<MasterfileSynchronizationJob>();
             services.AddTransient<ReportDataSynchronizationJob>();
+            services.AddTransient<RevalidateSalesJob>();
         }
     }
 }

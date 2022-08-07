@@ -87,5 +87,25 @@
 				<cron-expression>0 0 0 0/1 * ?</cron-expression>
 			</cron>
 		</trigger>
+		<!--Jobs-->
+		<job>
+			<name>Revalidate Sales Notification Job</name>
+			<group>Revalidate Sales Job</group>
+			<description>Scheduled Job for Revalidate Sales</description>
+			<job-type>CTI.TenantSales.Scheduler.Jobs.ReportDataSynchronizationJob, CTI.TenantSales.Scheduler</job-type>
+			<durable>true</durable>
+			<recover>false</recover>
+		</job>
+		<!--Triggers-->
+		<trigger>
+			<cron>
+				<name>Trigger for Revalidate Sales Notification Job</name>
+				<group>Revalidate Sales Job</group>
+				<description>Run Revalidate Sales Notification Job</description>
+				<job-name>Revalidate Sales Notification Job</job-name>
+				<job-group>Revalidate Sales Job</job-group>
+				<cron-expression>0 0/1 * * * ?</cron-expression>
+			</cron>
+		</trigger>
 	</schedule>
 </job-scheduling-data>
