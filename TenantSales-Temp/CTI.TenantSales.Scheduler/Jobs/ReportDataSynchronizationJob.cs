@@ -6,9 +6,9 @@ using CTI.TenantSales.Infrastructure.Data;
 using CTI.TenantSales.Scheduler.Helper;
 using CTI.TenantSales.Scheduler.Models;
 using CTI.TenantSales.Scheduler.Repository;
+using CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using System.Data;
@@ -18,11 +18,11 @@ namespace CTI.TenantSales.Scheduler.Jobs
     public class ReportDataSynchronizationJob : IJob
     {
         private readonly ApplicationContext _context;
-        private readonly ILogger<MasterfileSynchronizationJob> _logger;
-        public ReportDataSynchronizationJob(ApplicationContext context, ILogger<MasterfileSynchronizationJob> logger)
+        private readonly ReportDataSynchronizationRepository _reportDataSynchronizationRepository;
+        public ReportDataSynchronizationJob(ApplicationContext context, ReportDataSynchronizationRepository reportDataSynchronizationRepository)
         {
-            _context = context;
-            _logger = logger;
+            _context = context;       
+            _reportDataSynchronizationRepository = reportDataSynchronizationRepository;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -31,18 +31,13 @@ namespace CTI.TenantSales.Scheduler.Jobs
         }
         private async Task ProcessReportDataSynchronization()
         {
-            try
+            var projectList = await _context.DatabaseConnectionSetup.Where(l => l.IsDisabled == false)
+                .SelectMany(l => l.CompanyList!).Where(l => l.IsDisabled == false)
+                .SelectMany(l => l.ProjectList!).Where(l => l.IsDisabled == false)
+                .Include(l=>l.Company).ThenInclude(l=>l.DatabaseConnectionSetup).AsNoTracking().ToListAsync();
+            foreach (var projectItem in projectList)
             {
-                using var command = _context.Database.GetDbConnection().CreateCommand();
-                command.CommandTimeout = 600;
-                command.CommandType = CommandType.Text;
-                command.CommandText = @"";
-                _context.Database.OpenConnection();
-                await command.ExecuteNonQueryAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in ProcessMasterFileSynchronization");
+                await _reportDataSynchronizationRepository.RunReportDataSynchronizationScript(projectItem.Id);
             }
         }
     }
