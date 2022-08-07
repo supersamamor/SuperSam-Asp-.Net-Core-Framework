@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CTI.TenantSales.Core.Reports;
 using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.ExcelProcessor.Models;
 
@@ -24,6 +25,13 @@ namespace CTI.TenantSales.Web.Areas.Reports.Mapping
             CreateMap<TenantPOSSalesState, PdfGenerator.Models.DailySales>();
 
             CreateMap<ThemeState, PdfGenerator.Models.Theme>();
+            CreateMap<ClassificationState, PdfGenerator.Models.Classification>();
+            CreateMap<CategoryState, PdfGenerator.Models.Category>();
+            CreateMap<TenantState, PdfGenerator.Models.Tenant>();
+            CreateMap<ReportSalesGrowthPerformanceMonth, PdfGenerator.Models.ReportSalesGrowthPerformanceMonth>();
+            CreateMap<TenantLotMonthYear, PdfGenerator.Models.TenantLotMonthYear>();
+            CreateMap<ProjectState, PdfGenerator.Models.Project>();
         }
     }
 }
+

@@ -1,5 +1,4 @@
-﻿@*@using TenantSales.Web.Models.ReportViewModels
-@model SalesGrowthPerformanceReportModel
+﻿@model CTI.TenantSales.PdfGenerator.Models.SalesGrowthDataModel
 @{
     Layout = null;
 }
@@ -22,57 +21,57 @@
             <table class="RotativaReportTable ItemBorder" style="">
                 <thead class="ReportBorder">
                     <tr class="">
-                        <th class="Report_TableHeader ReportBorder" style="max-width:400px !important;">@Resource.LabelMerchants</th>
-                        <th class="Report_TableHeader ReportBorder">@Resource.LabelDateOpened</th>
-                        <th class="Report_TableHeader ReportBorder">@Resource.LabelArea</th>
-                        <th class="Report_TableHeader ReportBorder">@Resource.LabelFloorArea</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJan) { <text>display:none;</text>}">@Resource.LabelJan</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideFeb) { <text>display:none;</text>}">@Resource.LabelFeb</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideMar) { <text>display:none;</text>}">@Resource.LabelMar</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideApr) { <text>display:none;</text>}">@Resource.LabelApr</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideMay) { <text>display:none;</text>}">@Resource.LabelMay</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJun) { <text>display:none;</text>}">@Resource.LabelJun</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJul) { <text>display:none;</text>}">@Resource.LabelJul</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideAug) { <text>display:none;</text>}">@Resource.LabelAug</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideSep) { <text>display:none;</text>}">@Resource.LabelSep</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideOct) { <text>display:none;</text>}">@Resource.LabelOct</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideNov) { <text>display:none;</text>}">@Resource.LabelNov</th>
-                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideDec) { <text>display:none;</text>}">@Resource.LabelDec</th>
-                        <th class="Report_TableHeader ReportBorder">@Model.Year @Resource.LabelYtd</th>
-                        <th class="Report_TableHeader ReportBorder">@Model.PrevYear @Resource.LabelYtd</th>
-                        <th class="Report_TableHeader ReportBorder">@Resource.LabelPercentVariance</th>
-                        <th class="Report_TableHeader ReportBorder">@Resource.LabelPercRentAirConCAMCOverSales @Model.MonthName @Model.Year</th>
-                        <th class="Report_TableHeader ReportBorder">@Resource.LabelPercRentAirConCAMCOverSales @Model.MonthName @Model.Year @Resource.LabelYtd</th>
+                        <th class="Report_TableHeader ReportBorder" style="max-width:400px !important;">@Localizer["Merchants"]</th>
+                        <th class="Report_TableHeader ReportBorder">@Localizer["Date Opened"]</th>
+                        <th class="Report_TableHeader ReportBorder">@Localizer["Area"]</th>
+                        <th class="Report_TableHeader ReportBorder">@Localizer["Floor Area"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJan) { <text>display:none;</text>}">@Localizer["Jan"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideFeb) { <text>display:none;</text>}">@Localizer["Feb"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideMar) { <text>display:none;</text>}">@Localizer["Mar"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideApr) { <text>display:none;</text>}">@Localizer["Apr"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideMay) { <text>display:none;</text>}">@Localizer["May"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJun) { <text>display:none;</text>}">@Localizer["Jun"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideJul) { <text>display:none;</text>}">@Localizer["Jul"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideAug) { <text>display:none;</text>}">@Localizer["Aug"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideSep) { <text>display:none;</text>}">@Localizer["Sep"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideOct) { <text>display:none;</text>}">@Localizer["Oct"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideNov) { <text>display:none;</text>}">@Localizer["Nov"]</th>
+                        <th class="Report_TableHeader ReportBorder" style="@if (Model.HideColumn.HideDec) { <text>display:none;</text>}">@Localizer["Dec"]</th>
+                        <th class="Report_TableHeader ReportBorder">@Model.Year @Localizer["Ytd"]</th>
+                        <th class="Report_TableHeader ReportBorder">@Model.PrevYear @Localizer["Ytd"]/th>
+                        <th class="Report_TableHeader ReportBorder">@Localizer["Percent Variance"]</th>
+                        <th class="Report_TableHeader ReportBorder">@Localizer["% RENT + CAMC + AC OVER SALES"] @Model.MonthName @Model.Year</th>
+                        <th class="Report_TableHeader ReportBorder">@Localizer["% RENT + CAMC + AC OVER SALES"] @Model.MonthName @Model.Year @Localizer["Ytd"]</th>
                     </tr>
                 </thead>
                 <tbody id="TenantSalesTableContent">
 
-                    @foreach (var themeItem in Model.TenantThemeList)
+                    @foreach (var themeItem in Model.ThemeList)
                     {
                         if (themeItem.DisplaySalesGrowthByTheme)
                         {
                             <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;font-size:28px !important;"><b>Type of Operation : @themeItem.Name</b></td></tr>
-                            foreach (var classItem in themeItem.TenantClassList)
+                            foreach (var classItem in themeItem.ClassificationList!)
                             {
                                 if (classItem.Show)
                                 {
-                                    foreach (var catItem in classItem.TenantCategoryList)
+                                    foreach (var catItem in classItem.CategoryList!)
                                     {
                                         if (catItem.Show)
                                         {
                                             <tr class="ReportBorder"><td class="ReportBorder" colspan="21" style="text-transform:uppercase;"><b>@catItem.Name</b></td></tr>
-                                            @foreach (var tenantSalesGrowthItem in catItem.TenantList)
+                                            @foreach (var tenantSalesGrowthItem in catItem.TenantList!)
                                             {
                                                 if (tenantSalesGrowthItem.Show)
                                                 {
-                                                    @await Html.PartialAsync("SalesGrowthPerformanceReportItem", tenantSalesGrowthItem)
+                                                    @await Html.PartialAsync("..\\SalesGrowth\\Pdf\\SalesGrowthPerformanceReportItem", tenantSalesGrowthItem)
                                                 }
                                             }
-                                            @await Html.PartialAsync("SalesGrowthPerformanceReportSummary", catItem.SalesGrowthSummary)
+                                            @await Html.PartialAsync("..\\SalesGrowth\\Pdf\\SalesGrowthPerformanceReportSummary", catItem.SalesGrowthSummary)
                                             <tr class="ReportBorder"><td colspan="21" class="ReportBorder" style="text-transform:uppercase;"></td></tr>
                                         }
                                     }
-                                    @await Html.PartialAsync("SalesGrowthPerformanceReportSummary", classItem.SalesGrowthSummary)
+                                    @await Html.PartialAsync("..\\SalesGrowth\\Pdf\\SalesGrowthPerformanceReportSummary", classItem.SalesGrowthSummary)
                                     <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;"></td></tr>
                                     <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;"></td></tr>
                                     <tr class="ReportBorder"><td colspan="21" class="" style="text-transform:uppercase;"></td></tr>
@@ -81,9 +80,9 @@
                         }
 
                     }
-                    @if (Model.TenantThemeList.Count > 0)
+                    @if (Model.ThemeList.Any())
                     {
-                        @await Html.PartialAsync("SalesGrowthPerformanceReportSummary", Model.SalesGrowthGrandSummary)
+                        @await Html.PartialAsync("..\\SalesGrowth\\Pdf\\SalesGrowthPerformanceReportSummary", Model.SalesGrowthGrandSummary)
                     }
                 </tbody>
             </table>
@@ -91,4 +90,3 @@
     </body>
 }
 </html>
-*@

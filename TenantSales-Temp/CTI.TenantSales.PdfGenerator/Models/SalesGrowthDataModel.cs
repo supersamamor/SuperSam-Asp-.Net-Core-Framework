@@ -30,16 +30,12 @@ namespace CTI.TenantSales.PdfGenerator.Models
         public string ProjectName
         {
             get
-            {
-                string projectName = "";
-                if (ThemeList.Count > 0 && ThemeList!.FirstOrDefault()!.ClassificationList!.Count > 0
-                            && ThemeList!.FirstOrDefault()!.ClassificationList!.FirstOrDefault()!.CategoryList!.Count > 0
-                            && ThemeList!.FirstOrDefault()!.ClassificationList!.FirstOrDefault()!.CategoryList!.FirstOrDefault()!.TenantList!.Count > 0)
+            {               
+                if (this.ThemeList?.FirstOrDefault()?.ClassificationList?.FirstOrDefault()?.CategoryList?.FirstOrDefault()?.TenantList?.FirstOrDefault()?.Project != null)
                 {
-                    projectName = ThemeList!.FirstOrDefault()!.ClassificationList!.FirstOrDefault()!.CategoryList!.FirstOrDefault()!.TenantList!.FirstOrDefault()!.Project!.Name;
+                    return ThemeList!.FirstOrDefault()!.ClassificationList!.FirstOrDefault()!.CategoryList!.FirstOrDefault()!.TenantList!.FirstOrDefault()!.Project!.Name;
                 }
-
-                return projectName;
+                return "";
             }
         }
         public HideMonthColumn HideColumn
@@ -109,12 +105,27 @@ namespace CTI.TenantSales.PdfGenerator.Models
     }
     public class Theme
     {
+        public string Name { get; set; } = "";
+        public bool DisplaySalesGrowthByTheme
+        {
+            get
+            {
+                return (this.ClassificationList?.SelectMany(l => l.CategoryList!)?.SelectMany(l => l.TenantList!)?.SelectMany(l => l.ReportSalesGrowthPerformanceMonthList!)?.Any() == true);               
+            }
+        }
         public IList<Classification>? ClassificationList { get; set; }
     }
     public class Classification
     {
         public string Name { get; set; } = "";
         public IList<Category>? CategoryList { get; set; }
+        public bool Show
+        {
+            get
+            {
+                return this.SalesGrowthSummary.Show;
+            }
+        }
         public ReportSalesGrowthPerformanceMonth SalesGrowthSummary
         {
             get
@@ -175,6 +186,13 @@ namespace CTI.TenantSales.PdfGenerator.Models
     {
         public string Name { get; set; } = "";
         public IList<Tenant>? TenantList { get; set; }
+        public bool Show
+        {
+            get
+            {
+                return this.SalesGrowthSummary.Show;
+            }
+        }
         public ReportSalesGrowthPerformanceMonth SalesGrowthSummary
         {
             get
@@ -241,6 +259,37 @@ namespace CTI.TenantSales.PdfGenerator.Models
             get
             {
                 return this.ReportSalesGrowthPerformanceMonthList?.FirstOrDefault();
+            }
+        }
+        public bool Show
+        {
+            get
+            {
+                //Will Hide Row if no Sales Growth Data
+                bool show = false;
+                foreach (var sgItem in ReportSalesGrowthPerformanceMonthList!)
+                {
+                    show = true;
+                    break;
+                }
+                return show;
+            }
+        }
+        public string Name { get; set; } = "";
+        public DateTime OpeningDate
+        {
+            get; set;
+        }
+        public string OpeningDateFormatted
+        {
+            get
+            {
+                string openingDate = "";
+                if (this.ReportSalesGrowthPerformanceMonthList != null && this.ReportSalesGrowthPerformanceMonthList.Count > 0)
+                {
+                    openingDate = this.OpeningDate.Year == this.ReportSalesGrowthPerformanceMonthList!.FirstOrDefault()!.Year ? this.OpeningDate.ToString("MM/dd/yyyy") : "";
+                }
+                return openingDate;
             }
         }
     }
