@@ -1,4 +1,5 @@
 using CTI.Common.Core.Base.Models;
+using CTI.TenantSales.Core.Reports;
 using System.ComponentModel;
 
 namespace CTI.TenantSales.Core.TenantSales;
@@ -30,5 +31,9 @@ public record TenantState : BaseEntity
 	public IList<TenantContactState>? TenantContactList { get; set; }
 	public IList<TenantPOSState>? TenantPOSList { get; set; }
 	public IList<RevalidateState>? RevalidateList { get; set; }
-	
+	public IList<ReportSalesGrowthPerformance>? ReportSalesGrowthPerformance { get; set; }
+	public IList<ReportSalesGrowthPerformanceMonth>? ReportSalesGrowthPerformanceMonth { get; set; }
+	public IList<TenantARDetailsMonthYear>? TenantARDetailsMonthYear { get; set; }
+	public IList<TenantLotMonthYear>? TenantLotMonthYear { get; set; }
+
 }

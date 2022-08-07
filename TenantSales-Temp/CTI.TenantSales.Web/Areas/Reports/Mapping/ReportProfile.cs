@@ -22,6 +22,8 @@ namespace CTI.TenantSales.Web.Areas.Reports.Mapping
                .ForPath(e => e.TenantCode, o => o.MapFrom(s => s.Code));
             CreateMap<TenantPOSState, PdfGenerator.Models.TenantPOSDailySales>();
             CreateMap<TenantPOSSalesState, PdfGenerator.Models.DailySales>();
+
+            CreateMap<ThemeState, PdfGenerator.Models.Theme>();
         }
     }
 }

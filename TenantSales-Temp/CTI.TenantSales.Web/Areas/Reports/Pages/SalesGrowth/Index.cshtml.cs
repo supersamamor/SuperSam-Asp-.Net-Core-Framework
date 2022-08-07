@@ -1,3 +1,4 @@
+using CTI.TenantSales.Application.Features.Reports.SalesGrowthPerformance.Queries;
 using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.PdfGenerator.Helper;
 using CTI.TenantSales.Web.Areas.Reports.Models;
@@ -20,9 +21,9 @@ namespace CTI.TenantSales.Web.Areas.Reports.Pages.SalesGrowth
         public async Task<IActionResult> OnPost()
         {
             ModelState.Clear();
-            //var salesGrowthData = Mapper.Map<IList<ThemeState>, IList<PdfGenerator.Models.Theme>>(await Mediatr.Send(new GetSalesGrowthReportQuery(Input.ProjectId, Input.Year, Input.Month)));
-            //Input.FilePath = await SalesGrowthReportToPdf.GeneratePdf(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
-            //   _uploadPath + "\\" + WebConstants.ReportFolder, new PdfGenerator.Models.SalesGrowthDataModel(salesGrowthData), PageContext);
+            var salesGrowthData = Mapper.Map<IList<ThemeState>, IList<PdfGenerator.Models.Theme>>(await Mediatr.Send(new GetSalesGrowthPerformanceReportQuery(Input.ProjectId, Input.Year, Input.Month)));
+            Input.FilePath = await SalesGrowthReportToPdf.GeneratePdf(WebConstants.UploadFilesPath + "\\" + WebConstants.ReportFolder,
+               _uploadPath + "\\" + WebConstants.ReportFolder, new PdfGenerator.Models.SalesGrowthDataModel(salesGrowthData), PageContext);
             return Page();
         }
         public IActionResult OnGet()

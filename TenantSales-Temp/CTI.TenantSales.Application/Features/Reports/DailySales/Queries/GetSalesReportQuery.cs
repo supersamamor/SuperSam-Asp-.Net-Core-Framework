@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Z.EntityFramework.Plus;
 
-namespace CTI.TenantSales.Application.Features.TenantSales.TenantPOSSales.Queries;
+namespace CTI.TenantSales.Application.Features.Reports.DailySales.Queries;
 
 public record GetSalesReportQuery(DateTime DateFrom, DateTime DateTo, string? ProjectId, string? LevelId, string? TenantId, string? SalesCategoryCode = null) : IRequest<IList<TenantState>>;
 public class GetDailySalesReportQueryHandler : IRequestHandler<GetSalesReportQuery, IList<TenantState>>

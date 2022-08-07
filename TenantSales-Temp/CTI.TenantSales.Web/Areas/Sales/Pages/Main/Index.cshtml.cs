@@ -1,3 +1,4 @@
+using CTI.TenantSales.Application.Features.Reports.DailySales.Queries;
 using CTI.TenantSales.Application.Features.TenantSales.TenantPOSSales.Queries;
 using CTI.TenantSales.Core.TenantSales;
 using CTI.TenantSales.ExcelProcessor.Helper;
