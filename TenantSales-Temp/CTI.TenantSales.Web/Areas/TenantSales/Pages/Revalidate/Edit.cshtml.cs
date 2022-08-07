@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CTI.TenantSales.Web.Areas.TenantSales.Pages.Revalidate;
 
-[Authorize(Policy = Permission.Revalidate.Edit)]
+//[Authorize(Policy = Permission.Revalidate.Edit)]
 public class EditModel : BasePageModel<EditModel>
 {
     [BindProperty]

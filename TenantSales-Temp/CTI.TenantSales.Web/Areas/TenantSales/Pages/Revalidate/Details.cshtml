@@ -19,15 +19,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.Create)).Succeeded)
             {
                 <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.Edit)).Succeeded)
-            {
-                <a asp-page="Edit" asp-route-id="@Model.Revalidate.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.Delete)).Succeeded)
-            {
-                <a asp-page="Delete" asp-route-id="@Model.Revalidate.Id" class="btn btn-danger">@Localizer["Delete"]</a>
-            }
+            }           
         </p>
     </div>
 </div>

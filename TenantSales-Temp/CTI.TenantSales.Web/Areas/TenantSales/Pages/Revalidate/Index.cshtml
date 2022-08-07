@@ -78,22 +78,7 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/Revalidate/Details", new { area = "TenantSales" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewRevalidate">@Localizer["View"]</a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.Edit)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Revalidate/Edit", new { area = "TenantSales" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditRevalidate">@Localizer["Edit"]</a>';
-                    </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Revalidate.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Revalidate/Delete", new { area = "TenantSales" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteRevalidate">@Localizer["Delete"]</a>';
-                    </text>
-                }
-				   
+                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewRevalidate">@Localizer["View"]</a>';  
                         return button;
                     },
                 },
