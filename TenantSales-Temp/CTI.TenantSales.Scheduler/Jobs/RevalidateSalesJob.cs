@@ -24,7 +24,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
             {
                 try
                 {
-                    await _salesProcessingRepository.TenantSalesValidate();
+                    await _salesProcessingRepository.TenantSalesValidate(revalidateItem.SalesDate, revalidateItem.ProjectId, revalidateItem.TenantId);
                     revalidateItem.SetDone();
                 }
                 catch (Exception ex)
