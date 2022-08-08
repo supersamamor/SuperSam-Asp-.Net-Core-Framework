@@ -22,7 +22,7 @@ public record RevalidateViewModel : BaseViewModel
 	[Display(Name = "Status")]
 
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Status { get; init; } = "";
+	public string? Status { get; init; } = "";
 	[Display(Name = "Processing Remarks")]
 	
 	public string? ProcessingRemarks { get; init; }
