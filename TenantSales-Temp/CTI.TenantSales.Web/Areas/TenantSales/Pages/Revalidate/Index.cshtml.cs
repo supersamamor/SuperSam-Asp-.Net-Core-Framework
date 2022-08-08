@@ -32,8 +32,8 @@ public class IndexModel : BasePageModel<IndexModel>
             {
                 e.Id,
                 SalesDate = e.SalesDate.ToString("MMM dd, yyyy"),
-				ProjectId = e.Project?.Id,
-				TenantId = e.Tenant?.Id,
+				ProjectName = e.Project?.Name,
+				TenantName = e.Tenant?.Name,
 				e.Status,
 						
 				
