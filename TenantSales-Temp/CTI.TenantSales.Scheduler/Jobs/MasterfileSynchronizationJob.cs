@@ -26,7 +26,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
             var databaseConnectionSetupList = await _context.DatabaseConnectionSetup.Where(l => l.IsDisabled == false).IgnoreQueryFilters().AsNoTracking().ToListAsync();
             foreach (var databaseConnectionItem in databaseConnectionSetupList)
             {
-                await _masterfileSynchronizationRepository.RunMasterFileSynchronizationScript(databaseConnectionItem.Id);
+                await _masterfileSynchronizationRepository.RunMasterFileSynchronizationScript(databaseConnectionItem);
             }          
         }
     }
