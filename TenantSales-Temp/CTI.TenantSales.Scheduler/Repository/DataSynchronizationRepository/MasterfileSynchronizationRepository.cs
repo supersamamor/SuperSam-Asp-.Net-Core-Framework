@@ -167,8 +167,8 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 							Select a.Id,a.Code,a.[IsDisabled],a.[Name]
 							From Project as a
 							INNER JOIN dbo.Company as b on a.CompanyId = b.Id
-							INNER JOIN dbo.DatabaseConnectionSetup as c on b.DatabaseConnectionSetupId = b.Id
-							Where c.Id = '" + databaseConnectionSetup.Id + @"'
+							INNER JOIN dbo.DatabaseConnectionSetup as c on b.DatabaseConnectionSetupId = c.Id
+							Where c.Id = '" + databaseConnectionSetup.Id + @"' and a.IsDisabled = 0
 
 						CREATE TABLE #TenantToUpdateAndInsert(
 								[TenantId]  [varchar](255) NULL,
@@ -188,7 +188,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 								[Class] [nvarchar](255) NULL,
 								[CategoryName] [nvarchar](255) NULL,
 								[Category] [nvarchar](255) NULL,
-								[CategoryId] int NULL
+								[CategoryId] [varchar](255) NULL
 							) 
 
 
@@ -244,8 +244,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									LEFT JOIN " + databaseConnectionSetup.DatabaseAndServerName + @".pm_category cat ON a.theme_cd = cat.theme_cd
 																AND a.class_cd = cat.class_cd
 																AND a.category_cd = cat.category_cd									
-									LEFT JOIN [dbo].[Tenant] as i on i.Code = a.tenant_no and f.Id = i.ProjectId 
-									Where f.IsDisabled = 0
+									LEFT JOIN [dbo].[Tenant] as i on i.Code = a.tenant_no and f.Id = i.ProjectId 						
 								Group By[trade_name]
 								, a.[tenant_no]
 								,a.[commence_date] 
@@ -297,12 +296,12 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									  ,[LastModifiedBy]
 									  ,[LastModifiedDate]
 									  ,[ClassificationId])
-								Select Distinct NewID(),a.CategoryName,a.Category,@Entity,'System',GetDate(),'System',GetDate(),c.Id ClassId 
+								Select Distinct NewID(),IsNull(a.CategoryName,'[No Category]'),IsNull(a.Category,'[No Category]'),@Entity,'System',GetDate(),'System',GetDate(),c.Id ClassId 
 									From #TenantToUpdateAndInsert as a
 									INNER Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
 									INNER Join Classification as c on IsNull(a.Class,'[No Class]') = IsNull(c.Code,'[No Class]') and c.ThemeId = b.Id
 									LEFT Join Category as d on IsNull(a.Category,'[No Category]') = IsNull(d.Code,'[No Category]') and c.ThemeId = b.Id and d.ClassificationId = c.Id
-									Where d.Id is null order By a.CategoryName Asc
+									Where d.Id is null order By IsNull(a.CategoryName,'[No Category]') Asc
 
 								Update #TenantToUpdateAndInsert Set CategoryId = CategoryId2
 								From (Select Distinct a.TenantId TenantId2, a.Category,a.CategoryName,c.Id ClassId,d.Id CategoryId2
@@ -364,7 +363,8 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									,[IsDisabled]
 									,[RentalTypeId]
 									,[ProjectId]
-									,[Entity])
+									,[Entity]
+								    ,[Area])
 								Select Distinct 
 									NewId()
 									,GetDate()
@@ -379,6 +379,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									,3
 									,a.[ProjectId]	
 									,@Entity
+									,0
 								From #TenantToUpdateAndInsert as a
 								INNER JOIN dbo.[Level] as lv on a.ProjectId = lv.ProjectId and a.LevelDescs = lv.Name  
 								LEFT JOIN [dbo].[Tenant] as b on a.[ProjectId] = b.[ProjectId] And a.[Code] = b.Code 
