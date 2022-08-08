@@ -1,4 +1,5 @@
-﻿using CTI.TenantSales.Infrastructure.Data;
+﻿using CTI.TenantSales.Core.TenantSales;
+using CTI.TenantSales.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,7 +20,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
             _context = context;
             _logger = logger;
         }
-        public async Task RunReportDataSynchronizationScript(string projectId, int year = 0)
+        public async Task RunReportDataSynchronizationScript(ProjectState project, int year = 0)
         {
             year = year == 0 ? DateTime.Now.Year : year;
             try
@@ -40,148 +41,149 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									  ,[start_date]
 									  ,[end_date])
 							SELECT DISTINCT 
-								  ''' + Convert(Varchar,@Year) + ''' fyear, 
+								  '" + year + @"' fyear, 
 								  number fmonth, 
-								  CONVERT(DATE, ''' + Convert(Varchar,@Year) + '''+''-''+CONVERT(VARCHAR, number)+''-1'') start_date, 
-								  DATEADD(d, -1, DATEADD(m, 1, CONVERT(DATE, ''' + Convert(Varchar,@Year) + '''+''-''+CONVERT(VARCHAR, number)+''-1''))) end_date									 
-								FROM master..spt_values
-								WHERE number BETWEEN 1 AND 12
-									
-						Delete From TenantLotMonthYear Where Year = ''' + Convert(Varchar,@Year) + ''' and TenantReportID in (Select Id From Tenant Where ProjectId = ''' + @ProjectId + ''')
+								  CONVERT(DATE, '" + year + @"'+'-'+CONVERT(VARCHAR, number)+'-1') start_date, 
+								  DATEADD(d, -1, DATEADD(m, 1, CONVERT(DATE, '" + year + @"' + '-'+CONVERT(VARCHAR, number)+'-1'))) end_date
+                                FROM master..spt_values
+                                WHERE number BETWEEN 1 AND 12
 
-						Insert Into TenantLotMonthYear ([TenantReportID]
+
+                        Delete From TenantLotMonthYear Where Year = '" + year + @"' and TenantID in (Select Id From Tenant Where ProjectId = '"+ project.Id + @"')
+
+						Insert Into TenantLotMonthYear([TenantReportID]
 														,[Year]
 														,[Month]
 														,[LotNo]
 														,[Area])
 												SELECT Distinct ti.id TenantReportID,
-														d.fyear [Year],  
-														d.fmonth Month,     
-														prc.Lot_No LotNo,
-														prc.qty Area	  
-												FROM #dates d
-														INNER JOIN Tenant as ti on 1=1
-														INNER JOIN Project as p on ti.ProjectId = p.Id
-														INNER JOIN ' + @PplusDatabasePrefix + '.pm_rental_chrg prc ON d.end_date >= prc.start_date
-																							AND d.end_date <= prc.end_date                                                                              
-																							AND prc.trx_type = ''' + @TransactionType + '''
-																							AND prc.percentage_sales = ''P''																
-																							And p.Code = prc.Project_no
-																							and ti.Code = prc.tenant_no
-												Where d.fyear = ''' + Convert(Varchar,@Year) + ''' and ti.ProjectId = ''' + @ProjectId + '''						
-						
-						Delete From TenantARDetailsMonthYear Where Year = ''' + Convert(Varchar,@Year) + ''' and TenantReportID in (Select Id From Tenant Where ProjectId = ''' + @ProjectId + ''')
+                                                        d.fyear[Year],  
+														d.fmonth Month,
+                                                        prc.Lot_No LotNo,
+                                                        prc.qty Area
+                                                FROM #dates d
+														INNER JOIN Tenant as ti on 1 = 1
+                                                        INNER JOIN Project as p on ti.ProjectId = p.Id
+                                                        INNER JOIN ' + @PplusDatabasePrefix + '.pm_rental_chrg prc ON d.end_date >= prc.start_date
+                                                                                            AND d.end_date <= prc.end_date
+                                                                                            AND prc.trx_type = '' + @TransactionType + ''
+                                                                                            AND prc.percentage_sales = 'P'
+                                                                                            And p.Code = prc.Project_no
+                                                                                            and ti.Code = prc.tenant_no
+                                                Where d.fyear = '" + year + @"' and ti.ProjectId = '"+ project.Id + @"'
+
+
+                        Delete From TenantARDetailsMonthYear Where Year = '" + year + @"' and TenantReportID in (Select Id From Tenant Where ProjectId = '"+ project.Id + @"')
 
 						---INSERT CAMC
-						INSERT INTO TenantARDetailsMonthYear ([TenantReportID]
-								,[Year]
-								,[Month]
-								,[CAMCRate]
-								,AirConRate
-								,SalesAmount
-								,MBaseAmount
-								,EffectiveRent)
-						SELECT  t.Id TenantReportID,
-								d.fyear [Year], 
-								d.fmonth [Month],  
+                        INSERT INTO TenantARDetailsMonthYear([TenantReportID]
+                                , [Year]
+                                , [Month]
+                                , [CAMCRate]
+                                , AirConRate
+                                , SalesAmount
+                                , MBaseAmount
+                                , EffectiveRent)
+                        SELECT t.Id TenantReportID,
+                               d.fyear[Year], 
+								d.fmonth[Month],  
 								MAX(ISNULL(psc.rate, 0)) CAMCRate,
 								0 AirConRate,
 								0 SalesAmount,
 								0 MBaseAmount,
-								0 EffectiveRent	   
-						FROM #dates d      
-								INNER JOIN Tenant as t on 1=1
-								INNER JOIN Project as p on t.ProjectId = p.Id
-								LEFT JOIN ' + @PplusDatabasePrefix + '.pm_std_chrg psc ON d.start_date >= psc.start_date
-																AND d.end_date <= psc.end_date                                       
-																AND psc.descs LIKE ''%' + @CommonAreaFilter + '%''															
-																And p.Code = psc.Project_no
-																and t.Code = psc.tenant_no
-						Where d.fyear = ''' + Convert(Varchar,@Year) + ''' and t.ProjectId = ''' + @ProjectId + '''
-						GROUP BY  t.Id,
+								0 EffectiveRent
+                        FROM #dates d      
+								INNER JOIN Tenant as t on 1 = 1
+                                INNER JOIN Project as p on t.ProjectId = p.Id
+                                LEFT JOIN ' + @PplusDatabasePrefix + '.pm_std_chrg psc ON d.start_date >= psc.start_date
+                                                                AND d.end_date <= psc.end_date
+                                                                AND psc.descs LIKE ' % ' + @CommonAreaFilter + ' % '
+                                                                And p.Code = psc.Project_no
+                                                                and t.Code = psc.tenant_no
+                        Where d.fyear = '" + year + @"' and t.ProjectId = '"+ project.Id + @"'
+                        GROUP BY  t.Id,
 								d.fyear, 
-								d.fmonth	
+								d.fmonth
 
-						---UPDATE AIRCON CAMC
-						Update TenantARDetailsMonthYear
-						Set AirConRate = AirConRate2
-						From (SELECT  t.Id TenantReportID2,
-								   d.fyear [Year2], 
-								   d.fmonth [Month2],  
-								   MAX(ISNULL(psc.rate, 0)) AirConRate2	 
-							FROM #dates d      
-								 INNER JOIN Tenant as t on 1=1
-								 INNER JOIN Project as p on t.ProjectId = p.Id
-								 INNER JOIN ' + @PplusDatabasePrefix + '.pm_std_chrg psc ON d.start_date >= psc.start_date
-																   AND d.end_date <= psc.end_date                                       
-																   AND psc.descs LIKE ''%' + @AirconFilter + '%''															
-																	And p.Code = psc.Project_no
-																	and t.Code = psc.tenant_no
-							Where d.fyear = ''' + Convert(Varchar,@Year) + '''
-							GROUP BY  t.Id,
-								   d.fyear, 
-								   d.fmonth) as b
-						Where TenantReportID = TenantReportID2 and [Year] = b.Year2 and [Month] = b.Month2
+                        -- - UPDATE AIRCON CAMC
+                        Update TenantARDetailsMonthYear
+                        Set AirConRate = AirConRate2
+                        From(SELECT  t.Id TenantReportID2,
+                                   d.fyear[Year2],
+                                   d.fmonth[Month2],
+                                   MAX(ISNULL(psc.rate, 0)) AirConRate2
+                            FROM #dates d      
+								 INNER JOIN Tenant as t on 1 = 1
+                                 INNER JOIN Project as p on t.ProjectId = p.Id
+                                 INNER JOIN ' + @PplusDatabasePrefix + '.pm_std_chrg psc ON d.start_date >= psc.start_date
+                                                                   AND d.end_date <= psc.end_date
+                                                                   AND psc.descs LIKE ' % ' + @AirconFilter + ' % '
+                                                                    And p.Code = psc.Project_no
+                                                                    and t.Code = psc.tenant_no
+                            Where d.fyear = '" + year + @"'
+                            GROUP BY  t.Id,
+                                   d.fyear,
+                                   d.fmonth) as b
+                        Where TenantReportID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
 
 
-						---UPDATE Sales Amount
-						Update TenantARDetailsMonthYear
-						Set SalesAmount = SalesAmount2
-						From (SELECT  t.Id TenantReportID2,
-							   d.fyear [Year2], 
-							   d.fmonth [Month2],  
-							   MAX(ISNULL(pts.total_amt, 0)) SalesAmount2	 
-						FROM #dates d      
+                       -- - UPDATE Sales Amount
+                        Update TenantARDetailsMonthYear
+                        Set SalesAmount = SalesAmount2
+                        From(SELECT  t.Id TenantReportID2,
+                               d.fyear[Year2],
+                               d.fmonth[Month2],
+                               MAX(ISNULL(pts.total_amt, 0)) SalesAmount2
+                        FROM #dates d      
 							 INNER JOIN Tenant as t on 1 = 1
-							 INNER JOIN Project as p on t.ProjectId = p.Id
-							 INNER JOIN ' + @PplusDatabasePrefix + '.pos_tenant_sales pts ON d.fyear = pts.fyear
-																   AND d.fmonth = pts.fmonth and pts.project_no = p.Code and pts.debtor_acct = t.Code
-						Where d.fyear = ''' + Convert(Varchar,@Year) + '''
+                             INNER JOIN Project as p on t.ProjectId = p.Id
+                             INNER JOIN ' + @PplusDatabasePrefix + '.pos_tenant_sales pts ON d.fyear = pts.fyear
+                                                                   AND d.fmonth = pts.fmonth and pts.project_no = p.Code and pts.debtor_acct = t.Code
+
+                        Where d.fyear = '" + year + @"'
+                        GROUP BY  t.Id,
+                               d.fyear,
+                               d.fmonth) as b
+                        Where TenantID = TenantReportID2 and [Year] = b.Year2 and[Month] = b.Month2
+
+                        --- UPDATE MBal Amount
+                        Update TenantARDetailsMonthYear
+                        Set MBaseAmount = mbase_amt2
+                        From(SELECT  t.Id TenantReportID2,
+                               d.fyear[Year2],
+                               d.fmonth[Month2],
+                               SUM(ISNULL(l.mbase_amt, 0)) mbase_amt2
+                        FROM #dates d      
+							 INNER JOIN Tenant as t on 1 = 1
+                             INNER JOIN Project as p on t.ProjectId = p.Id
+                             INNER JOIN ' + @PplusDatabasePrefix + '.ar_ledger l ON d.fyear = l.fin_year
+                                                           AND d.fmonth = l.fin_month and l.project_no = p.Code and l.debtor_acct = t.Code
+                        Where d.fyear = '" + year + @"'
+                        AND l.descs LIKE ' % ' + @RentFilter + ' % '
+                              AND l.class IN('' + @InvoiceClass + '')
 						GROUP BY  t.Id,
 							   d.fyear, 
 							   d.fmonth) as b
-						Where TenantReportID = TenantReportID2 and [Year] = b.Year2 and [Month] = b.Month2
-					   
-						---UPDATE MBal Amount
-						Update TenantARDetailsMonthYear
-						Set MBaseAmount = mbase_amt2
-						From (SELECT  t.Id TenantReportID2,
-							   d.fyear [Year2], 
-							   d.fmonth [Month2],  
-							   SUM(ISNULL(l.mbase_amt, 0)) mbase_amt2	 
-						FROM #dates d      
-							 INNER JOIN Tenant as t on 1=1 
-							 INNER JOIN Project as p on t.ProjectId = p.Id
-							 INNER JOIN ' + @PplusDatabasePrefix + '.ar_ledger l ON d.fyear = l.fin_year
-														   AND d.fmonth = l.fin_month and l.project_no = p.Code and l.debtor_acct = t.Code
-						Where d.fyear = ''' + Convert(Varchar,@Year) + '''
-						AND l.descs LIKE ''%' + @RentFilter + '%''
-							  AND l.class IN(''' + @InvoiceClass + ''')
-						GROUP BY  t.Id,
-							   d.fyear, 
-							   d.fmonth) as b
-						Where TenantReportID = TenantReportID2 and [Year] = b.Year2 and [Month] = b.Month2
+                        Where TenantReportID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
 
 						---CALCULATE Effective Rent
-						Update TenantARDetailsMonthYear
-						Set EffectiveRent = CASE WHEN ISNULL(b.Area, 0) = 0 THEN 0
+                        Update TenantARDetailsMonthYear
+                        Set EffectiveRent = CASE WHEN ISNULL(b.Area, 0) = 0 THEN 0
 												ELSE ISNULL(MBaseAmount, 0) / b.Area
-											END 
-						From (Select a.TenantReportId TenantReportId2
-								,a.[Year] [Year2]
-								,a.[Month] [Month2]
-								,Sum(IsNull(a.Area,0)) Area
-							From TenantLotMonthYear  as a
-							Where a.[Year] = ''' + Convert(Varchar,@Year) + ''' 
+                                            END
+                        From(Select a.TenantReportId TenantReportId2
+                                , a.[Year][Year2]
+                                , a.[Month][Month2]
+                                , Sum(IsNull(a.Area,0)) Area
+                             From TenantLotMonthYear  as a
+                             Where a.[Year] = '" + year + @"' 
 						Group By a.TenantReportId,a.[Year],a.[Month]) as b
-						Where TenantReportID = TenantReportID2 and [Year] = b.Year2 and [Month] = b.Month2	
-						
-						Drop Table #Dates
-
+                        Where TenantReportID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
+                      Drop Table #Dates
                             ";
                 _context.Database.OpenConnection();
                 await command.ExecuteNonQueryAsync();
-            }
+    }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in RunReportDataSynchronizationScript");

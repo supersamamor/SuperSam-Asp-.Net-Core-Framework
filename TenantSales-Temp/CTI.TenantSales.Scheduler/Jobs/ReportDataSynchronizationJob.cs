@@ -37,7 +37,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
                 .Include(l=>l.Company).ThenInclude(l=>l!.DatabaseConnectionSetup).AsNoTracking().IgnoreQueryFilters().ToListAsync();
             foreach (var projectItem in projectList)
             {
-                await _reportDataSynchronizationRepository.RunReportDataSynchronizationScript(projectItem.Id);
+                await _reportDataSynchronizationRepository.RunReportDataSynchronizationScript(projectItem);
             }
         }
     }
