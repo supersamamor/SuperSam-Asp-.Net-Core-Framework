@@ -94,7 +94,8 @@ public class TenantSalesProfile : Profile
 		CreateMap<TenantPOSViewModel, EditTenantPOSCommand>();
 		CreateMap<TenantPOSState, TenantPOSViewModel>().ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<TenantPOSViewModel, TenantPOSState>();
-		CreateMap<RevalidateViewModel, AddRevalidateCommand>();
+		CreateMap<RevalidateViewModel, AddRevalidateCommand>()
+			.ForMember(e => e.Status, c => c.Ignore()).ForMember(e => e.ProcessingRemarks, c => c.Ignore());
 		CreateMap<RevalidateViewModel, EditRevalidateCommand>();
 		CreateMap<RevalidateState, RevalidateViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Name)).ForPath(e => e.ForeignKeyTenant, o => o.MapFrom(s => s.Tenant!.Name));
 		CreateMap<RevalidateViewModel, RevalidateState>();

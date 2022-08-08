@@ -20,7 +20,7 @@ public record RevalidateViewModel : BaseViewModel
 	public string? TenantId { get; init; }
 	public string?  ForeignKeyTenant { get; set; }
 	[Display(Name = "Status")]
-	[Required]
+
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Status { get; init; } = "";
 	[Display(Name = "Processing Remarks")]

@@ -31,7 +31,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                SalesDate = e.SalesDate.ToString("MMM dd, yyyy HH:mm"),
+                SalesDate = e.SalesDate.ToString("MMM dd, yyyy"),
 				ProjectId = e.Project?.Id,
 				TenantId = e.Tenant?.Id,
 				e.Status,

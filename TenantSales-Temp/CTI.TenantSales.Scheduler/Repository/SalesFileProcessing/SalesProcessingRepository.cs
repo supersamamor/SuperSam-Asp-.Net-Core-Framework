@@ -88,7 +88,7 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
                                             , _tenantPOSSalesList);
                                     }
                                     //Save Sales File
-                                    var existingSales = GetPOSSales(pos!.Id, SalesType.SalesTypeToInt(_salesType), _tenantPOSSalesList.SalesList.FirstOrDefault()!.SalesDate, _tenantPOSSalesList.SalesList.FirstOrDefault()!.SalesCategory!);
+                                    var existingSales = await GetPOSSales(pos!.Id, SalesType.SalesTypeToInt(_salesType), _tenantPOSSalesList.SalesList.FirstOrDefault()!.SalesDate, _tenantPOSSalesList.SalesList.FirstOrDefault()!.SalesCategory!);
                                     if (existingSales != null)
                                     {
                                         await UpdateFailedPOSSales(_tenantPOSSalesList);
@@ -165,7 +165,7 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
                                     //Fetch only active sales category
                                     foreach (var salesCategoryCode in tenantItem!.SalesCategoryList!.Where(l => l.IsDisabled == false))
                                     {
-                                        var salesItem = GetPOSSales(posItem.Id, salesType, dateToValidate, salesCategoryCode!.Code);
+                                        var salesItem = await GetPOSSales(posItem.Id, salesType, dateToValidate, salesCategoryCode!.Code);
                                         //If no existing Sales for the end of the day, insert a sale with Zero, Null and Default values..
                                         if (salesItem == null)
                                         {

@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TenantSales_jobs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="tenantsales_jobs-qa.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
