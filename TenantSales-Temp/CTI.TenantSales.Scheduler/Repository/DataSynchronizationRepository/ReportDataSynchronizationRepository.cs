@@ -27,7 +27,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                 using var command = _context.Database.GetDbConnection().CreateCommand();
                 command.CommandTimeout = 600;
                 command.CommandType = CommandType.Text;
-                command.CommandText = @"" + projectId + @"" + year + @"
+                command.CommandText = @"select " + projectId + @"," + year + @"
 
 
                             ";

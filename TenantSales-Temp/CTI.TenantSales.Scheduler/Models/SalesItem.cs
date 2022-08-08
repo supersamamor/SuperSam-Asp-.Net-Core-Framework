@@ -4,7 +4,7 @@ namespace CTI.TenantSales.Scheduler.Models
 {
     public record SalesItem 
     {
-        public string? Id { get; set; }
+        public string? Id { get; set; } = Guid.NewGuid().ToString();
         public int SalesType { get; set; }
         public int HourCode { get; set; }
         public string? SalesCategory { get; set; }

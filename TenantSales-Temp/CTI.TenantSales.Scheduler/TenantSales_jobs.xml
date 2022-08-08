@@ -24,7 +24,7 @@
 				<description>Run Scheduled Approval Notification Job</description>
 				<job-name>Scheduled Approval Notification Job</job-name>
 				<job-group>Approval Notification Job</job-group>
-				<cron-expression>0/1 * * * * ?</cron-expression>
+				<cron-expression>1 0/1 * * * ?</cron-expression>
 			</cron>
 		</trigger>
 		<!--Jobs-->
@@ -44,7 +44,7 @@
 				<description>Run Sales Processing Notification Job</description>
 				<job-name>Sales Processing Notification Job</job-name>
 				<job-group>Sales Processing Job</job-group>
-				<cron-expression>0 0 */4 * * ?</cron-expression>
+				<cron-expression>1 0 */4 * * ?</cron-expression>
 			</cron>
 		</trigger>
 		<!--Jobs-->
@@ -64,7 +64,7 @@
 				<description>Run Masterfile Synchronization Notification Job</description>
 				<job-name>Masterfile Synchronization Notification Job</job-name>
 				<job-group>Masterfile Synchronization Job</job-group>
-				<cron-expression>0/1 * * * * ?</cron-expression>
+				<cron-expression>1 0 0 */1 * ?</cron-expression>
 			</cron>
 		</trigger>
 		<!--Jobs-->
@@ -84,7 +84,7 @@
 				<description>Run Report Data Synchronization Notification Job</description>
 				<job-name>Report Data Synchronization Notification Job</job-name>
 				<job-group>Report Data Synchronization Job</job-group>
-				<cron-expression>0/1 * * * * ?</cron-expression>
+				<cron-expression>1 0 0 */1 * ?</cron-expression>
 			</cron>
 		</trigger>
 		<!--Jobs-->
@@ -104,7 +104,7 @@
 				<description>Run Revalidate Sales Notification Job</description>
 				<job-name>Revalidate Sales Notification Job</job-name>
 				<job-group>Revalidate Sales Job</job-group>
-				<cron-expression>0 */1 * * * ?</cron-expression>
+				<cron-expression>1 */15 * * * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>
