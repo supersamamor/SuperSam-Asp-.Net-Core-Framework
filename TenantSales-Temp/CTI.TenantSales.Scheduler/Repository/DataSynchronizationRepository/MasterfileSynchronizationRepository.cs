@@ -262,7 +262,11 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 								,cat.category_cd
 								,cat.Descs 
 
-	
+								Select Distinct a.ThemeName Name,a.Theme Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate
+									Into #TempTheme
+									From #TenantToUpdateAndInsert as a
+									Left Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
+									Where b.Id is null order By a.ThemeName Asc		
 								
 								Insert Into Theme ([Id]
 									  ,[Name]
@@ -272,20 +276,29 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									  ,[CreatedDate]
 									  ,[LastModifiedBy]
 									  ,[LastModifiedDate])
-								Select Distinct NewID(),a.ThemeName,a.Theme,@Entity,'System',GetDate(),'System',GetDate()
-									From #TenantToUpdateAndInsert as a
-									Left Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
-									Where b.Id is null order By a.ThemeName Asc		
+								Select newID(), [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate] From #TempTheme
 
-
-
-								Insert Into [dbo].[Classification] (Id, [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate],[ThemeId])
-								Select Distinct NewID() Id,a.ClassName Name,a.Class Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,b.Id ThemeId   
+								Drop Table #TempTheme
+								
+								Select Distinct a.ClassName Name,a.Class Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,b.Id ThemeId   
+									Into #TempClassicication
 									From #TenantToUpdateAndInsert as a
 									INNER Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
 									Left Join [Classification] as c on IsNull(a.Class,'[No Class]') = IsNull(c.Code,'[No Class]') and c.ThemeId = b.Id
 									Where c.Id is null order By a.ClassName Asc
-	
+
+								Insert Into [dbo].[Classification] (Id, [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate],[ThemeId])
+								Select newID(), [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate],[ThemeId] From #TempClassicication
+								
+								Drop Table #TempClassicication
+
+								Select Distinct IsNull(a.CategoryName,'[No Category]') Name,IsNull(a.Category,'[No Category]') Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,c.Id ClassId 
+									Into #TempCategory
+									From #TenantToUpdateAndInsert as a
+									INNER Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
+									INNER Join Classification as c on IsNull(a.Class,'[No Class]') = IsNull(c.Code,'[No Class]') and c.ThemeId = b.Id
+									LEFT Join Category as d on IsNull(a.Category,'[No Category]') = IsNull(d.Code,'[No Category]') and c.ThemeId = b.Id and d.ClassificationId = c.Id
+									Where d.Id is null order By IsNull(a.CategoryName,'[No Category]') Asc
 
 								Insert Into Category ([Id]
 									  ,[Name]
@@ -296,12 +309,9 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 									  ,[LastModifiedBy]
 									  ,[LastModifiedDate]
 									  ,[ClassificationId])
-								Select Distinct NewID(),IsNull(a.CategoryName,'[No Category]'),IsNull(a.Category,'[No Category]'),@Entity,'System',GetDate(),'System',GetDate(),c.Id ClassId 
-									From #TenantToUpdateAndInsert as a
-									INNER Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
-									INNER Join Classification as c on IsNull(a.Class,'[No Class]') = IsNull(c.Code,'[No Class]') and c.ThemeId = b.Id
-									LEFT Join Category as d on IsNull(a.Category,'[No Category]') = IsNull(d.Code,'[No Category]') and c.ThemeId = b.Id and d.ClassificationId = c.Id
-									Where d.Id is null order By IsNull(a.CategoryName,'[No Category]') Asc
+								Select  newID(), [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate],[ClassId] From #TempCategory
+
+								Drop Table #TempCategory
 
 								Update #TenantToUpdateAndInsert Set CategoryId = CategoryId2
 								From (Select Distinct a.TenantId TenantId2, a.Category,a.CategoryName,c.Id ClassId,d.Id CategoryId2
@@ -469,7 +479,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 
                             ";
                 _context.Database.OpenConnection();
-                await command.ExecuteNonQueryAsync();
+               await command.ExecuteNonQueryAsync();
             }
             catch (Exception ex)
             {
