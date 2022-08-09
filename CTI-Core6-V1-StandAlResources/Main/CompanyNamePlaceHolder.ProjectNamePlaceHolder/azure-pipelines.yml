@@ -27,7 +27,7 @@ steps:
     projects: '**/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.csproj'
     arguments: '-c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
-- task: efcore-migration-script-generator-task@0
+- task: efcore-migration-script-generator-task@1
   inputs:
     projectpath: '$(Build.SourcesDirectory)/CompanyNamePlaceHolder.ProjectNamePlaceHolder/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.csproj'
     databasecontexts: |
