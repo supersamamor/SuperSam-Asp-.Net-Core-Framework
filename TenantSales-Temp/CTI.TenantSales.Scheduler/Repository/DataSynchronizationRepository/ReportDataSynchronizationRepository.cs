@@ -25,6 +25,11 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
             year = year == 0 ? DateTime.Now.Year : year;
             try
             {
+                string percentageRentTransactionType = "RBPT";
+                string commonChargesFilter = "common";
+                string airconChargesFilter = "aircon";
+                string rentalChargesFilter = "rent";
+                string invoiceClass = "I";
                 using var command = _context.Database.GetDbConnection().CreateCommand();
                 command.CommandTimeout = 600;
                 command.CommandType = CommandType.Text;
@@ -64,9 +69,9 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                                                 FROM #dates d
 														INNER JOIN Tenant as ti on 1 = 1
                                                         INNER JOIN Project as p on ti.ProjectId = p.Id
-                                                        INNER JOIN ' + @PplusDatabasePrefix + '.pm_rental_chrg prc ON d.end_date >= prc.start_date
+                                                        INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pm_rental_chrg prc ON d.end_date >= prc.start_date
                                                                                             AND d.end_date <= prc.end_date
-                                                                                            AND prc.trx_type = '' + @TransactionType + ''
+                                                                                            AND prc.trx_type = '" + percentageRentTransactionType + @"'
                                                                                             AND prc.percentage_sales = 'P'
                                                                                             And p.Code = prc.Project_no
                                                                                             and ti.Code = prc.tenant_no
@@ -95,9 +100,9 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                         FROM #dates d      
 								INNER JOIN Tenant as t on 1 = 1
                                 INNER JOIN Project as p on t.ProjectId = p.Id
-                                LEFT JOIN ' + @PplusDatabasePrefix + '.pm_std_chrg psc ON d.start_date >= psc.start_date
+                                LEFT JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pm_std_chrg psc ON d.start_date >= psc.start_date
                                                                 AND d.end_date <= psc.end_date
-                                                                AND psc.descs LIKE ' % ' + @CommonAreaFilter + ' % '
+                                                                AND psc.descs LIKE '%"+ commonChargesFilter + @"%'
                                                                 And p.Code = psc.Project_no
                                                                 and t.Code = psc.tenant_no
                         Where d.fyear = '" + year + @"' and t.ProjectId = '"+ project.Id + @"'
@@ -115,9 +120,9 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                             FROM #dates d      
 								 INNER JOIN Tenant as t on 1 = 1
                                  INNER JOIN Project as p on t.ProjectId = p.Id
-                                 INNER JOIN ' + @PplusDatabasePrefix + '.pm_std_chrg psc ON d.start_date >= psc.start_date
+                                 INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pm_std_chrg psc ON d.start_date >= psc.start_date
                                                                    AND d.end_date <= psc.end_date
-                                                                   AND psc.descs LIKE ' % ' + @AirconFilter + ' % '
+                                                                   AND psc.descs LIKE '%" + airconChargesFilter + @"%'
                                                                     And p.Code = psc.Project_no
                                                                     and t.Code = psc.tenant_no
                             Where d.fyear = '" + year + @"'
@@ -137,7 +142,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                         FROM #dates d      
 							 INNER JOIN Tenant as t on 1 = 1
                              INNER JOIN Project as p on t.ProjectId = p.Id
-                             INNER JOIN ' + @PplusDatabasePrefix + '.pos_tenant_sales pts ON d.fyear = pts.fyear
+                             INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pos_tenant_sales pts ON d.fyear = pts.fyear
                                                                    AND d.fmonth = pts.fmonth and pts.project_no = p.Code and pts.debtor_acct = t.Code
 
                         Where d.fyear = '" + year + @"'
@@ -156,11 +161,11 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                         FROM #dates d      
 							 INNER JOIN Tenant as t on 1 = 1
                              INNER JOIN Project as p on t.ProjectId = p.Id
-                             INNER JOIN ' + @PplusDatabasePrefix + '.ar_ledger l ON d.fyear = l.fin_year
+                             INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.ar_ledger l ON d.fyear = l.fin_year
                                                            AND d.fmonth = l.fin_month and l.project_no = p.Code and l.debtor_acct = t.Code
                         Where d.fyear = '" + year + @"'
-                        AND l.descs LIKE ' % ' + @RentFilter + ' % '
-                              AND l.class IN('' + @InvoiceClass + '')
+                        AND l.descs LIKE '%" + rentalChargesFilter + @"%'
+                              AND l.class IN('"+ invoiceClass + @"')
 						GROUP BY  t.Id,
 							   d.fyear, 
 							   d.fmonth) as b

@@ -4,7 +4,7 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
 {
     public class ProcessMethodHourly : IProcessingMethod
     {
-        public POSSales ProcessSalesFile(StreamReader _fileStream, string fileName)
+        public async Task<POSSales> ProcessSalesFile(StreamReader _fileStream, string fileName)
         {
             POSSales posSales = new();
             SalesItem _tenantPOSSales = new();
@@ -13,7 +13,7 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
             DateTime? salesDate = null;
             while (!(_fileStream.EndOfStream))
             {
-                var _string = _fileStream.ReadLine();
+                string? _string = await _fileStream.ReadLineAsync();
                 string _fileRowString = "";
                 if (string.IsNullOrEmpty(_string))
                 {

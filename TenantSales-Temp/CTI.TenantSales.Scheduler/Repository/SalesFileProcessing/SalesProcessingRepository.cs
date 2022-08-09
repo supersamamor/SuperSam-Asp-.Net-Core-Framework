@@ -75,14 +75,14 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
                                     TenantState? tenant = new();
                                     using (FileStream? fileStream = File.OpenRead(fileDirectory))
                                     {
-                                        var _streamReader = new StreamReader(fileStream);
+                                        using var _streamReader = new StreamReader(fileStream);
                                         if (_disableHourly == true && _salesType == Core.Constants.SalesType.SALESTYPE_HOURLY) { continue; }
                                         using var processRepo = new ProcessingMethodFactory(_salesType);
-                                        _tenantPOSSalesList = processRepo.ProcessingMethod!.ProcessSalesFile(_streamReader, fileDirectory);
-                                        pos = await GetPOS(projectItem.Id, _tenantPOSSalesList.TenantCode, _tenantPOSSalesList.POSCode);
+                                        _tenantPOSSalesList = (await processRepo.ProcessingMethod!.ProcessSalesFile(_streamReader, fileDirectory))!;
+                                        pos = await GetPOS(projectItem.Id, _tenantPOSSalesList?.TenantCode, _tenantPOSSalesList?.POSCode);
                                         tenant = pos?.Tenant;
                                         //Set CompanyId, ProjectCode, TenantId, TenantCode, TenantPOSCode, Pos ID of List                          
-                                        _ = _tenantPOSSalesList.SalesList.Select(c => { c.TenantPOSId = pos!.Id; return c; }).ToList();
+                                        _ = _tenantPOSSalesList!.SalesList.Select(c => { c.TenantPOSId = pos!.Id; return c; }).ToList();
                                         //Validate Sales Category
                                         _tenantPOSSalesList = processRepo.ProcessingMethod.ValidateSalesCategory(tenant!.SalesCategoryList!.Select(l => l.Code).ToList()
                                             , _tenantPOSSalesList);
@@ -243,11 +243,11 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
             }
             return await query.IgnoreQueryFilters().ToListAsync();
         }
-        private async Task<TenantPOSState?> GetPOS(string projectId, string tenantCode, string posCode)
+        private async Task<TenantPOSState?> GetPOS(string projectId, string? tenantCode, string? posCode)
         {
             return await _context.TenantPOS.Where(l => l.Tenant!.ProjectId == projectId
                     && l.Tenant.Code == tenantCode
-                    && l.Code == posCode).Include(l => l.Tenant).AsNoTracking().IgnoreQueryFilters().FirstOrDefaultAsync();
+                    && l.Code == posCode).Include(l => l.Tenant).ThenInclude(l => l!.SalesCategoryList).AsNoTracking().IgnoreQueryFilters().FirstOrDefaultAsync();
         }
         private async Task<TenantPOSSalesState?> GetPOSSalesId(string posId, int salesType, DateTime salesDate, string salesCategory)
         {

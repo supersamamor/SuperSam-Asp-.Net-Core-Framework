@@ -1,9 +1,11 @@
 ﻿using CTI.TenantSales.Scheduler.Models;
+using System.Text;
+
 namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
 {
     public class ProcessMethodDaily : IProcessingMethod
     {
-        public POSSales ProcessSalesFile(StreamReader _fileStream, string fileName)
+        public async Task<POSSales> ProcessSalesFile(StreamReader _fileStream, string fileName)
         {
             POSSales posSales = new();
             SalesItem _tenantPOSSales = new() { };
@@ -15,11 +17,12 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
             _tenantPOSSales.ValidationRemarks = null;
             while (!(_fileStream.EndOfStream))
             {
-                string _string = _fileStream!.ReadLine()!;
+                StringBuilder stringBuilder = new((await _fileStream.ReadLineAsync())!);
+                string _string = stringBuilder.ToString();
                 string _fileRowString = "0";
-                if (!string.IsNullOrEmpty(_string))
+                if (_string.Length > 3)
                 {
-                    _fileRowString = _string[..2];                  
+                    _fileRowString = _string[..2];
                 }
                 int _fileRowNo;
                 try
@@ -33,10 +36,10 @@ namespace CTI.TenantSales.Scheduler.Repository.SalesFileProcessing
                 switch (_fileRowNo)
                 {
                     case 1:
-                        posSales.TenantCode = _string[2..].Trim();
+                        posSales.TenantCode = _string[2..]!.Trim();
                         break;
                     case 2:
-                        posSales.POSCode = _string[2..].Trim();
+                        posSales.POSCode = _string[2..]!.Trim();
                         break;
                     case 3:
                         _tenantPOSSales.SalesDate = new DateTime(Convert.ToInt32(_string!.Substring(6, 4)),
