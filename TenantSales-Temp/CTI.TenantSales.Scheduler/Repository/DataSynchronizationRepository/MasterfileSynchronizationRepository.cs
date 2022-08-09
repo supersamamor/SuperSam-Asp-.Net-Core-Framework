@@ -27,14 +27,11 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                 using var command = _context.Database.GetDbConnection().CreateCommand();
                 command.CommandTimeout = 600;
                 command.CommandType = CommandType.Text;
-                command.CommandText = @"
-							Declare @FillCompanyQuery NVARCHAR(MAX)
-							Declare @PplusDatabasePrefix NVARCHAR(100)
-							Declare @Entity NVARCHAR(100)
-							Set @PplusDatabasePrefix = (Select Top 1 [DatabaseAndServerName] From [dbo].[DatabaseConnectionSetup] Where Id = '" + databaseConnectionSetup.Id + @"')
+                command.CommandText = @"		
+							Declare @Entity NVARCHAR(100)						
 							Set @Entity = (Select Top 1 Entity From [dbo].[DatabaseConnectionSetup] Where Id = '" + databaseConnectionSetup.Id + @"')
 
-							Select b.[Id]
+							Select Distinct b.[Id]
 								  ,b.[CreatedDate]
 								  ,b.[LastModifiedDate]
 								  ,b.[Name]
@@ -101,7 +98,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 								Drop Table #EntityToUpdateAndInsert
 
 
-								SELECT   b.Id
+								SELECT  Distinct b.Id
 									,a.[entity_cd]
 									,a.[project_no]     
 									,a.[descs] ProjectName
@@ -262,11 +259,11 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 								,cat.category_cd
 								,cat.Descs 
 
-								Select Distinct a.ThemeName Name,a.Theme Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate
+								Select Distinct IsNull(a.ThemeName,'[No Theme]') [Name],IsNull(a.Theme,'[No Theme]') Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate
 									Into #TempTheme
 									From #TenantToUpdateAndInsert as a
 									Left Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
-									Where b.Id is null order By a.ThemeName Asc		
+									Where b.Id is null order By IsNull(a.ThemeName,'[No Theme]') Asc		
 								
 								Insert Into Theme ([Id]
 									  ,[Name]
@@ -280,19 +277,19 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 
 								Drop Table #TempTheme
 								
-								Select Distinct a.ClassName Name,a.Class Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,b.Id ThemeId   
+								Select Distinct IsNull(a.ClassName,'[No Class]') [Name], IsNull(a.Class,'[No Class]') Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,b.Id ThemeId   
 									Into #TempClassicication
 									From #TenantToUpdateAndInsert as a
 									INNER Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
 									Left Join [Classification] as c on IsNull(a.Class,'[No Class]') = IsNull(c.Code,'[No Class]') and c.ThemeId = b.Id
-									Where c.Id is null order By a.ClassName Asc
+									Where c.Id is null order By IsNull(a.ClassName,'[No Class]') Asc
 
 								Insert Into [dbo].[Classification] (Id, [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate],[ThemeId])
 								Select newID(), [Name],[Code] ,[Entity],[CreatedBy],[CreatedDate],[LastModifiedBy],[LastModifiedDate],[ThemeId] From #TempClassicication
 								
 								Drop Table #TempClassicication
 
-								Select Distinct IsNull(a.CategoryName,'[No Category]') Name,IsNull(a.Category,'[No Category]') Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,c.Id ClassId 
+								Select Distinct IsNull(a.CategoryName,'[No Category]') [Name],IsNull(a.Category,'[No Category]') Code,@Entity Entity,'System' CreatedBy,GetDate() CreatedDate,'System' LastModifiedBy,GetDate() LastModifiedDate,c.Id ClassId 
 									Into #TempCategory
 									From #TenantToUpdateAndInsert as a
 									INNER Join Theme as b on IsNull(a.Theme,'[No Theme]') = IsNull(b.Code,'[No Theme]')
