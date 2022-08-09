@@ -17,8 +17,9 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/CompanyNamePlaceHolder.ProjectNamePlaceHolder.API.csproj'
-    feedsToUse: 'select'
-    vstsFeed: 'b45948e4-3066-4767-a8ce-ac420ca2a595'
+    feedsToUse: 'config'
+    nugetConfigPath: 'nuget.config'
+    externalFeedCredentials: 'CTI.Alabang.Nuget Service Connection'
 - task: DotNetCoreCLI@2
   displayName: 'dotnet publish'
   inputs:
