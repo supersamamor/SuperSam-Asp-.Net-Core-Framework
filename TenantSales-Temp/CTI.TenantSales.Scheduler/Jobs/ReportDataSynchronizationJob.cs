@@ -33,7 +33,7 @@ namespace CTI.TenantSales.Scheduler.Jobs
         {
             var projectList = await _context.DatabaseConnectionSetup.Where(l => l.IsDisabled == false)
                 .SelectMany(l => l.CompanyList!).Where(l => l.IsDisabled == false)
-                .SelectMany(l => l.ProjectList!).Where(l => l.IsDisabled == false)
+                .SelectMany(l => l.ProjectList!).Where(l => l.IsDisabled == false && l.Name != "N/A")
                 .Include(l=>l.Company).ThenInclude(l=>l!.DatabaseConnectionSetup).AsNoTracking().IgnoreQueryFilters().ToListAsync();
             foreach (var projectItem in projectList)
             {

@@ -56,7 +56,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 
                         Delete From TenantLotMonthYear Where Year = '" + year + @"' and TenantID in (Select Id From Tenant Where ProjectId = '"+ project.Id + @"')
 
-						Insert Into TenantLotMonthYear([TenantReportID]
+						Insert Into TenantLotMonthYear([TenantID]
 														,[Year]
 														,[Month]
 														,[LotNo]
@@ -69,7 +69,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                                                 FROM #dates d
 														INNER JOIN Tenant as ti on 1 = 1
                                                         INNER JOIN Project as p on ti.ProjectId = p.Id
-                                                        INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pm_rental_chrg prc ON d.end_date >= prc.start_date
+                                                        INNER JOIN " + project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @".pm_rental_chrg prc ON d.end_date >= prc.start_date
                                                                                             AND d.end_date <= prc.end_date
                                                                                             AND prc.trx_type = '" + percentageRentTransactionType + @"'
                                                                                             AND prc.percentage_sales = 'P'
@@ -78,10 +78,10 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                                                 Where d.fyear = '" + year + @"' and ti.ProjectId = '"+ project.Id + @"'
 
 
-                        Delete From TenantARDetailsMonthYear Where Year = '" + year + @"' and TenantReportID in (Select Id From Tenant Where ProjectId = '"+ project.Id + @"')
+                        Delete From TenantARDetailsMonthYear Where Year = '" + year + @"' and TenantID in (Select Id From Tenant Where ProjectId = '"+ project.Id + @"')
 
 						---INSERT CAMC
-                        INSERT INTO TenantARDetailsMonthYear([TenantReportID]
+                        INSERT INTO TenantARDetailsMonthYear([TenantID]
                                 , [Year]
                                 , [Month]
                                 , [CAMCRate]
@@ -100,7 +100,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                         FROM #dates d      
 								INNER JOIN Tenant as t on 1 = 1
                                 INNER JOIN Project as p on t.ProjectId = p.Id
-                                LEFT JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pm_std_chrg psc ON d.start_date >= psc.start_date
+                                LEFT JOIN " + project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @".pm_std_chrg psc ON d.start_date >= psc.start_date
                                                                 AND d.end_date <= psc.end_date
                                                                 AND psc.descs LIKE '%"+ commonChargesFilter + @"%'
                                                                 And p.Code = psc.Project_no
@@ -120,7 +120,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                             FROM #dates d      
 								 INNER JOIN Tenant as t on 1 = 1
                                  INNER JOIN Project as p on t.ProjectId = p.Id
-                                 INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pm_std_chrg psc ON d.start_date >= psc.start_date
+                                 INNER JOIN "+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @".pm_std_chrg psc ON d.start_date >= psc.start_date
                                                                    AND d.end_date <= psc.end_date
                                                                    AND psc.descs LIKE '%" + airconChargesFilter + @"%'
                                                                     And p.Code = psc.Project_no
@@ -129,7 +129,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                             GROUP BY  t.Id,
                                    d.fyear,
                                    d.fmonth) as b
-                        Where TenantReportID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
+                        Where TenantId = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
 
 
                        -- - UPDATE Sales Amount
@@ -142,7 +142,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                         FROM #dates d      
 							 INNER JOIN Tenant as t on 1 = 1
                              INNER JOIN Project as p on t.ProjectId = p.Id
-                             INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.pos_tenant_sales pts ON d.fyear = pts.fyear
+                             INNER JOIN "+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @".pos_tenant_sales pts ON d.fyear = pts.fyear
                                                                    AND d.fmonth = pts.fmonth and pts.project_no = p.Code and pts.debtor_acct = t.Code
 
                         Where d.fyear = '" + year + @"'
@@ -161,7 +161,7 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
                         FROM #dates d      
 							 INNER JOIN Tenant as t on 1 = 1
                              INNER JOIN Project as p on t.ProjectId = p.Id
-                             INNER JOIN '"+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @"'.ar_ledger l ON d.fyear = l.fin_year
+                             INNER JOIN "+ project!.Company!.DatabaseConnectionSetup!.DatabaseAndServerName! + @".ar_ledger l ON d.fyear = l.fin_year
                                                            AND d.fmonth = l.fin_month and l.project_no = p.Code and l.debtor_acct = t.Code
                         Where d.fyear = '" + year + @"'
                         AND l.descs LIKE '%" + rentalChargesFilter + @"%'
@@ -169,21 +169,21 @@ namespace CTI.TenantSales.Scheduler.Repository.DataSynchronizationRepository
 						GROUP BY  t.Id,
 							   d.fyear, 
 							   d.fmonth) as b
-                        Where TenantReportID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
+                        Where TenantId = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
 
 						---CALCULATE Effective Rent
                         Update TenantARDetailsMonthYear
                         Set EffectiveRent = CASE WHEN ISNULL(b.Area, 0) = 0 THEN 0
 												ELSE ISNULL(MBaseAmount, 0) / b.Area
                                             END
-                        From(Select a.TenantReportId TenantReportId2
+                        From(Select a.TenantID TenantReportId2
                                 , a.[Year][Year2]
                                 , a.[Month][Month2]
                                 , Sum(IsNull(a.Area,0)) Area
                              From TenantLotMonthYear  as a
                              Where a.[Year] = '" + year + @"' 
-						Group By a.TenantReportId,a.[Year],a.[Month]) as b
-                        Where TenantReportID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
+						Group By a.TenantID,a.[Year],a.[Month]) as b
+                        Where TenantID = TenantReportID2 and[Year] = b.Year2 and[Month] = b.Month2
                       Drop Table #Dates
                             ";
                 _context.Database.OpenConnection();
