@@ -6,9 +6,11 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePla
 public record ApproverAssignmentViewModel : BaseViewModel
 {
     [Display(Name = "Approver")]
-    [Required]
     [StringLength(250, ErrorMessage = "{0} length can't be more than {1}.")]
-    public string ApproverUserId { get; init; } = "";
+    public string? ApproverUserId { get; init; } = "";
+    [Display(Name = "Role Approver")]  
+    [StringLength(250, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string? ApproverRoleId { get; init; } = "";
     [Display(Name = "Approver Setup")]
     [Required]
     public string ApproverSetupId { get; init; } = "";
@@ -18,6 +20,7 @@ public record ApproverAssignmentViewModel : BaseViewModel
 
     public DateTime LastModifiedDate { get; set; }
     public ApproverSetupViewModel? ApproverSetup { get; init; }
+    public string ApproverType { get; init; } = Core.ProjectNamePlaceHolder.ApproverTypes.User;
 
 
 }

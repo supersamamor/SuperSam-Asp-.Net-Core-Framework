@@ -1,6 +1,7 @@
 using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
 using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Oidc;
 using Microsoft.EntityFrameworkCore;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;

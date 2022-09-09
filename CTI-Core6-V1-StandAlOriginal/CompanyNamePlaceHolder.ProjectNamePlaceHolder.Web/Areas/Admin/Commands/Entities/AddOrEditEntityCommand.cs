@@ -1,5 +1,5 @@
 using AutoMapper;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;

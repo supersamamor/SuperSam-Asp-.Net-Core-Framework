@@ -3,7 +3,6 @@ using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
@@ -11,12 +10,13 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
 builder.Host.UseSerilog((context, services, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration).ReadFrom
+    configuration.ReadFrom.Configuration(context.Configuration).WriteTo.Console().ReadFrom
                           .Services(services).Enrich
                           .FromLogContext());
 

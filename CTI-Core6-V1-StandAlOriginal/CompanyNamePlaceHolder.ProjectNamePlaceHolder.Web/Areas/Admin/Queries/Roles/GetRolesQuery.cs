@@ -1,6 +1,6 @@
 using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Utility.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

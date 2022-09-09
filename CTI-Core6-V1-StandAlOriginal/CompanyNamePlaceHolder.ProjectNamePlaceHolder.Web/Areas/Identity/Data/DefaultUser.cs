@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 

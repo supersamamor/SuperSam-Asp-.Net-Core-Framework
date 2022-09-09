@@ -1,29 +1,30 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.Common.Core.Queries;
 using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Utility.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
+using Microsoft.AspNetCore.Identity;
 
-public record GetApproversQuery(string CurrentSelectedApprover, IList<string> AllSelectedApprovers) : BaseQuery, IRequest<PagedListResponse<ApplicationUser>>
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
+
+public record GetApproverRolesQuery(string CurrentSelectedApprover, IList<string> AllSelectedApprovers) : BaseQuery, IRequest<PagedListResponse<IdentityRole>>
 {
 }
 
-public class GetApproversQueryHandler : IRequestHandler<GetApproversQuery, PagedListResponse<ApplicationUser>>
+public class GetApproverRolesQueryHandler : IRequestHandler<GetApproverRolesQuery, PagedListResponse<IdentityRole>>
 {
     private readonly IdentityContext _context;
 
-    public GetApproversQueryHandler(IdentityContext context)
+    public GetApproverRolesQueryHandler(IdentityContext context)
     {
         _context = context;
     }
 
-    public async Task<PagedListResponse<ApplicationUser>> Handle(GetApproversQuery request, CancellationToken cancellationToken)
+    public async Task<PagedListResponse<IdentityRole>> Handle(GetApproverRolesQuery request, CancellationToken cancellationToken)
     {
         var excludedUsers = request.AllSelectedApprovers.Where(l => l != request.CurrentSelectedApprover);
-        var query = _context.Users.Where(l => !excludedUsers.Contains(l.Id)).AsNoTracking();
+        var query = _context.Roles.Where(l => !excludedUsers.Contains(l.Id)).AsNoTracking();
         return await query.ToPagedResponse(request.SearchColumns, request.SearchValue,
                                                        request.SortColumn, request.SortOrder,
                                                        request.PageNumber, request.PageSize, cancellationToken);

@@ -14,7 +14,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TableName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    ApprovalSetupType = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    WorkflowName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    WorkflowDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TableName = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     ApprovalType = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     EmailSubject = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     EmailBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -97,9 +100,11 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ApproverType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ApproverSetupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Sequence = table.Column<int>(type: "int", nullable: false),
-                    ApproverUserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    ApproverUserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    ApproverRoleId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -257,17 +262,18 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 column: "Status");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApproverAssignment_ApproverSetupId_ApproverUserId",
+                name: "IX_ApproverAssignment_ApproverSetupId_ApproverUserId_ApproverRoleId",
                 table: "ApproverAssignment",
-                columns: new[] { "ApproverSetupId", "ApproverUserId" },
-                unique: true);
+                columns: new[] { "ApproverSetupId", "ApproverUserId", "ApproverRoleId" },
+                unique: true,
+                filter: "[ApproverUserId] IS NOT NULL AND [ApproverRoleId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApproverSetup_TableName_Entity",
+                name: "IX_ApproverSetup_WorkflowName_ApprovalSetupType_TableName_Entity",
                 table: "ApproverSetup",
-                columns: new[] { "TableName", "Entity" },
+                columns: new[] { "WorkflowName", "ApprovalSetupType", "TableName", "Entity" },
                 unique: true,
-                filter: "[Entity] IS NOT NULL");
+                filter: "[WorkflowName] IS NOT NULL AND [TableName] IS NOT NULL AND [Entity] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditLogs_PrimaryKey",

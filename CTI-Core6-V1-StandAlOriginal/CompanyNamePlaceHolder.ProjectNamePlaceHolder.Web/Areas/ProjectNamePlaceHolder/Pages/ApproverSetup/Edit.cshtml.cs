@@ -61,7 +61,7 @@ public class EditModel : BasePageModel<EditModel>
     {
         ModelState.Clear();
         if (ApproverSetup!.ApproverAssignmentList == null) { ApproverSetup!.ApproverAssignmentList = new List<ApproverAssignmentViewModel>(); }
-        ApproverSetup!.ApproverAssignmentList!.Add(new ApproverAssignmentViewModel() { ApproverSetupId = ApproverSetup.Id });
+        ApproverSetup!.ApproverAssignmentList!.Add(new ApproverAssignmentViewModel() { ApproverSetupId = ApproverSetup.Id, Sequence = ApproverSetup!.ApproverAssignmentList.Count });
         return Partial("_InputFieldsPartial", ApproverSetup);
     }
     private IActionResult RemoveApproverAssignment()

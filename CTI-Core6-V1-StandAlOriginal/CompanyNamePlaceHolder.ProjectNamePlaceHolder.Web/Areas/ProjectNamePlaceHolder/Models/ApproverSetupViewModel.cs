@@ -37,4 +37,5 @@ public record ApproverSetupViewModel : BaseViewModel
             }
         }
     }
+    public string ApprovalSetupType { get; init; } = "";
 }

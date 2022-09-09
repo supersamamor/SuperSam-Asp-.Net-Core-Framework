@@ -48,10 +48,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
             this.Status = ApprovalStatus.Rejected;
             this.ApprovalRemarks = remarks;
         }
+        public void Skip()
+        {
+            this.StatusUpdateDateTime = DateTime.UtcNow;
+            this.Status = ApprovalStatus.Skipped;       
+        }
     }
     public record ApprovalRecordState : BaseEntity
     {
-        public string ApproverSetupId { get; init; } = "";
+        public string ApproverSetupId { get; init; } = ""; 
         public string DataId { get; init; } = "";
         public string Status { get; set; } = ApprovalStatus.New;
         public ApproverSetupState? ApproverSetup { get; init; }
@@ -71,7 +76,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
     }
     public record ApproverSetupState : BaseEntity
     {
-        public string TableName { get; init; } = "";
+        public string ApprovalSetupType { get; init; } = "";
+        public string? WorkflowName { get; init; } = "";
+        public string? WorkflowDescription { get; init; } = "";
+        public string? TableName { get; init; } = "";
         public string ApprovalType { get; init; } = ApprovalTypes.InSequence;
         public string EmailSubject { get; init; } = "";
         public string EmailBody { get; init; } = "";
@@ -79,9 +87,11 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
     }
     public record ApproverAssignmentState : BaseEntity
     {
+        public string ApproverType { get; init; } = ApproverTypes.User;
         public string ApproverSetupId { get; init; } = "";
         public int Sequence { get; init; } = 0;
-        public string ApproverUserId { get; init; } = "";
+        public string? ApproverUserId { get; init; } = "";
+        public string? ApproverRoleId { get; init; } = "";
         public ApproverSetupState ApproverSetup { get; init; } = new ApproverSetupState();
     }
     public static class ApprovalStatus
@@ -91,6 +101,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
         public const string PartiallyApproved = "Partially Approved";
         public const string Approved = "Approved";
         public const string Rejected = "Rejected";
+        public const string Skipped = "Skipped";
         public static readonly List<string> ApprovalStatusList =
               new()
               {
@@ -118,7 +129,23 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
         public const string Done = "Done";
         public const string Failed = "Failed";
     }
-	public static class ApprovalModule
+    public static class ApproverTypes
+    {
+        public const string User = "User";
+        public const string Role = "Role";  
+        public static readonly List<string> ApproverTypeList =
+           new()
+           {
+               User,
+               Role,            
+           };
+    }
+    public static class ApprovalSetupTypes
+    {
+        public const string Modular = "Modular";
+        public const string Workflow = "Workflow";
+    }
+    public static class ApprovalModule
 	{
 		public const string MainModule = "MainModule";
 		public static readonly List<string> ApprovalTableList =

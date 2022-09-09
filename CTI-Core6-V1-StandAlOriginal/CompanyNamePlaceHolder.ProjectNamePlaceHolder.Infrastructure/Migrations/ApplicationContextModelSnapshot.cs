@@ -184,12 +184,19 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApproverRoleId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ApproverSetupId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ApproverUserId")
+                    b.Property<string>("ApproverType")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApproverUserId")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -213,8 +220,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApproverSetupId", "ApproverUserId")
-                        .IsUnique();
+                    b.HasIndex("ApproverSetupId", "ApproverUserId", "ApproverRoleId")
+                        .IsUnique()
+                        .HasFilter("[ApproverUserId] IS NOT NULL AND [ApproverRoleId] IS NOT NULL");
 
                     b.ToTable("ApproverAssignment");
                 });
@@ -222,6 +230,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverSetupState", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApprovalSetupType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApprovalType")
@@ -254,15 +266,21 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TableName")
-                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("WorkflowDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkflowName")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TableName", "Entity")
+                    b.HasIndex("WorkflowName", "ApprovalSetupType", "TableName", "Entity")
                         .IsUnique()
-                        .HasFilter("[Entity] IS NOT NULL");
+                        .HasFilter("[WorkflowName] IS NOT NULL AND [TableName] IS NOT NULL AND [Entity] IS NOT NULL");
 
                     b.ToTable("ApproverSetup");
                 });

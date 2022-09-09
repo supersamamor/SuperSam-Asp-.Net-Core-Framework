@@ -56,7 +56,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                             approvalItem.SendingFailed(ex.Message);
                         }
                     }
-                    if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Count() == item.ApprovalList.Count)
+                    if (item.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved || l.Status == ApprovalStatus.Skipped).Count() == item.ApprovalList.Count)
                     {
                         item.Approve();
                     }

@@ -27,10 +27,6 @@ public class ApproveModel : BasePageModel<ApproveModel>
 
     public async Task<IActionResult> OnPost(string handler)
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
         if (handler == "Approve")
         {
             return await Approve();
