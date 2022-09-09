@@ -2,7 +2,7 @@ using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Web.Utility.Annotations;
 using CompanyNamePlaceHolder.Common.Web.Utility.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Authorization.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Oidc;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

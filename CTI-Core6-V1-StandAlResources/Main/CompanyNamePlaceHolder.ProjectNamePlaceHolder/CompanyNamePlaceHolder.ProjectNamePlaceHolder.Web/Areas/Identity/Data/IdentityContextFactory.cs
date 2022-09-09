@@ -1,3 +1,4 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 

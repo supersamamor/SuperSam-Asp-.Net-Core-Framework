@@ -1,9 +1,9 @@
 using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Oidc;
 using LanguageExt;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Authorization;

@@ -1,7 +1,7 @@
 using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Utility.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Oidc;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CompanyNamePlaceHolder.Common.Core.Queries;

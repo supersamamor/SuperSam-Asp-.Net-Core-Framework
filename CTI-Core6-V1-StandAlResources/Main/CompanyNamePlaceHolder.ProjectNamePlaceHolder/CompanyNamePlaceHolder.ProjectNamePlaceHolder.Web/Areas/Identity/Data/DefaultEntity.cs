@@ -1,3 +1,4 @@
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;

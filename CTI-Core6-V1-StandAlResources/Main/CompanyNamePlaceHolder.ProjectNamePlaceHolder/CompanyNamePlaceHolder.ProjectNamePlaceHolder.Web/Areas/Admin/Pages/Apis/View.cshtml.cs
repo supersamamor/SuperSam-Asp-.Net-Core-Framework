@@ -1,7 +1,7 @@
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Oidc.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Oidc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;

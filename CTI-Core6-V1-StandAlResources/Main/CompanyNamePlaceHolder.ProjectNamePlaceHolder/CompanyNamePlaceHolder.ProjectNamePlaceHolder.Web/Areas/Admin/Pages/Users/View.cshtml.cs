@@ -1,7 +1,7 @@
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
