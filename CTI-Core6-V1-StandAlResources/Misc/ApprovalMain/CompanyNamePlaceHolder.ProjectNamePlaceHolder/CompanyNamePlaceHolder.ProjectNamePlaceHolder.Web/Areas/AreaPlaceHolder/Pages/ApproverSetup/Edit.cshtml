@@ -54,7 +54,7 @@
                 $('#AsyncAction').val('MoveDownApproverAssignment');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
             });
-            $('.SelectApproverDropdown ').on( 'change', function () {       
+            $('.SelectApproverDropdown,  .SelectApproverTypeDropdown').on( 'change', function () {       
                 $('#AsyncAction').val('');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
             });

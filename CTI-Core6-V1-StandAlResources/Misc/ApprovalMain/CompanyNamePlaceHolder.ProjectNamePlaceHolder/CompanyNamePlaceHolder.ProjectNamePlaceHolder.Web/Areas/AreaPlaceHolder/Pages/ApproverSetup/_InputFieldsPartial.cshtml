@@ -18,6 +18,7 @@
             </div>
             <div class="card-body">
                 <input type="hidden" asp-for="@Model.Id" name="Id" />
+                <input type="hidden" asp-for="@Model.ApprovalSetupType" name="ApprovalSetupType" value="@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalSetupTypes.Modular"/>
 				<div class="row">
 					<partial name="_EditApproverSetupDetails" model="Model" />
 				</div>				
