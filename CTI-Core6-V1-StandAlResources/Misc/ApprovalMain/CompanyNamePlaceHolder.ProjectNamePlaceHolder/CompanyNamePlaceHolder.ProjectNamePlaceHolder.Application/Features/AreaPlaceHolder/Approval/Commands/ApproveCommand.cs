@@ -35,17 +35,27 @@ public class ApproveCommandHandler : IRequestHandler<ApproveCommand, Validation<
         entity.Approve(request.ApprovalRemarks);
         _context.Update(entity);
         await SetPendingEmailForInSequence(entity, cancellationToken);
+        await SkipSameSequence(entity, cancellationToken);
         _ = await _context.SaveChangesAsync(cancellationToken);
         return Success<Error, ApprovalResult>(new ApprovalResult(request.DataId));
     }
     private async Task SetPendingEmailForInSequence(ApprovalState entity, CancellationToken cancellationToken)
     {
-        var nextApproval = await _context.Approval.Where(l => l.ApprovalRecordId == entity.ApprovalRecordId && l.Sequence == entity.Sequence + 1).FirstOrDefaultAsync(cancellationToken);
-        if (nextApproval != null)
+        var nextApprovalList = await _context.Approval.Where(l => l.ApprovalRecordId == entity.ApprovalRecordId && l.Sequence == entity.Sequence + 1).ToListAsync(cancellationToken);
+        foreach (var nextApproval in nextApprovalList)
         {
             nextApproval.SetToPendingEmail();
             _context.Update(nextApproval);
-        }
+        }     
+    }
+    private async Task SkipSameSequence(ApprovalState entity, CancellationToken cancellationToken)
+    {
+        var approvalToSkipList = await _context.Approval.Where(l => l.ApprovalRecordId == entity.ApprovalRecordId && l.Sequence == entity.Sequence && l.Id != entity.Id).ToListAsync(cancellationToken);
+        foreach (var approvalToSkip in approvalToSkipList)
+        {
+            approvalToSkip.Skip();
+            _context.Update(approvalToSkip);
+        }       
     }
 }
 public record ApprovalResult : BaseEntity

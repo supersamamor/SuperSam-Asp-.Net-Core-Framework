@@ -4,6 +4,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 using MediatR;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 {

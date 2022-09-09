@@ -17,10 +17,13 @@ public record AddMainModulePlaceHolderCommand : MainModulePlaceHolderState, IReq
 
 public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<ApplicationContext, MainModulePlaceHolderState, AddMainModulePlaceHolderCommand>, IRequestHandler<AddMainModulePlaceHolderCommand, Validation<Error, MainModulePlaceHolderState>>
 {
+	private readonly IdentityContext _identityContext;
     public AddMainModulePlaceHolderCommandHandler(ApplicationContext context,
                                     IMapper mapper,
-                                    CompositeValidator<AddMainModulePlaceHolderCommand> validator) : base(context, mapper, validator)
+                                    CompositeValidator<AddMainModulePlaceHolderCommand> validator,
+									IdentityContext identityContext) : base(context, mapper, validator)
     {
+		_identityContext = identityContext;
     }
 
     Template:[InsertAddCommandMethod]
