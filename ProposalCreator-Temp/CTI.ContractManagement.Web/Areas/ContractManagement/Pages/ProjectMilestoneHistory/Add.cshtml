@@ -1,0 +1,80 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Project Milestone History"];
+    ViewData["ActiveMainPage"] = "ProjectMilestoneHistory";
+    ViewData["Level1"] = "ContractManagement";
+}
+<form id="projectMilestoneHistory-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ProjectMilestoneHistory" />
+    </div>    
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.fn.projecthistorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectHistory/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectHistoryId").projecthistorySelect();
+
+			$.fn.milestonestageSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/MilestoneStage/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#MilestoneStageId").milestonestageSelect();
+
+			$.fn.frequencySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Frequency/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#FrequencyId").frequencySelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

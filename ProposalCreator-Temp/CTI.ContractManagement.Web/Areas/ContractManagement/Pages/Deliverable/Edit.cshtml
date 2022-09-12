@@ -1,0 +1,168 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Deliverable"];
+    ViewData["ActiveMainPage"] = "Deliverable";
+    ViewData["Level1"] = "ContractManagement";
+}
+<form id="deliverable-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Deliverable" />
+    </div> 
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ProjectDeliverableListValidationPartial" model="@Model.Deliverable" />
+<partial name="_ProjectPackageAdditionalDeliverableListValidationPartial" model="@Model.Deliverable" />
+<partial name="_ProjectDeliverableHistoryListValidationPartial" model="@Model.Deliverable" />
+<partial name="_ProjectPackageAdditionalDeliverableHistoryListValidationPartial" model="@Model.Deliverable" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeProjectDeliverableFieldValidations($('#ProjectDeliverableCount').val());
+			$('.RemoveProjectDeliverableButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectDeliverable');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$('#btnAddProjectDeliverable').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectDeliverable');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projectlistdropdowns = document.getElementsByClassName('SelectProject');
+			for ( var i=0; i< projectlistdropdowns.length; i++) {
+				$("#ProjectDeliverableList_"+i+"_ProjectId").projectSelect();
+			}
+
+			$.InitializeProjectPackageAdditionalDeliverableFieldValidations($('#ProjectPackageAdditionalDeliverableCount').val());
+			$('.RemoveProjectPackageAdditionalDeliverableButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectPackageAdditionalDeliverable');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$('#btnAddProjectPackageAdditionalDeliverable').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectPackageAdditionalDeliverable');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$.fn.projectpackageSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectPackage/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projectpackagelistdropdowns = document.getElementsByClassName('SelectProjectPackage');
+			for ( var i=0; i< projectpackagelistdropdowns.length; i++) {
+				$("#ProjectPackageAdditionalDeliverableList_"+i+"_ProjectPackageId").projectpackageSelect();
+			}
+
+			$.InitializeProjectDeliverableHistoryFieldValidations($('#ProjectDeliverableHistoryCount').val());
+			$('.RemoveProjectDeliverableHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$('#btnAddProjectDeliverableHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$.fn.projecthistorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectHistory/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projecthistorylistdropdowns = document.getElementsByClassName('SelectProjectHistory');
+			for ( var i=0; i< projecthistorylistdropdowns.length; i++) {
+				$("#ProjectDeliverableHistoryList_"+i+"_ProjectHistoryId").projecthistorySelect();
+			}
+
+			$.InitializeProjectPackageAdditionalDeliverableHistoryFieldValidations($('#ProjectPackageAdditionalDeliverableHistoryCount').val());
+			$('.RemoveProjectPackageAdditionalDeliverableHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectPackageAdditionalDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$('#btnAddProjectPackageAdditionalDeliverableHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectPackageAdditionalDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#deliverable-form', InitializeForm);
+			});
+
+			$.fn.projectpackagehistorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectPackageHistory/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projectpackagehistorylistdropdowns = document.getElementsByClassName('SelectProjectPackageHistory');
+			for ( var i=0; i< projectpackagehistorylistdropdowns.length; i++) {
+				$("#ProjectPackageAdditionalDeliverableHistoryList_"+i+"_ProjectPackageHistoryId").projectpackagehistorySelect();
+			}
+
+			$.fn.projectcategorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectCategory/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectCategoryId").projectcategorySelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

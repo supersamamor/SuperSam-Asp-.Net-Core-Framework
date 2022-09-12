@@ -1,0 +1,122 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Pricing Type List"];
+    ViewData["ActiveMainPage"] = "PricingType";
+    ViewData["Level1"] = "ContractManagement";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="pricingType" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Name"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#pricingType').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 1, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/PricingType/Index", new { area = "ContractManagement", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "name", name: "Name", responsivePriority: 1, title: '@Localizer["Name"]', searchable: true },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/PricingType/Details", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewPricingType">@Localizer["View"]</a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PricingType.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/PricingType/Edit", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditPricingType">@Localizer["Edit"]</a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PricingType.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/PricingType/Delete", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeletePricingType">@Localizer["Delete"]</a>';
+                    </text>
+                }
+				   
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PricingType.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/PricingType/Add", new { area = "ContractManagement" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#pricingType tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddPricingType",".btnEditPricingType",".btnViewPricingType",".btnDeletePricingType"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddPricingType",".btnEditPricingType",".btnViewPricingType",".btnDeletePricingType"]);
+    });
+</script>
+}

@@ -1,0 +1,39 @@
+@page
+@model DetailsModel
+@{
+    ViewData["Title"] = Localizer["View Project Category"];
+    ViewData["ActiveMainPage"] = "ProjectCategory";
+    ViewData["Level1"] = "ContractManagement";
+}
+<div class="container-fluid" id="projectCategory-container">
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ProjectCategory" />
+    </div> 
+</div>
+<div class="row">
+    <div class="col-12">
+        <p>
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ProjectCategory.Create)).Succeeded)
+            {
+                <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
+            }
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ProjectCategory.Edit)).Succeeded)
+            {
+                <a asp-page="Edit" asp-route-id="@Model.ProjectCategory.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+            }
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ProjectCategory.Delete)).Succeeded)
+            {
+                <a asp-page="Delete" asp-route-id="@Model.ProjectCategory.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+            }
+        </p>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DisableFieldsPartial" model="@("projectCategory-container")" />
+}

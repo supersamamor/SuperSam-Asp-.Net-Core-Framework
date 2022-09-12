@@ -1,0 +1,39 @@
+@using Models
+@model ProjectViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeProjectPackageFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "ProjectPackageList[" + idx + "].ProjectId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Project"});
+				reqs.push({name: "ProjectPackageList[" + idx + "].OptionNumber", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Option"});
+				reqs.push({name: "ProjectPackageList[" + idx + "].Amount", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Amount"});
+				
+			}
+			let validator = $("#project-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

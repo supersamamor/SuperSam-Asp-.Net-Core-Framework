@@ -1,0 +1,84 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Project Package History"];
+    ViewData["ActiveMainPage"] = "ProjectPackageHistory";
+    ViewData["Level1"] = "ContractManagement";
+}
+<form id="projectPackageHistory-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ProjectPackageHistory" />
+    </div>    
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ProjectPackageAdditionalDeliverableHistoryListValidationPartial" model="@Model.ProjectPackageHistory" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeProjectPackageAdditionalDeliverableHistoryFieldValidations($('#ProjectPackageAdditionalDeliverableHistoryCount').val());
+			$('.RemoveProjectPackageAdditionalDeliverableHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectPackageAdditionalDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectPackageHistory-form', InitializeForm);
+			});
+
+			$('#btnAddProjectPackageAdditionalDeliverableHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectPackageAdditionalDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectPackageHistory-form', InitializeForm);
+			});
+
+			$.fn.deliverableSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Deliverable/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var deliverablelistdropdowns = document.getElementsByClassName('SelectDeliverable');
+			for ( var i=0; i< deliverablelistdropdowns.length; i++) {
+				$("#ProjectPackageAdditionalDeliverableHistoryList_"+i+"_DeliverableId").deliverableSelect();
+			}
+
+			$.fn.projecthistorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectHistory/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectHistoryId").projecthistorySelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

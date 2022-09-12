@@ -1,0 +1,41 @@
+@using Models
+@model FrequencyViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeProjectMilestoneHistoryFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "ProjectMilestoneHistoryList[" + idx + "].ProjectHistoryId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Project"});
+				reqs.push({name: "ProjectMilestoneHistoryList[" + idx + "].MilestoneStageId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Milestone Stage"});
+				reqs.push({name: "ProjectMilestoneHistoryList[" + idx + "].Sequence", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Sequence"});
+				reqs.push({name: "ProjectMilestoneHistoryList[" + idx + "].FrequencyId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Frequency"});
+				reqs.push({name: "ProjectMilestoneHistoryList[" + idx + "].FrequencyQuantity", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Quantity"});
+				
+			}
+			let validator = $("#frequency-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

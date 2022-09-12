@@ -1,0 +1,34 @@
+@using Models
+@model ProjectMilestoneViewModel
+
+<div class="col-md-12">
+	<label asp-for="@Model.ProjectId" class="fieldrequired"></label>
+	<select asp-for="@Model.ProjectId" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectId))"><option value="">- Select Project -</option></select>
+	<span asp-validation-for="@Model.ProjectId" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.MilestoneStageId" class="fieldrequired"></label>
+	<select asp-for="@Model.MilestoneStageId" class="form-control" asp-items="@(dropdownService.GetMilestoneStageList(Model.MilestoneStageId))"><option value="">- Select Milestone Stage -</option></select>
+	<span asp-validation-for="@Model.MilestoneStageId" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.Sequence" class=""></label>
+	<input asp-for="@Model.Sequence" class="form-control"  />
+	<span asp-validation-for="@Model.Sequence" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.FrequencyId" class="fieldrequired"></label>
+	<select asp-for="@Model.FrequencyId" class="form-control" asp-items="@(dropdownService.GetFrequencyList(Model.FrequencyId))"><option value="">- Select Frequency -</option></select>
+	<span asp-validation-for="@Model.FrequencyId" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.FrequencyQuantity" class=""></label>
+	<input asp-for="@Model.FrequencyQuantity" class="form-control"  />
+	<span asp-validation-for="@Model.FrequencyQuantity" class="text-danger"></span>
+	
+</div>
+

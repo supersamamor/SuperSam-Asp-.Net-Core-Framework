@@ -1,0 +1,142 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Project List"];
+    ViewData["ActiveMainPage"] = "Project";
+    ViewData["Level1"] = "ContractManagement";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="project" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Client"]
+							</th>
+							<th>
+								@Localizer["Project Name"]
+							</th>
+							<th>
+								@Localizer["Description"]
+							</th>
+							<th>
+								@Localizer["Document Code"]
+							</th>
+							  
+							<th>
+								@Localizer["Status"]
+							</th> 							
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#project').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 5, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Project/Index", new { area = "ContractManagement", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "clientId", name: "ClientId", responsivePriority: 1, title: '@Localizer["Client"]', searchable: false },
+				{ data: "projectName", name: "ProjectName", responsivePriority: 1, title: '@Localizer["Project Name"]', searchable: true },
+				{ data: "projectDescription", name: "ProjectDescription", responsivePriority: 1, title: '@Localizer["Description"]', searchable: false },
+				{ data: "documentCode", name: "DocumentCode", responsivePriority: 1, title: '@Localizer["Document Code"]', searchable: true },
+				   
+				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Project/Details", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewProject">@Localizer["View"]</a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Project/Edit", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditProject">@Localizer["Edit"]</a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Project/Delete", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteProject">@Localizer["Delete"]</a>';
+                    </text>
+                }
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.Approve)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Project/Approve", new { area = "ContractManagement" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Approve"]</a>';
+					</text>
+				}   
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Project/Add", new { area = "ContractManagement" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#project tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddProject",".btnEditProject",".btnViewProject",".btnDeleteProject"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddProject",".btnEditProject",".btnViewProject",".btnDeleteProject"]);
+    });
+</script>
+}

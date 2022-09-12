@@ -1,0 +1,130 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Milestone Stage"];
+    ViewData["ActiveMainPage"] = "MilestoneStage";
+    ViewData["Level1"] = "ContractManagement";
+}
+<form id="milestoneStage-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.MilestoneStage" />
+    </div> 
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ProjectMilestoneListValidationPartial" model="@Model.MilestoneStage" />
+<partial name="_ProjectMilestoneHistoryListValidationPartial" model="@Model.MilestoneStage" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeProjectMilestoneFieldValidations($('#ProjectMilestoneCount').val());
+			$('.RemoveProjectMilestoneButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectMilestone');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#milestoneStage-form', InitializeForm);
+			});
+
+			$('#btnAddProjectMilestone').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectMilestone');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#milestoneStage-form', InitializeForm);
+			});
+
+			$.fn.frequencySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Frequency/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var frequencylistdropdowns = document.getElementsByClassName('SelectFrequency');
+			for ( var i=0; i< frequencylistdropdowns.length; i++) {
+				$("#ProjectMilestoneList_"+i+"_FrequencyId").frequencySelect();
+			}
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projectlistdropdowns = document.getElementsByClassName('SelectProject');
+			for ( var i=0; i< projectlistdropdowns.length; i++) {
+				$("#ProjectMilestoneList_"+i+"_ProjectId").projectSelect();
+			}
+
+			$.InitializeProjectMilestoneHistoryFieldValidations($('#ProjectMilestoneHistoryCount').val());
+			$('.RemoveProjectMilestoneHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectMilestoneHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#milestoneStage-form', InitializeForm);
+			});
+
+			$('#btnAddProjectMilestoneHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectMilestoneHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#milestoneStage-form', InitializeForm);
+			});
+
+			$.fn.projecthistorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ProjectHistory/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projecthistorylistdropdowns = document.getElementsByClassName('SelectProjectHistory');
+			for ( var i=0; i< projecthistorylistdropdowns.length; i++) {
+				$("#ProjectMilestoneHistoryList_"+i+"_ProjectHistoryId").projecthistorySelect();
+			}
+
+			$.fn.frequencySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Frequency/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var frequencylistdropdowns = document.getElementsByClassName('SelectFrequency');
+			for ( var i=0; i< frequencylistdropdowns.length; i++) {
+				$("#ProjectMilestoneHistoryList_"+i+"_FrequencyId").frequencySelect();
+			}
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

@@ -1,0 +1,87 @@
+@using Models
+@model DeliverableViewModel
+<input type="hidden" id="ProjectDeliverableHistoryCount" value="@Model?.ProjectDeliverableHistoryList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Project Deliverable History"]</h5>
+                    </button>
+                    <button type="button" id="btnAddProjectDeliverableHistory" class="btn-field btn btn-primary cancel">
+                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
+                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
+                    </button>
+                    <button class="cancel" type="button" id="btnRemoveProjectDeliverableHistory" value="RemoveProjectDeliverableHistory" style="display:none;"></button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+                <table id="projectDeliverableHistory" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+							<th style="display:none;"></th>
+                            <th>
+								@Localizer["Project"]
+							</th>
+							<th>
+								@Localizer["Amount"]
+							</th>
+							<th>
+								@Localizer["Sequence"]
+							</th>
+							
+                            <th>
+                                @Localizer["Action"]
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.ProjectDeliverableHistoryList != null)
+                        {
+                            int counter = 0;
+                            foreach (var item in Model.ProjectDeliverableHistoryList)
+                            {
+                                <tr>
+									<td style="display:none;">
+                                        <input type="hidden" name="ProjectDeliverableHistoryList[@counter].Id" value="@item.Id" />
+                                        <input type="hidden" name="ProjectDeliverableHistoryList[@counter].DeliverableId" value="@item.DeliverableId" />                                      
+                                    </td>
+                                    <td>
+										<select asp-for="@item.ProjectHistoryId" id="ProjectDeliverableHistoryList_@(counter)_ProjectHistoryId" name="ProjectDeliverableHistoryList[@counter].ProjectHistoryId" class="form-control SelectProjectHistory" asp-items="@(dropdownService.GetProjectHistoryList(item.ProjectHistoryId))" >
+											<option value="">- Select Project -</option>
+										</select>
+										<span data-valmsg-for="ProjectDeliverableHistoryList[@counter].ProjectHistoryId" asp-validation-for="@item.ProjectHistoryId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Amount" name="ProjectDeliverableHistoryList[@counter].Amount" class="form-control"  />
+										<span data-valmsg-for="ProjectDeliverableHistoryList[@counter].Amount" asp-validation-for="@item.Amount" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Sequence" name="ProjectDeliverableHistoryList[@counter].Sequence" class="form-control"  />
+										<span data-valmsg-for="ProjectDeliverableHistoryList[@counter].Sequence" asp-validation-for="@item.Sequence" class="text-danger"></span>
+										
+									</td>
+									
+                                    <td>
+                                        <button type="button" class="btn-field btn btn-danger RemoveProjectDeliverableHistoryButton cancel" title="@Localizer["Remove ProjectDeliverableHistory"]" removeId="@(item.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

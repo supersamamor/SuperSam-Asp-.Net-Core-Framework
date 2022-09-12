@@ -1,0 +1,39 @@
+@page
+@model DetailsModel
+@{
+    ViewData["Title"] = Localizer["View Pricing Type"];
+    ViewData["ActiveMainPage"] = "PricingType";
+    ViewData["Level1"] = "ContractManagement";
+}
+<div class="container-fluid" id="pricingType-container">
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.PricingType" />
+    </div> 
+</div>
+<div class="row">
+    <div class="col-12">
+        <p>
+            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PricingType.Create)).Succeeded)
+            {
+                <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
+            }
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PricingType.Edit)).Succeeded)
+            {
+                <a asp-page="Edit" asp-route-id="@Model.PricingType.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+            }
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PricingType.Delete)).Succeeded)
+            {
+                <a asp-page="Delete" asp-route-id="@Model.PricingType.Id" class="btn btn-danger">@Localizer["Delete"]</a>
+            }
+        </p>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DisableFieldsPartial" model="@("pricingType-container")" />
+}

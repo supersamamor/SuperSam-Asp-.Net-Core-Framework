@@ -1,0 +1,57 @@
+@{
+    var appName = Configuration.GetValue<string>("Application");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewData["Title"] - @appName</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css" />
+    @RenderSection("Styles", required: false)
+    <script asp-add-nonce>
+        @Html.Raw(JavaScriptSnippet.ScriptBody)
+    </script>
+</head>
+<style>
+.bg-login-image{
+    background-image: url(/img/corptech2.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    margin-top: 25%;
+    background-position-x: center;
+    background-position-y: top;
+}
+</style>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1 bg-login-image"></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script asp-add-nonce src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script asp-add-nonce src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script asp-add-nonce src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+

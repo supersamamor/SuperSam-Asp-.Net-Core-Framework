@@ -1,0 +1,134 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Client List"];
+    ViewData["ActiveMainPage"] = "Client";
+    ViewData["Level1"] = "ContractManagement";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="client" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Full Name"]
+							</th>
+							<th>
+								@Localizer["Position"]
+							</th>
+							<th>
+								@Localizer["Company Name"]
+							</th>
+							<th>
+								@Localizer["Email"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#client').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 4, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Client/Index", new { area = "ContractManagement", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "contactPersonName", name: "ContactPersonName", responsivePriority: 1, title: '@Localizer["Full Name"]', searchable: true },
+				{ data: "contactPersonPosition", name: "ContactPersonPosition", responsivePriority: 1, title: '@Localizer["Position"]', searchable: true },
+				{ data: "companyName", name: "CompanyName", responsivePriority: 1, title: '@Localizer["Company Name"]', searchable: true },
+				{ data: "emailAddress", name: "EmailAddress", responsivePriority: 1, title: '@Localizer["Email"]', searchable: true },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Client/Details", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewClient">@Localizer["View"]</a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Client.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Client/Edit", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditClient">@Localizer["Edit"]</a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Client.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Client/Delete", new { area = "ContractManagement" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteClient">@Localizer["Delete"]</a>';
+                    </text>
+                }
+				   
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Client.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Client/Add", new { area = "ContractManagement" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#client tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddClient",".btnEditClient",".btnViewClient",".btnDeleteClient"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddClient",".btnEditClient",".btnViewClient",".btnDeleteClient"]);
+    });
+</script>
+}

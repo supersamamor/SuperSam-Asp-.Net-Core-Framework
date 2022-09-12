@@ -1,0 +1,164 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit ProjectHistory"];
+    ViewData["ActiveMainPage"] = "ProjectHistory";
+    ViewData["Level1"] = "ContractManagement";
+}
+<form enctype="multipart/form-data" id="projectHistory-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ProjectHistory" />
+    </div> 
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ProjectDeliverableHistoryListValidationPartial" model="@Model.ProjectHistory" />
+<partial name="_ProjectMilestoneHistoryListValidationPartial" model="@Model.ProjectHistory" />
+<partial name="_ProjectPackageHistoryListValidationPartial" model="@Model.ProjectHistory" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeProjectDeliverableHistoryFieldValidations($('#ProjectDeliverableHistoryCount').val());
+			$('.RemoveProjectDeliverableHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectHistory-form', InitializeForm);
+			});
+
+			$('#btnAddProjectDeliverableHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectDeliverableHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectHistory-form', InitializeForm);
+			});
+
+			$.fn.deliverableSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Deliverable/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var deliverablelistdropdowns = document.getElementsByClassName('SelectDeliverable');
+			for ( var i=0; i< deliverablelistdropdowns.length; i++) {
+				$("#ProjectDeliverableHistoryList_"+i+"_DeliverableId").deliverableSelect();
+			}
+
+			$.InitializeProjectMilestoneHistoryFieldValidations($('#ProjectMilestoneHistoryCount').val());
+			$('.RemoveProjectMilestoneHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectMilestoneHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectHistory-form', InitializeForm);
+			});
+
+			$('#btnAddProjectMilestoneHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectMilestoneHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectHistory-form', InitializeForm);
+			});
+
+			$.fn.milestonestageSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/MilestoneStage/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var milestonestagelistdropdowns = document.getElementsByClassName('SelectMilestoneStage');
+			for ( var i=0; i< milestonestagelistdropdowns.length; i++) {
+				$("#ProjectMilestoneHistoryList_"+i+"_MilestoneStageId").milestonestageSelect();
+			}
+
+			$.fn.frequencySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Frequency/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var frequencylistdropdowns = document.getElementsByClassName('SelectFrequency');
+			for ( var i=0; i< frequencylistdropdowns.length; i++) {
+				$("#ProjectMilestoneHistoryList_"+i+"_FrequencyId").frequencySelect();
+			}
+
+			$.InitializeProjectPackageHistoryFieldValidations($('#ProjectPackageHistoryCount').val());
+			$('.RemoveProjectPackageHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveProjectPackageHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectHistory-form', InitializeForm);
+			});
+
+			$('#btnAddProjectPackageHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddProjectPackageHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#projectHistory-form', InitializeForm);
+			});
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectId").projectSelect();
+
+			$.fn.clientSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Client/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ClientId").clientSelect();
+
+			$.fn.pricingtypeSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/PricingType/Index", new { area = "ContractManagement", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#PricingTypeId").pricingtypeSelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}
