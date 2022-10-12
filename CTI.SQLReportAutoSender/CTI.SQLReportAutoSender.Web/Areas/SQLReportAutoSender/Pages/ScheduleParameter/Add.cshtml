@@ -1,0 +1,115 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Schedule Parameter"];
+    ViewData["ActiveMainPage"] = "ScheduleParameter";
+    ViewData["Level1"] = "SQLReportAutoSender";
+}
+<form id="scheduleParameter-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ScheduleParameter" />
+    </div>    
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
+                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
+            </p>
+        </div>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ScheduleFrequencyParameterSetupListValidationPartial" model="@Model.ScheduleParameter" />
+<partial name="_ReportScheduleSettingListValidationPartial" model="@Model.ScheduleParameter" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeScheduleFrequencyParameterSetupFieldValidations($('#ScheduleFrequencyParameterSetupCount').val());
+			$('.RemoveScheduleFrequencyParameterSetupButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveScheduleFrequencyParameterSetup');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleParameter-form', InitializeForm);
+			});
+
+			$('#btnAddScheduleFrequencyParameterSetup').on( 'click', function () {
+				$('#AsyncAction').val('AddScheduleFrequencyParameterSetup');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleParameter-form', InitializeForm);
+			});
+
+			$.fn.schedulefrequencySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ScheduleFrequency/Index", new { area = "SQLReportAutoSender", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var schedulefrequencylistdropdowns = document.getElementsByClassName('SelectScheduleFrequency');
+			for ( var i=0; i< schedulefrequencylistdropdowns.length; i++) {
+				$("#ScheduleFrequencyParameterSetupList_"+i+"_ScheduleFrequencyId").schedulefrequencySelect();
+			}
+
+			$.InitializeReportScheduleSettingFieldValidations($('#ReportScheduleSettingCount').val());
+			$('.RemoveReportScheduleSettingButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveReportScheduleSetting');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleParameter-form', InitializeForm);
+			});
+
+			$('#btnAddReportScheduleSetting').on( 'click', function () {
+				$('#AsyncAction').val('AddReportScheduleSetting');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleParameter-form', InitializeForm);
+			});
+
+			$.fn.schedulefrequencySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ScheduleFrequency/Index", new { area = "SQLReportAutoSender", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var schedulefrequencylistdropdowns = document.getElementsByClassName('SelectScheduleFrequency');
+			for ( var i=0; i< schedulefrequencylistdropdowns.length; i++) {
+				$("#ReportScheduleSettingList_"+i+"_ScheduleFrequencyId").schedulefrequencySelect();
+			}
+
+			$.fn.reportSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Report/Index", new { area = "SQLReportAutoSender", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var reportlistdropdowns = document.getElementsByClassName('SelectReport');
+			for ( var i=0; i< reportlistdropdowns.length; i++) {
+				$("#ReportScheduleSettingList_"+i+"_ReportId").reportSelect();
+			}
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

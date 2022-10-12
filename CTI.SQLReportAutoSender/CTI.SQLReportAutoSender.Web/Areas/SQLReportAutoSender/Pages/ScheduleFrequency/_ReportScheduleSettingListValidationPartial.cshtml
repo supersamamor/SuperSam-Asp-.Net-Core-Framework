@@ -1,0 +1,40 @@
+@using Models
+@model ScheduleFrequencyViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeReportScheduleSettingFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "ReportScheduleSettingList[" + idx + "].ReportId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "ReportId"});
+				reqs.push({name: "ReportScheduleSettingList[" + idx + "].ScheduleFrequencyId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "ScheduleFrequencyId"});
+				reqs.push({name: "ReportScheduleSettingList[" + idx + "].ScheduleParameterId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "ScheduleParameterId"});
+				reqs.push({name: "ReportScheduleSettingList[" + idx + "].Value", el: "Input", minlength:0, maxlength:50, isrequired: true, description: "Value"});
+				
+			}
+			let validator = $("#scheduleFrequency-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

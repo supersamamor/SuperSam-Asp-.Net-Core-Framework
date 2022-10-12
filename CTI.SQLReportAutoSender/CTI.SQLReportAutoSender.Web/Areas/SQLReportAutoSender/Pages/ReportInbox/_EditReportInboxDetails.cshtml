@@ -1,0 +1,28 @@
+@using Models
+@model ReportInboxViewModel
+
+<div class="col-md-12">
+	<label asp-for="@Model.ReportId" class="fieldrequired"></label>
+	<input  asp-for="ForeignKeyReport" class="form-control"   readonly />
+	<span asp-validation-for="@Model.ReportId" class="text-danger"></span>
+	<input type="hidden" asp-for="@Model.ReportId"/>
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.Status" class="fieldrequired"></label>
+	<input asp-for="@Model.Status" class="form-control" maxlength="450"  readonly/>
+	<span asp-validation-for="@Model.Status" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.DateTimeSent" class="fieldrequired"></label>
+	<input asp-for="@Model.DateTimeSent" class="form-control"   readonly/>
+	<span asp-validation-for="@Model.DateTimeSent" class="text-danger"></span>
+	
+</div>
+<div class="col-md-12">
+	<label asp-for="@Model.Remarks" class="fieldrequired"></label>
+	<input asp-for="@Model.Remarks" class="form-control" maxlength="1000"  readonly/>
+	<span asp-validation-for="@Model.Remarks" class="text-danger"></span>
+	
+</div>
+

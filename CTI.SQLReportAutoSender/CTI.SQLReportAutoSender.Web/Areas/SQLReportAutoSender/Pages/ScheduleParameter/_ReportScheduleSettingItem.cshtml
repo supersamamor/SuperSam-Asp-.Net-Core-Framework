@@ -1,0 +1,51 @@
+@using Models
+@model ScheduleParameterViewModel
+<input type="hidden" id="ReportScheduleSettingCount" value="@Model?.ReportScheduleSettingList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Report Schedule"]</h5>
+                    </button>     
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+				<div class="row">
+				@if (Model?.ReportScheduleSettingList != null)
+				{
+					int counter = 0;
+					foreach (var item in Model.ReportScheduleSettingList)
+					{
+						<input type="hidden" name="ReportScheduleSettingList[@counter].Id" value="@item.Id" />
+						<input type="hidden" name="ReportScheduleSettingList[@counter].ScheduleParameterId" value="@item.ScheduleParameterId"  />
+						<div class="col-md-12">
+								<label asp-for="@item.ReportId"></label>
+								<select asp-for="@item.ReportId" id="ReportScheduleSettingList_@(counter)_ReportId" name="ReportScheduleSettingList[@counter].ReportId" class="form-control SelectReport" asp-items="@(dropdownService.GetReportList(item.ReportId))"><option value="">- Select  -</option></select>
+									<span data-valmsg-for="ReportScheduleSettingList[@counter].ReportId" asp-validation-for="@item.ReportId" class="text-danger"></span>
+						</div>
+						<div class="col-md-12">
+								<label asp-for="@item.ScheduleFrequencyId"></label>
+								<select asp-for="@item.ScheduleFrequencyId" id="ReportScheduleSettingList_@(counter)_ScheduleFrequencyId" name="ReportScheduleSettingList[@counter].ScheduleFrequencyId" class="form-control SelectScheduleFrequency" asp-items="@(dropdownService.GetScheduleFrequencyList(item.ScheduleFrequencyId))"><option value="">- Select  -</option></select>
+									<span data-valmsg-for="ReportScheduleSettingList[@counter].ScheduleFrequencyId" asp-validation-for="@item.ScheduleFrequencyId" class="text-danger"></span>
+						</div>
+						<div class="col-md-12">
+								<label asp-for="@item.Value"></label>
+								<input asp-for="@item.Value"  name="ReportScheduleSettingList[@counter].Value" class="form-control" maxlength="50"/>
+									<span data-valmsg-for="ReportScheduleSettingList[@counter].Value" asp-validation-for="@item.Value" class="text-danger"></span>
+						</div>
+						
+						counter++;
+					}
+				}	
+				</div>				                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+@using Models
+@model ApproverSetupViewModel
+
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Approver Setup Info"]</h5>
+                    </button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <input type="hidden" asp-for="@Model.Id" name="Id" />
+                <input type="hidden" asp-for="@Model.ApprovalSetupType" name="ApprovalSetupType" value="@CTI.SQLReportAutoSender.Core.SQLReportAutoSender.ApprovalSetupTypes.Modular"/>
+				<div class="row">
+					<partial name="_EditApproverSetupDetails" model="Model" />
+				</div>				
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_ApproverAssignmentList" model="Model" />

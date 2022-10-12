@@ -1,0 +1,71 @@
+@using Models
+@model ScheduleFrequencyViewModel
+<input type="hidden" id="ScheduleFrequencyParameterSetupCount" value="@Model?.ScheduleFrequencyParameterSetupList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Frequency Parameter Setup"]</h5>
+                    </button>
+                    <button type="button" id="btnAddScheduleFrequencyParameterSetup" class="btn-field btn btn-primary cancel">
+                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
+                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
+                    </button>
+                    <button class="cancel" type="button" id="btnRemoveScheduleFrequencyParameterSetup" value="RemoveScheduleFrequencyParameterSetup" style="display:none;"></button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+                <table id="scheduleFrequencyParameterSetup" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+							<th style="display:none;"></th>
+                            <th>
+								@Localizer["ScheduleParameterId"]
+							</th>
+							
+                            <th>
+                                @Localizer["Action"]
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.ScheduleFrequencyParameterSetupList != null)
+                        {
+                            int counter = 0;
+                            foreach (var item in Model.ScheduleFrequencyParameterSetupList)
+                            {
+                                <tr>
+									<td style="display:none;">
+                                        <input type="hidden" name="ScheduleFrequencyParameterSetupList[@counter].Id" value="@item.Id" />
+                                        <input type="hidden" name="ScheduleFrequencyParameterSetupList[@counter].ScheduleFrequencyId" value="@item.ScheduleFrequencyId" />                                      
+                                    </td>
+                                    <td>
+										<select asp-for="@item.ScheduleParameterId" id="ScheduleFrequencyParameterSetupList_@(counter)_ScheduleParameterId" name="ScheduleFrequencyParameterSetupList[@counter].ScheduleParameterId" class="form-control SelectScheduleParameter" asp-items="@(dropdownService.GetScheduleParameterList(item.ScheduleParameterId))" >
+											<option value="">- Select  -</option>
+										</select>
+										<span data-valmsg-for="ScheduleFrequencyParameterSetupList[@counter].ScheduleParameterId" asp-validation-for="@item.ScheduleParameterId" class="text-danger"></span>
+										
+									</td>
+									
+                                    <td>
+                                        <button type="button" class="btn-field btn btn-danger RemoveScheduleFrequencyParameterSetupButton cancel" title="@Localizer["Remove ScheduleFrequencyParameterSetup"]" removeId="@(item.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+@using Models
+@model ReportViewModel
+<input type="hidden" id="MailSettingCount" value="@Model?.MailSettingList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Mail Setting"]</h5>
+                    </button>     
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+				<div class="row">
+				@if (Model?.MailSettingList != null)
+				{
+					int counter = 0;
+					foreach (var item in Model.MailSettingList)
+					{
+						<input type="hidden" name="MailSettingList[@counter].Id" value="@item.Id" />
+						<input type="hidden" name="MailSettingList[@counter].ReportId" value="@item.ReportId"  />
+						<div class="col-md-12">
+								<label asp-for="@item.Account"></label>
+								<input asp-for="@item.Account"  name="MailSettingList[@counter].Account" class="form-control" maxlength="50"/>
+									<span data-valmsg-for="MailSettingList[@counter].Account" asp-validation-for="@item.Account" class="text-danger"></span>
+						</div>
+						<div class="col-md-12">
+								<label asp-for="@item.Password"></label>
+								<input asp-for="@item.Password"  name="MailSettingList[@counter].Password" class="form-control" maxlength="255"/>
+									<span data-valmsg-for="MailSettingList[@counter].Password" asp-validation-for="@item.Password" class="text-danger"></span>
+						</div>
+						<div class="col-md-12">
+								<label asp-for="@item.Body"></label>
+								<input asp-for="@item.Body"  name="MailSettingList[@counter].Body" class="form-control" maxlength="2500"/>
+									<span data-valmsg-for="MailSettingList[@counter].Body" asp-validation-for="@item.Body" class="text-danger"></span>
+						</div>
+						<div class="col-md-12">
+								<label asp-for="@item.Subject"></label>
+								<input asp-for="@item.Subject"  name="MailSettingList[@counter].Subject" class="form-control" maxlength="50"/>
+									<span data-valmsg-for="MailSettingList[@counter].Subject" asp-validation-for="@item.Subject" class="text-danger"></span>
+						</div>
+						
+						counter++;
+					}
+				}	
+				</div>				                
+            </div>
+        </div>
+    </div>
+</div>
