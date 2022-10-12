@@ -27,7 +27,7 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <partial name="_ScheduleFrequencyParameterSetupListValidationPartial" model="@Model.ScheduleParameter" />
-<partial name="_ReportScheduleSettingListValidationPartial" model="@Model.ScheduleParameter" />
+
 
 <script asp-add-nonce>
     $(document).ready(function () {
@@ -65,19 +65,6 @@
 			for ( var i=0; i< schedulefrequencylistdropdowns.length; i++) {
 				$("#ScheduleFrequencyParameterSetupList_"+i+"_ScheduleFrequencyId").schedulefrequencySelect();
 			}
-
-			$.InitializeReportScheduleSettingFieldValidations($('#ReportScheduleSettingCount').val());
-			$('.RemoveReportScheduleSettingButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveReportScheduleSetting');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleParameter-form', InitializeForm);
-			});
-
-			$('#btnAddReportScheduleSetting').on( 'click', function () {
-				$('#AsyncAction').val('AddReportScheduleSetting');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleParameter-form', InitializeForm);
-			});
-
 			$.fn.schedulefrequencySelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -88,11 +75,7 @@
 				});
 				return this;
 			};
-			var schedulefrequencylistdropdowns = document.getElementsByClassName('SelectScheduleFrequency');
-			for ( var i=0; i< schedulefrequencylistdropdowns.length; i++) {
-				$("#ReportScheduleSettingList_"+i+"_ScheduleFrequencyId").schedulefrequencySelect();
-			}
-
+		
 			$.fn.reportSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -102,12 +85,7 @@
 					});
 				});
 				return this;
-			};
-			var reportlistdropdowns = document.getElementsByClassName('SelectReport');
-			for ( var i=0; i< reportlistdropdowns.length; i++) {
-				$("#ReportScheduleSettingList_"+i+"_ReportId").reportSelect();
-			}
-
+			};			
 		}	
 		InitializeForm();
     });

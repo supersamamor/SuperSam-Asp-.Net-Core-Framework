@@ -32,8 +32,7 @@ public class EditScheduleFrequencyCommandHandler : BaseCommandHandler<Applicatio
 	{
 		var entity = await Context.ScheduleFrequency.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
-		await UpdateScheduleFrequencyParameterSetupList(entity, request, cancellationToken);
-		await UpdateReportScheduleSettingList(entity, request, cancellationToken);
+		await UpdateScheduleFrequencyParameterSetupList(entity, request, cancellationToken);		
 		Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ScheduleFrequencyState>(entity);
@@ -66,36 +65,7 @@ public class EditScheduleFrequencyCommandHandler : BaseCommandHandler<Applicatio
 				}
 			}
 		}
-	}
-	private async Task UpdateReportScheduleSettingList(ScheduleFrequencyState entity, EditScheduleFrequencyCommand request, CancellationToken cancellationToken)
-	{
-		IList<ReportScheduleSettingState> reportScheduleSettingListForDeletion = new List<ReportScheduleSettingState>();
-		var queryReportScheduleSettingForDeletion = Context.ReportScheduleSetting.Where(l => l.ScheduleFrequencyId == request.Id).AsNoTracking();
-		if (entity.ReportScheduleSettingList?.Count > 0)
-		{
-			queryReportScheduleSettingForDeletion = queryReportScheduleSettingForDeletion.Where(l => !(entity.ReportScheduleSettingList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		reportScheduleSettingListForDeletion = await queryReportScheduleSettingForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var reportScheduleSetting in reportScheduleSettingListForDeletion!)
-		{
-			Context.Entry(reportScheduleSetting).State = EntityState.Deleted;
-		}
-		if (entity.ReportScheduleSettingList?.Count > 0)
-		{
-			foreach (var reportScheduleSetting in entity.ReportScheduleSettingList.Where(l => !reportScheduleSettingListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<ReportScheduleSettingState>(x => x.Id == reportScheduleSetting.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(reportScheduleSetting).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(reportScheduleSetting).State = EntityState.Modified;
-				}
-			}
-		}
-	}
-	
+	}	
 }
 
 public class EditScheduleFrequencyCommandValidator : AbstractValidator<EditScheduleFrequencyCommand>

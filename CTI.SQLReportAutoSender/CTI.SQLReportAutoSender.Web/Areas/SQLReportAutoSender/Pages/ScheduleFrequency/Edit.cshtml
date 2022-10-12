@@ -27,7 +27,6 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <partial name="_ScheduleFrequencyParameterSetupListValidationPartial" model="@Model.ScheduleFrequency" />
-<partial name="_ReportScheduleSettingListValidationPartial" model="@Model.ScheduleFrequency" />
 
 <script asp-add-nonce>
     $(document).ready(function () {
@@ -65,19 +64,7 @@
 			for ( var i=0; i< scheduleparameterlistdropdowns.length; i++) {
 				$("#ScheduleFrequencyParameterSetupList_"+i+"_ScheduleParameterId").scheduleparameterSelect();
 			}
-
-			$.InitializeReportScheduleSettingFieldValidations($('#ReportScheduleSettingCount').val());
-			$('.RemoveReportScheduleSettingButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveReportScheduleSetting');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleFrequency-form', InitializeForm);
-			});
-
-			$('#btnAddReportScheduleSetting').on( 'click', function () {
-				$('#AsyncAction').val('AddReportScheduleSetting');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#scheduleFrequency-form', InitializeForm);
-			});
-
+					
 			$.fn.reportSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -87,11 +74,7 @@
 					});
 				});
 				return this;
-			};
-			var reportlistdropdowns = document.getElementsByClassName('SelectReport');
-			for ( var i=0; i< reportlistdropdowns.length; i++) {
-				$("#ReportScheduleSettingList_"+i+"_ReportId").reportSelect();
-			}
+			};		
 
 			$.fn.scheduleparameterSelect = function() {
 				this.filter("select").each(function() {
@@ -102,12 +85,7 @@
 					});
 				});
 				return this;
-			};
-			var scheduleparameterlistdropdowns = document.getElementsByClassName('SelectScheduleParameter');
-			for ( var i=0; i< scheduleparameterlistdropdowns.length; i++) {
-				$("#ReportScheduleSettingList_"+i+"_ScheduleParameterId").scheduleparameterSelect();
-			}
-
+			};	
 		}	
 		InitializeForm();
     });

@@ -34,8 +34,7 @@ public class AddScheduleFrequencyCommandHandler : BaseCommandHandler<Application
 	public async Task<Validation<Error, ScheduleFrequencyState>> AddScheduleFrequency(AddScheduleFrequencyCommand request, CancellationToken cancellationToken)
 	{
 		ScheduleFrequencyState entity = Mapper.Map<ScheduleFrequencyState>(request);
-		UpdateScheduleFrequencyParameterSetupList(entity);
-		UpdateReportScheduleSettingList(entity);
+		UpdateScheduleFrequencyParameterSetupList(entity);	
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ScheduleFrequencyState>(entity);
@@ -51,18 +50,6 @@ public class AddScheduleFrequencyCommandHandler : BaseCommandHandler<Application
 			}
 		}
 	}
-	private void UpdateReportScheduleSettingList(ScheduleFrequencyState entity)
-	{
-		if (entity.ReportScheduleSettingList?.Count > 0)
-		{
-			foreach (var reportScheduleSetting in entity.ReportScheduleSettingList!)
-			{
-				Context.Entry(reportScheduleSetting).State = EntityState.Added;
-			}
-		}
-	}
-	
-	
 }
 
 public class AddScheduleFrequencyCommandValidator : AbstractValidator<AddScheduleFrequencyCommand>
