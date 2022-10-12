@@ -8,7 +8,7 @@ public record ReportState : BaseEntity
 	public string Description { get; init; } = "";
 	public string ScheduleFrequencyId { get; init; } = "";
 	public bool IsActive { get; init; }
-	public string LatestFileGeneratedPath { get; init; } = "";
+	public string? LatestFileGeneratedPath { get; init; } = "";
 	public int MultipleReportType { get; init; }
 	
 	public ScheduleFrequencyState? ScheduleFrequency { get; init; }

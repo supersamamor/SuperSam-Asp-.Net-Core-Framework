@@ -7,15 +7,15 @@ namespace CTI.SQLReportAutoSender.Web.Areas.SQLReportAutoSender.Models;
 
 public record CustomScheduleViewModel : BaseViewModel
 {	
-	[Display(Name = "ReportId")]
+	[Display(Name = "Report Id")]
 	[Required]
 	
 	public string ReportId { get; init; } = "";
 	public string?  ForeignKeyReport { get; set; }
-	[Display(Name = "SequenceNumber")]
+	[Display(Name = "Sequence Number")]
 	[Required]
 	public int SequenceNumber { get; init; }
-	[Display(Name = "DateTimeSchedule")]
+	[Display(Name = "Date/Time Schedule")]
 	[Required]
 	public DateTime DateTimeSchedule { get; init; } = DateTime.Now.Date;
 	

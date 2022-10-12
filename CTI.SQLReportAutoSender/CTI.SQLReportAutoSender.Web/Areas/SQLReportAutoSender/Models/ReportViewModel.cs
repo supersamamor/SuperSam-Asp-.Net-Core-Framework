@@ -11,19 +11,18 @@ public record ReportViewModel : BaseViewModel
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Description { get; init; } = "";
-	[Display(Name = "ScheduleFrequencyId")]
+	[Display(Name = "Schedule Frequency")]
 	[Required]
 	
 	public string ScheduleFrequencyId { get; init; } = "";
 	public string?  ForeignKeyScheduleFrequency { get; set; }
-	[Display(Name = "IsActive")]
+	[Display(Name = "Active")]
 	[Required]
 	public bool IsActive { get; init; }
-	[Display(Name = "LatestFileGeneratedPath")]
-	[Required]
+	[Display(Name = "Latest File Generated Path")]
 	[StringLength(500, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string LatestFileGeneratedPath { get; init; } = "";
-	[Display(Name = "MultipleReportType")]
+	public string? LatestFileGeneratedPath { get; init; } = "";
+	[Display(Name = "Multiple Report Type")]
 	[Required]
 	public int MultipleReportType { get; init; }
 	

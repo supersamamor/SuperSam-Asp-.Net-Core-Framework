@@ -7,7 +7,7 @@ namespace CTI.SQLReportAutoSender.Web.Areas.SQLReportAutoSender.Models;
 
 public record ReportInboxViewModel : BaseViewModel
 {	
-	[Display(Name = "ReportId")]
+	[Display(Name = "Report Id")]
 	[Required]
 	
 	public string ReportId { get; init; } = "";
@@ -16,7 +16,7 @@ public record ReportInboxViewModel : BaseViewModel
 	[Required]
 	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Status { get; init; } = "";
-	[Display(Name = "DateTimeSent")]
+	[Display(Name = "Date/Time Sent")]
 	[Required]
 	public DateTime DateTimeSent { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Remarks")]

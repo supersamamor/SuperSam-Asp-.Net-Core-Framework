@@ -52,9 +52,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
-        modelBuilder.Entity<ScheduleFrequencyState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ScheduleFrequencyState>().HasIndex(p => p.Entity);modelBuilder.Entity<ScheduleFrequencyState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ScheduleParameterState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ScheduleParameterState>().HasIndex(p => p.Entity);modelBuilder.Entity<ScheduleParameterState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ScheduleFrequencyParameterSetupState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ScheduleFrequencyParameterSetupState>().HasIndex(p => p.Entity);modelBuilder.Entity<ScheduleFrequencyParameterSetupState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<ScheduleFrequencyState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ScheduleFrequencyState>().HasIndex(p => p.Entity);
+		modelBuilder.Entity<ScheduleParameterState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ScheduleParameterState>().HasIndex(p => p.Entity);
+		modelBuilder.Entity<ScheduleFrequencyParameterSetupState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ScheduleFrequencyParameterSetupState>().HasIndex(p => p.Entity);
 		modelBuilder.Entity<ReportState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ReportState>().HasIndex(p => p.Entity);modelBuilder.Entity<ReportState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ReportDetailState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ReportDetailState>().HasIndex(p => p.Entity);modelBuilder.Entity<ReportDetailState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<MailSettingState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<MailSettingState>().HasIndex(p => p.Entity);modelBuilder.Entity<MailSettingState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);

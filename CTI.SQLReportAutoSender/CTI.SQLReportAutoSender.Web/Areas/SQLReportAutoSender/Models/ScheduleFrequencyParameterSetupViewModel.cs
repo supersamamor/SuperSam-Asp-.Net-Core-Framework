@@ -7,12 +7,12 @@ namespace CTI.SQLReportAutoSender.Web.Areas.SQLReportAutoSender.Models;
 
 public record ScheduleFrequencyParameterSetupViewModel : BaseViewModel
 {	
-	[Display(Name = "ScheduleFrequencyId")]
+	[Display(Name = "Schedule Frequency")]
 	[Required]
 	
 	public string ScheduleFrequencyId { get; init; } = "";
 	public string?  ForeignKeyScheduleFrequency { get; set; }
-	[Display(Name = "ScheduleParameterId")]
+	[Display(Name = "Schedule Parameter")]
 	[Required]
 	
 	public string ScheduleParameterId { get; init; } = "";

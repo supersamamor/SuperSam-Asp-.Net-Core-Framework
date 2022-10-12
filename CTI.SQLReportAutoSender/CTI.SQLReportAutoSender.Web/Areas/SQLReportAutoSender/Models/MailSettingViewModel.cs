@@ -7,7 +7,7 @@ namespace CTI.SQLReportAutoSender.Web.Areas.SQLReportAutoSender.Models;
 
 public record MailSettingViewModel : BaseViewModel
 {	
-	[Display(Name = "ReportId")]
+	[Display(Name = "Report Id")]
 	[Required]
 	
 	public string ReportId { get; init; } = "";
