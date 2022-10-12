@@ -5,6 +5,11 @@
     ViewData["ActiveMainPage"] = "Report";
     ViewData["Level1"] = "SQLReportAutoSender";
 }
+<style>
+ body * {
+ outline:0px dashed red;
+ }
+</style>
 <form id="report-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
 	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />

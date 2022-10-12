@@ -43,7 +43,7 @@ namespace CTI.SQLReportAutoSender.Infrastructure.Migrations
                                     ,[CreatedDate]
                                     ,[LastModifiedBy]
                                     ,[LastModifiedDate])
-                    Values(NewId(),''" + Frequency.CustomDates + @"'','''','''',GetDate(),'''',GetDate())')");
+                    Values(''" + Frequency.CustomDateId + @"'',''" + Frequency.CustomDates + @"'','''','''',GetDate(),'''',GetDate())')");
 
             migrationBuilder.Sql(@"Exec ('Insert Into [dbo].[ScheduleParameter] ([Id]
                                     ,[Description]

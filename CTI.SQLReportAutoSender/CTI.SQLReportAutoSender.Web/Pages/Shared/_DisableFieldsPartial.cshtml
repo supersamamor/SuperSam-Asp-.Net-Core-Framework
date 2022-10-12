@@ -5,6 +5,7 @@
     $('#@Model input').attr('readonly', true);
 	$('#@Model textarea').attr('readonly', true);
     $("#@Model input[type='checkbox']").prop("disabled", "disabled");
+    $("#@Model input[type='radio']").prop("disabled", "disabled");
     $('#@Model .btn-field').attr('class', "btn-field btn btn-secondary");
     $('#@Model select').on('mousedown', function(e) {
        e.preventDefault();

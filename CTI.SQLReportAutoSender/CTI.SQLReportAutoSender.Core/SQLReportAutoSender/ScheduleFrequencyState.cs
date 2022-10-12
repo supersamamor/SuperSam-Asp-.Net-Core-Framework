@@ -13,4 +13,6 @@ public static class Frequency
 	public static string Weekly { get; set; } = "Weekly";
 	public static string Daily { get; set; } = "Daily";
 	public static string CustomDates { get; set; } = "Custom Dates";
+	public static string CustomDateId { get; set; } = "EE1A0DAF-D24A-4553-BC29-F472A1CDE62D";
+	
 }

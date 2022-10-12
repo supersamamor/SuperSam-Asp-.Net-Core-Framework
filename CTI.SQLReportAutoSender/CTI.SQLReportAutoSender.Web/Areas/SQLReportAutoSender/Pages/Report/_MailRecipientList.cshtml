@@ -25,14 +25,14 @@
                 <table id="mailRecipient" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
-							<th style="display:none;"></th>
+                            <th style="display:none;"></th>
                             <th>
-								@Localizer["Recipient Email"]
-							</th>
-							<th>
-								@Localizer["Sequence Number"]
-							</th>
-							
+                                @Localizer["Recipient Email"]
+                            </th>
+                            <th>
+                                @Localizer["Sequence Number"]
+                            </th>
+
                             <th>
                                 @Localizer["Action"]
                             </th>
@@ -45,21 +45,21 @@
                             foreach (var item in Model.MailRecipientList)
                             {
                                 <tr>
-									<td style="display:none;">
+                                    <td style="display:none;">
                                         <input type="hidden" name="MailRecipientList[@counter].Id" value="@item.Id" />
-                                        <input type="hidden" name="MailRecipientList[@counter].ReportId" value="@item.ReportId" />                                      
+                                        <input type="hidden" name="MailRecipientList[@counter].ReportId" value="@item.ReportId" />
                                     </td>
                                     <td>
-										<input  asp-for="@item.RecipientEmail" name="MailRecipientList[@counter].RecipientEmail" class="form-control" maxlength="100" />
-										<span data-valmsg-for="MailRecipientList[@counter].RecipientEmail" asp-validation-for="@item.RecipientEmail" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.SequenceNumber" name="MailRecipientList[@counter].SequenceNumber" class="form-control"  />
-										<span data-valmsg-for="MailRecipientList[@counter].SequenceNumber" asp-validation-for="@item.SequenceNumber" class="text-danger"></span>
-										
-									</td>
-									
+                                        <input asp-for="@item.RecipientEmail" name="MailRecipientList[@counter].RecipientEmail" class="form-control" maxlength="100" />
+                                        <span data-valmsg-for="MailRecipientList[@counter].RecipientEmail" asp-validation-for="@item.RecipientEmail" class="text-danger"></span>
+
+                                    </td>
+                                    <td>
+                                        <input asp-for="@item.SequenceNumber" name="MailRecipientList[@counter].SequenceNumber" class="form-control" />
+                                        <span data-valmsg-for="MailRecipientList[@counter].SequenceNumber" asp-validation-for="@item.SequenceNumber" class="text-danger"></span>
+
+                                    </td>
+
                                     <td>
                                         <button type="button" class="btn-field btn btn-danger RemoveMailRecipientButton cancel" title="@Localizer["Remove MailRecipient"]" removeId="@(item.Id)">
                                             <i class="fas fa-trash"></i>

@@ -15,6 +15,7 @@ public record MailRecipientViewModel : BaseViewModel
 	[Display(Name = "Recipient Email")]
 	[Required]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
+	[EmailAddress]
 	public string RecipientEmail { get; init; } = "";
 	[Display(Name = "Sequence Number")]
 	[Required]

@@ -25,20 +25,20 @@
                 <table id="reportDetail" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
-							<th style="display:none;"></th>
+                            <th style="display:none;"></th>
                             <th>
-								@Localizer["Report Detail Number"]
-							</th>
-							<th>
-								@Localizer["Description"]
-							</th>
-							<th>
-								@Localizer["Connection String"]
-							</th>
-							<th>
-								@Localizer["Query String"]
-							</th>
-							
+                                @Localizer["Report Detail Number"]
+                            </th>
+                            <th>
+                                @Localizer["Description"]
+                            </th>
+                            <th>
+                                @Localizer["Connection String"]
+                            </th>
+                            <th>
+                                @Localizer["Query String"]
+                            </th>
+
                             <th>
                                 @Localizer["Action"]
                             </th>
@@ -51,31 +51,31 @@
                             foreach (var item in Model.ReportDetailList)
                             {
                                 <tr>
-									<td style="display:none;">
+                                    <td style="display:none;">
                                         <input type="hidden" name="ReportDetailList[@counter].Id" value="@item.Id" />
-                                        <input type="hidden" name="ReportDetailList[@counter].ReportId" value="@item.ReportId" />                                      
+                                        <input type="hidden" name="ReportDetailList[@counter].ReportId" value="@item.ReportId" />
                                     </td>
                                     <td>
-										<input  asp-for="@item.ReportDetailNumber" name="ReportDetailList[@counter].ReportDetailNumber" class="form-control"  />
-										<span data-valmsg-for="ReportDetailList[@counter].ReportDetailNumber" asp-validation-for="@item.ReportDetailNumber" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.Description" name="ReportDetailList[@counter].Description" class="form-control" maxlength="255" />
-										<span data-valmsg-for="ReportDetailList[@counter].Description" asp-validation-for="@item.Description" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
-										<span data-valmsg-for="ReportDetailList[@counter].ConnectionString" asp-validation-for="@item.ConnectionString" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" maxlength="8000" />
-										<span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
-										
-									</td>
-									
+                                        <input asp-for="@item.ReportDetailNumber" name="ReportDetailList[@counter].ReportDetailNumber" class="form-control" />
+                                        <span data-valmsg-for="ReportDetailList[@counter].ReportDetailNumber" asp-validation-for="@item.ReportDetailNumber" class="text-danger"></span>
+
+                                    </td>
+                                    <td>
+                                        <input asp-for="@item.Description" name="ReportDetailList[@counter].Description" class="form-control" maxlength="255" />
+                                        <span data-valmsg-for="ReportDetailList[@counter].Description" asp-validation-for="@item.Description" class="text-danger"></span>
+
+                                    </td>
+                                    <td>
+                                        <input type="password" asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
+                                        <span data-valmsg-for="ReportDetailList[@counter].ConnectionString" asp-validation-for="@item.ConnectionString" class="text-danger"></span>
+
+                                    </td>
+                                    <td>
+                                        <input asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" maxlength="8000" />
+                                        <span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
+
+                                    </td>
+
                                     <td>
                                         <button type="button" class="btn-field btn btn-danger RemoveReportDetailButton cancel" title="@Localizer["Remove ReportDetail"]" removeId="@(item.Id)">
                                             <i class="fas fa-trash"></i>

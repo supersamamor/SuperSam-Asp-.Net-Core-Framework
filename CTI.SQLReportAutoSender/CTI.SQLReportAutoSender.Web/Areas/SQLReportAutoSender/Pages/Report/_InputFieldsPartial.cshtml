@@ -18,9 +18,10 @@
             </div>
             <div class="card-body">
                 <input type="hidden" asp-for="@Model.Id" name="Id" />
-				<div class="row">
-					<partial name="_EditReportDetails" model="Model" />
-				</div>				
+                <input type="hidden" asp-for="@Model.LatestFileGeneratedPath" name="Id" />
+                <div class="row">
+                    <partial name="_EditReportDetails" model="Model" />
+                </div>
             </div>
         </div>
     </div>
