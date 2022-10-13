@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="@item.Password"></label>
-                                <input asp-for="@item.Password" name="MailSettingList[@counter].Password" class="form-control" maxlength="255" />
+                                <input type="password" asp-for="@item.Password" name="MailSettingList[@counter].Password" class="form-control" maxlength="255" />
                                 <span data-valmsg-for="MailSettingList[@counter].Password" asp-validation-for="@item.Password" class="text-danger"></span>
                             </div>
                               <div class="col-md-4">

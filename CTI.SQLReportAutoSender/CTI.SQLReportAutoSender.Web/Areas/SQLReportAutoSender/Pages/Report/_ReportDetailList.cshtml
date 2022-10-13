@@ -37,7 +37,7 @@
                                 }
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link @activeClass" role="tab" data-toggle="tab" href="#tab-@(counter+1)">
-                                        @Localizer["Report"] @(counter+1)                                     
+                                        @Localizer["Report"] @(counter+1)
                                     </a>
                                 </li>
                                 counter++;
@@ -72,20 +72,20 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label asp-for="@item.ConnectionString"></label>
-                                        <input asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
+                                        <input type="password" asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
                                         <span data-valmsg-for="ReportDetailList[@counter].ConnectionString" asp-validation-for="@item.ConnectionString" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-12">
-                                        <label asp-for="@item.QueryString"></label>                                    
-                                        <textarea asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString"  class="form-control" style="height:255px;"></textarea>      
+                                        <label asp-for="@item.QueryString"></label>
+                                        <textarea asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" style="height:255px;"></textarea>
                                         <span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
-                                    </div>                                 
+                                    </div>
                                 </div>
                                 counter++;
                             }
                         }
                     </div>
-                </div>               
+                </div>
             </div>
         </div>
     </div>
