@@ -1,0 +1,68 @@
+@using Models
+@model ReportViewModel
+<input type="hidden" id="ReportScheduleSettingCount" value="@Model?.ReportScheduleSettingList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["Report Schedule"]</h5>
+                    </button>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+                <table id="mailRecipient" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="display:none;"></th>
+                            <th>
+                                @Localizer["Schedule Parameter"]
+                            </th>
+                            <th>
+                                @Localizer["Value"]
+                            </th>
+                            <th>
+                                @Localizer["Action"]
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.ReportScheduleSettingList != null)
+                        {
+                            int counter = 0;
+                            foreach (var item in Model.ReportScheduleSettingList)
+                            {
+                                <tr>
+                                    <td style="display:none;">
+                                        <input type="hidden" name="ReportScheduleSettingList[@counter].Id" value="@item.Id" />
+                                        <input type="hidden" name="ReportScheduleSettingList[@counter].ReportId" value="@item.ReportId" />
+                                        <input type="hidden" name="ReportScheduleSettingList[@counter].ScheduleFrequencyId" value="@item.ScheduleFrequencyId" />
+                                    </td>
+                                    <td>
+                                        <select asp-for="@item.ScheduleParameterId" id="ReportScheduleSettingList_@(counter)_ScheduleParameterId" name="ReportScheduleSettingList[@counter].ScheduleParameterId" class="form-control SelectScheduleParameter" asp-items="@(dropdownService.GetScheduleParameterList(item.ScheduleParameterId))"><option value="">- Select Parameter -</option></select>
+                                        <span data-valmsg-for="ReportScheduleSettingList[@counter].ScheduleParameterId" asp-validation-for="@item.ScheduleParameterId" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" maxlength="50" />
+                                        <span data-valmsg-for="ReportScheduleSettingList[@counter].Value" asp-validation-for="@item.Value" class="text-danger"></span>
+                                    <td>
+                                        <button type="button" class="btn-field btn btn-danger RemoveReportScheduleSettingButton cancel" title="@Localizer["Remove Report Schedule Setting"]" removeId="@(item.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
