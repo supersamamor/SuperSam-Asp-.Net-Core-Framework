@@ -43,6 +43,11 @@
 			});
 			
 			$.InitializeReportDetailFieldValidations($('#ReportDetailCount').val());
+			$('#ScheduleFrequencyId ').on( 'change', function () {		
+				$('#AsyncAction').val('');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#report-form', InitializeForm);
+			});
+
 			$('.RemoveReportDetailButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));
 				$('#AsyncAction').val('RemoveReportDetail');

@@ -49,6 +49,7 @@
 			
 			$.InitializeReportDetailFieldValidations($('#ReportDetailCount').val());
 			$('#ScheduleFrequencyId ').on( 'change', function () {		
+				$('#AsyncAction').val('');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#report-form', InitializeForm);
 			});
 

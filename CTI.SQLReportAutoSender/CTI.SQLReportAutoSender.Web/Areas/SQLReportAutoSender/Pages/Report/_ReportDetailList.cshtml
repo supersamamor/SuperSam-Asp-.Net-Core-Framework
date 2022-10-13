@@ -1,7 +1,7 @@
 @using Models
 @model ReportViewModel
 @{
-    var reportDetailCount = Model?.ReportDetailList!.Count() - 1;
+    var reportDetailCount = Model?.ReportDetailList?.Count() - 1;
 }
 <input type="hidden" id="ReportDetailCount" value="@Model?.ReportDetailList?.Count" />
 <div class="row">

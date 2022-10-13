@@ -43,10 +43,10 @@
                                         <input type="hidden" name="ReportScheduleSettingList[@counter].Id" value="@item.Id" />
                                         <input type="hidden" name="ReportScheduleSettingList[@counter].ReportId" value="@item.ReportId" />
                                         <input type="hidden" name="ReportScheduleSettingList[@counter].ScheduleFrequencyId" value="@item.ScheduleFrequencyId" />
+                                        <input type="hidden" name="ReportScheduleSettingList[@counter].ScheduleParameterId" value="@item.ScheduleParameterId" />
                                     </td>
                                     <td>
-                                        <select asp-for="@item.ScheduleParameterId" id="ReportScheduleSettingList_@(counter)_ScheduleParameterId" name="ReportScheduleSettingList[@counter].ScheduleParameterId" class="form-control SelectScheduleParameter" asp-items="@(dropdownService.GetScheduleParameterList(item.ScheduleParameterId))"><option value="">- Select Parameter -</option></select>
-                                        <span data-valmsg-for="ReportScheduleSettingList[@counter].ScheduleParameterId" asp-validation-for="@item.ScheduleParameterId" class="text-danger"></span>
+                                        <input class="form-control" name="ReportScheduleSettingList[@counter].FrequencyName" value="@item.ParameterName" readonly />
                                     </td>
                                     <td>
                                         <input asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" maxlength="50" />

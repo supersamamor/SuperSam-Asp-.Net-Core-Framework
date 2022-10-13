@@ -30,6 +30,7 @@ public class SQLReportAutoSenderProfile : Profile
 		CreateMap<ScheduleFrequencyParameterSetupViewModel, EditScheduleFrequencyParameterSetupCommand>();
 		CreateMap<ScheduleFrequencyParameterSetupState, ScheduleFrequencyParameterSetupViewModel>().ForPath(e => e.ForeignKeyScheduleParameter, o => o.MapFrom(s => s.ScheduleParameter!.Description)).ForPath(e => e.ForeignKeyScheduleFrequency, o => o.MapFrom(s => s.ScheduleFrequency!.Description));
 		CreateMap<ScheduleFrequencyParameterSetupViewModel, ScheduleFrequencyParameterSetupState>();
+		
 		CreateMap<ReportViewModel, AddReportCommand>();
 		CreateMap<ReportViewModel, EditReportCommand>();
 		CreateMap<ReportState, ReportViewModel>().ForPath(e => e.ForeignKeyScheduleFrequency, o => o.MapFrom(s => s.ScheduleFrequency!.Description));
