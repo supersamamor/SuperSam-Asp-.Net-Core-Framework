@@ -25,14 +25,11 @@
                 <table id="customSchedule" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
-							<th style="display:none;"></th>
+                            <th style="display:none;"></th>
                             <th>
-								@Localizer["Sequence Number"]
-							</th>
-							<th>
-								@Localizer["Date/Time Schedule"]
-							</th>
-							
+                                @Localizer["Date/Time Schedule"]
+                            </th>
+
                             <th>
                                 @Localizer["Action"]
                             </th>
@@ -42,24 +39,20 @@
                         @if (Model?.CustomScheduleList != null)
                         {
                             int counter = 0;
-                            foreach (var item in Model.CustomScheduleList)
+                            foreach (var item in Model.CustomScheduleList.OrderBy(l => l.DateTimeSchedule))
                             {
                                 <tr>
-									<td style="display:none;">
+                                    <td style="display:none;">
                                         <input type="hidden" name="CustomScheduleList[@counter].Id" value="@item.Id" />
-                                        <input type="hidden" name="CustomScheduleList[@counter].ReportId" value="@item.ReportId" />                                      
+                                        <input type="hidden" name="CustomScheduleList[@counter].ReportId" value="@item.ReportId" />
+                                        <input type="hidden" name="CustomScheduleList[@counter].SequenceNumber" value="@item.SequenceNumber" />
                                     </td>
                                     <td>
-										<input  asp-for="@item.SequenceNumber" name="CustomScheduleList[@counter].SequenceNumber" class="form-control"  />
-										<span data-valmsg-for="CustomScheduleList[@counter].SequenceNumber" asp-validation-for="@item.SequenceNumber" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.DateTimeSchedule" name="CustomScheduleList[@counter].DateTimeSchedule" class="form-control"  />
-										<span data-valmsg-for="CustomScheduleList[@counter].DateTimeSchedule" asp-validation-for="@item.DateTimeSchedule" class="text-danger"></span>
-										
-									</td>
-									
+                                        <input asp-for="@item.DateTimeSchedule" name="CustomScheduleList[@counter].DateTimeSchedule" class="form-control" />
+                                        <span data-valmsg-for="CustomScheduleList[@counter].DateTimeSchedule" asp-validation-for="@item.DateTimeSchedule" class="text-danger"></span>
+
+                                    </td>
+
                                     <td>
                                         <button type="button" class="btn-field btn btn-danger RemoveCustomScheduleButton cancel" title="@Localizer["Remove CustomSchedule"]" removeId="@(item.Id)">
                                             <i class="fas fa-trash"></i>

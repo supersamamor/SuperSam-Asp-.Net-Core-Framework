@@ -1,5 +1,8 @@
 @using Models
 @model ReportViewModel
+@{
+    var reportDetailCount = Model?.ReportDetailList!.Count() - 1;
+}
 <input type="hidden" id="ReportDetailCount" value="@Model?.ReportDetailList?.Count" />
 <div class="row">
     <div class="col-12">
@@ -8,10 +11,6 @@
                 <div class="card-title flex-grow-1">
                     <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
                         <h5>@Localizer["Report Detail"]</h5>
-                    </button>
-                    <button type="button" id="btnAddReportDetail" class="btn-field btn btn-primary cancel">
-                        <i class="fas fa-plus" style="float:left;padding-top: 7px;padding-right: 10px;"></i>
-                        <h6 style="float:left;padding-top: 7px;">@Localizer["Add"]</h6>
                     </button>
                     <button class="cancel" type="button" id="btnRemoveReportDetail" value="RemoveReportDetail" style="display:none;"></button>
                 </div>
@@ -22,71 +21,71 @@
                 </div>
             </div>
             <div class="card-body" style="overflow:auto;">
-                <table id="reportDetail" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
-                    <thead>
-                        <tr>
-                            <th style="display:none;"></th>
-                            <th>
-                                @Localizer["Report Detail Number"]
-                            </th>
-                            <th>
-                                @Localizer["Description"]
-                            </th>
-                            <th>
-                                @Localizer["Connection String"]
-                            </th>
-                            <th>
-                                @Localizer["Query String"]
-                            </th>
 
-                            <th>
-                                @Localizer["Action"]
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div>
+
+                    <ul class="nav nav-tabs" role="tablist">
                         @if (Model?.ReportDetailList != null)
                         {
                             int counter = 0;
+                            string activeClass = "";
                             foreach (var item in Model.ReportDetailList)
                             {
-                                <tr>
-                                    <td style="display:none;">
-                                        <input type="hidden" name="ReportDetailList[@counter].Id" value="@item.Id" />
-                                        <input type="hidden" name="ReportDetailList[@counter].ReportId" value="@item.ReportId" />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@item.ReportDetailNumber" name="ReportDetailList[@counter].ReportDetailNumber" class="form-control" />
-                                        <span data-valmsg-for="ReportDetailList[@counter].ReportDetailNumber" asp-validation-for="@item.ReportDetailNumber" class="text-danger"></span>
-
-                                    </td>
-                                    <td>
-                                        <input asp-for="@item.Description" name="ReportDetailList[@counter].Description" class="form-control" maxlength="255" />
-                                        <span data-valmsg-for="ReportDetailList[@counter].Description" asp-validation-for="@item.Description" class="text-danger"></span>
-
-                                    </td>
-                                    <td>
-                                        <input type="password" asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
-                                        <span data-valmsg-for="ReportDetailList[@counter].ConnectionString" asp-validation-for="@item.ConnectionString" class="text-danger"></span>
-
-                                    </td>
-                                    <td>
-                                        <input asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" maxlength="8000" />
-                                        <span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
-
-                                    </td>
-
-                                    <td>
-                                        <button type="button" class="btn-field btn btn-danger RemoveReportDetailButton cancel" title="@Localizer["Remove ReportDetail"]" removeId="@(item.Id)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                if (reportDetailCount == counter)
+                                {
+                                    activeClass = "active";
+                                }
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link @activeClass" role="tab" data-toggle="tab" href="#tab-@(counter+1)">
+                                        @Localizer["Report"] @(counter+1)                                     
+                                    </a>
+                                </li>
                                 counter++;
                             }
                         }
-                    </tbody>
-                </table>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="btnAddReportDetail" style="cursor:pointer;color:#fff;background: #007bff;">
+                                <i class="fas fa-plus"></i>
+                                @Localizer["Add"]
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        @if (Model?.ReportDetailList != null)
+                        {
+                            int counter = 0;
+                            string activeClass = "";
+                            foreach (var item in Model.ReportDetailList)
+                            {
+                                if (reportDetailCount == counter)
+                                {
+                                    activeClass = "active";
+                                }
+                                <div class="tab-pane @activeClass" role="tabpanel" id="tab-@(counter+1)">
+                                    <input type="hidden" name="ReportDetailList[@counter].Id" value="@item.Id" />
+                                    <input type="hidden" name="ReportDetailList[@counter].ReportId" value="@item.ReportId" />
+                                    <input type="hidden" name="ReportDetailList[@counter].ReportDetailNumber" value="@item.ReportDetailNumber" />
+                                    <div class="col-md-6">
+                                        <label asp-for="@item.Description"></label>
+                                        <input asp-for="@item.Description" name="ReportDetailList[@counter].Description" class="form-control" maxlength="255" />
+                                        <span data-valmsg-for="ReportDetailList[@counter].Description" asp-validation-for="@item.Description" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="@item.ConnectionString"></label>
+                                        <input type="password" asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
+                                        <span data-valmsg-for="ReportDetailList[@counter].ConnectionString" asp-validation-for="@item.ConnectionString" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label asp-for="@item.QueryString"></label>                                    
+                                        <textarea asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString"  class="form-control" style="height:255px;"></textarea>      
+                                        <span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
+                                    </div>                                 
+                                </div>
+                                counter++;
+                            }
+                        }
+                    </div>
+                </div>               
             </div>
         </div>
     </div>

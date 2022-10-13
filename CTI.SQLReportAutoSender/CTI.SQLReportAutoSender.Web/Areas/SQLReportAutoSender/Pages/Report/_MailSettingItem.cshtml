@@ -25,27 +25,26 @@
                         {
                             <input type="hidden" name="MailSettingList[@counter].Id" value="@item.Id" />
                             <input type="hidden" name="MailSettingList[@counter].ReportId" value="@item.ReportId" />
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <label asp-for="@item.Account"></label>
                                 <input asp-for="@item.Account" name="MailSettingList[@counter].Account" class="form-control" maxlength="50" />
                                 <span data-valmsg-for="MailSettingList[@counter].Account" asp-validation-for="@item.Account" class="text-danger"></span>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <label asp-for="@item.Password"></label>
                                 <input type="password" asp-for="@item.Password" name="MailSettingList[@counter].Password" class="form-control" maxlength="255" />
                                 <span data-valmsg-for="MailSettingList[@counter].Password" asp-validation-for="@item.Password" class="text-danger"></span>
                             </div>
-                            <div class="col-md-12">
-                                <label asp-for="@item.Body"></label>
-                                <input asp-for="@item.Body" name="MailSettingList[@counter].Body" class="form-control" maxlength="2500" />
-                                <span data-valmsg-for="MailSettingList[@counter].Body" asp-validation-for="@item.Body" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-12">
+                              <div class="col-md-4">
                                 <label asp-for="@item.Subject"></label>
                                 <input asp-for="@item.Subject" name="MailSettingList[@counter].Subject" class="form-control" maxlength="50" />
                                 <span data-valmsg-for="MailSettingList[@counter].Subject" asp-validation-for="@item.Subject" class="text-danger"></span>
                             </div>
-
+                            <div class="col-md-12">
+                                <label asp-for="@item.Body"></label>
+                                <textarea asp-for="@item.Body" name="MailSettingList[@counter].Body"  class="form-control" style="height:255px;"></textarea>                            
+                                <span data-valmsg-for="MailSettingList[@counter].Body" asp-validation-for="@item.Body" class="text-danger"></span>
+                            </div>   
                             counter++;
                         }
                     }

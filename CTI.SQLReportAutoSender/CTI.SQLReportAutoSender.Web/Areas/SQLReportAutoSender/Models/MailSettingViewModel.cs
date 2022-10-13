@@ -15,6 +15,7 @@ public record MailSettingViewModel : BaseViewModel
 	[Display(Name = "Account")]
 	[Required]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
+	[EmailAddress]
 	public string Account { get; init; } = "";
 	[Display(Name = "Password")]
 	[Required]

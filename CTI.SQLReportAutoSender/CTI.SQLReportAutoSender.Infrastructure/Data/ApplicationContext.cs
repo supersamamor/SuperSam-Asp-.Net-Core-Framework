@@ -72,10 +72,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ReportState>().Property(e => e.LatestFileGeneratedPath).HasMaxLength(500);
 		modelBuilder.Entity<ReportDetailState>().Property(e => e.Description).HasMaxLength(255);
 		modelBuilder.Entity<ReportDetailState>().Property(e => e.ConnectionString).HasMaxLength(255);
-		modelBuilder.Entity<ReportDetailState>().Property(e => e.QueryString).HasMaxLength(8000);
 		modelBuilder.Entity<MailSettingState>().Property(e => e.Account).HasMaxLength(50);
 		modelBuilder.Entity<MailSettingState>().Property(e => e.Password).HasMaxLength(255);
-		modelBuilder.Entity<MailSettingState>().Property(e => e.Body).HasMaxLength(2500);
 		modelBuilder.Entity<MailSettingState>().Property(e => e.Subject).HasMaxLength(50);
 		modelBuilder.Entity<MailRecipientState>().Property(e => e.RecipientEmail).HasMaxLength(100);
 		modelBuilder.Entity<ReportScheduleSettingState>().Property(e => e.Value).HasMaxLength(50);
