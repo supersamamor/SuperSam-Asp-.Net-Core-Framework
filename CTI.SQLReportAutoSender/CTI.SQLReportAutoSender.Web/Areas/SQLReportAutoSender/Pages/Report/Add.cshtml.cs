@@ -18,6 +18,7 @@ public class AddModel : BasePageModel<AddModel>
     public string? AsyncAction { get; set; }
     public async Task<IActionResult> OnGet()
     {
+        this.Report.IsActive = true;
         this.Report.MailSettingList = new List<MailSettingViewModel>() { new MailSettingViewModel() { ReportId = this.Report.Id } };
         this.Report.ReportDetailList = new List<ReportDetailViewModel>() { new ReportDetailViewModel() { ReportId = this.Report.Id } };
         this.Report.ReportScheduleSettingList = new List<ReportScheduleSettingViewModel>() { };
