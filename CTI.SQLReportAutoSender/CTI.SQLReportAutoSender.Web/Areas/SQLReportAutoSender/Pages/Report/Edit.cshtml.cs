@@ -30,6 +30,7 @@ public class EditModel : BasePageModel<EditModel>
     {		
         if (!ModelState.IsValid)
         {
+			NotyfService.Error(this.ValidateModelState());
             return Page();
         }
 		

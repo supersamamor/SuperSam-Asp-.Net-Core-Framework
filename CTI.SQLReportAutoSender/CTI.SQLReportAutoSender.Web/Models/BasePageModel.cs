@@ -192,3 +192,25 @@ public class BasePageModel<TContext, TPageModel> : BasePageModel<TPageModel>
                                  None: () => new SelectList(new List<SelectListItem>(), "Value", "Text"));
 }
 
+public static class PageModelExtension
+{
+    public static string ValidateModelState(this PageModel pageModel, string? exemptedField = null)
+    {
+        string modelStateError = "";
+        if (!pageModel.ModelState.IsValid)
+        {           
+            foreach (var modelStateKey in pageModel.ViewData.ModelState.Keys)
+            {
+                var modelStateVal = pageModel.ViewData.ModelState[modelStateKey];
+                foreach (var error in modelStateVal!.Errors)
+                {
+                    if (modelStateKey != exemptedField)
+                    {
+                        modelStateError += error.ErrorMessage.ToString() + "; ";                       
+                    }
+                }
+            }   
+        }
+        return modelStateError;
+    }
+}

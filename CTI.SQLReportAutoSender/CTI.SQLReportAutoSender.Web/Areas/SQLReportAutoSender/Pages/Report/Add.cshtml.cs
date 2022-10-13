@@ -30,6 +30,7 @@ public class AddModel : BasePageModel<AddModel>
 
         if (!ModelState.IsValid)
         {
+            NotyfService.Error(this.ValidateModelState());
             return Page();
         }
 

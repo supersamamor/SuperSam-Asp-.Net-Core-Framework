@@ -51,7 +51,22 @@
                                         <input class="form-control" name="ReportScheduleSettingList[@counter].ForeignKeyScheduleParameter" value="@item.ForeignKeyScheduleParameter" readonly />
                                     </td>
                                     <td>
-                                        <input asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" maxlength="50" />
+                                        @if (item.ForeignKeyScheduleParameter == CTI.SQLReportAutoSender.Core.SQLReportAutoSender.ScheduleParameter.Dayname)
+                                        {
+                                            <select asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" asp-items="@(dropdownService.Days())">
+                                                <option value="">- Select Day -</option>
+                                            </select>
+                                        }
+                                        else if (item.ForeignKeyScheduleParameter == CTI.SQLReportAutoSender.Core.SQLReportAutoSender.ScheduleParameter.Time)
+                                        {
+                                            <select asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" asp-items="@(dropdownService.TimeList())">
+                                                <option value="">- Select Time -</option>
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <input type="number" asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" max="31" />
+                                        }
                                         <span data-valmsg-for="ReportScheduleSettingList[@counter].Value" asp-validation-for="@item.Value" class="text-danger"></span>
                                     <td>
                                         <button type="button" class="btn-field btn btn-danger RemoveReportScheduleSettingButton cancel" title="@Localizer["Remove Report Schedule Setting"]" removeId="@(item.Id)">
