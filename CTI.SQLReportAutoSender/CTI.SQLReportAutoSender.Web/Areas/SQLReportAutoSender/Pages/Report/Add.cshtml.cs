@@ -110,7 +110,6 @@ public class AddModel : BasePageModel<AddModel>
     }
     private async Task RefreshScheduleParameters()
     {
-
         if (!string.IsNullOrEmpty(Report?.ScheduleFrequencyId))
         {
             Report!.ReportScheduleSettingList = new List<ReportScheduleSettingViewModel>();

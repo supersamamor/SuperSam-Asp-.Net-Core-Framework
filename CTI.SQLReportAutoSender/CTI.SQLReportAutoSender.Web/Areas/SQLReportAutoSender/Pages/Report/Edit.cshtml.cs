@@ -1,5 +1,6 @@
 using CTI.SQLReportAutoSender.Application.Features.SQLReportAutoSender.Report.Commands;
 using CTI.SQLReportAutoSender.Application.Features.SQLReportAutoSender.Report.Queries;
+using CTI.SQLReportAutoSender.Application.Features.SQLReportAutoSender.ScheduleFrequencyParameterSetup.Queries;
 using CTI.SQLReportAutoSender.Web.Areas.SQLReportAutoSender.Models;
 using CTI.SQLReportAutoSender.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +35,7 @@ public class EditModel : BasePageModel<EditModel>
 		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditReportCommand>(Report)), "Details", true);
     }	
-	public IActionResult OnPostChangeFormValue()
+	public async Task<IActionResult> OnPostChangeFormValue()
     {
         ModelState.Clear();
 		if (AsyncAction == "AddReportDetail")
@@ -61,9 +62,8 @@ public class EditModel : BasePageModel<EditModel>
 		{
 			return RemoveCustomSchedule();
 		}
-		
-		
-        return Partial("_InputFieldsPartial", Report);
+		await RefreshScheduleParameters();
+		return Partial("_InputFieldsPartial", Report);
     }
 	
 	private IActionResult AddReportDetail()
@@ -107,5 +107,22 @@ public class EditModel : BasePageModel<EditModel>
 		Report.CustomScheduleList = Report!.CustomScheduleList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Report);
 	}
-	
+	private async Task RefreshScheduleParameters()
+	{
+		if (!string.IsNullOrEmpty(Report?.ScheduleFrequencyId))
+		{
+			Report!.ReportScheduleSettingList = new List<ReportScheduleSettingViewModel>();
+			var query = new GetScheduleFrequencyParameterSetupQuery() { ScheduleFrequencyId = Report!.ScheduleFrequencyId };
+			foreach (var item in (await Mediatr.Send(query)).Data.ToList())
+			{
+				Report!.ReportScheduleSettingList!.Add(new ReportScheduleSettingViewModel()
+				{
+					ScheduleFrequencyId = item.ScheduleFrequencyId,
+					ScheduleParameterId = item.ScheduleParameterId,
+					FrequencyName = item.ScheduleFrequency!.Description,
+					ParameterName = item.ScheduleParameter!.Description,
+				});
+			}
+		}
+	}
 }
