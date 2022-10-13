@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label asp-for="@item.ConnectionString"></label>
-                                        <input type="password" asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
+                                        <input asp-for="@item.ConnectionString" name="ReportDetailList[@counter].ConnectionString" class="form-control" maxlength="255" />
                                         <span data-valmsg-for="ReportDetailList[@counter].ConnectionString" asp-validation-for="@item.ConnectionString" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-12">
