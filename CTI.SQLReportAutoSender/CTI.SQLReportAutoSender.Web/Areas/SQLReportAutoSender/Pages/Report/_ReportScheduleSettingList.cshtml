@@ -44,9 +44,11 @@
                                         <input type="hidden" name="ReportScheduleSettingList[@counter].ReportId" value="@item.ReportId" />
                                         <input type="hidden" name="ReportScheduleSettingList[@counter].ScheduleFrequencyId" value="@item.ScheduleFrequencyId" />
                                         <input type="hidden" name="ReportScheduleSettingList[@counter].ScheduleParameterId" value="@item.ScheduleParameterId" />
+                                        <input type="hidden" name="ReportScheduleSettingList[@counter].ForeignKeyScheduleParameter" value="@item.ForeignKeyScheduleParameter" />
+                                        <input type="hidden" name="ReportScheduleSettingList[@counter].ForeignKeyScheduleFrequency" value="@item.ForeignKeyScheduleFrequency" />
                                     </td>
                                     <td>
-                                        <input class="form-control" name="ReportScheduleSettingList[@counter].FrequencyName" value="@item.ParameterName" readonly />
+                                        <input class="form-control" name="ReportScheduleSettingList[@counter].ForeignKeyScheduleParameter" value="@item.ForeignKeyScheduleParameter" readonly />
                                     </td>
                                     <td>
                                         <input asp-for="@item.Value" name="ReportScheduleSettingList[@counter].Value" class="form-control" maxlength="50" />

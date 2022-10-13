@@ -31,6 +31,4 @@ public record ReportScheduleSettingViewModel : BaseViewModel
 	public ReportViewModel? Report { get; init; }
 	public ScheduleFrequencyViewModel? ScheduleFrequency { get; init; }
 	public ScheduleParameterViewModel? ScheduleParameter { get; init; }
-	public string FrequencyName { get; init; } = "";
-	public string ParameterName { get; init; } = "";
 }

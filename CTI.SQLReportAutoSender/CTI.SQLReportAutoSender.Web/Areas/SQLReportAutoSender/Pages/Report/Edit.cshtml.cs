@@ -117,10 +117,11 @@ public class EditModel : BasePageModel<EditModel>
 			{
 				Report!.ReportScheduleSettingList!.Add(new ReportScheduleSettingViewModel()
 				{
+					ReportId = Report.Id,
 					ScheduleFrequencyId = item.ScheduleFrequencyId,
 					ScheduleParameterId = item.ScheduleParameterId,
-					FrequencyName = item.ScheduleFrequency!.Description,
-					ParameterName = item.ScheduleParameter!.Description,
+					ForeignKeyScheduleFrequency = item.ScheduleFrequency!.Description,
+					ForeignKeyScheduleParameter = item.ScheduleParameter!.Description,
 				});
 			}
 		}

@@ -30,13 +30,19 @@
 <partial name="_ReportDetailList" model="Model" />
 <partial name="_MailSettingItem" model="Model" />
 <partial name="_MailRecipientList" model="Model" />
-<div class="col-md-4">
-    <label asp-for="@Model.ScheduleFrequencyId" class="fieldrequired"></label>
-    <select asp-for="@Model.ScheduleFrequencyId" class="form-control" asp-items="@(dropdownService.GetScheduleFrequencyList(Model.ScheduleFrequencyId))"><option value="">- Select  -</option></select>
-    <span asp-validation-for="@Model.ScheduleFrequencyId" class="text-danger"></span>
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-body" style="overflow:auto;">
+                <div class="col-md-4">
+                    <label asp-for="@Model.ScheduleFrequencyId" class="fieldrequired"></label>
+                    <select asp-for="@Model.ScheduleFrequencyId" class="form-control" asp-items="@(dropdownService.GetScheduleFrequencyList(Model.ScheduleFrequencyId))"><option value="">- Select  -</option></select>
+                    <span asp-validation-for="@Model.ScheduleFrequencyId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<br />
-<hr />
 @if (Model.ScheduleFrequencyId == CTI.SQLReportAutoSender.Core.SQLReportAutoSender.Frequency.CustomDateId)
 {
     <partial name="_CustomScheduleList" model="Model" />

@@ -14,16 +14,17 @@ public class GetReportByIdQueryHandler : BaseQueryByIdHandler<ApplicationContext
     public GetReportByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	
-	public override async Task<Option<ReportState>> Handle(GetReportByIdQuery request, CancellationToken cancellationToken = default)
-	{
-		return await Context.Report.Include(l=>l.ScheduleFrequency)
-			.Include(l=>l.ReportDetailList)
-			.Include(l=>l.MailSettingList)
-			.Include(l=>l.MailRecipientList)
-			.Include(l=>l.ReportScheduleSettingList)
-			.Include(l=>l.CustomScheduleList)
-			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-	}
-	
+
+    public override async Task<Option<ReportState>> Handle(GetReportByIdQuery request, CancellationToken cancellationToken = default)
+    {
+        return await Context.Report.Include(l => l.ScheduleFrequency)
+            .Include(l => l.ReportDetailList)
+            .Include(l => l.MailSettingList)
+            .Include(l => l.MailRecipientList)
+            .Include(l => l.ReportScheduleSettingList!).ThenInclude(l => l.ScheduleFrequency!)
+            .Include(l => l.ReportScheduleSettingList!).ThenInclude(l => l.ScheduleParameter!)
+            .Include(l => l.CustomScheduleList)
+            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+    }
+
 }
