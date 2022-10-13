@@ -35,6 +35,8 @@
     <select asp-for="@Model.ScheduleFrequencyId" class="form-control" asp-items="@(dropdownService.GetScheduleFrequencyList(Model.ScheduleFrequencyId))"><option value="">- Select  -</option></select>
     <span asp-validation-for="@Model.ScheduleFrequencyId" class="text-danger"></span>
 </div>
+<br />
+<hr />
 @if (Model.ScheduleFrequencyId == CTI.SQLReportAutoSender.Core.SQLReportAutoSender.Frequency.CustomDateId)
 {
     <partial name="_CustomScheduleList" model="Model" />
