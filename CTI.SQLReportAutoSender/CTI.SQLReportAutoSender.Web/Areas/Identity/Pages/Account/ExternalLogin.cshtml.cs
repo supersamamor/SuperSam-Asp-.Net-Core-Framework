@@ -160,6 +160,7 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
             };
 
             var result = await _userManager.CreateAsync(user);
+            _ = await _userManager.AddToRoleAsync(user, WebConstants.UserRole);
             if (result.Succeeded)
             {
                 result = await _userManager.AddLoginAsync(user, info);
