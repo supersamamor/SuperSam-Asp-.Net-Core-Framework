@@ -18,9 +18,9 @@ public class AddModel : BasePageModel<AddModel>
     public string? AsyncAction { get; set; }
     public async Task<IActionResult> OnGet()
     {
-        this.Report = new ReportViewModel() { IsActive = true};
+        this.Report = new ReportViewModel() { IsActive = true };
         this.Report.MailSettingList = new List<MailSettingViewModel>() { new MailSettingViewModel() { ReportId = this.Report.Id } };
-        this.Report.ReportDetailList = new List<ReportDetailViewModel>() { new ReportDetailViewModel() { ReportId = this.Report.Id } };
+        this.Report.ReportDetailList = new List<ReportDetailViewModel>() { new ReportDetailViewModel() { ReportId = this.Report.Id, Description = "Report 1" } };
         this.Report.ReportScheduleSettingList = new List<ReportScheduleSettingViewModel>() { };
         await RefreshScheduleParameters();
         return Page();
@@ -73,7 +73,11 @@ public class AddModel : BasePageModel<AddModel>
     {
         ModelState.Clear();
         if (Report!.ReportDetailList == null) { Report!.ReportDetailList = new List<ReportDetailViewModel>(); }
-        Report!.ReportDetailList!.Add(new ReportDetailViewModel() { ReportId = Report.Id });
+        Report!.ReportDetailList!.Add(new ReportDetailViewModel()
+        {
+            ReportId = Report.Id,
+            Description = "Report " + (Report!.ReportDetailList.Max(l => l.ReportDetailNumber) + 1)
+        });
         return Partial("_InputFieldsPartial", Report);
     }
     private IActionResult RemoveReportDetail()

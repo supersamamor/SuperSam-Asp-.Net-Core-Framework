@@ -64,7 +64,8 @@
                                 <div class="tab-pane @activeClass" role="tabpanel" id="tab-@(counter+1)">
                                     <input type="hidden" name="ReportDetailList[@counter].Id" value="@item.Id" />
                                     <input type="hidden" name="ReportDetailList[@counter].ReportId" value="@item.ReportId" />
-                                    <input type="hidden" name="ReportDetailList[@counter].ReportDetailNumber" value="@item.ReportDetailNumber" />
+                                    <input type="hidden" name="ReportDetailList[@counter].ReportDetailNumber" value="@(counter + 1)" />
+                                    <br>
                                     <div class="col-md-6">
                                         <label asp-for="@item.Description"></label>
                                         <input asp-for="@item.Description" name="ReportDetailList[@counter].Description" class="form-control" maxlength="255" />

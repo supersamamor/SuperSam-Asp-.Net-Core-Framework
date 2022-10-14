@@ -71,7 +71,11 @@ public class EditModel : BasePageModel<EditModel>
 	{
 		ModelState.Clear();
 		if (Report!.ReportDetailList == null) { Report!.ReportDetailList = new List<ReportDetailViewModel>(); }
-		Report!.ReportDetailList!.Add(new ReportDetailViewModel() { ReportId = Report.Id });
+		Report!.ReportDetailList!.Add(new ReportDetailViewModel()
+		{
+			ReportId = Report.Id,
+			Description = "Report " + (Report!.ReportDetailList.Max(l => l.ReportDetailNumber) + 1)
+		});
 		return Partial("_InputFieldsPartial", Report);
 	}
 	private IActionResult RemoveReportDetail()
