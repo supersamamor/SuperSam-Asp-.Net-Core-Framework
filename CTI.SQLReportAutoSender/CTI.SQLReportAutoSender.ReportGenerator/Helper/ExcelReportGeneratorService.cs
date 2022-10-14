@@ -51,16 +51,20 @@ namespace CTI.SQLReportAutoSender.ReportGenerator.Helper
                         int headerColumnCounter = 0;
                         //Generate Header
                         int workSheetRow = 1;
+                        workSheet1.Cells[workSheetRow, 1].Value = reportInbox!.Report!.Description + " - " + reportDetail.Description;
+                        workSheetRow++;
+                        workSheet1.Cells[workSheetRow, 1].Value = $"Report Status as of {DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss tt")}";
+                        workSheetRow++;
                         int columnCount = dataSet.Tables[0].Columns.Count;
                         foreach (var column in dataSet.Tables[0].Columns)
                         {
                             workSheet1.Cells[workSheetRow, headerColumnCounter + 1].Value = dataSet.Tables[0].Columns[headerColumnCounter].ColumnName;
                             headerColumnCounter++;
                         }
-                        workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
-                        workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.Font.Bold = true;
+                        workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+                        workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.Font.Bold = true;
                         workSheetRow++;
                         //Generate Data
                         int dataRowCounter = 0;
@@ -77,14 +81,14 @@ namespace CTI.SQLReportAutoSender.ReportGenerator.Helper
                         }
                         connection.Close();
                         #region Border to All Cells
-                        var sheet2modelTable = workSheet1.Cells[1, 1, workSheetRow, columnCount];
+                        var sheet2modelTable = workSheet1.Cells[1, 1, workSheetRow - 1, columnCount];
                         //Assign borders
                         sheet2modelTable.Style.Border.Top.Style = ExcelBorderStyle.Thin;
                         sheet2modelTable.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                         sheet2modelTable.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                         sheet2modelTable.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                         #endregion
-                        workSheet1.Cells[workSheet1.Dimension.Address].AutoFitColumns();                       
+                        workSheet1.Cells[workSheet1.Dimension.Address].AutoFitColumns();
                     }
                     reportCounter++;
                 }
@@ -114,16 +118,20 @@ namespace CTI.SQLReportAutoSender.ReportGenerator.Helper
                     int headerColumnCounter = 0;
                     //Generate Header
                     int workSheetRow = 1;
+                    workSheet1.Cells[workSheetRow, 1].Value = reportInbox!.Report!.Description + " - " + reportDetail.Description;
+                    workSheetRow++;
+                    workSheet1.Cells[workSheetRow, 1].Value = $"Report Status as of {DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss tt")}";
+                    workSheetRow++;
                     int columnCount = dataSet.Tables[0].Columns.Count;
                     foreach (var column in dataSet.Tables[0].Columns)
                     {
                         workSheet1.Cells[workSheetRow, headerColumnCounter + 1].Value = dataSet.Tables[0].Columns[headerColumnCounter].ColumnName;
                         headerColumnCounter++;
                     }
-                    workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
-                    workSheet1.Cells[workSheetRow, 1, workSheetRow, headerColumnCounter].Style.Font.Bold = true;
+                    workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+                    workSheet1.Cells[1, 1, workSheetRow, headerColumnCounter].Style.Font.Bold = true;
                     workSheetRow++;
                     //Generate Data
                     int dataRowCounter = 0;
@@ -140,7 +148,7 @@ namespace CTI.SQLReportAutoSender.ReportGenerator.Helper
                     }
                     connection.Close();
                     #region Border to All Cells
-                    var sheet2modelTable = workSheet1.Cells[1, 1, workSheetRow, columnCount];
+                    var sheet2modelTable = workSheet1.Cells[1, 1, workSheetRow - 1, columnCount];
                     //Assign borders
                     sheet2modelTable.Style.Border.Top.Style = ExcelBorderStyle.Thin;
                     sheet2modelTable.Style.Border.Left.Style = ExcelBorderStyle.Thin;

@@ -20,12 +20,14 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
         private readonly ApplicationContext _context;
         private readonly ExcelReportGeneratorService _excelReportGeneratorService;
         private readonly MailSettings _mailSettings;
+        private readonly ILogger<ReportSendingJob> _logger;
         public ReportSendingJob(ApplicationContext context,
-             ExcelReportGeneratorService excelReportGeneratorService, IOptions<MailSettings> mailSettings)
+             ExcelReportGeneratorService excelReportGeneratorService, IOptions<MailSettings> mailSettings, ILogger<ReportSendingJob> logger)
         {
             _context = context;
             _excelReportGeneratorService = excelReportGeneratorService;
             _mailSettings = mailSettings.Value;
+            _logger = logger;
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -118,6 +120,7 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, @"ProcessReportSending Error Message : {Message} / StackTrace : {StackTrace}", ex.Message, ex.StackTrace);
                     reportInbox.TagAsFailed(ex.Message);
                 }
                 await _context.SaveChangesAsync();

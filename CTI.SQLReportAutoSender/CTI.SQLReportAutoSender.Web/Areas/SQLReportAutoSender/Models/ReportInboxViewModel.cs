@@ -18,10 +18,9 @@ public record ReportInboxViewModel : BaseViewModel
 	public string Status { get; init; } = "";
 	[Display(Name = "Date/Time Sent")]
 	public DateTime? DateTimeSent { get; init; } = DateTime.Now.Date;
-	[Display(Name = "Remarks")]
-	[Required]
+	[Display(Name = "Remarks")]	
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Remarks { get; init; } = "";
+	public string? Remarks { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }
 	public ReportViewModel? Report { get; init; }
