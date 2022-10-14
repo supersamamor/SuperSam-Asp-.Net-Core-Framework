@@ -53,7 +53,7 @@ namespace CTI.SQLReportAutoSender.ReportGenerator.Helper
                         int workSheetRow = 1;
                         workSheet1.Cells[workSheetRow, 1].Value = reportInbox!.Report!.Description + " - " + reportDetail.Description;
                         workSheetRow++;
-                        workSheet1.Cells[workSheetRow, 1].Value = $"Report Status as of {DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss tt")}";
+                        workSheet1.Cells[workSheetRow, 1].Value = $"Report Status as of {DateTime.Now:MMMM dd, yyyy hh:mm:ss tt}";
                         workSheetRow++;
                         int columnCount = dataSet.Tables[0].Columns.Count;
                         foreach (var column in dataSet.Tables[0].Columns)
@@ -120,7 +120,7 @@ namespace CTI.SQLReportAutoSender.ReportGenerator.Helper
                     int workSheetRow = 1;
                     workSheet1.Cells[workSheetRow, 1].Value = reportInbox!.Report!.Description + " - " + reportDetail.Description;
                     workSheetRow++;
-                    workSheet1.Cells[workSheetRow, 1].Value = $"Report Status as of {DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss tt")}";
+                    workSheet1.Cells[workSheetRow, 1].Value = $"Report Status as of {DateTime.Now:MMMM dd, yyyy hh:mm:ss tt}";
                     workSheetRow++;
                     int columnCount = dataSet.Tables[0].Columns.Count;
                     foreach (var column in dataSet.Tables[0].Columns)

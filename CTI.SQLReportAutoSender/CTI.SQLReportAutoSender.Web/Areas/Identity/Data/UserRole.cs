@@ -10,7 +10,7 @@ public static class UserRole
     {
         var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var userRole = new IdentityRole(WebConstants.UserRole);
+        var userRole = new IdentityRole(Core.Constants.Roles.User);
         if (!await roleManager.RoleExistsAsync(userRole.Name))
         {
             _ = await roleManager.CreateAsync(userRole);

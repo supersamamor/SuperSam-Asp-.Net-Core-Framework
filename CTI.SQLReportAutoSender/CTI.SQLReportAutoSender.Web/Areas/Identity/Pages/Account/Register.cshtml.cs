@@ -91,7 +91,7 @@ public class RegisterModel : PageModel
                 BirthDate = Input?.BirthDate,
             };
             var result = await _userManager.CreateAsync(user, Input?.Password);
-            _ = await _userManager.AddToRoleAsync(user, WebConstants.UserRole);
+            _ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");

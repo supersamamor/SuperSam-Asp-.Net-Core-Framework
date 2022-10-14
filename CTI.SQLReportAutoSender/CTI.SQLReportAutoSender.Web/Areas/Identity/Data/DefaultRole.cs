@@ -10,7 +10,7 @@ public static class DefaultRole
     {
         var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var adminRole = new IdentityRole(WebConstants.AdminRole);
+        var adminRole = new IdentityRole(Core.Constants.Roles.Admin);
         if (!await roleManager.RoleExistsAsync(adminRole.Name))
         {
             _ = await roleManager.CreateAsync(adminRole);

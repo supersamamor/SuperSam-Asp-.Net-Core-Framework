@@ -15,7 +15,7 @@ public static class DefaultApprovalSetup
         var entity = await context.ApproverSetup.IgnoreQueryFilters().FirstOrDefaultAsync(e =>
                 e.TableName == ApprovalModule.Report && e.ApprovalSetupType == ApprovalSetupTypes.Modular);
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var adminRole = await roleManager.FindByNameAsync(WebConstants.AdminRole);
+        var adminRole = await roleManager.FindByNameAsync(Core.Constants.Roles.Admin);
         if (entity == null)
         {
             var approvalSetup = new ApproverSetupState()
