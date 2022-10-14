@@ -159,6 +159,9 @@ public class AddReportCommandValidator : AbstractValidator<AddReportCommand>
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<ReportState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Report with id {PropertyValue} already exists");
-        
-    }
+
+		RuleForEach(x => x.CustomScheduleList)
+						 .Must((model, submodel) => model.CustomScheduleList!.Count(xsub => xsub.DateTimeSchedule == submodel.DateTimeSchedule) <= 1)
+						 .WithMessage((model, submodel) => $"The report schedule date `{submodel.DateTimeSchedule}` has duplicates from report `{model.Description}`.");
+	}
 }

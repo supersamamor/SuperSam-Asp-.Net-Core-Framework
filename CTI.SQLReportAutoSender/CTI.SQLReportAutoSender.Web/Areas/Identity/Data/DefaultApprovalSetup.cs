@@ -12,7 +12,7 @@ public static class DefaultApprovalSetup
     {
         using var context = new ApplicationContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationContext>>(),
             serviceProvider.GetRequiredService<IAuthenticatedUser>());
-        var entity = await context.ApproverSetup.FirstOrDefaultAsync(e =>
+        var entity = await context.ApproverSetup.IgnoreQueryFilters().FirstOrDefaultAsync(e =>
                 e.TableName == ApprovalModule.Report && e.ApprovalSetupType == ApprovalSetupTypes.Modular);
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var adminRole = await roleManager.FindByNameAsync(WebConstants.AdminRole);
