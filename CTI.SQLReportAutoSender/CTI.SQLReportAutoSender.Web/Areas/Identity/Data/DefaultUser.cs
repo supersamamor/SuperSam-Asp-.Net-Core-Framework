@@ -15,9 +15,9 @@ public static class DefaultUser
         var entity = await context.Entities.FirstAsync(e => e.Name == "Default");
         var user = new ApplicationUser
         {
-            UserName = "system@admin",
-            Email = "system@admin",
-            Name = "System Admin",
+            UserName = WebConstants.AdminEmail,
+            Email = WebConstants.AdminEmail,
+            Name = WebConstants.AdminFullName,
             BirthDate = DateTime.MinValue,
             EntityId = entity.Id,
             IsActive = true,

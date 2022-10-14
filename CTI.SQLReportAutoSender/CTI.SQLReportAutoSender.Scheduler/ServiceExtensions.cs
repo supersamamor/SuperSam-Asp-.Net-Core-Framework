@@ -22,6 +22,7 @@ namespace CTI.SQLReportAutoSender.Scheduler
             });
             services.AddTransient<FileScanJob>();
             services.AddTransient<ApprovalNotificationJob>();
+            services.AddTransient<ReportSendingJob>();
         }
     }
 }
