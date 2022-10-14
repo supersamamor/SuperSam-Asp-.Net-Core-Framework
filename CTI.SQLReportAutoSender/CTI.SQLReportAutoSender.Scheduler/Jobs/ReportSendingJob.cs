@@ -30,6 +30,7 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
         public async Task Execute(IJobExecutionContext context)
         {
             await ProcessReportToInbox();
+            await ProcessReportSending();
         }
         private async Task ProcessReportToInbox()
         {
@@ -97,6 +98,17 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
                         }
                     }
                 }
+            }
+        }
+        private async Task ProcessReportSending()
+        {
+            var reportInboxList = await (from a in _context.ReportInbox
+                                    .Include(l => l.Report).ThenInclude(l => l!.ReportDetailList)
+                                    .Include(l => l.Report).ThenInclude(l => l!.MailSettingList)
+                                    .Include(l => l.Report).ThenInclude(l => l!.MailRecipientList)
+                                    select a).ToListAsync();
+            foreach (var reportInbox in reportInboxList)
+            { 
             }
         }
     }
