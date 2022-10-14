@@ -194,6 +194,13 @@ public class EditReportCommandValidator : AbstractValidator<EditReportCommand>
         _context = context;
 		RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<ReportState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Report with id {PropertyValue} does not exists");
-        
-    }
+
+		RuleForEach(x => x.CustomScheduleList)
+						 .Must((model, submodel) => model.CustomScheduleList!.Count(xsub => xsub.DateTimeSchedule == submodel.DateTimeSchedule) <= 1)
+						 .WithMessage((model, submodel) => $"The report schedule date `{submodel.DateTimeSchedule}` has duplicates from report `{model.Description}`.");
+
+	
+		RuleFor(x => x.MailRecipientList).NotEmpty().WithMessage("There must be atleast one recipient");
+		RuleFor(x => x.MailRecipientList!.Count).GreaterThan(0).WithMessage("There must be atleast one recipient");
+	}
 }

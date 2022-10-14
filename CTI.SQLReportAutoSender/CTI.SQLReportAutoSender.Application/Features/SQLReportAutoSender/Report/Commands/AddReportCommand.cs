@@ -163,5 +163,8 @@ public class AddReportCommandValidator : AbstractValidator<AddReportCommand>
 		RuleForEach(x => x.CustomScheduleList)
 						 .Must((model, submodel) => model.CustomScheduleList!.Count(xsub => xsub.DateTimeSchedule == submodel.DateTimeSchedule) <= 1)
 						 .WithMessage((model, submodel) => $"The report schedule date `{submodel.DateTimeSchedule}` has duplicates from report `{model.Description}`.");
+
+		RuleFor(x => x.MailRecipientList).NotEmpty().WithMessage("There must be atleast one recipient");
+		RuleFor(x => x.MailRecipientList!.Count).GreaterThan(0).WithMessage("There must be atleast one recipient");
 	}
 }
