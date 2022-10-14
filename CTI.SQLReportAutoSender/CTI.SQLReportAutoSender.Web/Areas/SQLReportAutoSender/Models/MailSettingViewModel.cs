@@ -15,10 +15,10 @@ public record MailSettingViewModel : BaseViewModel
 	[Display(Name = "Account")]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	[EmailAddress]
-	public string Account { get; init; } = "";
+	public string? Account { get; init; } = "";
 	[Display(Name = "Password")]	
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Password { get; init; } = "";
+	public string? Password { get; init; } = "";
 	[Display(Name = "Body")]
 	[Required]
 	[StringLength(2500, ErrorMessage = "{0} length can't be more than {1}.")]

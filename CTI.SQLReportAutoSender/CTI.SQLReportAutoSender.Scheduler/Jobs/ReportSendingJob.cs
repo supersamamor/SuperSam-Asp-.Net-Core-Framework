@@ -41,7 +41,7 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
                                     .Include(l => l.CustomScheduleList)
                                     join b in _context.ApprovalRecord on a.Id equals b.DataId
                                     where a.IsActive == true && b.Status == ApprovalStatus.Approved
-                                    select a).ToListAsync();
+                                    select a).IgnoreQueryFilters().ToListAsync();
             foreach (var item in reportList)
             {
                 int dayNo = 0;
@@ -107,7 +107,7 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
                                     .Include(l => l.Report).ThenInclude(l => l!.MailSettingList)
                                     .Include(l => l.Report).ThenInclude(l => l!.MailRecipientList)
                                          where a.Status == ReportStatus.Pending
-                                         select a).ToListAsync();
+                                         select a).IgnoreQueryFilters().ToListAsync();
             foreach (var reportInbox in reportInboxList)
             {
                 try
@@ -145,10 +145,12 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
             client.EnableSsl = true;
             if (string.IsNullOrEmpty(reportInbox.Report.MailSettingList?.FirstOrDefault()?.Account))
             {
+                message.From = new MailAddress(_mailSettings.SMTPEmail!);
                 client.Credentials = new System.Net.NetworkCredential(_mailSettings.SMTPEmail!, _mailSettings.SMTPEmailPassword);
             }
             else
             {
+                message.From = new MailAddress(reportInbox.Report.MailSettingList!.FirstOrDefault()!.Account!);
                 client.Credentials = new System.Net.NetworkCredential(reportInbox.Report.MailSettingList?.FirstOrDefault()?.Account,
                     reportInbox.Report.MailSettingList?.FirstOrDefault()?.Password);
             }

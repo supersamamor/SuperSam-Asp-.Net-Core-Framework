@@ -78,14 +78,7 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/ReportInbox/Details", new { area = "SQLReportAutoSender" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewReportInbox">@Localizer["View"]</a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportInbox.Edit)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/ReportInbox/Edit", new { area = "SQLReportAutoSender" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditReportInbox">@Localizer["Edit"]</a>';
-                    </text>
-                }
+                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewReportInbox">@Localizer["View"]</a>';              
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportInbox.Delete)).Succeeded)
                 {
                     <text>
