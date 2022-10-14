@@ -13,12 +13,10 @@ public record MailSettingViewModel : BaseViewModel
 	public string ReportId { get; init; } = "";
 	public string?  ForeignKeyReport { get; set; }
 	[Display(Name = "Account")]
-	[Required]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	[EmailAddress]
 	public string Account { get; init; } = "";
-	[Display(Name = "Password")]
-	[Required]
+	[Display(Name = "Password")]	
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Password { get; init; } = "";
 	[Display(Name = "Body")]

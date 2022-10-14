@@ -10,7 +10,7 @@
 				reqs.push({name: "ReportDetailList[" + idx + "].ReportDetailNumber", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "ReportDetailNumber"});
 				reqs.push({name: "ReportDetailList[" + idx + "].Description", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "Description"});
 				reqs.push({name: "ReportDetailList[" + idx + "].ConnectionString", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "ConnectionString"});
-				reqs.push({name: "ReportDetailList[" + idx + "].QueryString", el: "Input", minlength:0, maxlength:8000, isrequired: true, description: "QueryString"});
+				reqs.push({name: "ReportDetailList[" + idx + "].QueryString", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "QueryString"});
 				
 			}
 			let validator = $("#report-form").validate();

@@ -7,9 +7,9 @@
 			let reqs = [];			
 			for (let idx = 0; idx < count; idx++) {
 				reqs.push({name: "MailSettingList[" + idx + "].ReportId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "ReportId"});
-				reqs.push({name: "MailSettingList[" + idx + "].Account", el: "Input", minlength:0, maxlength:50, isrequired: true, description: "Account"});
-				reqs.push({name: "MailSettingList[" + idx + "].Password", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "Password"});
-				reqs.push({name: "MailSettingList[" + idx + "].Body", el: "Input", minlength:0, maxlength:2500, isrequired: true, description: "Body"});
+				reqs.push({name: "MailSettingList[" + idx + "].Account", el: "Input", minlength:0, maxlength:50, isrequired: false, description: "Account"});
+				reqs.push({name: "MailSettingList[" + idx + "].Password", el: "Input", minlength:0, maxlength:255, isrequired: false, description: "Password"});
+				reqs.push({name: "MailSettingList[" + idx + "].Body", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Body"});
 				reqs.push({name: "MailSettingList[" + idx + "].Subject", el: "Input", minlength:0, maxlength:50, isrequired: true, description: "Subject"});
 				
 			}
