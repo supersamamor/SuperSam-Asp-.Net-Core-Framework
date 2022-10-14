@@ -106,9 +106,14 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
                                     .Include(l => l.Report).ThenInclude(l => l!.ReportDetailList)
                                     .Include(l => l.Report).ThenInclude(l => l!.MailSettingList)
                                     .Include(l => l.Report).ThenInclude(l => l!.MailRecipientList)
-                                    select a).ToListAsync();
+                                         where a.Status == ReportStatus.Pending
+                                         select a).ToListAsync();
             foreach (var reportInbox in reportInboxList)
-            { 
+            {
+                foreach (var reportDetail in reportInbox.Report!.ReportDetailList!)
+                {
+
+                }
             }
         }
     }
