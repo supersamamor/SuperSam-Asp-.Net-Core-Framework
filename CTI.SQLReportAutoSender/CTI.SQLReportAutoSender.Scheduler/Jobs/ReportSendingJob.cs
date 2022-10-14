@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Quartz;
+using System.Globalization;
 
 namespace CTI.SQLReportAutoSender.Scheduler.Jobs
 {
@@ -32,11 +33,71 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
         }
         private async Task ProcessReportToInbox()
         {
-            var reportList = await _context.Report.Where(l => l.IsActive == true)
-                .Include(l => l.ReportScheduleSettingList).IgnoreQueryFilters().AsNoTracking().ToListAsync();
+            DateTime currentDate = DateTime.Now;
+            var reportList = await (from a in _context.Report
+                                    .Include(l => l.ScheduleFrequency)
+                                    .Include(l => l.ReportScheduleSettingList!).ThenInclude(l => l.ScheduleParameter)
+                                    .Include(l => l.CustomScheduleList)
+                                    join b in _context.ApprovalRecord on a.Id equals b.DataId
+                                    where a.IsActive == true && b.Status == ApprovalStatus.Approved
+                                    select a).ToListAsync();
             foreach (var item in reportList)
-            { 
+            {
+                int dayNo = 0;
+                TimeSpan time = currentDate.TimeOfDay;
+                string dayName = "";
+                foreach (var schedParam in item?.ReportScheduleSettingList!)
+                {
+                    if (schedParam.ScheduleParameter!.Description == ScheduleParameter.Dayname)
+                    {
+                        dayNo = Convert.ToInt32(schedParam.Value);
+                    }
+                    else if (schedParam.ScheduleParameter!.Description == ScheduleParameter.Daynumber)
+                    {
+                        DateTime dateTime = DateTime.ParseExact(schedParam.Value,
+                                       "h:mm tt", CultureInfo.InvariantCulture);
+                        time = dateTime.TimeOfDay;
+                    }
+                    else if (schedParam.ScheduleParameter!.Description == ScheduleParameter.Time)
+                    {
+                        dayName = schedParam.Value;
+                    }
+                }
+                if (time >= currentDate.TimeOfDay)
+                {
+                    bool hasScheduleToday = false;
+                    if (item.ScheduleFrequency!.Description == Frequency.Monthly)
+                    {
+                        if (dayNo == currentDate.Day) { hasScheduleToday = true; }
+                    }
+                    else if (item.ScheduleFrequency!.Description == Frequency.Weekly)
+                    {
+                        if (dayName == currentDate.DayOfWeek.ToString()) { hasScheduleToday = true; }
+                    }
+                    else if (item.ScheduleFrequency!.Description == Frequency.CustomDates)
+                    {
+                        foreach (var customSchedule in item?.CustomScheduleList!)
+                        {
+                            time = customSchedule.DateTimeSchedule.TimeOfDay;
+                            if (customSchedule.DateTimeSchedule.Date == currentDate.Date) { hasScheduleToday = true; break; }
+                        }
+                    }
+                    if (hasScheduleToday)
+                    {
+                        var reportDateTime = currentDate.Date.Add(time);
+                        if (!await _context.ReportInbox.Where(l => l.ReportDateTime == reportDateTime && l.ReportId == item.Id).AnyAsync())
+                        {
+                            await _context.AddAsync(new ReportInboxState()
+                            {
+                                ReportId = item.Id,
+                                Status = ReportStatus.Pending,
+                                ReportDateTime = reportDateTime,
+                            });
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                }
             }
-        }       
+        }
     }
 }

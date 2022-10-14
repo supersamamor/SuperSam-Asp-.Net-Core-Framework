@@ -33,10 +33,8 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 ReportId = e.Report?.Id,
 				e.Status,
-				DateTimeSent = e.DateTimeSent.ToString("MMM dd, yyyy HH:mm"),
-				e.Remarks,
-						
-				
+				DateTimeSent = e.DateTimeSent != null ? ((DateTime)e.DateTimeSent).ToString("MMM dd, yyyy HH:mm") : null,
+				e.Remarks,			
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

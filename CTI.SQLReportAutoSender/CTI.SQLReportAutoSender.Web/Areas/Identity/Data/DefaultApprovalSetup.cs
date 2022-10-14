@@ -34,18 +34,20 @@ public static class DefaultApprovalSetup
                 LastModifiedBy = "System",
                 LastModifiedDate = DateTime.Now,
             };
-            approvalSetup.ApproverAssignmentList = new List<ApproverAssignmentState>();
-            approvalSetup.ApproverAssignmentList.Add(new ApproverAssignmentState()
+            approvalSetup.ApproverAssignmentList = new List<ApproverAssignmentState>
             {
-                ApproverType = ApproverTypes.Role,
-                Sequence = 1,
-                ApproverRoleId = adminRole.Id,
-                Entity = "Default",
-                CreatedBy = "System",
-                CreatedDate = DateTime.Now,
-                LastModifiedBy = "System",
-                LastModifiedDate = DateTime.Now,
-            });
+                new ApproverAssignmentState()
+                {
+                    ApproverType = ApproverTypes.Role,
+                    Sequence = 1,
+                    ApproverRoleId = adminRole.Id,
+                    Entity = "Default",
+                    CreatedBy = "System",
+                    CreatedDate = DateTime.Now,
+                    LastModifiedBy = "System",
+                    LastModifiedDate = DateTime.Now,
+                }
+            };
             context.ApproverSetup.Add(approvalSetup);
             await context.SaveChangesAsync();
         }
