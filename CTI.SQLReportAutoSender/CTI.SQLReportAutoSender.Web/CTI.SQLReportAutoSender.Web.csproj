@@ -51,8 +51,4 @@
     <ProjectReference Include="..\CTI.Common.Web.Utility\CTI.Common.Web.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
-  </ItemGroup>
-
 </Project>

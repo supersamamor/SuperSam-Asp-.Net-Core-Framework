@@ -5,6 +5,8 @@
     ViewData["ActiveMainPage"] = "Report";
     ViewData["Level1"] = "SQLReportAutoSender";
 }
+<link rel="stylesheet" href="~/lib/codemirror/codemirror.min.css" />
+<link rel="stylesheet" href="~/lib/codemirror/3024-night.min.css" />
 <form id="report-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
@@ -31,7 +33,10 @@
 <partial name="_MailRecipientListValidationPartial" model="@Model.Report" />
 <partial name="_ReportScheduleSettingListValidationPartial" model="@Model.Report" />
 <partial name="_CustomScheduleListValidationPartial" model="@Model.Report" />
-
+<script asp-add-nonce src="~/lib/codemirror/codemirror.min.js"></script>
+<script asp-add-nonce src="~/lib/codemirror/sql.min.js"></script>
+<script asp-add-nonce src="~/lib/codemirror/closebrackets.min.js"></script>
+<script asp-add-nonce src="~/lib/codemirror/closetag.min.js"></script>
 <script asp-add-nonce>
     $(document).ready(function () {
 		function InitializeForm()
@@ -148,7 +153,16 @@
 				return this;
 			};
 			$("#ScheduleFrequencyId").schedulefrequencySelect();
-
+			for (let i = 0; i < $('#ReportDetailCount').val(); i++) {
+				var editor = CodeMirror.fromTextArea(
+				document.getElementById('ReportDetailList_' + i + '_QueryString'), {
+					mode: 'sql',
+					theme: '3024-night',
+					lineNumbers: true,
+					autoCloseBrackets: true,
+					autoCloseTags: true
+				}); 
+			}	
 		}	
 		InitializeForm();
     });

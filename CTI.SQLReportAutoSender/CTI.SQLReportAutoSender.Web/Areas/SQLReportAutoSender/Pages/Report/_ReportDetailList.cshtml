@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label asp-for="@item.QueryString"></label>
-                                        <textarea asp-for="@item.QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" style="height:255px;"></textarea>
+                                        <textarea asp-for="@item.QueryString" id="ReportDetailList_@(counter)_QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" style="height:255px;"></textarea>
                                         <span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
                                     </div>
                                 </div>

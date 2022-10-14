@@ -5,6 +5,8 @@
     ViewData["ActiveMainPage"] = "Report";
     ViewData["Level1"] = "SQLReportAutoSender";
 }
+<link rel="stylesheet" href="~/lib/codemirror/codemirror.min.css" />
+<link rel="stylesheet" href="~/lib/codemirror/3024-night.min.css" />
 <form id="report-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <partial name="_ApprovalStatusPartial" model="@Model.ApprovalStatus" />
@@ -40,4 +42,20 @@
 </a>
 @section Scripts {
 <partial name="_DisableFieldsPartial" model="@("report-form")" />
+<script asp-add-nonce src="~/lib/codemirror/codemirror.min.js"></script>
+<script asp-add-nonce src="~/lib/codemirror/sql.min.js"></script>
+<script asp-add-nonce src="~/lib/codemirror/closebrackets.min.js"></script>
+<script asp-add-nonce src="~/lib/codemirror/closetag.min.js"></script>
+<script asp-add-nonce>
+    for (let i = 0; i < $('#ReportDetailCount').val(); i++) {
+		var editor = CodeMirror.fromTextArea(
+		document.getElementById('ReportDetailList_' + i + '_QueryString'), {
+			mode: 'sql',
+			theme: '3024-night',
+			lineNumbers: true,
+			autoCloseBrackets: true,
+			autoCloseTags: true
+		}); 
+	}	
+</script>
 }
