@@ -11,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using CTI.SQLReportAutoSender.Scheduler;
 using CTI.SQLReportAutoSender.EmailSending;
+using CTI.SQLReportAutoSender.ReportGenerator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddScheduler(configuration);
 services.AddEmailSendingAService(configuration);
+services.AddReportGeneratorService();
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");

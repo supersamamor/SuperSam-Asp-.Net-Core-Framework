@@ -41,6 +41,7 @@
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
 	<ProjectReference Include="..\CTI.SQLReportAutoSender.EmailSending\CTI.SQLReportAutoSender.EmailSending.csproj" />
+	<ProjectReference Include="..\CTI.SQLReportAutoSender.ReportGenerator\CTI.SQLReportAutoSender.ReportGenerator.csproj" />
 	<ProjectReference Include="..\CTI.SQLReportAutoSender.Scheduler\CTI.SQLReportAutoSender.Scheduler.csproj" />
   </ItemGroup>
 

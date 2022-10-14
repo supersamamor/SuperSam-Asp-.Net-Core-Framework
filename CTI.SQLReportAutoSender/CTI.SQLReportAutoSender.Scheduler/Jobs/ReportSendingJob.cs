@@ -1,31 +1,31 @@
 using CTI.SQLReportAutoSender.Core.Identity;
 using CTI.SQLReportAutoSender.Core.SQLReportAutoSender;
+using CTI.SQLReportAutoSender.EmailSending;
 using CTI.SQLReportAutoSender.Infrastructure.Data;
+using CTI.SQLReportAutoSender.ReportGenerator.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 using System.Globalization;
+using System.Net.Mail;
 
 namespace CTI.SQLReportAutoSender.Scheduler.Jobs
 {
     public class ReportSendingJob : IJob
     {
         private readonly ApplicationContext _context;
-        private readonly ILogger<ReportSendingJob> _logger;
-        private readonly string _baseUrl;
-        private readonly IEmailSender _emailSender;
-        private readonly UserManager<ApplicationUser> _userManager;
-        public ReportSendingJob(ApplicationContext context, ILogger<ReportSendingJob> logger, IConfiguration configuration, IEmailSender emailSender,
-            UserManager<ApplicationUser> userManager)
+        private readonly ExcelReportGeneratorService _excelReportGeneratorService;
+        private readonly MailSettings _mailSettings;
+        public ReportSendingJob(ApplicationContext context,
+             ExcelReportGeneratorService excelReportGeneratorService, IOptions<MailSettings> mailSettings)
         {
             _context = context;
-            _logger = logger;
-            _baseUrl = configuration.GetValue<string>("BaseUrl");
-            _emailSender = emailSender;
-            _userManager = userManager;
+            _excelReportGeneratorService = excelReportGeneratorService;
+            _mailSettings = mailSettings.Value;
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -110,11 +110,49 @@ namespace CTI.SQLReportAutoSender.Scheduler.Jobs
                                          select a).ToListAsync();
             foreach (var reportInbox in reportInboxList)
             {
-                foreach (var reportDetail in reportInbox.Report!.ReportDetailList!)
+                try
                 {
-
+                    var listOfReportFiles = _excelReportGeneratorService.GenerateReport(reportInbox);
+                    await SendReport(reportInbox, listOfReportFiles);
+                    reportInbox.TagAsSent();
                 }
+                catch (Exception ex)
+                {
+                    reportInbox.TagAsFailed(ex.Message);
+                }
+                await _context.SaveChangesAsync();
             }
+        }
+        private async Task SendReport(ReportInboxState reportInbox, IList<string> listOfFiles)
+        {
+            MailMessage message = new();
+            foreach (var recipient in reportInbox?.Report?.MailRecipientList!)
+            {
+                message.To.Add(recipient.RecipientEmail);
+            }
+            foreach (var file in listOfFiles)
+            {
+                var attachment = new Attachment(file);
+                message.Attachments.Add(attachment);
+            }
+            message.Subject = reportInbox.Report.MailSettingList!.FirstOrDefault()?.Subject;
+            message.Body = reportInbox.Report.MailSettingList!.FirstOrDefault()?.Body;
+            using var client = new SmtpClient();
+            client.Host = _mailSettings.SMTPHost!;
+            client.Port = _mailSettings.SMTPPort;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.EnableSsl = true;
+            if (string.IsNullOrEmpty(reportInbox.Report.MailSettingList?.FirstOrDefault()?.Account))
+            {
+                client.Credentials = new System.Net.NetworkCredential(_mailSettings.SMTPEmail!, _mailSettings.SMTPEmailPassword);
+            }
+            else
+            {
+                client.Credentials = new System.Net.NetworkCredential(reportInbox.Report.MailSettingList?.FirstOrDefault()?.Account,
+                    reportInbox.Report.MailSettingList?.FirstOrDefault()?.Password);
+            }
+            await client.SendMailAsync(message);
         }
     }
 }

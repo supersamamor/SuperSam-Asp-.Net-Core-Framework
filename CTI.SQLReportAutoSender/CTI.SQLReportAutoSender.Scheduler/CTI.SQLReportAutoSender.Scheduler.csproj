@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CTI.SQLReportAutoSender.EmailSending\CTI.SQLReportAutoSender.EmailSending.csproj" />
     <ProjectReference Include="..\CTI.SQLReportAutoSender.Infrastructure\CTI.SQLReportAutoSender.Infrastructure.csproj" />
+    <ProjectReference Include="..\CTI.SQLReportAutoSender.ReportGenerator\CTI.SQLReportAutoSender.ReportGenerator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
