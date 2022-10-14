@@ -22,7 +22,7 @@ public class GetReportQueryHandler : BaseQueryHandler<ApplicationContext, Report
     {
         var query = Context.Set<ReportState>().Include(l => l.ScheduleFrequency)
                         .AsNoTracking();
-        if (_authenticatedUser.ClaimsPrincipal != null && _authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.User))
+        if (_authenticatedUser.ClaimsPrincipal != null && !_authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.Admin))
         {
             query = query.Where(l => l.CreatedBy == _authenticatedUser.UserId);
         }
