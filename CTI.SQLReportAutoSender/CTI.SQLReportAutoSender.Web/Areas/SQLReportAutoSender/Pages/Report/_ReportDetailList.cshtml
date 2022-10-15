@@ -37,7 +37,10 @@
                                 }
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link @activeClass" role="tab" data-toggle="tab" href="#tab-@(counter+1)">
-                                        @Localizer["Report"] @(counter+1)
+                                        @Localizer["Report"] @(counter+1)    
+                                        <span type="button" class="RemoveReportDetailButton cancel" title="@Localizer["Remove"]" removeId="@(item.Id)" style="border:none;background:transparent;padding-left: 10px;">
+                                            <i class="fas fa-times"></i>
+                                        </span>
                                     </a>
                                 </li>
                                 counter++;
@@ -64,7 +67,7 @@
                                 <div class="tab-pane @activeClass" role="tabpanel" id="tab-@(counter+1)">
                                     <input type="hidden" name="ReportDetailList[@counter].Id" value="@item.Id" />
                                     <input type="hidden" name="ReportDetailList[@counter].ReportId" value="@item.ReportId" />
-                                    <input type="hidden" name="ReportDetailList[@counter].ReportDetailNumber" value="@(counter + 1)" />
+                                    <input type="hidden" name="ReportDetailList[@counter].ReportDetailNumber" value="@(counter + 1)" />                                  
                                     <br>
                                     <div class="col-md-6">
                                         <label asp-for="@item.Description"></label>
@@ -81,6 +84,7 @@
                                         <textarea asp-for="@item.QueryString" id="ReportDetailList_@(counter)_QueryString" name="ReportDetailList[@counter].QueryString" class="form-control" style="height:255px;"></textarea>
                                         <span data-valmsg-for="ReportDetailList[@counter].QueryString" asp-validation-for="@item.QueryString" class="text-danger"></span>
                                     </div>
+
                                 </div>
                                 counter++;
                             }

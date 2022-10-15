@@ -74,7 +74,7 @@ public class EditModel : BasePageModel<EditModel>
 		Report!.ReportDetailList!.Add(new ReportDetailViewModel()
 		{
 			ReportId = Report.Id,
-			Description = "Report " + (Report!.ReportDetailList.Max(l => l.ReportDetailNumber) + 1)
+			Description = "Report " + (Report!.ReportDetailList.Count == 0 ? 1 : (Report!.ReportDetailList.Max(l => l.ReportDetailNumber) + 1))
 		});
 		return Partial("_InputFieldsPartial", Report);
 	}
