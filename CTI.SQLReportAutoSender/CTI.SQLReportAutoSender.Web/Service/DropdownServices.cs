@@ -63,30 +63,30 @@ namespace CTI.SQLReportAutoSender.Web.Service
         public IEnumerable<SelectListItem> TimeList()
         {
             IList<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem { Text = "1:00 AM", Value = "1:00 AM", });
-            items.Add(new SelectListItem { Text = "2:00 AM", Value = "2:00 AM", });
-            items.Add(new SelectListItem { Text = "3:00 AM", Value = "3:00 AM", });
-            items.Add(new SelectListItem { Text = "4:00 AM", Value = "4:00 AM", });
-            items.Add(new SelectListItem { Text = "5:00 AM", Value = "5:00 AM", });
-            items.Add(new SelectListItem { Text = "6:00 AM", Value = "6:00 AM", });
-            items.Add(new SelectListItem { Text = "7:00 AM", Value = "7:00 AM", });
-            items.Add(new SelectListItem { Text = "8:00 AM", Value = "8:00 AM", });
-            items.Add(new SelectListItem { Text = "9:00 AM", Value = "9:00 AM", });
-            items.Add(new SelectListItem { Text = "10:00 AM", Value = "10:00 AM", });
-            items.Add(new SelectListItem { Text = "11:00 AM", Value = "11:00 AM", });
-            items.Add(new SelectListItem { Text = "12:00 AM", Value = "12:00 AM", });
-            items.Add(new SelectListItem { Text = "1:00 PM", Value = "1:00 PM", });
-            items.Add(new SelectListItem { Text = "2:00 PM", Value = "2:00 PM", });
-            items.Add(new SelectListItem { Text = "3:00 PM", Value = "3:00 PM", });
-            items.Add(new SelectListItem { Text = "4:00 PM", Value = "4:00 PM", });
-            items.Add(new SelectListItem { Text = "5:00 PM", Value = "5:00 PM", });
-            items.Add(new SelectListItem { Text = "6:00 PM", Value = "6:00 PM", });
-            items.Add(new SelectListItem { Text = "7:00 PM", Value = "7:00 PM", });
-            items.Add(new SelectListItem { Text = "8:00 PM", Value = "8:00 PM", });
-            items.Add(new SelectListItem { Text = "9:00 PM", Value = "9:00 PM", });
-            items.Add(new SelectListItem { Text = "10:00 PM", Value = "10:00 PM", });
-            items.Add(new SelectListItem { Text = "11:00 PM", Value = "11:00 PM", });
-            items.Add(new SelectListItem { Text = "12:00 PM", Value = "12:00 PM", });
+            items.Add(new SelectListItem { Text = "1:00 AM", Value = "1:00:00 AM", });
+            items.Add(new SelectListItem { Text = "2:00 AM", Value = "2:00:00 AM", });
+            items.Add(new SelectListItem { Text = "3:00 AM", Value = "3:00:00 AM", });
+            items.Add(new SelectListItem { Text = "4:00 AM", Value = "4:00:00 AM", });
+            items.Add(new SelectListItem { Text = "5:00 AM", Value = "5:00:00 AM", });
+            items.Add(new SelectListItem { Text = "6:00 AM", Value = "6:00:00 AM", });
+            items.Add(new SelectListItem { Text = "7:00 AM", Value = "7:00:00 AM", });
+            items.Add(new SelectListItem { Text = "8:00 AM", Value = "8:00:00 AM", });
+            items.Add(new SelectListItem { Text = "9:00 AM", Value = "9:00:00 AM", });
+            items.Add(new SelectListItem { Text = "10:00 AM", Value = "10:00:00 AM", });
+            items.Add(new SelectListItem { Text = "11:00 AM", Value = "11:00:00 AM", });
+            items.Add(new SelectListItem { Text = "12:00 AM", Value = "12:00:00 AM", });
+            items.Add(new SelectListItem { Text = "1:00 PM", Value = "1:00:00 PM", });
+            items.Add(new SelectListItem { Text = "2:00 PM", Value = "2:00:00 PM", });
+            items.Add(new SelectListItem { Text = "3:00 PM", Value = "3:00:00 PM", });
+            items.Add(new SelectListItem { Text = "4:00 PM", Value = "4:00:00 PM", });
+            items.Add(new SelectListItem { Text = "5:00 PM", Value = "5:00:00 PM", });
+            items.Add(new SelectListItem { Text = "6:00 PM", Value = "6:00:00 PM", });
+            items.Add(new SelectListItem { Text = "7:00 PM", Value = "7:00:00 PM", });
+            items.Add(new SelectListItem { Text = "8:00 PM", Value = "8:00:00 PM", });
+            items.Add(new SelectListItem { Text = "9:00 PM", Value = "9:00:00 PM", });
+            items.Add(new SelectListItem { Text = "10:00 PM", Value = "10:00:00 PM", });
+            items.Add(new SelectListItem { Text = "11:00 PM", Value = "11:00:00 PM", });
+            items.Add(new SelectListItem { Text = "12:00 PM", Value = "12:00:00 PM", });
             return items;
         }
     }
