@@ -15,7 +15,7 @@
         <div class="col-12">
             <p>
                 <a asp-page="Index" class="btn btn-secondary">@Localizer["Back"]</a>
-                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalStatus.ForApproval)
+                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalStatus.ForApproval)
                 {
                     <button type="submit" class="btn btn-primary cancel" name="Handler" value="Approve">@Localizer["Approve"]</button>
                 }
@@ -23,7 +23,7 @@
                 {
                     <button type="button" class="btn btn-secondary" disabled>@Localizer["Approve"]</button>
                 }
-                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalStatus.ForApproval)
+                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalStatus.ForApproval)
                 {
                     <button type="submit" class="btn btn-danger" name="Handler" value="Reject">@Localizer["Reject"]</button>
                 }

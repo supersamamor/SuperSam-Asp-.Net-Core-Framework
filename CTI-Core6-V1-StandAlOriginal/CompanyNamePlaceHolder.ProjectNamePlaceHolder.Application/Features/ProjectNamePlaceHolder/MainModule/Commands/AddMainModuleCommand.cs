@@ -2,7 +2,7 @@ using AutoMapper;
 using CompanyNamePlaceHolder.Common.Core.Commands;
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Utility.Validators;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using FluentValidation;
 using LanguageExt;

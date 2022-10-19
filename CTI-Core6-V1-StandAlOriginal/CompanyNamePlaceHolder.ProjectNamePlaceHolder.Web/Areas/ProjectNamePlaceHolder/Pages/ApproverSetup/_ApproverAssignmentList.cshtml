@@ -52,20 +52,20 @@
                                         <input type="hidden" name="ApproverAssignmentList[@counter].ApproverSetupId" value="@item.ApproverSetupId" />
                                     </td>
                                     <td>
-                                        <select asp-for="@item.ApproverType" name="ApproverAssignmentList[@counter].ApproverType" asp-items="@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverTypes.ApproverTypeList.Select(l => new SelectListItem { Value = l, Text = l })" class="form-control SelectApproverTypeDropdown">
+                                        <select asp-for="@item.ApproverType" name="ApproverAssignmentList[@counter].ApproverType" asp-items="@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverTypes.ApproverTypeList.Select(l => new SelectListItem { Value = l, Text = l })" class="form-control SelectApproverTypeDropdown">
                                             <option selected="selected" value="">- Select Approver Type -</option>
                                         </select>
                                         <span data-valmsg-for="ApproverAssignmentList[@counter].ApproverType" asp-validation-for="@item.ApproverType" class="text-danger"></span>
                                     </td>
                                     <td>
-                                        @if (@item.ApproverType == @CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverTypes.User)
+                                        @if (@item.ApproverType == @CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverTypes.User)
                                         {
                                             <select asp-for="@item.ApproverUserId" name="ApproverAssignmentList[@counter].ApproverUserId" asp-items="@(await dropdownService.GetUserList(@item.ApproverUserId!, Model.ApproverAssignmentList.Select(l=>l.ApproverUserId).ToList()!))" class="form-control SelectApproverDropdown">
                                                 <option selected="selected" value="">- Select Approver -</option>
                                             </select>
                                             <span data-valmsg-for="ApproverAssignmentList[@counter].ApproverUserId" asp-validation-for="@item.ApproverUserId" class="text-danger"></span>
                                         }
-                                        else if (@item.ApproverType == @CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverTypes.Role)
+                                        else if (@item.ApproverType == @CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverTypes.Role)
                                         {
                                             <select asp-for="@item.ApproverRoleId" name="ApproverAssignmentList[@counter].ApproverRoleId" asp-items="@(await dropdownService.GetRoleApproverList(@item.ApproverRoleId!, Model.ApproverAssignmentList.Select(l=>l.ApproverRoleId).ToList()!))" class="form-control SelectApproverDropdown">
                                                 <option selected="selected" value="">- Select Approver Role -</option>

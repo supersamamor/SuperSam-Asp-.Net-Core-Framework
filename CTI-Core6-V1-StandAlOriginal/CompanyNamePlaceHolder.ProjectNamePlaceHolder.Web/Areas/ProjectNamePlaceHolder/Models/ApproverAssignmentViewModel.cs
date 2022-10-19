@@ -20,7 +20,7 @@ public record ApproverAssignmentViewModel : BaseViewModel
 
     public DateTime LastModifiedDate { get; set; }
     public ApproverSetupViewModel? ApproverSetup { get; init; }
-    public string ApproverType { get; init; } = Core.ProjectNamePlaceHolder.ApproverTypes.User;
+    public string ApproverType { get; init; } = Core.AreaPlaceHolder.ApproverTypes.User;
 
 
 }
