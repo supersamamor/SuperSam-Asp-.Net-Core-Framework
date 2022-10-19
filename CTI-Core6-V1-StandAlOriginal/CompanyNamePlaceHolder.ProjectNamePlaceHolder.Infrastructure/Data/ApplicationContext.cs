@@ -1,6 +1,6 @@
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Identity.Abstractions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
@@ -46,10 +46,10 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
-        modelBuilder.Entity<MainModuleState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<MainModuleState>().HasIndex(p => p.Entity);modelBuilder.Entity<MainModuleState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ParentModuleState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ParentModuleState>().HasIndex(p => p.Entity);modelBuilder.Entity<ParentModuleState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<SubDetailItemState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SubDetailItemState>().HasIndex(p => p.Entity);modelBuilder.Entity<SubDetailItemState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<SubDetailListState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SubDetailListState>().HasIndex(p => p.Entity);modelBuilder.Entity<SubDetailListState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<MainModuleState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<MainModuleState>().HasIndex(p => p.Entity);modelBuilder.Entity<MainModuleState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<ParentModuleState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<ParentModuleState>().HasIndex(p => p.Entity);modelBuilder.Entity<ParentModuleState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<SubDetailItemState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SubDetailItemState>().HasIndex(p => p.Entity);modelBuilder.Entity<SubDetailItemState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<SubDetailListState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<SubDetailListState>().HasIndex(p => p.Entity);modelBuilder.Entity<SubDetailListState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		
         modelBuilder.Entity<ParentModuleState>().HasIndex(p => p.Name).IsUnique();
 		
@@ -62,10 +62,10 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<MainModuleState>().HasMany(t => t.SubDetailItemList).WithOne(l => l.MainModule).HasForeignKey(t => t.TestForeignKeyTwo);
 		modelBuilder.Entity<MainModuleState>().HasMany(t => t.SubDetailListList).WithOne(l => l.MainModule).HasForeignKey(t => t.TestForeignKeyOne);
 		
-		modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ApproverSetupState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ApproverAssignmentState>().HasQueryFilter(e => _authenticatedUser.Entity == "DEFAULT" || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<ApproverSetupState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<ApproverAssignmentState>().HasQueryFilter(e => _authenticatedUser.Entity ==  Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.DataId);
 		modelBuilder.Entity<ApprovalRecordState>().Property(e => e.DataId).HasMaxLength(450);
 		modelBuilder.Entity<ApprovalRecordState>().Property(e => e.ApproverSetupId).HasMaxLength(450);
