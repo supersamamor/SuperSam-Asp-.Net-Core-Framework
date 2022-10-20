@@ -1,0 +1,43 @@
+@using Models
+@model ApplicationViewModel
+@if (!string.IsNullOrWhiteSpace(Model.DisplayName))
+{
+    <div class="form-group row">
+        <label asp-for="@Model.ClientId" class="col-md-3 col-form-label"></label>
+        <div class="col-md-9">
+            <input asp-for="@Model.ClientId" class="form-control" readonly />
+        </div>
+    </div>
+}
+<div class="form-group row">
+    <label asp-for="@Model.DisplayName" class="col-md-3 col-form-label"></label>
+    <div class="col-md-9">
+        <input asp-for="@Model.DisplayName" class="form-control" />
+        <span asp-validation-for="@Model.DisplayName" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.RedirectUri" class="col-md-3 col-form-label"></label>
+    <div class="col-md-9">
+        <input asp-for="@Model.RedirectUri" class="form-control" />
+        <span asp-validation-for="@Model.RedirectUri" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.Scopes" class="col-md-3 col-form-label"></label>
+    <div class="col-md-9">
+        <input asp-for="@Model.Scopes" class="form-control" />
+        <span asp-validation-for="@Model.Scopes" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="@Model.EntityId" class="col-md-3 col-form-label"></label>
+    <div class="col-md-9">
+        <select id="entity-select" asp-for="@Model.EntityId"
+                class="select2 form-control"
+                asp-items="@Model.Entities">
+            <option></option>
+        </select>
+        <span asp-validation-for="@Model.EntityId" class="text-danger"></span>
+    </div>
+</div>
