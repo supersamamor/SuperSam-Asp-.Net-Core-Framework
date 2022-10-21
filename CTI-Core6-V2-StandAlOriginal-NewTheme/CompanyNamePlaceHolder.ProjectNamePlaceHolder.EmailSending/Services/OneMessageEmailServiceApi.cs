@@ -1,12 +1,13 @@
+using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
+using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Exceptions;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
 {
-    public class OneMessageEmailServiceApi : IEmailSender
+    public class OneMessageEmailServiceApi : IMailService
     {
         private readonly MailSettings _emailApiConfig;
         private readonly IHttpClientFactory _httpClientFactory;
@@ -16,15 +17,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public async Task SendAsync(MailRequest request, CancellationToken cancellationToken = default)
         {
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", await GetJwTokenAsync(client, new CancellationToken())));
-            var emailRequest = new EmailRequest { From = _emailApiConfig.EmailApiSender, To = new List<string> { email }, Text = htmlMessage };
+            var emailRequest = new EmailRequest { From = _emailApiConfig.EmailApiSender, To = new List<string> { request.To }, Text = request.Body };
             var content = new StringContent(JsonConvert.SerializeObject(emailRequest), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(_emailApiConfig.EmailApiUrl + "/api/InfoBip/sms", content);
-            var result = await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(_emailApiConfig.EmailApiUrl + "/api/InfoBip/sms", content, cancellationToken: cancellationToken);
+            var result = await response.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 response.EnsureSuccessStatusCode();
@@ -33,7 +34,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
             {
                 throw new ApiResponseException(result, response);
             }
-            await response.Content.ReadAsStringAsync();
+            await response.Content.ReadAsStringAsync(cancellationToken);
         }
 
         private async Task<string> GetJwTokenAsync(HttpClient client, CancellationToken token)
