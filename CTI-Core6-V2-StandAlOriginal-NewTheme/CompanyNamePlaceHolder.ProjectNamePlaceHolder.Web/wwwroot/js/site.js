@@ -3,7 +3,85 @@
 
 // Write your JavaScript code.
 
+
 $(document).ready(function () {
+    (function () {
+        "use strict"; // Start of use strict
+
+        var sidebar = document.querySelector('.sidebar');
+        var sidebarToggles = document.querySelectorAll('#sidebarToggle, #sidebarToggleTop');
+
+        if (sidebar) {
+
+            var collapseEl = sidebar.querySelector('.collapse');
+            var collapseElementList = [].slice.call(document.querySelectorAll('.sidebar .collapse'))
+            var sidebarCollapseList = collapseElementList.map(function (collapseEl) {
+                return new bootstrap.Collapse(collapseEl, { toggle: false });
+            });
+
+            for (var toggle of sidebarToggles) {
+
+                // Toggle the side navigation
+                toggle.addEventListener('click', function (e) {
+                    document.body.classList.toggle('sidebar-toggled');
+                    sidebar.classList.toggle('toggled');
+
+                    if (sidebar.classList.contains('toggled')) {
+                        for (var bsCollapse of sidebarCollapseList) {
+                            bsCollapse.hide();
+                        }
+                    };
+                });
+            }
+
+            // Close any open menu accordions when window is resized below 768px
+            window.addEventListener('resize', function () {
+                var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+                if (vw < 768) {
+                    for (var bsCollapse of sidebarCollapseList) {
+                        bsCollapse.hide();
+                    }
+                };
+            });
+        }
+
+        // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
+
+        var fixedNaigation = document.querySelector('body.fixed-nav .sidebar');
+
+        if (fixedNaigation) {
+            fixedNaigation.on('mousewheel DOMMouseScroll wheel', function (e) {
+                var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+                if (vw > 768) {
+                    var e0 = e.originalEvent,
+                        delta = e0.wheelDelta || -e0.detail;
+                    this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+                    e.preventDefault();
+                }
+            });
+        }
+
+        var scrollToTop = document.querySelector('.scroll-to-top');
+
+        if (scrollToTop) {
+
+            // Scroll to top button appear
+            window.addEventListener('scroll', function () {
+                var scrollDistance = window.pageYOffset;
+
+                //check if user is scrolling up
+                if (scrollDistance > 100) {
+                    scrollToTop.style.display = 'block';
+                } else {
+                    scrollToTop.style.display = 'none';
+                }
+            });
+        }
+
+    })(); // End of use strict
+
     $('#logoutLink').click(function () {
         $('#logoutForm').submit();
     });
@@ -16,11 +94,7 @@ $(document).ready(function () {
         if (currentTheme === 'dark') {
             if (!document.body.classList.contains('dark-mode')) {
                 document.body.classList.add("dark-mode");
-            }
-            //if (mainHeader.classList.contains('navbar-light')) {
-            //    mainHeader.classList.add('navbar-dark');
-            //    mainHeader.classList.remove('navbar-light');
-            //}
+            }           
             toggleSwitch.checked = true;
         }
     }
@@ -29,20 +103,12 @@ $(document).ready(function () {
         if (e.target.checked) {
             if (!document.body.classList.contains('dark-mode')) {
                 document.body.classList.add("dark-mode");
-            }
-            //if (mainHeader.classList.contains('navbar-light')) {
-            //    mainHeader.classList.add('navbar-dark');
-            //    mainHeader.classList.remove('navbar-light');
-            //}
+            }            
             localStorage.setItem('theme', 'dark');
         } else {
             if (document.body.classList.contains('dark-mode')) {
                 document.body.classList.remove("dark-mode");
-            }
-            //if (mainHeader.classList.contains('navbar-dark')) {
-            //    mainHeader.classList.add('navbar-light');
-            //    mainHeader.classList.remove('navbar-dark');
-            //}
+            }           
             localStorage.setItem('theme', 'light');
         }
     }
@@ -178,4 +244,29 @@ $(document).ready(function () {
             $('body').removeClass('loaded');
         });
     }
+    $('.level-one-nav').click(function () {      
+        if ($(this).hasClass("menu-open") == true) {
+            $(this).removeClass('menu-open');
+            $(this).find('.level-one-nav-icon').removeClass('fa-angle-down');
+            $(this).find('.level-one-nav-icon').addClass('fa-angle-left');
+        }
+        else {
+            $(this).addClass('menu-open');
+            $(this).find('.level-one-nav-icon').removeClass('fa-angle-left');
+            $(this).find('.level-one-nav-icon').addClass('fa-angle-down');
+        }
+    });
+    $(".level-one-nav").map(function () {       
+        if ($(this).hasClass("menu-open") == true) {
+            $(this).addClass('menu-open');
+            $(this).find('.level-one-nav-icon').removeClass('fa-angle-left');
+            $(this).find('.level-one-nav-icon').addClass('fa-angle-down');
+           
+        }
+        else {
+            $(this).removeClass('menu-open');
+            $(this).find('.level-one-nav-icon').removeClass('fa-angle-down');
+            $(this).find('.level-one-nav-icon').addClass('fa-angle-left');
+        }
+    });
 });
