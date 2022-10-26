@@ -269,4 +269,29 @@ $(document).ready(function () {
             $(this).find('.level-one-nav-icon').addClass('fa-angle-left');
         }
     });
+    function GetElementTopPosition(elem) {
+        var top = 0;
+
+        do {
+            top += elem.offsetTop - elem.scrollTop;
+        } while (elem = elem.offsetParent);
+
+        return top;
+    }
+    var toolbarTopPosition = GetElementTopPosition(document.getElementById('toolbar-container'));
+    RefreshToolBarPosition();
+    $(window).scroll(function () {
+        RefreshToolBarPosition();
+    });
+    $(window).resize(function () {
+        RefreshToolBarPosition();
+    });
+    function RefreshToolBarPosition() {
+        if ($(window).height() < (toolbarTopPosition - $(document).scrollTop() + 110)) {
+            $('#toolbar-container').css({ "position": "fixed", "bottom": "20px", "right": "75px" });
+        }
+        else {
+            $('#toolbar-container').css({ "position": "relative", "bottom": "0px", "right": "0px" });
+        }
+    }
 });
