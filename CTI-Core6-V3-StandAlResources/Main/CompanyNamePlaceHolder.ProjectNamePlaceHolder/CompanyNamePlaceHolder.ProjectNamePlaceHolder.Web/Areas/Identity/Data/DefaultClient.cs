@@ -28,7 +28,7 @@ public static class DefaultClient
         var defaultClientId = configuration.GetValue<string>("DefaultClient:ClientId");
 
         var context = serviceProvider.GetRequiredService<IdentityContext>();
-        var entity = await context.Entities.FirstAsync(e => e.Name == Core.Constants.Entities.Default);
+        var entity = await context.Entities.FirstAsync(e => e.Name ==  Core.Constants.Entities.Default);
 
         var manager = serviceProvider.GetRequiredService<OpenIddictApplicationManager<OidcApplication>>();
         var redirectUris = new HashSet<Uri> { new("https://oauth.pstmn.io/v1/callback") };

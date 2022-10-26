@@ -12,7 +12,7 @@ public static class DefaultUser
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         using var context = new IdentityContext(
             serviceProvider.GetRequiredService<DbContextOptions<IdentityContext>>());
-        var entity = await context.Entities.FirstAsync(e => e.Name == Core.Constants.Entities.Default);
+        var entity = await context.Entities.FirstAsync(e => e.Name ==  Core.Constants.Entities.Default);
         var user = new ApplicationUser
         {
             UserName = "system@admin",

@@ -21,7 +21,7 @@ public class RegisterModel : PageModel
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<RegisterModel> _logger;
     private readonly IMailService _emailSender;
-	private readonly IdentityContext _context;
+    private readonly IdentityContext _context;
     public RegisterModel(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
@@ -33,7 +33,7 @@ public class RegisterModel : PageModel
         _signInManager = signInManager;
         _logger = logger;
         _emailSender = emailSender;
-		_context = context;
+        _context = context;
     }
 
     [BindProperty]
@@ -87,17 +87,17 @@ public class RegisterModel : PageModel
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (ModelState.IsValid)
         {
-			var defaultEntity = _context.Entities.Where(l => l.Name == Core.Constants.Entities.Default).AsNoTracking().FirstOrDefault();
+            var defaultEntity = _context.Entities.Where(l => l.Name == Core.Constants.Entities.Default).AsNoTracking().FirstOrDefault();
             var user = new ApplicationUser
             {
                 UserName = Input?.Email,
                 Email = Input?.Email,
                 Name = Input?.Name,
                 BirthDate = Input?.BirthDate,
-				EntityId = defaultEntity!.Id
+                EntityId = defaultEntity!.Id
             };
             var result = await _userManager.CreateAsync(user, Input?.Password);
-			_ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
+            _ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");

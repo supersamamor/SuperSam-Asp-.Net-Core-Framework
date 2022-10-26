@@ -12,7 +12,7 @@ public static class DefaultEntity
         var entity = await context.Entities.FirstOrDefaultAsync(e => e.Name == Core.Constants.Entities.Default);
         if (entity == null)
         {
-            context.Entities.Add(new(Core.Constants.Entities.Default.ToUpper(), Core.Constants.Entities.Default));
+            context.Entities.Add(new( Core.Constants.Entities.Default.ToUpper(),  Core.Constants.Entities.Default));
             await context.SaveChangesAsync();
         }
     }

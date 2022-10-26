@@ -13,6 +13,7 @@ using System.Text.Encodings.Web;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
@@ -30,14 +31,14 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
         ILogger<ExternalLoginModel> logger,
         IMailService emailSender,
         IMediator mediator,
-		IdentityContext context)
+        IdentityContext context)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _logger = logger;
         _emailSender = emailSender;
         _mediator = mediator;
-		_context = context;
+        _context = context;
     }
 
     [BindProperty]
@@ -154,18 +155,18 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
 
         if (ModelState.IsValid)
         {
-			var defaultEntity = _context.Entities.Where(l => l.Name == Core.Constants.Entities.Default).AsNoTracking().FirstOrDefault();
+            var defaultEntity = _context.Entities.Where(l => l.Name == Core.Constants.Entities.Default).AsNoTracking().FirstOrDefault();
             var user = new ApplicationUser
             {
                 UserName = Input?.Email,
                 Email = Input?.Email,
                 Name = Input?.Name,
                 BirthDate = Input?.BirthDate,
-				EntityId = defaultEntity!.Id
+                EntityId = defaultEntity!.Id
             };
 
             var result = await _userManager.CreateAsync(user);
-			_ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
+            _ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
             if (result.Succeeded)
             {
                 result = await _userManager.AddLoginAsync(user, info);
