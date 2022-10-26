@@ -119,6 +119,7 @@ if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
     await DefaultRole.Seed(scope.ServiceProvider);
     await DefaultUser.Seed(scope.ServiceProvider);
     await DefaultClient.Seed(scope.ServiceProvider);
+	await UserRole.Seed(scope.ServiceProvider);
     Log.Information("Finished seeding database");
 }
 app.Run();
