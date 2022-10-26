@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Identity.UI.Services;
+using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
+using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
 using Microsoft.Extensions.Options;
 using System.Net.Mail;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
 {
-    public class SMTPEmailService : IEmailSender
+    public class SMTPEmailService : IMailService
     {
         private readonly MailSettings _settings;
         public SMTPEmailService(IOptions<MailSettings> settings)
@@ -12,9 +13,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
             _settings = settings.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendAsync(MailRequest request, CancellationToken cancellationToken = default)
         {
-            var mailMessage = new MailMessage(_settings.SMTPEmail!, email, subject, message)
+            var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body)
             {
                 IsBodyHtml = true
             };
@@ -25,7 +26,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
             client.UseDefaultCredentials = false;
             client.EnableSsl = true;
             client.Credentials = new System.Net.NetworkCredential(_settings.SMTPEmail!, _settings.SMTPEmailPassword);
-            await client.SendMailAsync(mailMessage);
+            await client.SendMailAsync(mailMessage, cancellationToken);
         }
     }
 }

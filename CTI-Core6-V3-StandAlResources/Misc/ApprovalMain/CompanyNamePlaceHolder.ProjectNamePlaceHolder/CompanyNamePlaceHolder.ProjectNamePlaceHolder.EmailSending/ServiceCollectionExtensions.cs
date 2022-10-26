@@ -1,5 +1,5 @@
+using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending
@@ -11,12 +11,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending
             services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
             if (configuration["MailSettings:SendingType"]?.ToUpper() == SendingType.SMTP.ToString().ToUpper())
             {
-                services.AddTransient<IEmailSender, SMTPEmailService>();
+                services.AddTransient<IMailService, SMTPEmailService>();
             }
             else if (configuration["MailSettings:SendingType"]?.ToUpper() == SendingType.OneMessage.ToString().ToUpper())
             {
-                services.AddTransient<IEmailSender, OneMessageEmailServiceApi>();
-                services.AddHttpClient<IEmailSender, OneMessageEmailServiceApi>(c =>
+                services.AddTransient<IMailService, OneMessageEmailServiceApi>();
+                services.AddHttpClient<IMailService, OneMessageEmailServiceApi>(c =>
                 {
                     c.BaseAddress = new Uri(configuration.GetValue<string>("MailSettings:EmailApiUrl"));
                 });

@@ -1,12 +1,13 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Quartz;
+using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
+using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
 {
@@ -15,9 +16,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
         private readonly ApplicationContext _context;
         private readonly ILogger<ApprovalNotificationJob> _logger;
         private readonly string _baseUrl;
-        private readonly IEmailSender _emailSender;
+        private readonly IMailService _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
-        public ApprovalNotificationJob(ApplicationContext context, ILogger<ApprovalNotificationJob> logger, IConfiguration configuration, IEmailSender emailSender,
+        public ApprovalNotificationJob(ApplicationContext context, ILogger<ApprovalNotificationJob> logger, IConfiguration configuration, IMailService emailSender,
             UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -82,7 +83,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
             string subject = approvalRecord!.ApproverSetup!.EmailSubject;
             string message = SetApproverName(approvalRecord!.ApproverSetup!.EmailBody, user);
             message = SetApprovalUrl(message, approvalRecord);
-            await _emailSender.SendEmailAsync(user.Email, subject, message);
+            await _emailSender.SendAsync(new MailRequest() { To = user.Email, Subject = subject, Body = message });
         }
         private static string SetApproverName(string message, ApplicationUser user)
         {
