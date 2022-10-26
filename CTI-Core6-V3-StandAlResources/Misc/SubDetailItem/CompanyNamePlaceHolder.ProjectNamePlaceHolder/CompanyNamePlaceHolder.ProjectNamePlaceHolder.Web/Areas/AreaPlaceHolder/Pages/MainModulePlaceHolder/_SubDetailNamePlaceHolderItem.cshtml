@@ -1,0 +1,36 @@
+﻿@using Models
+@model MainModulePlaceHolderViewModel
+<input type="hidden" id="SubDetailNamePlaceHolderCount" value="@Model?.SubDetailNamePlaceHolderList?.Count" />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header d-flex">
+                <div class="card-title flex-grow-1">
+                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
+                        <h5>@Localizer["SubDetailDescriptionPlaceHolder"]</h5>
+                    </button>     
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="overflow:auto;">
+				<div class="row">
+				@if (Model?.SubDetailNamePlaceHolderList != null)
+				{
+					int counter = 0;
+					foreach (var item in Model.SubDetailNamePlaceHolderList)
+					{
+						<input type="hidden" name="SubDetailNamePlaceHolderList[@counter].Id" value="@item.Id" />
+						<input type="hidden" name="SubDetailNamePlaceHolderList[@counter].SubDetailForeignKeyPlaceHolder" value="@item.SubDetailForeignKeyPlaceHolder"  />
+						Template:[InsertNewSubDetailListName]
+						counter++;
+					}
+				}	
+				</div>				                
+            </div>
+        </div>
+    </div>
+</div>
