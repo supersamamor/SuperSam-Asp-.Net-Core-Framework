@@ -72,26 +72,26 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/MainModule/Details", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewMainModule">@Localizer["View"]</a>';
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewMainModule" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Edit)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/MainModule/Edit", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditMainModule">@Localizer["Edit"]</a>';
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditMainModule" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Delete)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/MainModule/Delete", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteMainModule">@Localizer["Delete"]</a>';
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteMainModule" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
                     </text>
                 }
 				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Approve)).Succeeded)
 				{
 					<text>
 						url = '@Url.Page("/MainModule/Approve", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
-						button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Approve"]</a>';
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
 					</text>
 				}   
                         return button;
@@ -129,6 +129,12 @@
             });
         }
         $.showAjaxLoaderOnClick([".btnAddMainModule",".btnEditMainModule",".btnViewMainModule",".btnDeleteMainModule"]);
+
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
     });
 </script>
 }

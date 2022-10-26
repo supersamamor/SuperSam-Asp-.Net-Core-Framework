@@ -6,19 +6,15 @@
     ViewData["Level1"] = "ProjectNamePlaceHolder";
 }
 <form enctype="multipart/form-data" id="mainModule-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>	
-	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
-	<div id="PartialLoaderContainer">
+    <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.MainModule" />
-    </div> 
-    <div class="row">
-        <div class="col-12">
-            <p>
-                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
-                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
-            </p>
-        </div>
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
@@ -31,52 +27,52 @@
 
 <script asp-add-nonce>
     $(document).ready(function () {
-		function InitializeForm()
-		{
-			$('.DisableSelectDropdown').on('mousedown', function(e) {
-				e.preventDefault();
-				this.blur();
-				window.focus();
-			});
-			
-			$.InitializeSubDetailItemFieldValidations($('#SubDetailItemCount').val());
-			$('.RemoveSubDetailItemButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveSubDetailItem');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
-			});
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
 
-			$('#btnAddSubDetailItem').on( 'click', function () {
-				$('#AsyncAction').val('AddSubDetailItem');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
-			});
+            $.InitializeSubDetailItemFieldValidations($('#SubDetailItemCount').val());
+            $('.RemoveSubDetailItemButton ').on( 'click', function () {
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveSubDetailItem');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
+            });
 
-			$.InitializeSubDetailListFieldValidations($('#SubDetailListCount').val());
-			$('.RemoveSubDetailListButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveSubDetailList');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
-			});
+            $('#btnAddSubDetailItem').on( 'click', function () {
+                $('#AsyncAction').val('AddSubDetailItem');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
+            });
 
-			$('#btnAddSubDetailList').on( 'click', function () {
-				$('#AsyncAction').val('AddSubDetailList');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
-			});
+            $.InitializeSubDetailListFieldValidations($('#SubDetailListCount').val());
+            $('.RemoveSubDetailListButton ').on( 'click', function () {
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveSubDetailList');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
+            });
 
-			$.fn.parentmoduleSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/ParentModule/Index", new { area = "ProjectNamePlaceHolder", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#ParentModuleId").parentmoduleSelect();
+            $('#btnAddSubDetailList').on( 'click', function () {
+                $('#AsyncAction').val('AddSubDetailList');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#mainModule-form', InitializeForm);
+            });
 
-		}	
-		InitializeForm();
+            $.fn.parentmoduleSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/ParentModule/Index", new { area = "ProjectNamePlaceHolder", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#ParentModuleId").parentmoduleSelect();
+
+        }
+        InitializeForm();
     });
 </script>
 }

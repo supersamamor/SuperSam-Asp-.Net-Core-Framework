@@ -8,28 +8,24 @@
 <div class="container-fluid" id="mainModule-container">
     <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
-	<div id="PartialLoaderContainer">
+    <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.MainModule" />
-    </div> 
-</div>
-<div class="row">
-    <div class="col-12">
-        <p>
-            <a asp-page="Index" class="btn btn-secondary">@Localizer["Close"]</a>
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Create)).Succeeded)
-            {
-                <a asp-page="Add" class="btn btn-success">@Localizer["Add"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Edit)).Succeeded)
-            {
-                <a asp-page="Edit" asp-route-id="@Model.MainModule.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-            }
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Delete)).Succeeded)
-            {
-                <a asp-page="Delete" asp-route-id="@Model.MainModule.Id" class="btn btn-danger">@Localizer["Delete"]</a>
-            }
-        </p>
     </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Create)).Succeeded)
+    {
+        <a asp-page="Add" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-id="@Model.MainModule.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.Delete)).Succeeded)
+    {
+        <a asp-page="Delete" asp-route-id="@Model.MainModule.Id" class="btn btn-danger" title="@Localizer["Delete"]"><i class="fas fa-trash"></i></a>
+    }
 </div>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>

@@ -11,29 +11,26 @@
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.MainModule" />
     </div>
-    <div class="row">
-        <div class="col-12">
-            <p>
-                <a asp-page="Index" class="btn btn-secondary">@Localizer["Back"]</a>
-                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalStatus.ForApproval)
-                {
-                    <button type="submit" class="btn btn-primary cancel" name="Handler" value="Approve">@Localizer["Approve"]</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" disabled>@Localizer["Approve"]</button>
-                }
-                @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalStatus.ForApproval)
-                {
-                    <button type="submit" class="btn btn-danger" name="Handler" value="Reject">@Localizer["Reject"]</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" disabled>@Localizer["Reject"]</button>
-                }
-            </p>
-        </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">   
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+        @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalStatus.ForApproval)
+        {
+            <button type="submit" class="btn btn-primary cancel" name="Handler" value="Approve" title="@Localizer["Approve"]"><i class="fas fa-check"></i></button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" title="@Localizer["Approve"]" disabled><i class="fas fa-check"></i></button>
+        }
+        @if (Model.ApprovalStatus == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalStatus.ForApproval)
+        {
+            <button type="submit" class="btn btn-danger" name="Handler" value="Reject" title="@Localizer["Reject"]"><i class="fas fa-times"></i></button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" title="@Localizer["Reject"]" disabled><i class="fas fa-times"></i></button>
+        }
     </div>
+
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>

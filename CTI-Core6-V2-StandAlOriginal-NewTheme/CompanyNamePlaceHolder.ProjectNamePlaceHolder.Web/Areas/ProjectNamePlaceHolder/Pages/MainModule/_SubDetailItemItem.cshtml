@@ -1,41 +1,27 @@
 @using Models
 @model MainModuleViewModel
 <input type="hidden" id="SubDetailItemCount" value="@Model?.SubDetailItemList?.Count" />
-<div class="row">
-    <div class="col-12">
-        <div class="card card-outline card-primary">
-            <div class="card-header d-flex">
-                <div class="card-title flex-grow-1">
-                    <button class="btn-field btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
-                        <h5>@Localizer["SubDetailItem"]</h5>
-                    </button>     
-                </div>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body" style="overflow:auto;">
-				<div class="row">
-				@if (Model?.SubDetailItemList != null)
-				{
-					int counter = 0;
-					foreach (var item in Model.SubDetailItemList)
-					{
-						<input type="hidden" name="SubDetailItemList[@counter].Id" value="@item.Id" />
-						<input type="hidden" name="SubDetailItemList[@counter].TestForeignKeyTwo" value="@item.TestForeignKeyTwo"  />
-						<div class="col-md-12">
-								<label asp-for="@item.Code"></label>
-								<input asp-for="@item.Code"  name="SubDetailItemList[@counter].Code" class="form-control" maxlength="255"/>
-									<span data-valmsg-for="SubDetailItemList[@counter].Code" asp-validation-for="@item.Code" class="text-danger"></span>
-						</div>
-						
-						counter++;
-					}
-				}	
-				</div>				                
-            </div>
+<div class="card">
+    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["SubDetailItem"]</span><br></h5>
+    <div class="card-body" style="overflow:auto;">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+            @if (Model?.SubDetailItemList != null)
+            {
+                int counter = 0;
+                foreach (var item in Model.SubDetailItemList)
+                {
+                    <input type="hidden" name="SubDetailItemList[@counter].Id" value="@item.Id" />
+                    <input type="hidden" name="SubDetailItemList[@counter].TestForeignKeyTwo" value="@item.TestForeignKeyTwo" />
+                    <div class="col">
+                        <div class="mb-3">
+                            <label asp-for="@item.Code" class="form-label fieldrequired"><strong>Code :</strong></label>
+                            <input asp-for="@item.Code" name="SubDetailItemList[@counter].Code" class="form-control" maxlength="255" />
+                            <span data-valmsg-for="SubDetailItemList[@counter].Code" asp-validation-for="@item.Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    counter++;
+                }
+            }
         </div>
     </div>
 </div>
