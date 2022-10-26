@@ -62,22 +62,22 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/MainModulePlaceHolder/Details", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btn-secondary btnViewMainModulePlaceHolder">@Localizer["View"]</a>';
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewMainModulePlaceHolder" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/MainModulePlaceHolder/Edit", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary btnEditMainModulePlaceHolder">@Localizer["Edit"]</a>';
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditMainModulePlaceHolder" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Delete)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/MainModulePlaceHolder/Delete", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-danger btnDeleteMainModulePlaceHolder">@Localizer["Delete"]</a>';
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteMainModulePlaceHolder" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
                     </text>
                 }
-				Template:[ApprovalActionButton]   
+				Template:[ApprovalActionButton]  
                         return button;
                     },
                 },
@@ -113,6 +113,12 @@
             });
         }
         $.showAjaxLoaderOnClick([".btnAddMainModulePlaceHolder",".btnEditMainModulePlaceHolder",".btnViewMainModulePlaceHolder",".btnDeleteMainModulePlaceHolder"]);
+
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
     });
 </script>
 }
