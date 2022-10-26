@@ -2,135 +2,128 @@
     var user = await UserManager.GetUserAsync(User);
     var appName = Configuration.GetValue<string>("Application");
 }
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="/Index" class="brand-link">
-        <img src="https://ui-avatars.com/api/?background=random&rounded=true&name=@appName" alt="Logo" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">@appName</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Admin.View)).Succeeded)
-                {
-                    <li class="nav-item @ManageNavPages.Level1Class(ViewContext, "Admin")">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-cogs nav-icon"></i>
-                            <p>
-                                @Localizer["Admin"]
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.View)).Succeeded)
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/Entities" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Entities")">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>@Localizer["Entities"]</p>
-                                    </a>
-                                </li>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.View)).Succeeded)
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/Roles" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Roles")">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>@Localizer["Roles"]</p>
-                                    </a>
-                                </li>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.View)).Succeeded)
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/Users" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Users")">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>@Localizer["Users"]</p>
-                                    </a>
-                                </li>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.View)).Succeeded)
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/Apis" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "APIs")">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>@Localizer["APIs"]</p>
-                                    </a>
-                                </li>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.View)).Succeeded)
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/Applications" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Applications")">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>@Localizer["Applications"]</p>
-                                    </a>
-                                </li>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.AuditTrail.View)).Succeeded)
-                            {
-                                <li class="nav-item">
-                                    <a href="/Admin/AuditTrail" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "AuditTrail")">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>@Localizer["Audit Trail"]</p>
-                                    </a>
-                                </li>
-                            }
-							@if((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
-							{
-								<li class="nav-item">
-									<a href = "/ProjectNamePlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
-										<i class="fas fa-circle nav-icon"></i>
-										<p>
-											@Localizer["Approval"]
-										</p>
-									</a>
-								</li>
-							}
-                        </ul>
-                    </li>
-                }
-                <li class="nav-item @ManageNavPages.Level1Class(ViewContext, "ProjectNamePlaceHolder")">
+<nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+    <div class="container-fluid d-flex flex-column p-0">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-th-large"></i></div>
+            <div class="sidebar-brand-text mx-3" style="max-width:100px;"><span>ProjectNamePlaceHolder</span></div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <ul class="navbar-nav text-light" id="accordionSidebar">
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Admin.View)).Succeeded)
+            {
+                <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Admin")">
                     <a href="#" class="nav-link">
-                        <i class="fas fa-list-alt nav-icon"></i>
-                        <p>
-                            @Localizer["Project Name Unit Test 1"]
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                        <i class="fas fa-cogs nav-icon"></i>
+                        <span>
+                            @Localizer["Admin"]
+                            <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                        </span>
                     </a>
                     <ul class="nav nav-treeview">
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/ProjectNamePlaceHolder/MainModule" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModule")">
-									<i class="fas fa-circle nav-icon"></i>
-									<p>
-										@Localizer["MainModule"]
-									</p>
-								</a>
-							</li>
-						}
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.ParentModule.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/ProjectNamePlaceHolder/ParentModule" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ParentModule")">
-									<i class="fas fa-circle nav-icon"></i>
-									<p>
-										@Localizer["ParentModule"]
-									</p>
-								</a>
-							</li>
-						}
-						
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Entities" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Entities")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Entities"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Roles" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Roles")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Roles"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Users" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Users")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Users"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Apis" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "APIs")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["APIs"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Applications" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Applications")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Applications"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.AuditTrail.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/AuditTrail" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "AuditTrail")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Audit Trail"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/ProjectNamePlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Approval"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+            }
+            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "ProjectNamePlaceHolder")">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-list-alt nav-icon"></i>
+                    <span>
+                        @Localizer["Project Name Unit Test 1"]
+                        <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                    </span>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModule.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ProjectNamePlaceHolder/MainModule" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModule")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["MainModule"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ParentModule.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ProjectNamePlaceHolder/ParentModule" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ParentModule")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["ParentModule"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </li>
+        </ul>
+        <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
     </div>
-    <!-- /.sidebar -->
-</aside>
+</nav>

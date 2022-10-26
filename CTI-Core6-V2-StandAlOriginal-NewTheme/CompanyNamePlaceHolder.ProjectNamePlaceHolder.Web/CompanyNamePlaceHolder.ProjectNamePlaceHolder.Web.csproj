@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -50,7 +50,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
+    <Content Update="wwwroot\lib\jquery\dist\jquery.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+	<Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css">
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
 
 </Project>
