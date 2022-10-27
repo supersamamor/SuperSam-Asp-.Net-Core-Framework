@@ -32,3 +32,10 @@ button.accept-policy {
     font-weight: bold;
     color: red;
 }
+.select2-selection {
+    height: 40px !important;
+}
+
+.select2-selection__rendered {
+    padding-top: 5px;
+}
