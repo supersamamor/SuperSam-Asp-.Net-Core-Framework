@@ -7,34 +7,15 @@
 }
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-outline card-primary">
-                <div class="card-header d-flex">
-                    <div class="card-title flex-grow-1">
-                        <button class="btn btn-block text-left text-black p-0" type="button" data-card-widget="collapse">
-                            <h5>@Localizer["API Info"]</h5>
-                        </button>
-                    </div>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <partial name="_EditApiDetails" model="Model.Scope" />
-                </div>
-            </div>
+    <div class="card">
+        <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["API Info"]</span><br></h5>
+        <div class="card-body">
+            <partial name="_EditApiDetails" model="Model.Scope" />
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <p>
-                <a asp-page="Index" class="btn btn-secondary">@Localizer["Cancel"]</a>
-                <button type="submit" class="btn btn-success">@Localizer["Save changes"]</button>
-            </p>
-        </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">

@@ -10,7 +10,7 @@
     ViewData["Level1"] = "Admin";
 }
 <div class="card">
-    <div class="card-body">
+    <div class="card-body" style="overflow-x:scroll;">
         <table id="auditLogs" class="table table-hover table-bordered table-striped table-responsive nowrap" style="width:100%">
             <thead>
                 <tr>
@@ -61,16 +61,8 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
             },
-            columns: [
-                {
-                    data: "timeStamp",
-                    name: "DateTime",
-                    searchable: false,
-                    responsivePriority: 1,
-                    render: function (data, type, row, meta) {
-                        return $.format.date(data, 'MM/dd/yyyy hh:mm:ss a');
-                    },
-                },
+            columns: [              
+                { data: "dateTime", name: "DateTime", visible: true, width: "100%", },
                 { data: "primaryKey", name: "PrimaryKey", visible: true, width: "100%", },
                 { data: "tableName", name: "TableName" },
                 { data: "type", name: "Type" },
@@ -84,8 +76,8 @@
                     orderable: false,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/AuditTrail/Details", new { area = "Admin" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
+                        var url = '@Url.Page("/AuditTrail/Details", new { area = "Admin" })' + '?id=' + row.id;                       
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
                         return button;
                     },
                 },
@@ -95,6 +87,11 @@
             ],
         });
         var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
     });
 </script>
 }

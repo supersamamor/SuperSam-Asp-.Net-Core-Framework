@@ -54,12 +54,12 @@
                     width: "10%",
 					render: function (data, type, row, meta) {
 						var url = '@Url.Page("/Entities/View", new { area = "Admin" })' + '?id=' + row.id;
-						var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
+						var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
 				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Edit)).Succeeded)
 				{
 					<text>
 						url = '@Url.Page("/Entities/Edit", new { area = "Admin" })' + '?id=' + row.id;
-						button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Edit"]</a>';
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
 					</text>
 				}
 						return button;
@@ -77,7 +77,7 @@
 						var url = '@Url.Page("/Entities/Add", new { area = "Admin" })';
 						window.location.href = url;
                     },
-                    className: 'btn btn-success',
+                    className: 'btn btn-success text-light',
 				},
             </text>
         }
@@ -85,6 +85,11 @@
 			],
 		});
         var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+		$('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
 	});
     </script>
 }

@@ -61,7 +61,7 @@ public class ViewModel : BasePageModel<ViewModel>
                 Name = user.Name ?? "",
                 BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
                 Email = user.Email,
-                Entity = Core.Constants.Entities.Default,
+                Entity =  Core.Constants.Entities.Default,
                 IsActive = user.IsActive,
             });
 
