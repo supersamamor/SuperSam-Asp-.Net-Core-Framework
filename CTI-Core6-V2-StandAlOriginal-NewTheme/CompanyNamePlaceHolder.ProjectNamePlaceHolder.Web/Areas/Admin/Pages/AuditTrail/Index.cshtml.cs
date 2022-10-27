@@ -27,7 +27,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.DateTime,
+                DateTime = e.DateTime.ToString("MM/dd/yyyy hh:mm:ss tt"),
                 TimeStamp = e.DateTime.ToLocalTime(),
                 e.PrimaryKey,
                 e.TableName,

@@ -54,12 +54,12 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/Apis/View", new { area = "Admin" })' + '?name=' + row.name;
-                        var button = '<a href="' + url + '" class="btn btn-secondary">@Localizer["View"]</a>';
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Apis/Edit", new { area = "Admin" })' + '?name=' + row.name;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btn-primary">@Localizer["Edit"]</a>';
+                        url = '@Url.Page("/Apis/Edit", new { area = "Admin" })' + '?name=' + row.name;     
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
                         return button;
@@ -76,7 +76,7 @@
                         var url = '@Url.Page("/Apis/Add", new { area = "Admin" })';
                         window.location.href = url;
                     },
-                    className: 'btn btn-success',
+                    className: 'btn btn-success text-light',
                 },
             </text>
         }
