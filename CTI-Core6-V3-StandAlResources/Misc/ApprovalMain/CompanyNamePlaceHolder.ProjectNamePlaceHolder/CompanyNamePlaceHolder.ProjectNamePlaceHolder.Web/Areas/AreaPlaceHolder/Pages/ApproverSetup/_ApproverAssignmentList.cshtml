@@ -36,7 +36,7 @@
                         <tr>
                             <td style="display:none;">
                                 <input type="hidden" name="ApproverAssignmentList[@counter].Id" value="@item.Id" />
-                                <input type="hidden" name="ApproverAssignmentList[@counter].TestForeignKeyOne" value="@item.TestForeignKeyOne" />
+                                <input type="hidden" name="ApproverAssignmentList[@counter].ApproverSetupId" value="@item.ApproverSetupId" />
                             </td>
 							<td>
 								<select asp-for="@item.ApproverType" name="ApproverAssignmentList[@counter].ApproverType" asp-items="@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverTypes.ApproverTypeList.Select(l => new SelectListItem { Value = l, Text = l })" class="form-control SelectApproverTypeDropdown">
