@@ -11,40 +11,49 @@
 <div class="card">
     <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["User Info"]</span><br></h5>
     <div class="card-body">
-        <div class="form-group row">
-            <label asp-for="@Model.UserDetails.Id" class="col-md-3 col-form-label"></label>
-            <div class="col-md-9">
-                <input asp-for="@Model.UserDetails.Id" class="form-control" readonly />
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.Id" class="form-label"><strong>Id :</strong></label>
+                    <input asp-for="@Model.UserDetails.Id" class="form-control" readonly />
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="@Model.UserDetails.Email" class="col-md-3 col-form-label"></label>
-            <div class="col-md-9">
-                <input asp-for="@Model.UserDetails.Email" class="form-control" readonly />
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.Email" class="form-label"><strong>Email :</strong></label>
+                    <input asp-for="@Model.UserDetails.Email" class="form-control" readonly />
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="@Model.UserDetails.Name" class="col-md-3 col-form-label"></label>
-            <div class="col-md-9">
-                <input asp-for="@Model.UserDetails.Name" class="form-control" readonly />
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.Name" class="form-label"><strong>Full Name :</strong></label>
+                    <input asp-for="@Model.UserDetails.Name" class="form-control" readonly />
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="@Model.UserDetails.BirthDate" class="col-md-3 col-form-label"></label>
-            <div class="col-md-9">
-                <input asp-for="@Model.UserDetails.BirthDate" class="form-control" readonly />
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.BirthDate" class="form-label"><strong>Birth Date :</strong></label>
+                    <input asp-for="@Model.UserDetails.BirthDate" class="form-control" readonly />
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="@Model.UserDetails.Entity" class="col-md-3 col-form-label"></label>
-            <div class="col-md-9">
-                <input asp-for="@Model.UserDetails.Entity" class="form-control" readonly />
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.Entity" class="form-label"><strong>Entity :</strong></label>
+                    <input asp-for="@Model.UserDetails.Entity" class="form-control" readonly />
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="@Model.UserDetails.IsActive" class="col-md-3 col-form-label"></label>
-            <div class="col-md-9 d-flex align-items-center">
-                @Html.DisplayFor(m => m.UserDetails.IsActive, "UserStatus")
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.IsActive" class="form-label" style="margin-right:10px;"><strong>Status :</strong></label>
+                    @if (Model.UserDetails.IsActive)
+                    {
+                        <span class="badge bg-success text-light">@Localizer["Active"]</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger text-light">@Localizer["Deactivated"]</span>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -52,7 +61,7 @@
 <br />
 <div class="card">
     <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Roles"]</span><br></h5>
-    <div class="card-body"  style="overflow-x:scroll;">
+    <div class="card-body" style="overflow-x:scroll;">
         <partial name="_ViewRoles" model="Model.Roles" />
     </div>
 </div>

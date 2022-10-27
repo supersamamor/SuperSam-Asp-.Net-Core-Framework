@@ -13,50 +13,53 @@
     <div class="card">
         <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["User Info"]</span><br></h5>
         <div class="card-body">
-            <div class="form-group row">
-                <label asp-for="@Model.Input.Email" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Input.Email" class="form-control" />
-                    <span asp-validation-for="@Model.Input.Email" class="text-danger"></span>
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.Email" class="form-label"><strong>Email :</strong></label>
+                        <input asp-for="@Model.Input.Email" class="form-control" />
+                        <span asp-validation-for="@Model.Input.Email" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Input.Password" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Input.Password" class="form-control" />
-                    <span asp-validation-for="@Model.Input.Password" class="text-danger"></span>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.Password" class="form-label"><strong>Password :</strong></label>
+                        <input asp-for="@Model.Input.Password" class="form-control" />
+                        <span asp-validation-for="@Model.Input.Password" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Input.ConfirmPassword" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Input.ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="@Model.Input.ConfirmPassword" class="text-danger"></span>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.ConfirmPassword" class="form-label"><strong>Confirm Password :</strong></label>
+                        <input asp-for="@Model.Input.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="@Model.Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Input.Name" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Input.Name" class="form-control" />
-                    <span asp-validation-for="@Model.Input.Name" class="text-danger"></span>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.Name" class="form-label"><strong>Full Name :</strong></label>
+                        <input asp-for="@Model.Input.Name" class="form-control" />
+                        <span asp-validation-for="@Model.Input.Name" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Input.BirthDate" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <input asp-for="@Model.Input.BirthDate" class="form-control" />
-                    <span asp-validation-for="@Model.Input.BirthDate" class="text-danger"></span>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.BirthDate" class="form-label"><strong>Birth Date :</strong></label>
+                        <input asp-for="@Model.Input.BirthDate" class="form-control" />
+                        <span asp-validation-for="@Model.Input.BirthDate" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="@Model.Input.EntityId" class="col-md-3 col-form-label"></label>
-                <div class="col-md-9">
-                    <select id="entity-select" asp-for="@Model.Input.EntityId"
-                            class="select2 form-control"
-                            asp-items="@Model.Input.Entities">
-                        <option></option>
-                    </select>
-                    <span asp-validation-for="@Model.Input.EntityId" class="text-danger"></span>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.EntityId" class="form-label"><strong>Entity :</strong></label>
+                        <select id="entity-select" asp-for="@Model.Input.EntityId"
+                                class="select2 form-control"
+                                asp-items="@Model.Input.Entities">
+                            <option></option>
+                        </select>
+                        <span asp-validation-for="@Model.Input.EntityId" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +67,7 @@
     <br />
     <div class="card">
         <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Roles"]</span><br></h5>
-        <div class="card-body"  style="overflow-x:scroll;">
+        <div class="card-body" style="overflow-x:scroll;">
             <partial name="_EditRoles" model="Model.Roles" />
         </div>
     </div>
