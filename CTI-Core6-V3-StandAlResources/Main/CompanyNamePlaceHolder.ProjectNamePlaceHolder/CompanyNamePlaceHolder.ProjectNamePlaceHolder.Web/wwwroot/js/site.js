@@ -278,20 +278,23 @@ $(document).ready(function () {
 
         return top;
     }
-    var toolbarTopPosition = GetElementTopPosition(document.getElementById('toolbar-container'));
-    RefreshToolBarPosition();
-    $(window).scroll(function () {
+    if ($('#toolbar-container').length)
+    {
+        var toolbarTopPosition = GetElementTopPosition(document.getElementById('toolbar-container'));
         RefreshToolBarPosition();
-    });
-    $(window).resize(function () {
-        RefreshToolBarPosition();
-    });
-    function RefreshToolBarPosition() {
-        if ($(window).height() < (toolbarTopPosition - $(document).scrollTop() + 110)) {
-            $('#toolbar-container').css({ "position": "fixed", "bottom": "20px", "right": "75px" });
-        }
-        else {
-            $('#toolbar-container').css({ "position": "relative", "bottom": "0px", "right": "0px" });
+        $(window).scroll(function () {
+            RefreshToolBarPosition();
+        });
+        $(window).resize(function () {
+            RefreshToolBarPosition();
+        });
+        function RefreshToolBarPosition() {
+            if ($(window).height() < (toolbarTopPosition - $(document).scrollTop() + 110)) {
+                $('#toolbar-container').css({ "position": "fixed", "bottom": "20px", "right": "75px" });
+            }
+            else {
+                $('#toolbar-container').css({ "position": "relative", "bottom": "0px", "right": "0px" });
+            }
         }
     }
 });
