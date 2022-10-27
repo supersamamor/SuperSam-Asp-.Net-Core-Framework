@@ -65,15 +65,15 @@ public class PendingApprovalsModel : BasePageModel<PendingApprovalsModel>
         switch (approvalStatus)
         {
             case ApprovalStatus.New:
-                return @"<span class=""badge badge-secondary"">" + approvalStatus + "</span>";
+                return @"<span class=""badge bg-secondary"">" + approvalStatus + "</span>";
             case ApprovalStatus.ForApproval:
-                return @"<span class=""badge badge-info"">" + approvalStatus + "</span>";
+                return @"<span class=""badge bg-info"">" + approvalStatus + "</span>";
             case ApprovalStatus.PartiallyApproved:
-                return @"<span class=""badge badge-primary"">" + approvalStatus + "</span>";
+                return @"<span class=""badge bg-primary"">" + approvalStatus + "</span>";
             case ApprovalStatus.Approved:
-                return @"<span class=""badge badge-success"">" + approvalStatus + "</span>";
+                return @"<span class=""badge bg-success"">" + approvalStatus + "</span>";
             case ApprovalStatus.Rejected:
-                return @"<span class=""badge badge-danger"">" + approvalStatus + "</span>";
+                return @"<span class=""badge bg-danger"">" + approvalStatus + "</span>";
             default:
                 break;
         }
@@ -84,11 +84,11 @@ public class PendingApprovalsModel : BasePageModel<PendingApprovalsModel>
         switch (sendingStatus)
         {
             case SendingStatus.Pending:
-                return @"<span class=""badge badge-primary"">" + sendingStatus + "</span>";
+                return @"<span class=""badge bg-primary"">" + sendingStatus + "</span>";
             case SendingStatus.Done:
-                return @"<span class=""badge badge-success"">" + sendingStatus + "</span>";
+                return @"<span class=""badge bg-success"">" + sendingStatus + "</span>";
             case SendingStatus.Failed:
-                return @"<span class=""badge badge-danger"">" + sendingStatus + "</span>";    
+                return @"<span class=""badge bg-danger"">" + sendingStatus + "</span>";    
             default:
                 break;
         }
