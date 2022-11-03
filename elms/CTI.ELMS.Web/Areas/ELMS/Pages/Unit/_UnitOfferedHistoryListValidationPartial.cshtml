@@ -1,0 +1,47 @@
+@using Models
+@model UnitViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeUnitOfferedHistoryFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].OfferingID", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Offering"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].UnitID", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Unit"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].LotBudget", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Lot Budget"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].LotArea", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Lot Area"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].OfferingHistoryID", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Offering History"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].BasicFixedMonthlyRent", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Basic Fixed"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].PercentageRent", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Percentage Rent"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].MinimumMonthlyRent", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Minimum Monthly"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].AnnualIncrement", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Annual Increment"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].AnnualIncrementInformation", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Annual Increment"});
+				reqs.push({name: "UnitOfferedHistoryList[" + idx + "].IsFixedMonthlyRent", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is Fixed"});
+				
+			}
+			let validator = $("#unit-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

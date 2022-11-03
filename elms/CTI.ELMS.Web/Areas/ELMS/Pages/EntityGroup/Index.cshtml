@@ -1,0 +1,144 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Entity List"];
+    ViewData["ActiveMainPage"] = "EntityGroup";
+    ViewData["Level1"] = "ELMS";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="entityGroup" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["PPlus Connection Setup"]
+							</th>
+							<th>
+								@Localizer["Entity Name"]
+							</th>
+							<th>
+								@Localizer["PPLUS Entity Code"]
+							</th>
+							<th>
+								@Localizer["Entity Short Name"]
+							</th>
+							<th>
+								@Localizer["Is Disabled"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#entityGroup').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 5, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/EntityGroup/Index", new { area = "ELMS", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "pPlusConnectionSetupID", name: "PPlusConnectionSetupID", responsivePriority: 1, title: '@Localizer["PPlus Connection Setup"]', searchable: false },
+				{ data: "entityName", name: "EntityName", responsivePriority: 1, title: '@Localizer["Entity Name"]', searchable: false },
+				{ data: "pPLUSEntityCode", name: "PPLUSEntityCode", responsivePriority: 1, title: '@Localizer["PPLUS Entity Code"]', searchable: false },
+				{ data: "entityShortName", name: "EntityShortName", responsivePriority: 1, title: '@Localizer["Entity Short Name"]', searchable: false },
+				{ data: "isDisabled", name: "IsDisabled", responsivePriority: 1, title: '@Localizer["Is Disabled"]', searchable: false },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/EntityGroup/Details", new { area = "ELMS" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewEntityGroup" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EntityGroup.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/EntityGroup/Edit", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditEntityGroup" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EntityGroup.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/EntityGroup/Delete", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteEntityGroup" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
+                    </text>
+                }
+				  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EntityGroup.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/EntityGroup/Add", new { area = "ELMS" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#entityGroup tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddEntityGroup",".btnEditEntityGroup",".btnViewEntityGroup",".btnDeleteEntityGroup"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddEntityGroup",".btnEditEntityGroup",".btnViewEntityGroup",".btnDeleteEntityGroup"]);
+
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
+    });
+</script>
+}

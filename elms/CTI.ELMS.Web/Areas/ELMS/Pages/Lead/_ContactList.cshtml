@@ -1,0 +1,59 @@
+@using Models
+@model LeadViewModel
+<input type="hidden" id="ContactCount" value="@Model?.ContactList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Contact"]</span>
+        <a id="btnAddContact" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        <button class="cancel" type="button" id="btnRemoveContact" value="RemoveContact" style="display:none;"></button>
+    </h5>
+    <div class="card-body" style="overflow:auto;">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th style="display:none;"></th>
+                    <th>
+								@Localizer["Contact Type"]
+							</th>
+							<th>
+								@Localizer["Contact Details"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.ContactList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.ContactList)
+                    {
+                        <tr>
+                            <td style="display:none;">
+                                <input type="hidden" name="ContactList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="ContactList[@counter].LeadID" value="@item.LeadID" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.ContactType" name="ContactList[@counter].ContactType" class="form-control"  />
+										<span data-valmsg-for="ContactList[@counter].ContactType" asp-validation-for="@item.ContactType" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.ContactDetails" name="ContactList[@counter].ContactDetails" class="form-control" maxlength="255" />
+										<span data-valmsg-for="ContactList[@counter].ContactDetails" asp-validation-for="@item.ContactDetails" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveContactButton" title="@Localizer["Remove Contact"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

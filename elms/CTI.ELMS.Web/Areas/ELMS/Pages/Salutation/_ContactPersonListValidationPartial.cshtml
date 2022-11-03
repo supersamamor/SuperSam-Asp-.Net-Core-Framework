@@ -1,0 +1,45 @@
+@using Models
+@model SalutationViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeContactPersonFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "ContactPersonList[" + idx + "].LeadId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Lead"});
+				reqs.push({name: "ContactPersonList[" + idx + "].SalutationID", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Salutation"});
+				reqs.push({name: "ContactPersonList[" + idx + "].FirstName", el: "Input", minlength:0, maxlength:35, isrequired: true, description: "First Name"});
+				reqs.push({name: "ContactPersonList[" + idx + "].MiddleName", el: "Input", minlength:0, maxlength:30, isrequired: false, description: "Middle Name"});
+				reqs.push({name: "ContactPersonList[" + idx + "].LastName", el: "Input", minlength:0, maxlength:70, isrequired: true, description: "Last Name"});
+				reqs.push({name: "ContactPersonList[" + idx + "].Position", el: "Input", minlength:0, maxlength:120, isrequired: true, description: "Position"});
+				reqs.push({name: "ContactPersonList[" + idx + "].IsSOARecipient", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is SOA Recipient"});
+				reqs.push({name: "ContactPersonList[" + idx + "].IsANSignatory", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is AN Signatory"});
+				reqs.push({name: "ContactPersonList[" + idx + "].IsCOLSignatory", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is COL Signatory"});
+				
+			}
+			let validator = $("#salutation-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

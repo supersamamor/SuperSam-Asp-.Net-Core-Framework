@@ -1,0 +1,142 @@
+@using Models
+@model ReportTableYTDExpirySummaryViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EntityID" class="form-label "><strong>@Localizer["EntityID"] :</strong></label>
+			<input asp-for="@Model.EntityID" class="form-control"  />
+			<span asp-validation-for="@Model.EntityID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EntityShortName" class="form-label fieldrequired"><strong>@Localizer["Entity Short"] :</strong></label>
+			<input asp-for="@Model.EntityShortName" class="form-control" maxlength="20" />
+			<span asp-validation-for="@Model.EntityShortName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EntityName" class="form-label fieldrequired"><strong>@Localizer["Entity Name"] :</strong></label>
+			<input asp-for="@Model.EntityName" class="form-control" maxlength="100" />
+			<span asp-validation-for="@Model.EntityName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProjectID" class="form-label "><strong>@Localizer["ProjectID"] :</strong></label>
+			<input asp-for="@Model.ProjectID" class="form-control"  />
+			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProjectName" class="form-label fieldrequired"><strong>@Localizer["Project Name"] :</strong></label>
+			<input asp-for="@Model.ProjectName" class="form-control" maxlength="100" />
+			<span asp-validation-for="@Model.ProjectName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Location" class="form-label fieldrequired"><strong>@Localizer["Location"] :</strong></label>
+			<input asp-for="@Model.Location" class="form-control" maxlength="100" />
+			<span asp-validation-for="@Model.Location" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.LandArea" class="form-label "><strong>@Localizer["Land Area"] :</strong></label>
+			<input asp-for="@Model.LandArea" class="form-control"  />
+			<span asp-validation-for="@Model.LandArea" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TotalGLA" class="form-label "><strong>@Localizer["TotalGLA"] :</strong></label>
+			<input asp-for="@Model.TotalGLA" class="form-control"  />
+			<span asp-validation-for="@Model.TotalGLA" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ColumnName" class="form-label fieldrequired"><strong>@Localizer["Column Name"] :</strong></label>
+			<input asp-for="@Model.ColumnName" class="form-control" maxlength="20" />
+			<span asp-validation-for="@Model.ColumnName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ExpiryLotArea" class="form-label "><strong>@Localizer["Expiry Lot"] :</strong></label>
+			<input asp-for="@Model.ExpiryLotArea" class="form-control"  />
+			<span asp-validation-for="@Model.ExpiryLotArea" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Renewed" class="form-label "><strong>@Localizer["Renewed"] :</strong></label>
+			<input asp-for="@Model.Renewed" class="form-control"  />
+			<span asp-validation-for="@Model.Renewed" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.NewLeases" class="form-label "><strong>@Localizer["New Leases"] :</strong></label>
+			<input asp-for="@Model.NewLeases" class="form-control"  />
+			<span asp-validation-for="@Model.NewLeases" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.WithProspectNego" class="form-label "><strong>@Localizer["With Prospect"] :</strong></label>
+			<input asp-for="@Model.WithProspectNego" class="form-control"  />
+			<span asp-validation-for="@Model.WithProspectNego" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.OrderBy" class="form-label "><strong>@Localizer["Order By"] :</strong></label>
+			<input asp-for="@Model.OrderBy" class="form-control"  />
+			<span asp-validation-for="@Model.OrderBy" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.VerticalOrderBy" class="form-label "><strong>@Localizer["Vertical Order"] :</strong></label>
+			<input asp-for="@Model.VerticalOrderBy" class="form-control"  />
+			<span asp-validation-for="@Model.VerticalOrderBy" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ReportYear" class="form-label "><strong>@Localizer["Report Year"] :</strong></label>
+			<input asp-for="@Model.ReportYear" class="form-control"  />
+			<span asp-validation-for="@Model.ReportYear" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProcessedDate" class="form-label "><strong>@Localizer["Processed Date"] :</strong></label>
+			<input asp-for="@Model.ProcessedDate" class="form-control"  />
+			<span asp-validation-for="@Model.ProcessedDate" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

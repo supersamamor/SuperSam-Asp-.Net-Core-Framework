@@ -1,0 +1,133 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Offering History"];
+    ViewData["ActiveMainPage"] = "OfferingHistory";
+    ViewData["Level1"] = "ELMS";
+}
+<form id="offeringHistory-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.OfferingHistory" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_UnitOfferedHistoryListValidationPartial" model="@Model.OfferingHistory" />
+<partial name="_UnitGroupListValidationPartial" model="@Model.OfferingHistory" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeUnitOfferedHistoryFieldValidations($('#UnitOfferedHistoryCount').val());
+			$('.RemoveUnitOfferedHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveUnitOfferedHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
+			});
+
+			$('#btnAddUnitOfferedHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddUnitOfferedHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
+			});
+
+			$.fn.unitSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Unit/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var unitlistdropdowns = document.getElementsByClassName('SelectUnit');
+			for ( var i=0; i< unitlistdropdowns.length; i++) {
+				$("#UnitOfferedHistoryList_"+i+"_UnitID").unitSelect();
+			}
+
+			$.fn.offeringSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
+			for ( var i=0; i< offeringlistdropdowns.length; i++) {
+				$("#UnitOfferedHistoryList_"+i+"_OfferingID").offeringSelect();
+			}
+
+			$.InitializeUnitGroupFieldValidations($('#UnitGroupCount').val());
+			$('.RemoveUnitGroupButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveUnitGroup');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
+			});
+
+			$('#btnAddUnitGroup').on( 'click', function () {
+				$('#AsyncAction').val('AddUnitGroup');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
+			});
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectID").projectSelect();
+
+			$.fn.offeringSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#OfferingID").offeringSelect();
+
+			$.fn.leadSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Lead/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LeadID").leadSelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

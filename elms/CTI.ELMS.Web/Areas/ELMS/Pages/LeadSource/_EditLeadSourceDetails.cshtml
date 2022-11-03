@@ -1,0 +1,14 @@
+@using Models
+@model LeadSourceViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.LeadSourceName" class="form-label fieldrequired"><strong>@Localizer["Lead Source"] :</strong></label>
+			<input asp-for="@Model.LeadSourceName" class="form-control"  />
+			<span asp-validation-for="@Model.LeadSourceName" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

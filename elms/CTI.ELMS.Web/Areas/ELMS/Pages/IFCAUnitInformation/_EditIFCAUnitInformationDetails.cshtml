@@ -1,0 +1,62 @@
+@using Models
+@model IFCAUnitInformationViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.UnitID" class="form-label "><strong>@Localizer["Unit"] :</strong></label>
+			<select asp-for="@Model.UnitID" class="form-control" asp-items="@(dropdownService.GetUnitList(Model.UnitID))"><option value="">- Select Unit -</option></select>
+			<span asp-validation-for="@Model.UnitID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IFCATenantInformationID" class="form-label "><strong>@Localizer["IFCA Tenant Information"] :</strong></label>
+			<select asp-for="@Model.IFCATenantInformationID" class="form-control" asp-items="@(dropdownService.GetIFCATenantInformationList(Model.IFCATenantInformationID))"><option value="">- Select IFCA Tenant Information -</option></select>
+			<span asp-validation-for="@Model.IFCATenantInformationID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.RentalRate" class="form-label "><strong>@Localizer["Rental Rate"] :</strong></label>
+			<input asp-for="@Model.RentalRate" class="form-control"  />
+			<span asp-validation-for="@Model.RentalRate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.BudgetedAmount" class="form-label "><strong>@Localizer["Budgeted Amount"] :</strong></label>
+			<input asp-for="@Model.BudgetedAmount" class="form-control"  />
+			<span asp-validation-for="@Model.BudgetedAmount" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.StartDate" class="form-label "><strong>@Localizer["Start Date"] :</strong></label>
+			<input asp-for="@Model.StartDate" class="form-control"  />
+			<span asp-validation-for="@Model.StartDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EndDate" class="form-label "><strong>@Localizer["End Date"] :</strong></label>
+			<input asp-for="@Model.EndDate" class="form-control"  />
+			<span asp-validation-for="@Model.EndDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.BasicFixedMonthlyRent" class="form-label "><strong>@Localizer["Basic Fixed Monthly Rent"] :</strong></label>
+			<input asp-for="@Model.BasicFixedMonthlyRent" class="form-control"  />
+			<span asp-validation-for="@Model.BasicFixedMonthlyRent" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

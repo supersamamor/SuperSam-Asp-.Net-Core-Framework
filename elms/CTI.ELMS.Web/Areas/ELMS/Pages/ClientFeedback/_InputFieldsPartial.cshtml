@@ -1,0 +1,12 @@
+@using Models
+@model ClientFeedbackViewModel
+
+<div class="card">
+    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["ClientFeedback Info"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditClientFeedbackDetails" model="Model" />        
+    </div>
+</div>
+
+<br /><partial name="_ActivityHistoryList" model="Model" />

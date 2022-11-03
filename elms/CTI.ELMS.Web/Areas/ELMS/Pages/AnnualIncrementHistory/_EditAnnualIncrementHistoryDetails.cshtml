@@ -1,0 +1,54 @@
+@using Models
+@model AnnualIncrementHistoryViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.UnitOfferedHistoryID" class="form-label "><strong>@Localizer["Unit Offered"] :</strong></label>
+			<select asp-for="@Model.UnitOfferedHistoryID" class="form-control" asp-items="@(dropdownService.GetUnitOfferedHistoryList(Model.UnitOfferedHistoryID))"><option value="">- Select Unit Offered -</option></select>
+			<span asp-validation-for="@Model.UnitOfferedHistoryID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Year" class="form-label "><strong>@Localizer["Year"] :</strong></label>
+			<input asp-for="@Model.Year" class="form-control"  />
+			<span asp-validation-for="@Model.Year" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.BasicFixedMonthlyRent" class="form-label "><strong>@Localizer["Basic Fixed Rent"] :</strong></label>
+			<input asp-for="@Model.BasicFixedMonthlyRent" class="form-control"  />
+			<span asp-validation-for="@Model.BasicFixedMonthlyRent" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PercentageRent" class="form-label "><strong>@Localizer["Percentage Rent"] :</strong></label>
+			<input asp-for="@Model.PercentageRent" class="form-control"  />
+			<span asp-validation-for="@Model.PercentageRent" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.MinimumMonthlyRent" class="form-label "><strong>@Localizer["Minimum Monthly Rent"] :</strong></label>
+			<input asp-for="@Model.MinimumMonthlyRent" class="form-control"  />
+			<span asp-validation-for="@Model.MinimumMonthlyRent" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ContractGroupingCount" class="form-label "><strong>@Localizer["Contract Grouping Count"] :</strong></label>
+			<input asp-for="@Model.ContractGroupingCount" class="form-control"  />
+			<span asp-validation-for="@Model.ContractGroupingCount" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

@@ -1,0 +1,94 @@
+@using Models
+@model IFCATenantInformationViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.OfferingID" class="form-label fieldrequired"><strong>@Localizer["Offering"] :</strong></label>
+			<select asp-for="@Model.OfferingID" class="form-control" asp-items="@(dropdownService.GetOfferingList(Model.OfferingID))"><option value="">- Select Offering -</option></select>
+			<span asp-validation-for="@Model.OfferingID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TenantContractNo" class="form-label fieldrequired"><strong>@Localizer["Tenant Contract No."] :</strong></label>
+			<input asp-for="@Model.TenantContractNo" class="form-control"  />
+			<span asp-validation-for="@Model.TenantContractNo" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IsExhibit" class="form-label "><strong>@Localizer["Is Exhibit"] :</strong></label>
+			<input asp-for="@Model.IsExhibit" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.IsExhibit" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProjectID" class="form-label fieldrequired"><strong>@Localizer["Project"] :</strong></label>
+			<select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TradeName" class="form-label fieldrequired"><strong>@Localizer["Trade Name"] :</strong></label>
+			<input asp-for="@Model.TradeName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.TradeName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TINNumber" class="form-label fieldrequired"><strong>@Localizer["TIN Number"] :</strong></label>
+			<input asp-for="@Model.TINNumber" class="form-control" maxlength="20" />
+			<span asp-validation-for="@Model.TINNumber" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PaidSecurityDeposit" class="form-label "><strong>@Localizer["Paid Security"] :</strong></label>
+			<input asp-for="@Model.PaidSecurityDeposit" class="form-control"  />
+			<span asp-validation-for="@Model.PaidSecurityDeposit" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Allowance" class="form-label "><strong>@Localizer["Allowance"] :</strong></label>
+			<input asp-for="@Model.Allowance" class="form-control"  />
+			<span asp-validation-for="@Model.Allowance" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TenantCategory" class="form-label fieldrequired"><strong>@Localizer["Tenant Category"] :</strong></label>
+			<input asp-for="@Model.TenantCategory" class="form-control" maxlength="100" />
+			<span asp-validation-for="@Model.TenantCategory" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IsAnchor" class="form-label "><strong>@Localizer["Is Anchor"] :</strong></label>
+			<input asp-for="@Model.IsAnchor" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.IsAnchor" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TenantClassification" class="form-label fieldrequired"><strong>@Localizer["Tenant Classification"] :</strong></label>
+			<input asp-for="@Model.TenantClassification" class="form-control" maxlength="100" />
+			<span asp-validation-for="@Model.TenantClassification" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

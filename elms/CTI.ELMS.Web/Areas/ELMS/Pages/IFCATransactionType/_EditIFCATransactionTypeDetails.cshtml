@@ -1,0 +1,46 @@
+@using Models
+@model IFCATransactionTypeViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TransCode" class="form-label fieldrequired"><strong>@Localizer["Trans Code"] :</strong></label>
+			<input asp-for="@Model.TransCode" class="form-control" maxlength="10" />
+			<span asp-validation-for="@Model.TransCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TransGroup" class="form-label fieldrequired"><strong>@Localizer["Trans Group"] :</strong></label>
+			<input asp-for="@Model.TransGroup" class="form-control" maxlength="20" />
+			<span asp-validation-for="@Model.TransGroup" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Description" class="form-label fieldrequired"><strong>@Localizer["Description"] :</strong></label>
+			<input asp-for="@Model.Description" class="form-control" maxlength="500" />
+			<span asp-validation-for="@Model.Description" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EntityID" class="form-label "><strong>@Localizer["Entity"] :</strong></label>
+			<select asp-for="@Model.EntityID" class="form-control" asp-items="@(dropdownService.GetEntityGroupList(Model.EntityID))"><option value="">- Select Entity -</option></select>
+			<span asp-validation-for="@Model.EntityID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Mode" class="form-label fieldrequired"><strong>@Localizer["Mode"] :</strong></label>
+			<input asp-for="@Model.Mode" class="form-control" maxlength="1" />
+			<span asp-validation-for="@Model.Mode" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

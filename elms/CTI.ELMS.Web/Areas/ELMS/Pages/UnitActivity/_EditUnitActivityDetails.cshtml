@@ -1,0 +1,30 @@
+@using Models
+@model UnitActivityViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.UnitID" class="form-label fieldrequired"><strong>@Localizer["Unit"] :</strong></label>
+			<select asp-for="@Model.UnitID" class="form-control" asp-items="@(dropdownService.GetUnitList(Model.UnitID))"><option value="">- Select Unit -</option></select>
+			<span asp-validation-for="@Model.UnitID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ActivityHistoryID" class="form-label "><strong>@Localizer["Activity History"] :</strong></label>
+			<select asp-for="@Model.ActivityHistoryID" class="form-control" asp-items="@(dropdownService.GetActivityHistoryList(Model.ActivityHistoryID))"><option value="">- Select Activity History -</option></select>
+			<span asp-validation-for="@Model.ActivityHistoryID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ActivityID" class="form-label fieldrequired"><strong>@Localizer["Activity"] :</strong></label>
+			<select asp-for="@Model.ActivityID" class="form-control" asp-items="@(dropdownService.GetActivityList(Model.ActivityID))"><option value="">- Select Activity -</option></select>
+			<span asp-validation-for="@Model.ActivityID" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

@@ -1,0 +1,86 @@
+@using Models
+@model ActivityHistoryViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ActivityID" class="form-label "><strong>@Localizer["Activity"] :</strong></label>
+			<select asp-for="@Model.ActivityID" class="form-control" asp-items="@(dropdownService.GetActivityList(Model.ActivityID))"><option value="">- Select Activity -</option></select>
+			<span asp-validation-for="@Model.ActivityID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.LeadTaskId" class="form-label "><strong>@Localizer["Lead Task"] :</strong></label>
+			<select asp-for="@Model.LeadTaskId" class="form-control" asp-items="@(dropdownService.GetLeadTaskList(Model.LeadTaskId))"><option value="">- Select Lead Task -</option></select>
+			<span asp-validation-for="@Model.LeadTaskId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ActivityDate" class="form-label "><strong>@Localizer["Activity Date"] :</strong></label>
+			<input asp-for="@Model.ActivityDate" class="form-control"  />
+			<span asp-validation-for="@Model.ActivityDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ClientFeedbackId" class="form-label "><strong>@Localizer["Client Feedback"] :</strong></label>
+			<select asp-for="@Model.ClientFeedbackId" class="form-control" asp-items="@(dropdownService.GetClientFeedbackList(Model.ClientFeedbackId))"><option value="">- Select Client Feedback -</option></select>
+			<span asp-validation-for="@Model.ClientFeedbackId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.NextStepId" class="form-label fieldrequired"><strong>@Localizer["Next Step"] :</strong></label>
+			<select asp-for="@Model.NextStepId" class="form-control" asp-items="@(dropdownService.GetNextStepList(Model.NextStepId))"><option value="">- Select Next Step -</option></select>
+			<span asp-validation-for="@Model.NextStepId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TargetDate" class="form-label fieldrequired"><strong>@Localizer["Target Date"] :</strong></label>
+			<input asp-for="@Model.TargetDate" class="form-control"  />
+			<span asp-validation-for="@Model.TargetDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ActivityRemarks" class="form-label fieldrequired"><strong>@Localizer["Activity Remarks"] :</strong></label>
+			<input asp-for="@Model.ActivityRemarks" class="form-control" maxlength="500" />
+			<span asp-validation-for="@Model.ActivityRemarks" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PCTDate" class="form-label fieldrequired"><strong>@Localizer["PCT Date"] :</strong></label>
+			<input asp-for="@Model.PCTDate" class="form-control"  />
+			<span asp-validation-for="@Model.PCTDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.UnitsInformation" class="form-label fieldrequired"><strong>@Localizer["Units Information"] :</strong></label>
+			<input asp-for="@Model.UnitsInformation" class="form-control"  />
+			<span asp-validation-for="@Model.UnitsInformation" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Status" class="form-label fieldrequired"><strong>@Localizer["Status"] :</strong></label>
+			<input asp-for="@Model.Status" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Status" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

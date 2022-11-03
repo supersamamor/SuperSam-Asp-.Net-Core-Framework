@@ -1,0 +1,246 @@
+@using Models
+@model ReportTableCollectionDetailViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProjectID" class="form-label "><strong>@Localizer["Project"] :</strong></label>
+			<select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IFCATenantInformationID" class="form-label "><strong>@Localizer["IFCA Tenant Information"] :</strong></label>
+			<select asp-for="@Model.IFCATenantInformationID" class="form-control" asp-items="@(dropdownService.GetIFCATenantInformationList(Model.IFCATenantInformationID))"><option value="">- Select IFCA Tenant Information -</option></select>
+			<span asp-validation-for="@Model.IFCATenantInformationID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Month" class="form-label "><strong>@Localizer["Month"] :</strong></label>
+			<input asp-for="@Model.Month" class="form-control"  />
+			<span asp-validation-for="@Model.Month" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Year" class="form-label fieldrequired"><strong>@Localizer["Year"] :</strong></label>
+			<input asp-for="@Model.Year" class="form-control"  />
+			<span asp-validation-for="@Model.Year" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IsTerminated" class="form-label "><strong>@Localizer["Is Terminated"] :</strong></label>
+			<input asp-for="@Model.IsTerminated" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.IsTerminated" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.CurrentMonth" class="form-label "><strong>@Localizer["Current Month"] :</strong></label>
+			<input asp-for="@Model.CurrentMonth" class="form-control"  />
+			<span asp-validation-for="@Model.CurrentMonth" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PrevMonth1" class="form-label "><strong>@Localizer["Prev Month"] :</strong></label>
+			<input asp-for="@Model.PrevMonth1" class="form-control"  />
+			<span asp-validation-for="@Model.PrevMonth1" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PrevMonth2" class="form-label "><strong>@Localizer["Prev Month"] :</strong></label>
+			<input asp-for="@Model.PrevMonth2" class="form-control"  />
+			<span asp-validation-for="@Model.PrevMonth2" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PrevMonth3" class="form-label "><strong>@Localizer["Prev Month"] :</strong></label>
+			<input asp-for="@Model.PrevMonth3" class="form-control"  />
+			<span asp-validation-for="@Model.PrevMonth3" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Prior" class="form-label "><strong>@Localizer["Prior"] :</strong></label>
+			<input asp-for="@Model.Prior" class="form-control"  />
+			<span asp-validation-for="@Model.Prior" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TotalOverDue" class="form-label "><strong>@Localizer["Total Over"] :</strong></label>
+			<input asp-for="@Model.TotalOverDue" class="form-control"  />
+			<span asp-validation-for="@Model.TotalOverDue" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.GrandTotal" class="form-label "><strong>@Localizer["Grand Total"] :</strong></label>
+			<input asp-for="@Model.GrandTotal" class="form-control"  />
+			<span asp-validation-for="@Model.GrandTotal" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Rental" class="form-label "><strong>@Localizer["Rental"] :</strong></label>
+			<input asp-for="@Model.Rental" class="form-control"  />
+			<span asp-validation-for="@Model.Rental" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.CusaAC" class="form-label "><strong>@Localizer["CusaAC"] :</strong></label>
+			<input asp-for="@Model.CusaAC" class="form-control"  />
+			<span asp-validation-for="@Model.CusaAC" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Utilities" class="form-label "><strong>@Localizer["Utilities"] :</strong></label>
+			<input asp-for="@Model.Utilities" class="form-control"  />
+			<span asp-validation-for="@Model.Utilities" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Deposits" class="form-label "><strong>@Localizer["Deposits"] :</strong></label>
+			<input asp-for="@Model.Deposits" class="form-control"  />
+			<span asp-validation-for="@Model.Deposits" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Interests" class="form-label "><strong>@Localizer["Interests"] :</strong></label>
+			<input asp-for="@Model.Interests" class="form-control"  />
+			<span asp-validation-for="@Model.Interests" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Penalty" class="form-label "><strong>@Localizer["Penalty"] :</strong></label>
+			<input asp-for="@Model.Penalty" class="form-control"  />
+			<span asp-validation-for="@Model.Penalty" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Others" class="form-label "><strong>@Localizer["Others"] :</strong></label>
+			<input asp-for="@Model.Others" class="form-control"  />
+			<span asp-validation-for="@Model.Others" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PaidSD" class="form-label "><strong>@Localizer["PaidSD"] :</strong></label>
+			<input asp-for="@Model.PaidSD" class="form-control"  />
+			<span asp-validation-for="@Model.PaidSD" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.SDExposure" class="form-label "><strong>@Localizer["SDExposure"] :</strong></label>
+			<input asp-for="@Model.SDExposure" class="form-control"  />
+			<span asp-validation-for="@Model.SDExposure" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PayableCurrentMonth" class="form-label "><strong>@Localizer["Payable Current"] :</strong></label>
+			<input asp-for="@Model.PayableCurrentMonth" class="form-control"  />
+			<span asp-validation-for="@Model.PayableCurrentMonth" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PayablePrevMonth1" class="form-label "><strong>@Localizer["Payable Prev"] :</strong></label>
+			<input asp-for="@Model.PayablePrevMonth1" class="form-control"  />
+			<span asp-validation-for="@Model.PayablePrevMonth1" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PayablePrevMonth2" class="form-label "><strong>@Localizer["Payable Prev"] :</strong></label>
+			<input asp-for="@Model.PayablePrevMonth2" class="form-control"  />
+			<span asp-validation-for="@Model.PayablePrevMonth2" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PayablePrevMonth3" class="form-label "><strong>@Localizer["Payable Prev"] :</strong></label>
+			<input asp-for="@Model.PayablePrevMonth3" class="form-control"  />
+			<span asp-validation-for="@Model.PayablePrevMonth3" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PayablePrior" class="form-label "><strong>@Localizer["Payable Prior"] :</strong></label>
+			<input asp-for="@Model.PayablePrior" class="form-control"  />
+			<span asp-validation-for="@Model.PayablePrior" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Column1" class="form-label fieldrequired"><strong>@Localizer["Column1"] :</strong></label>
+			<input asp-for="@Model.Column1" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Column1" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Column2" class="form-label fieldrequired"><strong>@Localizer["Column2"] :</strong></label>
+			<input asp-for="@Model.Column2" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Column2" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Column3" class="form-label fieldrequired"><strong>@Localizer["Column3"] :</strong></label>
+			<input asp-for="@Model.Column3" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Column3" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Column4" class="form-label fieldrequired"><strong>@Localizer["Column4"] :</strong></label>
+			<input asp-for="@Model.Column4" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Column4" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

@@ -1,0 +1,14 @@
+@using Models
+@model SalutationViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.SalutationDescription" class="form-label fieldrequired"><strong>@Localizer["Salutation Description"] :</strong></label>
+			<input asp-for="@Model.SalutationDescription" class="form-control" maxlength="15" />
+			<span asp-validation-for="@Model.SalutationDescription" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

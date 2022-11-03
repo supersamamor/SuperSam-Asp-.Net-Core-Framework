@@ -1,0 +1,150 @@
+@using Models
+@model UnitBudgetViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Year" class="form-label "><strong>@Localizer["Year"] :</strong></label>
+			<input asp-for="@Model.Year" class="form-control"  />
+			<span asp-validation-for="@Model.Year" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProjectID" class="form-label "><strong>@Localizer["Project"] :</strong></label>
+			<select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.UnitID" class="form-label "><strong>@Localizer["Unit"] :</strong></label>
+			<select asp-for="@Model.UnitID" class="form-control" asp-items="@(dropdownService.GetUnitList(Model.UnitID))"><option value="">- Select Unit -</option></select>
+			<span asp-validation-for="@Model.UnitID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.January" class="form-label "><strong>@Localizer["January"] :</strong></label>
+			<input asp-for="@Model.January" class="form-control"  />
+			<span asp-validation-for="@Model.January" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.February" class="form-label "><strong>@Localizer["February"] :</strong></label>
+			<input asp-for="@Model.February" class="form-control"  />
+			<span asp-validation-for="@Model.February" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.March" class="form-label "><strong>@Localizer["March"] :</strong></label>
+			<input asp-for="@Model.March" class="form-control"  />
+			<span asp-validation-for="@Model.March" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.April" class="form-label "><strong>@Localizer["April"] :</strong></label>
+			<input asp-for="@Model.April" class="form-control"  />
+			<span asp-validation-for="@Model.April" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.May" class="form-label "><strong>@Localizer["May"] :</strong></label>
+			<input asp-for="@Model.May" class="form-control"  />
+			<span asp-validation-for="@Model.May" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.June" class="form-label "><strong>@Localizer["June"] :</strong></label>
+			<input asp-for="@Model.June" class="form-control"  />
+			<span asp-validation-for="@Model.June" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.July" class="form-label "><strong>@Localizer["July"] :</strong></label>
+			<input asp-for="@Model.July" class="form-control"  />
+			<span asp-validation-for="@Model.July" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.August" class="form-label "><strong>@Localizer["August"] :</strong></label>
+			<input asp-for="@Model.August" class="form-control"  />
+			<span asp-validation-for="@Model.August" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.September" class="form-label "><strong>@Localizer["September"] :</strong></label>
+			<input asp-for="@Model.September" class="form-control"  />
+			<span asp-validation-for="@Model.September" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.October" class="form-label "><strong>@Localizer["October"] :</strong></label>
+			<input asp-for="@Model.October" class="form-control"  />
+			<span asp-validation-for="@Model.October" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.November" class="form-label "><strong>@Localizer["November"] :</strong></label>
+			<input asp-for="@Model.November" class="form-control"  />
+			<span asp-validation-for="@Model.November" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.December" class="form-label "><strong>@Localizer["December"] :</strong></label>
+			<input asp-for="@Model.December" class="form-control"  />
+			<span asp-validation-for="@Model.December" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.LotArea" class="form-label "><strong>@Localizer["Lot Area"] :</strong></label>
+			<input asp-for="@Model.LotArea" class="form-control"  />
+			<span asp-validation-for="@Model.LotArea" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IsOriginalBudgeted" class="form-label "><strong>@Localizer["Is Original"] :</strong></label>
+			<input asp-for="@Model.IsOriginalBudgeted" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.IsOriginalBudgeted" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ParentUnitBudgetID" class="form-label fieldrequired"><strong>@Localizer["Parent Unit"] :</strong></label>
+			<select asp-for="@Model.ParentUnitBudgetID" class="form-control" asp-items="@(dropdownService.GetUnitBudgetList(Model.ParentUnitBudgetID))"><option value="">- Select Parent Unit -</option></select>
+			<span asp-validation-for="@Model.ParentUnitBudgetID" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

@@ -1,0 +1,13 @@
+@using Models
+@model OfferingHistoryViewModel
+
+<div class="card">
+    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["OfferingHistory Info"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditOfferingHistoryDetails" model="Model" />        
+    </div>
+</div>
+
+<br /><partial name="_UnitOfferedHistoryList" model="Model" />
+<br /><partial name="_UnitGroupList" model="Model" />

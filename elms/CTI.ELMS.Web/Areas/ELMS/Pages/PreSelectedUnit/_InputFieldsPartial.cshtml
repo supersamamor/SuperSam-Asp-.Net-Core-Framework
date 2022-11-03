@@ -1,0 +1,10 @@
+@using Models
+@model PreSelectedUnitViewModel
+
+<div class="card">
+    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["PreSelectedUnit Info"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditPreSelectedUnitDetails" model="Model" />        
+    </div>
+</div>

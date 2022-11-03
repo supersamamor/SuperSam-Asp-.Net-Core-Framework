@@ -1,0 +1,197 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Lead"];
+    ViewData["ActiveMainPage"] = "Lead";
+    ViewData["Level1"] = "ELMS";
+}
+<form id="lead-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Lead" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ContactListValidationPartial" model="@Model.Lead" />
+<partial name="_ContactPersonListValidationPartial" model="@Model.Lead" />
+<partial name="_OfferingHistoryListValidationPartial" model="@Model.Lead" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeContactFieldValidations($('#ContactCount').val());
+			$('.RemoveContactButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+			});
+
+			$('#btnAddContact').on( 'click', function () {
+				$('#AsyncAction').val('AddContact');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+			});
+
+			$.InitializeContactPersonFieldValidations($('#ContactPersonCount').val());
+			$('.RemoveContactPersonButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveContactPerson');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+			});
+
+			$('#btnAddContactPerson').on( 'click', function () {
+				$('#AsyncAction').val('AddContactPerson');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+			});
+
+			$.fn.salutationSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Salutation/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var salutationlistdropdowns = document.getElementsByClassName('SelectSalutation');
+			for ( var i=0; i< salutationlistdropdowns.length; i++) {
+				$("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
+			}
+
+			$.InitializeOfferingHistoryFieldValidations($('#OfferingHistoryCount').val());
+			$('.RemoveOfferingHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveOfferingHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+			});
+
+			$('#btnAddOfferingHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddOfferingHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+			});
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var projectlistdropdowns = document.getElementsByClassName('SelectProject');
+			for ( var i=0; i< projectlistdropdowns.length; i++) {
+				$("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
+			}
+
+			$.fn.offeringSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
+			for ( var i=0; i< offeringlistdropdowns.length; i++) {
+				$("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
+			}
+
+			$.fn.businessnatureSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/BusinessNature/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#BusinessNatureID").businessnatureSelect();
+
+			$.fn.businessnaturesubitemSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#BusinessNatureSubItemID").businessnaturesubitemSelect();
+
+			$.fn.leadsourceSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LeadSourceId").leadsourceSelect();
+
+			$.fn.businessnaturecategorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#BusinessNatureCategoryID").businessnaturecategorySelect();
+
+			$.fn.leadtouchpointSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/LeadTouchPoint/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LeadTouchpointId").leadtouchpointSelect();
+
+			$.fn.operationtypeSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/OperationType/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#OperationTypeID").operationtypeSelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}
