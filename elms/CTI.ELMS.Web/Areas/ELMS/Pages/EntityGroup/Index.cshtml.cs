@@ -31,7 +31,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                PPlusConnectionSetupID = e.PPlusConnectionSetup?.PPlusVersionName,
+                PplusConnectionSetupID = e.PPlusConnectionSetup?.PPlusVersionName,
 				e.EntityName,
 				e.PPLUSEntityCode,
 				e.EntityShortName,
