@@ -43,12 +43,15 @@ public class BusinessNatureSubItemController : BaseApiController<BusinessNatureS
 
 public record BusinessNatureSubItemViewModel
 {
-    
-	public string? BusinessNatureSubItemName { get;set; }
+    [Required]
 	
-	public string? BusinessNatureID { get;set; }
+	public string BusinessNatureSubItemName { get;set; } = "";
+	[Required]
+	
+	public string BusinessNatureID { get;set; } = "";
 	public bool IsDisabled { get;set; }
+	[Required]
 	
-	public string? BusinessNatureSubItemCode { get;set; }
+	public string BusinessNatureSubItemCode { get;set; } = "";
 	   
 }

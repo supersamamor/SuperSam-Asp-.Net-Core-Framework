@@ -16,7 +16,7 @@ public class GetIFCATenantInformationQueryHandler : BaseQueryHandler<Application
     {
     }
 	public override async Task<PagedListResponse<IFCATenantInformationState>> Handle(GetIFCATenantInformationQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<IFCATenantInformationState>().Include(l=>l.Project).Include(l=>l.Offering)
+		await Context.Set<IFCATenantInformationState>().Include(l=>l.Offering).Include(l=>l.Project)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

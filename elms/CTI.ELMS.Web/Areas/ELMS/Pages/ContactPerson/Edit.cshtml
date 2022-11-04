@@ -33,18 +33,6 @@
                 window.focus();
             });
             
-			$.fn.leadSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Lead/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LeadId").leadSelect();
-
 			$.fn.salutationSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -56,6 +44,18 @@
 				return this;
 			};
 			$("#SalutationID").salutationSelect();
+
+			$.fn.leadSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Lead/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LeadId").leadSelect();
 
 
         }

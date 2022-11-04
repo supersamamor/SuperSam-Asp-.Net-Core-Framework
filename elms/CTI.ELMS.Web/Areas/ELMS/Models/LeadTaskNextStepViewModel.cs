@@ -11,21 +11,21 @@ public record LeadTaskNextStepViewModel : BaseViewModel
 	
 	public string? LeadTaskId { get; init; }
 	public string?  ForeignKeyLeadTask { get; set; }
+	[Display(Name = "Client Feedback")]
+	
+	public string? ClientFeedbackId { get; init; }
+	public string?  ForeignKeyClientFeedback { get; set; }
 	[Display(Name = "Next Step")]
 	
 	public string? NextStepId { get; init; }
 	public string?  ForeignKeyNextStep { get; set; }
 	[Display(Name = "PCT Day")]
 	public int? PCTDay { get; init; }
-	[Display(Name = "Client Feedback")]
-	
-	public string? ClientFeedbackId { get; init; }
-	public string?  ForeignKeyClientFeedback { get; set; }
 	
 	public DateTime LastModifiedDate { get; set; }
 	public LeadTaskViewModel? LeadTask { get; init; }
-	public NextStepViewModel? NextStep { get; init; }
 	public ClientFeedbackViewModel? ClientFeedback { get; init; }
+	public NextStepViewModel? NextStep { get; init; }
 		
 	
 }

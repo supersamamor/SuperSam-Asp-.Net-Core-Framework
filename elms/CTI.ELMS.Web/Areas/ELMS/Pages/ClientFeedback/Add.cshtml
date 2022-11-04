@@ -75,21 +75,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
 			});
 
-			$.fn.nextstepSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
-			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
-				$("#LeadTaskNextStepList_"+i+"_NextStepId").nextstepSelect();
-			}
-
 			$.fn.leadtaskSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -103,6 +88,21 @@
 			var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
 			for ( var i=0; i< leadtasklistdropdowns.length; i++) {
 				$("#LeadTaskNextStepList_"+i+"_LeadTaskId").leadtaskSelect();
+			}
+
+			$.fn.nextstepSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
+			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
+				$("#LeadTaskNextStepList_"+i+"_NextStepId").nextstepSelect();
 			}
 
 			$.InitializeActivityHistoryFieldValidations($('#ActivityHistoryCount').val());
@@ -132,21 +132,6 @@
 				$("#ActivityHistoryList_"+i+"_ActivityID").activitySelect();
 			}
 
-			$.fn.nextstepSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
-			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
-				$("#ActivityHistoryList_"+i+"_NextStepId").nextstepSelect();
-			}
-
 			$.fn.leadtaskSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -160,6 +145,21 @@
 			var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
 			for ( var i=0; i< leadtasklistdropdowns.length; i++) {
 				$("#ActivityHistoryList_"+i+"_LeadTaskId").leadtaskSelect();
+			}
+
+			$.fn.nextstepSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
+			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
+				$("#ActivityHistoryList_"+i+"_NextStepId").nextstepSelect();
 			}
 
 		}	

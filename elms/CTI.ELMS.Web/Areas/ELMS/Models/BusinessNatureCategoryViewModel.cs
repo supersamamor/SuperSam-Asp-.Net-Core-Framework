@@ -8,14 +8,17 @@ namespace CTI.ELMS.Web.Areas.ELMS.Models;
 public record BusinessNatureCategoryViewModel : BaseViewModel
 {	
 	[Display(Name = "Business Nature Category Code")]
+	[Required]
 	
-	public string? BusinessNatureCategoryCode { get; init; }
+	public string BusinessNatureCategoryCode { get; init; } = "";
 	[Display(Name = "Business Nature Category Name")]
+	[Required]
 	
-	public string? BusinessNatureCategoryName { get; init; }
+	public string BusinessNatureCategoryName { get; init; } = "";
 	[Display(Name = "Business Nature Sub Item")]
+	[Required]
 	
-	public string? BusinessNatureSubItemID { get; init; }
+	public string BusinessNatureSubItemID { get; init; } = "";
 	public string?  ForeignKeyBusinessNatureSubItem { get; set; }
 	[Display(Name = "Is Disabled")]
 	public bool IsDisabled { get; init; }

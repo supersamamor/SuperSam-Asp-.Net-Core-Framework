@@ -17,7 +17,13 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Probability"]
+								@Localizer["Project"]
+							</th>
+							<th>
+								@Localizer["Offering History"]
+							</th>
+							<th>
+								@Localizer["Status"]
 							</th>
 							  
 							<th>
@@ -43,7 +49,7 @@
         var table = $('#offering').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 2, 'desc' ]],
+            order: [[ 4, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "ListAll" })',
@@ -57,7 +63,9 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "probability", name: "Probability", responsivePriority: 1, title: '@Localizer["Probability"]', searchable: false },
+                { data: "projectID", name: "ProjectID", responsivePriority: 1, title: '@Localizer["Project"]', searchable: false },
+				{ data: "offeringHistoryID", name: "OfferingHistoryID", responsivePriority: 1, title: '@Localizer["Offering History"]', searchable: false },
+				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false },
 				   
 				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {

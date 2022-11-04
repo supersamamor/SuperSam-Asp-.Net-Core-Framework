@@ -16,10 +16,10 @@
 								@Localizer["Lead Task"]
 							</th>
 							<th>
-								@Localizer["PCT Day"]
+								@Localizer["Client Feedback"]
 							</th>
 							<th>
-								@Localizer["Client Feedback"]
+								@Localizer["PCT Day"]
 							</th>
 							
                     <th>
@@ -46,15 +46,15 @@
 										
 									</td>
 									<td>
-										<input  asp-for="@item.PCTDay" name="LeadTaskNextStepList[@counter].PCTDay" class="form-control"  />
-										<span data-valmsg-for="LeadTaskNextStepList[@counter].PCTDay" asp-validation-for="@item.PCTDay" class="text-danger"></span>
-										
-									</td>
-									<td>
 										<select asp-for="@item.ClientFeedbackId" id="LeadTaskNextStepList_@(counter)_ClientFeedbackId" name="LeadTaskNextStepList[@counter].ClientFeedbackId" class="form-control SelectClientFeedback" asp-items="@(dropdownService.GetClientFeedbackList(item.ClientFeedbackId))" >
 											<option value="">- Select Client Feedback -</option>
 										</select>
 										<span data-valmsg-for="LeadTaskNextStepList[@counter].ClientFeedbackId" asp-validation-for="@item.ClientFeedbackId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.PCTDay" name="LeadTaskNextStepList[@counter].PCTDay" class="form-control"  />
+										<span data-valmsg-for="LeadTaskNextStepList[@counter].PCTDay" asp-validation-for="@item.PCTDay" class="text-danger"></span>
 										
 									</td>
 									

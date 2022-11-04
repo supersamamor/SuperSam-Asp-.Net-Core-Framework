@@ -17,7 +17,7 @@ public class GetUnitActivityByIdQueryHandler : BaseQueryByIdHandler<ApplicationC
 	
 	public override async Task<Option<UnitActivityState>> Handle(GetUnitActivityByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.UnitActivity.Include(l=>l.ActivityHistory).Include(l=>l.Unit).Include(l=>l.Activity)
+		return await Context.UnitActivity.Include(l=>l.Activity).Include(l=>l.ActivityHistory).Include(l=>l.Unit)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

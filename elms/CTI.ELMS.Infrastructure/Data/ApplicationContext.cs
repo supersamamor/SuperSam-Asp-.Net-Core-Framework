@@ -188,7 +188,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ContactPersonState>().Property(e => e.Position).HasMaxLength(120);
 		modelBuilder.Entity<ActivityState>().Property(e => e.ActivityRemarks).HasMaxLength(500);
 		modelBuilder.Entity<ActivityHistoryState>().Property(e => e.ActivityRemarks).HasMaxLength(500);
-		modelBuilder.Entity<OfferingState>().Property(e => e.Probability).HasMaxLength(50);
+		modelBuilder.Entity<OfferingState>().Property(e => e.Status).HasMaxLength(50);
 		modelBuilder.Entity<OfferingState>().Property(e => e.ANType).HasMaxLength(100);
 		modelBuilder.Entity<OfferingState>().Property(e => e.TenantContractNo).HasMaxLength(50);
 		modelBuilder.Entity<OfferingState>().Property(e => e.AwardNoticeCreatedBy).HasMaxLength(450);
@@ -201,7 +201,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<OfferingState>().Property(e => e.PermittedUse).HasMaxLength(255);
 		modelBuilder.Entity<OfferingState>().Property(e => e.ModifiedCategory).HasMaxLength(255);
 		modelBuilder.Entity<OfferingState>().Property(e => e.ContractNumber).HasMaxLength(255);
-		modelBuilder.Entity<OfferingHistoryState>().Property(e => e.Probability).HasMaxLength(35);
+		modelBuilder.Entity<OfferingHistoryState>().Property(e => e.Status).HasMaxLength(35);
 		modelBuilder.Entity<OfferingHistoryState>().Property(e => e.ANType).HasMaxLength(100);
 		modelBuilder.Entity<UnitGroupState>().Property(e => e.AreaTypeDescription).HasMaxLength(50);
 		modelBuilder.Entity<IFCATransactionTypeState>().Property(e => e.TransCode).HasMaxLength(10);
@@ -244,13 +244,12 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.UnitList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);
 		modelBuilder.Entity<UnitState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.Unit).HasForeignKey(t => t.UnitID);
-		modelBuilder.Entity<UnitBudgetState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.UnitBudget).HasForeignKey(t => t.ParentUnitBudgetID)
-			.OnDelete(DeleteBehavior.NoAction);
+		modelBuilder.Entity<UnitBudgetState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.UnitBudget).HasForeignKey(t => t.ParentUnitBudgetID);
 		modelBuilder.Entity<LeadTaskState>().HasMany(t => t.LeadTaskClientFeedBackList).WithOne(l => l.LeadTask).HasForeignKey(t => t.LeadTaskId);
 		modelBuilder.Entity<ClientFeedbackState>().HasMany(t => t.LeadTaskClientFeedBackList).WithOne(l => l.ClientFeedback).HasForeignKey(t => t.ClientFeedbackId);
 		modelBuilder.Entity<LeadTaskState>().HasMany(t => t.LeadTaskNextStepList).WithOne(l => l.LeadTask).HasForeignKey(t => t.LeadTaskId);
-		modelBuilder.Entity<NextStepState>().HasMany(t => t.LeadTaskNextStepList).WithOne(l => l.NextStep).HasForeignKey(t => t.NextStepId);
 		modelBuilder.Entity<ClientFeedbackState>().HasMany(t => t.LeadTaskNextStepList).WithOne(l => l.ClientFeedback).HasForeignKey(t => t.ClientFeedbackId);
+		modelBuilder.Entity<NextStepState>().HasMany(t => t.LeadTaskNextStepList).WithOne(l => l.NextStep).HasForeignKey(t => t.NextStepId);
 		modelBuilder.Entity<BusinessNatureState>().HasMany(t => t.BusinessNatureSubItemList).WithOne(l => l.BusinessNature).HasForeignKey(t => t.BusinessNatureID);
 		modelBuilder.Entity<BusinessNatureSubItemState>().HasMany(t => t.BusinessNatureCategoryList).WithOne(l => l.BusinessNatureSubItem).HasForeignKey(t => t.BusinessNatureSubItemID);
 		modelBuilder.Entity<LeadSourceState>().HasMany(t => t.LeadList).WithOne(l => l.LeadSource).HasForeignKey(t => t.LeadSourceId);
@@ -274,8 +273,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<UnitState>().HasMany(t => t.UnitActivityList).WithOne(l => l.Unit).HasForeignKey(t => t.UnitID);
 		modelBuilder.Entity<ActivityHistoryState>().HasMany(t => t.UnitActivityList).WithOne(l => l.ActivityHistory).HasForeignKey(t => t.ActivityHistoryID);
 		modelBuilder.Entity<ActivityState>().HasMany(t => t.UnitActivityList).WithOne(l => l.Activity).HasForeignKey(t => t.ActivityID);
-		modelBuilder.Entity<LeadState>().HasMany(t => t.OfferingList).WithOne(l => l.Lead).HasForeignKey(t => t.LeadID);
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.OfferingList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);
+		modelBuilder.Entity<LeadState>().HasMany(t => t.OfferingList).WithOne(l => l.Lead).HasForeignKey(t => t.LeadID);
 		modelBuilder.Entity<OfferingState>().HasMany(t => t.OfferingHistoryList).WithOne(l => l.Offering).HasForeignKey(t => t.OfferingID);
 		modelBuilder.Entity<LeadState>().HasMany(t => t.OfferingHistoryList).WithOne(l => l.Lead).HasForeignKey(t => t.LeadID);
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.OfferingHistoryList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);

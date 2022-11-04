@@ -6,7 +6,7 @@ namespace CTI.ELMS.Core.ELMS;
 public record BusinessNatureState : BaseEntity
 {
 	public string BusinessNatureName { get; init; } = "";
-	public string? BusinessNatureCode { get; init; }
+	public string BusinessNatureCode { get; init; } = "";
 	public bool IsDisabled { get; init; }
 	
 	

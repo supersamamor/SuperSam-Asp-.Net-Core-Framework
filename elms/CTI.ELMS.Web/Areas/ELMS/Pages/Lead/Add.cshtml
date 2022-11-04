@@ -117,41 +117,17 @@
 				$("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
 			}
 
-			$.fn.leadsourceSelect = function() {
+			$.fn.businessnaturecategorySelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#LeadSourceId").leadsourceSelect();
-
-			$.fn.leadtouchpointSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/LeadTouchPoint/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LeadTouchpointId").leadtouchpointSelect();
-
-			$.fn.operationtypeSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/OperationType/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#OperationTypeID").operationtypeSelect();
+			$("#BusinessNatureCategoryID").businessnaturecategorySelect();
 
 			$.fn.businessnaturesubitemSelect = function() {
 				this.filter("select").each(function() {
@@ -165,17 +141,17 @@
 			};
 			$("#BusinessNatureSubItemID").businessnaturesubitemSelect();
 
-			$.fn.businessnaturecategorySelect = function() {
+			$.fn.leadsourceSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#BusinessNatureCategoryID").businessnaturecategorySelect();
+			$("#LeadSourceId").leadsourceSelect();
 
 			$.fn.businessnatureSelect = function() {
 				this.filter("select").each(function() {
@@ -188,6 +164,30 @@
 				return this;
 			};
 			$("#BusinessNatureID").businessnatureSelect();
+
+			$.fn.operationtypeSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/OperationType/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#OperationTypeID").operationtypeSelect();
+
+			$.fn.leadtouchpointSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/LeadTouchPoint/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LeadTouchpointId").leadtouchpointSelect();
 
 		}	
 		InitializeForm();

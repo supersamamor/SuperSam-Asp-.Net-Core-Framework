@@ -46,8 +46,9 @@ public record BusinessNatureViewModel
     [Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string BusinessNatureName { get;set; } = "";
+	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? BusinessNatureCode { get;set; }
+	public string BusinessNatureCode { get;set; } = "";
 	public bool IsDisabled { get;set; }
 	   
 }

@@ -6,7 +6,7 @@ namespace CTI.ELMS.Core.ELMS;
 public record OfferingHistoryState : BaseEntity
 {
 	public string? OfferingID { get; init; }
-	public string? Probability { get; init; }
+	public string? Status { get; init; }
 	public DateTime? CommencementDate { get; init; }
 	public DateTime? TerminationDate { get; init; }
 	public int? Year { get; init; }
@@ -18,8 +18,8 @@ public record OfferingHistoryState : BaseEntity
 	public decimal? OtherChargesAircon { get; init; }
 	public decimal? ConstructionCAMC { get; init; }
 	public decimal? CommencementCAMC { get; init; }
-	public string Concession { get; init; } = "";
-	public string OffersheetRemarks { get; init; } = "";
+	public string? Concession { get; init; }
+	public string? OffersheetRemarks { get; init; }
 	public string UnitsInformation { get; init; } = "";
 	public string? ANType { get; init; }
 	public string? LeadID { get; init; }
@@ -45,7 +45,7 @@ public record OfferingHistoryState : BaseEntity
 	public bool AutoComputeTotalSecurityDeposit { get; init; }
 	public decimal? MinimumSalesQuota { get; init; }
 	public string UnitType { get; init; } = "";
-	public string Provision { get; init; } = "";
+	public string? Provision { get; init; }
 	public int? FitOutPeriod { get; init; }
 	public DateTime TurnOverDate { get; init; }
 	public bool AutoComputeAnnualAdvertisingFee { get; init; }

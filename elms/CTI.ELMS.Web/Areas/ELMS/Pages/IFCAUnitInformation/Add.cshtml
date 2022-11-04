@@ -33,18 +33,6 @@
 				window.focus();
 			});
 			
-			$.fn.ifcatenantinformationSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/IFCATenantInformation/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#IFCATenantInformationID").ifcatenantinformationSelect();
-
 			$.fn.unitSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -56,6 +44,18 @@
 				return this;
 			};
 			$("#UnitID").unitSelect();
+
+			$.fn.ifcatenantinformationSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/IFCATenantInformation/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#IFCATenantInformationID").ifcatenantinformationSelect();
 
 		}	
 		InitializeForm();

@@ -31,7 +31,9 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.Probability,
+                ProjectID = e.Project?.Id,
+				OfferingHistoryID = e.OfferingHistoryID?.ToString("##,##"),
+				e.Status,
 						
 				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 e.LastModifiedDate

@@ -4,9 +4,25 @@
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.Probability" class="form-label "><strong>@Localizer["Probability"] :</strong></label>
-			<input asp-for="@Model.Probability" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.Probability" class="text-danger"></span>
+		<label asp-for="@Model.ProjectID" class="form-label "><strong>@Localizer["Project"] :</strong></label>
+			<select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.OfferingHistoryID" class="form-label "><strong>@Localizer["Offering History"] :</strong></label>
+			<input asp-for="@Model.OfferingHistoryID" class="form-control"  />
+			<span asp-validation-for="@Model.OfferingHistoryID" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Status" class="form-label "><strong>@Localizer["Status"] :</strong></label>
+			<input asp-for="@Model.Status" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Status" class="text-danger"></span>
 			
 	</div>
 </div>
@@ -132,25 +148,9 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.OfferingHistoryID" class="form-label "><strong>@Localizer["Offering History"] :</strong></label>
-			<input asp-for="@Model.OfferingHistoryID" class="form-control"  />
-			<span asp-validation-for="@Model.OfferingHistoryID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
 		<label asp-for="@Model.LeadID" class="form-label "><strong>@Localizer["Lead"] :</strong></label>
 			<select asp-for="@Model.LeadID" class="form-control" asp-items="@(dropdownService.GetLeadList(Model.LeadID))"><option value="">- Select Lead -</option></select>
 			<span asp-validation-for="@Model.LeadID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ProjectID" class="form-label "><strong>@Localizer["Project"] :</strong></label>
-			<select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
-			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
 			
 	</div>
 </div>

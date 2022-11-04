@@ -16,7 +16,7 @@ public class GetContactPersonQueryHandler : BaseQueryHandler<ApplicationContext,
     {
     }
 	public override async Task<PagedListResponse<ContactPersonState>> Handle(GetContactPersonQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<ContactPersonState>().Include(l=>l.Lead).Include(l=>l.Salutation)
+		await Context.Set<ContactPersonState>().Include(l=>l.Salutation).Include(l=>l.Lead)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

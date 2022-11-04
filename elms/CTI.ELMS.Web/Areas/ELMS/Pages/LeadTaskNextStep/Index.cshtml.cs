@@ -32,9 +32,9 @@ public class IndexModel : BasePageModel<IndexModel>
             {
                 e.Id,
                 LeadTaskId = e.LeadTask?.LeadTaskName,
+				ClientFeedbackId = e.ClientFeedback?.ClientFeedbackName,
 				NextStepId = e.NextStep?.NextStepTaskName,
 				PCTDay = e.PCTDay?.ToString("##,##"),
-				ClientFeedbackId = e.ClientFeedback?.ClientFeedbackName,
 						
 				
                 e.LastModifiedDate

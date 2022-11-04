@@ -12,8 +12,9 @@ public record BusinessNatureViewModel : BaseViewModel
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string BusinessNatureName { get; init; } = "";
 	[Display(Name = "Business Nature Code")]
+	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? BusinessNatureCode { get; init; }
+	public string BusinessNatureCode { get; init; } = "";
 	[Display(Name = "Is Disabled")]
 	public bool IsDisabled { get; init; }
 	

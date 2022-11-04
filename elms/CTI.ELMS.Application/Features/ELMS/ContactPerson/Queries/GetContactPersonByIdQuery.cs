@@ -17,7 +17,7 @@ public class GetContactPersonByIdQueryHandler : BaseQueryByIdHandler<Application
 	
 	public override async Task<Option<ContactPersonState>> Handle(GetContactPersonByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.ContactPerson.Include(l=>l.Lead).Include(l=>l.Salutation)
+		return await Context.ContactPerson.Include(l=>l.Salutation).Include(l=>l.Lead)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

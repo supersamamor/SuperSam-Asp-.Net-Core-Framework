@@ -59,21 +59,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#project-form', InitializeForm);
 			});
 
-			$.fn.offeringSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
-			for ( var i=0; i< offeringlistdropdowns.length; i++) {
-				$("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
-			}
-
 			$.fn.leadSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -87,6 +72,21 @@
 			var leadlistdropdowns = document.getElementsByClassName('SelectLead');
 			for ( var i=0; i< leadlistdropdowns.length; i++) {
 				$("#OfferingHistoryList_"+i+"_LeadID").leadSelect();
+			}
+
+			$.fn.offeringSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
+			for ( var i=0; i< offeringlistdropdowns.length; i++) {
+				$("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
 			}
 
 			$.fn.entitygroupSelect = function() {

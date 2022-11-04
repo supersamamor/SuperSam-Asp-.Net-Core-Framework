@@ -5,7 +5,9 @@ namespace CTI.ELMS.Core.ELMS;
 
 public record OfferingState : BaseEntity
 {
-	public string? Probability { get; init; }
+	public string? ProjectID { get; init; }
+	public int? OfferingHistoryID { get; init; }
+	public string? Status { get; init; }
 	public DateTime? CommencementDate { get; init; }
 	public DateTime? TerminationDate { get; init; }
 	public int? Year { get; init; }
@@ -21,9 +23,7 @@ public record OfferingState : BaseEntity
 	public decimal? BoardUp { get; init; }
 	public string? UnitsInformation { get; init; }
 	public string? ANType { get; init; }
-	public int? OfferingHistoryID { get; init; }
 	public string? LeadID { get; init; }
-	public string? ProjectID { get; init; }
 	public string? TenantContractNo { get; init; }
 	public decimal? DocStamp { get; init; }
 	public DateTime? AwardNoticeCreatedDate { get; init; }
@@ -79,8 +79,8 @@ public record OfferingState : BaseEntity
 	public bool IsDisabledModifiedCategory { get; init; }
 	public string? ContractNumber { get; init; }
 	
-	public LeadState? Lead { get; init; }
 	public ProjectState? Project { get; init; }
+	public LeadState? Lead { get; init; }
 	
 	public IList<OfferingHistoryState>? OfferingHistoryList { get; set; }
 	public IList<PreSelectedUnitState>? PreSelectedUnitList { get; set; }

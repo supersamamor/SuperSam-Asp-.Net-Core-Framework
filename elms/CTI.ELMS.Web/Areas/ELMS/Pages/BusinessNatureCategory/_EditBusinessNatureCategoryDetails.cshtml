@@ -4,7 +4,7 @@
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureCategoryCode" class="form-label "><strong>@Localizer["Business Nature Category Code"] :</strong></label>
+		<label asp-for="@Model.BusinessNatureCategoryCode" class="form-label fieldrequired"><strong>@Localizer["Business Nature Category Code"] :</strong></label>
 			<input asp-for="@Model.BusinessNatureCategoryCode" class="form-control"  />
 			<span asp-validation-for="@Model.BusinessNatureCategoryCode" class="text-danger"></span>
 			
@@ -12,7 +12,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureCategoryName" class="form-label "><strong>@Localizer["Business Nature Category Name"] :</strong></label>
+		<label asp-for="@Model.BusinessNatureCategoryName" class="form-label fieldrequired"><strong>@Localizer["Business Nature Category Name"] :</strong></label>
 			<input asp-for="@Model.BusinessNatureCategoryName" class="form-control"  />
 			<span asp-validation-for="@Model.BusinessNatureCategoryName" class="text-danger"></span>
 			
@@ -20,7 +20,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureSubItemID" class="form-label "><strong>@Localizer["Business Nature Sub Item"] :</strong></label>
+		<label asp-for="@Model.BusinessNatureSubItemID" class="form-label fieldrequired"><strong>@Localizer["Business Nature Sub Item"] :</strong></label>
 			<select asp-for="@Model.BusinessNatureSubItemID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureSubItemList(Model.BusinessNatureSubItemID))"><option value="">- Select Business Nature Sub Item -</option></select>
 			<span asp-validation-for="@Model.BusinessNatureSubItemID" class="text-danger"></span>
 			

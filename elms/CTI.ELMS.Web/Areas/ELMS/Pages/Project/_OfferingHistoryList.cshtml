@@ -16,7 +16,7 @@
 								@Localizer["Offering"]
 							</th>
 							<th>
-								@Localizer["Probability"]
+								@Localizer["Status"]
 							</th>
 							<th>
 								@Localizer["Commencement Date"]
@@ -169,8 +169,8 @@
 										
 									</td>
 									<td>
-										<input  asp-for="@item.Probability" name="OfferingHistoryList[@counter].Probability" class="form-control" maxlength="35" />
-										<span data-valmsg-for="OfferingHistoryList[@counter].Probability" asp-validation-for="@item.Probability" class="text-danger"></span>
+										<input  asp-for="@item.Status" name="OfferingHistoryList[@counter].Status" class="form-control" maxlength="35" />
+										<span data-valmsg-for="OfferingHistoryList[@counter].Status" asp-validation-for="@item.Status" class="text-danger"></span>
 										
 									</td>
 									<td>
@@ -286,7 +286,7 @@
 										
 									</td>
 									<td>
-										<input asp-for="@item.HasBoardUpFee" name="OfferingHistoryList[@counter].HasBoardUpFee" class="form-control" />
+										<input asp-for="@item.HasBoardUpFee" name="OfferingHistoryList[@counter].HasBoardUpFee" class="custom-checkbox-label" />
 										<span data-valmsg-for="OfferingHistoryList[@counter].HasBoardUpFee" asp-validation-for="@item.HasBoardUpFee" class="text-danger"></span>
 										
 									</td>
@@ -306,7 +306,7 @@
 										
 									</td>
 									<td>
-										<input asp-for="@item.IsPOS" name="OfferingHistoryList[@counter].IsPOS" class="form-control" />
+										<input asp-for="@item.IsPOS" name="OfferingHistoryList[@counter].IsPOS" class="custom-checkbox-label" />
 										<span data-valmsg-for="OfferingHistoryList[@counter].IsPOS" asp-validation-for="@item.IsPOS" class="text-danger"></span>
 										
 									</td>
@@ -341,12 +341,12 @@
 										
 									</td>
 									<td>
-										<input asp-for="@item.AutoComputeTotalConstructionBond" name="OfferingHistoryList[@counter].AutoComputeTotalConstructionBond" class="form-control" />
+										<input asp-for="@item.AutoComputeTotalConstructionBond" name="OfferingHistoryList[@counter].AutoComputeTotalConstructionBond" class="custom-checkbox-label" />
 										<span data-valmsg-for="OfferingHistoryList[@counter].AutoComputeTotalConstructionBond" asp-validation-for="@item.AutoComputeTotalConstructionBond" class="text-danger"></span>
 										
 									</td>
 									<td>
-										<input asp-for="@item.AutoComputeTotalSecurityDeposit" name="OfferingHistoryList[@counter].AutoComputeTotalSecurityDeposit" class="form-control" />
+										<input asp-for="@item.AutoComputeTotalSecurityDeposit" name="OfferingHistoryList[@counter].AutoComputeTotalSecurityDeposit" class="custom-checkbox-label" />
 										<span data-valmsg-for="OfferingHistoryList[@counter].AutoComputeTotalSecurityDeposit" asp-validation-for="@item.AutoComputeTotalSecurityDeposit" class="text-danger"></span>
 										
 									</td>
@@ -376,7 +376,7 @@
 										
 									</td>
 									<td>
-										<input asp-for="@item.AutoComputeAnnualAdvertisingFee" name="OfferingHistoryList[@counter].AutoComputeAnnualAdvertisingFee" class="form-control" />
+										<input asp-for="@item.AutoComputeAnnualAdvertisingFee" name="OfferingHistoryList[@counter].AutoComputeAnnualAdvertisingFee" class="custom-checkbox-label" />
 										<span data-valmsg-for="OfferingHistoryList[@counter].AutoComputeAnnualAdvertisingFee" asp-validation-for="@item.AutoComputeAnnualAdvertisingFee" class="text-danger"></span>
 										
 									</td>

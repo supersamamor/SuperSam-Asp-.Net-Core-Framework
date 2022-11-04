@@ -17,7 +17,7 @@ public class GetIFCATenantInformationByIdQueryHandler : BaseQueryByIdHandler<App
 	
 	public override async Task<Option<IFCATenantInformationState>> Handle(GetIFCATenantInformationByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.IFCATenantInformation.Include(l=>l.Project).Include(l=>l.Offering)
+		return await Context.IFCATenantInformation.Include(l=>l.Offering).Include(l=>l.Project)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

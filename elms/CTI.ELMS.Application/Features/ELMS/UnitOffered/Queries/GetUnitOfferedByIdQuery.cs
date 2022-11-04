@@ -17,7 +17,7 @@ public class GetUnitOfferedByIdQueryHandler : BaseQueryByIdHandler<ApplicationCo
 	
 	public override async Task<Option<UnitOfferedState>> Handle(GetUnitOfferedByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.UnitOffered.Include(l=>l.Offering).Include(l=>l.Unit)
+		return await Context.UnitOffered.Include(l=>l.Unit).Include(l=>l.Offering)
 			.Include(l=>l.AnnualIncrementList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

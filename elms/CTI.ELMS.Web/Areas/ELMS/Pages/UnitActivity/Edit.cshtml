@@ -33,6 +33,18 @@
                 window.focus();
             });
             
+			$.fn.activitySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Activity/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ActivityID").activitySelect();
+
 			$.fn.activityhistorySelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -56,18 +68,6 @@
 				return this;
 			};
 			$("#UnitID").unitSelect();
-
-			$.fn.activitySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Activity/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#ActivityID").activitySelect();
 
 
         }

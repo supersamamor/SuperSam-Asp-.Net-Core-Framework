@@ -46,18 +46,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#unitOffered-form', InitializeForm);
 			});
 
-			$.fn.offeringSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#OfferingID").offeringSelect();
-
 			$.fn.unitSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -69,6 +57,18 @@
 				return this;
 			};
 			$("#UnitID").unitSelect();
+
+			$.fn.offeringSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#OfferingID").offeringSelect();
 
 		}	
 		InitializeForm();

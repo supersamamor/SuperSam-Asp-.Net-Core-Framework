@@ -7,9 +7,15 @@ namespace CTI.ELMS.Web.Areas.ELMS.Models;
 
 public record OfferingViewModel : BaseViewModel
 {	
-	[Display(Name = "Probability")]
+	[Display(Name = "Project")]
+	
+	public string? ProjectID { get; init; }
+	public string?  ForeignKeyProject { get; set; }
+	[Display(Name = "Offering History")]
+	public int? OfferingHistoryID { get; init; }
+	[Display(Name = "Status")]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? Probability { get; init; }
+	public string? Status { get; init; }
 	[Display(Name = "Commencement Date")]
 	public DateTime? CommencementDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Termination Date")]
@@ -52,16 +58,10 @@ public record OfferingViewModel : BaseViewModel
 	[Display(Name = "ANType")]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ANType { get; init; }
-	[Display(Name = "Offering History")]
-	public int? OfferingHistoryID { get; init; }
 	[Display(Name = "Lead")]
 	
 	public string? LeadID { get; init; }
 	public string?  ForeignKeyLead { get; set; }
-	[Display(Name = "Project")]
-	
-	public string? ProjectID { get; init; }
-	public string?  ForeignKeyProject { get; set; }
 	[Display(Name = "Tenant Contract No.")]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? TenantContractNo { get; init; }
@@ -217,8 +217,8 @@ public record OfferingViewModel : BaseViewModel
 	public string? ContractNumber { get; init; }
 	
 	public DateTime LastModifiedDate { get; set; }
-	public LeadViewModel? Lead { get; init; }
 	public ProjectViewModel? Project { get; init; }
+	public LeadViewModel? Lead { get; init; }
 		
 	public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
 	public IList<PreSelectedUnitViewModel>? PreSelectedUnitList { get; set; }

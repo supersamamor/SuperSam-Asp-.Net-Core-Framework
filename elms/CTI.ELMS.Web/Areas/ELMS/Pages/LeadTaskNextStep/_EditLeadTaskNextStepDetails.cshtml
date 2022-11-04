@@ -12,6 +12,14 @@
 </div>
 <div class="col">
 	<div class="mb-3">
+		<label asp-for="@Model.ClientFeedbackId" class="form-label "><strong>@Localizer["Client Feedback"] :</strong></label>
+			<select asp-for="@Model.ClientFeedbackId" class="form-control" asp-items="@(dropdownService.GetClientFeedbackList(Model.ClientFeedbackId))"><option value="">- Select Client Feedback -</option></select>
+			<span asp-validation-for="@Model.ClientFeedbackId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
 		<label asp-for="@Model.NextStepId" class="form-label "><strong>@Localizer["Next Step"] :</strong></label>
 			<select asp-for="@Model.NextStepId" class="form-control" asp-items="@(dropdownService.GetNextStepList(Model.NextStepId))"><option value="">- Select Next Step -</option></select>
 			<span asp-validation-for="@Model.NextStepId" class="text-danger"></span>
@@ -23,14 +31,6 @@
 		<label asp-for="@Model.PCTDay" class="form-label "><strong>@Localizer["PCT Day"] :</strong></label>
 			<input asp-for="@Model.PCTDay" class="form-control"  />
 			<span asp-validation-for="@Model.PCTDay" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ClientFeedbackId" class="form-label "><strong>@Localizer["Client Feedback"] :</strong></label>
-			<select asp-for="@Model.ClientFeedbackId" class="form-control" asp-items="@(dropdownService.GetClientFeedbackList(Model.ClientFeedbackId))"><option value="">- Select Client Feedback -</option></select>
-			<span asp-validation-for="@Model.ClientFeedbackId" class="text-danger"></span>
 			
 	</div>
 </div>

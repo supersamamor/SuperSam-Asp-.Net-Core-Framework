@@ -17,7 +17,7 @@ public class GetUnitOfferedHistoryByIdQueryHandler : BaseQueryByIdHandler<Applic
 	
 	public override async Task<Option<UnitOfferedHistoryState>> Handle(GetUnitOfferedHistoryByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.UnitOfferedHistory.Include(l=>l.Offering).Include(l=>l.Unit).Include(l=>l.OfferingHistory)
+		return await Context.UnitOfferedHistory.Include(l=>l.OfferingHistory).Include(l=>l.Offering).Include(l=>l.Unit)
 			.Include(l=>l.AnnualIncrementHistoryList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

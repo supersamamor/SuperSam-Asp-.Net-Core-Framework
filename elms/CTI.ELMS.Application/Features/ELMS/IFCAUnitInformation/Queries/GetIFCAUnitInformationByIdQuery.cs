@@ -17,7 +17,7 @@ public class GetIFCAUnitInformationByIdQueryHandler : BaseQueryByIdHandler<Appli
 	
 	public override async Task<Option<IFCAUnitInformationState>> Handle(GetIFCAUnitInformationByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.IFCAUnitInformation.Include(l=>l.IFCATenantInformation).Include(l=>l.Unit)
+		return await Context.IFCAUnitInformation.Include(l=>l.Unit).Include(l=>l.IFCATenantInformation)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

@@ -75,21 +75,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#leadTask-form', InitializeForm);
 			});
 
-			$.fn.clientfeedbackSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var clientfeedbacklistdropdowns = document.getElementsByClassName('SelectClientFeedback');
-			for ( var i=0; i< clientfeedbacklistdropdowns.length; i++) {
-				$("#LeadTaskNextStepList_"+i+"_ClientFeedbackId").clientfeedbackSelect();
-			}
-
 			$.fn.nextstepSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -103,6 +88,21 @@
 			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
 			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
 				$("#LeadTaskNextStepList_"+i+"_NextStepId").nextstepSelect();
+			}
+
+			$.fn.clientfeedbackSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var clientfeedbacklistdropdowns = document.getElementsByClassName('SelectClientFeedback');
+			for ( var i=0; i< clientfeedbacklistdropdowns.length; i++) {
+				$("#LeadTaskNextStepList_"+i+"_ClientFeedbackId").clientfeedbackSelect();
 			}
 
 			$.InitializeActivityHistoryFieldValidations($('#ActivityHistoryCount').val());

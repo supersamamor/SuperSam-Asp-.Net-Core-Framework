@@ -17,7 +17,7 @@ public class GetLeadByIdQueryHandler : BaseQueryByIdHandler<ApplicationContext, 
 	
 	public override async Task<Option<LeadState>> Handle(GetLeadByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.Lead.Include(l=>l.LeadSource).Include(l=>l.LeadTouchPoint).Include(l=>l.OperationType).Include(l=>l.BusinessNatureSubItem).Include(l=>l.BusinessNatureCategory).Include(l=>l.BusinessNature)
+		return await Context.Lead.Include(l=>l.BusinessNatureCategory).Include(l=>l.BusinessNatureSubItem).Include(l=>l.LeadSource).Include(l=>l.BusinessNature).Include(l=>l.OperationType).Include(l=>l.LeadTouchPoint)
 			.Include(l=>l.ContactList)
 			.Include(l=>l.ContactPersonList)
 			.Include(l=>l.OfferingHistoryList)

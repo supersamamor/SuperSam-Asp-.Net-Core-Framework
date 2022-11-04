@@ -16,7 +16,7 @@ public class GetActivityHistoryQueryHandler : BaseQueryHandler<ApplicationContex
     {
     }
 	public override async Task<PagedListResponse<ActivityHistoryState>> Handle(GetActivityHistoryQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<ActivityHistoryState>().Include(l=>l.Activity).Include(l=>l.ClientFeedback).Include(l=>l.NextStep).Include(l=>l.LeadTask)
+		await Context.Set<ActivityHistoryState>().Include(l=>l.Activity).Include(l=>l.LeadTask).Include(l=>l.ClientFeedback).Include(l=>l.NextStep)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

@@ -46,6 +46,21 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activityHistory-form', InitializeForm);
 			});
 
+			$.fn.activitySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Activity/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var activitylistdropdowns = document.getElementsByClassName('SelectActivity');
+			for ( var i=0; i< activitylistdropdowns.length; i++) {
+				$("#UnitActivityList_"+i+"_ActivityID").activitySelect();
+			}
+
 			$.fn.unitSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -71,22 +86,19 @@
 				});
 				return this;
 			};
-			var activitylistdropdowns = document.getElementsByClassName('SelectActivity');
-			for ( var i=0; i< activitylistdropdowns.length; i++) {
-				$("#UnitActivityList_"+i+"_ActivityID").activitySelect();
-			}
+			$("#ActivityID").activitySelect();
 
-			$.fn.activitySelect = function() {
+			$.fn.leadtaskSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Activity/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#ActivityID").activitySelect();
+			$("#LeadTaskId").leadtaskSelect();
 
 			$.fn.clientfeedbackSelect = function() {
 				this.filter("select").each(function() {
@@ -111,18 +123,6 @@
 				return this;
 			};
 			$("#NextStepId").nextstepSelect();
-
-			$.fn.leadtaskSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LeadTaskId").leadtaskSelect();
 
 
         }

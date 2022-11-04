@@ -89,6 +89,18 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
 			});
 
+			$.fn.leadSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Lead/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#LeadID").leadSelect();
+
 			$.fn.offeringSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -112,18 +124,6 @@
 				return this;
 			};
 			$("#ProjectID").projectSelect();
-
-			$.fn.leadSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Lead/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LeadID").leadSelect();
 
 		}	
 		InitializeForm();

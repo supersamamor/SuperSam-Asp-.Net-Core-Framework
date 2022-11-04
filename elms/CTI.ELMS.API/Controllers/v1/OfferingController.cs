@@ -43,8 +43,11 @@ public class OfferingController : BaseApiController<OfferingController>
 
 public record OfferingViewModel
 {
-    [StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? Probability { get;set; }
+    
+	public string? ProjectID { get;set; }
+	public int? OfferingHistoryID { get;set; }
+	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? Status { get;set; }
 	public DateTime? CommencementDate { get;set; } = DateTime.Now.Date;
 	public DateTime? TerminationDate { get;set; } = DateTime.Now.Date;
 	public int? Year { get;set; }
@@ -72,11 +75,8 @@ public record OfferingViewModel
 	public string? UnitsInformation { get;set; }
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ANType { get;set; }
-	public int? OfferingHistoryID { get;set; }
 	
 	public string? LeadID { get;set; }
-	
-	public string? ProjectID { get;set; }
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? TenantContractNo { get;set; }
 	

@@ -17,7 +17,7 @@ public class GetOfferingByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	
 	public override async Task<Option<OfferingState>> Handle(GetOfferingByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.Offering.Include(l=>l.Lead).Include(l=>l.Project)
+		return await Context.Offering.Include(l=>l.Project).Include(l=>l.Lead)
 			.Include(l=>l.OfferingHistoryList)
 			.Include(l=>l.PreSelectedUnitList)
 			.Include(l=>l.UnitOfferedList)

@@ -11,9 +11,9 @@ public record OfferingHistoryViewModel : BaseViewModel
 	
 	public string? OfferingID { get; init; }
 	public string?  ForeignKeyOffering { get; set; }
-	[Display(Name = "Probability")]
+	[Display(Name = "Status")]
 	[StringLength(35, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? Probability { get; init; }
+	public string? Status { get; init; }
 	[Display(Name = "Commencement Date")]
 	public DateTime? CommencementDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Termination Date")]
@@ -45,13 +45,11 @@ public record OfferingHistoryViewModel : BaseViewModel
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? CommencementCAMC { get; init; }
 	[Display(Name = "Concession")]
-	[Required]
 	
-	public string Concession { get; init; } = "";
+	public string? Concession { get; init; }
 	[Display(Name = "Offersheet Remarks")]
-	[Required]
 	
-	public string OffersheetRemarks { get; init; } = "";
+	public string? OffersheetRemarks { get; init; }
 	[Display(Name = "Units Information")]
 	[Required]
 	
@@ -136,9 +134,8 @@ public record OfferingHistoryViewModel : BaseViewModel
 	
 	public string UnitType { get; init; } = "";
 	[Display(Name = "Provision")]
-	[Required]
 	
-	public string Provision { get; init; } = "";
+	public string? Provision { get; init; }
 	[Display(Name = "Fit-Out Period")]
 	public int? FitOutPeriod { get; init; }
 	[Display(Name = "Turn Over Date")]

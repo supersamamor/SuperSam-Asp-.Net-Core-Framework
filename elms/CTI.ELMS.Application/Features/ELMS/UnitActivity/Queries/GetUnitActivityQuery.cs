@@ -16,7 +16,7 @@ public class GetUnitActivityQueryHandler : BaseQueryHandler<ApplicationContext, 
     {
     }
 	public override async Task<PagedListResponse<UnitActivityState>> Handle(GetUnitActivityQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<UnitActivityState>().Include(l=>l.ActivityHistory).Include(l=>l.Unit).Include(l=>l.Activity)
+		await Context.Set<UnitActivityState>().Include(l=>l.Activity).Include(l=>l.ActivityHistory).Include(l=>l.Unit)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.ELMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221104003348_InitialDatabase")]
+    [Migration("20221104054523_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -520,12 +520,15 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessNatureCategoryCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BusinessNatureCategoryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BusinessNatureSubItemID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -563,6 +566,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessNatureCode")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -592,8 +596,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BusinessNatureCode")
-                        .IsUnique()
-                        .HasFilter("[BusinessNatureCode] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("BusinessNatureName")
                         .IsUnique();
@@ -611,12 +614,15 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessNatureID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessNatureSubItemCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BusinessNatureSubItemName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -1598,7 +1604,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Concession")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("ConstructionCAMC")
@@ -1663,21 +1668,15 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OffersheetRemarks")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("OtherChargesAircon")
                         .HasColumnType("decimal(18,6)");
 
-                    b.Property<string>("Probability")
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
-
                     b.Property<string>("ProjectID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Provision")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SecMonths")
@@ -1685,6 +1684,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<int?>("SecurityDepositPayableWithinMonths")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
 
                     b.Property<DateTime?>("TerminationDate")
                         .HasColumnType("datetime2");
@@ -1900,10 +1903,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Probability")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("ProjectID")
                         .HasColumnType("nvarchar(450)");
 
@@ -1932,6 +1931,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<DateTime?>("SignedOfferSheetDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TagForFinalPrintLeaseContractBy")
                         .HasColumnType("nvarchar(max)");
@@ -3069,7 +3072,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.ELMS.Core.ELMS.BusinessNatureSubItemState", "BusinessNatureSubItem")
                         .WithMany("BusinessNatureCategoryList")
-                        .HasForeignKey("BusinessNatureSubItemID");
+                        .HasForeignKey("BusinessNatureSubItemID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BusinessNatureSubItem");
                 });
@@ -3078,7 +3083,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.ELMS.Core.ELMS.BusinessNatureState", "BusinessNature")
                         .WithMany("BusinessNatureSubItemList")
-                        .HasForeignKey("BusinessNatureID");
+                        .HasForeignKey("BusinessNatureID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BusinessNature");
                 });
@@ -3368,8 +3375,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.ELMS.Core.ELMS.UnitBudgetState", "UnitBudget")
                         .WithMany("UnitBudgetList")
-                        .HasForeignKey("ParentUnitBudgetID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ParentUnitBudgetID");
 
                     b.HasOne("CTI.ELMS.Core.ELMS.ProjectState", "Project")
                         .WithMany("UnitBudgetList")

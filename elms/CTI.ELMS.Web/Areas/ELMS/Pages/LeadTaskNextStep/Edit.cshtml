@@ -33,17 +33,17 @@
                 window.focus();
             });
             
-			$.fn.clientfeedbackSelect = function() {
+			$.fn.leadtaskSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#ClientFeedbackId").clientfeedbackSelect();
+			$("#LeadTaskId").leadtaskSelect();
 
 			$.fn.nextstepSelect = function() {
 				this.filter("select").each(function() {
@@ -57,17 +57,17 @@
 			};
 			$("#NextStepId").nextstepSelect();
 
-			$.fn.leadtaskSelect = function() {
+			$.fn.clientfeedbackSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#LeadTaskId").leadtaskSelect();
+			$("#ClientFeedbackId").clientfeedbackSelect();
 
 
         }

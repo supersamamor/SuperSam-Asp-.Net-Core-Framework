@@ -46,7 +46,7 @@ public record OfferingHistoryViewModel
     
 	public string? OfferingID { get;set; }
 	[StringLength(35, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? Probability { get;set; }
+	public string? Status { get;set; }
 	public DateTime? CommencementDate { get;set; } = DateTime.Now.Date;
 	public DateTime? TerminationDate { get;set; } = DateTime.Now.Date;
 	public int? Year { get;set; }
@@ -66,12 +66,10 @@ public record OfferingHistoryViewModel
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? CommencementCAMC { get;set; }
-	[Required]
 	
-	public string Concession { get;set; } = "";
-	[Required]
+	public string? Concession { get;set; }
 	
-	public string OffersheetRemarks { get;set; } = "";
+	public string? OffersheetRemarks { get;set; }
 	[Required]
 	
 	public string UnitsInformation { get;set; } = "";
@@ -128,9 +126,8 @@ public record OfferingHistoryViewModel
 	[Required]
 	
 	public string UnitType { get;set; } = "";
-	[Required]
 	
-	public string Provision { get;set; } = "";
+	public string? Provision { get;set; }
 	public int? FitOutPeriod { get;set; }
 	[Required]
 	public DateTime TurnOverDate { get;set; } = DateTime.Now.Date;

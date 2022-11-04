@@ -16,7 +16,7 @@ public class GetOfferingHistoryQueryHandler : BaseQueryHandler<ApplicationContex
     {
     }
 	public override async Task<PagedListResponse<OfferingHistoryState>> Handle(GetOfferingHistoryQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<OfferingHistoryState>().Include(l=>l.Offering).Include(l=>l.Project).Include(l=>l.Lead)
+		await Context.Set<OfferingHistoryState>().Include(l=>l.Lead).Include(l=>l.Offering).Include(l=>l.Project)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

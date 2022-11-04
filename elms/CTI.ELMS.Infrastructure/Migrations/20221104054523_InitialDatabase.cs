@@ -59,7 +59,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BusinessNatureName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    BusinessNatureCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    BusinessNatureCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -301,10 +301,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BusinessNatureSubItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BusinessNatureID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BusinessNatureSubItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BusinessNatureID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
-                    BusinessNatureSubItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BusinessNatureSubItemCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -318,7 +318,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         name: "FK_BusinessNatureSubItem_BusinessNature_BusinessNatureID",
                         column: x => x.BusinessNatureID,
                         principalTable: "BusinessNature",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -356,9 +357,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LeadTaskId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ClientFeedbackId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     NextStepId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PCTDay = table.Column<int>(type: "int", nullable: true),
-                    ClientFeedbackId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -451,9 +452,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BusinessNatureCategoryCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BusinessNatureCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BusinessNatureSubItemID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BusinessNatureCategoryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BusinessNatureCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BusinessNatureSubItemID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -468,7 +469,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         name: "FK_BusinessNatureCategory_BusinessNatureSubItem_BusinessNatureSubItemID",
                         column: x => x.BusinessNatureSubItemID,
                         principalTable: "BusinessNatureSubItem",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -846,7 +848,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Probability = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ProjectID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    OfferingHistoryID = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     CommencementDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TerminationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: true),
@@ -862,9 +866,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     BoardUp = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ANType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    OfferingHistoryID = table.Column<int>(type: "int", nullable: true),
                     LeadID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProjectID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TenantContractNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DocStamp = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     AwardNoticeCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -1079,7 +1081,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     OfferingID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Probability = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: true),
                     CommencementDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TerminationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: true),
@@ -1091,8 +1093,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     OtherChargesAircon = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     ConstructionCAMC = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     CommencementCAMC = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
-                    Concession = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OffersheetRemarks = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Concession = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OffersheetRemarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ANType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LeadID = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -1118,7 +1120,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     AutoComputeTotalSecurityDeposit = table.Column<bool>(type: "bit", nullable: false),
                     MinimumSalesQuota = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     UnitType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Provision = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Provision = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FitOutPeriod = table.Column<int>(type: "int", nullable: true),
                     TurnOverDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AutoComputeAnnualAdvertisingFee = table.Column<bool>(type: "bit", nullable: false),
@@ -1616,8 +1618,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 name: "IX_BusinessNature_BusinessNatureCode",
                 table: "BusinessNature",
                 column: "BusinessNatureCode",
-                unique: true,
-                filter: "[BusinessNatureCode] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BusinessNature_BusinessNatureName",

@@ -46,9 +46,9 @@ public record LeadTaskNextStepViewModel
     
 	public string? LeadTaskId { get;set; }
 	
+	public string? ClientFeedbackId { get;set; }
+	
 	public string? NextStepId { get;set; }
 	public int? PCTDay { get;set; }
-	
-	public string? ClientFeedbackId { get;set; }
 	   
 }

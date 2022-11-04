@@ -33,6 +33,18 @@
                 window.focus();
             });
             
+			$.fn.unitbudgetSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/UnitBudget/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ParentUnitBudgetID").unitbudgetSelect();
+
 			$.fn.unitSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -56,18 +68,6 @@
 				return this;
 			};
 			$("#ProjectID").projectSelect();
-
-			$.fn.unitbudgetSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/UnitBudget/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#ParentUnitBudgetID").unitbudgetSelect();
 
 
         }
