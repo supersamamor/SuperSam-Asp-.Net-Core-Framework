@@ -37,7 +37,7 @@
 <div class="col">
 	<div class="mb-3">
 		<label asp-for="@Model.StartDate" class="form-label "><strong>@Localizer["Start Date"] :</strong></label>
-			<input asp-for="@Model.StartDate" class="form-control"  />
+			<input type="date" asp-for="@Model.StartDate" class="form-control" />
 			<span asp-validation-for="@Model.StartDate" class="text-danger"></span>
 			
 	</div>
@@ -45,7 +45,7 @@
 <div class="col">
 	<div class="mb-3">
 		<label asp-for="@Model.EndDate" class="form-label "><strong>@Localizer["End Date"] :</strong></label>
-			<input asp-for="@Model.EndDate" class="form-control"  />
+			<input type="date" asp-for="@Model.EndDate" class="form-control" />
 			<span asp-validation-for="@Model.EndDate" class="text-danger"></span>
 			
 	</div>

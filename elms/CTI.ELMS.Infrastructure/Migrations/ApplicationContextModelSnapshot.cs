@@ -77,7 +77,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActivityRemarks")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -103,22 +102,15 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NextStepId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("PCTDate")
+                    b.Property<DateTime?>("PCTDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("TargetDate")
+                    b.Property<DateTime?>("TargetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UnitsInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -147,7 +139,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ActivityRemarks")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -176,26 +167,16 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NextStepId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("PCTDate")
+                    b.Property<DateTime?>("PCTDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ProjectID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("TargetDate")
+                    b.Property<DateTime?>("TargetDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UnitsInformation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -580,10 +561,13 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessNatureCode")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("BusinessNatureName")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -610,8 +594,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasFilter("[BusinessNatureCode] IS NOT NULL");
 
                     b.HasIndex("BusinessNatureName")
-                        .IsUnique()
-                        .HasFilter("[BusinessNatureName] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("Entity");
 
@@ -670,7 +653,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("ClientFeedbackName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -714,7 +698,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(35)
                         .HasColumnType("nvarchar(35)");
 
@@ -734,7 +717,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
@@ -747,7 +729,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
@@ -829,7 +810,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("EntityAddress2")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -1262,7 +1242,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("LeadSourceName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -1287,7 +1268,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("BusinessNatureCategoryID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BusinessNatureID")
@@ -1490,7 +1470,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("LeadTaskName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -1526,7 +1507,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("LeadTouchPointName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -1562,7 +1544,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("NextStepTaskName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -1760,12 +1743,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ANSignatoryName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ANSignatoryPosition")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -1789,17 +1770,16 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("AwardNoticeCreatedBy")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("AwardNoticeCreatedDate")
+                    b.Property<DateTime?>("AwardNoticeCreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("BoardUp")
                         .HasColumnType("decimal(18,6)");
 
-                    b.Property<DateTime>("BookingDate")
+                    b.Property<DateTime?>("BookingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("CAMCConstructionTotalUnitArea")
@@ -1812,7 +1792,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Concession")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("ConstructionCAMC")
@@ -1855,10 +1834,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<int?>("FitOutPeriod")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ForFinalPrintLeaseContractDate")
+                    b.Property<DateTime?>("ForFinalPrintLeaseContractDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ForReviewLeaseContractDate")
+                    b.Property<DateTime?>("ForReviewLeaseContractDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("HasBoardUpFee")
@@ -1880,11 +1859,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LeaseContractCreatedBy")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("LeaseContractCreatedDate")
+                    b.Property<DateTime?>("LeaseContractCreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LeaseContractStatus")
@@ -1898,7 +1876,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("ModifiedCategory")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -1908,18 +1885,16 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<int?>("OfferSheetPerProjectCounter")
                         .HasColumnType("int");
 
-                    b.Property<int>("OfferingHistoryID")
+                    b.Property<int?>("OfferingHistoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("OffersheetRemarks")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("OtherChargesAircon")
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("PermittedUse")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -1931,7 +1906,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Provision")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SecMonths")
@@ -1941,46 +1915,38 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SignatoryName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("SignatoryPosition")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("SignedAwardNoticeDate")
+                    b.Property<DateTime?>("SignedAwardNoticeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("SignedLeaseContractDate")
+                    b.Property<DateTime?>("SignedLeaseContractDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("SignedOfferSheetDate")
+                    b.Property<DateTime?>("SignedOfferSheetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TagForFinalPrintLeaseContractBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TagForReviewLeaseContractBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TagSignedAwardNoticeBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TagSignedLeaseContractBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TagSignedOfferSheetBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenantContractNo")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -2008,7 +1974,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<decimal?>("TotalUnitArea")
                         .HasColumnType("decimal(18,6)");
 
-                    b.Property<DateTime>("TurnOverDate")
+                    b.Property<DateTime?>("TurnOverDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UnitType")
@@ -2016,11 +1982,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UnitsInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WitnessName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2062,7 +2026,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("OperationTypeName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -2082,6 +2047,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConnectionString")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -2095,7 +2061,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ExhibitThemeCodes")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2106,10 +2071,12 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PPlusVersionName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TablePrefix")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2120,8 +2087,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("LastModifiedDate");
 
                     b.HasIndex("PPlusVersionName")
-                        .IsUnique()
-                        .HasFilter("[PPlusVersionName] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("PPlusConnectionSetup");
                 });
@@ -2202,12 +2168,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ContractSignatoryWitness")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ContractSignatoryWitnessPosition")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2218,7 +2182,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DatabaseSource")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -2251,7 +2214,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -2269,7 +2231,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ProjectGreetingsSection")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2284,7 +2245,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ProjectShortName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2299,12 +2259,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("SignatureLower")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("SignatureUpper")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2684,7 +2642,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("ParentUnitBudgetID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProjectID")
@@ -2907,10 +2864,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("AvailabilityDate")
+                    b.Property<DateTime?>("AvailabilityDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CommencementDate")
+                    b.Property<DateTime?>("CommencementDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -2920,7 +2877,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CurrentTenantContractNo")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -2933,16 +2889,18 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("LotArea")
+                    b.Property<decimal>("LotArea")
                         .HasColumnType("decimal(18,6)");
 
-                    b.Property<decimal?>("LotBudget")
+                    b.Property<decimal>("LotBudget")
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("ProjectID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UnitNo")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -3010,9 +2968,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasOne("CTI.ELMS.Core.ELMS.NextStepState", "NextStep")
                         .WithMany("ActivityHistoryList")
-                        .HasForeignKey("NextStepId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("NextStepId");
 
                     b.Navigation("Activity");
 
@@ -3039,9 +2995,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasOne("CTI.ELMS.Core.ELMS.NextStepState", "NextStep")
                         .WithMany("ActivityList")
-                        .HasForeignKey("NextStepId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("NextStepId");
 
                     b.HasOne("CTI.ELMS.Core.ELMS.ProjectState", "Project")
                         .WithMany("ActivityList")
@@ -3227,9 +3181,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.ELMS.Core.ELMS.BusinessNatureCategoryState", "BusinessNatureCategory")
                         .WithMany("LeadList")
-                        .HasForeignKey("BusinessNatureCategoryID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("BusinessNatureCategoryID");
 
                     b.HasOne("CTI.ELMS.Core.ELMS.BusinessNatureState", "BusinessNature")
                         .WithMany("LeadList")
@@ -3415,8 +3367,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasOne("CTI.ELMS.Core.ELMS.UnitBudgetState", "UnitBudget")
                         .WithMany("UnitBudgetList")
                         .HasForeignKey("ParentUnitBudgetID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CTI.ELMS.Core.ELMS.ProjectState", "Project")
                         .WithMany("UnitBudgetList")
@@ -3482,7 +3433,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.ELMS.Core.ELMS.ProjectState", "Project")
                         .WithMany("UnitList")
-                        .HasForeignKey("ProjectID");
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Project");
                 });

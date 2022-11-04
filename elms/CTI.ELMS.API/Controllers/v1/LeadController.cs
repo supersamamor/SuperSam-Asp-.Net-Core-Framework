@@ -76,9 +76,8 @@ public record LeadViewModel
 	[Required]
 	
 	public string BusinessNatureSubItemID { get;set; } = "";
-	[Required]
 	
-	public string BusinessNatureCategoryID { get;set; } = "";
+	public string? BusinessNatureCategoryID { get;set; }
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? TINNumber { get;set; }
 	public bool IsFranchise { get;set; }

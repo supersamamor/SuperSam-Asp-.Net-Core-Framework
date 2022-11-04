@@ -9,7 +9,7 @@ public record LeadTaskViewModel : BaseViewModel
 {	
 	[Display(Name = "Name")]
 	[Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string LeadTaskName { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }

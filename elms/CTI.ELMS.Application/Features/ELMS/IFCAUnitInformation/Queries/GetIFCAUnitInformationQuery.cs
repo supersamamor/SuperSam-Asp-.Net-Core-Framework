@@ -16,7 +16,7 @@ public class GetIFCAUnitInformationQueryHandler : BaseQueryHandler<ApplicationCo
     {
     }
 	public override async Task<PagedListResponse<IFCAUnitInformationState>> Handle(GetIFCAUnitInformationQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<IFCAUnitInformationState>().Include(l=>l.Unit).Include(l=>l.IFCATenantInformation)
+		await Context.Set<IFCAUnitInformationState>().Include(l=>l.IFCATenantInformation).Include(l=>l.Unit)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

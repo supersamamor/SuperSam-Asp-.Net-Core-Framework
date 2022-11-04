@@ -43,22 +43,23 @@ public class UnitController : BaseApiController<UnitController>
 
 public record UnitViewModel
 {
-    [StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? UnitNo { get;set; }
+    [Required]
+	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string UnitNo { get;set; } = "";
+	[Required]
 	
-	public string? ProjectID { get;set; }
+	public string ProjectID { get;set; } = "";
+	[Required]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal? LotBudget { get;set; }
+	public decimal LotBudget { get;set; }
+	[Required]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal? LotArea { get;set; }
-	[Required]
-	public DateTime AvailabilityDate { get;set; } = DateTime.Now.Date;
-	[Required]
-	public DateTime CommencementDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public decimal LotArea { get;set; }
+	public DateTime? AvailabilityDate { get;set; } = DateTime.Now.Date;
+	public DateTime? CommencementDate { get;set; } = DateTime.Now.Date;
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string CurrentTenantContractNo { get;set; } = "";
+	public string? CurrentTenantContractNo { get;set; }
 	   
 }

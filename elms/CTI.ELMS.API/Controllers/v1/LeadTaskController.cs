@@ -44,7 +44,7 @@ public class LeadTaskController : BaseApiController<LeadTaskController>
 public record LeadTaskViewModel
 {
     [Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string LeadTaskName { get;set; } = "";
 	   
 }

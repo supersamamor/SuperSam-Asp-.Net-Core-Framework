@@ -58,9 +58,8 @@ public record LeadViewModel : BaseViewModel
 	public string BusinessNatureSubItemID { get; init; } = "";
 	public string?  ForeignKeyBusinessNatureSubItem { get; set; }
 	[Display(Name = "Category")]
-	[Required]
 	
-	public string BusinessNatureCategoryID { get; init; } = "";
+	public string? BusinessNatureCategoryID { get; init; }
 	public string?  ForeignKeyBusinessNatureCategory { get; set; }
 	[Display(Name = "TIN No.")]
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]

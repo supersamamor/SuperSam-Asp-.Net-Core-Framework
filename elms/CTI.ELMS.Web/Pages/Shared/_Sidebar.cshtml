@@ -131,17 +131,6 @@
 								</a>
 							</li>
 						}
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.UserProjectAssignment.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/ELMS/UserProjectAssignment" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "UserProjectAssignment")">
-									<i class="fas fa-circle nav-icon"></i>
-									<span>
-										@Localizer["User / Project Assignment"]
-									</span>
-								</a>
-							</li>
-						}
 						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Unit.View)).Succeeded)
 						{
 							<li class="nav-item">
@@ -219,28 +208,6 @@
 								</a>
 							</li>
 						}
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.LeadTaskClientFeedBack.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/ELMS/LeadTaskClientFeedBack" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadTaskClientFeedBack")">
-									<i class="fas fa-circle nav-icon"></i>
-									<span>
-										@Localizer["Lead Task / Client Feedback Setup"]
-									</span>
-								</a>
-							</li>
-						}
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.LeadTaskNextStep.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/ELMS/LeadTaskNextStep" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadTaskNextStep")">
-									<i class="fas fa-circle nav-icon"></i>
-									<span>
-										@Localizer["Lead Task / Next Step Setup"]
-									</span>
-								</a>
-							</li>
-						}
 						@if((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNature.View)).Succeeded)
 						{
 							<li class="nav-item">
@@ -302,7 +269,7 @@
 								<a href = "/ELMS/Lead" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Lead")">
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
-										@Localizer["Lead"]
+										@Localizer["Prospects"]
 									</span>
 								</a>
 							</li>

@@ -29,13 +29,11 @@ public record OfferingViewModel : BaseViewModel
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? OtherChargesAircon { get; init; }
 	[Display(Name = "Concession")]
-	[Required]
 	
-	public string Concession { get; init; } = "";
+	public string? Concession { get; init; }
 	[Display(Name = "Offersheet Remarks")]
-	[Required]
 	
-	public string OffersheetRemarks { get; init; } = "";
+	public string? OffersheetRemarks { get; init; }
 	[Display(Name = "Construction CAMC")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -49,15 +47,13 @@ public record OfferingViewModel : BaseViewModel
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? BoardUp { get; init; }
 	[Display(Name = "Units Information")]
-	[Required]
 	
-	public string UnitsInformation { get; init; } = "";
+	public string? UnitsInformation { get; init; }
 	[Display(Name = "ANType")]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ANType { get; init; }
 	[Display(Name = "Offering History")]
-	[Required]
-	public int OfferingHistoryID { get; init; }
+	public int? OfferingHistoryID { get; init; }
 	[Display(Name = "Lead")]
 	
 	public string? LeadID { get; init; }
@@ -67,27 +63,22 @@ public record OfferingViewModel : BaseViewModel
 	public string? ProjectID { get; init; }
 	public string?  ForeignKeyProject { get; set; }
 	[Display(Name = "Tenant Contract No.")]
-	[Required]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string TenantContractNo { get; init; } = "";
+	public string? TenantContractNo { get; init; }
 	[Display(Name = "Doc Stamp")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? DocStamp { get; init; }
 	[Display(Name = "Award Notice Created Date")]
-	[Required]
-	public DateTime AwardNoticeCreatedDate { get; init; } = DateTime.Now.Date;
+	public DateTime? AwardNoticeCreatedDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Award Notice Created By")]
-	[Required]
 	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AwardNoticeCreatedBy { get; init; } = "";
+	public string? AwardNoticeCreatedBy { get; init; }
 	[Display(Name = "Signed Offersheet Date")]
-	[Required]
-	public DateTime SignedOfferSheetDate { get; init; } = DateTime.Now.Date;
+	public DateTime? SignedOfferSheetDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Tag Signed Offersheet By")]
-	[Required]
 	
-	public string TagSignedOfferSheetBy { get; init; } = "";
+	public string? TagSignedOfferSheetBy { get; init; }
 	[Display(Name = "Total Unit Area")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -149,12 +140,10 @@ public record OfferingViewModel : BaseViewModel
 	[Display(Name = "Offer Sheet Per Project Counter")]
 	public int? OfferSheetPerProjectCounter { get; init; }
 	[Display(Name = "Signed Award Notice Date")]
-	[Required]
-	public DateTime SignedAwardNoticeDate { get; init; } = DateTime.Now.Date;
+	public DateTime? SignedAwardNoticeDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Tag Signed Award Notice By")]
-	[Required]
 	
-	public string TagSignedAwardNoticeBy { get; init; } = "";
+	public string? TagSignedAwardNoticeBy { get; init; }
 	[Display(Name = "Minimum Sales")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -164,63 +153,48 @@ public record OfferingViewModel : BaseViewModel
 	
 	public string UnitType { get; init; } = "";
 	[Display(Name = "Provision")]
-	[Required]
 	
-	public string Provision { get; init; } = "";
+	public string? Provision { get; init; }
 	[Display(Name = "Fit-Out Period")]
 	public int? FitOutPeriod { get; init; }
 	[Display(Name = "Turn Over Date")]
-	[Required]
-	public DateTime TurnOverDate { get; init; } = DateTime.Now.Date;
+	public DateTime? TurnOverDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Auto Compute Annual Advertising Fee")]
 	public bool AutoComputeAnnualAdvertisingFee { get; init; }
 	[Display(Name = "Booking Date")]
-	[Required]
-	public DateTime BookingDate { get; init; } = DateTime.Now.Date;
+	public DateTime? BookingDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Signatory Name")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SignatoryName { get; init; } = "";
+	public string? SignatoryName { get; init; }
 	[Display(Name = "Signatory Position")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SignatoryPosition { get; init; } = "";
+	public string? SignatoryPosition { get; init; }
 	[Display(Name = "AN Signatory Name")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ANSignatoryName { get; init; } = "";
+	public string? ANSignatoryName { get; init; }
 	[Display(Name = "AN Signatory Position")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ANSignatoryPosition { get; init; } = "";
+	public string? ANSignatoryPosition { get; init; }
 	[Display(Name = "Lease Contract Created Date")]
-	[Required]
-	public DateTime LeaseContractCreatedDate { get; init; } = DateTime.Now.Date;
+	public DateTime? LeaseContractCreatedDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Lease Contract Created By")]
-	[Required]
 	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string LeaseContractCreatedBy { get; init; } = "";
+	public string? LeaseContractCreatedBy { get; init; }
 	[Display(Name = "Tag Signed Lease Contract By")]
-	[Required]
 	
-	public string TagSignedLeaseContractBy { get; init; } = "";
+	public string? TagSignedLeaseContractBy { get; init; }
 	[Display(Name = "Signed Lease Contract Date")]
-	[Required]
-	public DateTime SignedLeaseContractDate { get; init; } = DateTime.Now.Date;
+	public DateTime? SignedLeaseContractDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Tag For Review Lease Contract By")]
-	[Required]
 	
-	public string TagForReviewLeaseContractBy { get; init; } = "";
+	public string? TagForReviewLeaseContractBy { get; init; }
 	[Display(Name = "For Review Lease Contract Date")]
-	[Required]
-	public DateTime ForReviewLeaseContractDate { get; init; } = DateTime.Now.Date;
+	public DateTime? ForReviewLeaseContractDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Tag For Final Print Lease Contract By")]
-	[Required]
 	
-	public string TagForFinalPrintLeaseContractBy { get; init; } = "";
+	public string? TagForFinalPrintLeaseContractBy { get; init; }
 	[Display(Name = "For Final Print Lease Contract Date")]
-	[Required]
-	public DateTime ForFinalPrintLeaseContractDate { get; init; } = DateTime.Now.Date;
+	public DateTime? ForFinalPrintLeaseContractDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Lease Contract")]
 	public int? LeaseContractStatus { get; init; }
 	[Display(Name = "AN Term Type")]
@@ -228,17 +202,14 @@ public record OfferingViewModel : BaseViewModel
 	[Display(Name = "Contract Type")]
 	public int? ContractTypeID { get; init; }
 	[Display(Name = "Witness Name")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string WitnessName { get; init; } = "";
+	public string? WitnessName { get; init; }
 	[Display(Name = "Permitted Use")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PermittedUse { get; init; } = "";
+	public string? PermittedUse { get; init; }
 	[Display(Name = "Modified Category")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ModifiedCategory { get; init; } = "";
+	public string? ModifiedCategory { get; init; }
 	[Display(Name = "Is Disabled Modified Category")]
 	public bool IsDisabledModifiedCategory { get; init; }
 	[Display(Name = "Contract Number")]

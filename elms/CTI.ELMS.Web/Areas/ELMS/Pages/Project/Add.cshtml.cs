@@ -34,6 +34,14 @@ public class AddModel : BasePageModel<AddModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
+		if (AsyncAction == "AddUserProjectAssignment")
+		{
+			return AddUserProjectAssignment();
+		}
+		if (AsyncAction == "RemoveUserProjectAssignment")
+		{
+			return RemoveUserProjectAssignment();
+		}
 		if (AsyncAction == "AddOfferingHistory")
 		{
 			return AddOfferingHistory();
@@ -47,6 +55,20 @@ public class AddModel : BasePageModel<AddModel>
         return Partial("_InputFieldsPartial", Project);
     }
 	
+	private IActionResult AddUserProjectAssignment()
+	{
+		ModelState.Clear();
+		if (Project!.UserProjectAssignmentList == null) { Project!.UserProjectAssignmentList = new List<UserProjectAssignmentViewModel>(); }
+		Project!.UserProjectAssignmentList!.Add(new UserProjectAssignmentViewModel() { ProjectID = Project.Id });
+		return Partial("_InputFieldsPartial", Project);
+	}
+	private IActionResult RemoveUserProjectAssignment()
+	{
+		ModelState.Clear();
+		Project.UserProjectAssignmentList = Project!.UserProjectAssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", Project);
+	}
+
 	private IActionResult AddOfferingHistory()
 	{
 		ModelState.Clear();

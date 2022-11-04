@@ -34,12 +34,23 @@ public class AddNextStepCommandHandler : BaseCommandHandler<ApplicationContext, 
 	public async Task<Validation<Error, NextStepState>> AddNextStep(AddNextStepCommand request, CancellationToken cancellationToken)
 	{
 		NextStepState entity = Mapper.Map<NextStepState>(request);
+		UpdateLeadTaskNextStepList(entity);
 		UpdateActivityHistoryList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, NextStepState>(entity);
 	}
 	
+	private void UpdateLeadTaskNextStepList(NextStepState entity)
+	{
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			foreach (var leadTaskNextStep in entity.LeadTaskNextStepList!)
+			{
+				Context.Entry(leadTaskNextStep).State = EntityState.Added;
+			}
+		}
+	}
 	private void UpdateActivityHistoryList(NextStepState entity)
 	{
 		if (entity.ActivityHistoryList?.Count > 0)

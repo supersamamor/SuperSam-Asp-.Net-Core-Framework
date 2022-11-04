@@ -50,21 +50,13 @@ public record ActivityHistoryViewModel
 	public DateTime? ActivityDate { get;set; } = DateTime.Now.Date;
 	
 	public string? ClientFeedbackId { get;set; }
-	[Required]
 	
-	public string NextStepId { get;set; } = "";
-	[Required]
-	public DateTime TargetDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public string? NextStepId { get;set; }
+	public DateTime? TargetDate { get;set; } = DateTime.Now.Date;
 	[StringLength(500, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ActivityRemarks { get;set; } = "";
-	[Required]
-	public DateTime PCTDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public string? ActivityRemarks { get;set; }
+	public DateTime? PCTDate { get;set; } = DateTime.Now.Date;
 	
-	public string UnitsInformation { get;set; } = "";
-	[Required]
-	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Status { get;set; } = "";
+	public string? UnitsInformation { get;set; }
 	   
 }

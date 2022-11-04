@@ -44,7 +44,7 @@ public class NextStepController : BaseApiController<NextStepController>
 public record NextStepViewModel
 {
     [Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string NextStepTaskName { get;set; } = "";
 	   
 }

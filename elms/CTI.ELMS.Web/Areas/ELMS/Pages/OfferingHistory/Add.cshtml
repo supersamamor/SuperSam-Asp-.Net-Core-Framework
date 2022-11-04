@@ -47,21 +47,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
 			});
 
-			$.fn.unitSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Unit/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var unitlistdropdowns = document.getElementsByClassName('SelectUnit');
-			for ( var i=0; i< unitlistdropdowns.length; i++) {
-				$("#UnitOfferedHistoryList_"+i+"_UnitID").unitSelect();
-			}
-
 			$.fn.offeringSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -77,6 +62,21 @@
 				$("#UnitOfferedHistoryList_"+i+"_OfferingID").offeringSelect();
 			}
 
+			$.fn.unitSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Unit/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var unitlistdropdowns = document.getElementsByClassName('SelectUnit');
+			for ( var i=0; i< unitlistdropdowns.length; i++) {
+				$("#UnitOfferedHistoryList_"+i+"_UnitID").unitSelect();
+			}
+
 			$.InitializeUnitGroupFieldValidations($('#UnitGroupCount').val());
 			$('.RemoveUnitGroupButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));
@@ -89,18 +89,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offeringHistory-form', InitializeForm);
 			});
 
-			$.fn.projectSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#ProjectID").projectSelect();
-
 			$.fn.offeringSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -112,6 +100,18 @@
 				return this;
 			};
 			$("#OfferingID").offeringSelect();
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectID").projectSelect();
 
 			$.fn.leadSelect = function() {
 				this.filter("select").each(function() {

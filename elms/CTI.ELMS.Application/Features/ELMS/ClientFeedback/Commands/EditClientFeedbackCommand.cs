@@ -32,12 +32,70 @@ public class EditClientFeedbackCommandHandler : BaseCommandHandler<ApplicationCo
 	{
 		var entity = await Context.ClientFeedback.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
+		await UpdateLeadTaskClientFeedBackList(entity, request, cancellationToken);
+		await UpdateLeadTaskNextStepList(entity, request, cancellationToken);
 		await UpdateActivityHistoryList(entity, request, cancellationToken);
 		Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ClientFeedbackState>(entity);
 	}
 	
+	private async Task UpdateLeadTaskClientFeedBackList(ClientFeedbackState entity, EditClientFeedbackCommand request, CancellationToken cancellationToken)
+	{
+		IList<LeadTaskClientFeedBackState> leadTaskClientFeedBackListForDeletion = new List<LeadTaskClientFeedBackState>();
+		var queryLeadTaskClientFeedBackForDeletion = Context.LeadTaskClientFeedBack.Where(l => l.ClientFeedbackId == request.Id).AsNoTracking();
+		if (entity.LeadTaskClientFeedBackList?.Count > 0)
+		{
+			queryLeadTaskClientFeedBackForDeletion = queryLeadTaskClientFeedBackForDeletion.Where(l => !(entity.LeadTaskClientFeedBackList.Select(l => l.Id).ToList().Contains(l.Id)));
+		}
+		leadTaskClientFeedBackListForDeletion = await queryLeadTaskClientFeedBackForDeletion.ToListAsync(cancellationToken: cancellationToken);
+		foreach (var leadTaskClientFeedBack in leadTaskClientFeedBackListForDeletion!)
+		{
+			Context.Entry(leadTaskClientFeedBack).State = EntityState.Deleted;
+		}
+		if (entity.LeadTaskClientFeedBackList?.Count > 0)
+		{
+			foreach (var leadTaskClientFeedBack in entity.LeadTaskClientFeedBackList.Where(l => !leadTaskClientFeedBackListForDeletion.Select(l => l.Id).Contains(l.Id)))
+			{
+				if (await Context.NotExists<LeadTaskClientFeedBackState>(x => x.Id == leadTaskClientFeedBack.Id, cancellationToken: cancellationToken))
+				{
+					Context.Entry(leadTaskClientFeedBack).State = EntityState.Added;
+				}
+				else
+				{
+					Context.Entry(leadTaskClientFeedBack).State = EntityState.Modified;
+				}
+			}
+		}
+	}
+	private async Task UpdateLeadTaskNextStepList(ClientFeedbackState entity, EditClientFeedbackCommand request, CancellationToken cancellationToken)
+	{
+		IList<LeadTaskNextStepState> leadTaskNextStepListForDeletion = new List<LeadTaskNextStepState>();
+		var queryLeadTaskNextStepForDeletion = Context.LeadTaskNextStep.Where(l => l.ClientFeedbackId == request.Id).AsNoTracking();
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			queryLeadTaskNextStepForDeletion = queryLeadTaskNextStepForDeletion.Where(l => !(entity.LeadTaskNextStepList.Select(l => l.Id).ToList().Contains(l.Id)));
+		}
+		leadTaskNextStepListForDeletion = await queryLeadTaskNextStepForDeletion.ToListAsync(cancellationToken: cancellationToken);
+		foreach (var leadTaskNextStep in leadTaskNextStepListForDeletion!)
+		{
+			Context.Entry(leadTaskNextStep).State = EntityState.Deleted;
+		}
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			foreach (var leadTaskNextStep in entity.LeadTaskNextStepList.Where(l => !leadTaskNextStepListForDeletion.Select(l => l.Id).Contains(l.Id)))
+			{
+				if (await Context.NotExists<LeadTaskNextStepState>(x => x.Id == leadTaskNextStep.Id, cancellationToken: cancellationToken))
+				{
+					Context.Entry(leadTaskNextStep).State = EntityState.Added;
+				}
+				else
+				{
+					Context.Entry(leadTaskNextStep).State = EntityState.Modified;
+				}
+			}
+		}
+	}
 	private async Task UpdateActivityHistoryList(ClientFeedbackState entity, EditClientFeedbackCommand request, CancellationToken cancellationToken)
 	{
 		IList<ActivityHistoryState> activityHistoryListForDeletion = new List<ActivityHistoryState>();

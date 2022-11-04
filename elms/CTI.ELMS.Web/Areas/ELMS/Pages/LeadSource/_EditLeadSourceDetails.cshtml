@@ -5,7 +5,7 @@
     <div class="col">
 	<div class="mb-3">
 		<label asp-for="@Model.LeadSourceName" class="form-label fieldrequired"><strong>@Localizer["Lead Source"] :</strong></label>
-			<input asp-for="@Model.LeadSourceName" class="form-control"  />
+			<input asp-for="@Model.LeadSourceName" class="form-control" maxlength="255" />
 			<span asp-validation-for="@Model.LeadSourceName" class="text-danger"></span>
 			
 	</div>

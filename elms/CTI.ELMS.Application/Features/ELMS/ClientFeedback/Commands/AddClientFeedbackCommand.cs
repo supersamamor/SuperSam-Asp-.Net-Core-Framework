@@ -34,12 +34,34 @@ public class AddClientFeedbackCommandHandler : BaseCommandHandler<ApplicationCon
 	public async Task<Validation<Error, ClientFeedbackState>> AddClientFeedback(AddClientFeedbackCommand request, CancellationToken cancellationToken)
 	{
 		ClientFeedbackState entity = Mapper.Map<ClientFeedbackState>(request);
+		UpdateLeadTaskClientFeedBackList(entity);
+		UpdateLeadTaskNextStepList(entity);
 		UpdateActivityHistoryList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ClientFeedbackState>(entity);
 	}
 	
+	private void UpdateLeadTaskClientFeedBackList(ClientFeedbackState entity)
+	{
+		if (entity.LeadTaskClientFeedBackList?.Count > 0)
+		{
+			foreach (var leadTaskClientFeedBack in entity.LeadTaskClientFeedBackList!)
+			{
+				Context.Entry(leadTaskClientFeedBack).State = EntityState.Added;
+			}
+		}
+	}
+	private void UpdateLeadTaskNextStepList(ClientFeedbackState entity)
+	{
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			foreach (var leadTaskNextStep in entity.LeadTaskNextStepList!)
+			{
+				Context.Entry(leadTaskNextStep).State = EntityState.Added;
+			}
+		}
+	}
 	private void UpdateActivityHistoryList(ClientFeedbackState entity)
 	{
 		if (entity.ActivityHistoryList?.Count > 0)

@@ -140,7 +140,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.ParentUnitBudgetID" class="form-label fieldrequired"><strong>@Localizer["Parent Unit"] :</strong></label>
+		<label asp-for="@Model.ParentUnitBudgetID" class="form-label "><strong>@Localizer["Parent Unit"] :</strong></label>
 			<select asp-for="@Model.ParentUnitBudgetID" class="form-control" asp-items="@(dropdownService.GetUnitBudgetList(Model.ParentUnitBudgetID))"><option value="">- Select Parent Unit -</option></select>
 			<span asp-validation-for="@Model.ParentUnitBudgetID" class="text-danger"></span>
 			

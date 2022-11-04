@@ -32,12 +32,41 @@ public class EditNextStepCommandHandler : BaseCommandHandler<ApplicationContext,
 	{
 		var entity = await Context.NextStep.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
+		await UpdateLeadTaskNextStepList(entity, request, cancellationToken);
 		await UpdateActivityHistoryList(entity, request, cancellationToken);
 		Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, NextStepState>(entity);
 	}
 	
+	private async Task UpdateLeadTaskNextStepList(NextStepState entity, EditNextStepCommand request, CancellationToken cancellationToken)
+	{
+		IList<LeadTaskNextStepState> leadTaskNextStepListForDeletion = new List<LeadTaskNextStepState>();
+		var queryLeadTaskNextStepForDeletion = Context.LeadTaskNextStep.Where(l => l.NextStepId == request.Id).AsNoTracking();
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			queryLeadTaskNextStepForDeletion = queryLeadTaskNextStepForDeletion.Where(l => !(entity.LeadTaskNextStepList.Select(l => l.Id).ToList().Contains(l.Id)));
+		}
+		leadTaskNextStepListForDeletion = await queryLeadTaskNextStepForDeletion.ToListAsync(cancellationToken: cancellationToken);
+		foreach (var leadTaskNextStep in leadTaskNextStepListForDeletion!)
+		{
+			Context.Entry(leadTaskNextStep).State = EntityState.Deleted;
+		}
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			foreach (var leadTaskNextStep in entity.LeadTaskNextStepList.Where(l => !leadTaskNextStepListForDeletion.Select(l => l.Id).Contains(l.Id)))
+			{
+				if (await Context.NotExists<LeadTaskNextStepState>(x => x.Id == leadTaskNextStep.Id, cancellationToken: cancellationToken))
+				{
+					Context.Entry(leadTaskNextStep).State = EntityState.Added;
+				}
+				else
+				{
+					Context.Entry(leadTaskNextStep).State = EntityState.Modified;
+				}
+			}
+		}
+	}
 	private async Task UpdateActivityHistoryList(NextStepState entity, EditNextStepCommand request, CancellationToken cancellationToken)
 	{
 		IList<ActivityHistoryState> activityHistoryListForDeletion = new List<ActivityHistoryState>();

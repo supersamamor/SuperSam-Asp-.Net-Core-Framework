@@ -34,12 +34,34 @@ public class AddLeadTaskCommandHandler : BaseCommandHandler<ApplicationContext, 
 	public async Task<Validation<Error, LeadTaskState>> AddLeadTask(AddLeadTaskCommand request, CancellationToken cancellationToken)
 	{
 		LeadTaskState entity = Mapper.Map<LeadTaskState>(request);
+		UpdateLeadTaskClientFeedBackList(entity);
+		UpdateLeadTaskNextStepList(entity);
 		UpdateActivityHistoryList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, LeadTaskState>(entity);
 	}
 	
+	private void UpdateLeadTaskClientFeedBackList(LeadTaskState entity)
+	{
+		if (entity.LeadTaskClientFeedBackList?.Count > 0)
+		{
+			foreach (var leadTaskClientFeedBack in entity.LeadTaskClientFeedBackList!)
+			{
+				Context.Entry(leadTaskClientFeedBack).State = EntityState.Added;
+			}
+		}
+	}
+	private void UpdateLeadTaskNextStepList(LeadTaskState entity)
+	{
+		if (entity.LeadTaskNextStepList?.Count > 0)
+		{
+			foreach (var leadTaskNextStep in entity.LeadTaskNextStepList!)
+			{
+				Context.Entry(leadTaskNextStep).State = EntityState.Added;
+			}
+		}
+	}
 	private void UpdateActivityHistoryList(LeadTaskState entity)
 	{
 		if (entity.ActivityHistoryList?.Count > 0)

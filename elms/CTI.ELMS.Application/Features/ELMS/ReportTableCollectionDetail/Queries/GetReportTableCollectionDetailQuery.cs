@@ -16,7 +16,7 @@ public class GetReportTableCollectionDetailQueryHandler : BaseQueryHandler<Appli
     {
     }
 	public override async Task<PagedListResponse<ReportTableCollectionDetailState>> Handle(GetReportTableCollectionDetailQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<ReportTableCollectionDetailState>().Include(l=>l.Project).Include(l=>l.IFCATenantInformation)
+		await Context.Set<ReportTableCollectionDetailState>().Include(l=>l.IFCATenantInformation).Include(l=>l.Project)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

@@ -33,6 +33,18 @@
                 window.focus();
             });
             
+			$.fn.clientfeedbackSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ClientFeedbackId").clientfeedbackSelect();
+
 			$.fn.nextstepSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -56,18 +68,6 @@
 				return this;
 			};
 			$("#LeadTaskId").leadtaskSelect();
-
-			$.fn.clientfeedbackSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#ClientFeedbackId").clientfeedbackSelect();
 
 
         }

@@ -36,9 +36,6 @@
 							<th>
 								@Localizer["Units Information"]
 							</th>
-							<th>
-								@Localizer["Status"]
-							</th>
 							
                     <th>
                         @Localizer["Action"]
@@ -83,7 +80,7 @@
 										
 									</td>
 									<td>
-										<input  asp-for="@item.TargetDate" name="ActivityHistoryList[@counter].TargetDate" class="form-control"  />
+										<input type="date" asp-for="@item.TargetDate" name="ActivityHistoryList[@counter].TargetDate" class="form-control" />
 										<span data-valmsg-for="ActivityHistoryList[@counter].TargetDate" asp-validation-for="@item.TargetDate" class="text-danger"></span>
 										
 									</td>
@@ -93,18 +90,13 @@
 										
 									</td>
 									<td>
-										<input  asp-for="@item.PCTDate" name="ActivityHistoryList[@counter].PCTDate" class="form-control"  />
+										<input type="date" asp-for="@item.PCTDate" name="ActivityHistoryList[@counter].PCTDate" class="form-control" />
 										<span data-valmsg-for="ActivityHistoryList[@counter].PCTDate" asp-validation-for="@item.PCTDate" class="text-danger"></span>
 										
 									</td>
 									<td>
 										<input  asp-for="@item.UnitsInformation" name="ActivityHistoryList[@counter].UnitsInformation" class="form-control"  />
 										<span data-valmsg-for="ActivityHistoryList[@counter].UnitsInformation" asp-validation-for="@item.UnitsInformation" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.Status" name="ActivityHistoryList[@counter].Status" class="form-control" maxlength="50" />
-										<span data-valmsg-for="ActivityHistoryList[@counter].Status" asp-validation-for="@item.Status" class="text-danger"></span>
 										
 									</td>
 									

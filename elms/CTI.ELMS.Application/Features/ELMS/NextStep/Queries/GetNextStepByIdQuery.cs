@@ -18,6 +18,7 @@ public class GetNextStepByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	public override async Task<Option<NextStepState>> Handle(GetNextStepByIdQuery request, CancellationToken cancellationToken = default)
 	{
 		return await Context.NextStep
+			.Include(l=>l.LeadTaskNextStepList)
 			.Include(l=>l.ActivityHistoryList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

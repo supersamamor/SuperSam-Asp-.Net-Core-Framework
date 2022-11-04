@@ -18,6 +18,7 @@ public class GetProjectByIdQueryHandler : BaseQueryByIdHandler<ApplicationContex
 	public override async Task<Option<ProjectState>> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken = default)
 	{
 		return await Context.Project.Include(l=>l.EntityGroup)
+			.Include(l=>l.UserProjectAssignmentList)
 			.Include(l=>l.OfferingHistoryList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

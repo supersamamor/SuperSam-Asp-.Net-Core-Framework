@@ -10,12 +10,10 @@ public record ActivityState : BaseEntity
 	public string? LeadTaskId { get; init; }
 	public DateTime? ActivityDate { get; init; }
 	public string? ClientFeedbackId { get; init; }
-	public string NextStepId { get; init; } = "";
-	public DateTime TargetDate { get; init; }
-	public string ActivityRemarks { get; init; } = "";
-	public DateTime PCTDate { get; init; }
-	public string UnitsInformation { get; init; } = "";
-	public string Status { get; init; } = "";
+	public string? NextStepId { get; init; }
+	public DateTime? TargetDate { get; init; }
+	public string? ActivityRemarks { get; init; }
+	public DateTime? PCTDate { get; init; }
 	
 	public LeadState? Lead { get; init; }
 	public ProjectState? Project { get; init; }

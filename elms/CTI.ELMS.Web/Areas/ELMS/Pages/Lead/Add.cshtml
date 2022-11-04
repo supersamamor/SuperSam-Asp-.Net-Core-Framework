@@ -1,7 +1,7 @@
 @page
 @model AddModel
 @{
-    ViewData["Title"] = Localizer["Add Lead"];
+    ViewData["Title"] = Localizer["Add Prospects"];
     ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
 }
@@ -87,21 +87,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
 			});
 
-			$.fn.projectSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var projectlistdropdowns = document.getElementsByClassName('SelectProject');
-			for ( var i=0; i< projectlistdropdowns.length; i++) {
-				$("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
-			}
-
 			$.fn.offeringSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -117,29 +102,20 @@
 				$("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
 			}
 
-			$.fn.businessnatureSelect = function() {
+			$.fn.projectSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/BusinessNature/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#BusinessNatureID").businessnatureSelect();
-
-			$.fn.businessnaturesubitemSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#BusinessNatureSubItemID").businessnaturesubitemSelect();
+			var projectlistdropdowns = document.getElementsByClassName('SelectProject');
+			for ( var i=0; i< projectlistdropdowns.length; i++) {
+				$("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
+			}
 
 			$.fn.leadsourceSelect = function() {
 				this.filter("select").each(function() {
@@ -152,18 +128,6 @@
 				return this;
 			};
 			$("#LeadSourceId").leadsourceSelect();
-
-			$.fn.businessnaturecategorySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#BusinessNatureCategoryID").businessnaturecategorySelect();
 
 			$.fn.leadtouchpointSelect = function() {
 				this.filter("select").each(function() {
@@ -188,6 +152,42 @@
 				return this;
 			};
 			$("#OperationTypeID").operationtypeSelect();
+
+			$.fn.businessnaturesubitemSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#BusinessNatureSubItemID").businessnaturesubitemSelect();
+
+			$.fn.businessnaturecategorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#BusinessNatureCategoryID").businessnaturecategorySelect();
+
+			$.fn.businessnatureSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/BusinessNature/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#BusinessNatureID").businessnatureSelect();
 
 		}	
 		InitializeForm();

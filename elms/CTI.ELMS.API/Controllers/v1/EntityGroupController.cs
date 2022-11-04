@@ -51,20 +51,19 @@ public record EntityGroupViewModel
 	[StringLength(5, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? PPLUSEntityCode { get;set; }
 	[Required]
-	[StringLength(17, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string TINNo { get;set; } = "";
-	[Required]
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string EntityShortName { get;set; } = "";
-	public bool IsDisabled { get;set; }
 	[Required]
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EntityAddress { get;set; } = "";
+	[StringLength(17, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string TINNo { get;set; } = "";
 	[Required]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string EntityDescription { get;set; } = "";
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EntityAddress2 { get;set; } = "";
+	public string EntityAddress { get;set; } = "";
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? EntityAddress2 { get;set; }
+	public bool IsDisabled { get;set; }
 	   
 }

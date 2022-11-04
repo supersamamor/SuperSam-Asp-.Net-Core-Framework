@@ -44,7 +44,7 @@ public class LeadTouchPointController : BaseApiController<LeadTouchPointControll
 public record LeadTouchPointViewModel
 {
     [Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string LeadTouchPointName { get;set; } = "";
 	   
 }

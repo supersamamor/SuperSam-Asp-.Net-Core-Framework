@@ -88,8 +88,7 @@ public record UnitBudgetViewModel
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? LotArea { get;set; }
 	public bool IsOriginalBudgeted { get;set; }
-	[Required]
 	
-	public string ParentUnitBudgetID { get;set; } = "";
+	public string? ParentUnitBudgetID { get;set; }
 	   
 }

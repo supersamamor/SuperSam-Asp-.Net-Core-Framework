@@ -22,7 +22,7 @@ public record UnitBudgetState : BaseEntity
 	public decimal? December { get; init; }
 	public decimal? LotArea { get; init; }
 	public bool IsOriginalBudgeted { get; init; }
-	public string ParentUnitBudgetID { get; init; } = "";
+	public string? ParentUnitBudgetID { get; init; }
 	
 	public ProjectState? Project { get; init; }
 	public UnitState? Unit { get; init; }

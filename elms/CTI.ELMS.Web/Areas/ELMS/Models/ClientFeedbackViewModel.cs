@@ -9,7 +9,7 @@ public record ClientFeedbackViewModel : BaseViewModel
 {	
 	[Display(Name = "Client Feedback Name")]
 	[Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string ClientFeedbackName { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }

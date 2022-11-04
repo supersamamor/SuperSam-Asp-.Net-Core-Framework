@@ -37,6 +37,22 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
+		if (AsyncAction == "AddLeadTaskClientFeedBack")
+		{
+			return AddLeadTaskClientFeedBack();
+		}
+		if (AsyncAction == "RemoveLeadTaskClientFeedBack")
+		{
+			return RemoveLeadTaskClientFeedBack();
+		}
+		if (AsyncAction == "AddLeadTaskNextStep")
+		{
+			return AddLeadTaskNextStep();
+		}
+		if (AsyncAction == "RemoveLeadTaskNextStep")
+		{
+			return RemoveLeadTaskNextStep();
+		}
 		if (AsyncAction == "AddActivityHistory")
 		{
 			return AddActivityHistory();
@@ -50,6 +66,34 @@ public class EditModel : BasePageModel<EditModel>
         return Partial("_InputFieldsPartial", LeadTask);
     }
 	
+	private IActionResult AddLeadTaskClientFeedBack()
+	{
+		ModelState.Clear();
+		if (LeadTask!.LeadTaskClientFeedBackList == null) { LeadTask!.LeadTaskClientFeedBackList = new List<LeadTaskClientFeedBackViewModel>(); }
+		LeadTask!.LeadTaskClientFeedBackList!.Add(new LeadTaskClientFeedBackViewModel() { LeadTaskId = LeadTask.Id });
+		return Partial("_InputFieldsPartial", LeadTask);
+	}
+	private IActionResult RemoveLeadTaskClientFeedBack()
+	{
+		ModelState.Clear();
+		LeadTask.LeadTaskClientFeedBackList = LeadTask!.LeadTaskClientFeedBackList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", LeadTask);
+	}
+
+	private IActionResult AddLeadTaskNextStep()
+	{
+		ModelState.Clear();
+		if (LeadTask!.LeadTaskNextStepList == null) { LeadTask!.LeadTaskNextStepList = new List<LeadTaskNextStepViewModel>(); }
+		LeadTask!.LeadTaskNextStepList!.Add(new LeadTaskNextStepViewModel() { LeadTaskId = LeadTask.Id });
+		return Partial("_InputFieldsPartial", LeadTask);
+	}
+	private IActionResult RemoveLeadTaskNextStep()
+	{
+		ModelState.Clear();
+		LeadTask.LeadTaskNextStepList = LeadTask!.LeadTaskNextStepList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", LeadTask);
+	}
+
 	private IActionResult AddActivityHistory()
 	{
 		ModelState.Clear();

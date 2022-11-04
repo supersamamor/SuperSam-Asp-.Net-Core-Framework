@@ -37,6 +37,14 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
+		if (AsyncAction == "AddLeadTaskNextStep")
+		{
+			return AddLeadTaskNextStep();
+		}
+		if (AsyncAction == "RemoveLeadTaskNextStep")
+		{
+			return RemoveLeadTaskNextStep();
+		}
 		if (AsyncAction == "AddActivityHistory")
 		{
 			return AddActivityHistory();
@@ -50,6 +58,20 @@ public class EditModel : BasePageModel<EditModel>
         return Partial("_InputFieldsPartial", NextStep);
     }
 	
+	private IActionResult AddLeadTaskNextStep()
+	{
+		ModelState.Clear();
+		if (NextStep!.LeadTaskNextStepList == null) { NextStep!.LeadTaskNextStepList = new List<LeadTaskNextStepViewModel>(); }
+		NextStep!.LeadTaskNextStepList!.Add(new LeadTaskNextStepViewModel() { NextStepId = NextStep.Id });
+		return Partial("_InputFieldsPartial", NextStep);
+	}
+	private IActionResult RemoveLeadTaskNextStep()
+	{
+		ModelState.Clear();
+		NextStep.LeadTaskNextStepList = NextStep!.LeadTaskNextStepList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", NextStep);
+	}
+
 	private IActionResult AddActivityHistory()
 	{
 		ModelState.Clear();

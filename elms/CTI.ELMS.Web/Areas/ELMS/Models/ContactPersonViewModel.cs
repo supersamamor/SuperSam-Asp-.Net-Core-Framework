@@ -17,20 +17,17 @@ public record ContactPersonViewModel : BaseViewModel
 	public string? SalutationID { get; init; }
 	public string?  ForeignKeySalutation { get; set; }
 	[Display(Name = "First Name")]
-	[Required]
 	[StringLength(35, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string FirstName { get; init; } = "";
+	public string? FirstName { get; init; }
 	[Display(Name = "Middle Name")]
 	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? MiddleName { get; init; }
 	[Display(Name = "Last Name")]
-	[Required]
 	[StringLength(70, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string LastName { get; init; } = "";
+	public string? LastName { get; init; }
 	[Display(Name = "Position")]
-	[Required]
 	[StringLength(120, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Position { get; init; } = "";
+	public string? Position { get; init; }
 	[Display(Name = "Is SOA Recipient")]
 	public bool IsSOARecipient { get; init; }
 	[Display(Name = "Is AN Signatory")]

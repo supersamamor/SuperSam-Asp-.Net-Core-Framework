@@ -1,0 +1,51 @@
+@using Models
+@model ProjectViewModel
+<input type="hidden" id="UserProjectAssignmentCount" value="@Model?.UserProjectAssignmentList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["User / Project Assignment"]</span>
+        <a id="btnAddUserProjectAssignment" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        <button class="cancel" type="button" id="btnRemoveUserProjectAssignment" value="RemoveUserProjectAssignment" style="display:none;"></button>
+    </h5>
+    <div class="card-body" style="overflow:auto;">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th style="display:none;"></th>
+                    <th>
+								@Localizer["User Id"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.UserProjectAssignmentList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.UserProjectAssignmentList)
+                    {
+                        <tr>
+                            <td style="display:none;">
+                                <input type="hidden" name="UserProjectAssignmentList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="UserProjectAssignmentList[@counter].ProjectID" value="@item.ProjectID" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.UserId" name="UserProjectAssignmentList[@counter].UserId" class="form-control"  />
+										<span data-valmsg-for="UserProjectAssignmentList[@counter].UserId" asp-validation-for="@item.UserId" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveUserProjectAssignmentButton" title="@Localizer["Remove UserProjectAssignment"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -6,12 +6,12 @@ namespace CTI.ELMS.Core.ELMS;
 public record ProjectState : BaseEntity
 {
 	public string ProjectName { get; init; } = "";
-	public string DatabaseSource { get; init; } = "";
+	public string? DatabaseSource { get; init; }
 	public string? EntityGroupId { get; init; }
 	public string? IFCAProjectCode { get; init; }
 	public string PayableTo { get; init; } = "";
 	public string ProjectAddress { get; init; } = "";
-	public string Location { get; init; } = "";
+	public string? Location { get; init; }
 	public string ProjectNameANSection { get; init; } = "";
 	public decimal? LandArea { get; init; }
 	public decimal? GLA { get; init; }
@@ -23,13 +23,13 @@ public record ProjectState : BaseEntity
 	public string ContractSignatory { get; init; } = "";
 	public string ContractSignatoryPosition { get; init; } = "";
 	public string ContractSignatoryProofOfIdentity { get; init; } = "";
-	public string ContractSignatoryWitness { get; init; } = "";
-	public string ContractSignatoryWitnessPosition { get; init; } = "";
+	public string? ContractSignatoryWitness { get; init; }
+	public string? ContractSignatoryWitnessPosition { get; init; }
 	public bool OutsideFC { get; init; }
-	public string ProjectGreetingsSection { get; init; } = "";
-	public string ProjectShortName { get; init; } = "";
-	public string SignatureUpper { get; init; } = "";
-	public string SignatureLower { get; init; } = "";
+	public string? ProjectGreetingsSection { get; init; }
+	public string? ProjectShortName { get; init; }
+	public string? SignatureUpper { get; init; }
+	public string? SignatureLower { get; init; }
 	public bool HasAssociationDues { get; init; }
 	
 	public EntityGroupState? EntityGroup { get; init; }

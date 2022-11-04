@@ -8,10 +8,11 @@ namespace CTI.ELMS.Web.Areas.ELMS.Models;
 public record BusinessNatureViewModel : BaseViewModel
 {	
 	[Display(Name = "Business Nature Name")]
-	
-	public string? BusinessNatureName { get; init; }
+	[Required]
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string BusinessNatureName { get; init; } = "";
 	[Display(Name = "Business Nature Code")]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? BusinessNatureCode { get; init; }
 	[Display(Name = "Is Disabled")]
 	public bool IsDisabled { get; init; }

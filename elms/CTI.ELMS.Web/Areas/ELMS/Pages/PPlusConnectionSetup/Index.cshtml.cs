@@ -33,8 +33,6 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.PPlusVersionName,
 				e.TablePrefix,
-				e.ConnectionString,
-				e.ExhibitThemeCodes,
 						
 				
                 e.LastModifiedDate

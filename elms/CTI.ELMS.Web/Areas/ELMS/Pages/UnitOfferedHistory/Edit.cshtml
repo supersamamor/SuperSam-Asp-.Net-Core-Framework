@@ -46,17 +46,17 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#unitOfferedHistory-form', InitializeForm);
 			});
 
-			$.fn.offeringhistorySelect = function() {
+			$.fn.offeringSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/OfferingHistory/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#OfferingHistoryID").offeringhistorySelect();
+			$("#OfferingID").offeringSelect();
 
 			$.fn.unitSelect = function() {
 				this.filter("select").each(function() {
@@ -70,17 +70,17 @@
 			};
 			$("#UnitID").unitSelect();
 
-			$.fn.offeringSelect = function() {
+			$.fn.offeringhistorySelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/OfferingHistory/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#OfferingID").offeringSelect();
+			$("#OfferingHistoryID").offeringhistorySelect();
 
 
         }

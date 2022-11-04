@@ -72,9 +72,8 @@ public record UnitBudgetViewModel : BaseViewModel
 	[Display(Name = "Is Original")]
 	public bool IsOriginalBudgeted { get; init; }
 	[Display(Name = "Parent Unit")]
-	[Required]
 	
-	public string ParentUnitBudgetID { get; init; } = "";
+	public string? ParentUnitBudgetID { get; init; }
 	public string?  ForeignKeyUnitBudget { get; set; }
 	
 	public DateTime LastModifiedDate { get; set; }

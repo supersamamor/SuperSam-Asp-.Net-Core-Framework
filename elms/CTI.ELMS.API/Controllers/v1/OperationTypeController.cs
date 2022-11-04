@@ -44,7 +44,7 @@ public class OperationTypeController : BaseApiController<OperationTypeController
 public record OperationTypeViewModel
 {
     [Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string OperationTypeName { get;set; } = "";
 	   
 }

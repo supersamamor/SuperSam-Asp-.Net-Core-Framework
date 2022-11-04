@@ -16,7 +16,7 @@ public class GetUnitOfferedHistoryQueryHandler : BaseQueryHandler<ApplicationCon
     {
     }
 	public override async Task<PagedListResponse<UnitOfferedHistoryState>> Handle(GetUnitOfferedHistoryQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<UnitOfferedHistoryState>().Include(l=>l.OfferingHistory).Include(l=>l.Unit).Include(l=>l.Offering)
+		await Context.Set<UnitOfferedHistoryState>().Include(l=>l.Offering).Include(l=>l.Unit).Include(l=>l.OfferingHistory)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

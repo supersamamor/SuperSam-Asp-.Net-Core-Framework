@@ -43,14 +43,16 @@ public class PPlusConnectionSetupController : BaseApiController<PPlusConnectionS
 
 public record PPlusConnectionSetupViewModel
 {
-    [StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? PPlusVersionName { get;set; }
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? TablePrefix { get;set; }
-	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? ConnectionString { get;set; }
+    [Required]
+	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string PPlusVersionName { get;set; } = "";
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ExhibitThemeCodes { get;set; } = "";
+	public string TablePrefix { get;set; } = "";
+	[Required]
+	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string ConnectionString { get;set; } = "";
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? ExhibitThemeCodes { get;set; }
 	   
 }

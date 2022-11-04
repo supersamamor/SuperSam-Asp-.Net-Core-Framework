@@ -22,6 +22,7 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_UserProjectAssignmentListValidationPartial" model="@Model.Project" />
 <partial name="_OfferingHistoryListValidationPartial" model="@Model.Project" />
 
 <script asp-add-nonce>
@@ -34,6 +35,18 @@
 				window.focus();
 			});
 			
+			$.InitializeUserProjectAssignmentFieldValidations($('#UserProjectAssignmentCount').val());
+			$('.RemoveUserProjectAssignmentButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveUserProjectAssignment');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#project-form', InitializeForm);
+			});
+
+			$('#btnAddUserProjectAssignment').on( 'click', function () {
+				$('#AsyncAction').val('AddUserProjectAssignment');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#project-form', InitializeForm);
+			});
+
 			$.InitializeOfferingHistoryFieldValidations($('#OfferingHistoryCount').val());
 			$('.RemoveOfferingHistoryButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));

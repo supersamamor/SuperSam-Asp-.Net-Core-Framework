@@ -9,7 +9,7 @@ public record LeadSourceViewModel : BaseViewModel
 {	
 	[Display(Name = "Lead Source")]
 	[Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string LeadSourceName { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }

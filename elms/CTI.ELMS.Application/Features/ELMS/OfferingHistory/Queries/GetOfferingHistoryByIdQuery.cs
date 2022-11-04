@@ -17,7 +17,7 @@ public class GetOfferingHistoryByIdQueryHandler : BaseQueryByIdHandler<Applicati
 	
 	public override async Task<Option<OfferingHistoryState>> Handle(GetOfferingHistoryByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.OfferingHistory.Include(l=>l.Project).Include(l=>l.Offering).Include(l=>l.Lead)
+		return await Context.OfferingHistory.Include(l=>l.Offering).Include(l=>l.Project).Include(l=>l.Lead)
 			.Include(l=>l.UnitOfferedHistoryList)
 			.Include(l=>l.UnitGroupList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);

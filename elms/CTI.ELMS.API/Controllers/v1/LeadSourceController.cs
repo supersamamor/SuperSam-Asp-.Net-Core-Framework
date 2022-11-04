@@ -44,7 +44,7 @@ public class LeadSourceController : BaseApiController<LeadSourceController>
 public record LeadSourceViewModel
 {
     [Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string LeadSourceName { get;set; } = "";
 	   
 }

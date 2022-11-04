@@ -33,7 +33,7 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.UnitNo,
 				ProjectID = e.Project?.Id,
-				LotBudget = e.LotBudget?.ToString("##,##.00"),
+				LotBudget = e.LotBudget.ToString("##,##.00"),
 						
 				
                 e.LastModifiedDate

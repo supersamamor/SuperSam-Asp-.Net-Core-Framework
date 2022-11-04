@@ -22,12 +22,6 @@
 							<th>
 								@Localizer["Table Prefix"]
 							</th>
-							<th>
-								@Localizer["Connection String"]
-							</th>
-							<th>
-								@Localizer["Exhibit Theme Codes"]
-							</th>
 							  
 														
                             <th>
@@ -50,7 +44,7 @@
         var table = $('#pPlusConnectionSetup').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 4, 'desc' ]],
+            order: [[ 2, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/PPlusConnectionSetup/Index", new { area = "ELMS", handler = "ListAll" })',
@@ -64,10 +58,8 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "pPlusVersionName", name: "PPlusVersionName", responsivePriority: 1, title: '@Localizer["PPlus Version"]', searchable: false },
+                { data: "pPlusVersionName", name: "PPlusVersionName", responsivePriority: 1, title: '@Localizer["PPlus Version"]', searchable: true },
 				{ data: "tablePrefix", name: "TablePrefix", responsivePriority: 1, title: '@Localizer["Table Prefix"]', searchable: false },
-				{ data: "connectionString", name: "ConnectionString", responsivePriority: 1, title: '@Localizer["Connection String"]', searchable: false },
-				{ data: "exhibitThemeCodes", name: "ExhibitThemeCodes", responsivePriority: 1, title: '@Localizer["Exhibit Theme Codes"]', searchable: false },
 				   
 				
                 {

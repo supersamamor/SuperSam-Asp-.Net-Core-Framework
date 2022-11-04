@@ -145,21 +145,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
 			});
 
-			$.fn.offeringhistorySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/OfferingHistory/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var offeringhistorylistdropdowns = document.getElementsByClassName('SelectOfferingHistory');
-			for ( var i=0; i< offeringhistorylistdropdowns.length; i++) {
-				$("#UnitOfferedHistoryList_"+i+"_OfferingHistoryID").offeringhistorySelect();
-			}
-
 			$.fn.unitSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -175,17 +160,20 @@
 				$("#UnitOfferedHistoryList_"+i+"_UnitID").unitSelect();
 			}
 
-			$.fn.projectSelect = function() {
+			$.fn.offeringhistorySelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+							url: '@Url.Page("/OfferingHistory/Index", new { area = "ELMS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#ProjectID").projectSelect();
+			var offeringhistorylistdropdowns = document.getElementsByClassName('SelectOfferingHistory');
+			for ( var i=0; i< offeringhistorylistdropdowns.length; i++) {
+				$("#UnitOfferedHistoryList_"+i+"_OfferingHistoryID").offeringhistorySelect();
+			}
 
 			$.fn.leadSelect = function() {
 				this.filter("select").each(function() {
@@ -198,6 +186,18 @@
 				return this;
 			};
 			$("#LeadID").leadSelect();
+
+			$.fn.projectSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ProjectID").projectSelect();
 
 
         }

@@ -9,7 +9,7 @@ public record NextStepViewModel : BaseViewModel
 {	
 	[Display(Name = "Name")]
 	[Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string NextStepTaskName { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }

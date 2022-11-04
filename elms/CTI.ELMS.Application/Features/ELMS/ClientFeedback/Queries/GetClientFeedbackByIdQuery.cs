@@ -18,6 +18,8 @@ public class GetClientFeedbackByIdQueryHandler : BaseQueryByIdHandler<Applicatio
 	public override async Task<Option<ClientFeedbackState>> Handle(GetClientFeedbackByIdQuery request, CancellationToken cancellationToken = default)
 	{
 		return await Context.ClientFeedback
+			.Include(l=>l.LeadTaskClientFeedBackList)
+			.Include(l=>l.LeadTaskNextStepList)
 			.Include(l=>l.ActivityHistoryList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

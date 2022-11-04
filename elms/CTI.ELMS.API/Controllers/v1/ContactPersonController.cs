@@ -48,17 +48,14 @@ public record ContactPersonViewModel
 	public string LeadId { get;set; } = "";
 	
 	public string? SalutationID { get;set; }
-	[Required]
 	[StringLength(35, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string FirstName { get;set; } = "";
+	public string? FirstName { get;set; }
 	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? MiddleName { get;set; }
-	[Required]
 	[StringLength(70, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string LastName { get;set; } = "";
-	[Required]
+	public string? LastName { get;set; }
 	[StringLength(120, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Position { get;set; } = "";
+	public string? Position { get;set; }
 	public bool IsSOARecipient { get;set; }
 	public bool IsANSignatory { get;set; }
 	public bool IsCOLSignatory { get;set; }

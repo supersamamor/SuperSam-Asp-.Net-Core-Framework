@@ -18,6 +18,55 @@ namespace CTI.ELMS.Web.Service
 			_context = context;
 			_mediaTr = mediaTr;
 		}       
+		public SelectList GetProjectList(string id)
+		{
+			return _context.GetSingle<ProjectState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetOfferingList(string id)
+		{
+			return _context.GetSingle<OfferingState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetLeadList(string id)
+		{
+			return _context.GetSingle<LeadState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetUnitList(string id)
+		{
+			return _context.GetSingle<UnitState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetUnitBudgetList(string id)
+		{
+			return _context.GetSingle<UnitBudgetState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetActivityList(string id)
+		{
+			return _context.GetSingle<ActivityState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetClientFeedbackList(string id)
+		{
+			return _context.GetSingle<ClientFeedbackState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.ClientFeedbackName } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
 		public SelectList GetNextStepList(string id)
 		{
 			return _context.GetSingle<NextStepState>(e => e.Id == id, new()).Result.Match(
@@ -32,10 +81,10 @@ namespace CTI.ELMS.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetClientFeedbackList(string id)
+		public SelectList GetIFCATenantInformationList(string id)
 		{
-			return _context.GetSingle<ClientFeedbackState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.ClientFeedbackName } }, "Value", "Text", e.Id),
+			return _context.GetSingle<IFCATenantInformationState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
@@ -46,9 +95,16 @@ namespace CTI.ELMS.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetBusinessNatureSubItemList(string id)
+		public SelectList GetActivityHistoryList(string id)
 		{
-			return _context.GetSingle<BusinessNatureSubItemState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<ActivityHistoryState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetUnitOfferedList(string id)
+		{
+			return _context.GetSingle<UnitOfferedState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
@@ -57,13 +113,6 @@ namespace CTI.ELMS.Web.Service
 		{
 			return _context.GetSingle<LeadSourceState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.LeadSourceName } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetBusinessNatureCategoryList(string id)
-		{
-			return _context.GetSingle<BusinessNatureCategoryState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
@@ -81,23 +130,23 @@ namespace CTI.ELMS.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetProjectList(string id)
+		public SelectList GetBusinessNatureSubItemList(string id)
 		{
-			return _context.GetSingle<ProjectState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<BusinessNatureSubItemState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetOfferingList(string id)
+		public SelectList GetBusinessNatureCategoryList(string id)
 		{
-			return _context.GetSingle<OfferingState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<BusinessNatureCategoryState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetUnitOfferedList(string id)
+		public SelectList GetEntityGroupList(string id)
 		{
-			return _context.GetSingle<UnitOfferedState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<EntityGroupState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
@@ -109,24 +158,10 @@ namespace CTI.ELMS.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetActivityList(string id)
+		public SelectList GetSalutationList(string id)
 		{
-			return _context.GetSingle<ActivityState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetActivityHistoryList(string id)
-		{
-			return _context.GetSingle<ActivityHistoryState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetUnitList(string id)
-		{
-			return _context.GetSingle<UnitState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+			return _context.GetSingle<SalutationState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.SalutationDescription } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
@@ -137,44 +172,9 @@ namespace CTI.ELMS.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetLeadList(string id)
-		{
-			return _context.GetSingle<LeadState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetIFCATenantInformationList(string id)
-		{
-			return _context.GetSingle<IFCATenantInformationState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetSalutationList(string id)
-		{
-			return _context.GetSingle<SalutationState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.SalutationDescription } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetEntityGroupList(string id)
-		{
-			return _context.GetSingle<EntityGroupState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
 		public SelectList GetOfferingHistoryList(string id)
 		{
 			return _context.GetSingle<OfferingHistoryState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetUnitBudgetList(string id)
-		{
-			return _context.GetSingle<UnitBudgetState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);

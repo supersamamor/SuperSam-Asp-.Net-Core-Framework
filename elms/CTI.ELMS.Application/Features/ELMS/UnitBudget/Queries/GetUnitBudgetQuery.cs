@@ -16,7 +16,7 @@ public class GetUnitBudgetQueryHandler : BaseQueryHandler<ApplicationContext, Un
     {
     }
 	public override async Task<PagedListResponse<UnitBudgetState>> Handle(GetUnitBudgetQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<UnitBudgetState>().Include(l=>l.Project).Include(l=>l.Unit).Include(l=>l.UnitBudget)
+		await Context.Set<UnitBudgetState>().Include(l=>l.Unit).Include(l=>l.Project).Include(l=>l.UnitBudget)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

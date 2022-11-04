@@ -18,28 +18,27 @@ public record EntityGroupViewModel : BaseViewModel
 	[Display(Name = "PPLUS Entity Code")]
 	[StringLength(5, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? PPLUSEntityCode { get; init; }
-	[Display(Name = "TIN Number")]
-	[Required]
-	[StringLength(17, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string TINNo { get; init; } = "";
 	[Display(Name = "Entity Short Name")]
 	[Required]
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string EntityShortName { get; init; } = "";
-	[Display(Name = "Is Disabled")]
-	public bool IsDisabled { get; init; }
-	[Display(Name = "Entity Address")]
+	[Display(Name = "TIN Number")]
 	[Required]
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EntityAddress { get; init; } = "";
+	[StringLength(17, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string TINNo { get; init; } = "";
 	[Display(Name = "Entity Description")]
 	[Required]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string EntityDescription { get; init; } = "";
-	[Display(Name = "Entity Address 2")]
+	[Display(Name = "Entity Address")]
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EntityAddress2 { get; init; } = "";
+	public string EntityAddress { get; init; } = "";
+	[Display(Name = "Entity Address 2")]
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? EntityAddress2 { get; init; }
+	[Display(Name = "Is Disabled")]
+	public bool IsDisabled { get; init; }
 	
 	public DateTime LastModifiedDate { get; set; }
 	public PPlusConnectionSetupViewModel? PPlusConnectionSetup { get; init; }

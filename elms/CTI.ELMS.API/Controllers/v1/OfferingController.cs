@@ -55,12 +55,10 @@ public record OfferingViewModel
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? OtherChargesAircon { get;set; }
-	[Required]
 	
-	public string Concession { get;set; } = "";
-	[Required]
+	public string? Concession { get;set; }
 	
-	public string OffersheetRemarks { get;set; } = "";
+	public string? OffersheetRemarks { get;set; }
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? ConstructionCAMC { get;set; }
@@ -70,33 +68,26 @@ public record OfferingViewModel
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? BoardUp { get;set; }
-	[Required]
 	
-	public string UnitsInformation { get;set; } = "";
+	public string? UnitsInformation { get;set; }
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ANType { get;set; }
-	[Required]
-	public int OfferingHistoryID { get;set; }
+	public int? OfferingHistoryID { get;set; }
 	
 	public string? LeadID { get;set; }
 	
 	public string? ProjectID { get;set; }
-	[Required]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string TenantContractNo { get;set; } = "";
+	public string? TenantContractNo { get;set; }
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? DocStamp { get;set; }
-	[Required]
-	public DateTime AwardNoticeCreatedDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public DateTime? AwardNoticeCreatedDate { get;set; } = DateTime.Now.Date;
 	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AwardNoticeCreatedBy { get;set; } = "";
-	[Required]
-	public DateTime SignedOfferSheetDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public string? AwardNoticeCreatedBy { get;set; }
+	public DateTime? SignedOfferSheetDate { get;set; } = DateTime.Now.Date;
 	
-	public string TagSignedOfferSheetBy { get;set; } = "";
+	public string? TagSignedOfferSheetBy { get;set; }
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? TotalUnitArea { get;set; }
@@ -138,70 +129,50 @@ public record OfferingViewModel
 	public bool AutoComputeTotalConstructionBond { get;set; }
 	public bool AutoComputeTotalSecurityDeposit { get;set; }
 	public int? OfferSheetPerProjectCounter { get;set; }
-	[Required]
-	public DateTime SignedAwardNoticeDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public DateTime? SignedAwardNoticeDate { get;set; } = DateTime.Now.Date;
 	
-	public string TagSignedAwardNoticeBy { get;set; } = "";
+	public string? TagSignedAwardNoticeBy { get;set; }
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? MinimumSalesQuota { get;set; }
 	[Required]
 	
 	public string UnitType { get;set; } = "";
-	[Required]
 	
-	public string Provision { get;set; } = "";
+	public string? Provision { get;set; }
 	public int? FitOutPeriod { get;set; }
-	[Required]
-	public DateTime TurnOverDate { get;set; } = DateTime.Now.Date;
+	public DateTime? TurnOverDate { get;set; } = DateTime.Now.Date;
 	public bool AutoComputeAnnualAdvertisingFee { get;set; }
-	[Required]
-	public DateTime BookingDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public DateTime? BookingDate { get;set; } = DateTime.Now.Date;
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SignatoryName { get;set; } = "";
-	[Required]
+	public string? SignatoryName { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SignatoryPosition { get;set; } = "";
-	[Required]
+	public string? SignatoryPosition { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ANSignatoryName { get;set; } = "";
-	[Required]
+	public string? ANSignatoryName { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ANSignatoryPosition { get;set; } = "";
-	[Required]
-	public DateTime LeaseContractCreatedDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public string? ANSignatoryPosition { get;set; }
+	public DateTime? LeaseContractCreatedDate { get;set; } = DateTime.Now.Date;
 	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string LeaseContractCreatedBy { get;set; } = "";
-	[Required]
+	public string? LeaseContractCreatedBy { get;set; }
 	
-	public string TagSignedLeaseContractBy { get;set; } = "";
-	[Required]
-	public DateTime SignedLeaseContractDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public string? TagSignedLeaseContractBy { get;set; }
+	public DateTime? SignedLeaseContractDate { get;set; } = DateTime.Now.Date;
 	
-	public string TagForReviewLeaseContractBy { get;set; } = "";
-	[Required]
-	public DateTime ForReviewLeaseContractDate { get;set; } = DateTime.Now.Date;
-	[Required]
+	public string? TagForReviewLeaseContractBy { get;set; }
+	public DateTime? ForReviewLeaseContractDate { get;set; } = DateTime.Now.Date;
 	
-	public string TagForFinalPrintLeaseContractBy { get;set; } = "";
-	[Required]
-	public DateTime ForFinalPrintLeaseContractDate { get;set; } = DateTime.Now.Date;
+	public string? TagForFinalPrintLeaseContractBy { get;set; }
+	public DateTime? ForFinalPrintLeaseContractDate { get;set; } = DateTime.Now.Date;
 	public int? LeaseContractStatus { get;set; }
 	public int? ANTermTypeID { get;set; }
 	public int? ContractTypeID { get;set; }
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string WitnessName { get;set; } = "";
-	[Required]
+	public string? WitnessName { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PermittedUse { get;set; } = "";
-	[Required]
+	public string? PermittedUse { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ModifiedCategory { get;set; } = "";
+	public string? ModifiedCategory { get;set; }
 	public bool IsDisabledModifiedCategory { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ContractNumber { get;set; }

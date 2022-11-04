@@ -17,7 +17,7 @@ public record LeadState : BaseEntity
 	public string OperationTypeID { get; init; } = "";
 	public string BusinessNatureID { get; init; } = "";
 	public string BusinessNatureSubItemID { get; init; } = "";
-	public string BusinessNatureCategoryID { get; init; } = "";
+	public string? BusinessNatureCategoryID { get; init; }
 	public string? TINNumber { get; init; }
 	public bool IsFranchise { get; init; }
 	

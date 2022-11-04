@@ -17,7 +17,7 @@ public class GetReportTableCollectionDetailByIdQueryHandler : BaseQueryByIdHandl
 	
 	public override async Task<Option<ReportTableCollectionDetailState>> Handle(GetReportTableCollectionDetailByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.ReportTableCollectionDetail.Include(l=>l.Project).Include(l=>l.IFCATenantInformation)
+		return await Context.ReportTableCollectionDetail.Include(l=>l.IFCATenantInformation).Include(l=>l.Project)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

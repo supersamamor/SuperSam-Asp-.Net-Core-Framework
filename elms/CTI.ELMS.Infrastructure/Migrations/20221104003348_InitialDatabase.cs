@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CTI.ELMS.Infrastructure.Migrations
 {
-    public partial class InitialDatabaseStructure : Migration
+    public partial class InitialDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,8 +58,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BusinessNatureName = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    BusinessNatureCode = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BusinessNatureName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    BusinessNatureCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -77,7 +77,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClientFeedbackName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClientFeedbackName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -94,7 +94,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LeadSourceName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LeadSourceName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -111,7 +111,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LeadTaskName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LeadTaskName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -128,7 +128,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LeadTouchPointName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LeadTouchPointName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -145,7 +145,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NextStepTaskName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NextStepTaskName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -162,7 +162,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OperationTypeName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OperationTypeName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -179,10 +179,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PPlusVersionName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    TablePrefix = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    ConnectionString = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    ExhibitThemeCodes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    PPlusVersionName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TablePrefix = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ConnectionString = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    ExhibitThemeCodes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -393,12 +393,12 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     PPlusConnectionSetupID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EntityName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PPLUSEntityCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
-                    TINNo = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     EntityShortName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    IsDisabled = table.Column<bool>(type: "bit", nullable: false),
-                    EntityAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    TINNo = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     EntityDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    EntityAddress2 = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    EntityAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    EntityAddress2 = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -503,12 +503,12 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProjectName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DatabaseSource = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    DatabaseSource = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     EntityGroupId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IFCAProjectCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     PayableTo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ProjectAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ProjectNameANSection = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     LandArea = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     GLA = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
@@ -520,13 +520,13 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     ContractSignatory = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ContractSignatoryPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ContractSignatoryProofOfIdentity = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ContractSignatoryWitness = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ContractSignatoryWitnessPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ContractSignatoryWitness = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ContractSignatoryWitnessPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     OutsideFC = table.Column<bool>(type: "bit", nullable: false),
-                    ProjectGreetingsSection = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ProjectShortName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    SignatureUpper = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    SignatureLower = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ProjectGreetingsSection = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ProjectShortName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SignatureUpper = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SignatureLower = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     HasAssociationDues = table.Column<bool>(type: "bit", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -561,7 +561,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     OperationTypeID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BusinessNatureID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BusinessNatureSubItemID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BusinessNatureCategoryID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BusinessNatureCategoryID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TINNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     IsFranchise = table.Column<bool>(type: "bit", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -583,8 +583,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         name: "FK_Lead_BusinessNatureCategory_BusinessNatureCategoryID",
                         column: x => x.BusinessNatureCategoryID,
                         principalTable: "BusinessNatureCategory",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Lead_BusinessNatureSubItem_BusinessNatureSubItemID",
                         column: x => x.BusinessNatureSubItemID,
@@ -685,13 +684,13 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UnitNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    ProjectID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    LotBudget = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
-                    LotArea = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
-                    AvailabilityDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CommencementDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CurrentTenantContractNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UnitNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    ProjectID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LotBudget = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    LotArea = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    AvailabilityDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CommencementDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CurrentTenantContractNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -705,7 +704,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         name: "FK_Unit_Project_ProjectID",
                         column: x => x.ProjectID,
                         principalTable: "Project",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -741,12 +741,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     LeadTaskId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ActivityDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClientFeedbackId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    NextStepId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ActivityRemarks = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PCTDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NextStepId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ActivityRemarks = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    PCTDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -775,8 +773,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         name: "FK_Activity_NextStep_NextStepId",
                         column: x => x.NextStepId,
                         principalTable: "NextStep",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Activity_Project_ProjectID",
                         column: x => x.ProjectID,
@@ -815,10 +812,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LeadId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SalutationID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: true),
                     MiddleName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: true),
+                    Position = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
                     IsSOARecipient = table.Column<bool>(type: "bit", nullable: false),
                     IsANSignatory = table.Column<bool>(type: "bit", nullable: false),
                     IsCOLSignatory = table.Column<bool>(type: "bit", nullable: false),
@@ -858,22 +855,22 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     SecMonths = table.Column<int>(type: "int", nullable: true),
                     ConstructionMonths = table.Column<int>(type: "int", nullable: true),
                     OtherChargesAircon = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
-                    Concession = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OffersheetRemarks = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Concession = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OffersheetRemarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConstructionCAMC = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     CommencementCAMC = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     BoardUp = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
-                    UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ANType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    OfferingHistoryID = table.Column<int>(type: "int", nullable: false),
+                    OfferingHistoryID = table.Column<int>(type: "int", nullable: true),
                     LeadID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProjectID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TenantContractNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TenantContractNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DocStamp = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
-                    AwardNoticeCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AwardNoticeCreatedBy = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    SignedOfferSheetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TagSignedOfferSheetBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AwardNoticeCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AwardNoticeCreatedBy = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    SignedOfferSheetDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TagSignedOfferSheetBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalUnitArea = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     IsPOS = table.Column<bool>(type: "bit", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -893,33 +890,33 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     AutoComputeTotalConstructionBond = table.Column<bool>(type: "bit", nullable: false),
                     AutoComputeTotalSecurityDeposit = table.Column<bool>(type: "bit", nullable: false),
                     OfferSheetPerProjectCounter = table.Column<int>(type: "int", nullable: true),
-                    SignedAwardNoticeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TagSignedAwardNoticeBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SignedAwardNoticeDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TagSignedAwardNoticeBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MinimumSalesQuota = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     UnitType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Provision = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Provision = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FitOutPeriod = table.Column<int>(type: "int", nullable: true),
-                    TurnOverDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TurnOverDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AutoComputeAnnualAdvertisingFee = table.Column<bool>(type: "bit", nullable: false),
-                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SignatoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    SignatoryPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ANSignatoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ANSignatoryPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LeaseContractCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LeaseContractCreatedBy = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    TagSignedLeaseContractBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SignedLeaseContractDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TagForReviewLeaseContractBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ForReviewLeaseContractDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TagForFinalPrintLeaseContractBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ForFinalPrintLeaseContractDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SignatoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SignatoryPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ANSignatoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ANSignatoryPosition = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    LeaseContractCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LeaseContractCreatedBy = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    TagSignedLeaseContractBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SignedLeaseContractDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TagForReviewLeaseContractBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ForReviewLeaseContractDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TagForFinalPrintLeaseContractBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ForFinalPrintLeaseContractDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LeaseContractStatus = table.Column<int>(type: "int", nullable: true),
                     ANTermTypeID = table.Column<int>(type: "int", nullable: true),
                     ContractTypeID = table.Column<int>(type: "int", nullable: true),
-                    WitnessName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    PermittedUse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ModifiedCategory = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    WitnessName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PermittedUse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ModifiedCategory = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsDisabledModifiedCategory = table.Column<bool>(type: "bit", nullable: false),
                     ContractNumber = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -965,7 +962,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     December = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     LotArea = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     IsOriginalBudgeted = table.Column<bool>(type: "bit", nullable: false),
-                    ParentUnitBudgetID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ParentUnitBudgetID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1001,12 +998,11 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     LeadTaskId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ActivityDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClientFeedbackId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    NextStepId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ActivityRemarks = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PCTDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NextStepId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ActivityRemarks = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    PCTDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UnitsInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1035,8 +1031,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         name: "FK_ActivityHistory_NextStep_NextStepId",
                         column: x => x.NextStepId,
                         principalTable: "NextStep",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1628,8 +1623,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 name: "IX_BusinessNature_BusinessNatureName",
                 table: "BusinessNature",
                 column: "BusinessNatureName",
-                unique: true,
-                filter: "[BusinessNatureName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BusinessNature_Entity",
@@ -2046,8 +2040,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 name: "IX_PPlusConnectionSetup_PPlusVersionName",
                 table: "PPlusConnectionSetup",
                 column: "PPlusVersionName",
-                unique: true,
-                filter: "[PPlusVersionName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PreSelectedUnit_Entity",

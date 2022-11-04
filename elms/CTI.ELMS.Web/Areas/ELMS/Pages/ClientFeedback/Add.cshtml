@@ -22,6 +22,8 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_LeadTaskClientFeedBackListValidationPartial" model="@Model.ClientFeedback" />
+<partial name="_LeadTaskNextStepListValidationPartial" model="@Model.ClientFeedback" />
 <partial name="_ActivityHistoryListValidationPartial" model="@Model.ClientFeedback" />
 
 <script asp-add-nonce>
@@ -34,15 +36,15 @@
 				window.focus();
 			});
 			
-			$.InitializeActivityHistoryFieldValidations($('#ActivityHistoryCount').val());
-			$('.RemoveActivityHistoryButton ').on( 'click', function () {
+			$.InitializeLeadTaskClientFeedBackFieldValidations($('#LeadTaskClientFeedBackCount').val());
+			$('.RemoveLeadTaskClientFeedBackButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveActivityHistory');
+				$('#AsyncAction').val('RemoveLeadTaskClientFeedBack');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
 			});
 
-			$('#btnAddActivityHistory').on( 'click', function () {
-				$('#AsyncAction').val('AddActivityHistory');
+			$('#btnAddLeadTaskClientFeedBack').on( 'click', function () {
+				$('#AsyncAction').val('AddLeadTaskClientFeedBack');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
 			});
 
@@ -58,8 +60,62 @@
 			};
 			var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
 			for ( var i=0; i< leadtasklistdropdowns.length; i++) {
-				$("#ActivityHistoryList_"+i+"_LeadTaskId").leadtaskSelect();
+				$("#LeadTaskClientFeedBackList_"+i+"_LeadTaskId").leadtaskSelect();
 			}
+
+			$.InitializeLeadTaskNextStepFieldValidations($('#LeadTaskNextStepCount').val());
+			$('.RemoveLeadTaskNextStepButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveLeadTaskNextStep');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
+			});
+
+			$('#btnAddLeadTaskNextStep').on( 'click', function () {
+				$('#AsyncAction').val('AddLeadTaskNextStep');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
+			});
+
+			$.fn.nextstepSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
+			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
+				$("#LeadTaskNextStepList_"+i+"_NextStepId").nextstepSelect();
+			}
+
+			$.fn.leadtaskSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
+			for ( var i=0; i< leadtasklistdropdowns.length; i++) {
+				$("#LeadTaskNextStepList_"+i+"_LeadTaskId").leadtaskSelect();
+			}
+
+			$.InitializeActivityHistoryFieldValidations($('#ActivityHistoryCount').val());
+			$('.RemoveActivityHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveActivityHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
+			});
+
+			$('#btnAddActivityHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddActivityHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#clientFeedback-form', InitializeForm);
+			});
 
 			$.fn.activitySelect = function() {
 				this.filter("select").each(function() {
@@ -89,6 +145,21 @@
 			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
 			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
 				$("#ActivityHistoryList_"+i+"_NextStepId").nextstepSelect();
+			}
+
+			$.fn.leadtaskSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
+			for ( var i=0; i< leadtasklistdropdowns.length; i++) {
+				$("#ActivityHistoryList_"+i+"_LeadTaskId").leadtaskSelect();
 			}
 
 		}	

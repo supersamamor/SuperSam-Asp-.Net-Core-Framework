@@ -16,7 +16,7 @@ public class GetLeadTaskNextStepQueryHandler : BaseQueryHandler<ApplicationConte
     {
     }
 	public override async Task<PagedListResponse<LeadTaskNextStepState>> Handle(GetLeadTaskNextStepQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<LeadTaskNextStepState>().Include(l=>l.NextStep).Include(l=>l.LeadTask).Include(l=>l.ClientFeedback)
+		await Context.Set<LeadTaskNextStepState>().Include(l=>l.ClientFeedback).Include(l=>l.NextStep).Include(l=>l.LeadTask)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

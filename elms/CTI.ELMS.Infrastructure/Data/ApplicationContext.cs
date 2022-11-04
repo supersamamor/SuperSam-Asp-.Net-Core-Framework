@@ -138,10 +138,10 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<PPlusConnectionSetupState>().Property(e => e.ExhibitThemeCodes).HasMaxLength(255);
 		modelBuilder.Entity<EntityGroupState>().Property(e => e.EntityName).HasMaxLength(100);
 		modelBuilder.Entity<EntityGroupState>().Property(e => e.PPLUSEntityCode).HasMaxLength(5);
-		modelBuilder.Entity<EntityGroupState>().Property(e => e.TINNo).HasMaxLength(17);
 		modelBuilder.Entity<EntityGroupState>().Property(e => e.EntityShortName).HasMaxLength(20);
-		modelBuilder.Entity<EntityGroupState>().Property(e => e.EntityAddress).HasMaxLength(255);
+		modelBuilder.Entity<EntityGroupState>().Property(e => e.TINNo).HasMaxLength(17);
 		modelBuilder.Entity<EntityGroupState>().Property(e => e.EntityDescription).HasMaxLength(100);
+		modelBuilder.Entity<EntityGroupState>().Property(e => e.EntityAddress).HasMaxLength(255);
 		modelBuilder.Entity<EntityGroupState>().Property(e => e.EntityAddress2).HasMaxLength(255);
 		modelBuilder.Entity<ProjectState>().Property(e => e.ProjectName).HasMaxLength(100);
 		modelBuilder.Entity<ProjectState>().Property(e => e.DatabaseSource).HasMaxLength(30);
@@ -165,7 +165,15 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ProjectState>().Property(e => e.SignatureLower).HasMaxLength(255);
 		modelBuilder.Entity<UnitState>().Property(e => e.UnitNo).HasMaxLength(20);
 		modelBuilder.Entity<UnitState>().Property(e => e.CurrentTenantContractNo).HasMaxLength(50);
+		modelBuilder.Entity<LeadSourceState>().Property(e => e.LeadSourceName).HasMaxLength(255);
+		modelBuilder.Entity<LeadTouchPointState>().Property(e => e.LeadTouchPointName).HasMaxLength(255);
+		modelBuilder.Entity<LeadTaskState>().Property(e => e.LeadTaskName).HasMaxLength(255);
+		modelBuilder.Entity<NextStepState>().Property(e => e.NextStepTaskName).HasMaxLength(255);
+		modelBuilder.Entity<ClientFeedbackState>().Property(e => e.ClientFeedbackName).HasMaxLength(255);
 		modelBuilder.Entity<LeadTaskClientFeedBackState>().Property(e => e.ActivityStatus).HasMaxLength(25);
+		modelBuilder.Entity<BusinessNatureState>().Property(e => e.BusinessNatureName).HasMaxLength(255);
+		modelBuilder.Entity<BusinessNatureState>().Property(e => e.BusinessNatureCode).HasMaxLength(255);
+		modelBuilder.Entity<OperationTypeState>().Property(e => e.OperationTypeName).HasMaxLength(255);
 		modelBuilder.Entity<SalutationState>().Property(e => e.SalutationDescription).HasMaxLength(15);
 		modelBuilder.Entity<LeadState>().Property(e => e.Brand).HasMaxLength(255);
 		modelBuilder.Entity<LeadState>().Property(e => e.Company).HasMaxLength(255);
@@ -179,9 +187,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ContactPersonState>().Property(e => e.LastName).HasMaxLength(70);
 		modelBuilder.Entity<ContactPersonState>().Property(e => e.Position).HasMaxLength(120);
 		modelBuilder.Entity<ActivityState>().Property(e => e.ActivityRemarks).HasMaxLength(500);
-		modelBuilder.Entity<ActivityState>().Property(e => e.Status).HasMaxLength(50);
 		modelBuilder.Entity<ActivityHistoryState>().Property(e => e.ActivityRemarks).HasMaxLength(500);
-		modelBuilder.Entity<ActivityHistoryState>().Property(e => e.Status).HasMaxLength(50);
 		modelBuilder.Entity<OfferingState>().Property(e => e.Probability).HasMaxLength(50);
 		modelBuilder.Entity<OfferingState>().Property(e => e.ANType).HasMaxLength(100);
 		modelBuilder.Entity<OfferingState>().Property(e => e.TenantContractNo).HasMaxLength(50);
@@ -238,8 +244,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.UnitList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);
 		modelBuilder.Entity<UnitState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.Unit).HasForeignKey(t => t.UnitID);
-		modelBuilder.Entity<UnitBudgetState>().HasMany(t => t.UnitBudgetList)			
-			.WithOne(l => l.UnitBudget).OnDelete(DeleteBehavior.NoAction).HasForeignKey(t => t.ParentUnitBudgetID);
+		modelBuilder.Entity<UnitBudgetState>().HasMany(t => t.UnitBudgetList).WithOne(l => l.UnitBudget).HasForeignKey(t => t.ParentUnitBudgetID)
+			.OnDelete(DeleteBehavior.NoAction);
 		modelBuilder.Entity<LeadTaskState>().HasMany(t => t.LeadTaskClientFeedBackList).WithOne(l => l.LeadTask).HasForeignKey(t => t.LeadTaskId);
 		modelBuilder.Entity<ClientFeedbackState>().HasMany(t => t.LeadTaskClientFeedBackList).WithOne(l => l.ClientFeedback).HasForeignKey(t => t.ClientFeedbackId);
 		modelBuilder.Entity<LeadTaskState>().HasMany(t => t.LeadTaskNextStepList).WithOne(l => l.LeadTask).HasForeignKey(t => t.LeadTaskId);

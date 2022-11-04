@@ -4,8 +4,8 @@
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureName" class="form-label "><strong>@Localizer["Business Nature Name"] :</strong></label>
-			<input asp-for="@Model.BusinessNatureName" class="form-control"  />
+		<label asp-for="@Model.BusinessNatureName" class="form-label fieldrequired"><strong>@Localizer["Business Nature Name"] :</strong></label>
+			<input asp-for="@Model.BusinessNatureName" class="form-control" maxlength="255" />
 			<span asp-validation-for="@Model.BusinessNatureName" class="text-danger"></span>
 			
 	</div>
@@ -13,7 +13,7 @@
 <div class="col">
 	<div class="mb-3">
 		<label asp-for="@Model.BusinessNatureCode" class="form-label "><strong>@Localizer["Business Nature Code"] :</strong></label>
-			<input asp-for="@Model.BusinessNatureCode" class="form-control"  />
+			<input asp-for="@Model.BusinessNatureCode" class="form-control" maxlength="255" />
 			<span asp-validation-for="@Model.BusinessNatureCode" class="text-danger"></span>
 			
 	</div>

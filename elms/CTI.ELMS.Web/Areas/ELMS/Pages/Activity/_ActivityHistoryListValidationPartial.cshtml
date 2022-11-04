@@ -10,12 +10,11 @@
 				reqs.push({name: "ActivityHistoryList[" + idx + "].LeadTaskId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Lead Task"});
 				reqs.push({name: "ActivityHistoryList[" + idx + "].ActivityDate", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Activity Date"});
 				reqs.push({name: "ActivityHistoryList[" + idx + "].ClientFeedbackId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Client Feedback"});
-				reqs.push({name: "ActivityHistoryList[" + idx + "].NextStepId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Next Step"});
-				reqs.push({name: "ActivityHistoryList[" + idx + "].TargetDate", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Target Date"});
-				reqs.push({name: "ActivityHistoryList[" + idx + "].ActivityRemarks", el: "Input", minlength:0, maxlength:500, isrequired: true, description: "Activity Remarks"});
-				reqs.push({name: "ActivityHistoryList[" + idx + "].PCTDate", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "PCT Date"});
-				reqs.push({name: "ActivityHistoryList[" + idx + "].UnitsInformation", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Units Information"});
-				reqs.push({name: "ActivityHistoryList[" + idx + "].Status", el: "Input", minlength:0, maxlength:50, isrequired: true, description: "Status"});
+				reqs.push({name: "ActivityHistoryList[" + idx + "].NextStepId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Next Step"});
+				reqs.push({name: "ActivityHistoryList[" + idx + "].TargetDate", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Target Date"});
+				reqs.push({name: "ActivityHistoryList[" + idx + "].ActivityRemarks", el: "Input", minlength:0, maxlength:500, isrequired: false, description: "Activity Remarks"});
+				reqs.push({name: "ActivityHistoryList[" + idx + "].PCTDate", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "PCT Date"});
+				reqs.push({name: "ActivityHistoryList[" + idx + "].UnitsInformation", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Units Information"});
 				
 			}
 			let validator = $("#activity-form").validate();

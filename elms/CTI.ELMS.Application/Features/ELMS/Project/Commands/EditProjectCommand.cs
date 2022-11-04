@@ -32,12 +32,41 @@ public class EditProjectCommandHandler : BaseCommandHandler<ApplicationContext, 
 	{
 		var entity = await Context.Project.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
+		await UpdateUserProjectAssignmentList(entity, request, cancellationToken);
 		await UpdateOfferingHistoryList(entity, request, cancellationToken);
 		Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ProjectState>(entity);
 	}
 	
+	private async Task UpdateUserProjectAssignmentList(ProjectState entity, EditProjectCommand request, CancellationToken cancellationToken)
+	{
+		IList<UserProjectAssignmentState> userProjectAssignmentListForDeletion = new List<UserProjectAssignmentState>();
+		var queryUserProjectAssignmentForDeletion = Context.UserProjectAssignment.Where(l => l.ProjectID == request.Id).AsNoTracking();
+		if (entity.UserProjectAssignmentList?.Count > 0)
+		{
+			queryUserProjectAssignmentForDeletion = queryUserProjectAssignmentForDeletion.Where(l => !(entity.UserProjectAssignmentList.Select(l => l.Id).ToList().Contains(l.Id)));
+		}
+		userProjectAssignmentListForDeletion = await queryUserProjectAssignmentForDeletion.ToListAsync(cancellationToken: cancellationToken);
+		foreach (var userProjectAssignment in userProjectAssignmentListForDeletion!)
+		{
+			Context.Entry(userProjectAssignment).State = EntityState.Deleted;
+		}
+		if (entity.UserProjectAssignmentList?.Count > 0)
+		{
+			foreach (var userProjectAssignment in entity.UserProjectAssignmentList.Where(l => !userProjectAssignmentListForDeletion.Select(l => l.Id).Contains(l.Id)))
+			{
+				if (await Context.NotExists<UserProjectAssignmentState>(x => x.Id == userProjectAssignment.Id, cancellationToken: cancellationToken))
+				{
+					Context.Entry(userProjectAssignment).State = EntityState.Added;
+				}
+				else
+				{
+					Context.Entry(userProjectAssignment).State = EntityState.Modified;
+				}
+			}
+		}
+	}
 	private async Task UpdateOfferingHistoryList(ProjectState entity, EditProjectCommand request, CancellationToken cancellationToken)
 	{
 		IList<OfferingHistoryState> offeringHistoryListForDeletion = new List<OfferingHistoryState>();

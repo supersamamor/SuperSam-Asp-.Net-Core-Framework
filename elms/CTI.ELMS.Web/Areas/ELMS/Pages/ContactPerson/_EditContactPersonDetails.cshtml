@@ -20,7 +20,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.FirstName" class="form-label fieldrequired"><strong>@Localizer["First Name"] :</strong></label>
+		<label asp-for="@Model.FirstName" class="form-label "><strong>@Localizer["First Name"] :</strong></label>
 			<input asp-for="@Model.FirstName" class="form-control" maxlength="35" />
 			<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
 			
@@ -36,7 +36,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.LastName" class="form-label fieldrequired"><strong>@Localizer["Last Name"] :</strong></label>
+		<label asp-for="@Model.LastName" class="form-label "><strong>@Localizer["Last Name"] :</strong></label>
 			<input asp-for="@Model.LastName" class="form-control" maxlength="70" />
 			<span asp-validation-for="@Model.LastName" class="text-danger"></span>
 			
@@ -44,7 +44,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.Position" class="form-label fieldrequired"><strong>@Localizer["Position"] :</strong></label>
+		<label asp-for="@Model.Position" class="form-label "><strong>@Localizer["Position"] :</strong></label>
 			<input asp-for="@Model.Position" class="form-control" maxlength="120" />
 			<span asp-validation-for="@Model.Position" class="text-danger"></span>
 			

@@ -46,9 +46,8 @@ public record ProjectViewModel
     [Required]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string ProjectName { get;set; } = "";
-	[Required]
 	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string DatabaseSource { get;set; } = "";
+	public string? DatabaseSource { get;set; }
 	
 	public string? EntityGroupId { get;set; }
 	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
@@ -59,9 +58,8 @@ public record ProjectViewModel
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string ProjectAddress { get;set; } = "";
-	[Required]
 	[StringLength(100, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Location { get;set; } = "";
+	public string? Location { get;set; }
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string ProjectNameANSection { get;set; } = "";
@@ -93,25 +91,19 @@ public record ProjectViewModel
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string ContractSignatoryProofOfIdentity { get;set; } = "";
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ContractSignatoryWitness { get;set; } = "";
-	[Required]
+	public string? ContractSignatoryWitness { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ContractSignatoryWitnessPosition { get;set; } = "";
+	public string? ContractSignatoryWitnessPosition { get;set; }
 	public bool OutsideFC { get;set; }
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ProjectGreetingsSection { get;set; } = "";
-	[Required]
+	public string? ProjectGreetingsSection { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string ProjectShortName { get;set; } = "";
-	[Required]
+	public string? ProjectShortName { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SignatureUpper { get;set; } = "";
-	[Required]
+	public string? SignatureUpper { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SignatureLower { get;set; } = "";
+	public string? SignatureLower { get;set; }
 	public bool HasAssociationDues { get;set; }
 	   
 }

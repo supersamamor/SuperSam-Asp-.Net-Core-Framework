@@ -5,13 +5,13 @@ namespace CTI.ELMS.Core.ELMS;
 
 public record UnitState : BaseEntity
 {
-	public string? UnitNo { get; init; }
-	public string? ProjectID { get; init; }
-	public decimal? LotBudget { get; init; }
-	public decimal? LotArea { get; init; }
-	public DateTime AvailabilityDate { get; init; }
-	public DateTime CommencementDate { get; init; }
-	public string CurrentTenantContractNo { get; init; } = "";
+	public string UnitNo { get; init; } = "";
+	public string ProjectID { get; init; } = "";
+	public decimal LotBudget { get; init; }
+	public decimal LotArea { get; init; }
+	public DateTime? AvailabilityDate { get; init; }
+	public DateTime? CommencementDate { get; init; }
+	public string? CurrentTenantContractNo { get; init; }
 	
 	public ProjectState? Project { get; init; }
 	

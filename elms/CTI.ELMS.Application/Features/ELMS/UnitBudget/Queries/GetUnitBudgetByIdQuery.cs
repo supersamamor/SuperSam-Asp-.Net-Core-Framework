@@ -17,7 +17,7 @@ public class GetUnitBudgetByIdQueryHandler : BaseQueryByIdHandler<ApplicationCon
 	
 	public override async Task<Option<UnitBudgetState>> Handle(GetUnitBudgetByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.UnitBudget.Include(l=>l.Project).Include(l=>l.Unit).Include(l=>l.UnitBudget)
+		return await Context.UnitBudget.Include(l=>l.Unit).Include(l=>l.Project).Include(l=>l.UnitBudget)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

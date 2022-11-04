@@ -34,12 +34,23 @@ public class AddProjectCommandHandler : BaseCommandHandler<ApplicationContext, P
 	public async Task<Validation<Error, ProjectState>> AddProject(AddProjectCommand request, CancellationToken cancellationToken)
 	{
 		ProjectState entity = Mapper.Map<ProjectState>(request);
+		UpdateUserProjectAssignmentList(entity);
 		UpdateOfferingHistoryList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ProjectState>(entity);
 	}
 	
+	private void UpdateUserProjectAssignmentList(ProjectState entity)
+	{
+		if (entity.UserProjectAssignmentList?.Count > 0)
+		{
+			foreach (var userProjectAssignment in entity.UserProjectAssignmentList!)
+			{
+				Context.Entry(userProjectAssignment).State = EntityState.Added;
+			}
+		}
+	}
 	private void UpdateOfferingHistoryList(ProjectState entity)
 	{
 		if (entity.OfferingHistoryList?.Count > 0)

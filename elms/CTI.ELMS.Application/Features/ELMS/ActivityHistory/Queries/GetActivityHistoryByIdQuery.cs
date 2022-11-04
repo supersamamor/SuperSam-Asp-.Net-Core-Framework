@@ -17,7 +17,7 @@ public class GetActivityHistoryByIdQueryHandler : BaseQueryByIdHandler<Applicati
 	
 	public override async Task<Option<ActivityHistoryState>> Handle(GetActivityHistoryByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.ActivityHistory.Include(l=>l.LeadTask).Include(l=>l.Activity).Include(l=>l.ClientFeedback).Include(l=>l.NextStep)
+		return await Context.ActivityHistory.Include(l=>l.Activity).Include(l=>l.ClientFeedback).Include(l=>l.NextStep).Include(l=>l.LeadTask)
 			.Include(l=>l.UnitActivityList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

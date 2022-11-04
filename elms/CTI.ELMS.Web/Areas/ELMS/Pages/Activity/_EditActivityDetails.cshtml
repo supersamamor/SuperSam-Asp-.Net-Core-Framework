@@ -44,7 +44,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.NextStepId" class="form-label fieldrequired"><strong>@Localizer["Next Step"] :</strong></label>
+		<label asp-for="@Model.NextStepId" class="form-label "><strong>@Localizer["Next Step"] :</strong></label>
 			<select asp-for="@Model.NextStepId" class="form-control" asp-items="@(dropdownService.GetNextStepList(Model.NextStepId))"><option value="">- Select Next Step -</option></select>
 			<span asp-validation-for="@Model.NextStepId" class="text-danger"></span>
 			
@@ -52,7 +52,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.TargetDate" class="form-label fieldrequired"><strong>@Localizer["Target Date"] :</strong></label>
+		<label asp-for="@Model.TargetDate" class="form-label "><strong>@Localizer["Target Date"] :</strong></label>
 			<input asp-for="@Model.TargetDate" class="form-control"  />
 			<span asp-validation-for="@Model.TargetDate" class="text-danger"></span>
 			
@@ -60,7 +60,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.ActivityRemarks" class="form-label fieldrequired"><strong>@Localizer["Activity Remarks"] :</strong></label>
+		<label asp-for="@Model.ActivityRemarks" class="form-label "><strong>@Localizer["Activity Remarks"] :</strong></label>
 			<input asp-for="@Model.ActivityRemarks" class="form-control" maxlength="500" />
 			<span asp-validation-for="@Model.ActivityRemarks" class="text-danger"></span>
 			
@@ -68,25 +68,9 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.PCTDate" class="form-label fieldrequired"><strong>@Localizer["PCT Date"] :</strong></label>
+		<label asp-for="@Model.PCTDate" class="form-label "><strong>@Localizer["PCT Date"] :</strong></label>
 			<input asp-for="@Model.PCTDate" class="form-control"  />
 			<span asp-validation-for="@Model.PCTDate" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.UnitsInformation" class="form-label fieldrequired"><strong>@Localizer["Units Information"] :</strong></label>
-			<input asp-for="@Model.UnitsInformation" class="form-control"  />
-			<span asp-validation-for="@Model.UnitsInformation" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Status" class="form-label fieldrequired"><strong>@Localizer["Status"] :</strong></label>
-			<input asp-for="@Model.Status" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.Status" class="text-danger"></span>
 			
 	</div>
 </div>

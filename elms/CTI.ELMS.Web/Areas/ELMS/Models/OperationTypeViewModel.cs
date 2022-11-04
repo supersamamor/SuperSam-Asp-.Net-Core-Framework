@@ -9,7 +9,7 @@ public record OperationTypeViewModel : BaseViewModel
 {	
 	[Display(Name = "Operation Type")]
 	[Required]
-	
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string OperationTypeName { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }

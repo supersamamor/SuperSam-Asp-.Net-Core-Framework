@@ -49,21 +49,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#unit-form', InitializeForm);
 			});
 
-			$.fn.activitySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Activity/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var activitylistdropdowns = document.getElementsByClassName('SelectActivity');
-			for ( var i=0; i< activitylistdropdowns.length; i++) {
-				$("#UnitActivityList_"+i+"_ActivityID").activitySelect();
-			}
-
 			$.fn.activityhistorySelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -77,6 +62,21 @@
 			var activityhistorylistdropdowns = document.getElementsByClassName('SelectActivityHistory');
 			for ( var i=0; i< activityhistorylistdropdowns.length; i++) {
 				$("#UnitActivityList_"+i+"_ActivityHistoryID").activityhistorySelect();
+			}
+
+			$.fn.activitySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Activity/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var activitylistdropdowns = document.getElementsByClassName('SelectActivity');
+			for ( var i=0; i< activitylistdropdowns.length; i++) {
+				$("#UnitActivityList_"+i+"_ActivityID").activitySelect();
 			}
 
 			$.InitializePreSelectedUnitFieldValidations($('#PreSelectedUnitCount').val());
@@ -145,21 +145,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#unit-form', InitializeForm);
 			});
 
-			$.fn.offeringhistorySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/OfferingHistory/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var offeringhistorylistdropdowns = document.getElementsByClassName('SelectOfferingHistory');
-			for ( var i=0; i< offeringhistorylistdropdowns.length; i++) {
-				$("#UnitOfferedHistoryList_"+i+"_OfferingHistoryID").offeringhistorySelect();
-			}
-
 			$.fn.offeringSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -173,6 +158,21 @@
 			var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
 			for ( var i=0; i< offeringlistdropdowns.length; i++) {
 				$("#UnitOfferedHistoryList_"+i+"_OfferingID").offeringSelect();
+			}
+
+			$.fn.offeringhistorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/OfferingHistory/Index", new { area = "ELMS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var offeringhistorylistdropdowns = document.getElementsByClassName('SelectOfferingHistory');
+			for ( var i=0; i< offeringhistorylistdropdowns.length; i++) {
+				$("#UnitOfferedHistoryList_"+i+"_OfferingHistoryID").offeringhistorySelect();
 			}
 
 			$.fn.projectSelect = function() {
