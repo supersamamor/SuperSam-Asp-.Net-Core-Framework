@@ -1,0 +1,143 @@
+@page
+@model OfferingListModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Offering List"];
+    ViewData["ActiveMainPage"] = "Offering";
+    ViewData["Level1"] = "ELMS";
+}
+<div class="card">
+    <div class="card-header">
+        <partial name="_TabNavigation" model="@(new CTI.ELMS.Web.Areas.ELMS.Models.LeadTabNavigationPartial() {TabName = "Offerings", LeadId=Model.LeadId, LeadName = Model.LeadName })" />
+    </div>
+    <div class="card-body">
+        <table id="offering" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Localizer["Project"]
+                    </th>
+                    <th>
+                        @Localizer["Offering History"]
+                    </th>
+                    <th>
+                        @Localizer["Status"]
+                    </th>
+
+                    <th>
+                        @Localizer["Status"]
+                    </th>
+                    <th>
+                        @Localizer["Actions"]
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#offering').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 4, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+            initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+            columns: [
+                { data: "projectID", name: "ProjectID", responsivePriority: 1, title: '@Localizer["Project"]', searchable: false },
+                { data: "offeringHistoryID", name: "OfferingHistoryID", responsivePriority: 1, title: '@Localizer["Offering History"]', searchable: false },
+                { data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false },
+
+                { data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Offering/Details", new { area = "ELMS" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewOffering" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Offering/Edit", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Offering/Delete", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteOffering" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Approve)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Offering/Approve", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
+                    </text>
+                }
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Offering/Add", new { area = "ELMS" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+        function BindTableRowCollapseEvent()
+        {
+            $('#offering tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddOffering",".btnEditOffering",".btnViewOffering",".btnDeleteOffering"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddOffering",".btnEditOffering",".btnViewOffering",".btnDeleteOffering"]);
+
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
+    });
+</script>
+}

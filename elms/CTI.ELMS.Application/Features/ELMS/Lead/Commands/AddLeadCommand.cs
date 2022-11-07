@@ -35,8 +35,7 @@ public class AddLeadCommandHandler : BaseCommandHandler<ApplicationContext, Lead
 	{
 		LeadState entity = Mapper.Map<LeadState>(request);
 		UpdateContactList(entity);
-		UpdateContactPersonList(entity);
-		UpdateOfferingHistoryList(entity);
+		UpdateContactPersonList(entity);	
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, LeadState>(entity);
@@ -62,18 +61,6 @@ public class AddLeadCommandHandler : BaseCommandHandler<ApplicationContext, Lead
 			}
 		}
 	}
-	private void UpdateOfferingHistoryList(LeadState entity)
-	{
-		if (entity.OfferingHistoryList?.Count > 0)
-		{
-			foreach (var offeringHistory in entity.OfferingHistoryList!)
-			{
-				Context.Entry(offeringHistory).State = EntityState.Added;
-			}
-		}
-	}
-	
-	
 }
 
 public class AddLeadCommandValidator : AbstractValidator<AddLeadCommand>

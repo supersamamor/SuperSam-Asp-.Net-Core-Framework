@@ -33,8 +33,7 @@ public class EditLeadCommandHandler : BaseCommandHandler<ApplicationContext, Lea
 		var entity = await Context.Lead.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
 		await UpdateContactList(entity, request, cancellationToken);
-		await UpdateContactPersonList(entity, request, cancellationToken);
-		await UpdateOfferingHistoryList(entity, request, cancellationToken);
+		await UpdateContactPersonList(entity, request, cancellationToken);	
 		Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, LeadState>(entity);
@@ -96,35 +95,6 @@ public class EditLeadCommandHandler : BaseCommandHandler<ApplicationContext, Lea
 			}
 		}
 	}
-	private async Task UpdateOfferingHistoryList(LeadState entity, EditLeadCommand request, CancellationToken cancellationToken)
-	{
-		IList<OfferingHistoryState> offeringHistoryListForDeletion = new List<OfferingHistoryState>();
-		var queryOfferingHistoryForDeletion = Context.OfferingHistory.Where(l => l.LeadID == request.Id).AsNoTracking();
-		if (entity.OfferingHistoryList?.Count > 0)
-		{
-			queryOfferingHistoryForDeletion = queryOfferingHistoryForDeletion.Where(l => !(entity.OfferingHistoryList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		offeringHistoryListForDeletion = await queryOfferingHistoryForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var offeringHistory in offeringHistoryListForDeletion!)
-		{
-			Context.Entry(offeringHistory).State = EntityState.Deleted;
-		}
-		if (entity.OfferingHistoryList?.Count > 0)
-		{
-			foreach (var offeringHistory in entity.OfferingHistoryList.Where(l => !offeringHistoryListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<OfferingHistoryState>(x => x.Id == offeringHistory.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(offeringHistory).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(offeringHistory).State = EntityState.Modified;
-				}
-			}
-		}
-	}
-	
 }
 
 public class EditLeadCommandValidator : AbstractValidator<EditLeadCommand>

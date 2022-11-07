@@ -4,11 +4,10 @@
     ViewData["Title"] = Localizer["Edit Prospects"];
     ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
-    string tabName = "Info";
 }
 <div class="card">
     <div class="card-header">
-        <partial name="_TabNavigation" model="tabName" />
+        <partial name="_TabNavigation" model="@(new CTI.ELMS.Web.Areas.ELMS.Models.LeadTabNavigationPartial() {TabName = "Info", LeadId=Model.Lead.Id, LeadName = Model.Lead.Company })" />
     </div>
     <div class="card-body">
         <form id="lead-form" method="post">
@@ -83,7 +82,7 @@
                 $("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
             }
 
-           
+
             $.fn.projectSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
@@ -93,7 +92,7 @@
                     });
                 });
                 return this;
-            };           
+            };
 
             $.fn.businessnaturecategorySelect = function() {
                 this.filter("select").each(function() {
