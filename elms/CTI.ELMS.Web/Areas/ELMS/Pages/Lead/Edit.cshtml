@@ -4,17 +4,11 @@
     ViewData["Title"] = Localizer["Edit Prospects"];
     ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
-    string activeClass = "";
+    string tabName = "Info";
 }
 <div class="card">
     <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link active">@Localizer["Info"]</a></li>
-            <li class="nav-item"><a class="nav-link">@Localizer["Activities"]</a></li>
-            <li class="nav-item"><a class="nav-link">@Localizer["Offerings"]</a></li>
-            <li class="nav-item"><a class="nav-link">@Localizer["Award Notice"]</a></li>
-            <li class="nav-item"><a class="nav-link" href="ProjectProposalContract-L.html">@Localizer["Lease Contract"]</a></li>
-        </ul>
+        <partial name="_TabNavigation" model="tabName" />
     </div>
     <div class="card-body">
         <form id="lead-form" method="post">
@@ -89,33 +83,7 @@
                 $("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
             }
 
-            $.InitializeOfferingHistoryFieldValidations($('#OfferingHistoryCount').val());
-            $('.RemoveOfferingHistoryButton ').on( 'click', function () {
-                $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                $('#AsyncAction').val('RemoveOfferingHistory');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-            });
-
-            $('#btnAddOfferingHistory').on( 'click', function () {
-                $('#AsyncAction').val('AddOfferingHistory');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-            });
-
-            $.fn.offeringSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
-            for ( var i=0; i< offeringlistdropdowns.length; i++) {
-                $("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
-            }
-
+           
             $.fn.projectSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
@@ -125,11 +93,7 @@
                     });
                 });
                 return this;
-            };
-            var projectlistdropdowns = document.getElementsByClassName('SelectProject');
-            for ( var i=0; i< projectlistdropdowns.length; i++) {
-                $("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
-            }
+            };           
 
             $.fn.businessnaturecategorySelect = function() {
                 this.filter("select").each(function() {
