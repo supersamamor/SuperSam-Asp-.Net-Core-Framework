@@ -1,22 +1,37 @@
-@page
+﻿@page
 @model EditModel
 @{
     ViewData["Title"] = Localizer["Edit Prospects"];
     ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
+    string activeClass = "";
 }
-<form id="lead-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
-    <input type="hidden" asp-for="@Model.AsyncAction" />
-    <div id="PartialLoaderContainer">
-        <partial name="_InputFieldsPartial" model="Model.Lead" />
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link active">@Localizer["Info"]</a></li>
+            <li class="nav-item"><a class="nav-link">@Localizer["Activities"]</a></li>
+            <li class="nav-item"><a class="nav-link">@Localizer["Offerings"]</a></li>
+            <li class="nav-item"><a class="nav-link">@Localizer["Award Notice"]</a></li>
+            <li class="nav-item"><a class="nav-link" href="ProjectProposalContract-L.html">@Localizer["Lease Contract"]</a></li>
+        </ul>
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    <div class="card-body">
+        <form id="lead-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+            <input type="hidden" asp-for="@Model.AsyncAction" />
+            <div id="PartialLoaderContainer">
+                <partial name="_InputFieldsPartial" model="Model.Lead" />
+            </div>
+            <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+                <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+                <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
+
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
@@ -24,7 +39,6 @@
 <partial name="_ValidationScriptsPartial" />
 <partial name="_ContactListValidationPartial" model="@Model.Lead" />
 <partial name="_ContactPersonListValidationPartial" model="@Model.Lead" />
-<partial name="_OfferingHistoryListValidationPartial" model="@Model.Lead" />
 
 <script asp-add-nonce>
     $(document).ready(function () {
@@ -35,159 +49,159 @@
                 this.blur();
                 window.focus();
             });
-            
-			$.InitializeContactFieldValidations($('#ContactCount').val());
-			$('.RemoveContactButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveContact');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-			});
 
-			$('#btnAddContact').on( 'click', function () {
-				$('#AsyncAction').val('AddContact');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-			});
+            $.InitializeContactFieldValidations($('#ContactCount').val());
+            $('.RemoveContactButton ').on( 'click', function () {
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveContact');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
 
-			$.InitializeContactPersonFieldValidations($('#ContactPersonCount').val());
-			$('.RemoveContactPersonButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveContactPerson');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-			});
+            $('#btnAddContact').on( 'click', function () {
+                $('#AsyncAction').val('AddContact');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
 
-			$('#btnAddContactPerson').on( 'click', function () {
-				$('#AsyncAction').val('AddContactPerson');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-			});
+            $.InitializeContactPersonFieldValidations($('#ContactPersonCount').val());
+            $('.RemoveContactPersonButton ').on( 'click', function () {
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveContactPerson');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
 
-			$.fn.salutationSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Salutation/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var salutationlistdropdowns = document.getElementsByClassName('SelectSalutation');
-			for ( var i=0; i< salutationlistdropdowns.length; i++) {
-				$("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
-			}
+            $('#btnAddContactPerson').on( 'click', function () {
+                $('#AsyncAction').val('AddContactPerson');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
 
-			$.InitializeOfferingHistoryFieldValidations($('#OfferingHistoryCount').val());
-			$('.RemoveOfferingHistoryButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveOfferingHistory');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-			});
+            $.fn.salutationSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Salutation/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            var salutationlistdropdowns = document.getElementsByClassName('SelectSalutation');
+            for ( var i=0; i< salutationlistdropdowns.length; i++) {
+                $("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
+            }
 
-			$('#btnAddOfferingHistory').on( 'click', function () {
-				$('#AsyncAction').val('AddOfferingHistory');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-			});
+            $.InitializeOfferingHistoryFieldValidations($('#OfferingHistoryCount').val());
+            $('.RemoveOfferingHistoryButton ').on( 'click', function () {
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveOfferingHistory');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
 
-			$.fn.offeringSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
-			for ( var i=0; i< offeringlistdropdowns.length; i++) {
-				$("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
-			}
+            $('#btnAddOfferingHistory').on( 'click', function () {
+                $('#AsyncAction').val('AddOfferingHistory');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
 
-			$.fn.projectSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var projectlistdropdowns = document.getElementsByClassName('SelectProject');
-			for ( var i=0; i< projectlistdropdowns.length; i++) {
-				$("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
-			}
+            $.fn.offeringSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
+            for ( var i=0; i< offeringlistdropdowns.length; i++) {
+                $("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
+            }
 
-			$.fn.businessnaturecategorySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#BusinessNatureCategoryID").businessnaturecategorySelect();
+            $.fn.projectSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            var projectlistdropdowns = document.getElementsByClassName('SelectProject');
+            for ( var i=0; i< projectlistdropdowns.length; i++) {
+                $("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
+            }
 
-			$.fn.businessnaturesubitemSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#BusinessNatureSubItemID").businessnaturesubitemSelect();
+            $.fn.businessnaturecategorySelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#BusinessNatureCategoryID").businessnaturecategorySelect();
 
-			$.fn.leadsourceSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LeadSourceId").leadsourceSelect();
+            $.fn.businessnaturesubitemSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#BusinessNatureSubItemID").businessnaturesubitemSelect();
 
-			$.fn.businessnatureSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/BusinessNature/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#BusinessNatureID").businessnatureSelect();
+            $.fn.leadsourceSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#LeadSourceId").leadsourceSelect();
 
-			$.fn.operationtypeSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/OperationType/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#OperationTypeID").operationtypeSelect();
+            $.fn.businessnatureSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/BusinessNature/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#BusinessNatureID").businessnatureSelect();
 
-			$.fn.leadtouchpointSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/LeadTouchPoint/Index", new { area = "ELMS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#LeadTouchpointId").leadtouchpointSelect();
+            $.fn.operationtypeSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/OperationType/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#OperationTypeID").operationtypeSelect();
+
+            $.fn.leadtouchpointSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/LeadTouchPoint/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#LeadTouchpointId").leadtouchpointSelect();
 
 
         }
