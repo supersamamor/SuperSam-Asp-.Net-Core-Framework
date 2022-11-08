@@ -16,7 +16,14 @@
     }
     else
     {
-        <li class="nav-item"><a class="nav-link" href="ActivityList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Activities"]</a></li>
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="ActivityList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Activities"]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;" disabled>@Localizer["Activities"]</a></li>
+        }
     }
     @if (Model.TabName == "Offerings")
     {
@@ -24,7 +31,14 @@
     }
     else
     {
-        <li class="nav-item"><a class="nav-link" href="OfferingList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Offerings"]</a></li>
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="OfferingList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Offerings"]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;" disabled>@Localizer["Offerings"]</a></li>
+        }
     }
     @if (Model.TabName == "Award Notice")
     {
@@ -32,7 +46,14 @@
     }
     else
     {
-        <li class="nav-item"><a class="nav-link" href="AwardNoticeList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Award Notice"]</a></li>
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.AwardNotice.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="AwardNoticeList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Award Notice"]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;" disabled>@Localizer["Award Notice"]</a></li>
+        }
     }
     @if (Model.TabName == "Lease Contract")
     {
@@ -40,6 +61,14 @@
     }
     else
     {
-        <li class="nav-item"><a class="nav-link" href="LeaseContractList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Lease Contract"]</a></li>
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeaseContract.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="LeaseContractList?LeadId=@(Model.LeadId)&LeadName=@Model.LeadName" style="cursor:pointer;">@Localizer["Lease Contract"]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;" disabled>@Localizer["Lease Contract"]</a></li>
+        }
+    }
     }
 </ul>
