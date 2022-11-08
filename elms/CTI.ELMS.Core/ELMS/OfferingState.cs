@@ -71,7 +71,7 @@ public record OfferingState : BaseEntity
 	public string? TagForFinalPrintLeaseContractBy { get; init; }
 	public DateTime? ForFinalPrintLeaseContractDate { get; init; }
 	public int? LeaseContractStatus { get; init; }
-	public int? ANTermTypeID { get; init; }
+	public string? ANTermType { get; init; }
 	public int? ContractTypeID { get; init; }
 	public string? WitnessName { get; init; }
 	public string? PermittedUse { get; init; }

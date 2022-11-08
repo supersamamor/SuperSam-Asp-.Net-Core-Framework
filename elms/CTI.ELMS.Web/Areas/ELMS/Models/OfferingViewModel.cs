@@ -198,7 +198,7 @@ public record OfferingViewModel : BaseViewModel
 	[Display(Name = "Lease Contract")]
 	public int? LeaseContractStatus { get; init; }
 	[Display(Name = "AN Term Type")]
-	public int? ANTermTypeID { get; init; }
+	public string? ANTermType { get; init; }
 	[Display(Name = "Contract Type")]
 	public int? ContractTypeID { get; init; }
 	[Display(Name = "Witness Name")]
