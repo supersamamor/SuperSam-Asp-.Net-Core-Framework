@@ -3,124 +3,116 @@
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ClientType" class="form-label fieldrequired"><strong>@Localizer["Type"] :</strong></label>
-			<input asp-for="@Model.ClientType" class="form-control"  />
-			<span asp-validation-for="@Model.ClientType" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Brand" class="form-label fieldrequired"><strong>@Localizer["Brand"] :</strong></label>
-			<input asp-for="@Model.Brand" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.Brand" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Company" class="form-label fieldrequired"><strong>@Localizer["Registered Name"] :</strong></label>
-			<input asp-for="@Model.Company" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.Company" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Street" class="form-label "><strong>@Localizer["Street"] :</strong></label>
-			<input asp-for="@Model.Street" class="form-control" maxlength="100" />
-			<span asp-validation-for="@Model.Street" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.City" class="form-label "><strong>@Localizer["City"] :</strong></label>
-			<input asp-for="@Model.City" class="form-control" maxlength="100" />
-			<span asp-validation-for="@Model.City" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Province" class="form-label "><strong>@Localizer["Province"] :</strong></label>
-			<input asp-for="@Model.Province" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.Province" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Country" class="form-label fieldrequired"><strong>@Localizer["Country"] :</strong></label>
-			<input asp-for="@Model.Country" class="form-control"  />
-			<span asp-validation-for="@Model.Country" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.LeadSourceId" class="form-label fieldrequired"><strong>@Localizer["Lead Source"] :</strong></label>
-			<select asp-for="@Model.LeadSourceId" class="form-control" asp-items="@(dropdownService.GetLeadSourceList(Model.LeadSourceId))"><option value="">- Select Lead Source -</option></select>
-			<span asp-validation-for="@Model.LeadSourceId" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.LeadTouchpointId" class="form-label fieldrequired"><strong>@Localizer["Lead Touchpoint"] :</strong></label>
-			<select asp-for="@Model.LeadTouchpointId" class="form-control" asp-items="@(dropdownService.GetLeadTouchPointList(Model.LeadTouchpointId))"><option value="">- Select Lead Touchpoint -</option></select>
-			<span asp-validation-for="@Model.LeadTouchpointId" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.OperationTypeID" class="form-label fieldrequired"><strong>@Localizer["Type of Operation"] :</strong></label>
-			<select asp-for="@Model.OperationTypeID" class="form-control" asp-items="@(dropdownService.GetOperationTypeList(Model.OperationTypeID))"><option value="">- Select Type of Operation -</option></select>
-			<span asp-validation-for="@Model.OperationTypeID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureID" class="form-label fieldrequired"><strong>@Localizer["Nature of Business"] :</strong></label>
-			<select asp-for="@Model.BusinessNatureID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureList(Model.BusinessNatureID))"><option value="">- Select Nature of Business -</option></select>
-			<span asp-validation-for="@Model.BusinessNatureID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureSubItemID" class="form-label fieldrequired"><strong>@Localizer["Classification"] :</strong></label>
-			<select asp-for="@Model.BusinessNatureSubItemID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureSubItemList(Model.BusinessNatureSubItemID))"><option value="">- Select Classification -</option></select>
-			<span asp-validation-for="@Model.BusinessNatureSubItemID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.BusinessNatureCategoryID" class="form-label "><strong>@Localizer["Category"] :</strong></label>
-			<select asp-for="@Model.BusinessNatureCategoryID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureCategoryList(Model.BusinessNatureCategoryID))"><option value="">- Select Category -</option></select>
-			<span asp-validation-for="@Model.BusinessNatureCategoryID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.TINNumber" class="form-label "><strong>@Localizer["TIN No."] :</strong></label>
-			<input asp-for="@Model.TINNumber" class="form-control" maxlength="20" />
-			<span asp-validation-for="@Model.TINNumber" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.IsFranchise" class="form-label "><strong>@Localizer["Franchise"] :</strong></label>
-			<input asp-for="@Model.IsFranchise" class="custom-checkbox-label"/>
-			<span asp-validation-for="@Model.IsFranchise" class="text-danger"></span>
-			
-	</div>
-</div>
+        <div class="mb-3">
+            <label asp-for="@Model.ClientType" class="form-label fieldrequired"><strong>@Localizer["Type"] :</strong></label>
+            <select asp-for="@Model.ClientType" class="form-control" asp-items="@(dropdownService.ClientTypes())"><option value="">- Select Client Type -</option></select>
+            <span asp-validation-for="@Model.ClientType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Brand" class="form-label fieldrequired"><strong>@Localizer["Brand"] :</strong></label>
+            <input asp-for="@Model.Brand" class="form-control" maxlength="255" />
+            <span asp-validation-for="@Model.Brand" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Company" class="form-label fieldrequired"><strong>@Localizer["Registered Name"] :</strong></label>
+            <input asp-for="@Model.Company" class="form-control" maxlength="255" />
+            <span asp-validation-for="@Model.Company" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Street" class="form-label "><strong>@Localizer["Street"] :</strong></label>
+            <input asp-for="@Model.Street" class="form-control" maxlength="100" />
+            <span asp-validation-for="@Model.Street" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.City" class="form-label "><strong>@Localizer["City"] :</strong></label>
+            <input asp-for="@Model.City" class="form-control" maxlength="100" />
+            <span asp-validation-for="@Model.City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Province" class="form-label "><strong>@Localizer["Province"] :</strong></label>
+            <input asp-for="@Model.Province" class="form-control" maxlength="50" />
+            <span asp-validation-for="@Model.Province" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Country" class="form-label fieldrequired"><strong>@Localizer["Country"] :</strong></label>
+            <input asp-for="@Model.Country" class="form-control" />
+            <span asp-validation-for="@Model.Country" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.LeadSourceId" class="form-label fieldrequired"><strong>@Localizer["Lead Source"] :</strong></label>
+            <select asp-for="@Model.LeadSourceId" class="form-control" asp-items="@(dropdownService.GetLeadSourceList(Model.LeadSourceId))"><option value="">- Select Lead Source -</option></select>
+            <span asp-validation-for="@Model.LeadSourceId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.LeadTouchpointId" class="form-label fieldrequired"><strong>@Localizer["Lead Touchpoint"] :</strong></label>
+            <select asp-for="@Model.LeadTouchpointId" class="form-control" asp-items="@(dropdownService.GetLeadTouchPointList(Model.LeadTouchpointId))"><option value="">- Select Lead Touchpoint -</option></select>
+            <span asp-validation-for="@Model.LeadTouchpointId" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.OperationTypeID" class="form-label fieldrequired"><strong>@Localizer["Type of Operation"] :</strong></label>
+            <select asp-for="@Model.OperationTypeID" class="form-control" asp-items="@(dropdownService.GetOperationTypeList(Model.OperationTypeID))"><option value="">- Select Type of Operation -</option></select>
+            <span asp-validation-for="@Model.OperationTypeID" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.BusinessNatureID" class="form-label fieldrequired"><strong>@Localizer["Nature of Business"] :</strong></label>
+            <select asp-for="@Model.BusinessNatureID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureList(Model.BusinessNatureID))"><option value="">- Select Nature of Business -</option></select>
+            <span asp-validation-for="@Model.BusinessNatureID" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.BusinessNatureSubItemID" class="form-label fieldrequired"><strong>@Localizer["Classification"] :</strong></label>
+            <select asp-for="@Model.BusinessNatureSubItemID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureSubItemList(Model.BusinessNatureSubItemID))"><option value="">- Select Classification -</option></select>
+            <span asp-validation-for="@Model.BusinessNatureSubItemID" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.BusinessNatureCategoryID" class="form-label "><strong>@Localizer["Category"] :</strong></label>
+            <select asp-for="@Model.BusinessNatureCategoryID" class="form-control" asp-items="@(dropdownService.GetBusinessNatureCategoryList(Model.BusinessNatureCategoryID))"><option value="">- Select Category -</option></select>
+            <span asp-validation-for="@Model.BusinessNatureCategoryID" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TINNumber" class="form-label "><strong>@Localizer["TIN No."] :</strong></label>
+            <input asp-for="@Model.TINNumber" class="form-control" maxlength="20" />
+            <span asp-validation-for="@Model.TINNumber" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.IsFranchise" class="form-label "><strong>@Localizer["Franchise"] :</strong></label>
+            <input asp-for="@Model.IsFranchise" class="custom-checkbox-label" />
+            <span asp-validation-for="@Model.IsFranchise" class="text-danger"></span>
+
+        </div>
+    </div>
 
 </div>

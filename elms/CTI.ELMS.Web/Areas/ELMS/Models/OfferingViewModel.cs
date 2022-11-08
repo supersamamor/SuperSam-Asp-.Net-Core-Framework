@@ -196,7 +196,7 @@ public record OfferingViewModel : BaseViewModel
 	[Display(Name = "For Final Print Lease Contract Date")]
 	public DateTime? ForFinalPrintLeaseContractDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Lease Contract")]
-	public int? LeaseContractStatus { get; init; }
+	public string? LeaseContractStatus { get; init; }
 	[Display(Name = "AN Term Type")]
 	public string? ANTermType { get; init; }
 	[Display(Name = "Contract Type")]
