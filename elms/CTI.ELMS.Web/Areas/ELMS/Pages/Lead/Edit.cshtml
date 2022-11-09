@@ -32,11 +32,12 @@
 <partial name="_ValidationScriptsPartial" />
 <partial name="_ContactListValidationPartial" model="@Model.Lead" />
 <partial name="_ContactPersonListValidationPartial" model="@Model.Lead" />
-
+<partial name="_BusinessNatureScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
         {
+            $.bindBusinessNatureDropdown("#BusinessNatureID","#BusinessNatureSubItemID","#BusinessNatureSubItemIDSelected","#BusinessNatureCategoryID","#BusinessNatureID");
             $('.select-contacttype').on( 'change', function () {
                 $('#AsyncAction').val('');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
@@ -107,33 +108,8 @@
                     });
                 });
                 return this;
-            };
-            $("#BusinessNatureCategoryID").businessnaturecategorySelect();
-
-            $.fn.businessnaturesubitemSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            $("#BusinessNatureSubItemID").businessnaturesubitemSelect();
-
-            $.fn.leadsourceSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
+            };          
             $("#LeadSourceId").leadsourceSelect();
-
             $.fn.businessnatureSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
@@ -170,6 +146,7 @@
             };
             $("#LeadTouchpointId").leadtouchpointSelect();    
             $(".MobileNumber").mask('@Html.Raw(CTI.ELMS.Web.WebConstants.MobileNoMask)', { placeholder: '@Html.Raw(CTI.ELMS.Web.WebConstants.MobileNoMaskDefaultValue)' });
+            $(".TinNumber").mask('@Html.Raw(CTI.ELMS.Web.WebConstants.TinNoMask)', { placeholder: '@Html.Raw(CTI.ELMS.Web.WebConstants.TinNoMaskDefaultValue)' });
         }
         InitializeForm();
     });

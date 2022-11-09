@@ -27,9 +27,7 @@
 							</th>
 							<th>
 								@Localizer["Business Nature Sub Item Code"]
-							</th>
-							  
-														
+							</th>						
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -67,9 +65,7 @@
                 { data: "businessNatureSubItemName", name: "BusinessNatureSubItemName", responsivePriority: 1, title: '@Localizer["Business Nature Sub Item Name"]', searchable: false },
 				{ data: "businessNatureID", name: "BusinessNatureID", responsivePriority: 1, title: '@Localizer["Business Nature"]', searchable: false },
 				{ data: "isDisabled", name: "IsDisabled", responsivePriority: 1, title: '@Localizer["Is Disabled"]', searchable: false },
-				{ data: "businessNatureSubItemCode", name: "BusinessNatureSubItemCode", responsivePriority: 1, title: '@Localizer["Business Nature Sub Item Code"]', searchable: false },
-				   
-				
+				{ data: "businessNatureSubItemCode", name: "BusinessNatureSubItemCode", responsivePriority: 1, title: '@Localizer["Business Nature Sub Item Code"]', searchable: false },				
                 {
                     data: null,
                     searchable: false,
@@ -92,8 +88,7 @@
                         url = '@Url.Page("/BusinessNatureSubItem/Delete", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteBusinessNatureSubItem" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
                     </text>
-                }
-				  
+                }				  
                         return button;
                     },
                 },

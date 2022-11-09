@@ -106,7 +106,7 @@ namespace CTI.ELMS.Web.Service
                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
             );
         }
-        public SelectList GetBusinessNatureSubItemList(string id)
+        public SelectList GetBusinessNatureSubItemList(string? id)
         {
             return _context.GetSingle<BusinessNatureSubItemState>(e => e.Id == id, new()).Result.Match(
                 Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.BusinessNatureSubItemName } }, "Value", "Text", e.Id),
@@ -183,7 +183,7 @@ namespace CTI.ELMS.Web.Service
                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
             );
         }
-        public SelectList GetBusinessNatureCategoryList(string id)
+        public SelectList GetBusinessNatureCategoryList(string? id)
         {
             return _context.GetSingle<BusinessNatureCategoryState>(e => e.Id == id, new()).Result.Match(
                 Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.BusinessNatureCategoryName } }, "Value", "Text", e.Id),
