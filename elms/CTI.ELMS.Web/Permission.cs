@@ -275,8 +275,7 @@ public static class Permission
     {
         public const string View = "Permission.Lead.View";
         public const string Create = "Permission.Lead.Create";
-        public const string Edit = "Permission.Lead.Edit";
-        public const string Delete = "Permission.Lead.Delete";
+        public const string Edit = "Permission.Lead.Edit";        
     }
     public static class Contact
     {
