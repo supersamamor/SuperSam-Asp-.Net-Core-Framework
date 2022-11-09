@@ -6,12 +6,12 @@
 }
 @{
     ViewData["Title"] = Localizer["Offering List"];
-    ViewData["ActiveMainPage"] = "Offering";
+    ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
 }
 <div class="card">
     <div class="card-header">
-        <partial name="_TabNavigation" model="@(new CTI.ELMS.Web.Areas.ELMS.Models.LeadTabNavigationPartial() {TabName = "Award Notice", LeadId=Model.LeadId, LeadName = Model.LeadName })" />
+        <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
     </div>
     <div class="card-body">
         <table id="offering" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">

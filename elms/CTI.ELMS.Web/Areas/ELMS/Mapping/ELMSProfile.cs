@@ -42,7 +42,6 @@ using CTI.ELMS.Application.Features.ELMS.IFCAARAllocation.Commands;
 using CTI.ELMS.Application.Features.ELMS.ReportTableCollectionDetail.Commands;
 using CTI.ELMS.Application.Features.ELMS.ReportTableYTDExpirySummary.Commands;
 
-
 namespace CTI.ELMS.Web.Areas.ELMS.Mapping;
 
 public class ELMSProfile : Profile
@@ -200,5 +199,6 @@ public class ELMSProfile : Profile
 		CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
 		CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
 		CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
-    }
+		CreateMap<CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries.TabNavigationModel, LeadTabNavigationPartial>();
+	}
 }

@@ -7,7 +7,7 @@
 }
 <div class="card">
     <div class="card-header">
-        <partial name="_TabNavigation" model="@(new CTI.ELMS.Web.Areas.ELMS.Models.LeadTabNavigationPartial() {TabName = "Info", LeadId=Model.Lead.Id, LeadName = Model.Lead.Company })" />
+        <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
     </div>
     <div class="card-body">
         <form id="lead-form" method="post">

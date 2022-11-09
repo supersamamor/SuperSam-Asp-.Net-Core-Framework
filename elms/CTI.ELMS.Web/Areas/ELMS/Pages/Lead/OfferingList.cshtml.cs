@@ -6,7 +6,7 @@ using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CTI.ELMS.Web.Helper;
-
+using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
 
 namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
 
@@ -18,12 +18,12 @@ public class OfferingListModel : BasePageModel<OfferingListModel>
     [DataTablesRequest]
     public DataTablesRequest? DataRequest { get; set; }
     public string LeadId { get; set; } = "";
-    public string LeadName { get; set; } = "";
+    public LeadTabNavigationPartial LeadTabNavigation { get; set; } = new();
 
-    public IActionResult OnGet(string leadId, string leadName)
+    public async Task<IActionResult> OnGet(string leadId)
     {
         LeadId = leadId;
-        LeadName = leadName;
+        LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(leadId, Constants.TabNavigation.Offerings)));
         return Page();
     }
 
