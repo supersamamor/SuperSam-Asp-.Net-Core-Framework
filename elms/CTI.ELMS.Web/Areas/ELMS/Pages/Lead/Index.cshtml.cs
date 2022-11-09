@@ -25,23 +25,30 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
+
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetLeadQuery>());
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
                 e.ClientType,
-				e.Brand,
-				e.Company,
-						
-				
-                e.LastModifiedDate
+                e.Brand,
+                e.Company,
+                e.CreatedBy,
+                e.CreatedDate,
+                e.LastModifiedDate,
+                DisplayName = e.DisplayName + "<br /><i>" + e.CreatedBy + "</i>",               
+                e.ContactNumber,
+                LatestUpdatedDateString = e.LatestUpdatedDate.ToString("MMM dd, yyyy") + "<br /><i>" + e.LatestUpdatedByUsername + "</i>",             
+                ProspectAging = e.CreatedDate.ToString("MMM dd, yyyy") + "<br /><i>" + e.LeadAging + " day(s)" + "</i>",
+                EmailLink = string.IsNullOrEmpty(e.Email)
+                    ? @"<a href=""#"" title=""No Available Email"" style=""color:grey;""><i class=""fas fa-envelope""></i></a>"
+                    : @"<a href=""mailto:" + e.Email + @"?subject=" + WebConstants.DefaultLeadMailSubject + @""" title=""" + e.Email + @"""><i class=""fas fa-envelope""></i></a>",
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+    }
+
+    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
         var result = await Mediatr.Send(request.ToQuery<GetLeadQuery>(nameof(LeadState.Id)));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));

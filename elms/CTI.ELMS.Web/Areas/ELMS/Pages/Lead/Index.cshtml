@@ -17,16 +17,20 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Type"]
-							</th>
-							<th>
-								@Localizer["Brand"]
-							</th>
-							<th>
-								@Localizer["Registered Name"]
-							</th>
-							  
-														
+
+                            </th>
+                            <th>
+                                @Localizer["Name"]
+                            </th>                           
+                            <th>
+                                @Localizer["Contact No."]
+                            </th>
+                            <th>
+                                @Localizer["Prospect Aging"]
+                            </th>
+                            <th>
+                                @Localizer["Latest Update"]
+                            </th>
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -57,15 +61,15 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
             },
-			initComplete: function( settings, json ) {
+            initComplete: function( settings, json ) {
                 BindTableRowCollapseEvent();
             },
-			columns: [
-                { data: "clientType", name: "ClientType", responsivePriority: 1, title: '@Localizer["Type"]', searchable: false },
-				{ data: "brand", name: "Brand", responsivePriority: 1, title: '@Localizer["Brand"]', searchable: false },
-				{ data: "company", name: "Company", responsivePriority: 1, title: '@Localizer["Registered Name"]', searchable: false },
-				   
-				
+            columns: [
+                { data: "emailLink", name: "EmailLink", responsivePriority: 1, searchable: false, orderable: false, width: "5%" },
+                { data: "displayName", name: "Company", responsivePriority: 1, title: '@Localizer["Name"]', searchable: true, orderable: true },              
+                { data: "contactNumber", name: "ContactNumber", responsivePriority: 1, title: '@Localizer["Contact No."]', searchable: false, orderable: false },
+                { data: "prospectAging", name: "CreatedDate", responsivePriority: 1, title: '@Localizer["Prospect Aging"]', searchable: false, orderable: true },
+                { data: "latestUpdatedDateString", name: "LatestUpdatedDate", responsivePriority: 1, title: '@Localizer["Latest Update"]', searchable: false, orderable: true },
                 {
                     data: null,
                     searchable: false,
@@ -89,12 +93,20 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteLead" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
                     </text>
                 }
-				  
+
                         return button;
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
+                { data: "brand", name: "Brand", searchable: true, visible: false },
+            ],
+            columnDefs: [
+                {
+                    "targets": 0, 
+                    "className": "text-center",
+                    "width": "4%"
+                }               
             ],
             buttons: [
         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Lead.Create)).Succeeded)
@@ -118,7 +130,7 @@
         $('.btn-table_filter').on('click', function(e) {
             table.ajax.reload(null, false);
         });
-		function BindTableRowCollapseEvent()
+        function BindTableRowCollapseEvent()
         {
             $('#lead tbody').on('click', 'td.dtr-control', function () {
                 $.showAjaxLoaderOnClick([".btnAddLead",".btnEditLead",".btnViewLead",".btnDeleteLead"]);
