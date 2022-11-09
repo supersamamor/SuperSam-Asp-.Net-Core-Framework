@@ -169,7 +169,7 @@
                 return this;
             };
             $("#LeadTouchpointId").leadtouchpointSelect();    
-            $(".MobileNumber").mask("(+99) (999) (999-9999)", { placeholder: "(+63) (   ) (   -    )" });
+            $(".MobileNumber").mask('@Html.Raw(CTI.ELMS.Web.WebConstants.MobileNoMask)', { placeholder: '@Html.Raw(CTI.ELMS.Web.WebConstants.MobileNoMaskDefaultValue)' });
         }
         InitializeForm();
     });
