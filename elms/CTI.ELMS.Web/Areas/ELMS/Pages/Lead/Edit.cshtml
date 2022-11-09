@@ -99,16 +99,16 @@
                 return this;
             };
 
-            $.fn.businessnaturecategorySelect = function() {
+            $.fn.leadsourceSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
                         ajax: {
-                            url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "Select2Data" })',
+                            url: '@Url.Page("/LeadSource/Index", new { area = "ELMS", handler = "Select2Data" })',
                         }
                     });
                 });
                 return this;
-            };          
+            };             
             $("#LeadSourceId").leadsourceSelect();
             $.fn.businessnatureSelect = function() {
                 this.filter("select").each(function() {

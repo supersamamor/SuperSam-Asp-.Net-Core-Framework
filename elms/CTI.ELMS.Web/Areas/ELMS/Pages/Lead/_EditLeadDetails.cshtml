@@ -1,28 +1,57 @@
 @using Models
 @model LeadViewModel
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-8 row-cols-lg-8 row-cols-xl-8 row-cols-xxl-8">
+    <div class="card">
+        <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Prospect Details"]</span><br></h5>
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Brand" class="form-label fieldrequired"><strong>@Localizer["Brand"] :</strong></label>
+                        <input asp-for="@Model.Brand" class="form-control" maxlength="255" />
+                        <span asp-validation-for="@Model.Brand" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.ClientType" class="form-label fieldrequired"><strong>@Localizer["Type"] :</strong></label>
+                        <select asp-for="@Model.ClientType" class="form-control" asp-items="@(dropdownService.ClientTypes())"><option value="">- Select Client Type -</option></select>
+                        <span asp-validation-for="@Model.ClientType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.IsFranchise" class="form-label "><strong>@Localizer["Franchise"] :</strong></label>
+                        <input asp-for="@Model.IsFranchise" class="custom-checkbox-label" />
+                        <span asp-validation-for="@Model.IsFranchise" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Company" class="form-label fieldrequired"><strong>@Localizer["Registered Name"] :</strong></label>
+                        <input asp-for="@Model.Company" class="form-control" maxlength="255" />
+                        <span asp-validation-for="@Model.Company" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.TINNumber" class="form-label "><strong>@Localizer["TIN No."] :</strong></label>
+                        <input asp-for="@Model.TINNumber" class="form-control TinNumber" maxlength="20" />
+                        <span asp-validation-for="@Model.TINNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4">
+    </div>
+    <div class="card">
+        <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Lead Info"]</span><br></h5>
+        <div class="card-body">
+        </div>
+    </div>
 
-<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.ClientType" class="form-label fieldrequired"><strong>@Localizer["Type"] :</strong></label>
-            <select asp-for="@Model.ClientType" class="form-control" asp-items="@(dropdownService.ClientTypes())"><option value="">- Select Client Type -</option></select>
-            <span asp-validation-for="@Model.ClientType" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.Brand" class="form-label fieldrequired"><strong>@Localizer["Brand"] :</strong></label>
-            <input asp-for="@Model.Brand" class="form-control" maxlength="255" />
-            <span asp-validation-for="@Model.Brand" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.Company" class="form-label fieldrequired"><strong>@Localizer["Registered Name"] :</strong></label>
-            <input asp-for="@Model.Company" class="form-control" maxlength="255" />
-            <span asp-validation-for="@Model.Company" class="text-danger"></span>
-        </div>
-    </div>
+
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.Street" class="form-label "><strong>@Localizer["Street"] :</strong></label>
@@ -95,18 +124,5 @@
             <span asp-validation-for="@Model.BusinessNatureCategoryID" class="text-danger"></span>
         </div>
     </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.TINNumber" class="form-label "><strong>@Localizer["TIN No."] :</strong></label>
-            <input asp-for="@Model.TINNumber" class="form-control TinNumber" maxlength="20" />
-            <span asp-validation-for="@Model.TINNumber" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.IsFranchise" class="form-label "><strong>@Localizer["Franchise"] :</strong></label>
-            <input asp-for="@Model.IsFranchise" class="custom-checkbox-label" />
-            <span asp-validation-for="@Model.IsFranchise" class="text-danger"></span>
-        </div>
-    </div>
+
 </div>

@@ -84,9 +84,7 @@
             var salutationlistdropdowns = document.getElementsByClassName('SelectSalutation');
             for ( var i=0; i< salutationlistdropdowns.length; i++) {
                 $("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
-            }
-
-            $.InitializeOfferingHistoryFieldValidations($('#OfferingHistoryCount').val());
+            }          
             $('.RemoveOfferingHistoryButton ').on( 'click', function () {
                 $('#RemoveSubDetailId').val($(this).attr('removeid'));
                 $('#AsyncAction').val('RemoveOfferingHistory');
