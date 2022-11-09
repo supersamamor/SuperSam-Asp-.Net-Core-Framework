@@ -50,7 +50,8 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("IFCAARAllocation"))
             .Concat(GeneratePermissionsForModule("ReportTableCollectionDetail"))
             .Concat(GeneratePermissionsForModule("ReportTableYTDExpirySummary"))
-
+            .Concat(GeneratePermissionsForModule("AwardNotice"))
+            .Concat(GeneratePermissionsForModule("LeaseContract"))
             .Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
 
@@ -423,6 +424,6 @@ public static class Permission
     }
     public static class LeaseContract
     {
-        public const string View = "Permission.AwardNotice.View";
+        public const string View = "Permission.LeaseContract.View";
     }
 }
