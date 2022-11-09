@@ -37,6 +37,10 @@
     $(document).ready(function () {
         function InitializeForm()
         {
+            $('.select-contacttype').on( 'change', function () {
+                $('#AsyncAction').val('');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
+            });
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();
@@ -164,9 +168,8 @@
                 });
                 return this;
             };
-            $("#LeadTouchpointId").leadtouchpointSelect();
-
-
+            $("#LeadTouchpointId").leadtouchpointSelect();    
+            $(".MobileNumber").mask("(+99) (999) (999-9999)", { placeholder: "(+63) (   ) (   -    )" });
         }
         InitializeForm();
     });

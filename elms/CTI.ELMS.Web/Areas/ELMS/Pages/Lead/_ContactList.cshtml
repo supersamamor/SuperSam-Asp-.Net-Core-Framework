@@ -13,12 +13,11 @@
                 <tr>
                     <th style="display:none;"></th>
                     <th>
-								@Localizer["Contact Type"]
-							</th>
-							<th>
-								@Localizer["Contact Details"]
-							</th>
-							
+                        @Localizer["Contact Type"]
+                    </th>
+                    <th>
+                        @Localizer["Contact Details"]
+                    </th>
                     <th>
                         @Localizer["Action"]
                     </th>
@@ -36,16 +35,20 @@
                                 <input type="hidden" name="ContactList[@counter].LeadID" value="@item.LeadID" />
                             </td>
                             <td>
-										<input  asp-for="@item.ContactType" name="ContactList[@counter].ContactType" class="form-control"  />
-										<span data-valmsg-for="ContactList[@counter].ContactType" asp-validation-for="@item.ContactType" class="text-danger"></span>
-										
-									</td>
-									<td>
-										<input  asp-for="@item.ContactDetails" name="ContactList[@counter].ContactDetails" class="form-control" maxlength="255" />
-										<span data-valmsg-for="ContactList[@counter].ContactDetails" asp-validation-for="@item.ContactDetails" class="text-danger"></span>
-										
-									</td>
-									
+                                <select asp-for="@item.ContactType" class="form-control select-contacttype" name="ContactList[@counter].ContactType" asp-items="@(dropdownService.ContactTypeList())"><option value="">- Select Contact Type -</option></select>
+                                <span data-valmsg-for="ContactList[@counter].ContactType" asp-validation-for="@item.ContactType" class="text-danger"></span>
+                            </td>
+                            <td>
+                                @if (@item.ContactType == CTI.ELMS.Core.Constants.ContactType.Email)
+                                {
+                                    <input type="email" asp-for="@item.ContactDetails" name="ContactList[@counter].ContactDetails" class="form-control" maxlength="255" />
+                                }
+                                else
+                                {
+                                    <input asp-for="@item.ContactDetails" name="ContactList[@counter].ContactDetails" class="form-control MobileNumber" maxlength="255" />
+                                }
+                                <span data-valmsg-for="ContactList[@counter].ContactDetails" asp-validation-for="@item.ContactDetails" class="text-danger"></span>
+                            </td>
                             <td>
                                 <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveContactButton" title="@Localizer["Remove Contact"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
                             </td>
