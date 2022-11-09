@@ -1,6 +1,7 @@
 using CTI.ELMS.Application.Features.ELMS.Lead.Queries;
 using CTI.ELMS.Core.ELMS;
 using CTI.ELMS.Web.Areas.ELMS.Models;
+using CTI.ELMS.Web.Helper;
 using CTI.ELMS.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +26,7 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-
+        var userHelper = new UserHelper(Mediatr);
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetLeadQuery>());
         return new JsonResult(result.Data
             .Select(e => new
@@ -37,9 +38,9 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.CreatedBy,
                 e.CreatedDate,
                 e.LastModifiedDate,
-                DisplayName = e.DisplayName + "<br /><i>" + e.CreatedBy + "</i>",               
+                DisplayName = e.DisplayName + "<br /><i>" + userHelper.GetUserName(e.CreatedBy!) + "</i>",               
                 e.ContactNumber,
-                LatestUpdatedDateString = e.LatestUpdatedDate.ToString("MMM dd, yyyy") + "<br /><i>" + e.LatestUpdatedByUsername + "</i>",             
+                LatestUpdatedDateString = e.LatestUpdatedDate.ToString("MMM dd, yyyy") + "<br /><i>" + userHelper.GetUserName(e.LatestUpdatedByUsername) + "</i>",             
                 ProspectAging = e.CreatedDate.ToString("MMM dd, yyyy") + "<br /><i>" + e.LeadAging + " day(s)" + "</i>",
                 EmailLink = string.IsNullOrEmpty(e.Email)
                     ? @"<a href=""#"" title=""No Available Email"" style=""color:grey;""><i class=""fas fa-envelope""></i></a>"
