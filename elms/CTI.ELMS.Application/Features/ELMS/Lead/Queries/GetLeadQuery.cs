@@ -15,10 +15,17 @@ public class GetLeadQueryHandler : BaseQueryHandler<ApplicationContext, LeadStat
     public GetLeadQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	public override async Task<PagedListResponse<LeadState>> Handle(GetLeadQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<LeadState>().Include(l=>l.BusinessNatureCategory).Include(l=>l.BusinessNatureSubItem).Include(l=>l.LeadSource).Include(l=>l.BusinessNature).Include(l=>l.OperationType).Include(l=>l.LeadTouchPoint)
-		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
-			request.SortColumn, request.SortOrder,
-			request.PageNumber, request.PageSize,
-			cancellationToken);	
+    public override async Task<PagedListResponse<LeadState>> Handle(GetLeadQuery request, CancellationToken cancellationToken = default) =>
+        await Context.Set<LeadState>().Include(l => l.BusinessNatureCategory)
+        .Include(l => l.BusinessNatureSubItem)
+        .Include(l => l.LeadSource)
+        .Include(l => l.BusinessNature)
+        .Include(l => l.OperationType)
+        .Include(l => l.LeadTouchPoint)
+        .Include(l => l.ContactList)
+        .Include(l => l.ContactPersonList)
+        .AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
+            request.SortColumn, request.SortOrder,
+            request.PageNumber, request.PageSize,
+            cancellationToken);
 }

@@ -12,7 +12,7 @@ public record ContactViewModel : BaseViewModel
 	public string? LeadID { get; init; }
 	public string?  ForeignKeyLead { get; set; }
 	[Display(Name = "Contact Type")]
-	public int? ContactType { get; init; }
+	public string? ContactType { get; init; }
 	[Display(Name = "Contact Details")]
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]

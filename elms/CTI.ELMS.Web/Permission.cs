@@ -62,6 +62,15 @@ public static class Permission
         {
             permissions.Add($"Permission.{module}.View");
         }
+        else if (module == "Lead") //No Delete
+        {
+            permissions.AddRange(new List<string>()
+            {
+                $"Permission.{module}.Create",
+                $"Permission.{module}.View",
+                $"Permission.{module}.Edit",               
+            });
+        }
         else
         {
             permissions.AddRange(new List<string>()

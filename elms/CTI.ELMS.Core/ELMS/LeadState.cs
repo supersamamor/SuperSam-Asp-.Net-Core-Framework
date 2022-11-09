@@ -21,7 +21,7 @@ public record LeadState : BaseEntity
     public string? TINNumber { get; init; }
     public bool IsFranchise { get; init; }
     public DateTime LatestUpdatedDate { get; set; } = DateTime.UtcNow;
-    public string LatestUpdatedByUsername { get; init; } = "";    
+    public string LatestUpdatedByUsername { get; init; } = "";
     public LeadSourceState? LeadSource { get; init; }
     public LeadTouchPointState? LeadTouchPoint { get; init; }
     public OperationTypeState? OperationType { get; init; }
@@ -39,14 +39,16 @@ public record LeadState : BaseEntity
     {
         get
         {
-            return "";
+            var email = this.ContactList?.Where(l => l.ContactType == Constants.ContactType.Email).FirstOrDefault();
+            return email != null ? email.ContactDetails : "";
         }
     }
     public string ContactNumber
     {
         get
         {
-            return "";
+            var contactNumber = this.ContactList?.Where(l => l.ContactType == Constants.ContactType.ContactNumber).FirstOrDefault();
+            return contactNumber != null ? contactNumber.ContactDetails : "";
         }
     }
     public string DisplayName

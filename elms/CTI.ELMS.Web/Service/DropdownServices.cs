@@ -260,5 +260,14 @@ namespace CTI.ELMS.Web.Service
             };
             return items;
         }
+        public IEnumerable<SelectListItem> ContactTypeList()
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem { Text = Core.Constants.ContactType.Email, Value = Core.Constants.ContactType.Email, },
+                new SelectListItem { Text = Core.Constants.ContactType.ContactNumber, Value = Core.Constants.ContactType.ContactNumber, },
+            };
+            return items;
+        }
     }
 }

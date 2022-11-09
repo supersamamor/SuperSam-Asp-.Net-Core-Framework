@@ -77,8 +77,8 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/Lead/Details", new { area = "ELMS" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewLead" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                        var url = '';
+                        var button = '';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Lead.Edit)).Succeeded)
                 {
                     <text>

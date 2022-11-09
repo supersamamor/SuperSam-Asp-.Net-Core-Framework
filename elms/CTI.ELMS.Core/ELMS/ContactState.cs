@@ -5,11 +5,11 @@ namespace CTI.ELMS.Core.ELMS;
 
 public record ContactState : BaseEntity
 {
-	public string? LeadID { get; init; }
-	public int? ContactType { get; init; }
-	public string ContactDetails { get; init; } = "";
-	
-	public LeadState? Lead { get; init; }
-	
-	
+    public string? LeadID { get; init; }
+    public string? ContactType { get; init; }
+    public string ContactDetails { get; init; } = "";
+
+    public LeadState? Lead { get; init; }
+
+
 }

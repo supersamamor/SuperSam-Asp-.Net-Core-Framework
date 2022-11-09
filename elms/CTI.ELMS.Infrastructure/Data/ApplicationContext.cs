@@ -239,8 +239,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ReportTableYTDExpirySummaryState>().Property(e => e.ProjectName).HasMaxLength(100);
 		modelBuilder.Entity<ReportTableYTDExpirySummaryState>().Property(e => e.Location).HasMaxLength(100);
 		modelBuilder.Entity<ReportTableYTDExpirySummaryState>().Property(e => e.ColumnName).HasMaxLength(20);
-		
-        modelBuilder.Entity<PPlusConnectionSetupState>().HasMany(t => t.EntityGroupList).WithOne(l => l.PPlusConnectionSetup).HasForeignKey(t => t.PPlusConnectionSetupID);
+		modelBuilder.Entity<ContactState>().Property(e => e.ContactType).HasMaxLength(20);
+
+		modelBuilder.Entity<PPlusConnectionSetupState>().HasMany(t => t.EntityGroupList).WithOne(l => l.PPlusConnectionSetup).HasForeignKey(t => t.PPlusConnectionSetupID);
 		modelBuilder.Entity<EntityGroupState>().HasMany(t => t.ProjectList).WithOne(l => l.EntityGroup).HasForeignKey(t => t.EntityGroupId);
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.UserProjectAssignmentList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);
 		modelBuilder.Entity<ProjectState>().HasMany(t => t.UnitList).WithOne(l => l.Project).HasForeignKey(t => t.ProjectID);

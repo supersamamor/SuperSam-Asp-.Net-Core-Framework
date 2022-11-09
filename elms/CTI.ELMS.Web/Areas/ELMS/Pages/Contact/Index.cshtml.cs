@@ -32,7 +32,7 @@ public class IndexModel : BasePageModel<IndexModel>
             {
                 e.Id,
                 LeadID = e.Lead?.Id,
-				ContactType = e.ContactType?.ToString("##,##"),
+				ContactType = e.ContactType,
 				e.ContactDetails,
 						
 				
