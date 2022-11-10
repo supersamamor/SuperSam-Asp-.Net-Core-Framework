@@ -37,7 +37,7 @@
     $(document).ready(function () {
         function InitializeForm()
         {
-            $.bindBusinessNatureDropdown("#BusinessNatureID","#BusinessNatureSubItemID","#BusinessNatureSubItemIDSelected","#BusinessNatureCategoryID","#BusinessNatureID");
+            $.bindBusinessNatureDropdown("#BusinessNatureID","#BusinessNatureSubItemID","#BusinessNatureSubItemIDSelected","#BusinessNatureCategoryID","#BusinessNatureCategoryIDSelected");
             $.bindAddressDropdown("#Province","#City","#CitySelected");
             $('.select-contacttype, #Country').on( 'change', function () {
                 $('#AsyncAction').val('');

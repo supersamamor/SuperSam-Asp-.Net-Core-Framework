@@ -2,7 +2,7 @@
     $(document).ready(function () {
         $.bindBusinessNatureDropdown = function(businessNatureElem,businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem)
         {            
-            $.updateBusinessNatureSubItemDropdown($(businessNatureElem).val(),businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem);
+            $.updateBusinessNatureSubItemDropdown($(businessNatureElem).val(),businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem);           
             $.updateBusinessNatureCategoryDropdown(businessNatureSubItemElem,businessNatureCategoryElem, businessNatureCategorySelectedElem);
             $(businessNatureElem).on("change", function() {
                 let businessNatureVal = $(this).val();
@@ -54,9 +54,9 @@
             }
         }
         $.updateBusinessNatureCategoryDropdown = function(businessNatureSubItemElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem)
-        {
+        {           
             if($(businessNatureCategorySelectedElem).length > 0)
-            {
+            {               
                 let e_sel = $(businessNatureCategoryElem);
                 $.ajax({
                     type: "GET",
@@ -72,8 +72,7 @@
                         e_sel.append(`<option value=''>- Select Category -</option>`);
                         d.forEach(function(o) {
                             if(o.value == $(businessNatureCategorySelectedElem).val())
-                            {
-                                alert(o.value + ' - ' + $(businessNatureCategorySelectedElem).val())
+                            {                           
                                 e_sel.append(`<option value='${o.value}' selected>${o.text}</option>`);
                             }
                             else

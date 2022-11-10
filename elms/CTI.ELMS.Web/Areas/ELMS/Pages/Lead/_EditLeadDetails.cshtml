@@ -152,7 +152,7 @@
                         <div class="mb-3">
                             <label asp-for="@Model.BusinessNatureCategoryID" class="form-label "><strong>@Localizer["Category"] :</strong></label>
                             <select asp-for="@Model.BusinessNatureCategoryID" class="form-control select2" asp-items="@(dropdownService.GetBusinessNatureCategoryList(Model.BusinessNatureCategoryID))"><option value="">- Select Category -</option></select>
-                            <input type="text" value="@Model.BusinessNatureCategoryID" id="BusinessNatureCategoryIDSelected" />
+                            <input type="hidden" value="@Model.BusinessNatureCategoryID" id="BusinessNatureCategoryIDSelected" />
                             <span asp-validation-for="@Model.BusinessNatureCategoryID" class="text-danger"></span>
                         </div>
                     </div>
