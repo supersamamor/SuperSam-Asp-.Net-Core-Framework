@@ -10,31 +10,41 @@
         }
         $.updateCityDropdown = function(provinceElem, cityElem, citySelectedElem)
         {
-            let e_sel = $(cityElem);
-            $.ajax({
-                type: "GET",
-                url: '@Url.Page("/Address/Index", new { area = "ELMS", handler = "DropdownCities" })',
-                contentType: "application/json; charset=utf-8",
-                data: { province: $(provinceElem).val(), },
-                headers: {
-                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-                },
-                success: function(d) {
-                    if (!d) return;
-                    e_sel.children("option").remove();
-                    e_sel.append(`<option value=''>- Select City/Municipality -</option>`);
-                    d.forEach(function(o) {                     
-                        if(o.value == $(citySelectedElem).val())
-                        {
-                            e_sel.append(`<option value='${o.value}' selected>${o.text}</option>`);
-                        }
-                        else
-                        {
-                            e_sel.append(`<option value='${o.value}'>${o.text}</option>`);
-                        }
-                    });
-                },
-            });            
+            if($(citySelectedElem).length > 0)
+            {
+                let e_sel = $(cityElem);
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Page("/Address/Index", new { area = "ELMS", handler = "DropdownCities" })',
+                    contentType: "application/json; charset=utf-8",
+                    data: { province: $(provinceElem).val(), },
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function(d) {
+                        if (!d) return;
+                        e_sel.children("option").remove();
+                        e_sel.append(`<option value=''>- Select City/Municipality -</option>`);
+                        d.forEach(function(o) {
+                            if(o.value == $(citySelectedElem).val())
+                            {
+                                e_sel.append(`<option value='${o.value}' selected>${o.text}</option>`);
+                            }
+                            else
+                            {
+                                e_sel.append(`<option value='${o.value}'>${o.text}</option>`);
+                            }
+                        });
+                    },
+                });      
+                $(cityElem).select2({
+                    placeholder: "- Select City/Municipality -",
+                    allowClear: true,
+                    escapeMarkup: function (m) {
+                        return m;
+                    }
+            });
+            }            
         }
     });
 </script>
