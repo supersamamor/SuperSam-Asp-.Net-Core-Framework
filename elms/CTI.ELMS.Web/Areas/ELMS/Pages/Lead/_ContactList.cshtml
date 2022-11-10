@@ -12,10 +12,10 @@
             <thead>
                 <tr>
                     <th style="display:none;"></th>
-                    <th>
+                    <th style="min-width:150px;">
                         @Localizer["Contact Type"]
                     </th>
-                    <th>
+                    <th style="min-width:150px;">
                         @Localizer["Contact Details"]
                     </th>
                     <th>
@@ -35,7 +35,7 @@
                                 <input type="hidden" name="ContactList[@counter].LeadID" value="@item.LeadID" />
                             </td>
                             <td>
-                                <select asp-for="@item.ContactType" class="form-control select-contacttype" name="ContactList[@counter].ContactType" asp-items="@(dropdownService.ContactTypeList())"><option value="">- Select Contact Type -</option></select>
+                                <select asp-for="@item.ContactType" class="form-control select-contacttype select2" name="ContactList[@counter].ContactType" asp-items="@(dropdownService.ContactTypeList())"><option value="">- Select Contact Type -</option></select>
                                 <span data-valmsg-for="ContactList[@counter].ContactType" asp-validation-for="@item.ContactType" class="text-danger"></span>
                             </td>
                             <td>
