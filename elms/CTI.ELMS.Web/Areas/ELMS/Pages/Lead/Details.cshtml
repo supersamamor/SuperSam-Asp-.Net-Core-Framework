@@ -36,4 +36,12 @@
 </a>
 @section Scripts {
 <partial name="_DisableFieldsPartial" model="@("PartialLoaderContainer")" />
+<partial name="_BusinessNatureScripts" />
+<partial name="_AddressScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+         $.bindBusinessNatureDropdown("#BusinessNatureID","#BusinessNatureSubItemID","#BusinessNatureSubItemIDSelected","#BusinessNatureCategoryID","#BusinessNatureCategoryIDSelected");
+         $.bindAddressDropdown("#Province","#City","#CitySelected");
+    });
+</script>
 }
