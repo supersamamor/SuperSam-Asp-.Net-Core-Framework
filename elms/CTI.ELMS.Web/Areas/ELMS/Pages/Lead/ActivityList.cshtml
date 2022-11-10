@@ -83,23 +83,15 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/Lead/DetailsActivity", new { area = "ELMS" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewActivity" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                        var url = '';
+                        var button = '';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.Edit)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/Lead/EditActivity", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditActivity" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Lead/DeleteActivity", new { area = "ELMS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteActivity" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
-                    </text>
-                }
-
+                }      
                         return button;
                     },
                 },

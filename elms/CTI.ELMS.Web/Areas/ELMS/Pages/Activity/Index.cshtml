@@ -73,15 +73,7 @@
                         url = '@Url.Page("/Activity/Edit", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditActivity" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Activity/Delete", new { area = "ELMS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteActivity" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
-                    </text>
-                }
-				  
+                }     
                         return button;
                     },
                 },
