@@ -62,7 +62,7 @@ public static class Permission
         {
             permissions.Add($"Permission.{module}.View");
         }
-        else if (module == "Lead") //No Delete
+        else if (module == "Lead" || module == "Activity") //No Delete
         {
             permissions.AddRange(new List<string>()
             {
@@ -277,6 +277,12 @@ public static class Permission
         public const string Create = "Permission.Lead.Create";
         public const string Edit = "Permission.Lead.Edit";        
     }
+    public static class Activity
+    {
+        public const string View = "Permission.Activity.View";
+        public const string Create = "Permission.Activity.Create";
+        public const string Edit = "Permission.Activity.Edit";
+    }
     public static class Contact
     {
         public const string View = "Permission.Contact.View";
@@ -291,13 +297,7 @@ public static class Permission
         public const string Edit = "Permission.ContactPerson.Edit";
         public const string Delete = "Permission.ContactPerson.Delete";
     }
-    public static class Activity
-    {
-        public const string View = "Permission.Activity.View";
-        public const string Create = "Permission.Activity.Create";
-        public const string Edit = "Permission.Activity.Edit";
-        public const string Delete = "Permission.Activity.Delete";
-    }
+  
     public static class ActivityHistory
     {
         public const string View = "Permission.ActivityHistory.View";

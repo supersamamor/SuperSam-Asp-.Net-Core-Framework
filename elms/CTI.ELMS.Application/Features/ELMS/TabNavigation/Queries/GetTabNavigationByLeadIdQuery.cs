@@ -28,7 +28,7 @@ namespace CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries
                           select new TabNavigationModel()
                           {
                               TabName = request.TabName,
-                              LeadName = a.Company,
+                              LeadName = a.DisplayName,
                               LeadId = request.LeadId,
                               ForAwardNoticeCount = a.OfferingList!.Where(l => l.SignedOfferSheetDate != null).Count(),
                               ForContractCount = a.OfferingList!.Where(l => !string.IsNullOrEmpty(l.TenantContractNo)).Count(),

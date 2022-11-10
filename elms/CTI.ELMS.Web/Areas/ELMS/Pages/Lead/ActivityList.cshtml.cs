@@ -2,6 +2,7 @@ using CTI.ELMS.Application.Features.ELMS.Activity.Queries;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
 using CTI.ELMS.Core.ELMS;
 using CTI.ELMS.Web.Areas.ELMS.Models;
+using CTI.ELMS.Web.Helper;
 using CTI.ELMS.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
@@ -27,17 +28,23 @@ public class ActivityListModel : BasePageModel<ActivityListModel>
         return Page();
     }
 
-    public async Task<IActionResult> OnPostListAllAsync()
+    public async Task<IActionResult> OnPostListAllAsync(string leadId)
     {
-
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetActivityQuery>());
+        var activityStatusHelper = new ActivityStatusHelper(Mediatr);
+        var userHelper = new UserHelper(Mediatr);
+        var activityQuery = DataRequest!.ToQuery<GetActivityQuery>();
+        activityQuery.LeadId = leadId;
+        var result = await Mediatr.Send(activityQuery);
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
                 ActivityDate = e.ActivityDate?.ToString("MMM dd, yyyy HH:mm"),
-
-
+                ProjectSpaces = e.Project?.ProjectName + (string.IsNullOrEmpty(e.UnitInformation) ? "" : " (" + e.UnitInformation + ")"),
+                Status = activityStatusHelper.GetActivityStatus(e.LeadTaskId!, e.ClientFeedbackId!),
+                LatestActivity = userHelper.GetUserName(e.LastModifiedBy!) + " / " + e.LeadTask!.LeadTaskName + "<br /><i>" + e.LastModifiedDate.ToString("MMM dd, yyyy hh:mm tt") + "</i>",
+                ClientFeedback = e.ClientFeedback!.ClientFeedbackName,
+                NextStep = e.NextStep?.NextStepTaskName,
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
