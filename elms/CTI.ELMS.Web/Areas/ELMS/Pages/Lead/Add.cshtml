@@ -32,12 +32,14 @@
 <partial name="_ContactListValidationPartial" model="@Model.Lead" />
 <partial name="_ContactPersonListValidationPartial" model="@Model.Lead" />
 <partial name="_BusinessNatureScripts" />
+<partial name="_AddressScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
         {
             $.bindBusinessNatureDropdown("#BusinessNatureID","#BusinessNatureSubItemID","#BusinessNatureSubItemIDSelected","#BusinessNatureCategoryID","#BusinessNatureID");
-            $('.select-contacttype').on( 'change', function () {
+            $.bindAddressDropdown("#Province","#City","#CitySelected");
+            $('.select-contacttype, #Country').on( 'change', function () {
                 $('#AsyncAction').val('');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
             });

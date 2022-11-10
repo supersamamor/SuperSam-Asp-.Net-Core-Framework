@@ -1,7 +1,9 @@
 <script asp-add-nonce>
     $(document).ready(function () {
         $.bindBusinessNatureDropdown = function(businessNatureElem,businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem)
-        {
+        {            
+            $.updateBusinessNatureSubItemDropdown($(businessNatureElem).val(),businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem);
+            $.updateBusinessNatureCategoryDropdown($(businessNatureSubItemElem).val(),businessNatureCategoryElem, businessNatureCategorySelectedElem);
             $(businessNatureElem).on("change", function() {
                 let businessNatureVal = $(this).val();
                 $.updateBusinessNatureSubItemDropdown(businessNatureVal,businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem);

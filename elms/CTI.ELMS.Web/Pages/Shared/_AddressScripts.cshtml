@@ -1,33 +1,30 @@
 <script asp-add-nonce>
     $(document).ready(function () {
-        $.bindBusinessNatureDropdown = function(businessNatureElem,businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem)
+        $.bindAddressDropdown = function(provinceElem, cityElem, citySelectedElem)
         {
-            $(businessNatureElem).on("change", function() {
-                let businessNatureVal = $(this).val();
-                $.updateBusinessNatureSubItemDropdown(businessNatureVal,businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem);
-            });
-            $(businessNatureSubItemElem).on("change", function() {
-                let businessNatureSubItemVal = $(this).val();
-                $.updateBusinessNatureCategoryDropdown(businessNatureSubItemVal,businessNatureCategoryElem, businessNatureCategorySelectedElem);
+            $.updateCityDropdown(provinceElem,cityElem, citySelectedElem);
+            $(provinceElem).on("change", function() {
+                let provinceVal = $(this).val();
+                $.updateCityDropdown(provinceElem,cityElem, citySelectedElem);
             });
         }
-        $.updateBusinessNatureSubItemDropdown = function(businessNatureVal, businessNatureSubItemElem, businessNatureSubItemSelectedElem ,businessNatureCategoryElem, businessNatureCategorySelectedElem)
+        $.updateCityDropdown = function(provinceElem, cityElem, citySelectedElem)
         {
-            let e_sel = $(businessNatureSubItemElem);
+            let e_sel = $(cityElem);
             $.ajax({
                 type: "GET",
-                url: '@Url.Page("/BusinessNatureSubItem/Index", new { area = "ELMS", handler = "DropdownBusinessNatureSubItem" })',
+                url: '@Url.Page("/Address/Index", new { area = "ELMS", handler = "DropdownCities" })',
                 contentType: "application/json; charset=utf-8",
-                data: { businessNature: businessNatureVal, },
+                data: { province: $(provinceElem).val(), },
                 headers: {
                     RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
                 success: function(d) {
                     if (!d) return;
                     e_sel.children("option").remove();
-                    e_sel.append(`<option value=''>- Select Classification -</option>`);
-                    d.forEach(function(o) {
-                        if(o.value == $(businessNatureSubItemSelectedElem).val())
+                    e_sel.append(`<option value=''>- Select City/Municipality -</option>`);
+                    d.forEach(function(o) {                     
+                        if(o.value == $(citySelectedElem).val())
                         {
                             e_sel.append(`<option value='${o.value}' selected>${o.text}</option>`);
                         }
@@ -37,36 +34,7 @@
                         }
                     });
                 },
-            });
-            $.updateBusinessNatureCategoryDropdown($(businessNatureSubItemSelectedElem).val(), businessNatureCategoryElem, businessNatureCategorySelectedElem);
-        }
-        $.updateBusinessNatureCategoryDropdown = function(businessNatureSubItemVal ,businessNatureCategoryElem, businessNatureCategorySelectedElem)
-        {
-            let e_sel = $(businessNatureCategoryElem);
-            $.ajax({
-                type: "GET",
-                url: '@Url.Page("/BusinessNatureCategory/Index", new { area = "ELMS", handler = "DropdownBusinessNatureCategory" })',
-                contentType: "application/json; charset=utf-8",
-                data: { businessNatureSubItem: businessNatureSubItemVal, },
-                headers: {
-                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-                },
-                success: function(d) {
-                    if (!d) return;
-                    e_sel.children("option").remove();
-                    e_sel.append(`<option value=''>- Select Category -</option>`);
-                    d.forEach(function(o) {
-                        if(o.value == $(businessNatureCategorySelectedElem).val())
-                        {
-                            e_sel.append(`<option value='${o.value}' selected>${o.text}</option>`);
-                        }
-                        else
-                        {
-                            e_sel.append(`<option value='${o.value}'>${o.text}</option>`);
-                        }
-                    });
-                },
-            });
+            });            
         }
     });
 </script>
