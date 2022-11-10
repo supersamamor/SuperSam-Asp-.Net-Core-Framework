@@ -34,8 +34,8 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-		
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditLeadCommand>(Lead)), "Details", true);
+		LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(Lead.Id, Constants.TabNavigation.Info)));
+		return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditLeadCommand>(Lead)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()
     {

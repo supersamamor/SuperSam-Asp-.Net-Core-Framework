@@ -1,0 +1,142 @@
+@page
+@model AddActivityModel
+@{
+    ViewData["Title"] = Localizer["Add Activity"];
+    ViewData["ActiveMainPage"] = "Lead";
+    ViewData["Level1"] = "ELMS";
+}
+<div class="card">
+    <div class="card-header">
+        <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
+    </div>
+    <div class="card-body">
+        <form id="activity-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+            <input type="hidden" asp-for="@Model.AsyncAction" />
+            <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID"/>
+            <div id="PartialLoaderContainer">
+                <partial name="_ActivityInputFieldsPartial" model="Model.Activity" />
+            </div>
+            <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+                <a asp-page="ActivityList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+                <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+
+            $.fn.leadtaskSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
+            for ( var i=0; i< leadtasklistdropdowns.length; i++) {
+                $("#ActivityHistoryList_"+i+"_LeadTaskId").leadtaskSelect();
+            }
+
+            $.fn.clientfeedbackSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            var clientfeedbacklistdropdowns = document.getElementsByClassName('SelectClientFeedback');
+            for ( var i=0; i< clientfeedbacklistdropdowns.length; i++) {
+                $("#ActivityHistoryList_"+i+"_ClientFeedbackId").clientfeedbackSelect();
+            }
+
+            $.fn.nextstepSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
+            for ( var i=0; i< nextsteplistdropdowns.length; i++) {
+                $("#ActivityHistoryList_"+i+"_NextStepId").nextstepSelect();
+            }
+
+
+            $.fn.leadtaskSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#LeadTaskId").leadtaskSelect();
+
+            $.fn.projectSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#ProjectID").projectSelect();
+
+            $.fn.clientfeedbackSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#ClientFeedbackId").clientfeedbackSelect();
+
+            $.fn.nextstepSelect = function() {
+                this.filter("select").each(function() {
+                    $(this).ajaxSelect({
+                        ajax: {
+                            url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
+                        }
+                    });
+                });
+                return this;
+            };
+            $("#NextStepId").nextstepSelect();
+
+        }
+        InitializeForm();
+    });
+</script>
+}

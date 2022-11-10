@@ -48,7 +48,7 @@ public class IndexModel : BasePageModel<IndexModel>
         return new JsonResult(result.ToSelect2Response(e => new Select2Result
         {
             Id = e.Id,
-            Text = e.EntityGroup!.PPlusConnectionSetup!.PPlusVersionName
+            Text = e.EntityGroup?.PPlusConnectionSetup?.PPlusVersionName
                         + " - " + e.IFCAProjectCode
                         + " - " + e.ProjectName
         }));

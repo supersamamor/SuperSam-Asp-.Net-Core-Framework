@@ -15,10 +15,10 @@ public class GetProjectQueryHandler : BaseQueryHandler<ApplicationContext, Proje
     public GetProjectQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	public override async Task<PagedListResponse<ProjectState>> Handle(GetProjectQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<ProjectState>().Include(l=>l.EntityGroup)
-		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
-			request.SortColumn, request.SortOrder,
-			request.PageNumber, request.PageSize,
-			cancellationToken);	
+    public override async Task<PagedListResponse<ProjectState>> Handle(GetProjectQuery request, CancellationToken cancellationToken = default) =>
+        await Context.Set<ProjectState>().Include(l => l.EntityGroup).ThenInclude(l => l!.PPlusConnectionSetup)
+        .AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
+            request.SortColumn, request.SortOrder,
+            request.PageNumber, request.PageSize,
+            cancellationToken);
 }
