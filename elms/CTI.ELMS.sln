@@ -17,6 +17,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CTI.ELMS.Application", "CTI.ELMS.Application\CTI.ELMS.Application.csproj", "{8E4C37A3-B646-4A9B-B535-860D1CC550A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CTI.ELMS.Web", "CTI.ELMS.Web\CTI.ELMS.Web.csproj", "{7E3752BD-4020-4488-B037-582EF3B206D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{753C9B5F-6630-4E81-B2C2-9366459DDFBD} = {753C9B5F-6630-4E81-B2C2-9366459DDFBD}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CTI.ELMS.API", "CTI.ELMS.API\CTI.ELMS.API.csproj", "{1CC3EAFC-F483-431D-82A4-9C2BC852E861}"
 EndProject
@@ -47,7 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTI.ELMS.LocationApi", "CTI.ELMS.LocationApi\CTI.ELMS.LocationApi.csproj", "{753C9B5F-6630-4E81-B2C2-9366459DDFBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CTI.ELMS.LocationApi", "CTI.ELMS.LocationApi\CTI.ELMS.LocationApi.csproj", "{753C9B5F-6630-4E81-B2C2-9366459DDFBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,5 +8,6 @@ namespace CTI.ELMS.Web
         public const string MobileNoMaskDefaultValue = "(+63) (   ) (   -    )";
         public const string TinNoMask = "999-999-999-99999";
         public const string TinNoMaskDefaultValue = "   -   -   -     ";
+        public const string CountryPhilippines = "Philippines";
     }
 }

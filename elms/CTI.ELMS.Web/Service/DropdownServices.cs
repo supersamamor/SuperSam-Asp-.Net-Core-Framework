@@ -5,8 +5,9 @@ using CTI.Common.Data;
 using CTI.ELMS.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using CTI.ELMS.Web.Areas.Admin.Queries.Roles;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using CTI.ELMS.LocationApi.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CTI.ELMS.Web.Service
 {
@@ -14,11 +15,12 @@ namespace CTI.ELMS.Web.Service
     {
         private readonly ApplicationContext _context;
         private readonly IMediator _mediaTr;
-
-        public DropdownServices(ApplicationContext context, IMediator mediaTr)
+        private readonly LocationApiService _locationServiceApi;
+        public DropdownServices(ApplicationContext context, IMediator mediaTr, LocationApiService locationApiService)
         {
             _context = context;
             _mediaTr = mediaTr;
+            _locationServiceApi = locationApiService;
         }
         public SelectList GetOfferingList(string id)
         {
@@ -268,6 +270,60 @@ namespace CTI.ELMS.Web.Service
                 new SelectListItem { Text = Core.Constants.ContactType.ContactNumber, Value = Core.Constants.ContactType.ContactNumber, },
             };
             return items;
+        }
+        public async Task<IEnumerable<SelectListItem>> GetCountryList()
+        {
+            var list = new List<SelectListItem>();
+            var countryList = await _locationServiceApi.GetCountryList();
+            if (countryList != null)
+            {
+                foreach (var c in countryList.OrderBy(a => a.Name))
+                    if (c.Name.Equals(WebConstants.CountryPhilippines))
+                    {
+                        list.Insert(0, new SelectListItem { Value = c.Name, Text = c.Name, Group = new SelectListGroup { Name = c.Name } });
+                    }
+                    else
+                    {
+                        list.Add(new SelectListItem { Value = c.Name, Text = c.Name, Group = new SelectListGroup { Name = c.Name } });
+                    }
+            }
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetProvinceList()
+        {
+            var list = new List<SelectListItem>();
+            var provinceList = await _locationServiceApi.GetProvinceList();
+            if (provinceList != null)
+            {
+                foreach (var p in provinceList)
+                    list.Add(new SelectListItem { Value = p.AlternativeName, Text = p.AlternativeName });
+            }
+            return list;
+        }
+
+        public async Task<IActionResult> GetCityList(string province)
+        {
+            var list = new List<SelectListItem>();
+            var cityList = await _locationServiceApi.GetCityListByProvinceName(province);
+            if (cityList != null)
+            {
+                foreach (var p in cityList)
+                    list.Add(new SelectListItem { Value = p.AlternativeName, Text = p.AlternativeName });
+            }          
+            return new JsonResult(list);
+        }
+
+        public async Task<IActionResult> GetBarangayList(string province, string city)
+        {
+            var list = new List<SelectListItem>();
+            var brgyList = await _locationServiceApi.GetBarangayListByProvinceNameAndCityName(province, city);
+            if (brgyList != null)
+            {
+                foreach (var p in brgyList)
+                    list.Add(new SelectListItem { Value = p.AlternativeName, Text = p.AlternativeName });
+            }            
+            return new JsonResult(list);
         }
     }
 }

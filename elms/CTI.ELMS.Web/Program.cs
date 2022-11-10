@@ -11,7 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using CTI.ELMS.Scheduler;
 using CTI.ELMS.EmailSending;
-
+using CTI.ELMS.LocationApi;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
@@ -43,6 +43,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddScheduler(configuration);
 services.AddEmailSendingAService(configuration);
+services.AddLocationApiService(configuration);
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
