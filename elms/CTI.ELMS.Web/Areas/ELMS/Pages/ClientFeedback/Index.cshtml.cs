@@ -5,8 +5,7 @@ using CTI.ELMS.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CTI.ELMS.Web.Areas.ELMS.Pages.ClientFeedback;
 
@@ -43,5 +42,16 @@ public class IndexModel : BasePageModel<IndexModel>
     {
         var result = await Mediatr.Send(request.ToQuery<GetClientFeedbackQuery>(nameof(ClientFeedbackState.ClientFeedbackName)));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.ClientFeedbackName }));
+    }
+    public async Task<IActionResult> OnGetDropdownClientFeedbackAsync(string leadTask)
+    {
+        var list = new List<SelectListItem>();
+        if (!string.IsNullOrEmpty(leadTask))
+        {
+            var clientFeedbackList = (await Mediatr.Send(new GetClientFeedbackQuery() { LeadTaskId = leadTask })).Data.ToList();
+            foreach (var p in clientFeedbackList)
+                list.Add(new SelectListItem { Value = p.Id, Text = p.ClientFeedbackName });
+        }
+        return new JsonResult(list);
     }
 }

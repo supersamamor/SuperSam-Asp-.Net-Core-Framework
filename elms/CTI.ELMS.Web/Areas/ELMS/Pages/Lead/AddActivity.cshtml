@@ -31,74 +31,17 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_LeadTaskScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
         {
+            $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();
                 window.focus();
             });
-
-            $.fn.leadtaskSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            var leadtasklistdropdowns = document.getElementsByClassName('SelectLeadTask');
-            for ( var i=0; i< leadtasklistdropdowns.length; i++) {
-                $("#ActivityHistoryList_"+i+"_LeadTaskId").leadtaskSelect();
-            }
-
-            $.fn.clientfeedbackSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            var clientfeedbacklistdropdowns = document.getElementsByClassName('SelectClientFeedback');
-            for ( var i=0; i< clientfeedbacklistdropdowns.length; i++) {
-                $("#ActivityHistoryList_"+i+"_ClientFeedbackId").clientfeedbackSelect();
-            }
-
-            $.fn.nextstepSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
-            for ( var i=0; i< nextsteplistdropdowns.length; i++) {
-                $("#ActivityHistoryList_"+i+"_NextStepId").nextstepSelect();
-            }
-
-
-            $.fn.leadtaskSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            $("#LeadTaskId").leadtaskSelect();
-
             $.fn.projectSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
@@ -110,31 +53,17 @@
                 return this;
             };
             $("#ProjectID").projectSelect();
-
-            $.fn.clientfeedbackSelect = function() {
+            $.fn.leadtaskSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
                         ajax: {
-                            url: '@Url.Page("/ClientFeedback/Index", new { area = "ELMS", handler = "Select2Data" })',
+                            url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
                         }
                     });
                 });
                 return this;
             };
-            $("#ClientFeedbackId").clientfeedbackSelect();
-
-            $.fn.nextstepSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/NextStep/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            $("#NextStepId").nextstepSelect();
-
+            $("#LeadTaskId").leadtaskSelect();
         }
         InitializeForm();
     });

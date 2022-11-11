@@ -23,11 +23,12 @@ public record ActivityViewModel : BaseViewModel
 	[Required]
 	public string? ClientFeedbackId { get; init; }
 	public string?  ForeignKeyClientFeedback { get; set; }
-	[Display(Name = "Next Step")]	
+	[Display(Name = "Next Step")]
+	[Required]
 	public string? NextStepId { get; init; }
 	public string?  ForeignKeyNextStep { get; set; }
 	[Display(Name = "Target Date")]
-	public DateTime? TargetDate { get; init; } = DateTime.Now.Date;
+	public DateTime? TargetDate { get; init; }
 	[Display(Name = "Activity Remarks")]
 	[StringLength(500, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? ActivityRemarks { get; init; }
