@@ -14,13 +14,15 @@ public class GetActivityByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
     public GetActivityByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	
-	public override async Task<Option<ActivityState>> Handle(GetActivityByIdQuery request, CancellationToken cancellationToken = default)
-	{
-		return await Context.Activity.Include(l=>l.LeadTask).Include(l=>l.Lead).Include(l=>l.Project).Include(l=>l.ClientFeedback).Include(l=>l.NextStep)
-			.Include(l=>l.ActivityHistoryList)
-			.Include(l=>l.UnitActivityList)
-			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-	}
-	
+
+    public override async Task<Option<ActivityState>> Handle(GetActivityByIdQuery request, CancellationToken cancellationToken = default)
+    {
+        return await Context.Activity.Include(l => l.LeadTask).Include(l => l.Lead).Include(l => l.Project).Include(l => l.ClientFeedback).Include(l => l.NextStep)
+            .Include(l => l.ActivityHistoryList!).ThenInclude(l => l.LeadTask)
+            .Include(l => l.ActivityHistoryList!).ThenInclude(l => l.ClientFeedback)
+            .Include(l => l.ActivityHistoryList!).ThenInclude(l => l.NextStep)
+            .Include(l => l.UnitActivityList)
+            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+    }
+
 }
