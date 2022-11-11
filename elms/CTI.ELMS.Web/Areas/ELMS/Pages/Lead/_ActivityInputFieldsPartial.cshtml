@@ -1,10 +1,35 @@
 @using Models
 @model ActivityViewModel
 
-<div class="card">
-    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Activity Info"]</span><br></h5>
-    <div class="card-body">
-        <input type="hidden" asp-for="@Model.Id" name="Id" />       
-        <partial name="_EditActivityDetails" model="Model" />        
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-lg-8">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-lg-6" style="padding-top:10px;">
+                <div class="card">
+                    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Activity Details"]</span><br></h5>
+                    <div class="card-body">
+                        <input type="hidden" asp-for="@Model.Id" name="Id" />
+                        <partial name="_EditActivityDetails" model="Model" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-6" style="padding-top:10px;">
+                <div class="card">
+                    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Lot Spaces"]</span><br></h5>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-lg-4">
+        <div class="col-xs-6" style="padding-top:10px;">
+            <div class="card">
+                <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Activity History"]</span><br></h5>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
