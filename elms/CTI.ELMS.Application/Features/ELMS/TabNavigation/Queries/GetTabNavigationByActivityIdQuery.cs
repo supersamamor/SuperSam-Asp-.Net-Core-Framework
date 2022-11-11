@@ -6,23 +6,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries
 {
-    public record GetTabNavigationByLeadIdQuery(string LeadId, string TabName) : IRequest<TabNavigationModel>;
-    public class GetTabNavigationByLeadIdQueryHandler : IRequestHandler<GetTabNavigationByLeadIdQuery, TabNavigationModel>
+    public record GetTabNavigationByActivityIdQuery(string ActivityId, string TabName) : IRequest<TabNavigationModel>;
+   
+    public class GetTabNavigationByActivityIdQueryHandler : IRequestHandler<GetTabNavigationByActivityIdQuery, TabNavigationModel>
     {
         private readonly ApplicationContext _context;
-        public GetTabNavigationByLeadIdQueryHandler(ApplicationContext context)
+        public GetTabNavigationByActivityIdQueryHandler(ApplicationContext context)
         {
             _context = context;
         }
-        public async Task<TabNavigationModel> Handle(GetTabNavigationByLeadIdQuery request, CancellationToken cancellationToken)
+        public async Task<TabNavigationModel> Handle(GetTabNavigationByActivityIdQuery request, CancellationToken cancellationToken)
         {
             return await (from a in _context.Lead.Include(l => l.OfferingList)
-                          where a.Id == request.LeadId
+                          join b in _context.Activity on a.Id equals b.LeadID
+                          where b.Id == request.ActivityId
                           select new TabNavigationModel()
                           {
                               TabName = request.TabName,
                               LeadName = a.DisplayName,
-                              LeadId = request.LeadId,
+                              LeadId = b.LeadID!,
                               ForAwardNoticeCount = a.OfferingList!.Where(l => l.SignedOfferSheetDate != null).Count(),
                               ForContractCount = a.OfferingList!.Where(l => !string.IsNullOrEmpty(l.TenantContractNo)).Count(),
                           }).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);

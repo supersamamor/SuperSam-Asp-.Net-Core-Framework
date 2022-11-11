@@ -42,8 +42,8 @@ public class ActivityListModel : BasePageModel<ActivityListModel>
                 ActivityDate = e.ActivityDate?.ToString("MMM dd, yyyy HH:mm"),
                 ProjectSpaces = e.Project?.ProjectName + (string.IsNullOrEmpty(e.UnitInformation) ? "" : " (" + e.UnitInformation + ")"),
                 Status = activityStatusHelper.GetActivityStatus(e.LeadTaskId!, e.ClientFeedbackId!),
-                LatestActivity = userHelper.GetUserName(e.LastModifiedBy!) + " / " + e.LeadTask!.LeadTaskName + "<br /><i>" + e.LastModifiedDate.ToString("MMM dd, yyyy hh:mm tt") + "</i>",
-                ClientFeedback = e.ClientFeedback!.ClientFeedbackName,
+                LatestActivity = userHelper.GetUserName(e.LastModifiedBy!) + " / " + e.LeadTask?.LeadTaskName + "<br /><i>" + e.LastModifiedDate.ToString("MMM dd, yyyy hh:mm tt") + "</i>",
+                ClientFeedback = e.ClientFeedback?.ClientFeedbackName,
                 NextStep = e.NextStep?.NextStepTaskName,
                 e.LastModifiedDate
             })

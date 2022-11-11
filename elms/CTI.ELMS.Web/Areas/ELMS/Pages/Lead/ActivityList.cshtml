@@ -88,7 +88,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Lead/EditActivity", new { area = "ELMS" })' + '?id=' + row.id + '&leadId=' + @Model.LeadTabNavigation.LeadId;
+                        url = '@Url.Page("/Lead/EditActivity", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditActivity" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }

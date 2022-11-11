@@ -199,6 +199,6 @@ public class ELMSProfile : Profile
 		CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
 		CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
 		CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
-		CreateMap<CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries.TabNavigationModel, LeadTabNavigationPartial>();
+		CreateMap<CTI.ELMS.Application.Features.ELMS.TabNavigation.Models.TabNavigationModel, LeadTabNavigationPartial>();
 	}
 }

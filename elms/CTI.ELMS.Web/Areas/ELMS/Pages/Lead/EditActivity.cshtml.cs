@@ -18,9 +18,9 @@ public class EditActivityModel : BasePageModel<EditActivityModel>
     [BindProperty]
     public string? AsyncAction { get; set; }
 	public LeadTabNavigationPartial LeadTabNavigation { get; set; } = new();
-	public async Task<IActionResult> OnGet(string id, string leadId)
+	public async Task<IActionResult> OnGet(string id)
     {
-		LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(leadId, Constants.TabNavigation.Activities)));
+		LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByActivityIdQuery(id, Constants.TabNavigation.Activities)));
         return await PageFrom(async () => await Mediatr.Send(new GetActivityByIdQuery(id)), Activity);
     }
 
