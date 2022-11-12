@@ -35,7 +35,7 @@ public record ActivityHistoryViewModel : BaseViewModel
 	[Display(Name = "Units Information")]
 	
 	public string? UnitsInformation { get; init; }
-	
+	public string? LastModifiedBy { get; init; }	
 	public DateTime LastModifiedDate { get; set; }
 	public ActivityViewModel? Activity { get; init; }
 	public LeadTaskViewModel? LeadTask { get; init; }

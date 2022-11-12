@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
             <input type="hidden" asp-for="@Model.AsyncAction" />
-            <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID"/>
+            <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />        
             <div id="PartialLoaderContainer">
                 <partial name="_ActivityInputFieldsPartial" model="Model.Activity" />
             </div>
@@ -35,24 +35,14 @@
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
-        {
+        {         
+            $(".ProjectId").hide();  
             $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();
                 window.focus();
-            });
-            $.fn.projectSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            $("#ProjectID").projectSelect();
+            });            
             $.fn.leadtaskSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({

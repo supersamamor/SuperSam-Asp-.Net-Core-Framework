@@ -36,6 +36,7 @@
     $(document).ready(function () {
         function InitializeForm()
         {
+            $("#ProjectIdLabel").hide();
             $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();

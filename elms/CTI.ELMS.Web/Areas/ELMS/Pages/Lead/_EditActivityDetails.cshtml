@@ -5,7 +5,8 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.ProjectID" class="form-label fieldrequired"><strong>@Localizer["Project"] :</strong></label>
-            <select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+            <select asp-for="@Model.ProjectID" class="form-control ProjectId" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+            <label class="form-control" id="ProjectIdLabel">@Model?.Project?.ProjectName</label>
             <span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
         </div>
     </div>
@@ -19,7 +20,7 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.ActivityDate" class="form-label fieldrequired"><strong>@Localizer["Activity Date"] :</strong></label>
-            <input asp-for="@Model.ActivityDate" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mmZ")"/>
+            <input asp-for="@Model.ActivityDate" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mmZ")" />
             <span asp-validation-for="@Model.ActivityDate" class="text-danger"></span>
         </div>
     </div>

@@ -7,9 +7,6 @@ using CTI.ELMS.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
-
 namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
 
 [Authorize(Policy = Permission.Activity.View)]

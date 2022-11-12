@@ -1,0 +1,23 @@
+@using Models
+@model ActivityViewModel
+
+@{
+    var activityStatusHelper = new CTI.ELMS.Web.Helper.ActivityStatusHelper(Mediatr);
+    var userHelper = new CTI.ELMS.Web.Helper.UserHelper(Mediatr);
+}
+@if (Model?.ActivityHistoryList != null)
+{
+    foreach (var item in Model.ActivityHistoryList.OrderByDescending(l=>l.ActivityDate))
+    {
+        <div class='col-xs-12'>@userHelper.GetUserName(item!.LastModifiedBy!) / @item!.LeadTask!.LeadTaskName / @(((System.DateTime)item.ActivityDate!).ToString("MMM dd, yyyy"))</div>
+        <div class='col-xs-12'>
+            <div class='col-xs-12'><small><i>Space: @item.UnitsInformation / Status: @Html.Raw(activityStatusHelper.GetActivityStatus(item.LeadTaskId!, item.ClientFeedbackId!))</i></small></div>
+            <div class='col-xs-12'><small><i>Client FeedBack: @item!.ClientFeedback!.ClientFeedbackName</i></small></div>
+            <div class='col-xs-12'><small><i>Next Step: @item.NextStep!.NextStepTaskName / @(item.TargetDate != null ? ((System.DateTime)item.TargetDate!).ToString("MMM dd, yyyy") : "")</i></small></div>
+            <div class='col-xs-12'><small><i>Remarks : @item.ActivityRemarks</i></small></div>
+            <div class='col-xs-12'><small><i>Created Date/Time :  @(((System.DateTime)item.LastModifiedDate!).AddHours(Configuration.GetValue<int>("TimeOffset")).ToString("MMM dd, yyyy hh:mm:ss tt"))</i></small></div>
+        </div>
+        <div class='clearfix'></div>
+        <hr />
+    }
+}
