@@ -21,7 +21,7 @@ public class GetActivityByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
             .Include(l => l.ActivityHistoryList!).ThenInclude(l => l.LeadTask)
             .Include(l => l.ActivityHistoryList!).ThenInclude(l => l.ClientFeedback)
             .Include(l => l.ActivityHistoryList!).ThenInclude(l => l.NextStep)
-            .Include(l => l.UnitActivityList)
+            .Include(l => l.UnitActivityList!).ThenInclude(l => l.Unit)
             .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
     }
 

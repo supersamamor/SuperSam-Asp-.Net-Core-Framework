@@ -15,11 +15,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-lg-6" style="padding-top:10px;">
-                <div class="card">
-                    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Lot Spaces"]</span><br></h5>
-                    <div class="card-body">
-                    </div>
-                </div>
+                <partial name="_UnitActivityList" model="Model" />
             </div>
         </div>
     </div>
@@ -28,7 +24,7 @@
             <div class="card">
                 <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Activity History"]</span><br></h5>
                 <div class="card-body">
-                      <partial name="_ActivityHistoryList" model="Model" />       
+                    <partial name="_ActivityHistoryList" model="Model" />
                 </div>
             </div>
         </div>

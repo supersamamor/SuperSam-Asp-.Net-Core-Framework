@@ -35,6 +35,6 @@ public class AddActivityModel : BasePageModel<AddActivityModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();	
-        return Partial("_InputFieldsPartial", Activity);
+        return Partial("_ActivityInputFieldsPartial", Activity);
     }
 }

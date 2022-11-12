@@ -29,8 +29,11 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
+<input class="selected-unitid" />
+<partial name="_ModalPartial" />
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_DataTableScripts" />
 <partial name="_LeadTaskScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
@@ -38,6 +41,10 @@
         {
             $("#ProjectIdLabel").hide();
             $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
+             $('#ProjectID').on( 'change', function () {                
+                $('#AsyncAction').val('');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
+            });
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();
@@ -65,8 +72,32 @@
                 return this;
             };
             $("#LeadTaskId").leadtaskSelect();
+            $(".btn-add-unit").on('click', function (e) {
+                modelPopup();
+            });
         }
         InitializeForm();
+        
+        GetSelectedUnitQueryString = () => {
+            //Get All Selected Bed
+            var selectedUnitsElementList = document.querySelectorAll('.selected-unitid');
+            let selectedUnitQueryString = '';
+            for (var i = 0, len = selectedUnitsElementList.length; i < len; i++) {
+                if (selectedUnitsElementList[i].value != null && selectedUnitsElementList[i].value != '') { selectedUnitQueryString += '&selectedUnits=' + selectedUnitsElementList[i].value; }
+            }
+            return selectedUnitQueryString;
+        }
+        function modelPopup() {    
+            var selectedUnitQueryString = GetSelectedUnitQueryString();            
+            var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('#ProjectId').val() + selectedUnitQueryString;
+            var title = "Select Unit";
+            openModal(url, title);
+            $('#searchkey').keyup(function(){                   
+                var selectedUnitQueryString = GetSelectedUnitQueryString();
+                var searchUrl = '@Url.Page("/Unit/Search/Index", new { area = "CoLiving" })' + '?projectId=' + $('#ProjectId').val() + selectedUnitQueryString + '&searchKey=' + $(this).val();
+                fillPartial(searchUrl, "#table-container");           
+            })
+        }    
     });
 </script>
 }

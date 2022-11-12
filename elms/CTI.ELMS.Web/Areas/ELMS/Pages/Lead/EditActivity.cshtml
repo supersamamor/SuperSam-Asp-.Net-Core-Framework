@@ -31,6 +31,7 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_DataTableScripts" />
 <partial name="_LeadTaskScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
@@ -38,6 +39,10 @@
         {         
             $(".ProjectId").hide();  
             $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
+            $('#ProjectId').on( 'change', function () {
+                $('#AsyncAction').val('');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
+            });
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();

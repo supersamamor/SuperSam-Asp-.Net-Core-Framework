@@ -1,0 +1,82 @@
+﻿@using Models
+@model IEnumerable<CTI.ELMS.Application.Features.ELMS.Unit.Queries.AvailableUnitModel>
+
+<table id="available-units-table" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Localizer["Unit No."]
+            </th>
+            <th>
+                @Localizer["Lot Area"]
+            </th>
+            <th>
+                @Localizer["Availability"]
+            </th>
+            <th>
+                @Localizer["Lot Budget"]
+            </th>
+            <th>
+                @Localizer["Unit Id"]
+            </th>
+            <th>
+                @Localizer["Actions"]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var unit in Model)
+        {
+            <tr>
+                <td>
+                    @unit.UnitNo
+                </td>
+                <td>
+                    @unit.LotArea
+                </td>
+                <td>
+                    @unit.Availability
+                </td>
+                <td>
+                    @unit.LotBudget
+                </td>
+                <td>
+                    @unit.UnitId
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script asp-add-nonce>
+    InitializeTable();
+    function InitializeTable()
+    {
+        var table = $('#available-units-table').DataTable({
+            select: false,
+            responsive: false,
+            ordering: false,
+            searching:false,
+            paging: true,
+            info: true,
+            buttons: [],
+            columns: [
+                { data: "unitNo", name: "UnitNo", },
+                { data: "lotArea", name: "LotArea", },
+                { data: "availability", name: "Availability" },
+                { data: "lotBudget", name: "LotBudget", },
+                { data: "unitId", name: "UnitId", visible: false, },
+                {
+                    data: null,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        return '<button class="btn btn-custom">@Localizer["Select"]</button>';
+                    },
+                },
+            ]
+        });
+
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+    }
+</script>
