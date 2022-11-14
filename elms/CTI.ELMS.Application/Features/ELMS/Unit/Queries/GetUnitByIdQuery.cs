@@ -14,15 +14,11 @@ public class GetUnitByIdQueryHandler : BaseQueryByIdHandler<ApplicationContext, 
     public GetUnitByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	
-	public override async Task<Option<UnitState>> Handle(GetUnitByIdQuery request, CancellationToken cancellationToken = default)
-	{
-		return await Context.Unit.Include(l=>l.Project)
-			.Include(l=>l.UnitActivityList)
-			.Include(l=>l.PreSelectedUnitList)
-			.Include(l=>l.UnitOfferedList)
-			.Include(l=>l.UnitOfferedHistoryList)
-			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-	}
-	
+
+    public override async Task<Option<UnitState>> Handle(GetUnitByIdQuery request, CancellationToken cancellationToken = default)
+    {
+        return await Context.Unit.Include(l => l.Project)
+                    .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+    }
+
 }

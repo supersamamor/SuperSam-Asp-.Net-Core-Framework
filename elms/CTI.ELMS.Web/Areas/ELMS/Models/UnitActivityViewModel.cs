@@ -40,8 +40,7 @@ public record UnitActivityViewModel : BaseViewModel
                 ret = (this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MMM dd, yyyy") : "");
             }
             return ret;
-        }
-        set { }
+        }      
     }
 
 }

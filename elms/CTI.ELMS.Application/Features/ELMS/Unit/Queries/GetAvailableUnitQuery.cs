@@ -26,7 +26,7 @@ public record AvailableUnitModel
             string ret = LotAvailability.Available;
             if (this.AvailabilityDate != null && this.AvailabilityDate >= DateTime.Today)
             {
-                ret =  (this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MMM dd, yyyy") : "");
+                ret = (this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MMM dd, yyyy") : "");
             }
             return ret;
         }
@@ -53,7 +53,7 @@ public record AvailableUnitModel
             {
                 case 1:
                     lotBudget = this.January;
-                    break; 
+                    break;
                 case 2:
                     lotBudget = this.February;
                     break;
@@ -119,8 +119,8 @@ public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuer
         {
             query = query.Where(l => l.UnitNo.Contains(request.SearchKey));
         }
-        IList<AvailableUnitModel> initialValue = new List<AvailableUnitModel>() { new AvailableUnitModel() };
-        return initialValue.Concat(await(from unit in query.Include(l => l.UnitBudgetList)
+
+        return await (from unit in query.Include(l => l.UnitBudgetList)
                       join a in _context.UnitBudget on unit.Id equals a.UnitID
                       where a.Year == year
                       select new AvailableUnitModel()
@@ -143,6 +143,6 @@ public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuer
                           November = a.November,
                           December = a.December,
                       })
-                      .ToListAsync(cancellationToken: cancellationToken));
+                      .ToListAsync(cancellationToken: cancellationToken);
     }
 }

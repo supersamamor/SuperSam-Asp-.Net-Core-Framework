@@ -228,11 +228,9 @@ $(document).ready(function () {
     }
     $.triggerPageForm = function (handler, elementContainer, form, initializeFormFunction) {
         $('body').removeClass('loaded');      
-        var url = '?handler=' + handler;
-        alert('?handler=' + handler);
+        var url = '?handler=' + handler;    
         $.post(url, $(form).serialize(),
-            function (data) {
-                alert(1);
+            function (data) {              
                 $(elementContainer).html(data);
                 initializeFormFunction();
                 $('body').addClass('loaded');

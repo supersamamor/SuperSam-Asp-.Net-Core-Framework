@@ -149,6 +149,7 @@ public class ELMSProfile : Profile
         CreateMap<UnitActivityViewModel, UnitActivityState>();
         CreateMap<UnitState, UnitActivityViewModel>()
             .ForMember(e => e.Id, c => c.Ignore())
+            .ForMember(e => e.Availability, c => c.Ignore())
             .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
         CreateMap<OfferingViewModel, AddOfferingCommand>();
         CreateMap<OfferingViewModel, EditOfferingCommand>();

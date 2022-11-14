@@ -75,13 +75,7 @@
                     }
                 }
                 return selectedUnitQueryString;
-            }
-            function modelPopup() {
-                var selectedUnitQueryString = GetSelectedUnitQueryString();
-                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
-                var title = "Select Unit";
-                openModal(url, title, InitializeTable);
-            }
+            }            
             $('.RemoveUnitActivityButton ').on( 'click', function () {
                 $('#RemoveSubDetailId').val($(this).attr('removeid'));
                 $('#AsyncAction').val('RemoveUnitActivity');
@@ -102,6 +96,10 @@
                             $('#AddUnitActivityUnitId').val($(this).attr('addUnitId'));
                             $('#AsyncAction').val('AddUnitActivity');
                             $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
+                            var selectedUnitQueryString = GetSelectedUnitQueryString();
+                            var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
+                            fillPartial(url, "#table-container");  
+                            InitializeTable();
                         });
                     },
                     columns: [
@@ -129,7 +127,13 @@
                     ]
                 });        
                 var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search     
-            }           
+            } 
+            function modelPopup() {
+                var selectedUnitQueryString = GetSelectedUnitQueryString();
+                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
+                var title = "Select Unit";
+                openModal(url, title, InitializeTable);
+            }
         }
         InitializeForm();
     });

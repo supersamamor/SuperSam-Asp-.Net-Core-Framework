@@ -59,14 +59,7 @@ public class EditActivityModel : BasePageModel<EditActivityModel>
     {
         ModelState.Clear();
         UnitActivityViewModel unitActivityToAdd = new UnitActivityViewModel();
-        try
-        {
-            (await Mediatr.Send(new GetUnitByIdQuery(AddUnitActivityUnitId!))).Select(l => unitActivityToAdd = Mapper.Map<UnitActivityViewModel>(l));
-        }
-        catch (Exception ex)
-        {
-            var test = 1;
-        }
+        (await Mediatr.Send(new GetUnitByIdQuery(AddUnitActivityUnitId!))).Select(l => unitActivityToAdd = Mapper.Map<UnitActivityViewModel>(l));
         unitActivityToAdd.ActivityID = Activity.Id;
         if (Activity!.UnitActivityList == null) { Activity!.UnitActivityList = new List<UnitActivityViewModel>(); }
         Activity!.UnitActivityList!.Add(unitActivityToAdd);
