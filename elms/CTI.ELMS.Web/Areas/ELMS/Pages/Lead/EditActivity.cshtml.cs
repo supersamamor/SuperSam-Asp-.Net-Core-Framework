@@ -35,7 +35,17 @@ public class EditActivityModel : BasePageModel<EditActivityModel>
 	}	
 	public IActionResult OnPostChangeFormValue()
     {
-        ModelState.Clear();	
-        return Partial("_InputFieldsPartial", Activity);
+        ModelState.Clear();
+        if (AsyncAction == "RemoveUnitActivity")
+        {
+            return RemoveUnitActivity();
+        }
+        return Partial("_ActivityInputFieldsPartial", Activity);
+    }
+    private IActionResult RemoveUnitActivity()
+    {
+        ModelState.Clear();
+        Activity.UnitActivityList = Activity!.UnitActivityList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+        return Partial("_ActivityInputFieldsPartial", Activity);
     }
 }

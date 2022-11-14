@@ -81,6 +81,11 @@
                 var title = "Select Unit";
                 openModal(url, title);               
             }    
+            $('.RemoveUnitActivityButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveUnitActivity');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
+			});
         }
         InitializeForm();
     });

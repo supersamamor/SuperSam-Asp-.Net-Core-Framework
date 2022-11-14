@@ -3,7 +3,7 @@
 <input type="hidden" id="UnitActivityCount" value="@Model?.UnitActivityList?.Count" />
 <div class="card">
     <h5 class="card-header">
-        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Lot Spaces"]</span>       
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Lot Spaces"]</span>
         <button class="cancel" type="button" id="btnRemoveUnitActivity" value="RemoveUnitActivity" style="display:none;"></button>
         @if (!string.IsNullOrEmpty(Model.ProjectID))
         {
@@ -16,10 +16,13 @@
                 <tr>
                     <th style="display:none;"></th>
                     <th>
-                        @Localizer["Unit"]
+                        @Localizer["Space No."]
                     </th>
                     <th>
-                        @Localizer["Activity History"]
+                        @Localizer["Lot Area"]
+                    </th>
+                    <th>
+                        @Localizer["Availability Date"]
                     </th>
                     <th>
                         @Localizer["Action"]
@@ -35,23 +38,28 @@
                         <tr>
                             <td style="display:none;">
                                 <input type="hidden" name="UnitActivityList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" class="selected-unitid" name="UnitActivityList[@counter].UnitId" value="@item.UnitID" />
                                 <input type="hidden" name="UnitActivityList[@counter].ActivityID" value="@item.ActivityID" />
+                                <input type="hidden" name="UnitActivityList[@counter].UnitNo" value="@item.UnitNo" />
+                                <input type="hidden" name="UnitActivityList[@counter].LotArea" value="@item.LotArea" />
+                                <input type="hidden" name="UnitActivityList[@counter].AvailabilityDate" value="@item.AvailabilityDate" />
                             </td>
                             <td>
-                                <select asp-for="@item.UnitID" id="UnitActivityList_@(counter)_UnitID" name="UnitActivityList[@counter].UnitID" class="form-control SelectUnit" asp-items="@(dropdownService.GetUnitList(item.UnitID))">
-                                    <option value="">- Select Unit -</option>
-                                </select>
-                                <span data-valmsg-for="UnitActivityList[@counter].UnitID" asp-validation-for="@item.UnitID" class="text-danger"></span>
-
+                                <span class="form-control">@item!.UnitNo</span>
                             </td>
                             <td>
-                                <select asp-for="@item.ActivityHistoryID" id="UnitActivityList_@(counter)_ActivityHistoryID" name="UnitActivityList[@counter].ActivityHistoryID" class="form-control SelectActivityHistory" asp-items="@(dropdownService.GetActivityHistoryList(item.ActivityHistoryID))">
-                                    <option value="">- Select Activity History -</option>
-                                </select>
-                                <span data-valmsg-for="UnitActivityList[@counter].ActivityHistoryID" asp-validation-for="@item.ActivityHistoryID" class="text-danger"></span>
-
+                                <span class="form-control">@item!.LotArea</span>
                             </td>
-
+                            <td class="text-center">
+                                @if (item!.Availability == CTI.ELMS.Core.Constants.LotAvailability.Available)
+                                {
+                                    <span class="badge bg-success">@item!.Availability</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">@item!.Availability</span>
+                                }
+                            </td>
                             <td>
                                 <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveUnitActivityButton" title="@Localizer["Remove UnitActivity"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
                             </td>
