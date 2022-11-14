@@ -29,6 +29,7 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
+<partial name="_ModalPartial" />
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <partial name="_DataTableScripts" />
@@ -59,6 +60,27 @@
                 return this;
             };
             $("#LeadTaskId").leadtaskSelect();
+            $(".btn-add-unit").on('click', function (e) {
+                modelPopup();
+            });
+            GetSelectedUnitQueryString = () => {
+                //Get All Selected Unit
+                 let selectedUnitQueryString = '';             
+                if($('.selected-unitid').length > 0)
+                {               
+                    var selectedUnitsElementList = document.querySelectorAll('.selected-unitid');              
+                    for (var i = 0, len = selectedUnitsElementList.length; i < len; i++) {
+                        if (selectedUnitsElementList[i].value != null && selectedUnitsElementList[i].value != '') { selectedUnitQueryString += '&selectedUnits=' + selectedUnitsElementList[i].value; }
+                    }               
+                }    
+                return selectedUnitQueryString;
+            }
+            function modelPopup() {                  
+                var selectedUnitQueryString = GetSelectedUnitQueryString();            
+                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
+                var title = "Select Unit";
+                openModal(url, title);               
+            }    
         }
         InitializeForm();
     });

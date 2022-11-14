@@ -197,16 +197,20 @@ $(document).ready(function () {
         });
     }
 
-    openModal = (url, title, callback) => {
+    openModal = (url, title) => {       
         var placeholderElement = $('#modal-placeholder');
         $.get(url).done(function (data) {
-            placeholderElement.find('.modal-body').html(data);
+            placeholderElement.find('#table-container').html(data);
             placeholderElement.find('.modal-title').html(title);
-            placeholderElement.find('.modal').modal('show');
-            callback();
-        });
+            placeholderElement.find('.modal').modal('show');          
+        });       
     }
-	
+    fillPartial = (url, elementToFill) => {       
+        var placeholderElement = $(elementToFill);
+        $.get(url).done(function (data) {
+            placeholderElement.html(data);
+        });  
+    }
 	setTimeout(function () {
         $('body').addClass('loaded');
     }, 200);

@@ -23,10 +23,10 @@ public record AvailableUnitModel
     {
         get
         {
-            string ret = @"<span class=""badge bg-success"">" + LotAvailability.Available + "</span>";
+            string ret = LotAvailability.Available;
             if (this.AvailabilityDate != null && this.AvailabilityDate >= DateTime.Today)
             {
-                ret = this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MM dd, yyyy") : "";
+                ret =  (this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MMM dd, yyyy") : "");
             }
             return ret;
         }

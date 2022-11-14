@@ -1,6 +1,11 @@
 ﻿@using Models
 @model IEnumerable<CTI.ELMS.Application.Features.ELMS.Unit.Queries.AvailableUnitModel>
-
+<style>
+    #available-units-table_filter {
+        float: right;
+        margin-bottom: 10px;
+    }
+</style>
 <table id="available-units-table" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
     <thead>
         <tr>
@@ -18,6 +23,12 @@
             </th>
             <th>
                 @Localizer["Unit Id"]
+            </th>
+            <th>
+                @Localizer["Availability"]
+            </th>
+            <th>
+                @Localizer["AvailabilityDate"]
             </th>
             <th>
                 @Localizer["Actions"]
@@ -44,6 +55,12 @@
                     @unit.UnitId
                 </td>
                 <td>
+                    @unit.Availability
+                </td>
+                <td>
+                    @unit.AvailabilityDate
+                </td>
+                <td>
                 </td>
             </tr>
         }
@@ -55,23 +72,32 @@
     {
         var table = $('#available-units-table').DataTable({
             select: false,
-            responsive: false,
-            ordering: false,
-            searching:false,
+            responsive: true,
+            ordering: true,
+            searching:true,
             paging: true,
             info: true,
             buttons: [],
             columns: [
-                { data: "unitNo", name: "UnitNo", },
-                { data: "lotArea", name: "LotArea", },
-                { data: "availability", name: "Availability" },
-                { data: "lotBudget", name: "LotBudget", },
+                { data: "unitNo", name: "UnitNo", orderable: true, },
+                { data: "lotArea", name: "LotArea", orderable: true, },
+                {
+                    data: "availabilityDate",
+                    name: "AvailabilityDate",
+                    orderable: true,
+                    render: function (data, type, row, meta) {
+                        return '<a class="badge ' + (row.availability=='@(CTI.ELMS.Core.Constants.LotAvailability.Available)'? 'bg-success' : 'bg-warning') + '" style="text-decoration:none;">' + row.availability + '</a>';
+                    },
+                },
+                { data: "lotBudget", name: "LotBudget", orderable: true, },
                 { data: "unitId", name: "UnitId", visible: false, },
+                { data: "availability", name: "Availability", visible: false, },
+                { data: "availabilityDate", name: "AvailabilityDate", visible: false, },
                 {
                     data: null,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        return '<button class="btn btn-custom">@Localizer["Select"]</button>';
+                        return '<a class="btn btnMaterial btn-flat success semicircle" title="Select"><i class="fas fa-plus"></i></a>';
                     },
                 },
             ]
