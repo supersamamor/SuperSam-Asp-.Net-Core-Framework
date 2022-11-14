@@ -12,6 +12,7 @@ public record ActivityViewModel : BaseViewModel
 	[Required]
 	public string? ProjectID { get; init; }
 	public string?  ForeignKeyProject { get; set; }
+	public string? ForeignKeyProjectName { get; set; }	
 	[Display(Name = "Lead Task")]
 	[Required]
 	public string? LeadTaskId { get; init; }

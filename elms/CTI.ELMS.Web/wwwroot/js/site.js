@@ -197,12 +197,13 @@ $(document).ready(function () {
         });
     }
 
-    openModal = (url, title) => {       
+    openModal = (url, title, callback) => {       
         var placeholderElement = $('#modal-placeholder');
         $.get(url).done(function (data) {
             placeholderElement.find('#table-container').html(data);
             placeholderElement.find('.modal-title').html(title);
-            placeholderElement.find('.modal').modal('show');          
+            placeholderElement.find('.modal').modal('show');
+            callback();
         });       
     }
     fillPartial = (url, elementToFill) => {       
@@ -226,16 +227,18 @@ $(document).ready(function () {
         });
     }
     $.triggerPageForm = function (handler, elementContainer, form, initializeFormFunction) {
-        $('body').removeClass('loaded');
+        $('body').removeClass('loaded');      
         var url = '?handler=' + handler;
+        alert('?handler=' + handler);
         $.post(url, $(form).serialize(),
             function (data) {
+                alert(1);
                 $(elementContainer).html(data);
                 initializeFormFunction();
                 $('body').addClass('loaded');
                 if ($(form).valid() == false) { }
             })
-            .fail(function () { });
+            .fail(function () { alert('failed'); });
     }
 	$.showAjaxLoaderOnClick = function (triggerElements)
     {      

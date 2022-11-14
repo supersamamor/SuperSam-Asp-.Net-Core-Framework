@@ -6,7 +6,7 @@
         <div class="mb-3">
             <label asp-for="@Model.ProjectID" class="form-label fieldrequired"><strong>@Localizer["Project"] :</strong></label>
             <select asp-for="@Model.ProjectID" class="form-control ProjectId" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
-            <input id="ProjectIdLabel" asp-for="@Model.ForeignKeyProject" class="form-control" readonly />
+            <input id="ProjectIdLabel" asp-for="@Model.ForeignKeyProjectName" class="form-control" readonly />
             <span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
         </div>
     </div>

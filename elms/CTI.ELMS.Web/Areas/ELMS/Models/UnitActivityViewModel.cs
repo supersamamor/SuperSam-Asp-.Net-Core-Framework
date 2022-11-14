@@ -20,7 +20,7 @@ public record UnitActivityViewModel : BaseViewModel
     [Display(Name = "Activity")]
     [Required]
 
-    public string ActivityID { get; init; } = "";
+    public string ActivityID { get; set; } = "";
     public string? ForeignKeyActivity { get; set; }
 
     public DateTime LastModifiedDate { get; set; }

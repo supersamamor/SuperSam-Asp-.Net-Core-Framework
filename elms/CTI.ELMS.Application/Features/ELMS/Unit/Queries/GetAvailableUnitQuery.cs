@@ -119,8 +119,8 @@ public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuer
         {
             query = query.Where(l => l.UnitNo.Contains(request.SearchKey));
         }
-
-        return await (from unit in query.Include(l => l.UnitBudgetList)
+        IList<AvailableUnitModel> initialValue = new List<AvailableUnitModel>() { new AvailableUnitModel() };
+        return initialValue.Concat(await(from unit in query.Include(l => l.UnitBudgetList)
                       join a in _context.UnitBudget on unit.Id equals a.UnitID
                       where a.Year == year
                       select new AvailableUnitModel()
@@ -143,6 +143,6 @@ public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuer
                           November = a.November,
                           December = a.December,
                       })
-                      .ToListAsync(cancellationToken: cancellationToken);
+                      .ToListAsync(cancellationToken: cancellationToken));
     }
 }

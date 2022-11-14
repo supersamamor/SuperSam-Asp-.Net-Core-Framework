@@ -125,7 +125,13 @@ public class ELMSProfile : Profile
         CreateMap<ContactPersonViewModel, ContactPersonState>();
         CreateMap<ActivityViewModel, AddActivityCommand>();
         CreateMap<ActivityViewModel, EditActivityCommand>();
-        CreateMap<ActivityState, ActivityViewModel>().ForPath(e => e.ForeignKeyLeadTask, o => o.MapFrom(s => s.LeadTask!.LeadTaskName)).ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id)).ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyClientFeedback, o => o.MapFrom(s => s.ClientFeedback!.ClientFeedbackName)).ForPath(e => e.ForeignKeyNextStep, o => o.MapFrom(s => s.NextStep!.NextStepTaskName));
+        CreateMap<ActivityState, ActivityViewModel>()
+            .ForPath(e => e.ForeignKeyLeadTask, o => o.MapFrom(s => s.LeadTask!.LeadTaskName))
+            .ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id))
+            .ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id))
+            .ForPath(e => e.ForeignKeyProjectName, o => o.MapFrom(s => s.Project!.ProjectName))
+            .ForPath(e => e.ForeignKeyClientFeedback, o => o.MapFrom(s => s.ClientFeedback!.ClientFeedbackName))
+            .ForPath(e => e.ForeignKeyNextStep, o => o.MapFrom(s => s.NextStep!.NextStepTaskName));
         CreateMap<ActivityViewModel, ActivityState>();
         CreateMap<ActivityHistoryViewModel, AddActivityHistoryCommand>();
         CreateMap<ActivityHistoryViewModel, EditActivityHistoryCommand>();
@@ -141,6 +147,9 @@ public class ELMSProfile : Profile
             .ForPath(e => e.LotArea, o => o.MapFrom(s => s.Unit!.LotArea))
             .ForPath(e => e.AvailabilityDate, o => o.MapFrom(s => s.Unit!.AvailabilityDate));
         CreateMap<UnitActivityViewModel, UnitActivityState>();
+        CreateMap<UnitState, UnitActivityViewModel>()
+            .ForMember(e => e.Id, c => c.Ignore())
+            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
         CreateMap<OfferingViewModel, AddOfferingCommand>();
         CreateMap<OfferingViewModel, EditOfferingCommand>();
         CreateMap<OfferingState, OfferingViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id));

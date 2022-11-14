@@ -14,7 +14,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
             <input type="hidden" asp-for="@Model.AsyncAction" />
-            <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID"/>
+            <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
+            <input type="hidden" asp-for="@Model.AddUnitActivityUnitId" />
             <div id="PartialLoaderContainer">
                 <partial name="_ActivityInputFieldsPartial" model="Model.Activity" />
             </div>
@@ -40,7 +41,7 @@
         {
             $("#ProjectIdLabel").hide();
             $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
-             $('#ProjectID').on( 'change', function () {                
+             $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
             });
@@ -76,31 +77,31 @@
             });
             GetSelectedUnitQueryString = () => {
                 //Get All Selected Unit
-                 let selectedUnitQueryString = '';             
+                 let selectedUnitQueryString = '';
                 if($('.selected-unitid').length > 0)
-                {               
-                    var selectedUnitsElementList = document.querySelectorAll('.selected-unitid');              
+                {
+                    var selectedUnitsElementList = document.querySelectorAll('.selected-unitid');
                     for (var i = 0, len = selectedUnitsElementList.length; i < len; i++) {
                         if (selectedUnitsElementList[i].value != null && selectedUnitsElementList[i].value != '') { selectedUnitQueryString += '&selectedUnits=' + selectedUnitsElementList[i].value; }
-                    }               
-                }    
+                    }
+                }
                 return selectedUnitQueryString;
             }
-            function modelPopup() {                  
-                var selectedUnitQueryString = GetSelectedUnitQueryString();            
+            function modelPopup() {
+                var selectedUnitQueryString = GetSelectedUnitQueryString();
                 var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
                 var title = "Select Unit";
-                openModal(url, title);               
-            }    
+                openModal(url, title);
+            }
             $('.RemoveUnitActivityButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveUnitActivity');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
-			});
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveUnitActivity');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
+            });
         }
         InitializeForm();
-        
-        
+
+
     });
 </script>
 }
