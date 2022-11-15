@@ -93,7 +93,7 @@
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
             });
             function InitializeTable()
-            {
+            {               
                 var table = $('#available-units-table').DataTable({
                     select: false,
                     responsive: true,
@@ -102,15 +102,11 @@
                     paging: true,
                     info: true,
                     buttons: [],
-                    fnDrawCallback: function(oSettings) {
-                        $('.AddUnitActivityButton').on( 'click', function () {
+                    fnDrawCallback: function(oSettings) { 
+                       $('.AddUnitActivityButton').on( 'click', function () {
                             $('#AddUnitActivityUnitId').val($(this).attr('addUnitId'));
                             $('#AsyncAction').val('AddUnitActivity');
-                            $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', InitializeForm);
-                            var selectedUnitQueryString = GetSelectedUnitQueryString();
-                            var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
-                            fillPartial(url, "#table-container");  
-                            InitializeTable();
+                            $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#activity-form', BindOnAddUnitActivity);                   
                         });
                     },
                     columns: [
@@ -137,13 +133,24 @@
                         },
                     ]
                 });
-                var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
-            }
+                function DestroyTable()
+                {
+                    table.destroy();
+                }              
+                var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search     
+            } 
             function modelPopup() {
                 var selectedUnitQueryString = GetSelectedUnitQueryString();
                 var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
                 var title = "Select Unit";
                 openModal(url, title, InitializeTable);
+            }
+            function BindOnAddUnitActivity()
+            {       
+                var selectedUnitQueryString = GetSelectedUnitQueryString();
+                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;                           
+                fillPartial(url, "#table-container", InitializeTable);
+                InitializeForm();
             }
         }
         InitializeForm();

@@ -206,10 +206,13 @@ $(document).ready(function () {
             callback();
         });       
     }
-    fillPartial = (url, elementToFill) => {       
+    fillPartial = (url, elementToFill, callBack) => {
+        $('body').removeClass('loaded');
         var placeholderElement = $(elementToFill);
         $.get(url).done(function (data) {
             placeholderElement.html(data);
+            callBack();
+            $('body').addClass('loaded');
         });  
     }
 	setTimeout(function () {

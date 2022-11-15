@@ -91,7 +91,7 @@ public class ELMSProfile : Profile
         CreateMap<AddContactCommand, ContactState>();
         CreateMap<EditContactCommand, ContactState>().IgnoreBaseEntityProperties();
         CreateMap<AddContactPersonCommand, ContactPersonState>();
-        CreateMap<EditContactPersonCommand, ContactPersonState>().IgnoreBaseEntityProperties();        
+        CreateMap<EditContactPersonCommand, ContactPersonState>().IgnoreBaseEntityProperties();
         CreateMap<EditActivityCommand, ActivityState>().IgnoreBaseEntityProperties();
         CreateMap<AddActivityHistoryCommand, ActivityHistoryState>();
         CreateMap<EditActivityHistoryCommand, ActivityHistoryState>().IgnoreBaseEntityProperties();
@@ -134,6 +134,7 @@ public class ELMSProfile : Profile
             .ForPath(e => e.ActivityID, o => o.MapFrom(s => s.Id))
             .ForMember(e => e.Id, c => c.Ignore());
         CreateMap<AddActivityCommand, ActivityState>()
-            .ForMember(e => e.Id, c => c.Ignore());
+            .ForMember(e => e.Id, c => c.Ignore())
+            .ForMember(e => e.ActivityHistoryList, c => c.Ignore());
     }
 }

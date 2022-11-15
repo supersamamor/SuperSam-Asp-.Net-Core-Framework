@@ -56,7 +56,7 @@ public class AddActivityCommandHandler : BaseCommandHandler<ApplicationContext, 
         return Success<Error, ActivityState>(entity);
     }
     private void AddActivityHistory(ActivityState entity)
-    {
+    {     
         var activityHistory = Mapper.Map<ActivityHistoryState>(entity);
         Context.Entry(activityHistory).State = EntityState.Added;
     }
