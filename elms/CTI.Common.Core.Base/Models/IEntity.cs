@@ -8,5 +8,5 @@ public interface IEntity
     /// <summary>
     /// Id of this entity
     /// </summary>
-    string Id { get; init; }
+    string Id { get; set; }
 }

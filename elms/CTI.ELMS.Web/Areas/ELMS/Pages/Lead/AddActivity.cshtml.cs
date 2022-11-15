@@ -61,8 +61,8 @@ public class AddActivityModel : BasePageModel<AddActivityModel>
     private async Task<IActionResult> AddUnitActivity()
     {
         ModelState.Clear();
-        UnitActivityViewModel unitActivityToAdd = new UnitActivityViewModel();
-        (await Mediatr.Send(new GetUnitByIdQuery(AddUnitActivityUnitId!))).Select(l => unitActivityToAdd = Mapper.Map<UnitActivityViewModel>(l));
+        UnitActivityViewModel unitActivityToAdd = new();
+        _ = (await Mediatr.Send(new GetUnitByIdQuery(AddUnitActivityUnitId!))).Select(l => unitActivityToAdd = Mapper.Map<UnitActivityViewModel>(l));
         unitActivityToAdd.ActivityID = Activity.Id;
         if (Activity!.UnitActivityList == null) { Activity!.UnitActivityList = new List<UnitActivityViewModel>(); }
         Activity!.UnitActivityList!.Add(unitActivityToAdd);

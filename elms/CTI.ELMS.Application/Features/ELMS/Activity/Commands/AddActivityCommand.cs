@@ -30,47 +30,59 @@ public class AddActivityCommandHandler : BaseCommandHandler<ApplicationContext, 
 
     public async Task<Validation<Error, ActivityState>> AddActivity(AddActivityCommand request, CancellationToken cancellationToken)
     {
-        var entity = await GetActivityByLeadProject(request.LeadID!, request.ProjectID!);       
+        var entity = await GetActivityByLeadProject(request.LeadID!, request.ProjectID!);
         if (entity != null)
         {
             Mapper.Map(request, entity);
-            await UpdateUnitActivityList(entity, request, cancellationToken);
+            var activityHistoryId = AddActivityHistory(entity);
+            await UpdateUnitActivityList(entity, request, activityHistoryId, cancellationToken);
             Context.Entry(entity).State = EntityState.Modified;
         }
         else
         {
-            entity = Mapper.Map<ActivityState>(request);         
-            AddUnitActivityList(entity);
+            entity = Mapper.Map<ActivityState>(request);
+            var activityHistoryId = AddActivityHistory(entity);
+            AddUnitActivityList(entity, activityHistoryId);
             var nextStepPCT = await GetLeadTaskNextStepItem(request.LeadTaskId!, request.ClientFeedbackId!, request.NextStepId!);
             if (nextStepPCT != null && nextStepPCT.PCTDay != 0)
             {
                 if (entity.ActivityDate != null)
-                { 
-                    entity.SetPCTDate(((DateTime)entity.ActivityDate).AddDays((int)nextStepPCT!.PCTDay!)); 
-                }                
-            }            
+                {
+                    entity.SetPCTDate(((DateTime)entity.ActivityDate).AddDays((int)nextStepPCT!.PCTDay!));
+                }
+            }
             _ = await Context.AddAsync(entity, cancellationToken);
         }
-        AddActivityHistory(entity);
         _ = await Context.SaveChangesAsync(cancellationToken);
         return Success<Error, ActivityState>(entity);
     }
-    private void AddActivityHistory(ActivityState entity)
-    {     
+    private string AddActivityHistory(ActivityState entity)
+    {
         var activityHistory = Mapper.Map<ActivityHistoryState>(entity);
-        Context.Entry(activityHistory).State = EntityState.Added;
+        Context.Entry(activityHistory!).State = EntityState.Added;
+        return activityHistory.Id;
     }
-    private void AddUnitActivityList(ActivityState entity)
+    private void AddUnitActivityHistory(UnitActivityState unitActivity, string activityHistoryId)
+    {
+        var unitActivityHistory = new UnitActivityState()
+        {
+            UnitID = unitActivity.UnitID,
+            ActivityHistoryID = activityHistoryId,
+        };     
+        Context.Entry(unitActivityHistory).State = EntityState.Added;
+    }
+    private void AddUnitActivityList(ActivityState entity, string activityHistoryId)
     {
         if (entity.UnitActivityList?.Count > 0)
         {
             foreach (var unitActivity in entity.UnitActivityList!)
             {
                 Context.Entry(unitActivity).State = EntityState.Added;
+                AddUnitActivityHistory(unitActivity, activityHistoryId);
             }
         }
     }
-    private async Task UpdateUnitActivityList(ActivityState entity, AddActivityCommand request, CancellationToken cancellationToken)
+    private async Task UpdateUnitActivityList(ActivityState entity, AddActivityCommand request, string activityHistoryId, CancellationToken cancellationToken)
     {
         IList<UnitActivityState> unitActivityListForDeletion = new List<UnitActivityState>();
         var queryUnitActivityForDeletion = Context.UnitActivity.Where(l => l.ActivityID == request.Id).AsNoTracking();
@@ -95,12 +107,13 @@ public class AddActivityCommandHandler : BaseCommandHandler<ApplicationContext, 
                 {
                     Context.Entry(unitActivity).State = EntityState.Modified;
                 }
+                AddUnitActivityHistory(unitActivity, activityHistoryId);
             }
         }
     }
     public async Task<ActivityState?> GetActivityByLeadProject(string leadID, string projectID)
     {
-        return await Context.Activity.         
+        return await Context.Activity.
             FirstOrDefaultAsync(i => i.LeadID == leadID && i.ProjectID == projectID);
     }
     public async Task<LeadTaskNextStepState?> GetLeadTaskNextStepItem(string ladTaskId, string clientFeedbackId, string nextStepId)
@@ -112,5 +125,5 @@ public class AddActivityCommandHandler : BaseCommandHandler<ApplicationContext, 
 }
 
 public class AddActivityCommandValidator : AbstractValidator<AddActivityCommand>
-{ 
+{
 }

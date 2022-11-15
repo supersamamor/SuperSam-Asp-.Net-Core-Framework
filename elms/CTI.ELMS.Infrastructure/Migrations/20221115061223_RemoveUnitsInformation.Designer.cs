@@ -4,6 +4,7 @@ using CTI.ELMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.ELMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221115061223_RemoveUnitsInformation")]
+    partial class RemoveUnitsInformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2555,6 +2557,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActivityID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -3358,7 +3361,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasOne("CTI.ELMS.Core.ELMS.ActivityState", "Activity")
                         .WithMany("UnitActivityList")
-                        .HasForeignKey("ActivityID");
+                        .HasForeignKey("ActivityID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("CTI.ELMS.Core.ELMS.UnitState", "Unit")
                         .WithMany("UnitActivityList")

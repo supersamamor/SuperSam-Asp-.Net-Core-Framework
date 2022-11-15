@@ -132,7 +132,8 @@ public class ELMSProfile : Profile
         CreateMap<ApproverAssignmentState, ApproverAssignmentState>().IgnoreBaseEntityProperties();
         CreateMap<ActivityState, ActivityHistoryState>()
             .ForPath(e => e.ActivityID, o => o.MapFrom(s => s.Id))
-            .ForMember(e => e.Id, c => c.Ignore());
+            .ForMember(e => e.Id, c => c.Ignore())
+            .ForMember(e => e.UnitActivityList, c => c.Ignore());
         CreateMap<AddActivityCommand, ActivityState>()
             .ForMember(e => e.Id, c => c.Ignore())
             .ForMember(e => e.ActivityHistoryList, c => c.Ignore());

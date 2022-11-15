@@ -8,7 +8,7 @@ public abstract record BaseEntity : IEntity
     /// <summary>
     /// Id of this entity
     /// </summary>
-    public string Id { get; init; } = Guid.NewGuid().ToString();
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// Field representing the tenant who owns this entity. Used for multi-tenant support.

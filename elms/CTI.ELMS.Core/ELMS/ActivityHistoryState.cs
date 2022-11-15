@@ -12,7 +12,21 @@ public record ActivityHistoryState : BaseEntity
 	public DateTime? TargetDate { get; init; }
 	public string? ActivityRemarks { get; init; }
 	public DateTime? PCTDate { get; init; }
-	public string? UnitsInformation { get; init; }	
+	public string? UnitsInformation
+	{
+		get
+		{
+			var unitList = this.UnitActivityList?.Select(l => l.Unit?.UnitNo).ToList();
+			if (unitList != null)
+			{
+				return string.Join(", ", unitList);
+			}
+			else
+			{
+				return "";
+			}
+		}
+	}
 	public ActivityState? Activity { get; init; }
 	public LeadTaskState? LeadTask { get; init; }
 	public ClientFeedbackState? ClientFeedback { get; init; }
