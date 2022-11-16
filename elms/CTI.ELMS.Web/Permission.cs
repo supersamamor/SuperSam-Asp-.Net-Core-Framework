@@ -58,7 +58,12 @@ public static class Permission
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
         var permissions = new List<string>();
-        if (module == "AwardNotice" || module == "LeaseContract" || module == "Offering")
+        if (module == "AwardNotice")
+        {
+            permissions.Add($"Permission.{module}.View");
+            permissions.Add($"Permission.{module}.CancelAwardNotice");
+        }
+        if (module == "LeaseContract")
         {
             permissions.Add($"Permission.{module}.View");
         }
@@ -68,7 +73,7 @@ public static class Permission
             {
                 $"Permission.{module}.Create",
                 $"Permission.{module}.View",
-                $"Permission.{module}.Edit",               
+                $"Permission.{module}.Edit",
             });
         }
         else
@@ -78,7 +83,7 @@ public static class Permission
                 $"Permission.{module}.Create",
                 $"Permission.{module}.View",
                 $"Permission.{module}.Edit",
-                $"Permission.{module}.Delete",             
+                $"Permission.{module}.Delete",
             });
             if (module == "ApproverSetup")
             {
@@ -87,7 +92,12 @@ public static class Permission
         }
         if (module == "Offering")
         {
+            permissions.Add($"Permission.{module}.Create");
+            permissions.Add($"Permission.{module}.View");
             permissions.Add($"Permission.{module}.Approve");
+            permissions.Add($"Permission.{module}.Print");
+            permissions.Add($"Permission.{module}.CancelOffersheet");
+            permissions.Add($"Permission.{module}.SignOffersheet");
         }
         return permissions;
     }
@@ -278,7 +288,7 @@ public static class Permission
     {
         public const string View = "Permission.Lead.View";
         public const string Create = "Permission.Lead.Create";
-        public const string Edit = "Permission.Lead.Edit";        
+        public const string Edit = "Permission.Lead.Edit";
     }
     public static class Activity
     {
@@ -290,8 +300,11 @@ public static class Permission
     {
         public const string View = "Permission.Offering.View";
         public const string Create = "Permission.Offering.Create";
-        public const string Edit = "Permission.Offering.Edit";   
+        public const string Edit = "Permission.Offering.Edit";
         public const string Approve = "Permission.Offering.Approve";
+        public const string Print = "Permission.Offering.Print";
+        public const string CancelOffersheet = "Permission.Offering.CancelOffersheet";
+        public const string SignOffersheet = "Permission.Offering.SignOffersheet";        
     }
     public static class Contact
     {
@@ -307,7 +320,7 @@ public static class Permission
         public const string Edit = "Permission.ContactPerson.Edit";
         public const string Delete = "Permission.ContactPerson.Delete";
     }
-  
+
     public static class ActivityHistory
     {
         public const string View = "Permission.ActivityHistory.View";
@@ -431,7 +444,8 @@ public static class Permission
     }
     public static class AwardNotice
     {
-        public const string View = "Permission.AwardNotice.View";  
+        public const string View = "Permission.AwardNotice.View";
+        public const string CancelAwardNotice = "Permission.AwardNotice.CancelAwardNotice";
     }
     public static class LeaseContract
     {

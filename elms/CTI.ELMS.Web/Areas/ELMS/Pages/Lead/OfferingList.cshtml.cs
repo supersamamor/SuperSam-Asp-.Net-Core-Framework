@@ -45,7 +45,8 @@ public class OfferingListModel : BasePageModel<OfferingListModel>
                 StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 Status = OfferingStatusHelper.GetOfferingStatus(e.Status!),
                 e.LastModifiedDate,
-                e.OfferSheetNo
+                e.OfferSheetNo,
+                IsSigned = e?.SignedOfferSheetDate != null,
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }
