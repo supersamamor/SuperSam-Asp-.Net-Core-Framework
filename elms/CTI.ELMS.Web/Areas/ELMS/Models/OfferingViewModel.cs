@@ -85,10 +85,6 @@ public record OfferingViewModel : BaseViewModel
     public decimal? TotalUnitArea { get; init; }
     [Display(Name = "Is POS")]
     public bool IsPOS { get; init; }
-    [Display(Name = "Location")]
-    [Required]
-
-    public string Location { get; init; } = "";
     [Display(Name = "Total Security Deposit")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -148,10 +144,7 @@ public record OfferingViewModel : BaseViewModel
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? MinimumSalesQuota { get; init; }
-    [Display(Name = "Unit Type")]
-    [Required]
 
-    public string UnitType { get; init; } = "";
     [Display(Name = "Provision")]
 
     public string? Provision { get; init; }

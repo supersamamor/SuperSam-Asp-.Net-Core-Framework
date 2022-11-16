@@ -213,15 +213,7 @@
             <span asp-validation-for="@Model.IsPOS" class="text-danger"></span>
 
         </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.Location" class="form-label fieldrequired"><strong>@Localizer["Location"] :</strong></label>
-            <input asp-for="@Model.Location" class="form-control" />
-            <span asp-validation-for="@Model.Location" class="text-danger"></span>
-
-        </div>
-    </div>
+    </div> 
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.TotalSecurityDeposit" class="form-label "><strong>@Localizer["Total Security Deposit"] :</strong></label>
@@ -371,14 +363,6 @@
             <label asp-for="@Model.MinimumSalesQuota" class="form-label "><strong>@Localizer["Minimum Sales"] :</strong></label>
             <input asp-for="@Model.MinimumSalesQuota" class="form-control" />
             <span asp-validation-for="@Model.MinimumSalesQuota" class="text-danger"></span>
-
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.UnitType" class="form-label fieldrequired"><strong>@Localizer["Unit Type"] :</strong></label>
-            <input asp-for="@Model.UnitType" class="form-control" />
-            <span asp-validation-for="@Model.UnitType" class="text-danger"></span>
 
         </div>
     </div>

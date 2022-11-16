@@ -1,0 +1,69 @@
+@using Models
+@model OfferingViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.SecMonths" class="form-label "><strong>@Localizer["Sec Months"] :</strong></label>
+            <input asp-for="@Model.SecMonths" class="form-control" />
+            <span asp-validation-for="@Model.SecMonths" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.SecurityDepositPayableWithinMonths" class="form-label "><strong>@Localizer["Security Deposit Payable Within Months"] :</strong></label>
+            <input asp-for="@Model.SecurityDepositPayableWithinMonths" class="form-control" />
+            <span asp-validation-for="@Model.SecurityDepositPayableWithinMonths" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TotalSecurityDeposit" class="form-label "><strong>@Localizer["Total Security Deposit"] :</strong></label>
+            <input asp-for="@Model.TotalSecurityDeposit" class="form-control" />
+            <span asp-validation-for="@Model.TotalSecurityDeposit" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.FitOutPeriod" class="form-label "><strong>@Localizer["Fit-Out Period"] :</strong></label>
+            <input asp-for="@Model.FitOutPeriod" class="form-control" />
+            <span asp-validation-for="@Model.FitOutPeriod" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TurnOverDate" class="form-label "><strong>@Localizer["Turn Over Date"] :</strong></label>
+            <input type="date" asp-for="@Model.TurnOverDate" class="form-control" />
+            <span asp-validation-for="@Model.TurnOverDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ConstructionPayableWithinMonths" class="form-label "><strong>@Localizer["Construction Payable Within Months"] :</strong></label>
+            <input asp-for="@Model.ConstructionPayableWithinMonths" class="form-control" />
+            <span asp-validation-for="@Model.ConstructionPayableWithinMonths" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ConstructionMonths" class="form-label "><strong>@Localizer["Construction Months"] :</strong></label>
+            <input asp-for="@Model.ConstructionMonths" class="form-control" />
+            <span asp-validation-for="@Model.ConstructionMonths" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TotalConstructionBond" class="form-label "><strong>@Localizer["Total Construction Bond"] :</strong></label>
+            <input asp-for="@Model.TotalConstructionBond" class="form-control" />
+            <span asp-validation-for="@Model.TotalConstructionBond" class="text-danger"></span>
+        </div>
+    </div>      
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.MinimumSalesQuota" class="form-label "><strong>@Localizer["Minimum Sales"] :</strong></label>
+            <input asp-for="@Model.MinimumSalesQuota" class="form-control" />
+            <span asp-validation-for="@Model.MinimumSalesQuota" class="text-danger"></span>
+        </div>
+    </div>
+</div>

@@ -96,7 +96,6 @@ public record OfferingState : BaseEntity
 			{
 				version = (int)(this.OfferingHistoryList!.Where(l => l.Id == this.OfferingHistoryID)!.FirstOrDefault()!.OfferingVersion!);
 			}
-
 			return this.Project?.IFCAProjectCode?.ToString() + "-" + this.Id.PadLeft(5, '0') + "-" + version.ToString().PadLeft(2, '0');
 		}
 	}
