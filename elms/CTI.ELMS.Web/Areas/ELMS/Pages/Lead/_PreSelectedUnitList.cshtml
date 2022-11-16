@@ -1,0 +1,69 @@
+@using Models
+@model OfferingViewModel
+<input type="hidden" id="PreSelectedUnitCount" value="@Model?.PreSelectedUnitList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Pre Selected Unit"]</span>
+        <a id="btnAddPreSelectedUnit" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        <button class="cancel" type="button" id="btnRemovePreSelectedUnit" value="RemovePreSelectedUnit" style="display:none;"></button>
+    </h5>
+    <div class="card-body" style="overflow:auto;">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th style="display:none;"></th>
+                    <th>
+                        @Localizer["Unit"]
+                    </th>
+                    <th>
+                        @Localizer["Lot Budget"]
+                    </th>
+                    <th>
+                        @Localizer["Lot Area"]
+                    </th>
+
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.PreSelectedUnitList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.PreSelectedUnitList)
+                    {
+                        <tr>
+                            <td style="display:none;">
+                                <input type="hidden" name="PreSelectedUnitList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="PreSelectedUnitList[@counter].OfferingID" value="@item.OfferingID" />
+                            </td>
+                            <td>
+                                <select asp-for="@item.UnitID" id="PreSelectedUnitList_@(counter)_UnitID" name="PreSelectedUnitList[@counter].UnitID" class="form-control SelectUnit" asp-items="@(dropdownService.GetUnitList(item.UnitID))">
+                                    <option value="">- Select Unit -</option>
+                                </select>
+                                <span data-valmsg-for="PreSelectedUnitList[@counter].UnitID" asp-validation-for="@item.UnitID" class="text-danger"></span>
+
+                            </td>
+                            <td>
+                                <input asp-for="@item.LotBudget" name="PreSelectedUnitList[@counter].LotBudget" class="form-control" />
+                                <span data-valmsg-for="PreSelectedUnitList[@counter].LotBudget" asp-validation-for="@item.LotBudget" class="text-danger"></span>
+
+                            </td>
+                            <td>
+                                <input asp-for="@item.LotArea" name="PreSelectedUnitList[@counter].LotArea" class="form-control" />
+                                <span data-valmsg-for="PreSelectedUnitList[@counter].LotArea" asp-validation-for="@item.LotArea" class="text-danger"></span>
+
+                            </td>
+
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemovePreSelectedUnitButton" title="@Localizer["Remove PreSelectedUnit"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
