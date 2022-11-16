@@ -5,21 +5,21 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.Concession" class="form-label "><strong>@Localizer["Concession"] :</strong></label>
-            <input asp-for="@Model.Concession" class="form-control" />
+            <textarea asp-for="@Model.Concession" class="form-control" ></textarea>
             <span asp-validation-for="@Model.Concession" class="text-danger"></span>
         </div>
     </div>
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.OffersheetRemarks" class="form-label "><strong>@Localizer["Offersheet Remarks"] :</strong></label>
-            <input asp-for="@Model.OffersheetRemarks" class="form-control" />
+            <textarea asp-for="@Model.OffersheetRemarks" class="form-control"></textarea>
             <span asp-validation-for="@Model.OffersheetRemarks" class="text-danger"></span>
         </div>
     </div>  
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.Provision" class="form-label "><strong>@Localizer["Provision"] :</strong></label>
-            <input asp-for="@Model.Provision" class="form-control" />
+            <textarea asp-for="@Model.Provision" class="form-control" ></textarea>
             <span asp-validation-for="@Model.Provision" class="text-danger"></span>
         </div>
     </div>   
