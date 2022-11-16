@@ -37,7 +37,7 @@ public class AwardNoticeListModel : BasePageModel<AwardNoticeListModel>
             {
                 e.Id,
                 ProjectID = e.Project?.Id,
-				OfferingHistoryID = e.OfferingHistoryID?.ToString("##,##"),
+				e.OfferingHistoryID,
 				e.Status,
 						
 				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),

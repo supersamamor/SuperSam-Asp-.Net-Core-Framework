@@ -32,7 +32,7 @@ public class IndexModel : BasePageModel<IndexModel>
             {
                 e.Id,
                 ProjectID = e.Project?.Id,
-				OfferingHistoryID = e.OfferingHistoryID?.ToString("##,##"),
+				e.OfferingHistoryID,
 				e.Status,
 						
 				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),

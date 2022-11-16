@@ -34,17 +34,18 @@ public class OfferingListModel : BasePageModel<OfferingListModel>
         var offeringQuery = DataRequest!.ToQuery<GetOfferingQuery>();
         offeringQuery.LeadId = leadId;
         var result = await Mediatr.Send(offeringQuery);
-        var userHelper = new UserHelper(Mediatr);      
+        var userHelper = new UserHelper(Mediatr);
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
                 e.Project?.ProjectName,
-                OfferingHistoryID = e.OfferingHistoryID?.ToString("##,##"),           
+                e.OfferingHistoryID,
                 CreatedDate = e.CreatedDate.ToString("MMM dd, yyyy hh:mm tt") + "<br /><i>" + userHelper.GetUserName(e.CreatedBy!) + "</i>",
                 StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 Status = OfferingStatusHelper.GetOfferingStatus(e.Status!),
-                e.LastModifiedDate
+                e.LastModifiedDate,
+                e.OfferSheetNo
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }

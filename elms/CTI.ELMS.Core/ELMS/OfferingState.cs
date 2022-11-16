@@ -6,7 +6,7 @@ namespace CTI.ELMS.Core.ELMS;
 public record OfferingState : BaseEntity
 {
 	public string? ProjectID { get; init; }
-	public int? OfferingHistoryID { get; init; }
+	public string? OfferingHistoryID { get; init; }
 	public string? Status { get; init; }
 	public DateTime? CommencementDate { get; init; }
 	public DateTime? TerminationDate { get; init; }
@@ -87,5 +87,17 @@ public record OfferingState : BaseEntity
 	public IList<UnitOfferedState>? UnitOfferedList { get; set; }
 	public IList<UnitOfferedHistoryState>? UnitOfferedHistoryList { get; set; }
 	public IList<IFCATenantInformationState>? IFCATenantInformationList { get; set; }
-	
+	public string OfferSheetNo
+	{
+		get
+		{
+			int version = 1;
+			if (this.OfferingHistoryList != null && this.OfferingHistoryList.Count > 0)
+			{
+				version = (int)(this.OfferingHistoryList!.Where(l => l.Id == this.OfferingHistoryID)!.FirstOrDefault()!.OfferingVersion!);
+			}
+
+			return this.Project?.IFCAProjectCode?.ToString() + "-" + this.Id.PadLeft(5, '0') + "-" + version.ToString().PadLeft(2, '0');
+		}
+	}
 }

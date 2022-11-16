@@ -37,7 +37,7 @@ public class LeaseContractListModel : BasePageModel<LeaseContractListModel>
             {
                 e.Id,
                 ProjectID = e.Project?.Id,
-				OfferingHistoryID = e.OfferingHistoryID?.ToString("##,##"),
+				e.OfferingHistoryID,
 				e.Status,						
 				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 e.LastModifiedDate
