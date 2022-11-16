@@ -17,7 +17,7 @@ public record UnitOfferedViewModel : BaseViewModel
 	public decimal? LotArea { get; init; }
 	[Display(Name = "Offering")]
 	
-	public string? OfferingID { get; init; }
+	public string? OfferingID { get; set; }
 	public string?  ForeignKeyOffering { get; set; }
 	[Display(Name = "Unit")]
 	

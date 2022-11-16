@@ -9,7 +9,7 @@ public record PreSelectedUnitViewModel : BaseViewModel
 {	
 	[Display(Name = "Offering")]
 	
-	public string? OfferingID { get; init; }
+	public string? OfferingID { get; set; }
 	public string?  ForeignKeyOffering { get; set; }
 	[Display(Name = "Unit")]
 	
