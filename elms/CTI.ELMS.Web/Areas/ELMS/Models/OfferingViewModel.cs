@@ -8,8 +8,8 @@ namespace CTI.ELMS.Web.Areas.ELMS.Models;
 public record OfferingViewModel : BaseViewModel
 {
     [Display(Name = "Project")]
-
-    public string? ProjectID { get; init; }
+    [Required]
+    public string ProjectID { get; init; } = "";
     public string? ForeignKeyProject { get; set; }
     [Display(Name = "Offering History")]
     public string? OfferingHistoryID { get; init; }
@@ -146,8 +146,8 @@ public record OfferingViewModel : BaseViewModel
     public decimal? MinimumSalesQuota { get; init; }
 
     [Display(Name = "Provision")]
-
     public string? Provision { get; init; }
+    [Range(2, int.MaxValue, ErrorMessage = "{0} shall be more than 1 day")]
     [Display(Name = "Fit-Out Period")]
     public int? FitOutPeriod { get; init; }
     [Display(Name = "Turn Over Date")]
@@ -218,6 +218,6 @@ public record OfferingViewModel : BaseViewModel
     public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
     public IList<UnitOfferedHistoryViewModel>? UnitOfferedHistoryList { get; set; }
     public IList<IFCATenantInformationViewModel>? IFCATenantInformationList { get; set; }
-   
-
+    [Display(Name = "OS Reference No")]
+    public string? OfferSheetNo { get; init; } = "";
 }

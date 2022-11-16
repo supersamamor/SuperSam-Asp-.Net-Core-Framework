@@ -37,8 +37,9 @@
     $(document).ready(function () {
         function InitializeForm()
         {
-            $("#ProjectIdLabel").hide();
-           
+             $("#ProjectIdLabel").hide();
+             $("#OfferSheetNoContainer").hide();
+             $("#StatusContainer").hide();
              $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
@@ -58,7 +59,7 @@
                 });
                 return this;
             };
-            $("#ProjectID").projectSelect();            
+            $("#ProjectID").projectSelect();
             $(".btn-add-unit").on('click', function (e) {
                 modelPopup();
             });
@@ -80,7 +81,7 @@
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
             function InitializeTable()
-            {               
+            {
                 var table = $('#available-units-table').DataTable({
                     select: false,
                     responsive: true,
@@ -89,11 +90,11 @@
                     paging: true,
                     info: true,
                     buttons: [],
-                    fnDrawCallback: function(oSettings) { 
+                    fnDrawCallback: function(oSettings) {
                        $('.AddPreSelectedUnitButton').on( 'click', function () {
                             $('#AddPreSelectedUnitUnitId').val($(this).attr('addUnitId'));
                             $('#AsyncAction').val('AddPreSelectedUnit');
-                            $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', BindOnAddPreSelectedUnit);                   
+                            $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', BindOnAddPreSelectedUnit);
                         });
                     },
                     columns: [
@@ -123,9 +124,9 @@
                 function DestroyTable()
                 {
                     table.destroy();
-                }              
-                var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search     
-            } 
+                }
+                var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+            }
             function modelPopup() {
                 var selectedUnitQueryString = GetSelectedUnitQueryString();
                 var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
@@ -133,9 +134,9 @@
                 openModal(url, title, InitializeTable);
             }
             function BindOnAddPreSelectedUnit()
-            {       
+            {
                 var selectedUnitQueryString = GetSelectedUnitQueryString();
-                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;                           
+                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
                 fillPartial(url, "#table-container", InitializeTable);
                 InitializeForm();
             }

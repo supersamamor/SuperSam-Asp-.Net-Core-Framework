@@ -41,11 +41,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-lg-12" style="padding-top:10px;">
-                        <div class="card">
-                            <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Offered Space(s)"]</span><br></h5>
-                            <div class="card-body">
-                            </div>
-                        </div>
+                        <partial name="_UnitOfferedList" model="Model" />
                     </div>
                     <div class="col-xs-12 col-sm-12 col-lg-12" style="padding-top:10px;">
                         <div class="card">
@@ -59,6 +55,7 @@
                         <div class="card">
                             <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Other Charges"]</span><br></h5>
                             <div class="card-body">
+                                <partial name="_EditOfferingOtherChargesDetails" model="Model" />
                             </div>
                         </div>
                     </div>

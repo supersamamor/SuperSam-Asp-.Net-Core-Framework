@@ -5,7 +5,7 @@ namespace CTI.ELMS.Core.ELMS;
 
 public record OfferingState : BaseEntity
 {
-	public string? ProjectID { get; init; }
+	public string ProjectID { get; init; } = "";
 	public string? OfferingHistoryID { get; init; }
 	public string? Status { get; init; }
 	public DateTime? CommencementDate { get; init; }
@@ -78,8 +78,8 @@ public record OfferingState : BaseEntity
 	public string? ModifiedCategory { get; init; }
 	public bool IsDisabledModifiedCategory { get; init; }
 	public string? ContractNumber { get; init; }
-	
-	public ProjectState? Project { get; init; }
+
+	public ProjectState Project { get; init; } = new ProjectState();
 	public LeadState? Lead { get; init; }
 	
 	public IList<OfferingHistoryState>? OfferingHistoryList { get; set; }
