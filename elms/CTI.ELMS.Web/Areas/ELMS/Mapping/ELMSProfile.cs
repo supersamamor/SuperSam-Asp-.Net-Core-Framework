@@ -161,7 +161,12 @@ public class ELMSProfile : Profile
         CreateMap<OfferingHistoryViewModel, OfferingHistoryState>();
         CreateMap<PreSelectedUnitViewModel, AddPreSelectedUnitCommand>();
         CreateMap<PreSelectedUnitViewModel, EditPreSelectedUnitCommand>();
-        CreateMap<PreSelectedUnitState, PreSelectedUnitViewModel>().ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id)).ForPath(e => e.ForeignKeyUnit, o => o.MapFrom(s => s.Unit!.Id));
+        CreateMap<PreSelectedUnitState, PreSelectedUnitViewModel>()
+            .ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id))   
+            .ForPath(e => e.ForeignKeyUnit, o => o.MapFrom(s => s.Unit!.Id))
+            .ForPath(e => e.UnitNo, o => o.MapFrom(s => s.Unit!.UnitNo))
+            .ForPath(e => e.LotArea, o => o.MapFrom(s => s.Unit!.LotArea))
+            .ForPath(e => e.AvailabilityDate, o => o.MapFrom(s => s.Unit!.AvailabilityDate)); ;
         CreateMap<PreSelectedUnitViewModel, PreSelectedUnitState>();
         CreateMap<UnitOfferedViewModel, AddUnitOfferedCommand>();
         CreateMap<UnitOfferedViewModel, EditUnitOfferedCommand>();
@@ -216,5 +221,9 @@ public class ELMSProfile : Profile
         CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
         CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
         CreateMap<CTI.ELMS.Application.Features.ELMS.TabNavigation.Models.TabNavigationModel, LeadTabNavigationPartial>();
+        CreateMap<UnitState, PreSelectedUnitViewModel>()
+            .ForMember(e => e.Id, c => c.Ignore())
+            .ForMember(e => e.Availability, c => c.Ignore())
+            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
     }
 }

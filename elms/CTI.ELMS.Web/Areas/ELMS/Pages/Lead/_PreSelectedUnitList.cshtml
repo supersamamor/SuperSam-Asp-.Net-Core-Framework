@@ -4,8 +4,11 @@
 <div class="card">
     <h5 class="card-header">
         <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Pre-Selected Space(s)"]</span>
-        <a id="btnAddPreSelectedUnit" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
         <button class="cancel" type="button" id="btnRemovePreSelectedUnit" value="RemovePreSelectedUnit" style="display:none;"></button>
+        @if (!string.IsNullOrEmpty(Model?.ProjectID))
+        {
+            <a class="btn btnMaterial btn-flat primary semicircle cancel btn-add-unit" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        }
     </h5>
     <div class="card-body" style="overflow:auto;">
         <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
@@ -13,15 +16,14 @@
                 <tr>
                     <th style="display:none;"></th>
                     <th>
-                        @Localizer["Unit"]
-                    </th>
-                    <th>
-                        @Localizer["Lot Budget"]
+                        @Localizer["Space No."]
                     </th>
                     <th>
                         @Localizer["Lot Area"]
                     </th>
-
+                    <th>
+                        @Localizer["Availability Date"]
+                    </th>
                     <th>
                         @Localizer["Action"]
                     </th>
@@ -36,26 +38,43 @@
                         <tr>
                             <td style="display:none;">
                                 <input type="hidden" name="PreSelectedUnitList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="PreSelectedUnitList[@counter].UnitId" class="selected-unitid" value="@item.UnitID" />
                                 <input type="hidden" name="PreSelectedUnitList[@counter].OfferingID" value="@item.OfferingID" />
+                                <input type="hidden" name="PreSelectedUnitList[@counter].UnitNo" value="@item.UnitNo" />
+                                <input type="hidden" name="PreSelectedUnitList[@counter].LotArea" value="@item.LotArea" />
+                                <input type="hidden" name="PreSelectedUnitList[@counter].AvailabilityDate" value="@item.AvailabilityDate" />
                             </td>
                             <td>
-                                <select asp-for="@item.UnitID" id="PreSelectedUnitList_@(counter)_UnitID" name="PreSelectedUnitList[@counter].UnitID" class="form-control SelectUnit" asp-items="@(dropdownService.GetUnitList(item.UnitID))">
-                                    <option value="">- Select Unit -</option>
-                                </select>
-                                <span data-valmsg-for="PreSelectedUnitList[@counter].UnitID" asp-validation-for="@item.UnitID" class="text-danger"></span>
-
+                                <span class="form-control" style="background:transparent;border:none;">@item!.UnitNo</span>
                             </td>
                             <td>
-                                <input asp-for="@item.LotBudget" name="PreSelectedUnitList[@counter].LotBudget" class="form-control" />
-                                <span data-valmsg-for="PreSelectedUnitList[@counter].LotBudget" asp-validation-for="@item.LotBudget" class="text-danger"></span>
+                                <span class="form-control" style="background:transparent;border:none;">
+                                    @if (@item!.LotArea != null)
+                                    {
+                                        <text>
+                                            @(((decimal)item!.LotArea).ToString("##,##.00"))
+                                        </text>
 
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            0
+                                        </text>
+                                    }
+                                    @Localizer["sqm(s)"]
+                                </span>
                             </td>
-                            <td>
-                                <input asp-for="@item.LotArea" name="PreSelectedUnitList[@counter].LotArea" class="form-control" />
-                                <span data-valmsg-for="PreSelectedUnitList[@counter].LotArea" asp-validation-for="@item.LotArea" class="text-danger"></span>
-
+                            <td class="text-center">
+                                @if (item!.Availability == CTI.ELMS.Core.Constants.LotAvailability.Available)
+                                {
+                                    <span class="badge bg-success">@item!.Availability</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">@item!.Availability</span>
+                                }
                             </td>
-
                             <td>
                                 <a class="btn btnMaterial btn-flat accent semicircle cancel RemovePreSelectedUnitButton" title="@Localizer["Remove PreSelectedUnit"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
                             </td>
