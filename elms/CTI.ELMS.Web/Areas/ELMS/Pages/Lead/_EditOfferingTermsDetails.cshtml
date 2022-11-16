@@ -2,7 +2,6 @@
 @model OfferingViewModel
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
-   
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.CommencementDate" class="form-label "><strong>@Localizer["Commencement Date"] :</strong></label>
@@ -10,20 +9,13 @@
             <span asp-validation-for="@Model.CommencementDate" class="text-danger"></span>
         </div>
     </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.TerminationDate" class="form-label "><strong>@Localizer["Termination Date"] :</strong></label>
-            <input type="date" asp-for="@Model.TerminationDate" class="form-control" />
-            <span asp-validation-for="@Model.TerminationDate" class="text-danger"></span>
-
-        </div>
-    </div>
+</div>
+<div class="row row-cols-3 row-cols-sm-1 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-3">
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.Year" class="form-label "><strong>@Localizer["Year"] :</strong></label>
             <input asp-for="@Model.Year" class="form-control" />
             <span asp-validation-for="@Model.Year" class="text-danger"></span>
-
         </div>
     </div>
     <div class="col">
@@ -39,5 +31,14 @@
             <input asp-for="@Model.Day" class="form-control" />
             <span asp-validation-for="@Model.Day" class="text-danger"></span>
         </div>
-    </div>   
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TerminationDate" class="form-label "><strong>@Localizer["Termination Date"] :</strong></label>
+            <input type="date" asp-for="@Model.TerminationDate" class="form-control" />
+            <span asp-validation-for="@Model.TerminationDate" class="text-danger"></span>
+        </div>
+    </div>
 </div>
