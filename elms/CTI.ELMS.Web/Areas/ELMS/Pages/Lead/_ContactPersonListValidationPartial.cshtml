@@ -8,10 +8,10 @@
 			for (let idx = 0; idx < count; idx++) {
 				reqs.push({name: "ContactPersonList[" + idx + "].LeadId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Lead"});
 				reqs.push({name: "ContactPersonList[" + idx + "].SalutationID", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Salutation"});
-				reqs.push({name: "ContactPersonList[" + idx + "].FirstName", el: "Input", minlength:0, maxlength:35, isrequired: false, description: "First Name"});
+				reqs.push({name: "ContactPersonList[" + idx + "].FirstName", el: "Input", minlength:0, maxlength:35, isrequired: true, description: "First Name"});
 				reqs.push({name: "ContactPersonList[" + idx + "].MiddleName", el: "Input", minlength:0, maxlength:30, isrequired: false, description: "Middle Name"});
-				reqs.push({name: "ContactPersonList[" + idx + "].LastName", el: "Input", minlength:0, maxlength:70, isrequired: false, description: "Last Name"});
-				reqs.push({name: "ContactPersonList[" + idx + "].Position", el: "Input", minlength:0, maxlength:120, isrequired: false, description: "Position"});
+				reqs.push({name: "ContactPersonList[" + idx + "].LastName", el: "Input", minlength:0, maxlength:70, isrequired: true, description: "Last Name"});
+				reqs.push({name: "ContactPersonList[" + idx + "].Position", el: "Input", minlength:0, maxlength:120, isrequired: true, description: "Position"});
 				reqs.push({name: "ContactPersonList[" + idx + "].IsSOARecipient", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is SOA Recipient"});
 				reqs.push({name: "ContactPersonList[" + idx + "].IsANSignatory", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is AN Signatory"});
 				reqs.push({name: "ContactPersonList[" + idx + "].IsCOLSignatory", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Is COL Signatory"});
