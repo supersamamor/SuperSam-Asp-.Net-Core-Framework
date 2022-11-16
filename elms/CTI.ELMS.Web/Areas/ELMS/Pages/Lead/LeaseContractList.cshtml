@@ -84,14 +84,7 @@
                         url = '@Url.Page("/Offering/Edit", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Offering/Delete", new { area = "ELMS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteOffering" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
-                    </text>
-                }
+                }            
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Approve)).Succeeded)
                 {
                     <text>

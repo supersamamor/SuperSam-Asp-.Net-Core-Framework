@@ -58,7 +58,7 @@ public static class Permission
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
         var permissions = new List<string>();
-        if (module == "AwardNotice" || module == "LeaseContract")
+        if (module == "AwardNotice" || module == "LeaseContract" || module == "Offering")
         {
             permissions.Add($"Permission.{module}.View");
         }
@@ -78,13 +78,16 @@ public static class Permission
                 $"Permission.{module}.Create",
                 $"Permission.{module}.View",
                 $"Permission.{module}.Edit",
-                $"Permission.{module}.Delete",
-                $"Permission.{module}.Approve",
+                $"Permission.{module}.Delete",             
             });
             if (module == "ApproverSetup")
             {
                 permissions.Add($"Permission.{module}.PendingApprovals");
             }
+        }
+        if (module == "Offering")
+        {
+            permissions.Add($"Permission.{module}.Approve");
         }
         return permissions;
     }
@@ -283,6 +286,13 @@ public static class Permission
         public const string Create = "Permission.Activity.Create";
         public const string Edit = "Permission.Activity.Edit";
     }
+    public static class Offering
+    {
+        public const string View = "Permission.Offering.View";
+        public const string Create = "Permission.Offering.Create";
+        public const string Edit = "Permission.Offering.Edit";   
+        public const string Approve = "Permission.Offering.Approve";
+    }
     public static class Contact
     {
         public const string View = "Permission.Contact.View";
@@ -312,14 +322,7 @@ public static class Permission
         public const string Edit = "Permission.UnitActivity.Edit";
         public const string Delete = "Permission.UnitActivity.Delete";
     }
-    public static class Offering
-    {
-        public const string View = "Permission.Offering.View";
-        public const string Create = "Permission.Offering.Create";
-        public const string Edit = "Permission.Offering.Edit";
-        public const string Delete = "Permission.Offering.Delete";
-        public const string Approve = "Permission.Offering.Approve";
-    }
+
     public static class OfferingHistory
     {
         public const string View = "Permission.OfferingHistory.View";
