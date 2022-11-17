@@ -18,6 +18,8 @@ samples, guidance on mobile development, and a full API reference.
 Facebook
 App Id 621324849743358
 
+Client Token
+726636d034149caec92e2850d317455d
 
 Check Login Status
 
