@@ -75,6 +75,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_twitter_login:
+    dependency: "direct main"
+    description:
+      name: flutter_twitter_login
+      sha256: "6900ab69c7c0becefb54f561178a72891c6fc9932b5cb09396abaad0530edda6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   js:
     dependency: transitive
     description:
@@ -185,4 +193,4 @@ packages:
     source: hosted
     version: "2.1.4"
 sdks:
-  dart: ">=2.19.0-406.0.dev <4.0.0"
+  dart: ">=2.19.0-406.0.dev <3.0.0"
