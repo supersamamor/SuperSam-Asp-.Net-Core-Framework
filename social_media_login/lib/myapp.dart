@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.green,
-            title: const Text('GeeksforGeeks'),
+            title: const Text('Authenticated'),
           ),
         ));
   }
@@ -35,7 +35,6 @@ class NewScreen extends StatefulWidget {
 class _NewScreenState extends State<NewScreen> {
   TextEditingController textEditingController = TextEditingController();
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(

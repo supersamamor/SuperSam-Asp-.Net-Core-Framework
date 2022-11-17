@@ -13,5 +13,5 @@ void main() async {
       version: "v15.0",
     );
   }
-  runApp(MyApp());
+  runApp(const MyApp());
 }
