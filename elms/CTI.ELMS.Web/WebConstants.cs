@@ -9,5 +9,6 @@ namespace CTI.ELMS.Web
         public const string TinNoMask = "999-999-999-99999";
         public const string TinNoMaskDefaultValue = "   -   -   -     ";
         public const string CountryPhilippines = "Philippines";
+        public const decimal VATRate = 0.12M;        
     }
 }

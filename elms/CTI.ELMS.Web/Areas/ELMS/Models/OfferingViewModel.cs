@@ -17,15 +17,17 @@ public record OfferingViewModel : BaseViewModel
     [StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
     public string? Status { get; init; }
     [Display(Name = "Commencement Date")]
+    [Required]
     public DateTime? CommencementDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Termination Date")]
+    [Required]
     public DateTime? TerminationDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Year")]
-    public int? Year { get; init; }
+    public int? Year { get; set; }
     [Display(Name = "Month")]
-    public int? Month { get; init; }
+    public int? Month { get; set; }
     [Display(Name = "Day")]
-    public int? Day { get; init; }
+    public int? Day { get; set; }
     [Display(Name = "Sec Months")]
     public int? SecMonths { get; init; }
     [Display(Name = "Construction Months")]
@@ -43,7 +45,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Construction CAMC")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? ConstructionCAMC { get; init; }
+    public decimal? ConstructionCAMC { get; set; }
     [Display(Name = "Commencement CAMC")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -88,15 +90,15 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Total Security Deposit")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalSecurityDeposit { get; init; }
+    public decimal? TotalSecurityDeposit { get; set; }
     [Display(Name = "Annual Advertising Fee")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? AnnualAdvertisingFee { get; init; }
+    public decimal? AnnualAdvertisingFee { get; set; }
     [Display(Name = "CAMC Construction Total Unit Area")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? CAMCConstructionTotalUnitArea { get; init; }
+    public decimal? CAMCConstructionTotalUnitArea { get; set; }
     [Display(Name = "Construction CAMC Months")]
     public int? ConstructionCAMCMonths { get; init; }
     [Display(Name = "Construction CAMC Rate")]
@@ -110,13 +112,13 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Total Construction Bond")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalConstructionBond { get; init; }
+    public decimal? TotalConstructionBond { get; set; }
     [Display(Name = "Construction Payable Within Months")]
     public int? ConstructionPayableWithinMonths { get; init; }
     [Display(Name = "Total Basic Fixed Monthly Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalBasicFixedMonthlyRent { get; init; }
+    public decimal? TotalBasicFixedMonthlyRent { get; set; }
     [Display(Name = "Total Minimum Monthly Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -149,9 +151,10 @@ public record OfferingViewModel : BaseViewModel
     public string? Provision { get; init; }
     [Range(2, int.MaxValue, ErrorMessage = "{0} shall be more than 1 day")]
     [Display(Name = "Fit-Out Period")]
-    public int? FitOutPeriod { get; init; }
+    [Required]
+    public int? FitOutPeriod { get; set; }
     [Display(Name = "Turn Over Date")]
-    public DateTime? TurnOverDate { get; init; } = DateTime.Now.Date;
+    public DateTime? TurnOverDate { get; set; } = DateTime.Now.Date;
     [Display(Name = "Auto Compute Annual Advertising Fee")]
     public bool AutoComputeAnnualAdvertisingFee { get; init; }
     [Display(Name = "Booking Date")]

@@ -5,7 +5,7 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.CommencementDate" class="form-label"><strong>@Localizer["Commencement Date"] :</strong></label>
-            <input type="date" asp-for="@Model.CommencementDate" class="form-control CommencementDate" />
+            <input type="date" asp-for="@Model.CommencementDate" class="form-control CommencementDate" min="@System.DateTime.Today.ToString("yyyy-MM-ddTHH:mmZ")"/>
             <span asp-validation-for="@Model.CommencementDate" class="text-danger"></span>
         </div>
     </div>

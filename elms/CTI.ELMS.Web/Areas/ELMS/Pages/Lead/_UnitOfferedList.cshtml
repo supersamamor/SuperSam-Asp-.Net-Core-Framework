@@ -164,7 +164,7 @@
                                                     <input type="hidden" name="AnnualIncrementList[@annualIncrementCounter].UnitOfferedID" value="@annualIncrementItem.UnitOfferedID" />
                                                 </td>
                                                 <td>
-                                                    <input asp-for="@annualIncrementItem.Year" name="AnnualIncrementList[@annualIncrementCounter].Year" class="form-control" />
+                                                    <input asp-for="@annualIncrementItem.Year" name="AnnualIncrementList[@annualIncrementCounter].Year" class="form-control" readonly />
                                                     <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].Year" asp-validation-for="@annualIncrementItem.Year" class="text-danger"></span>
                                                 </td>
                                                 <td>

@@ -16,15 +16,15 @@ public record AnnualIncrementViewModel : BaseViewModel
 	[Display(Name = "Basic Fixed Monthly Rent")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal? BasicFixedMonthlyRent { get; init; }
+	public decimal? BasicFixedMonthlyRent { get; set; }
 	[Display(Name = "Percentage Rent")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal? PercentageRent { get; init; }
+	public decimal? PercentageRent { get; set; }
 	[Display(Name = "Minimum Monthly Rent")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal? MinimumMonthlyRent { get; init; }
+	public decimal? MinimumMonthlyRent { get; set; }
 	
 	public DateTime LastModifiedDate { get; set; }
 	public UnitOfferedViewModel? UnitOffered { get; init; }
