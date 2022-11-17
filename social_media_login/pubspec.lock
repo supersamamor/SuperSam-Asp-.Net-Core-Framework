@@ -175,7 +175,7 @@ packages:
     source: hosted
     version: "4.1.1"
   flutter_facebook_auth_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_facebook_auth_web
       sha256: "6dfd4a3844137fbf7eb4c8d753add1ca15233b280a73a3360d9af46b87680678"
