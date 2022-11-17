@@ -76,6 +76,16 @@ public static class Permission
                 $"Permission.{module}.Edit",
             });
         }
+        else if (module == "Offering")
+        {
+            permissions.Add($"Permission.{module}.Create");
+            permissions.Add($"Permission.{module}.View");
+            permissions.Add($"Permission.{module}.Edit");
+            permissions.Add($"Permission.{module}.Approve");
+            permissions.Add($"Permission.{module}.Print");
+            permissions.Add($"Permission.{module}.CancelOffersheet");
+            permissions.Add($"Permission.{module}.SignOffersheet");
+        }
         else
         {
             permissions.AddRange(new List<string>()
@@ -90,15 +100,7 @@ public static class Permission
                 permissions.Add($"Permission.{module}.PendingApprovals");
             }
         }
-        if (module == "Offering")
-        {
-            permissions.Add($"Permission.{module}.Create");
-            permissions.Add($"Permission.{module}.View");
-            permissions.Add($"Permission.{module}.Approve");
-            permissions.Add($"Permission.{module}.Print");
-            permissions.Add($"Permission.{module}.CancelOffersheet");
-            permissions.Add($"Permission.{module}.SignOffersheet");
-        }
+
         return permissions;
     }
 
@@ -304,7 +306,7 @@ public static class Permission
         public const string Approve = "Permission.Offering.Approve";
         public const string Print = "Permission.Offering.Print";
         public const string CancelOffersheet = "Permission.Offering.CancelOffersheet";
-        public const string SignOffersheet = "Permission.Offering.SignOffersheet";        
+        public const string SignOffersheet = "Permission.Offering.SignOffersheet";
     }
     public static class Contact
     {

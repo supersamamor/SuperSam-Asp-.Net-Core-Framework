@@ -11,15 +11,15 @@ namespace CTI.ELMS.Web.Areas.ELMS.Pages.Unit.Search
     {
         public IEnumerable<AvailableUnitModel> AvailableUnits { get; set; } = new List<AvailableUnitModel>();
 
-        public async Task<IActionResult> OnGet(string projectId, string[] selectedUnits, string? searchKey = null)
+        public async Task<IActionResult> OnGet(string projectId, string[] selectedUnits, string? searchKey = null, DateTime? commencementDate = null)
         {
-            AvailableUnits = await Mediatr.Send(new GetAvailableUnitQuery { ProjectId = projectId, SelectedUnits = selectedUnits, SearchKey = searchKey });           
+            AvailableUnits = await Mediatr.Send(new GetAvailableUnitQuery { ProjectId = projectId, SelectedUnits = selectedUnits, SearchKey = searchKey, CommencementDate = commencementDate });
             return Partial("_ViewAvailableUnits", AvailableUnits);
         }
 
         public async Task<IActionResult> OnGetFull(string projectId)
         {
-            AvailableUnits = await Mediatr.Send(new GetAvailableUnitQuery { ProjectId = projectId });            
+            AvailableUnits = await Mediatr.Send(new GetAvailableUnitQuery { ProjectId = projectId });
             return Page();
         }
     }

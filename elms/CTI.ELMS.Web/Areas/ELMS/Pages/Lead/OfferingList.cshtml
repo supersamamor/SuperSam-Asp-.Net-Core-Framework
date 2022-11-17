@@ -81,6 +81,13 @@
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/Lead/OfferingDetails", new { area = "ELMS" })' + '?id=' + row.id;
                         var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewOffering" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Lead/EditOffering", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Print)).Succeeded)
                 {
                     <text>

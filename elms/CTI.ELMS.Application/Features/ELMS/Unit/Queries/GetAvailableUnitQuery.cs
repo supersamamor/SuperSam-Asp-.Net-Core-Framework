@@ -11,7 +11,7 @@ public record GetAvailableUnitQuery : BaseQuery, IRequest<IEnumerable<AvailableU
     public string ProjectId { get; set; } = "";
     public string[]? SelectedUnits { get; set; }
     public string? SearchKey { get; set; }
-    public DateTime CommencementDate { get; set; } = DateTime.Now;
+    public DateTime? CommencementDate { get; set; }
 }
 public record AvailableUnitModel
 {
@@ -102,8 +102,12 @@ public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuer
     }
     public async Task<IEnumerable<AvailableUnitModel>> Handle(GetAvailableUnitQuery request, CancellationToken cancellationToken = default)
     {
-        int month = request.CommencementDate.Month;
-        int year = request.CommencementDate.Year;
+        if (request?.CommencementDate == null)
+        {
+            request!.CommencementDate = DateTime.Today;
+        }
+        int month = ((DateTime)request.CommencementDate).Month;
+        int year = ((DateTime)request.CommencementDate).Year;
         var query = (from unit in _context.Unit
 
                      select unit).AsNoTracking();

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
 
-[Authorize(Policy = Permission.Offering.Create)]
+[Authorize(Policy = Permission.Offering.Edit)]
 public class EditOfferingModel : BasePageModel<EditOfferingModel>
 {
     [BindProperty]

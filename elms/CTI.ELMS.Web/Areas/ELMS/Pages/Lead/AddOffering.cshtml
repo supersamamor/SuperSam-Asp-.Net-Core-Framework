@@ -129,14 +129,14 @@
             }
             function modelPopup() {
                 var selectedUnitQueryString = GetSelectedUnitQueryString();
-                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
+                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + '&commencementDate=' + $('.CommencementDate').val() + selectedUnitQueryString;
                 var title = "Select Unit";
                 openModal(url, title, InitializeTable);
             }
             function BindOnAddPreSelectedUnit()
             {
                 var selectedUnitQueryString = GetSelectedUnitQueryString();
-                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
+                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val()  + '&commencementDate=' + $('.CommencementDate').val() + selectedUnitQueryString;
                 fillPartial(url, "#table-container", InitializeTable);
                 InitializeForm();
             }
