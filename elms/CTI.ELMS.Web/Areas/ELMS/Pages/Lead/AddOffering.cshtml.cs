@@ -56,6 +56,10 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         {
             return await AddUnitOffered();
         }
+        if (AsyncAction == "RemoveUnitOffered")
+        {
+            return await RemoveUnitOffered();
+        }
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private IActionResult RemovePreSelectedUnit()
@@ -90,6 +94,14 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         if (Offering!.UnitOfferedList == null) { Offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
         Offering!.UnitOfferedList!.Add(unitOfferedToAdd);
         Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.UnitID != AddUnitOfferedUnitId).ToList();
+        return Partial("_OfferingInputFieldsPartial", Offering);
+    }
+    private async Task<IActionResult> RemoveUnitOffered()
+    {
+        AddPreSelectedUnitUnitId = RemoveSubDetailId;
+        ModelState.Clear();
+        await AddPreSelectedUnit();
+        Offering.UnitOfferedList = Offering!.UnitOfferedList!.Where(l => l.UnitID != RemoveSubDetailId).ToList();  
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
 }

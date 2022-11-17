@@ -146,6 +146,11 @@
                 $('#AsyncAction').val('AddUnitOffered');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
+            $('.RemoveUnitOfferedButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveUnitOffered');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+			});
         }
         InitializeForm();
     });
