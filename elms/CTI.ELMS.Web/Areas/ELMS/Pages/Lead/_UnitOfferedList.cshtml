@@ -82,3 +82,117 @@
         </table>
     </div>
 </div>
+@if (Model?.UnitOfferedList != null)
+{
+    int counter = 0;
+    foreach (var item in Model.UnitOfferedList)
+    {
+        <div style="padding-top:10px;">
+            <div class="card">
+                <h5 class="card-header">
+                    <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Lot Offer Setup for : "] @item.UnitNo</span>
+                </h5>
+                <div class="card-body" style="overflow:auto;">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+                        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                        </div>
+                        <div class="col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1">
+                            <div class="mb-3">
+                                <label asp-for="@item.IsFixedMonthlyRent" class="form-label"><strong>@Localizer["Fixed Rent"] :</strong></label>
+                                <input asp-for="@item.IsFixedMonthlyRent" name="UnitOfferedList[@counter].IsFixedMonthlyRent" class="custom-checkbox-label" />
+                                <span data-valmsg-for="UnitOfferedList[@counter].IsFixedMonthlyRent" asp-validation-for="@item.IsFixedMonthlyRent" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                            <div class="mb-3">
+                                <label asp-for="@item.BasicFixedMonthlyRent" class="form-label"><strong>@Localizer["Basic Rent"] :</strong></label>
+                                <input asp-for="@item.BasicFixedMonthlyRent" name="UnitOfferedList[@counter].BasicFixedMonthlyRent" class="form-control" />
+                                <span data-valmsg-for="UnitOfferedList[@counter].BasicFixedMonthlyRent" asp-validation-for="@item.BasicFixedMonthlyRent" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                            <div class="mb-3">
+                                <label asp-for="@item.PercentageRent" class="form-label"><strong>@Localizer["Perc. Rent"] :</strong></label>
+                                <input asp-for="@item.PercentageRent" name="UnitOfferedList[@counter].PercentageRent" class="form-control" />
+                                <span data-valmsg-for="UnitOfferedList[@counter].PercentageRent" asp-validation-for="@item.PercentageRent" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                            <div class="mb-3">
+                                <label asp-for="@item.MinimumMonthlyRent" class="form-label"><strong>@Localizer["Min. Monthly Rent"] :</strong></label>
+                                <input asp-for="@item.MinimumMonthlyRent" name="UnitOfferedList[@counter].MinimumMonthlyRent" class="form-control" />
+                                <span data-valmsg-for="UnitOfferedList[@counter].MinimumMonthlyRent" asp-validation-for="@item.MinimumMonthlyRent" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+                        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                            <div class="mb-3">
+                                <label asp-for="@item.AnnualIncrement" class="form-label"><strong>@Localizer["Annual Increment"] :</strong></label>
+                                <input asp-for="@item.AnnualIncrement" name="UnitOfferedList[@counter].AnnualIncrement" class="form-control" />
+                                <span data-valmsg-for="UnitOfferedList[@counter].AnnualIncrement" asp-validation-for="@item.AnnualIncrement" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+                            <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none;"></th>
+                                        <th>
+                                            @Localizer["Year"]
+                                        </th>
+                                        <th>
+                                            @Localizer["Basic Rent"]
+                                        </th>
+                                        <th>
+                                            @Localizer["Perc. Rent"]
+                                        </th>
+                                        <th>
+                                            @Localizer["Min. Monthly Rent"]
+                                        </th>
+                                        <th>
+                                            @Localizer["Action"]
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (item?.AnnualIncrementList != null)
+                                    {
+                                        int annualIncrementCounter = 0;
+                                        foreach (var annualIncrementItem in item.AnnualIncrementList)
+                                        {
+                                            <tr>
+                                                <td style="display:none;">
+                                                    <input type="hidden" name="AnnualIncrementList[@annualIncrementCounter].Id" value="@annualIncrementItem.Id" />
+                                                    <input type="hidden" name="AnnualIncrementList[@annualIncrementCounter].UnitOfferedID" value="@annualIncrementItem.UnitOfferedID" />
+                                                </td>
+                                                <td>
+                                                    <input asp-for="@annualIncrementItem.Year" name="AnnualIncrementList[@annualIncrementCounter].Year" class="form-control" />
+                                                    <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].Year" asp-validation-for="@annualIncrementItem.Year" class="text-danger"></span>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="@annualIncrementItem.BasicFixedMonthlyRent" name="AnnualIncrementList[@annualIncrementCounter].BasicFixedMonthlyRent" class="form-control" />
+                                                    <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].BasicFixedMonthlyRent" asp-validation-for="@annualIncrementItem.BasicFixedMonthlyRent" class="text-danger"></span>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="@annualIncrementItem.PercentageRent" name="AnnualIncrementList[@annualIncrementCounter].PercentageRent" class="form-control" />
+                                                    <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].PercentageRent" asp-validation-for="@annualIncrementItem.PercentageRent" class="text-danger"></span>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="@annualIncrementItem.MinimumMonthlyRent" name="AnnualIncrementList[@annualIncrementCounter].MinimumMonthlyRent" class="form-control" />
+                                                    <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].MinimumMonthlyRent" asp-validation-for="@annualIncrementItem.MinimumMonthlyRent" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+                                            annualIncrementCounter++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        counter++;
+    }
+}
