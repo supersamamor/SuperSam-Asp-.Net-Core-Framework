@@ -16,6 +16,7 @@
             <input type="hidden" asp-for="@Model.AsyncAction" />
             <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
             <input type="hidden" asp-for="@Model.AddPreSelectedUnitUnitId" />
+            <input type="hidden" asp-for="@Model.AddUnitOfferedUnitId" />
             <div id="PartialLoaderContainer">
                 <partial name="_OfferingInputFieldsPartial" model="Model.Offering" />
             </div>
@@ -140,6 +141,11 @@
                 fillPartial(url, "#table-container", InitializeTable);
                 InitializeForm();
             }
+            $('.AddUnitOfferedButton').on( 'click', function () {
+                $('#AddUnitOfferedUnitId').val($(this).attr('addId'));
+                $('#AsyncAction').val('AddUnitOffered');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
         }
         InitializeForm();
     });

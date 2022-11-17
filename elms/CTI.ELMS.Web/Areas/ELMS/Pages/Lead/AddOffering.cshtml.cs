@@ -19,6 +19,8 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
     public string? AsyncAction { get; set; }
     [BindProperty]
     public string? AddPreSelectedUnitUnitId { get; set; }
+    [BindProperty]
+    public string? AddUnitOfferedUnitId { get; set; }
     public LeadTabNavigationPartial LeadTabNavigation { get; set; } = new();
     public async Task<IActionResult> OnGet(string leadId)
     {
@@ -50,12 +52,16 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         {
             return ChangeProject();
         }
+        if (AsyncAction == "AddUnitOffered")
+        {
+            return await AddUnitOffered();
+        }
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private IActionResult RemovePreSelectedUnit()
     {
         ModelState.Clear();
-        Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+      
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private async Task<IActionResult> AddPreSelectedUnit()
@@ -73,6 +79,17 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         ModelState.Clear();
         Offering.UnitOfferedList = new List<UnitOfferedViewModel>();
         Offering.PreSelectedUnitList = new List<PreSelectedUnitViewModel>();
+        return Partial("_OfferingInputFieldsPartial", Offering);
+    }
+    private async Task<IActionResult> AddUnitOffered()
+    {
+        ModelState.Clear();
+        UnitOfferedViewModel unitOfferedToAdd = new();
+        _ = (await Mediatr.Send(new GetUnitByIdQuery(AddUnitOfferedUnitId!))).Select(l => unitOfferedToAdd = Mapper.Map<UnitOfferedViewModel>(l));
+        unitOfferedToAdd.OfferingID = Offering.Id;
+        if (Offering!.UnitOfferedList == null) { Offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
+        Offering!.UnitOfferedList!.Add(unitOfferedToAdd);
+        Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.UnitID != AddUnitOfferedUnitId).ToList();
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
 }

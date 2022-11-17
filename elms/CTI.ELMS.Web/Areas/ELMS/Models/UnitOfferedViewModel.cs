@@ -1,4 +1,5 @@
 using CTI.Common.Web.Utility.Extensions;
+using CTI.ELMS.Core.Constants;
 using CTI.ELMS.Web.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
@@ -49,7 +50,19 @@ public record UnitOfferedViewModel : BaseViewModel
 	public DateTime LastModifiedDate { get; set; }
 	public OfferingViewModel? Offering { get; init; }
 	public UnitViewModel? Unit { get; init; }
-		
+	public string? UnitNo { get; set; }
+	public DateTime? AvailabilityDate { get; set; }
 	public IList<AnnualIncrementViewModel>? AnnualIncrementList { get; set; }
-	
+	public string? Availability
+	{
+		get
+		{
+			string ret = LotAvailability.Available;
+			if (this.AvailabilityDate != null && this.AvailabilityDate >= DateTime.Today)
+			{
+				ret = (this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MMM dd, yyyy") : "");
+			}
+			return ret;
+		}
+	}
 }
