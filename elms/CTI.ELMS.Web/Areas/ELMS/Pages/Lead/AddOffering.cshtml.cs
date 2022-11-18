@@ -63,7 +63,39 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         }
         if (AsyncAction == "AutocalculateYearMonthDayFromStartAndEndDate")
         {
-            //return AutocalculateYearMonthDayFromStartAndEndDate();
+            Offering = OfferingHelper.AutocalculateTerminationDateFromYearMonthDate(Offering);
+        }
+        if (AsyncAction == "AutocalculateFitOut")
+        {
+            Offering = OfferingHelper.AutocalculateFitOut(Offering);
+        }
+        if (AsyncAction == "AutocalculateTurnOverDate")
+        {
+            Offering = OfferingHelper.AutocalculateTurnOverDate(Offering);
+        }
+        if (AsyncAction == "AutoCalculateAnnualIncrementAndCAMCArea")
+        {
+            Offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
+        }
+        if (AsyncAction == "AutoCalculateTotalSecurityDeposit")
+        {
+            Offering = OfferingHelper.AutoCalculateTotalSecurityDeposit(Offering);
+        }
+        if (AsyncAction == "AutoCalculateTotalConstructionBond")
+        {
+            Offering = OfferingHelper.AutoCalculateTotalConstructionBond(Offering);
+        }
+        if (AsyncAction == "AutoCalculateCAMC")
+        {
+            Offering = OfferingHelper.AutoCalculateCAMC(Offering);
+        }
+        if (AsyncAction == "AutoCalculateAnnualAdsFee")
+        {
+            Offering = OfferingHelper.AutoCalculateAnnualAdsFee(Offering);
+        }
+        if (AsyncAction == "AutoCalculateTotalBasicFixedMonthlyRent")
+        {
+            Offering = OfferingHelper.AutoCalculateTotalBasicFixedMonthlyRent(Offering);
         }
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
@@ -108,18 +140,5 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         await AddPreSelectedUnit();
         Offering.UnitOfferedList = Offering!.UnitOfferedList!.Where(l => l.UnitID != RemoveSubDetailId).ToList();
         return Partial("_OfferingInputFieldsPartial", Offering);
-    }
-    public IActionResult Test()
-    {
-        Offering = OfferingHelper.AutocalculateTerminationDateFromYearMonthDate(Offering);
-        AutocalculateFitOut();
-        AutocalculateTurnOverDate();
-        AutoCalculateAnnualIncrementAndCAMCArea();
-        AutoCalculateTotalSecurityDeposit();
-        AutoCalculateTotalConstructionBond();
-        AutoCalculateCAMC();
-        AutoCalculateAnnualAdsFee();
-        AutoCalculateTotalBasicFixedMonthlyRent();
-        return Partial("_OfferingInputFieldsPartial", Offering);
-    }    
+    }  
 }
