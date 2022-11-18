@@ -21,6 +21,9 @@ App Id 621324849743358
 Client Token
 726636d034149caec92e2850d317455d
 
+App Secret
+46f2350b1ec7ec55a510cca35b0ff4b2
+
 Check Login Status
 
 FB.getLoginStatus(function(response) {

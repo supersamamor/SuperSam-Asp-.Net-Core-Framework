@@ -40,8 +40,7 @@ dependencies:
   flutter_facebook_auth: ^5.0.6
   font_awesome_flutter: ^10.2.1
   google_sign_in: ^5.4.2
-  twitter_oauth2_pkce: ^1.0.0 
-  flutter_facebook_auth_web: ^4.1.1
+  twitter_oauth2_pkce: ^1.0.0   
 dev_dependencies:
   flutter_test:
     sdk: flutter
