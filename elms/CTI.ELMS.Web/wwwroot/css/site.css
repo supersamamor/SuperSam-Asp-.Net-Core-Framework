@@ -39,3 +39,6 @@ button.accept-policy {
 .select2-selection__rendered {
     padding-top: 5px;
 }
+input[readonly] {
+    background-color: #eaecf4 !important;
+}
