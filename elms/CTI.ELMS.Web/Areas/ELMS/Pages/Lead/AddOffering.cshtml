@@ -54,18 +54,22 @@
             });
             
             $('#TerminationDate').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutocalculateYearMonthDay');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+                setTimeout(function() {
+                    $('#AsyncAction').val('Action_AutocalculateYearMonthDay');
+                    $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+                }, 600); 
             });
             $('#TurnOverDate').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutocalculateFitOut');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+                setTimeout(function() {
+                    $('#AsyncAction').val('Action_AutocalculateFitOut');
+                    $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+                }, 600);                 
             });
             $('#FitOutPeriod').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutocalculateTurnOverDate');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
-            $('.HasAnnualIncrement, .UnitOfferedSetup_AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent').on( 'change', function () {
+            $('.HasAnnualIncrement, .AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutoCalculateAnnualIncrement');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });

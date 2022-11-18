@@ -106,21 +106,21 @@
                         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                             <div class="mb-3">
                                 <label asp-for="@item.BasicFixedMonthlyRent" class="form-label"><strong>@Localizer["Basic Rent"] :</strong></label>
-                                <input asp-for="@item.BasicFixedMonthlyRent" name="UnitOfferedList[@counter].BasicFixedMonthlyRent" class="form-control" />
+                                <input asp-for="@item.BasicFixedMonthlyRent" name="UnitOfferedList[@counter].BasicFixedMonthlyRent" class="form-control BasicFixedMonthlyRent" />
                                 <span data-valmsg-for="UnitOfferedList[@counter].BasicFixedMonthlyRent" asp-validation-for="@item.BasicFixedMonthlyRent" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                             <div class="mb-3">
                                 <label asp-for="@item.PercentageRent" class="form-label"><strong>@Localizer["Perc. Rent"] :</strong></label>
-                                <input asp-for="@item.PercentageRent" name="UnitOfferedList[@counter].PercentageRent" class="form-control" />
+                                <input asp-for="@item.PercentageRent" name="UnitOfferedList[@counter].PercentageRent" class="form-control PercentageRent" />
                                 <span data-valmsg-for="UnitOfferedList[@counter].PercentageRent" asp-validation-for="@item.PercentageRent" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                             <div class="mb-3">
                                 <label asp-for="@item.MinimumMonthlyRent" class="form-label"><strong>@Localizer["Min. Monthly Rent"] :</strong></label>
-                                <input asp-for="@item.MinimumMonthlyRent" name="UnitOfferedList[@counter].MinimumMonthlyRent" class="form-control" />
+                                <input asp-for="@item.MinimumMonthlyRent" name="UnitOfferedList[@counter].MinimumMonthlyRent MinimumMonthlyRent" class="form-control" />
                                 <span data-valmsg-for="UnitOfferedList[@counter].MinimumMonthlyRent" asp-validation-for="@item.MinimumMonthlyRent" class="text-danger"></span>
                             </div>
                         </div>
@@ -129,8 +129,8 @@
                         <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
                             <div class="mb-3">
                                 <label asp-for="@item.AnnualIncrement" class="form-label"><strong>@Localizer["Annual Increment"] :</strong></label>
-                                <input asp-for="@item.HasAnnualIncrement" name="UnitOfferedList[@counter].HasAnnualIncrement" class="custom-checkbox-label" />
-                                <input asp-for="@item.AnnualIncrement" name="UnitOfferedList[@counter].AnnualIncrement" class="form-control" />
+                                <input asp-for="@item.HasAnnualIncrement" name="UnitOfferedList[@counter].HasAnnualIncrement" class="custom-checkbox-label HasAnnualIncrement" />
+                                <input asp-for="@item.AnnualIncrement" name="UnitOfferedList[@counter].AnnualIncrement" class="form-control AnnualIncrement" />
                                 <span data-valmsg-for="UnitOfferedList[@counter].AnnualIncrement" asp-validation-for="@item.AnnualIncrement" class="text-danger"></span>
                             </div>
                         </div>
