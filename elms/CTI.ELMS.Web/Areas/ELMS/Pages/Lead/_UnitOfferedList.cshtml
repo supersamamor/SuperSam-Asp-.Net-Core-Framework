@@ -120,7 +120,7 @@
                         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                             <div class="mb-3">
                                 <label asp-for="@item.MinimumMonthlyRent" class="form-label"><strong>@Localizer["Min. Monthly Rent"] :</strong></label>
-                                <input asp-for="@item.MinimumMonthlyRent" name="UnitOfferedList[@counter].MinimumMonthlyRent MinimumMonthlyRent" class="form-control" />
+                                <input asp-for="@item.MinimumMonthlyRent" name="UnitOfferedList[@counter].MinimumMonthlyRent" class="form-control MinimumMonthlyRent" />
                                 <span data-valmsg-for="UnitOfferedList[@counter].MinimumMonthlyRent" asp-validation-for="@item.MinimumMonthlyRent" class="text-danger"></span>
                             </div>
                         </div>
