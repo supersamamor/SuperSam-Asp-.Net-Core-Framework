@@ -39,7 +39,7 @@ public record UnitOfferedViewModel : BaseViewModel
     [Display(Name = "Annual Increment")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? AnnualIncrement { get; set; } = 0;
+    public decimal? AnnualIncrement { get; set; } 
     [Display(Name = "Annual Increment")]
     [Required]
 
@@ -52,6 +52,7 @@ public record UnitOfferedViewModel : BaseViewModel
     public UnitViewModel? Unit { get; init; }
     public string? UnitNo { get; set; }
     public DateTime? AvailabilityDate { get; set; }
+    public bool HasAnnualIncrement { get; set; }
     public IList<AnnualIncrementViewModel>? AnnualIncrementList { get; set; }
     public string? Availability
     {
@@ -64,11 +65,5 @@ public record UnitOfferedViewModel : BaseViewModel
             }
             return ret;
         }
-    }
-
-    public bool HasAnnualIncrement
-    {
-        get => AnnualIncrement != null && AnnualIncrement > 0;
-        set {  }
     }
 }

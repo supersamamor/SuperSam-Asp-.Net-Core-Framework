@@ -15,7 +15,7 @@ public record UnitOfferedState : BaseEntity
 	public decimal? AnnualIncrement { get; init; }
 	public string AnnualIncrementInformation { get; init; } = "";
 	public bool IsFixedMonthlyRent { get; init; }
-	
+	public bool HasAnnualIncrement { get; init; }
 	public OfferingState? Offering { get; init; }
 	public UnitState? Unit { get; init; }
 	

@@ -6,6 +6,13 @@ namespace CTI.ELMS.Web.Helper
     {
         public static OfferingViewModel AutoCalculateAllRates(OfferingViewModel offering)
         {
+            if (offering.UnitOfferedList != null)
+            {
+                foreach (var item in offering.UnitOfferedList)
+                {
+                    SetAnnualIncrement(item);
+                }
+            }
             offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(offering);
             offering = OfferingHelper.AutoCalculateTotalBasicFixedMonthlyRent(offering);
             offering = OfferingHelper.AutoCalculateTotalSecurityDeposit(offering);
@@ -51,17 +58,6 @@ namespace CTI.ELMS.Web.Helper
                 decimal totalCAMCArea = 0;
                 foreach (var item in offering.UnitOfferedList)
                 {
-                    if (item.HasAnnualIncrement == true)
-                    {
-                        if (item.AnnualIncrement == null || item.AnnualIncrement == 0)
-                        {
-                            item.AnnualIncrement = WebConstants.DefaultAnnualIncrement;
-                        }
-                    }
-                    else
-                    {
-                        item.AnnualIncrement = 0;
-                    }
                     currentYear = item.AnnualIncrementList == null ? 1 : item.AnnualIncrementList.Count + 1;
                     totalCAMCArea += (item.LotArea == null ? 0 : (decimal)item.LotArea);
                     if (item.AnnualIncrementList == null) { item.AnnualIncrementList = new List<AnnualIncrementViewModel>(); }
@@ -82,7 +78,10 @@ namespace CTI.ELMS.Web.Helper
                         {
                             var annualInctToAdd = new AnnualIncrementViewModel
                             {
-                                Year = addYear
+                                Year = addYear,
+                                BasicFixedMonthlyRent = item.BasicFixedMonthlyRent,
+                                PercentageRent = item.PercentageRent,
+                                MinimumMonthlyRent = item.MinimumMonthlyRent,
                             };
                             item.AnnualIncrementList.Add(annualInctToAdd);
                         }
@@ -210,6 +209,21 @@ namespace CTI.ELMS.Web.Helper
             }
             offering.TotalBasicFixedMonthlyRent = totalBasicFixedMonthlyRent;
             return offering;
+        }
+        private static UnitOfferedViewModel SetAnnualIncrement(UnitOfferedViewModel unitOffered)
+        {
+            if (unitOffered.HasAnnualIncrement == true)
+            {
+                if (unitOffered.AnnualIncrement == null || unitOffered.AnnualIncrement == 0)
+                {
+                    unitOffered.AnnualIncrement = WebConstants.DefaultAnnualIncrement;
+                }
+            }
+            else
+            {
+                unitOffered.AnnualIncrement = 0;
+            }
+            return unitOffered;
         }
     }
 }
