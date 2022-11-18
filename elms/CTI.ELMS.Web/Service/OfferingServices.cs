@@ -1,9 +1,20 @@
-﻿using CTI.ELMS.Web.Areas.ELMS.Models;
+﻿using AutoMapper;
+using CTI.ELMS.Application.Features.ELMS.Unit.Queries;
+using CTI.ELMS.Web.Areas.ELMS.Models;
+using CTI.ELMS.Web.Helper;
+using MediatR;
 
-namespace CTI.ELMS.Web.Helper
+namespace CTI.ELMS.Web.Service
 {
-    public static class OfferingHelper
+    public class OfferingServices
     {
+        private readonly IMediator _mediatr;
+        private readonly IMapper _mapper;
+        public OfferingServices(IMediator mediatr, IMapper mapper)
+        {
+            _mediatr = mediatr;
+            _mapper = mapper;
+        }
         public static OfferingViewModel AutoCalculateAllRates(OfferingViewModel offering)
         {
             if (offering.UnitOfferedList != null)
@@ -13,12 +24,12 @@ namespace CTI.ELMS.Web.Helper
                     SetAnnualIncrement(item);
                 }
             }
-            offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(offering);
-            offering = OfferingHelper.AutoCalculateTotalBasicFixedMonthlyRent(offering);
-            offering = OfferingHelper.AutoCalculateTotalSecurityDeposit(offering);
-            offering = OfferingHelper.AutoCalculateTotalConstructionBond(offering);
-            offering = OfferingHelper.AutoCalculateCAMC(offering);
-            return OfferingHelper.AutoCalculateAnnualAdsFee(offering);
+            offering = AutoCalculateAnnualIncrementAndCAMCArea(offering);
+            offering = AutoCalculateTotalBasicFixedMonthlyRent(offering);
+            offering = AutoCalculateTotalSecurityDeposit(offering);
+            offering = AutoCalculateTotalConstructionBond(offering);
+            offering = AutoCalculateCAMC(offering);
+            return AutoCalculateAnnualAdsFee(offering);
         }
         public static OfferingViewModel AutocalculateTermination(OfferingViewModel offering)
         {
@@ -208,6 +219,48 @@ namespace CTI.ELMS.Web.Helper
                 }
             }
             offering.TotalBasicFixedMonthlyRent = totalBasicFixedMonthlyRent;
+            return offering;
+        }
+        public static OfferingViewModel RemovePreSelectedUnit(OfferingViewModel offering, string? removeSubDetailId)
+        {
+
+            offering.PreSelectedUnitList = offering!.PreSelectedUnitList!.Where(l => l.Id != removeSubDetailId).ToList();
+            offering = AutoCalculateAllRates(offering);
+            return offering;
+        }
+        public async Task<OfferingViewModel> AddPreSelectedUnit(OfferingViewModel offering, string? AddPreSelectedUnitUnitId)
+        {
+            PreSelectedUnitViewModel preSelectedUnitToAdd = new();
+            _ = (await _mediatr.Send(new GetUnitByIdQuery(AddPreSelectedUnitUnitId!))).Select(l => preSelectedUnitToAdd = _mapper.Map<PreSelectedUnitViewModel>(l));
+            preSelectedUnitToAdd.OfferingID = offering.Id;
+            if (offering!.PreSelectedUnitList == null) { offering!.PreSelectedUnitList = new List<PreSelectedUnitViewModel>(); }
+            offering!.PreSelectedUnitList!.Add(preSelectedUnitToAdd);
+            offering = AutoCalculateAllRates(offering);
+            return offering;
+        }
+        public static OfferingViewModel ChangeProject(OfferingViewModel offering)
+        {
+            offering.UnitOfferedList = new List<UnitOfferedViewModel>();
+            offering.PreSelectedUnitList = new List<PreSelectedUnitViewModel>();
+            offering = AutoCalculateAllRates(offering);
+            return offering;
+        }
+        public async Task<OfferingViewModel> AddUnitOffered(OfferingViewModel offering, string? addUnitOfferedUnitId)
+        {
+            UnitOfferedViewModel unitOfferedToAdd = new();
+            _ = (await _mediatr.Send(new GetUnitByIdQuery(addUnitOfferedUnitId!))).Select(l => unitOfferedToAdd = _mapper.Map<UnitOfferedViewModel>(l));
+            unitOfferedToAdd.OfferingID = offering.Id;
+            if (offering!.UnitOfferedList == null) { offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
+            offering!.UnitOfferedList!.Add(unitOfferedToAdd);
+            offering.PreSelectedUnitList = offering!.PreSelectedUnitList!.Where(l => l.UnitID != addUnitOfferedUnitId).ToList();
+            offering = AutoCalculateAllRates(offering);
+            return offering;
+        }
+        public async Task<OfferingViewModel> RemoveUnitOffered(OfferingViewModel offering, string? removeSubDetailId)
+        {
+            await AddPreSelectedUnit(offering, removeSubDetailId);
+            offering.UnitOfferedList = offering!.UnitOfferedList!.Where(l => l.UnitID != removeSubDetailId).ToList();
+            offering = AutoCalculateAllRates(offering);
             return offering;
         }
         private static UnitOfferedViewModel SetAnnualIncrement(UnitOfferedViewModel unitOffered)

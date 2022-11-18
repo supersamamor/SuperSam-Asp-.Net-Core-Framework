@@ -2,8 +2,8 @@ using CTI.ELMS.Application.Features.ELMS.Offering.Commands;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
 using CTI.ELMS.Application.Features.ELMS.Unit.Queries;
 using CTI.ELMS.Web.Areas.ELMS.Models;
-using CTI.ELMS.Web.Helper;
 using CTI.ELMS.Web.Models;
+using CTI.ELMS.Web.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +12,11 @@ namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
 [Authorize(Policy = Permission.Offering.Create)]
 public class AddOfferingModel : BasePageModel<AddOfferingModel>
 {
+    private readonly OfferingServices _offeringServices;
+    public AddOfferingModel(OfferingServices offeringServices)
+    {
+        _offeringServices = offeringServices;
+    }
     [BindProperty]
     public OfferingViewModel Offering { get; set; } = new();
     [BindProperty]
@@ -26,7 +31,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
     public async Task<IActionResult> OnGet(string leadId)
     {
         LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(leadId, Constants.TabNavigation.Offerings)));
-        Offering = OfferingHelper.AutocalculateYearMonthDay(Offering);
+        Offering = OfferingServices.AutocalculateYearMonthDay(Offering);
         return Page();
     }
 
@@ -43,111 +48,65 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
     {
         ModelState.Clear();
         if (AsyncAction == "RemovePreSelectedUnit")
-        {          
-            return RemovePreSelectedUnit();
+        {
+            Offering = OfferingServices.RemovePreSelectedUnit(Offering, RemoveSubDetailId);
         }
         if (AsyncAction == "AddPreSelectedUnit")
-        {           
-            return await AddPreSelectedUnit();
+        {
+            Offering = await _offeringServices.AddPreSelectedUnit(Offering, AddPreSelectedUnitUnitId);
         }
         if (AsyncAction == "ChangeProject")
         {
-            return ChangeProject();
+            Offering = OfferingServices.ChangeProject(Offering);
+            Offering = OfferingServices.AutoCalculateAllRates(Offering);
         }
         if (AsyncAction == "AddUnitOffered")
         {
-            return await AddUnitOffered();
+            Offering = await _offeringServices.AddUnitOffered(Offering, AddUnitOfferedUnitId);
         }
         if (AsyncAction == "RemoveUnitOffered")
         {
-            return await RemoveUnitOffered();
+            Offering = await _offeringServices.RemoveUnitOffered(Offering, RemoveSubDetailId);
         }
         if (AsyncAction == "Action_AutocalculateTerminationTurnOverDate")
         {
-            Offering = OfferingHelper.AutocalculateTermination(Offering);
-            Offering = OfferingHelper.AutocalculateTurnOverDate(Offering);
-            Offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
+            Offering = OfferingServices.AutocalculateTermination(Offering);
+            Offering = OfferingServices.AutocalculateTurnOverDate(Offering);
+            Offering = OfferingServices.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
         }
         if (AsyncAction == "Action_AutocalculateYearMonthDay")
         {
-            Offering = OfferingHelper.AutocalculateYearMonthDay(Offering);
-            Offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
+            Offering = OfferingServices.AutocalculateYearMonthDay(Offering);
+            Offering = OfferingServices.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
         }
         if (AsyncAction == "Action_AutocalculateFitOut")
         {
-            Offering = OfferingHelper.AutocalculateFitOut(Offering);
+            Offering = OfferingServices.AutocalculateFitOut(Offering);
         }
         if (AsyncAction == "Action_AutocalculateTurnOverDate")
         {
-            Offering = OfferingHelper.AutocalculateTurnOverDate(Offering);
+            Offering = OfferingServices.AutocalculateTurnOverDate(Offering);
         }
         if (AsyncAction == "Action_AutoCalculateAnnualIncrement")
         {
-            Offering = OfferingHelper.AutoCalculateAllRates(Offering);
+            Offering = OfferingServices.AutoCalculateAllRates(Offering);
         }
         if (AsyncAction == "Action_AutoCalculateTotalSecurityDeposit")
         {
-            Offering = OfferingHelper.AutoCalculateTotalSecurityDeposit(Offering);
+            Offering = OfferingServices.AutoCalculateTotalSecurityDeposit(Offering);
         }
         if (AsyncAction == "Action_AutoCalculateTotalConstructionBond")
         {
-            Offering = OfferingHelper.AutoCalculateTotalConstructionBond(Offering);
+            Offering = OfferingServices.AutoCalculateTotalConstructionBond(Offering);
         }
         if (AsyncAction == "Action_AutoCalculateCAMC")
         {
-            Offering = OfferingHelper.AutoCalculateCAMC(Offering);
+            Offering = OfferingServices.AutoCalculateCAMC(Offering);
         }
         if (AsyncAction == "Action_AutoCalculateAnnualAdsFee")
         {
-            Offering = OfferingHelper.AutoCalculateAnnualAdsFee(Offering);
+            Offering = OfferingServices.AutoCalculateAnnualAdsFee(Offering);
         }
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
-    private IActionResult RemovePreSelectedUnit()
-    {
-        ModelState.Clear();
-        Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
-        return Partial("_OfferingInputFieldsPartial", Offering);
-    }
-    private async Task<IActionResult> AddPreSelectedUnit()
-    {
-        ModelState.Clear();
-        PreSelectedUnitViewModel preSelectedUnitToAdd = new();
-        _ = (await Mediatr.Send(new GetUnitByIdQuery(AddPreSelectedUnitUnitId!))).Select(l => preSelectedUnitToAdd = Mapper.Map<PreSelectedUnitViewModel>(l));
-        preSelectedUnitToAdd.OfferingID = Offering.Id;
-        if (Offering!.PreSelectedUnitList == null) { Offering!.PreSelectedUnitList = new List<PreSelectedUnitViewModel>(); }
-        Offering!.PreSelectedUnitList!.Add(preSelectedUnitToAdd);
-        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
-        return Partial("_OfferingInputFieldsPartial", Offering);
-    }
-    private IActionResult ChangeProject()
-    {
-        ModelState.Clear();
-        Offering.UnitOfferedList = new List<UnitOfferedViewModel>();
-        Offering.PreSelectedUnitList = new List<PreSelectedUnitViewModel>();
-        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
-        return Partial("_OfferingInputFieldsPartial", Offering);
-    }
-    private async Task<IActionResult> AddUnitOffered()
-    {
-        ModelState.Clear();
-        UnitOfferedViewModel unitOfferedToAdd = new();
-        _ = (await Mediatr.Send(new GetUnitByIdQuery(AddUnitOfferedUnitId!))).Select(l => unitOfferedToAdd = Mapper.Map<UnitOfferedViewModel>(l));
-        unitOfferedToAdd.OfferingID = Offering.Id;    
-        if (Offering!.UnitOfferedList == null) { Offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
-        Offering!.UnitOfferedList!.Add(unitOfferedToAdd);
-        Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.UnitID != AddUnitOfferedUnitId).ToList();
-        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
-        return Partial("_OfferingInputFieldsPartial", Offering);
-    }
-    private async Task<IActionResult> RemoveUnitOffered()
-    {
-        AddPreSelectedUnitUnitId = RemoveSubDetailId;
-        ModelState.Clear();
-        await AddPreSelectedUnit();
-        Offering.UnitOfferedList = Offering!.UnitOfferedList!.Where(l => l.UnitID != RemoveSubDetailId).ToList();
-        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
-        return Partial("_OfferingInputFieldsPartial", Offering);
-    } 
 }
