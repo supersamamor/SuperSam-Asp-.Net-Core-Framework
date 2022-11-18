@@ -44,11 +44,15 @@
             $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });          
-            $('#Year, #Month, #Day, #CommencementDate').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutocalculateTerminationTurnOverDate');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
+            
+            $('#Year, #Month, #Day, #CommencementDate').on( 'change',function () {
+                setTimeout(function() {
+                    $('#AsyncAction').val('Action_AutocalculateTerminationTurnOverDate');
+                    $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+                }, 600);                
+            });
+            
             $('#TerminationDate').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutocalculateYearMonthDay');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
@@ -64,7 +68,23 @@
             $('.HasAnnualIncrement, .UnitOfferedSetup_AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutoCalculateAnnualIncrement');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });          
+            });
+            $('#AutoComputeTotalSecurityDeposit, #SecMonths').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateTotalSecurityDeposit');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#AutoComputeTotalConstructionBond, #ConstructionMonths').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateTotalConstructionBond');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#ConstructionCAMCRate, #ConstructionCAMCMonths').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateCAMC');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#AutoComputeAnnualAdvertisingFee').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateAnnualAdsFee');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();
@@ -167,10 +187,10 @@
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
             $('.RemoveUnitOfferedButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveUnitOffered');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-			});
+                $('#RemoveSubDetailId').val($(this).attr('removeid'));
+                $('#AsyncAction').val('RemoveUnitOffered');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
         }
         InitializeForm();
     });

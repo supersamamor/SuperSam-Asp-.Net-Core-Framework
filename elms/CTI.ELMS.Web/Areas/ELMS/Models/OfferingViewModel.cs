@@ -35,7 +35,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Other Charges / Aircon")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? OtherChargesAircon { get; init; }
+    public decimal? OtherChargesAircon { get; init; } = 0;
     [Display(Name = "Concession")]
 
     public string? Concession { get; init; }
@@ -45,15 +45,15 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Construction CAMC")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? ConstructionCAMC { get; set; }
+    public decimal? ConstructionCAMC { get; set; } = 0;
     [Display(Name = "Commencement CAMC")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? CommencementCAMC { get; init; }
+    public decimal? CommencementCAMC { get; init; } = 0;
     [Display(Name = "Board Up")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? BoardUp { get; init; }
+    public decimal? BoardUp { get; init; } = 0;
     [Display(Name = "Units Information")]
 
     public string? UnitsInformation { get; init; }
@@ -70,12 +70,12 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Doc Stamp")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? DocStamp { get; init; }
+    public decimal? DocStamp { get; init; } = 0;
     [Display(Name = "Award Notice Created Date")]
     public DateTime? AwardNoticeCreatedDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Award Notice Created By")]
     [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
-    public string? AwardNoticeCreatedBy { get; init; }
+    public string? AwardNoticeCreatedBy { get; init; } 
     [Display(Name = "Signed Offersheet Date")]
     public DateTime? SignedOfferSheetDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Tag Signed Offersheet By")]
@@ -84,27 +84,27 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Total Unit Area")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalUnitArea { get; init; }
+    public decimal? TotalUnitArea { get; init; } = 0;
     [Display(Name = "Is POS")]
     public bool IsPOS { get; init; }
     [Display(Name = "Total Security Deposit")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalSecurityDeposit { get; set; }
+    public decimal? TotalSecurityDeposit { get; set; } = 0;
     [Display(Name = "Annual Advertising Fee")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? AnnualAdvertisingFee { get; set; }
+    public decimal? AnnualAdvertisingFee { get; set; } = 0;
     [Display(Name = "CAMC Construction Total Unit Area")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? CAMCConstructionTotalUnitArea { get; set; }
+    public decimal? CAMCConstructionTotalUnitArea { get; set; } = 0;
     [Display(Name = "Construction CAMC Months")]
     public int? ConstructionCAMCMonths { get; init; }
     [Display(Name = "Construction CAMC Rate")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? ConstructionCAMCRate { get; init; }
+    public decimal? ConstructionCAMCRate { get; init; } = 0;
     [Display(Name = "Has Board Up Fee")]
     public bool HasBoardUpFee { get; init; }
     [Display(Name = "Security Deposit Payable Within Months")]
@@ -112,21 +112,21 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Total Construction Bond")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalConstructionBond { get; set; }
+    public decimal? TotalConstructionBond { get; set; } = 0;
     [Display(Name = "Construction Payable Within Months")]
     public int? ConstructionPayableWithinMonths { get; init; }
     [Display(Name = "Total Basic Fixed Monthly Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalBasicFixedMonthlyRent { get; set; }
+    public decimal? TotalBasicFixedMonthlyRent { get; set; } = 0;
     [Display(Name = "Total Minimum Monthly Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalMinimumMonthlyRent { get; init; }
+    public decimal? TotalMinimumMonthlyRent { get; init; } = 0;
     [Display(Name = "Total Lot Budget")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalLotBudget { get; init; }
+    public decimal? TotalLotBudget { get; init; } = 0;
     [Display(Name = "Total Percentage Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -145,7 +145,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Minimum Sales")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? MinimumSalesQuota { get; init; }
+    public decimal? MinimumSalesQuota { get; init; } = 0;
 
     [Display(Name = "Provision")]
     public string? Provision { get; init; }

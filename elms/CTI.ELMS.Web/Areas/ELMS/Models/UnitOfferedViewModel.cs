@@ -11,11 +11,11 @@ public record UnitOfferedViewModel : BaseViewModel
     [Display(Name = "Lot Budget")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? LotBudget { get; init; }
+    public decimal? LotBudget { get; init; } = 0;
     [Display(Name = "Lot Area")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? LotArea { get; init; }
+    public decimal? LotArea { get; init; } = 0;
     [Display(Name = "Offering")]
 
     public string? OfferingID { get; set; }
@@ -27,19 +27,19 @@ public record UnitOfferedViewModel : BaseViewModel
     [Display(Name = "Basic Fixed")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? BasicFixedMonthlyRent { get; init; }
+    public decimal? BasicFixedMonthlyRent { get; init; } = 0;
     [Display(Name = "Percentage Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? PercentageRent { get; init; }
+    public decimal? PercentageRent { get; init; } = 0;
     [Display(Name = "Minimum Monthly")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? MinimumMonthlyRent { get; init; }
+    public decimal? MinimumMonthlyRent { get; init; } = 0;
     [Display(Name = "Annual Increment")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? AnnualIncrement { get; set; }
+    public decimal? AnnualIncrement { get; set; } = 0;
     [Display(Name = "Annual Increment")]
     [Required]
 

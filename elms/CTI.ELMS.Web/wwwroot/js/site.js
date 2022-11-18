@@ -304,5 +304,5 @@ $(document).ready(function () {
                 $('#toolbar-container').css({ "position": "relative", "bottom": "0px", "right": "0px" });
             }
         }
-    }
+    }        
 });

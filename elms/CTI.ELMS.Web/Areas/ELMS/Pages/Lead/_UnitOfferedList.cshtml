@@ -161,23 +161,23 @@
                                         {
                                             <tr>
                                                 <td style="display:none;">
-                                                    <input type="hidden" name="AnnualIncrementList[@annualIncrementCounter].Id" value="@annualIncrementItem.Id" />
-                                                    <input type="hidden" name="AnnualIncrementList[@annualIncrementCounter].UnitOfferedID" value="@annualIncrementItem.UnitOfferedID" />
+                                                    <input type="hidden" name="UnitOfferedList[@counter].AnnualIncrementList[@annualIncrementCounter].Id" value="@annualIncrementItem.Id" />
+                                                    <input type="hidden" name="UnitOfferedList[@counter].AnnualIncrementList[@annualIncrementCounter].UnitOfferedID" value="@item.Id" />
                                                 </td>
                                                 <td>
-                                                    <input asp-for="@annualIncrementItem.Year" name="AnnualIncrementList[@annualIncrementCounter].Year" class="form-control" readonly />
+                                                    <input asp-for="@annualIncrementItem.Year" name="UnitOfferedList[@counter].AnnualIncrementList[@annualIncrementCounter].Year" class="form-control" readonly />
                                                     <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].Year" asp-validation-for="@annualIncrementItem.Year" class="text-danger"></span>
                                                 </td>
                                                 <td>
-                                                    <input asp-for="@annualIncrementItem.BasicFixedMonthlyRent" name="AnnualIncrementList[@annualIncrementCounter].BasicFixedMonthlyRent" class="form-control" />
+                                                    <input asp-for="@annualIncrementItem.BasicFixedMonthlyRent" name="UnitOfferedList[@counter].AnnualIncrementList[@annualIncrementCounter].BasicFixedMonthlyRent" class="form-control" />
                                                     <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].BasicFixedMonthlyRent" asp-validation-for="@annualIncrementItem.BasicFixedMonthlyRent" class="text-danger"></span>
                                                 </td>
                                                 <td>
-                                                    <input asp-for="@annualIncrementItem.PercentageRent" name="AnnualIncrementList[@annualIncrementCounter].PercentageRent" class="form-control" />
+                                                    <input asp-for="@annualIncrementItem.PercentageRent" name="UnitOfferedList[@counter].AnnualIncrementList[@annualIncrementCounter].PercentageRent" class="form-control" />
                                                     <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].PercentageRent" asp-validation-for="@annualIncrementItem.PercentageRent" class="text-danger"></span>
                                                 </td>
                                                 <td>
-                                                    <input asp-for="@annualIncrementItem.MinimumMonthlyRent" name="AnnualIncrementList[@annualIncrementCounter].MinimumMonthlyRent" class="form-control" />
+                                                    <input asp-for="@annualIncrementItem.MinimumMonthlyRent" name="UnitOfferedList[@counter].AnnualIncrementList[@annualIncrementCounter].MinimumMonthlyRent" class="form-control" />
                                                     <span data-valmsg-for="AnnualIncrementList[@annualIncrementCounter].MinimumMonthlyRent" asp-validation-for="@annualIncrementItem.MinimumMonthlyRent" class="text-danger"></span>
                                                 </td>
                                             </tr>
