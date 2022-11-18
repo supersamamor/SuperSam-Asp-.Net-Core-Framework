@@ -38,13 +38,33 @@
     $(document).ready(function () {
         function InitializeForm()
         {
-             $("#ProjectIdLabel").hide();
-             $("#OfferSheetNoContainer").hide();
-             $("#StatusContainer").hide();
-             $('#ProjectID').on( 'change', function () {
+            $("#ProjectIdLabel").hide();
+            $("#OfferSheetNoContainer").hide();
+            $("#StatusContainer").hide();
+            $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });          
+            $('#Year, #Month, #Day, #CommencementDate').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutocalculateTerminationTurnOverDate');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
+            $('#TerminationDate').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutocalculateYearMonthDay');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#TurnOverDate').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutocalculateFitOut');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#FitOutPeriod').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutocalculateTurnOverDate');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('.HasAnnualIncrement, .UnitOfferedSetup_AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateAnnualIncrement');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });          
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();

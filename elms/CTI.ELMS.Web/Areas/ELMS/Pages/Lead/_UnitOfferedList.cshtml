@@ -129,6 +129,7 @@
                         <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
                             <div class="mb-3">
                                 <label asp-for="@item.AnnualIncrement" class="form-label"><strong>@Localizer["Annual Increment"] :</strong></label>
+                                <input asp-for="@item.HasAnnualIncrement" name="UnitOfferedList[@counter].HasAnnualIncrement" class="custom-checkbox-label" />
                                 <input asp-for="@item.AnnualIncrement" name="UnitOfferedList[@counter].AnnualIncrement" class="form-control" />
                                 <span data-valmsg-for="UnitOfferedList[@counter].AnnualIncrement" asp-validation-for="@item.AnnualIncrement" class="text-danger"></span>
                             </div>
@@ -149,7 +150,7 @@
                                         </th>
                                         <th>
                                             @Localizer["Min. Monthly Rent"]
-                                        </th>                                       
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -21,7 +21,7 @@ public record OfferingViewModel : BaseViewModel
     public DateTime? CommencementDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Termination Date")]
     [Required]
-    public DateTime? TerminationDate { get; init; } = DateTime.Now.Date;
+    public DateTime? TerminationDate { get; set; } = DateTime.Now.Date;
     [Display(Name = "Year")]
     public int? Year { get; set; }
     [Display(Name = "Month")]
@@ -152,7 +152,7 @@ public record OfferingViewModel : BaseViewModel
     [Range(2, int.MaxValue, ErrorMessage = "{0} shall be more than 1 day")]
     [Display(Name = "Fit-Out Period")]
     [Required]
-    public int? FitOutPeriod { get; set; }
+    public int? FitOutPeriod { get; set; } = 0;
     [Display(Name = "Turn Over Date")]
     public DateTime? TurnOverDate { get; set; } = DateTime.Now.Date;
     [Display(Name = "Auto Compute Annual Advertising Fee")]

@@ -4,7 +4,22 @@ namespace CTI.ELMS.Web.Helper
 {
     public static class OfferingHelper
     {
-        public static OfferingViewModel AutocalculateTerminationDateFromYearMonthDate(OfferingViewModel offering)
+        public static OfferingViewModel AutoCalculateAllRates(OfferingViewModel offering)
+        {
+            offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(offering);
+            offering = OfferingHelper.AutoCalculateTotalBasicFixedMonthlyRent(offering);
+            offering = OfferingHelper.AutoCalculateTotalSecurityDeposit(offering);
+            offering = OfferingHelper.AutoCalculateTotalConstructionBond(offering);
+            offering = OfferingHelper.AutoCalculateCAMC(offering);
+            return OfferingHelper.AutoCalculateAnnualAdsFee(offering);
+        }
+        public static OfferingViewModel AutocalculateTermination(OfferingViewModel offering)
+        {
+            var day = offering.Day <= 0 || offering.Day == null ? 0 : (int)offering.Day - 1;
+            offering.TerminationDate = ((DateTime)offering.CommencementDate!).AddYears((int)offering.Year!).AddMonths((int)offering.Month!).AddDays(day);
+            return offering;
+        }
+        public static OfferingViewModel AutocalculateYearMonthDay(OfferingViewModel offering)
         {
             var dateSpan = DateHelper.AutocalculateYearMonthDayFromStartAndEndDate((DateTime)offering.CommencementDate!, (DateTime)offering.TerminationDate!);
             offering.Year = dateSpan.Years;
@@ -36,6 +51,17 @@ namespace CTI.ELMS.Web.Helper
                 decimal totalCAMCArea = 0;
                 foreach (var item in offering.UnitOfferedList)
                 {
+                    if (item.HasAnnualIncrement == true)
+                    {
+                        if (item.AnnualIncrement == null || item.AnnualIncrement == 0)
+                        {
+                            item.AnnualIncrement = WebConstants.DefaultAnnualIncrement;
+                        }
+                    }
+                    else
+                    {
+                        item.AnnualIncrement = 0;
+                    }
                     currentYear = item.AnnualIncrementList == null ? 1 : item.AnnualIncrementList.Count + 1;
                     totalCAMCArea += (item.LotArea == null ? 0 : (decimal)item.LotArea);
                     if (item.AnnualIncrementList == null) { item.AnnualIncrementList = new List<AnnualIncrementViewModel>(); }

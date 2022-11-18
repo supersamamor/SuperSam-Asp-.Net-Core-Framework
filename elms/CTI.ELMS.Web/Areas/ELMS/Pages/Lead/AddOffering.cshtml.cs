@@ -26,6 +26,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
     public async Task<IActionResult> OnGet(string leadId)
     {
         LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(leadId, Constants.TabNavigation.Offerings)));
+        Offering = OfferingHelper.AutocalculateYearMonthDay(Offering);
         return Page();
     }
 
@@ -42,11 +43,11 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
     {
         ModelState.Clear();
         if (AsyncAction == "RemovePreSelectedUnit")
-        {
+        {          
             return RemovePreSelectedUnit();
         }
         if (AsyncAction == "AddPreSelectedUnit")
-        {
+        {           
             return await AddPreSelectedUnit();
         }
         if (AsyncAction == "ChangeProject")
@@ -61,48 +62,52 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         {
             return await RemoveUnitOffered();
         }
-        if (AsyncAction == "AutocalculateYearMonthDayFromStartAndEndDate")
+        if (AsyncAction == "Action_AutocalculateTerminationTurnOverDate")
         {
-            Offering = OfferingHelper.AutocalculateTerminationDateFromYearMonthDate(Offering);
+            Offering = OfferingHelper.AutocalculateTermination(Offering);
+            Offering = OfferingHelper.AutocalculateTurnOverDate(Offering);
+            Offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
         }
-        if (AsyncAction == "AutocalculateFitOut")
+        if (AsyncAction == "Action_AutocalculateYearMonthDay")
+        {
+            Offering = OfferingHelper.AutocalculateYearMonthDay(Offering);
+            Offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
+        }
+        if (AsyncAction == "Action_AutocalculateFitOut")
         {
             Offering = OfferingHelper.AutocalculateFitOut(Offering);
         }
-        if (AsyncAction == "AutocalculateTurnOverDate")
+        if (AsyncAction == "Action_AutocalculateTurnOverDate")
         {
             Offering = OfferingHelper.AutocalculateTurnOverDate(Offering);
         }
-        if (AsyncAction == "AutoCalculateAnnualIncrementAndCAMCArea")
+        if (AsyncAction == "Action_AutoCalculateAnnualIncrement")
         {
-            Offering = OfferingHelper.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
+            Offering = OfferingHelper.AutoCalculateAllRates(Offering);
         }
-        if (AsyncAction == "AutoCalculateTotalSecurityDeposit")
+        if (AsyncAction == "Action_AutoCalculateTotalSecurityDeposit")
         {
             Offering = OfferingHelper.AutoCalculateTotalSecurityDeposit(Offering);
         }
-        if (AsyncAction == "AutoCalculateTotalConstructionBond")
+        if (AsyncAction == "Action_AutoCalculateTotalConstructionBond")
         {
             Offering = OfferingHelper.AutoCalculateTotalConstructionBond(Offering);
         }
-        if (AsyncAction == "AutoCalculateCAMC")
+        if (AsyncAction == "Action_AutoCalculateCAMC")
         {
             Offering = OfferingHelper.AutoCalculateCAMC(Offering);
         }
-        if (AsyncAction == "AutoCalculateAnnualAdsFee")
+        if (AsyncAction == "Action_AutoCalculateAnnualAdsFee")
         {
             Offering = OfferingHelper.AutoCalculateAnnualAdsFee(Offering);
-        }
-        if (AsyncAction == "AutoCalculateTotalBasicFixedMonthlyRent")
-        {
-            Offering = OfferingHelper.AutoCalculateTotalBasicFixedMonthlyRent(Offering);
         }
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private IActionResult RemovePreSelectedUnit()
     {
         ModelState.Clear();
-
+        Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private async Task<IActionResult> AddPreSelectedUnit()
@@ -113,6 +118,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         preSelectedUnitToAdd.OfferingID = Offering.Id;
         if (Offering!.PreSelectedUnitList == null) { Offering!.PreSelectedUnitList = new List<PreSelectedUnitViewModel>(); }
         Offering!.PreSelectedUnitList!.Add(preSelectedUnitToAdd);
+        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private IActionResult ChangeProject()
@@ -120,6 +126,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         ModelState.Clear();
         Offering.UnitOfferedList = new List<UnitOfferedViewModel>();
         Offering.PreSelectedUnitList = new List<PreSelectedUnitViewModel>();
+        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private async Task<IActionResult> AddUnitOffered()
@@ -131,6 +138,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         if (Offering!.UnitOfferedList == null) { Offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
         Offering!.UnitOfferedList!.Add(unitOfferedToAdd);
         Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.UnitID != AddUnitOfferedUnitId).ToList();
+        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
         return Partial("_OfferingInputFieldsPartial", Offering);
     }
     private async Task<IActionResult> RemoveUnitOffered()
@@ -139,6 +147,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         ModelState.Clear();
         await AddPreSelectedUnit();
         Offering.UnitOfferedList = Offering!.UnitOfferedList!.Where(l => l.UnitID != RemoveSubDetailId).ToList();
+        Offering = OfferingHelper.AutoCalculateAllRates(Offering);
         return Partial("_OfferingInputFieldsPartial", Offering);
-    }  
+    } 
 }
