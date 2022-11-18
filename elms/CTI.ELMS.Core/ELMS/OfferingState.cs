@@ -19,8 +19,7 @@ public record OfferingState : BaseEntity
 	public string? Concession { get; init; }
 	public string? OffersheetRemarks { get; init; }
 	public decimal? ConstructionCAMC { get; init; }
-	public decimal? CommencementCAMC { get; init; }
-	public decimal? BoardUp { get; init; }
+	public decimal? CommencementCAMC { get; init; }	
 	public string? UnitsInformation { get; init; }
 	public string? ANType { get; init; }
 	public string? LeadID { get; init; }

@@ -28,10 +28,7 @@ public record OfferingHistoryViewModel : BaseViewModel
 	public int? SecMonths { get; init; }
 	[Display(Name = "Construction Months")]
 	public int? ConstructionMonths { get; init; }
-	[Display(Name = "Board Up")]
-	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal? BoardUp { get; init; }
+
 	[Display(Name = "Other Charges / Aircon")]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]

@@ -14,7 +14,6 @@ public record OfferingHistoryState : BaseEntity
 	public int? Day { get; init; }
 	public int? SecMonths { get; init; }
 	public int? ConstructionMonths { get; init; }
-	public decimal? BoardUp { get; init; }
 	public decimal? OtherChargesAircon { get; init; }
 	public decimal? ConstructionCAMC { get; init; }
 	public decimal? CommencementCAMC { get; init; }

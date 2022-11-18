@@ -50,10 +50,6 @@ public record OfferingViewModel : BaseViewModel
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? CommencementCAMC { get; init; } = 0;
-    [Display(Name = "Board Up")]
-
-    [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? BoardUp { get; init; } = 0;
     [Display(Name = "Units Information")]
 
     public string? UnitsInformation { get; init; }

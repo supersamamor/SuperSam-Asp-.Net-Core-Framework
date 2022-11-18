@@ -41,6 +41,10 @@
             $("#ProjectIdLabel").hide();
             $("#OfferSheetNoContainer").hide();
             $("#StatusContainer").hide();
+            $('.IsFixedMonthlyRent').on( 'change', function () {
+                $('#AsyncAction').val('');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
             $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);

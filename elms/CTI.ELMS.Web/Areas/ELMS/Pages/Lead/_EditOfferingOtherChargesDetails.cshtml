@@ -29,7 +29,14 @@
             <div class="col">
                 <div class="mb-3">
                     <label asp-for="@Model.AnnualAdvertisingFee" class="form-label "><strong>@Localizer["Annual Advertising Fee"] :</strong></label>
-                    <input asp-for="@Model.AnnualAdvertisingFee" class="form-control" />
+                    @if (@Model.AutoComputeAnnualAdvertisingFee)
+                    {
+                        <input asp-for="@Model.AnnualAdvertisingFee" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.AnnualAdvertisingFee" class="form-control" />
+                    }                   
                     <span asp-validation-for="@Model.AnnualAdvertisingFee" class="text-danger"></span>
                 </div>
             </div>
@@ -41,14 +48,7 @@
                     <input asp-for="@Model.HasBoardUpFee" class="custom-checkbox-label" />
                     <span asp-validation-for="@Model.HasBoardUpFee" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="@Model.BoardUp" class="form-label "><strong>@Localizer["Board Up Fee"] :</strong></label>
-                    <input asp-for="@Model.BoardUp" class="form-control" />
-                    <span asp-validation-for="@Model.BoardUp" class="text-danger"></span>
-                </div>
-            </div>
+            </div>           
         </div>
     </div>
     <div class="col">

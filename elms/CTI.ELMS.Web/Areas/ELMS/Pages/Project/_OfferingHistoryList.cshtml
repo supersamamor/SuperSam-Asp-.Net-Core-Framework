@@ -38,10 +38,7 @@
 							</th>
 							<th>
 								@Localizer["Construction Months"]
-							</th>
-							<th>
-								@Localizer["Board Up"]
-							</th>
+							</th>							
 							<th>
 								@Localizer["Other Charges / Aircon"]
 							</th>
@@ -208,11 +205,7 @@
 										<span data-valmsg-for="OfferingHistoryList[@counter].ConstructionMonths" asp-validation-for="@item.ConstructionMonths" class="text-danger"></span>
 										
 									</td>
-									<td>
-										<input  asp-for="@item.BoardUp" name="OfferingHistoryList[@counter].BoardUp" class="form-control"  />
-										<span data-valmsg-for="OfferingHistoryList[@counter].BoardUp" asp-validation-for="@item.BoardUp" class="text-danger"></span>
-										
-									</td>
+								
 									<td>
 										<input  asp-for="@item.OtherChargesAircon" name="OfferingHistoryList[@counter].OtherChargesAircon" class="form-control"  />
 										<span data-valmsg-for="OfferingHistoryList[@counter].OtherChargesAircon" asp-validation-for="@item.OtherChargesAircon" class="text-danger"></span>
