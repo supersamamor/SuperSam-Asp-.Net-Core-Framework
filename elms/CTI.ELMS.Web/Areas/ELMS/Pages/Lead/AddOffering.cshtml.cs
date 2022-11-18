@@ -134,7 +134,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         ModelState.Clear();
         UnitOfferedViewModel unitOfferedToAdd = new();
         _ = (await Mediatr.Send(new GetUnitByIdQuery(AddUnitOfferedUnitId!))).Select(l => unitOfferedToAdd = Mapper.Map<UnitOfferedViewModel>(l));
-        unitOfferedToAdd.OfferingID = Offering.Id;
+        unitOfferedToAdd.OfferingID = Offering.Id;    
         if (Offering!.UnitOfferedList == null) { Offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
         Offering!.UnitOfferedList!.Add(unitOfferedToAdd);
         Offering.PreSelectedUnitList = Offering!.PreSelectedUnitList!.Where(l => l.UnitID != AddUnitOfferedUnitId).ToList();

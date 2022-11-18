@@ -29,9 +29,9 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Day")]
     public int? Day { get; set; }
     [Display(Name = "Sec Months")]
-    public int? SecMonths { get; init; }
+    public int? SecMonths { get; init; } = 0;
     [Display(Name = "Construction Months")]
-    public int? ConstructionMonths { get; init; }
+    public int? ConstructionMonths { get; init; } = 0;
     [Display(Name = "Other Charges / Aircon")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -77,10 +77,6 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Tag Signed Offersheet By")]
 
     public string? TagSignedOfferSheetBy { get; init; }
-    [Display(Name = "Total Unit Area")]
-
-    [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? TotalUnitArea { get; init; } = 0;
     [Display(Name = "Is POS")]
     public bool IsPOS { get; init; }
     [Display(Name = "Total Security Deposit")]
@@ -96,7 +92,7 @@ public record OfferingViewModel : BaseViewModel
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? CAMCConstructionTotalUnitArea { get; set; } = 0;
     [Display(Name = "Construction CAMC Months")]
-    public int? ConstructionCAMCMonths { get; init; }
+    public int? ConstructionCAMCMonths { get; init; } = 0;
     [Display(Name = "Construction CAMC Rate")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -104,13 +100,13 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Has Board Up Fee")]
     public bool HasBoardUpFee { get; init; }
     [Display(Name = "Security Deposit Payable Within Months")]
-    public int? SecurityDepositPayableWithinMonths { get; init; }
+    public int? SecurityDepositPayableWithinMonths { get; init; } = 0;
     [Display(Name = "Total Construction Bond")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? TotalConstructionBond { get; set; } = 0;
     [Display(Name = "Construction Payable Within Months")]
-    public int? ConstructionPayableWithinMonths { get; init; }
+    public int? ConstructionPayableWithinMonths { get; init; } = 0;
     [Display(Name = "Total Basic Fixed Monthly Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]

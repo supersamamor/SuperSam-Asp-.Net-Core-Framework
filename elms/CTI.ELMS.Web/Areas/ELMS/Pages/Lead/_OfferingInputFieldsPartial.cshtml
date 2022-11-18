@@ -11,6 +11,7 @@
                         <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Offering Sheet Details"]</span><br></h5>
                         <div class="card-body">
                             <input type="hidden" asp-for="@Model.Id" name="Id" />
+                            <input type="hidden" asp-for="@Model.TotalBasicFixedMonthlyRent" name="TotalBasicFixedMonthlyRent" />
                             <partial name="_EditOfferingDetails" model="Model" />
                         </div>
                     </div>

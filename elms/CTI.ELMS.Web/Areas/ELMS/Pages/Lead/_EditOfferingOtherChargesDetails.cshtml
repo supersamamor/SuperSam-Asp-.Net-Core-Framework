@@ -58,9 +58,9 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
             <div class="col">
                 <div class="mb-3">
-                    <label asp-for="@Model.TotalUnitArea" class="form-label "><strong>@Localizer["Total Area"] :</strong></label>
-                    <input asp-for="@Model.TotalUnitArea" class="form-control" />
-                    <span asp-validation-for="@Model.TotalUnitArea" class="text-danger"></span>
+                    <label asp-for="@Model.CAMCConstructionTotalUnitArea" class="form-label "><strong>@Localizer["Total Area"] :</strong></label>
+                    <input asp-for="@Model.CAMCConstructionTotalUnitArea" class="form-control" readonly />
+                    <span asp-validation-for="@Model.CAMCConstructionTotalUnitArea" class="text-danger"></span>
                 </div>
             </div>
             <div class="col">
@@ -78,8 +78,11 @@
         </div>
         <div class="mb-3">
             <label asp-for="@Model.ConstructionCAMC" class="form-label "><strong>@Localizer["Total CAMC Upon Construction"] :</strong></label>
-            <input asp-for="@Model.ConstructionCAMC" class="form-control" />
+            <input asp-for="@Model.ConstructionCAMC" class="form-control" readonly/>
             <span asp-validation-for="@Model.ConstructionCAMC" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <i style="font-size:10px;">@Localizer["Note: Total CAMC = Rate/sqm x Total Area x Months + (@(WebConstants.VATRate * 100)% VAT)"]</i>
         </div>
     </div>
 </div>

@@ -27,7 +27,7 @@ public record UnitOfferedViewModel : BaseViewModel
     [Display(Name = "Basic Fixed")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? BasicFixedMonthlyRent { get; init; } = 0;
+    public decimal? BasicFixedMonthlyRent { get; set; } = 0;
     [Display(Name = "Percentage Rent")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
