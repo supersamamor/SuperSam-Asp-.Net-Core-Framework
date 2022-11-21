@@ -71,7 +71,7 @@ public record OfferingViewModel : BaseViewModel
     public DateTime? AwardNoticeCreatedDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Award Notice Created By")]
     [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
-    public string? AwardNoticeCreatedBy { get; init; } 
+    public string? AwardNoticeCreatedBy { get; init; }
     [Display(Name = "Signed Offersheet Date")]
     public DateTime? SignedOfferSheetDate { get; init; } = DateTime.Now.Date;
     [Display(Name = "Tag Signed Offersheet By")]
@@ -211,8 +211,31 @@ public record OfferingViewModel : BaseViewModel
     public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
     public IList<PreSelectedUnitViewModel>? PreSelectedUnitList { get; set; }
     public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
-    public IList<UnitOfferedHistoryViewModel>? UnitOfferedHistoryList { get; set; }
-    public IList<IFCATenantInformationViewModel>? IFCATenantInformationList { get; set; }
+
     [Display(Name = "OS Reference No")]
     public string? OfferSheetNo { get; init; } = "";
+    public decimal AreaDivider
+    {
+        get
+        {
+            return (this.CAMCConstructionTotalUnitArea == null || this.CAMCConstructionTotalUnitArea == 0 ? 1 : (decimal)this.CAMCConstructionTotalUnitArea);
+        }
+    }
+    public string TotalRentalRateString
+    {
+        get
+        {
+            var FixedRent = (this.TotalBasicFixedMonthlyRent == null || this.TotalBasicFixedMonthlyRent == 0 ? 1 : (decimal)this.TotalBasicFixedMonthlyRent) / this.AreaDivider;
+            var PercentRent = (this.TotalPercentageRent == null || this.TotalPercentageRent == 0 ? 1 : (decimal)this.TotalPercentageRent) / this.AreaDivider;
+            var MinimumRent = (this.TotalMinimumMonthlyRent == null || this.TotalMinimumMonthlyRent == 0 ? 1 : (decimal)this.TotalMinimumMonthlyRent) / this.AreaDivider;
+            return String.Format("{0:n0}", FixedRent) + "/" + (PercentRent).ToString("0.##") + "%/" + String.Format("{0:n0}", MinimumRent);
+        }
+    }
+    public string TotalLotBudgetString
+    {
+        get
+        {
+            return String.Format("{0:n0}", (this.TotalLotBudget / this.AreaDivider));
+        }
+    }
 }

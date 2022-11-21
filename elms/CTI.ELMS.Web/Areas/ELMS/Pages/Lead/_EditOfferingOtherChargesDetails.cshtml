@@ -82,7 +82,7 @@
             <span asp-validation-for="@Model.ConstructionCAMC" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <i style="font-size:10px;">@Localizer["Note: Total CAMC = Rate/sqm x Total Area x Months + (@(WebConstants.VATRate * 100)% VAT)"]</i>
+            <i style="font-size:10px;">@Localizer["Note: Total CAMC = Rate/sqm x Total Area x Months + ("]@(WebConstants.VATRate * 100)@Localizer["% VAT)"]</i>
         </div>
     </div>
 </div>

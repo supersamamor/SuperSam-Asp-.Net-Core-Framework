@@ -130,7 +130,7 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Lead/AddOffering", new { area = "ELMS" })'+ '?leadId=' + @Model.LeadTabNavigation.LeadId;
+                        var url = '@Url.Page("/Lead/AddOffering", new { area = "ELMS" })'+ '?leadId=' + '@Model.LeadTabNavigation.LeadId';
                         window.location.href = url;
                     },
                     className: 'btn btn-success text-light',

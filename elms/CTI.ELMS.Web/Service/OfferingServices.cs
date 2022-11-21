@@ -247,9 +247,11 @@ namespace CTI.ELMS.Web.Service
         }
         public async Task<OfferingViewModel> AddUnitOffered(OfferingViewModel offering, string? addUnitOfferedUnitId)
         {
+            var preSelectedUnit = offering!.PreSelectedUnitList!.Where(l => l.UnitID != addUnitOfferedUnitId).FirstOrDefault();
             UnitOfferedViewModel unitOfferedToAdd = new();
             _ = (await _mediatr.Send(new GetUnitByIdQuery(addUnitOfferedUnitId!))).Select(l => unitOfferedToAdd = _mapper.Map<UnitOfferedViewModel>(l));
             unitOfferedToAdd.OfferingID = offering.Id;
+            unitOfferedToAdd.LotBudget = preSelectedUnit?.LotBudget;
             if (offering!.UnitOfferedList == null) { offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
             offering!.UnitOfferedList!.Add(unitOfferedToAdd);
             offering.PreSelectedUnitList = offering!.PreSelectedUnitList!.Where(l => l.UnitID != addUnitOfferedUnitId).ToList();

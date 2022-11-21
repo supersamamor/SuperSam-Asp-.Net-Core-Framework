@@ -1,84 +1,63 @@
-import 'dart:html' as html;
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
+import 'package:social_media_login/screens/login_with_google.dart';
+import 'package:social_media_login/screens/login_with_twitter.dart';
+import 'package:social_media_login/screens/login_with_facebook.dart';
 
-void main() {
-  String? token;
-  if (html.window.location.href.contains("access_token")) {
-    String url = html.window.location.href
-        .replaceFirst("#/", "?"); // workaround for readable redirect url
-    Uri uri = Uri.parse(url);
-    if (uri.queryParameters.keys.contains("access_token")) {
-      token = uri.queryParameters["access_token"];
-    }
-  }
-
-  runApp(
-    MaterialApp(
-        title: 'Facebook Sign In',
-        home: SignIn(
-          token: token,
-        )),
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
-class SignIn extends StatefulWidget {
-  final String token;
-
-  const SignIn({Key key, this.token}) : super(key: key);
-
+class MyApp extends StatelessWidget {
   @override
-  _SignInState createState() => _SignInState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Login',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomeScreen(),
+    );
+  }
 }
 
-class _SignInState extends State<SignIn> {
-  String? _message;
-  final String clientId = "621324849743358";
-  final String redirectUri = "http://localhost:49722/signin";
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (widget.token != null) _signInWithFacebook(widget.token);
-  }
-
-  void _signInWithFacebook(String token) async {
-    setState(() {
-      _message = "Loading...";
-    });
-    final AuthCredential credential = FacebookAuthProvider.credential(token);
-    final User? user = (await _auth.signInWithCredential(credential)).user;
-    assert(await user.getIdToken() != null);
-    final User? currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-    setState(() {
-      if (user != null) {
-        _message = 'Successfully signed in with Facebook. ' +
-            user?.displayName.toString();
-      } else {
-        _message = 'Failed to sign in with Facebook. ';
-      }
-    });
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Select Option"),
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
         child: Column(
-          children: <Widget>[
-            Text(_message ?? "Please try to sign in"),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             ElevatedButton(
-              onPressed: () {
-                html.window.open(
-                    "https://www.facebook.com/dialog/oauth?response_type=token&scope=email,public_profile,&client_id=${clientId}&redirect_uri=${redirectUri}",
-                    "_self");
-              },
-              child: Text('Facebook login'),
-            ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LoginWithGoogle()));
+                },
+                child: Text("Login with google")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LoginWithFacebook()));
+                },
+                child: Text("Login with facebook")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LoginWithTwitter()));
+                },
+                child: Text("Login with Twitter"))
           ],
         ),
       ),

@@ -11,7 +11,7 @@ public record UnitOfferedViewModel : BaseViewModel
     [Display(Name = "Lot Budget")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? LotBudget { get; init; } = 0;
+    public decimal? LotBudget { get; set; } = 0;
     [Display(Name = "Lot Area")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
@@ -39,7 +39,7 @@ public record UnitOfferedViewModel : BaseViewModel
     [Display(Name = "Annual Increment")]
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-    public decimal? AnnualIncrement { get; set; } 
+    public decimal? AnnualIncrement { get; set; }
     [Display(Name = "Annual Increment")]
     [Required]
 
@@ -64,6 +64,13 @@ public record UnitOfferedViewModel : BaseViewModel
                 ret = (this.AvailabilityDate != null ? ((DateTime)this.AvailabilityDate!).ToString("MMM dd, yyyy") : "");
             }
             return ret;
+        }
+    }
+    public string RentalRateString
+    {
+        get
+        {
+            return String.Format("{0:n}", this.BasicFixedMonthlyRent) + "/" + this.PercentageRent.ToString() + "%/" + String.Format("{0:n}", this.MinimumMonthlyRent);
         }
     }
 }

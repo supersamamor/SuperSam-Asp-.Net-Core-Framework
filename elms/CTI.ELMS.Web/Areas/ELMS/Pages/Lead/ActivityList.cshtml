@@ -105,7 +105,7 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Lead/AddActivity", new { area = "ELMS" })'+ '?leadId=' + @Model.LeadTabNavigation.LeadId;
+                        var url = '@Url.Page("/Lead/AddActivity", new { area = "ELMS" })'+ '?leadId=' + '@Model.LeadTabNavigation.LeadId';
 
                         window.location.href = url;
                     },
