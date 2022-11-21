@@ -40,11 +40,7 @@
         {
             $("#ProjectIdLabel").hide();
             $("#OfferSheetNoContainer").hide();
-            $("#StatusContainer").hide();
-            $('.IsFixedMonthlyRent').on( 'change', function () {
-                $('#AsyncAction').val('');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
+            $("#StatusContainer").hide();       
             $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
@@ -73,7 +69,7 @@
                 $('#AsyncAction').val('Action_AutocalculateTurnOverDate');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
-            $('.HasAnnualIncrement, .AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent').on( 'change', function () {
+            $('.HasAnnualIncrement, .AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent, .IsFixedMonthlyRent').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutoCalculateAnnualIncrement');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });

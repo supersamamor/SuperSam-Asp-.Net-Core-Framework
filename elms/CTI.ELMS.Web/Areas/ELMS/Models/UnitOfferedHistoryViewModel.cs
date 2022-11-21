@@ -43,10 +43,8 @@ public record UnitOfferedHistoryViewModel : BaseViewModel
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
 	public decimal? AnnualIncrement { get; init; }
-	[Display(Name = "Annual Increment")]
-	[Required]
-	
-	public string AnnualIncrementInformation { get; init; } = "";
+	[Display(Name = "Annual Increment Information")]
+	public string? AnnualIncrementInformation { get; init; } = "";
 	[Display(Name = "Is Fixed")]
 	public bool IsFixedMonthlyRent { get; init; }
 	

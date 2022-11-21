@@ -68,12 +68,12 @@ public record OfferingViewModel : BaseViewModel
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? DocStamp { get; init; } = 0;
     [Display(Name = "Award Notice Created Date")]
-    public DateTime? AwardNoticeCreatedDate { get; init; } = DateTime.Now.Date;
+    public DateTime? AwardNoticeCreatedDate { get; init; }
     [Display(Name = "Award Notice Created By")]
     [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
     public string? AwardNoticeCreatedBy { get; init; }
     [Display(Name = "Signed Offersheet Date")]
-    public DateTime? SignedOfferSheetDate { get; init; } = DateTime.Now.Date;
+    public DateTime? SignedOfferSheetDate { get; init; }
     [Display(Name = "Tag Signed Offersheet By")]
 
     public string? TagSignedOfferSheetBy { get; init; }
@@ -130,7 +130,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Offer Sheet Per Project Counter")]
     public int? OfferSheetPerProjectCounter { get; init; }
     [Display(Name = "Signed Award Notice Date")]
-    public DateTime? SignedAwardNoticeDate { get; init; } = DateTime.Now.Date;
+    public DateTime? SignedAwardNoticeDate { get; init; } 
     [Display(Name = "Tag Signed Award Notice By")]
 
     public string? TagSignedAwardNoticeBy { get; init; }
@@ -150,7 +150,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Auto Compute Annual Advertising Fee")]
     public bool AutoComputeAnnualAdvertisingFee { get; init; }
     [Display(Name = "Booking Date")]
-    public DateTime? BookingDate { get; init; } = DateTime.Now.Date;
+    public DateTime? BookingDate { get; init; }
     [Display(Name = "Signatory Name")]
     [StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
     public string? SignatoryName { get; init; }
@@ -164,7 +164,7 @@ public record OfferingViewModel : BaseViewModel
     [StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
     public string? ANSignatoryPosition { get; init; }
     [Display(Name = "Lease Contract Created Date")]
-    public DateTime? LeaseContractCreatedDate { get; init; } = DateTime.Now.Date;
+    public DateTime? LeaseContractCreatedDate { get; init; }
     [Display(Name = "Lease Contract Created By")]
     [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
     public string? LeaseContractCreatedBy { get; init; }
@@ -172,17 +172,17 @@ public record OfferingViewModel : BaseViewModel
 
     public string? TagSignedLeaseContractBy { get; init; }
     [Display(Name = "Signed Lease Contract Date")]
-    public DateTime? SignedLeaseContractDate { get; init; } = DateTime.Now.Date;
+    public DateTime? SignedLeaseContractDate { get; init; }
     [Display(Name = "Tag For Review Lease Contract By")]
 
     public string? TagForReviewLeaseContractBy { get; init; }
     [Display(Name = "For Review Lease Contract Date")]
-    public DateTime? ForReviewLeaseContractDate { get; init; } = DateTime.Now.Date;
+    public DateTime? ForReviewLeaseContractDate { get; init; }
     [Display(Name = "Tag For Final Print Lease Contract By")]
 
     public string? TagForFinalPrintLeaseContractBy { get; init; }
     [Display(Name = "For Final Print Lease Contract Date")]
-    public DateTime? ForFinalPrintLeaseContractDate { get; init; } = DateTime.Now.Date;
+    public DateTime? ForFinalPrintLeaseContractDate { get; init; }
     [Display(Name = "Lease Contract")]
     public string? LeaseContractStatus { get; init; }
     [Display(Name = "AN Term Type")]
