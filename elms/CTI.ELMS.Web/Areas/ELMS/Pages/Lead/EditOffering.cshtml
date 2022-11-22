@@ -16,6 +16,7 @@
             <input type="hidden" asp-for="@Model.AsyncAction" />
             <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
             <input type="hidden" asp-for="@Model.AddPreSelectedUnitUnitId" />
+            <input type="hidden" asp-for="@Model.AddUnitOfferedUnitId" />
             <div id="PartialLoaderContainer">
                 <partial name="_OfferingInputFieldsPartial" model="Model.Offering" />
             </div>
@@ -35,14 +36,40 @@
 <partial name="_ValidationScriptsPartial" />
 <partial name="_DataTableScripts" />
 <partial name="_LeadTaskScripts" />
+<partial name="_DisableFieldsViaClassPartial" model="@("Lock_OfferSheetRates")" />
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
         {
+            //For Edit Offering
             $(".ProjectId").hide();
-            $.bindLeadTaskDropdown("#LeadTaskId","#ClientFeedbackId","#ClientFeedbackIdSelected","#NextStepId","#NextStepIdSelected");
-            $('#ProjectId').on( 'change', function () {
-                $('#AsyncAction').val('');
+            $.DisableFieldsViaClass();
+            //Common Javascript
+            $('#TurnOverDate').on( 'change', function () {
+                setTimeout(function() {
+                    $('#AsyncAction').val('Action_AutocalculateFitOut');
+                    $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+                }, 600);
+            });
+            $('#FitOutPeriod').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutocalculateTurnOverDate');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+
+            $('#AutoComputeTotalSecurityDeposit, #SecMonths').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateTotalSecurityDeposit');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#AutoComputeTotalConstructionBond, #ConstructionMonths').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateTotalConstructionBond');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#ConstructionCAMCRate, #ConstructionCAMCMonths').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateCAMC');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
+            });
+            $('#AutoComputeAnnualAdvertisingFee').on( 'change', function () {
+                $('#AsyncAction').val('Action_AutoCalculateAnnualAdsFee');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
             $('.DisableSelectDropdown').on('mousedown', function(e) {
@@ -50,97 +77,6 @@
                 this.blur();
                 window.focus();
             });
-            $.fn.leadtaskSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/LeadTask/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            $("#LeadTaskId").leadtaskSelect();
-            $(".btn-add-unit").on('click', function (e) {
-                modelPopup();
-            });
-            GetSelectedUnitQueryString = () => {
-                //Get All Selected Unit
-                 let selectedUnitQueryString = '';
-                if($('.selected-unitid').length > 0)
-                {
-                    var selectedUnitsElementList = document.querySelectorAll('.selected-unitid');
-                    for (var i = 0, len = selectedUnitsElementList.length; i < len; i++) {
-                        if (selectedUnitsElementList[i].value != null && selectedUnitsElementList[i].value != '') { selectedUnitQueryString += '&selectedUnits=' + selectedUnitsElementList[i].value; }
-                    }
-                }
-                return selectedUnitQueryString;
-            }            
-            $('.RemoveUnitOfferingButton ').on( 'click', function () {
-                $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                $('#AsyncAction').val('RemoveUnitOffering');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });                  
-            function InitializeTable()
-            {               
-                var table = $('#available-units-table').DataTable({
-                    select: false,
-                    responsive: true,
-                    ordering: true,
-                    searching:true,
-                    paging: true,
-                    info: true,
-                    buttons: [],
-                    fnDrawCallback: function(oSettings) { 
-                       $('.AddUnitOfferingButton').on( 'click', function () {
-                            $('#AddUnitOfferingUnitId').val($(this).attr('addUnitId'));
-                            $('#AsyncAction').val('AddUnitOffering');
-                            $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', BindOnAddUnitOffering);                   
-                        });
-                    },
-                    columns: [
-                        { data: "unitNo", name: "UnitNo", orderable: true, },
-                        { data: "lotArea", name: "LotArea", orderable: true, },
-                        {
-                            data: "availabilityDate",
-                            name: "AvailabilityDate",
-                            orderable: true,
-                            render: function (data, type, row, meta) {
-                                return '<a class="badge ' + (row.availability=='@(CTI.ELMS.Core.Constants.LotAvailability.Available)'? 'bg-success' : 'bg-warning') + '" style="text-decoration:none;">' + row.availability + '</a>';
-                            },
-                        },
-                        { data: "lotBudget", name: "LotBudget", orderable: true, },
-                        { data: "unitId", name: "UnitId", visible: false, },
-                        { data: "availability", name: "Availability", visible: false, },
-                        { data: "availabilityDate", name: "AvailabilityDate", visible: false, },
-                        {
-                            data: null,
-                            width: "10%",
-                            render: function (data, type, row, meta) {
-                                return '<a class="btn btnMaterial btn-flat success semicircle AddUnitOfferingButton" title="Select" addUnitId="' + row.unitId + '"><i class="fas fa-plus"></i></a>';
-                            },
-                        },
-                    ]
-                });
-                function DestroyTable()
-                {
-                    table.destroy();
-                }              
-                var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search     
-            } 
-            function modelPopup() {
-                var selectedUnitQueryString = GetSelectedUnitQueryString();
-                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;
-                var title = "Select Unit";
-                openModal(url, title, InitializeTable);
-            }
-            function BindOnAddUnitOffering()
-            {       
-                var selectedUnitQueryString = GetSelectedUnitQueryString();
-                var url = '@Url.Page("/Unit/Search/Index", new { area = "ELMS" })' + '?projectId=' + $('.ProjectId').val() + selectedUnitQueryString;                           
-                fillPartial(url, "#table-container", InitializeTable);
-                InitializeForm();
-            }
         }
         InitializeForm();
     });

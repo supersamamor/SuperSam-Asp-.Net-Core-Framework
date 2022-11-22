@@ -21,7 +21,7 @@ public class GetOfferingByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
             .Include(l => l.OfferingHistoryList)
             .Include(l => l.PreSelectedUnitList!).ThenInclude(l => l.Unit)
             .Include(l => l.UnitOfferedList!).ThenInclude(l => l.Unit)
-            .Include(l => l.UnitOfferedList!).ThenInclude(l => l.AnnualIncrementList)   
+            .Include(l => l.UnitOfferedList!).ThenInclude(l => l.AnnualIncrementList)
             .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
     }
 

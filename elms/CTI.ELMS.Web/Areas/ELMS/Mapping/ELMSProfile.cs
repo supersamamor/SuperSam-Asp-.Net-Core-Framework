@@ -152,7 +152,10 @@ public class ELMSProfile : Profile
             .ForMember(e => e.Id, c => c.Ignore())
             .ForMember(e => e.Availability, c => c.Ignore())
             .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));      
-        CreateMap<OfferingState, OfferingViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id));
+        CreateMap<OfferingState, OfferingViewModel>()
+            .ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id))
+            .ForPath(e => e.ForeignKeyProjectName, o => o.MapFrom(s => s.Project!.ProjectName))
+            .ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id));
         CreateMap<OfferingViewModel, OfferingState>();
         CreateMap<OfferingHistoryViewModel, AddOfferingHistoryCommand>();
         CreateMap<OfferingHistoryViewModel, EditOfferingHistoryCommand>();

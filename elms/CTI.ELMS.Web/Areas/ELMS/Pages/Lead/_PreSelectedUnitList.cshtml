@@ -7,7 +7,7 @@
         <button class="cancel" type="button" id="btnRemovePreSelectedUnit" value="RemovePreSelectedUnit" style="display:none;"></button>
         @if (!string.IsNullOrEmpty(Model?.ProjectID))
         {
-            <a class="btn btnMaterial btn-flat primary semicircle cancel btn-add-unit" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+            <a class="btn Lock_OfferSheetRates btnMaterial btn-flat primary semicircle cancel btn-add-unit" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
         }
     </h5>
     <div class="card-body" style="overflow:auto;">
@@ -76,8 +76,8 @@
                                 }
                             </td>
                             <td>
-                                <a class="btn btnMaterial btn-flat primary semicircle cancel AddUnitOfferedButton" title="@Localizer["Add"]" addId="@(item.UnitID)"><i class="fas fa-plus" style="font-size:18px;"></i></a>
-                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemovePreSelectedUnitButton" title="@Localizer["Remove Pre-Selected Unit"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                                <a class="btn btnMaterial btn-flat primary semicircle cancel AddUnitOfferedButton Lock_OfferSheetRates" title="@Localizer["Add"]" addId="@(item.UnitID)"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemovePreSelectedUnitButton Lock_OfferSheetRates" title="@Localizer["Remove Pre-Selected Unit"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
                             </td>
                         </tr>
                         counter++;

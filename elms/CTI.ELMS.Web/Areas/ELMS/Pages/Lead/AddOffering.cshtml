@@ -38,61 +38,29 @@
     $(document).ready(function () {
         function InitializeForm()
         {
+            //For Add Offering
             $("#ProjectIdLabel").hide();
             $("#OfferSheetNoContainer").hide();
-            $("#StatusContainer").hide();       
+            $("#StatusContainer").hide(); 
             $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
-            
             $('#Year, #Month, #Day, #CommencementDate').on( 'change',function () {
                 setTimeout(function() {
                     $('#AsyncAction').val('Action_AutocalculateTerminationTurnOverDate');
                     $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
                 }, 600);                
-            });
-            
+            });            
             $('#TerminationDate').on( 'change', function () {
                 setTimeout(function() {
                     $('#AsyncAction').val('Action_AutocalculateYearMonthDay');
                     $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
                 }, 600); 
             });
-            $('#TurnOverDate').on( 'change', function () {
-                setTimeout(function() {
-                    $('#AsyncAction').val('Action_AutocalculateFitOut');
-                    $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-                }, 600);                 
-            });
-            $('#FitOutPeriod').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutocalculateTurnOverDate');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
             $('.HasAnnualIncrement, .AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent, .IsFixedMonthlyRent').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutoCalculateAnnualIncrement');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
-            $('#AutoComputeTotalSecurityDeposit, #SecMonths').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutoCalculateTotalSecurityDeposit');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
-            $('#AutoComputeTotalConstructionBond, #ConstructionMonths').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutoCalculateTotalConstructionBond');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
-            $('#ConstructionCAMCRate, #ConstructionCAMCMonths').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutoCalculateCAMC');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
-            $('#AutoComputeAnnualAdvertisingFee').on( 'change', function () {
-                $('#AsyncAction').val('Action_AutoCalculateAnnualAdsFee');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
-            $('.DisableSelectDropdown').on('mousedown', function(e) {
-                e.preventDefault();
-                this.blur();
-                window.focus();
             });
             $.fn.projectSelect = function() {
                 this.filter("select").each(function() {
@@ -103,14 +71,14 @@
                     });
                 });
                 return this;
-            };
+            }; 
             $("#ProjectID").projectSelect();
             $(".btn-add-unit").on('click', function (e) {
                 modelPopup();
             });
             GetSelectedUnitQueryString = () => {
                 //Get All Selected Unit
-                 let selectedUnitQueryString = '';
+                let selectedUnitQueryString = '';
                 if($('.selected-unitid').length > 0)
                 {
                     var selectedUnitsElementList = document.querySelectorAll('.selected-unitid');
@@ -195,6 +163,7 @@
                 $('#AsyncAction').val('RemoveUnitOffered');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
             });
+            
         }
         InitializeForm();
     });

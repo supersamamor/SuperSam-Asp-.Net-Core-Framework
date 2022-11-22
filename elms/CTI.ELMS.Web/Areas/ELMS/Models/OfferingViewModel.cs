@@ -10,6 +10,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Project")]
     [Required]
     public string ProjectID { get; init; } = "";
+    public string? ForeignKeyProjectName { get; set; }
     public string? ForeignKeyProject { get; set; }
     [Display(Name = "Offering History")]
     public string? OfferingHistoryID { get; init; }
@@ -130,7 +131,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "Offer Sheet Per Project Counter")]
     public int? OfferSheetPerProjectCounter { get; init; }
     [Display(Name = "Signed Award Notice Date")]
-    public DateTime? SignedAwardNoticeDate { get; init; } 
+    public DateTime? SignedAwardNoticeDate { get; init; }
     [Display(Name = "Tag Signed Award Notice By")]
 
     public string? TagSignedAwardNoticeBy { get; init; }
