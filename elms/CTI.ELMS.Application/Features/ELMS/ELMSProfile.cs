@@ -143,5 +143,10 @@ public class ELMSProfile : Profile
         CreateMap<AddOfferingCommand, OfferingState>()
          .ForMember(e => e.Id, c => c.Ignore())
          .ForMember(e => e.OfferingHistoryList, c => c.Ignore());
+        CreateMap<UnitOfferedState, UnitOfferedHistoryState>()
+          .ForPath(e => e.AnnualIncrementHistoryList, o => o.MapFrom(s => s.AnnualIncrementList))
+          .ForMember(e => e.Id, c => c.Ignore());
+        CreateMap<AnnualIncrementState, AnnualIncrementHistoryState>()        
+          .ForMember(e => e.Id, c => c.Ignore());
     }
 }

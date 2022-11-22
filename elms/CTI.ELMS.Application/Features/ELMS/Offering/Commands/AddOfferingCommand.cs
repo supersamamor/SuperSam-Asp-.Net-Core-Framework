@@ -35,8 +35,8 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
     {
         OfferingState entity = Mapper.Map<OfferingState>(request);
         var offeringHistoryId = await AddOfferingHistory(entity);
-        UpdatePreSelectedUnitList(entity);
-        UpdateUnitOfferedList(entity);
+        AddPreSelectedUnitList(entity);
+        AddUnitOfferedList(entity, offeringHistoryId);
         _ = await Context.AddAsync(entity, cancellationToken);
         await AddApprovers(entity.Id, cancellationToken);
         _ = await Context.SaveChangesAsync(cancellationToken);
@@ -51,7 +51,7 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
         Context.Entry(offeringHistory!).State = EntityState.Added;
         return offeringHistory.Id;
     }
-    private void UpdatePreSelectedUnitList(OfferingState entity)
+    private void AddPreSelectedUnitList(OfferingState entity)
     {
         if (entity.PreSelectedUnitList?.Count > 0)
         {
@@ -61,17 +61,25 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
             }
         }
     }
-    private void UpdateUnitOfferedList(OfferingState entity)
+    private void AddUnitOfferedList(OfferingState entity, string offeringHistoryId)
     {
         if (entity.UnitOfferedList?.Count > 0)
         {
             foreach (var unitOffered in entity.UnitOfferedList!)
             {
+                unitOffered.OfferingID = entity.Id;
                 Context.Entry(unitOffered).State = EntityState.Added;
+                AddUnitOfferedHistory(unitOffered, offeringHistoryId);
             }
         }
     }
 
+    private void AddUnitOfferedHistory(UnitOfferedState unitOffered, string offeringHistoryId)
+    {
+        var unitOfferedHistory = Mapper.Map<UnitOfferedHistoryState>(unitOffered);  
+        unitOfferedHistory.OfferingHistoryID = offeringHistoryId;     
+        Context.Entry(unitOfferedHistory).State = EntityState.Added;
+    }
 
     private async Task AddApprovers(string offeringId, CancellationToken cancellationToken)
     {

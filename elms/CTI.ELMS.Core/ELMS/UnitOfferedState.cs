@@ -7,7 +7,7 @@ public record UnitOfferedState : BaseEntity
 {
 	public decimal? LotBudget { get; init; }
 	public decimal? LotArea { get; init; }
-	public string? OfferingID { get; init; }
+	public string? OfferingID { get; set; }
 	public string? UnitID { get; init; }
 	public decimal? BasicFixedMonthlyRent { get; init; }
 	public decimal? PercentageRent { get; init; }

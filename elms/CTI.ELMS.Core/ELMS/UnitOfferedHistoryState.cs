@@ -9,7 +9,7 @@ public record UnitOfferedHistoryState : BaseEntity
 	public string? UnitID { get; init; }
 	public decimal? LotBudget { get; init; }
 	public decimal? LotArea { get; init; }
-	public string? OfferingHistoryID { get; init; }
+	public string? OfferingHistoryID { get; set; }
 	public decimal? BasicFixedMonthlyRent { get; init; }
 	public decimal? PercentageRent { get; init; }
 	public decimal? MinimumMonthlyRent { get; init; }
