@@ -69,16 +69,31 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
             {
                 unitOffered.OfferingID = entity.Id;
                 Context.Entry(unitOffered).State = EntityState.Added;
-                AddUnitOfferedHistory(unitOffered, offeringHistoryId);
+                var unitOfferedHistoryId = AddUnitOfferedHistory(unitOffered, offeringHistoryId);
+                if (unitOffered.AnnualIncrementList?.Count > 0)
+                {
+                    foreach (var annualIncrement in unitOffered.AnnualIncrementList!)
+                    {
+                        Context.Entry(annualIncrement).State = EntityState.Added;
+                        AddAnnualIncrementHistory(annualIncrement, unitOfferedHistoryId);
+                    }
+                }
             }
         }
     }
 
-    private void AddUnitOfferedHistory(UnitOfferedState unitOffered, string offeringHistoryId)
+    private string AddUnitOfferedHistory(UnitOfferedState unitOffered, string offeringHistoryId)
     {
-        var unitOfferedHistory = Mapper.Map<UnitOfferedHistoryState>(unitOffered);  
-        unitOfferedHistory.OfferingHistoryID = offeringHistoryId;     
+        var unitOfferedHistory = Mapper.Map<UnitOfferedHistoryState>(unitOffered);
+        unitOfferedHistory.OfferingHistoryID = offeringHistoryId;
         Context.Entry(unitOfferedHistory).State = EntityState.Added;
+        return unitOfferedHistory.Id;
+    }
+    private void AddAnnualIncrementHistory(AnnualIncrementState annualIncrement, string unitOfferedHistoryID)
+    {
+        var annualIncrementHistory = Mapper.Map<AnnualIncrementHistoryState>(annualIncrement);
+        annualIncrementHistory.UnitOfferedHistoryID = unitOfferedHistoryID;
+        Context.Entry(annualIncrementHistory).State = EntityState.Added;
     }
 
     private async Task AddApprovers(string offeringId, CancellationToken cancellationToken)
