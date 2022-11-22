@@ -19,7 +19,7 @@ public record OfferingHistoryState : BaseEntity
 	public decimal? CommencementCAMC { get; init; }
 	public string? Concession { get; init; }
 	public string? OffersheetRemarks { get; init; }
-	public string UnitsInformation { get; init; } = "";
+	public string? UnitsInformation { get; init; }
 	public string? ANType { get; init; }
 	public string? LeadID { get; init; }
 	public string? ProjectID { get; init; }
@@ -35,7 +35,7 @@ public record OfferingHistoryState : BaseEntity
 	public int? ConstructionPayableWithinMonths { get; init; }
 	public bool IsPOS { get; init; }
 	public string Location { get; init; } = "";
-	public int? OfferingVersion { get; init; }
+	public int? OfferingVersion { get; private set; }
 	public decimal? TotalBasicFixedMonthlyRent { get; init; }
 	public decimal? TotalMinimumMonthlyRent { get; init; }
 	public decimal? TotalLotBudget { get; init; }
@@ -46,15 +46,16 @@ public record OfferingHistoryState : BaseEntity
 	public string UnitType { get; init; } = "";
 	public string? Provision { get; init; }
 	public int? FitOutPeriod { get; init; }
-	public DateTime TurnOverDate { get; init; }
+	public DateTime? TurnOverDate { get; init; }
 	public bool AutoComputeAnnualAdvertisingFee { get; init; }
-	public DateTime BookingDate { get; init; }
-	
+	public DateTime? BookingDate { get; init; }	
 	public OfferingState? Offering { get; init; }
 	public LeadState? Lead { get; init; }
-	public ProjectState? Project { get; init; }
-	
+	public ProjectState? Project { get; init; }	
 	public IList<UnitOfferedHistoryState>? UnitOfferedHistoryList { get; set; }
 	public IList<UnitGroupState>? UnitGroupList { get; set; }
-	
+	public void SetOfferingVersion(int offeringVersion)
+	{
+		this.OfferingVersion = offeringVersion;
+	}	
 }

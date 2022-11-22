@@ -34,11 +34,6 @@ public class OfferingController : BaseApiController<OfferingController>
         var command = Mapper.Map<EditOfferingCommand>(request);
         return await ToActionResult(async () => await Mediator.Send(command with { Id = id }));
     }
-
-    [Authorize(Policy = Permission.Offering.Delete)]
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<OfferingState>> DeleteAsync(string id) =>
-        await ToActionResult(async () => await Mediator.Send(new DeleteOfferingCommand { Id = id }));
 }
 
 public record OfferingViewModel

@@ -151,9 +151,7 @@ public class ELMSProfile : Profile
         CreateMap<UnitState, UnitActivityViewModel>()
             .ForMember(e => e.Id, c => c.Ignore())
             .ForMember(e => e.Availability, c => c.Ignore())
-            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
-        CreateMap<OfferingViewModel, AddOfferingCommand>();
-        CreateMap<OfferingViewModel, EditOfferingCommand>();
+            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));      
         CreateMap<OfferingState, OfferingViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id)).ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id));
         CreateMap<OfferingViewModel, OfferingState>();
         CreateMap<OfferingHistoryViewModel, AddOfferingHistoryCommand>();
@@ -238,5 +236,9 @@ public class ELMSProfile : Profile
         CreateMap<AvailableUnitModel, UnitOfferedViewModel>()
           .ForMember(e => e.Id, c => c.Ignore())
           .ForMember(e => e.Availability, c => c.Ignore());
+        CreateMap<OfferingViewModel, AddOfferingCommand>()
+            .ForMember(e => e.Status, c => c.Ignore());
+        CreateMap<OfferingViewModel, EditOfferingCommand>()
+            .ForMember(e => e.Status, c => c.Ignore());
     }
 }

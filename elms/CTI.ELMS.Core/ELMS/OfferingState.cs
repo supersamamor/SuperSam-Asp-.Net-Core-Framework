@@ -1,13 +1,14 @@
 using CTI.Common.Core.Base.Models;
-using System.ComponentModel;
+using CTI.ELMS.Core.Constants;
+
 
 namespace CTI.ELMS.Core.ELMS;
 
 public record OfferingState : BaseEntity
 {
 	public string ProjectID { get; init; } = "";
-	public string? OfferingHistoryID { get; init; }
-	public string? Status { get; init; }
+	public string? OfferingHistoryID { get; private set; }
+	public string? Status { get; init; } = OfferingStatus.NewOS;
 	public DateTime? CommencementDate { get; init; }
 	public DateTime? TerminationDate { get; init; }
 	public int? Year { get; init; }
@@ -97,5 +98,9 @@ public record OfferingState : BaseEntity
 			}
 			return this.Project?.IFCAProjectCode?.ToString() + "-" + this.Id.PadLeft(5, '0') + "-" + version.ToString().PadLeft(2, '0');
 		}
+	}
+	public void SetOfferingHistoryId(string offeringHistoryId)
+	{
+		this.OfferingHistoryID = offeringHistoryId;
 	}
 }

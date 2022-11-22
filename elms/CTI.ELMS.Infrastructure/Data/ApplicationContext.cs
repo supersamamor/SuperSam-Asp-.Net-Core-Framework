@@ -203,6 +203,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<OfferingState>().Property(e => e.ContractNumber).HasMaxLength(255);
 		modelBuilder.Entity<OfferingState>().Property(e => e.ANTermType).HasMaxLength(100);
 		modelBuilder.Entity<OfferingState>().Property(e => e.LeaseContractStatus).HasMaxLength(100);
+		modelBuilder.Entity<OfferingState>().Property(e => e.OfferingHistoryID).HasMaxLength(450);
+		modelBuilder.Entity<OfferingState>().HasIndex(p => p.OfferingHistoryID);
 		modelBuilder.Entity<OfferingHistoryState>().Property(e => e.Status).HasMaxLength(35);
 		modelBuilder.Entity<OfferingHistoryState>().Property(e => e.ANType).HasMaxLength(100);
 		modelBuilder.Entity<UnitGroupState>().Property(e => e.AreaTypeDescription).HasMaxLength(50);

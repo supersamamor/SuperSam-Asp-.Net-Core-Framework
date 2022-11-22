@@ -97,7 +97,6 @@ public class ELMSProfile : Profile
         CreateMap<EditActivityHistoryCommand, ActivityHistoryState>().IgnoreBaseEntityProperties();
         CreateMap<AddUnitActivityCommand, UnitActivityState>();
         CreateMap<EditUnitActivityCommand, UnitActivityState>().IgnoreBaseEntityProperties();
-        CreateMap<AddOfferingCommand, OfferingState>();
         CreateMap<EditOfferingCommand, OfferingState>().IgnoreBaseEntityProperties();
         CreateMap<AddOfferingHistoryCommand, OfferingHistoryState>();
         CreateMap<EditOfferingHistoryCommand, OfferingHistoryState>().IgnoreBaseEntityProperties();
@@ -137,5 +136,12 @@ public class ELMSProfile : Profile
         CreateMap<AddActivityCommand, ActivityState>()
             .ForMember(e => e.Id, c => c.Ignore())
             .ForMember(e => e.ActivityHistoryList, c => c.Ignore());
+        CreateMap<OfferingState, OfferingHistoryState>()
+           .ForPath(e => e.OfferingID, o => o.MapFrom(s => s.Id))
+           .ForMember(e => e.Id, c => c.Ignore())
+           .ForMember(e => e.UnitOfferedHistoryList, c => c.Ignore());
+        CreateMap<AddOfferingCommand, OfferingState>()
+         .ForMember(e => e.Id, c => c.Ignore())
+         .ForMember(e => e.OfferingHistoryList, c => c.Ignore());
     }
 }

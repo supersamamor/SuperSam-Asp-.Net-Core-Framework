@@ -4,6 +4,7 @@ using CTI.ELMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.ELMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221122021152_AddIndexFromOfferingHistoryIdField")]
+    partial class AddIndexFromOfferingHistoryIdField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("PrimaryKey");
 
-                    b.ToTable("AuditLogs", (string)null);
+                    b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ActivityHistoryState", b =>
@@ -124,7 +126,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("NextStepId");
 
-                    b.ToTable("ActivityHistory", (string)null);
+                    b.ToTable("ActivityHistory");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ActivityState", b =>
@@ -191,7 +193,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("Activity", (string)null);
+                    b.ToTable("Activity");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.AnnualIncrementHistoryState", b =>
@@ -240,7 +242,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitOfferedHistoryID");
 
-                    b.ToTable("AnnualIncrementHistory", (string)null);
+                    b.ToTable("AnnualIncrementHistory");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.AnnualIncrementState", b =>
@@ -286,7 +288,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitOfferedID");
 
-                    b.ToTable("AnnualIncrement", (string)null);
+                    b.ToTable("AnnualIncrement");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ApprovalRecordState", b =>
@@ -332,7 +334,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("ApprovalRecord", (string)null);
+                    b.ToTable("ApprovalRecord");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ApprovalState", b =>
@@ -400,7 +402,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Approval", (string)null);
+                    b.ToTable("Approval");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ApproverAssignmentState", b =>
@@ -448,7 +450,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[ApproverUserId] IS NOT NULL AND [ApproverRoleId] IS NOT NULL");
 
-                    b.ToTable("ApproverAssignment", (string)null);
+                    b.ToTable("ApproverAssignment");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ApproverSetupState", b =>
@@ -506,7 +508,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[WorkflowName] IS NOT NULL AND [TableName] IS NOT NULL AND [Entity] IS NOT NULL");
 
-                    b.ToTable("ApproverSetup", (string)null);
+                    b.ToTable("ApproverSetup");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.BusinessNatureCategoryState", b =>
@@ -552,7 +554,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("BusinessNatureCategory", (string)null);
+                    b.ToTable("BusinessNatureCategory");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.BusinessNatureState", b =>
@@ -600,7 +602,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("BusinessNature", (string)null);
+                    b.ToTable("BusinessNature");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.BusinessNatureSubItemState", b =>
@@ -646,7 +648,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("BusinessNatureSubItem", (string)null);
+                    b.ToTable("BusinessNatureSubItem");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ClientFeedbackState", b =>
@@ -683,7 +685,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("ClientFeedback", (string)null);
+                    b.ToTable("ClientFeedback");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ContactPersonState", b =>
@@ -748,7 +750,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("SalutationID");
 
-                    b.ToTable("ContactPerson", (string)null);
+                    b.ToTable("ContactPerson");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ContactState", b =>
@@ -791,7 +793,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LeadID");
 
-                    b.ToTable("Contact", (string)null);
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.EntityGroupState", b =>
@@ -861,7 +863,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("PPlusConnectionSetupID");
 
-                    b.ToTable("EntityGroup", (string)null);
+                    b.ToTable("EntityGroup");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.IFCAARAllocationState", b =>
@@ -916,7 +918,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("IFCAARAllocation", (string)null);
+                    b.ToTable("IFCAARAllocation");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.IFCAARLedgerState", b =>
@@ -1036,7 +1038,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("IFCAARLedger", (string)null);
+                    b.ToTable("IFCAARLedger");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.IFCATenantInformationState", b =>
@@ -1113,7 +1115,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("IFCATenantInformation", (string)null);
+                    b.ToTable("IFCATenantInformation");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.IFCATransactionTypeState", b =>
@@ -1167,7 +1169,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("IFCATransactionType", (string)null);
+                    b.ToTable("IFCATransactionType");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.IFCAUnitInformationState", b =>
@@ -1221,7 +1223,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitID");
 
-                    b.ToTable("IFCAUnitInformation", (string)null);
+                    b.ToTable("IFCAUnitInformation");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.LeadSourceState", b =>
@@ -1258,7 +1260,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("LeadSourceName")
                         .IsUnique();
 
-                    b.ToTable("LeadSource", (string)null);
+                    b.ToTable("LeadSource");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.LeadState", b =>
@@ -1366,7 +1368,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("OperationTypeID");
 
-                    b.ToTable("Lead", (string)null);
+                    b.ToTable("Lead");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.LeadTaskClientFeedBackState", b =>
@@ -1409,7 +1411,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LeadTaskId");
 
-                    b.ToTable("LeadTaskClientFeedBack", (string)null);
+                    b.ToTable("LeadTaskClientFeedBack");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.LeadTaskNextStepState", b =>
@@ -1456,7 +1458,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("NextStepId");
 
-                    b.ToTable("LeadTaskNextStep", (string)null);
+                    b.ToTable("LeadTaskNextStep");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.LeadTaskState", b =>
@@ -1493,7 +1495,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("LeadTaskName")
                         .IsUnique();
 
-                    b.ToTable("LeadTask", (string)null);
+                    b.ToTable("LeadTask");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.LeadTouchPointState", b =>
@@ -1530,7 +1532,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("LeadTouchPointName")
                         .IsUnique();
 
-                    b.ToTable("LeadTouchPoint", (string)null);
+                    b.ToTable("LeadTouchPoint");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.NextStepState", b =>
@@ -1567,7 +1569,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("NextStepTaskName")
                         .IsUnique();
 
-                    b.ToTable("NextStep", (string)null);
+                    b.ToTable("NextStep");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.OfferingHistoryState", b =>
@@ -1738,7 +1740,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("OfferingHistory", (string)null);
+                    b.ToTable("OfferingHistory");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.OfferingState", b =>
@@ -2008,7 +2010,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("Offering", (string)null);
+                    b.ToTable("Offering");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.OperationTypeState", b =>
@@ -2045,7 +2047,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("OperationTypeName")
                         .IsUnique();
 
-                    b.ToTable("OperationType", (string)null);
+                    b.ToTable("OperationType");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.PPlusConnectionSetupState", b =>
@@ -2096,7 +2098,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("PPlusVersionName")
                         .IsUnique();
 
-                    b.ToTable("PPlusConnectionSetup", (string)null);
+                    b.ToTable("PPlusConnectionSetup");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.PreSelectedUnitState", b =>
@@ -2141,7 +2143,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitID");
 
-                    b.ToTable("PreSelectedUnit", (string)null);
+                    b.ToTable("PreSelectedUnit");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ProjectState", b =>
@@ -2281,7 +2283,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Project", (string)null);
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ReportTableCollectionDetailState", b =>
@@ -2413,7 +2415,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("ReportTableCollectionDetail", (string)null);
+                    b.ToTable("ReportTableCollectionDetail");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ReportTableYTDExpirySummaryState", b =>
@@ -2503,7 +2505,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("ReportTableYTDExpirySummary", (string)null);
+                    b.ToTable("ReportTableYTDExpirySummary");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.SalutationState", b =>
@@ -2540,7 +2542,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.HasIndex("SalutationDescription")
                         .IsUnique();
 
-                    b.ToTable("Salutation", (string)null);
+                    b.ToTable("Salutation");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UnitActivityState", b =>
@@ -2585,7 +2587,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitID");
 
-                    b.ToTable("UnitActivity", (string)null);
+                    b.ToTable("UnitActivity");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UnitBudgetState", b =>
@@ -2674,7 +2676,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitID");
 
-                    b.ToTable("UnitBudget", (string)null);
+                    b.ToTable("UnitBudget");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UnitGroupState", b =>
@@ -2729,7 +2731,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("OfferingHistoryID");
 
-                    b.ToTable("UnitGroup", (string)null);
+                    b.ToTable("UnitGroup");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UnitOfferedHistoryState", b =>
@@ -2797,7 +2799,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitID");
 
-                    b.ToTable("UnitOfferedHistory", (string)null);
+                    b.ToTable("UnitOfferedHistory");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UnitOfferedState", b =>
@@ -2863,7 +2865,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("UnitID");
 
-                    b.ToTable("UnitOffered", (string)null);
+                    b.ToTable("UnitOffered");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UnitState", b =>
@@ -2919,7 +2921,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("Unit", (string)null);
+                    b.ToTable("Unit");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.UserProjectAssignmentState", b =>
@@ -2956,7 +2958,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("UserProjectAssignment", (string)null);
+                    b.ToTable("UserProjectAssignment");
                 });
 
             modelBuilder.Entity("CTI.ELMS.Core.ELMS.ActivityHistoryState", b =>
