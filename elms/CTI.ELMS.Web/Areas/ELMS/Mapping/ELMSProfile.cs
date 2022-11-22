@@ -41,6 +41,7 @@ using CTI.ELMS.Application.Features.ELMS.IFCAARLedger.Commands;
 using CTI.ELMS.Application.Features.ELMS.IFCAARAllocation.Commands;
 using CTI.ELMS.Application.Features.ELMS.ReportTableCollectionDetail.Commands;
 using CTI.ELMS.Application.Features.ELMS.ReportTableYTDExpirySummary.Commands;
+using CTI.ELMS.Application.Features.ELMS.Unit.Queries;
 
 namespace CTI.ELMS.Web.Areas.ELMS.Mapping;
 
@@ -162,14 +163,14 @@ public class ELMSProfile : Profile
         CreateMap<PreSelectedUnitViewModel, AddPreSelectedUnitCommand>();
         CreateMap<PreSelectedUnitViewModel, EditPreSelectedUnitCommand>();
         CreateMap<PreSelectedUnitState, PreSelectedUnitViewModel>()
-            .ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id))   
+            .ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id))
             .ForPath(e => e.ForeignKeyUnit, o => o.MapFrom(s => s.Unit!.Id))
             .ForPath(e => e.UnitNo, o => o.MapFrom(s => s.Unit!.UnitNo))
             .ForPath(e => e.LotArea, o => o.MapFrom(s => s.Unit!.LotArea))
-            .ForPath(e => e.AvailabilityDate, o => o.MapFrom(s => s.Unit!.AvailabilityDate)); 
+            .ForPath(e => e.AvailabilityDate, o => o.MapFrom(s => s.Unit!.AvailabilityDate));
         CreateMap<PreSelectedUnitViewModel, PreSelectedUnitState>();
         CreateMap<UnitOfferedViewModel, AddUnitOfferedCommand>();
-        CreateMap<UnitOfferedViewModel, EditUnitOfferedCommand>();       
+        CreateMap<UnitOfferedViewModel, EditUnitOfferedCommand>();
         CreateMap<UnitOfferedViewModel, UnitOfferedState>();
         CreateMap<UnitOfferedHistoryViewModel, AddUnitOfferedHistoryCommand>();
         CreateMap<UnitOfferedHistoryViewModel, EditUnitOfferedHistoryCommand>();
@@ -223,7 +224,7 @@ public class ELMSProfile : Profile
         CreateMap<UnitState, PreSelectedUnitViewModel>()
             .ForMember(e => e.Id, c => c.Ignore())
             .ForMember(e => e.Availability, c => c.Ignore())
-            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));       
+            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
         CreateMap<UnitOfferedState, UnitOfferedViewModel>()
             .ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id))
             .ForPath(e => e.ForeignKeyUnit, o => o.MapFrom(s => s.Unit!.Id))
@@ -234,5 +235,8 @@ public class ELMSProfile : Profile
           .ForMember(e => e.Id, c => c.Ignore())
           .ForMember(e => e.Availability, c => c.Ignore())
           .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
+        CreateMap<AvailableUnitModel, UnitOfferedViewModel>()
+          .ForMember(e => e.Id, c => c.Ignore())
+          .ForMember(e => e.Availability, c => c.Ignore());
     }
 }

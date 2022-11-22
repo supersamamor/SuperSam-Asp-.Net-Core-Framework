@@ -248,12 +248,16 @@ namespace CTI.ELMS.Web.Service
         public async Task<OfferingViewModel> AddUnitOffered(OfferingViewModel offering, string? addUnitOfferedUnitId)
         {
             var preSelectedUnit = offering!.PreSelectedUnitList!.Where(l => l.UnitID != addUnitOfferedUnitId).FirstOrDefault();
-            UnitOfferedViewModel unitOfferedToAdd = new();
-            _ = (await _mediatr.Send(new GetUnitByIdQuery(addUnitOfferedUnitId!))).Select(l => unitOfferedToAdd = _mapper.Map<UnitOfferedViewModel>(l));
-            unitOfferedToAdd.OfferingID = offering.Id;
-            unitOfferedToAdd.LotBudget = preSelectedUnit?.LotBudget;
+            IList<UnitOfferedViewModel> unitOfferedToAddList = new List<UnitOfferedViewModel>();
+            var query = new GetAvailableUnitQuery
+            {
+                UnitId = addUnitOfferedUnitId,
+                CommencementDate = offering.CommencementDate
+            };
+            unitOfferedToAddList = _mapper.Map<IList<UnitOfferedViewModel>>(await _mediatr.Send(query));         
+            unitOfferedToAddList.Single().OfferingID = offering.Id;   
             if (offering!.UnitOfferedList == null) { offering!.UnitOfferedList = new List<UnitOfferedViewModel>(); }
-            offering!.UnitOfferedList!.Add(unitOfferedToAdd);
+            offering!.UnitOfferedList!.Add(unitOfferedToAddList.Single());
             offering.PreSelectedUnitList = offering!.PreSelectedUnitList!.Where(l => l.UnitID != addUnitOfferedUnitId).ToList();
             offering = AutoCalculateAllRates(offering);
             return offering;
@@ -263,6 +267,23 @@ namespace CTI.ELMS.Web.Service
             await AddPreSelectedUnit(offering, removeSubDetailId);
             offering.UnitOfferedList = offering!.UnitOfferedList!.Where(l => l.UnitID != removeSubDetailId).ToList();
             offering = AutoCalculateAllRates(offering);
+            return offering;
+        }
+        public async Task<OfferingViewModel> RecalculateLotBudget(OfferingViewModel offering)
+        {
+            if (offering.UnitOfferedList != null)
+            {
+                foreach (var item in offering.UnitOfferedList)
+                {
+                   
+                    var query = new GetAvailableUnitQuery
+                    {
+                        UnitId = item.UnitID,
+                        CommencementDate = offering.CommencementDate
+                    };
+                    item.LotBudget = (await _mediatr.Send(query)).FirstOrDefault()!.LotBudget;
+                }
+            }
             return offering;
         }
         private static UnitOfferedViewModel SetAnnualIncrement(UnitOfferedViewModel unitOffered)

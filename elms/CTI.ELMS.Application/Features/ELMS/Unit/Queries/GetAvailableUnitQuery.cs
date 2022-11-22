@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using CTI.ELMS.Core.Constants;
 
 namespace CTI.ELMS.Application.Features.ELMS.Unit.Queries;
-public record GetAvailableUnitQuery : BaseQuery, IRequest<IEnumerable<AvailableUnitModel>>
+public record GetAvailableUnitQuery : BaseQuery, IRequest<IList<AvailableUnitModel>>
 {
     public string ProjectId { get; set; } = "";
     public string[]? SelectedUnits { get; set; }
     public string? SearchKey { get; set; }
     public DateTime? CommencementDate { get; set; }
+    public string? UnitId { get; set; } = "";
 }
 public record AvailableUnitModel
 {
@@ -44,7 +45,7 @@ public record AvailableUnitModel
     public decimal? October { get; init; }
     public decimal? November { get; init; }
     public decimal? December { get; init; }
-    public string LotBudget
+    public decimal LotBudget
     {
         get
         {
@@ -88,19 +89,19 @@ public record AvailableUnitModel
                     lotBudget = this.December;
                     break;
             }
-            return lotBudget == null ? "" : ((decimal)lotBudget).ToString("##,##.00");
+            return lotBudget == null ? 0 : (decimal)lotBudget;
         }
     }
 
 }
-public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuery, IEnumerable<AvailableUnitModel>>
+public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuery, IList<AvailableUnitModel>>
 {
     private readonly ApplicationContext _context;
     public GetAvailableUnitQueryHandler(ApplicationContext context)
     {
         _context = context;
     }
-    public async Task<IEnumerable<AvailableUnitModel>> Handle(GetAvailableUnitQuery request, CancellationToken cancellationToken = default)
+    public async Task<IList<AvailableUnitModel>> Handle(GetAvailableUnitQuery request, CancellationToken cancellationToken = default)
     {
         if (request?.CommencementDate == null)
         {
@@ -123,7 +124,34 @@ public class GetAvailableUnitQueryHandler : IRequestHandler<GetAvailableUnitQuer
         {
             query = query.Where(l => l.UnitNo.Contains(request.SearchKey));
         }
-
+        if (!string.IsNullOrEmpty(request?.UnitId))
+        {
+            query = query.Where(l => l.Id == request.UnitId);
+        }
+        var test = await (from unit in query.Include(l => l.UnitBudgetList)
+                      join a in _context.UnitBudget on unit.Id equals a.UnitID
+                      where a.Year == year
+                      select new AvailableUnitModel()
+                      {
+                          UnitId = unit.Id,
+                          UnitNo = unit.UnitNo,
+                          LotArea = unit.LotArea.ToString("##,##.00"),
+                          AvailabilityDate = unit.AvailabilityDate,
+                          Month = month,
+                          January = a.January,
+                          February = a.February,
+                          March = a.March,
+                          April = a.April,
+                          May = a.May,
+                          June = a.June,
+                          July = a.July,
+                          August = a.August,
+                          September = a.September,
+                          October = a.October,
+                          November = a.November,
+                          December = a.December,
+                      })
+                      .ToListAsync(cancellationToken: cancellationToken);
         return await (from unit in query.Include(l => l.UnitBudgetList)
                       join a in _context.UnitBudget on unit.Id equals a.UnitID
                       where a.Year == year

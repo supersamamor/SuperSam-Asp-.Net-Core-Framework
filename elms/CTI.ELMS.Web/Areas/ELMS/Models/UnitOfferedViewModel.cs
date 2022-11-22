@@ -40,7 +40,7 @@ public record UnitOfferedViewModel : BaseViewModel
 
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? AnnualIncrement { get; set; }
-    [Display(Name = "Annual Increment Information")]   
+    [Display(Name = "Annual Increment Information")]
     public string? AnnualIncrementInformation { get; init; } = "";
     [Display(Name = "Is Fixed")]
     public bool IsFixedMonthlyRent { get; init; }
@@ -68,7 +68,7 @@ public record UnitOfferedViewModel : BaseViewModel
     {
         get
         {
-            return String.Format("{0:n}", this.BasicFixedMonthlyRent) + "/" + this.PercentageRent.ToString() + "%/" + String.Format("{0:n}", this.MinimumMonthlyRent);
+            return String.Format("{0:n}", this.BasicFixedMonthlyRent) + "/" + String.Format("{0:n}", this.PercentageRent) + "%/" + String.Format("{0:n}", this.MinimumMonthlyRent);
         }
     }
 }

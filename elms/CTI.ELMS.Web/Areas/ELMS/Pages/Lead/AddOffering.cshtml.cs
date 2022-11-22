@@ -70,6 +70,7 @@ public class AddOfferingModel : BasePageModel<AddOfferingModel>
         }
         if (AsyncAction == "Action_AutocalculateTerminationTurnOverDate")
         {
+            Offering = await _offeringServices.RecalculateLotBudget(Offering);
             Offering = OfferingServices.AutocalculateTermination(Offering);
             Offering = OfferingServices.AutocalculateTurnOverDate(Offering);
             Offering = OfferingServices.AutoCalculateAnnualIncrementAndCAMCArea(Offering);
