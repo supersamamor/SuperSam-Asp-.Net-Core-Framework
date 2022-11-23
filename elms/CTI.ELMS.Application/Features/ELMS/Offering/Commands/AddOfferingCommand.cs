@@ -44,12 +44,12 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
 
     public async Task<Validation<Error, OfferingState>> AddOffering(AddOfferingCommand request, CancellationToken cancellationToken)
     {
-        OfferingState entity = Mapper.Map<OfferingState>(request);
-        var offeringHistoryId = await AddOfferingHistory(entity);
-        AddPreSelectedUnitList(entity);
-        AddUnitOfferedList(entity, offeringHistoryId);
+        OfferingState entity = Mapper.Map<OfferingState>(request);     
+        AddPreSelectedUnitList(entity);   
         entity.SetOfferSheetPerProjectCounter(await GetOfferSheetPerProjectCounter(entity.ProjectID!));
         await AutoCalculateOfferSheetFields(entity);
+        var offeringHistoryId = await AddOfferingHistory(entity);
+        AddUnitOfferedList(entity, offeringHistoryId);
         _ = await Context.AddAsync(entity, cancellationToken);
         await AddApprovers(entity.Id, cancellationToken);
         await UpdateLeadLatestUpdateDate(entity.LeadID!);

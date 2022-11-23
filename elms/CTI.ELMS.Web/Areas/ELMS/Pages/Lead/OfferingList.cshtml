@@ -51,7 +51,7 @@
         var table = $('#offering').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 4, 'desc' ]],
+            order: [[ 2, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Lead/OfferingList", new { area = "ELMS", handler = "ListAll" })',
