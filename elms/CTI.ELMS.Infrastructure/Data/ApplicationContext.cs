@@ -327,6 +327,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverRoleId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId, e.ApproverRoleId }).IsUnique();
-        base.OnModelCreating(modelBuilder);
+		modelBuilder.HasSequence<long>(Constants.OfferSheetNoSequence);
+		modelBuilder.Entity<OfferingState>().HasIndex(p => p.OfferSheetId).IsUnique();
+		base.OnModelCreating(modelBuilder);
     }
 }

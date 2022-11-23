@@ -9,7 +9,10 @@ using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using static LanguageExt.Prelude;
+using System.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace CTI.ELMS.Application.Features.ELMS.Offering.Commands;
 
@@ -18,12 +21,15 @@ public record AddOfferingCommand : OfferingState, IRequest<Validation<Error, Off
 public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, OfferingState, AddOfferingCommand>, IRequestHandler<AddOfferingCommand, Validation<Error, OfferingState>>
 {
     private readonly IdentityContext _identityContext;
+    private readonly IConfiguration _config;
     public AddOfferingCommandHandler(ApplicationContext context,
                                     IMapper mapper,
                                     CompositeValidator<AddOfferingCommand> validator,
-                                    IdentityContext identityContext) : base(context, mapper, validator)
+                                    IdentityContext identityContext,
+                                    IConfiguration config) : base(context, mapper, validator)
     {
         _identityContext = identityContext;
+        _config = config;
     }
 
     public async Task<Validation<Error, OfferingState>> Handle(AddOfferingCommand request, CancellationToken cancellationToken) =>
@@ -48,6 +54,7 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
         var offeringHistory = Mapper.Map<OfferingHistoryState>(entity);
         offeringHistory.SetOfferingVersion(offeringVersion == null ? 1 : (int)offeringVersion);
         entity.SetOfferingHistoryId(offeringHistory.Id);
+        entity.SetOfferSheetId(await GenerateOfferSheetIdAsync());
         Context.Entry(offeringHistory!).State = EntityState.Added;
         return offeringHistory.Id;
     }
@@ -146,6 +153,23 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
             }
             await Context.AddAsync(approvalRecord, cancellationToken);
         }
+    }
+    private async Task<string> GenerateOfferSheetIdAsync()
+    {
+        string offerSheetNo = "";
+        using (var sqlConnection = new SqlConnection(_config.GetConnectionString("ApplicationContext")))
+        {
+            using var cmd = new SqlCommand()
+            {
+                CommandText = $"SELECT RIGHT('00000' + CAST(NEXT VALUE FOR {Infrastructure.Constants.OfferSheetNoSequence} AS VARCHAR), 5)",
+                CommandType = CommandType.Text,
+                Connection = sqlConnection
+            };
+            sqlConnection.Open();
+            using (var reader = await cmd.ExecuteReaderAsync()) { if (await reader.ReadAsync()) { offerSheetNo = reader[0].ToString()!; } }
+            sqlConnection.Close();
+        }
+        return string.IsNullOrEmpty(offerSheetNo) ? string.Empty : offerSheetNo;
     }
 }
 

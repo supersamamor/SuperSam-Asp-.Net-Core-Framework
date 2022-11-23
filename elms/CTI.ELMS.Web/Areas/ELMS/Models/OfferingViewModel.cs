@@ -211,8 +211,7 @@ public record OfferingViewModel : BaseViewModel
 
     public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
     public IList<PreSelectedUnitViewModel>? PreSelectedUnitList { get; set; }
-    public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
-
+    public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }  
     [Display(Name = "OS Reference No")]
     public string? OfferSheetNo { get; init; } = "";
     public decimal AreaDivider

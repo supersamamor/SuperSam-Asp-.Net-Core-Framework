@@ -96,7 +96,7 @@ public class ELMSProfile : Profile
         CreateMap<AddActivityHistoryCommand, ActivityHistoryState>();
         CreateMap<EditActivityHistoryCommand, ActivityHistoryState>().IgnoreBaseEntityProperties();
         CreateMap<AddUnitActivityCommand, UnitActivityState>();
-        CreateMap<EditUnitActivityCommand, UnitActivityState>().IgnoreBaseEntityProperties();     
+        CreateMap<EditUnitActivityCommand, UnitActivityState>().IgnoreBaseEntityProperties();
         CreateMap<AddOfferingHistoryCommand, OfferingHistoryState>();
         CreateMap<EditOfferingHistoryCommand, OfferingHistoryState>().IgnoreBaseEntityProperties();
         CreateMap<AddPreSelectedUnitCommand, PreSelectedUnitState>();
@@ -145,12 +145,47 @@ public class ELMSProfile : Profile
         CreateMap<UnitOfferedState, UnitOfferedHistoryState>()
           .ForPath(e => e.AnnualIncrementHistoryList, o => o.MapFrom(s => s.AnnualIncrementList))
           .ForMember(e => e.Id, c => c.Ignore());
-        CreateMap<AnnualIncrementState, AnnualIncrementHistoryState>()        
+        CreateMap<AnnualIncrementState, AnnualIncrementHistoryState>()
           .ForMember(e => e.Id, c => c.Ignore());
         CreateMap<EditOfferingCommand, OfferingState>()
             .ForMember(e => e.UnitOfferedList, c => c.Ignore())
             .ForMember(e => e.PreSelectedUnitList, c => c.Ignore())
             .ForMember(e => e.OfferingHistoryList, c => c.Ignore())
+            .ForMember(e => e.OfferSheetId, c => c.Ignore())
+            .ForMember(e => e.Status, c => c.Ignore())
+            .ForMember(e => e.ProjectID, c => c.Ignore())
+            .ForMember(e => e.OfferingHistoryID, c => c.Ignore())
+            .ForMember(e => e.ANType, c => c.Ignore())
+            .ForMember(e => e.TenantContractNo, c => c.Ignore())
+            .ForMember(e => e.DocStamp, c => c.Ignore())
+            .ForMember(e => e.AwardNoticeCreatedDate, c => c.Ignore())
+            .ForMember(e => e.AwardNoticeCreatedBy, c => c.Ignore())
+            .ForMember(e => e.SignedOfferSheetDate, c => c.Ignore())
+            .ForMember(e => e.TagSignedOfferSheetBy, c => c.Ignore())
+            .ForMember(e => e.IsPOS, c => c.Ignore())
+            .ForMember(e => e.OfferSheetPerProjectCounter, c => c.Ignore())
+            .ForMember(e => e.SignedAwardNoticeDate, c => c.Ignore())
+            .ForMember(e => e.TagSignedAwardNoticeBy, c => c.Ignore())
+            .ForMember(e => e.BookingDate, c => c.Ignore())
+            .ForMember(e => e.SignatoryName, c => c.Ignore())
+            .ForMember(e => e.SignatoryPosition, c => c.Ignore())
+            .ForMember(e => e.ANSignatoryName, c => c.Ignore())
+            .ForMember(e => e.ANSignatoryPosition, c => c.Ignore())
+            .ForMember(e => e.LeaseContractCreatedDate, c => c.Ignore())
+            .ForMember(e => e.LeaseContractCreatedBy, c => c.Ignore())
+            .ForMember(e => e.TagSignedLeaseContractBy, c => c.Ignore())
+            .ForMember(e => e.SignedLeaseContractDate, c => c.Ignore())
+            .ForMember(e => e.TagForReviewLeaseContractBy, c => c.Ignore())
+            .ForMember(e => e.ForReviewLeaseContractDate, c => c.Ignore())
+            .ForMember(e => e.TagForFinalPrintLeaseContractBy, c => c.Ignore())
+            .ForMember(e => e.ForFinalPrintLeaseContractDate, c => c.Ignore())
+            .ForMember(e => e.LeaseContractStatus, c => c.Ignore())
+            .ForMember(e => e.ANTermType, c => c.Ignore())
+            .ForMember(e => e.ContractTypeID, c => c.Ignore())
+            .ForMember(e => e.WitnessName, c => c.Ignore())
+            .ForMember(e => e.ModifiedCategory, c => c.Ignore())
+            .ForMember(e => e.IsDisabledModifiedCategory, c => c.Ignore())
+            .ForMember(e => e.ContractNumber, c => c.Ignore())   
             .IgnoreBaseEntityProperties();
     }
 }
