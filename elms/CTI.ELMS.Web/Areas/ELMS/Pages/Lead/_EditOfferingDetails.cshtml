@@ -10,18 +10,19 @@
             <span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
         </div>
     </div>
+</div>
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
     <div class="col" id="OfferSheetNoContainer">
         <div class="mb-3">
             <label asp-for="@Model.OfferSheetNo" class="form-label "><strong>@Localizer["OS Reference No."] :</strong></label>
             <input asp-for="@Model.OfferSheetNo" class="form-control" readonly />
-            <span asp-validation-for="@Model.OfferSheetNo" class="text-danger"></span>
         </div>
     </div>
     <div class="col" id="StatusContainer">
         <div class="mb-3">
             <label asp-for="@Model.Status" class="form-label "><strong>@Localizer["Status"] :</strong></label>
-            <input asp-for="@Model.Status" class="form-control" maxlength="50" readonly />
-            <span asp-validation-for="@Model.Status" class="text-danger"></span>
+            <br />
+            @Html.Raw(CTI.ELMS.Web.Helper.OfferingStatusHelper.GetOfferingStatus(Model.Status!))           
         </div>
     </div>
 </div>
