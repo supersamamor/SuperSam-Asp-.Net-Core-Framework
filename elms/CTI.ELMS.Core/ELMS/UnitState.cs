@@ -12,7 +12,8 @@ public record UnitState : BaseEntity
 	public DateTime? AvailabilityDate { get; init; }
 	public DateTime? CommencementDate { get; init; }
 	public string? CurrentTenantContractNo { get; init; }
-	
+	public string Location { get; init; } = "";
+	public string UnitType { get; init; } = "";
 	public ProjectState? Project { get; init; }
 	
 	public IList<UnitBudgetState>? UnitBudgetList { get; set; }

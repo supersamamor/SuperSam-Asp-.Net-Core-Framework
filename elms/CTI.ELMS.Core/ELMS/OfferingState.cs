@@ -21,8 +21,8 @@ public record OfferingState : BaseEntity
     public string? OffersheetRemarks { get; init; }
     public decimal? ConstructionCAMC { get; init; }
     public decimal? CommencementCAMC { get; init; }
-    public string? UnitsInformation { get; init; }
-    public string? ANType { get; init; }
+    public string? UnitsInformation { get; set; }
+    public string? ANType { get; set; }
     public string? LeadID { get; init; }
     public string? TenantContractNo { get; init; }
     public decimal? DocStamp { get; init; }
@@ -30,9 +30,9 @@ public record OfferingState : BaseEntity
     public string? AwardNoticeCreatedBy { get; init; }
     public DateTime? SignedOfferSheetDate { get; init; }
     public string? TagSignedOfferSheetBy { get; init; }
-    public decimal? TotalUnitArea { get; init; }
-    public bool IsPOS { get; init; }
-    public string Location { get; init; } = "";
+    public decimal? TotalUnitArea { get; set; }
+    public bool IsPOS { get; set; }
+    public string Location { get; set; } = "";
     public decimal? TotalSecurityDeposit { get; init; }
     public decimal? AnnualAdvertisingFee { get; init; }
     public decimal? CAMCConstructionTotalUnitArea { get; init; }
@@ -42,17 +42,17 @@ public record OfferingState : BaseEntity
     public int? SecurityDepositPayableWithinMonths { get; init; }
     public decimal? TotalConstructionBond { get; init; }
     public int? ConstructionPayableWithinMonths { get; init; }
-    public decimal? TotalBasicFixedMonthlyRent { get; init; }
-    public decimal? TotalMinimumMonthlyRent { get; init; }
-    public decimal? TotalLotBudget { get; init; }
-    public decimal? TotalPercentageRent { get; init; }
+    public decimal? TotalBasicFixedMonthlyRent { get; set; }
+    public decimal? TotalMinimumMonthlyRent { get; set; }
+    public decimal? TotalLotBudget { get; set; }
+    public decimal? TotalPercentageRent { get; set; }
     public bool AutoComputeTotalConstructionBond { get; init; }
     public bool AutoComputeTotalSecurityDeposit { get; init; }
     public int? OfferSheetPerProjectCounter { get; set; }
     public DateTime? SignedAwardNoticeDate { get; init; }
     public string? TagSignedAwardNoticeBy { get; init; }
     public decimal? MinimumSalesQuota { get; init; }
-    public string UnitType { get; init; } = "";
+    public string UnitType { get; set; } = "";
     public string? Provision { get; init; }
     public int? FitOutPeriod { get; init; }
     public DateTime? TurnOverDate { get; init; }
@@ -71,7 +71,7 @@ public record OfferingState : BaseEntity
     public string? TagForFinalPrintLeaseContractBy { get; init; }
     public DateTime? ForFinalPrintLeaseContractDate { get; init; }
     public string? LeaseContractStatus { get; init; } = Constants.LeaseContractStatus.NoContract;
-    public string? ANTermType { get; init; }
+    public string? ANTermType { get; set; }
     public int? ContractTypeID { get; init; }
     public string? WitnessName { get; init; }
     public string? PermittedUse { get; init; }

@@ -49,6 +49,7 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
         AddPreSelectedUnitList(entity);
         AddUnitOfferedList(entity, offeringHistoryId);
         entity.SetOfferSheetPerProjectCounter(await GetOfferSheetPerProjectCounter(entity.ProjectID!));
+        await AutoCalculateOfferSheetFields(entity);
         _ = await Context.AddAsync(entity, cancellationToken);
         await AddApprovers(entity.Id, cancellationToken);
         await UpdateLeadLatestUpdateDate(entity.LeadID!);
@@ -183,6 +184,88 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
             unitOffered.AnnualIncrementInformation = annualIncrementInformationString[0..^3];
         }
     }
+    public async Task AutoCalculateOfferSheetFields(OfferingState offering)
+    {
+        StringBuilder sbUnitInfo = new();
+        decimal unitAreaTotal = 0;
+        bool isPos = false;
+        string location = "N/A";
+        string unitType = "N/A";
+        decimal totalBasicFixedMonthlyRent = 0;
+        decimal totalMinimumMonthlyRent = 0;
+        decimal totalLotBudget = 0;
+        decimal totalPercentageRent = 0;
+        if (offering.UnitOfferedList != null)
+        {
+            int counter = 1;
+            foreach (var item in offering.UnitOfferedList)
+            {
+                var unit = await Context.Unit.Where(l => l.Id == item.UnitID).AsNoTracking().FirstOrDefaultAsync();
+                sbUnitInfo.Append(unit!.UnitNo + ", ");
+                unitAreaTotal += unit.LotArea;
+                if (item.PercentageRent > 0)
+                {
+                    isPos = true;
+                }
+                if (counter == 1)
+                {
+                    location = unit.Location!;
+                    unitType = unit.UnitType!;
+                }
+                totalBasicFixedMonthlyRent += ((item.BasicFixedMonthlyRent == null ? 0 : (decimal)item.BasicFixedMonthlyRent) * unit.LotArea);
+                totalMinimumMonthlyRent += ((item.MinimumMonthlyRent == null ? 0 : (decimal)item.MinimumMonthlyRent) * unit.LotArea);
+                totalLotBudget += ((item.LotBudget == null ? 0 : (decimal)item.LotBudget) * unit.LotArea);
+                totalPercentageRent += ((item.PercentageRent == null ? 0 : (decimal)item.PercentageRent) * unit.LotArea);
+                counter++;
+            }
+        }
+        string unitInfoString = sbUnitInfo.ToString();
+        if (unitInfoString.Length >= 2)
+        { offering.UnitsInformation = unitInfoString[0..^2]; }
+        offering.TotalUnitArea = unitAreaTotal;
+        offering.IsPOS = isPos;
+        offering.Location = location;
+        offering.UnitType = unitType;
+        offering.TotalBasicFixedMonthlyRent = totalBasicFixedMonthlyRent;
+        offering.TotalMinimumMonthlyRent = totalMinimumMonthlyRent;
+        offering.TotalLotBudget = totalLotBudget;
+        offering.TotalPercentageRent = totalPercentageRent;
+        string anType = "";
+        if (offering.IsPOS == true)
+        {
+            if (offering.Year >= 2)
+            {
+                anType = Core.Constants.ANType.NonFixed;
+            }
+            else
+            {
+                anType = Core.Constants.ANType.NonFixedKiosk;
+            }
+        }
+        else
+        {
+            if (offering.Year >= 2)
+            {
+                anType = Core.Constants.ANType.Fixed;
+            }
+            else
+            {
+                anType = Core.Constants.ANType.FixedKiosk;
+            }
+        }
+        offering.ANType = anType;
+        string anTermType = "";
+        if (offering.ANType == Core.Constants.ANType.Fixed || offering.ANType == Core.Constants.ANType.NonFixed)
+        {
+            anTermType = Core.Constants.ANTermType.Inline;
+        }
+        else
+        {
+            anTermType = Core.Constants.ANTermType.Kiosk;
+        }
+        offering.ANTermType = anTermType;
+    }
+
     private async Task AddApprovers(string offeringId, CancellationToken cancellationToken)
     {
         var approverList = await Context.ApproverAssignment.Include(l => l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.Offering).AsNoTracking().ToListAsync(cancellationToken);
