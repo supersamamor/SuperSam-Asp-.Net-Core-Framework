@@ -13,7 +13,7 @@ public record UnitOfferedState : BaseEntity
 	public decimal? PercentageRent { get; init; }
 	public decimal? MinimumMonthlyRent { get; init; }
 	public decimal? AnnualIncrement { get; init; }
-	public string? AnnualIncrementInformation { get; init; } = "";
+	public string? AnnualIncrementInformation { get; set; } = "";
 	public bool IsFixedMonthlyRent { get; init; }
 	public bool HasAnnualIncrement { get; init; }
 	public OfferingState? Offering { get; init; }

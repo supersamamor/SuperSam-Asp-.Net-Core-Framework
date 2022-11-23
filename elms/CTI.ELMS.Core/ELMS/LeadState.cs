@@ -20,8 +20,8 @@ public record LeadState : BaseEntity
     public string? BusinessNatureCategoryID { get; init; }
     public string? TINNumber { get; init; }
     public bool IsFranchise { get; init; }
-    public DateTime LatestUpdatedDate { get; set; } = DateTime.UtcNow;
-    public string LatestUpdatedByUsername { get; init; } = "";
+    public DateTime LatestUpdatedDate { get; private set; } = DateTime.UtcNow;
+    public string LatestUpdatedByUsername { get; private set; } = "";
     public LeadSourceState? LeadSource { get; init; }
     public LeadTouchPointState? LeadTouchPoint { get; init; }
     public OperationTypeState? OperationType { get; init; }
@@ -62,6 +62,11 @@ public record LeadState : BaseEntity
     public int LeadAging
     {
         get { return (int)(DateTime.UtcNow - this.CreatedDate).TotalDays; }
+    }
+    public void SetLatestUpdatedInformation(string userId)
+    {
+        this.LatestUpdatedDate = DateTime.UtcNow;
+        this.LatestUpdatedByUsername = userId;
     }
     #endregion
 }

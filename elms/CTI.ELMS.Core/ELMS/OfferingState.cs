@@ -48,7 +48,7 @@ public record OfferingState : BaseEntity
     public decimal? TotalPercentageRent { get; init; }
     public bool AutoComputeTotalConstructionBond { get; init; }
     public bool AutoComputeTotalSecurityDeposit { get; init; }
-    public int? OfferSheetPerProjectCounter { get; init; }
+    public int? OfferSheetPerProjectCounter { get; set; }
     public DateTime? SignedAwardNoticeDate { get; init; }
     public string? TagSignedAwardNoticeBy { get; init; }
     public decimal? MinimumSalesQuota { get; init; }
@@ -107,5 +107,9 @@ public record OfferingState : BaseEntity
     public void SetOfferSheetId(string offerSheetId)
     {
         this.OfferSheetId = offerSheetId;
+    }
+    public void SetOfferSheetPerProjectCounter(int offerSheetPerProjectCounter)
+    {
+        this.OfferSheetPerProjectCounter = offerSheetPerProjectCounter;
     }
 }

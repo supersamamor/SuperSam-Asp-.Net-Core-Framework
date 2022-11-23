@@ -329,6 +329,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId, e.ApproverRoleId }).IsUnique();
 		modelBuilder.HasSequence<long>(Constants.OfferSheetNoSequence);
 		modelBuilder.Entity<OfferingState>().HasIndex(p => p.OfferSheetId).IsUnique();
+		modelBuilder.Entity<OfferingState>().HasIndex(e => new { e.OfferSheetPerProjectCounter, e.ProjectID }).IsUnique();
 		base.OnModelCreating(modelBuilder);
     }
 }
