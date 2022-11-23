@@ -151,5 +151,28 @@ public record OfferingHistoryViewModel : BaseViewModel
 		
 	public IList<UnitOfferedHistoryViewModel>? UnitOfferedHistoryList { get; set; }
 	public IList<UnitGroupViewModel>? UnitGroupList { get; set; }
-	
+	public decimal AreaDivider
+	{
+		get
+		{
+			return (this.CAMCConstructionTotalUnitArea == null || this.CAMCConstructionTotalUnitArea == 0 ? 1 : (decimal)this.CAMCConstructionTotalUnitArea);
+		}
+	}
+	public string TotalRentalRateString
+	{
+		get
+		{
+			var FixedRent = (this.TotalBasicFixedMonthlyRent == null || this.TotalBasicFixedMonthlyRent == 0 ? 1 : (decimal)this.TotalBasicFixedMonthlyRent) / this.AreaDivider;
+			var PercentRent = (this.TotalPercentageRent == null || this.TotalPercentageRent == 0 ? 1 : (decimal)this.TotalPercentageRent) / this.AreaDivider;
+			var MinimumRent = (this.TotalMinimumMonthlyRent == null || this.TotalMinimumMonthlyRent == 0 ? 1 : (decimal)this.TotalMinimumMonthlyRent) / this.AreaDivider;
+			return String.Format("{0:n0}", FixedRent) + "/" + (PercentRent).ToString("0.##") + "%/" + String.Format("{0:n0}", MinimumRent);
+		}
+	}
+	public string TotalLotBudgetString
+	{
+		get
+		{		
+			return String.Format("{0:n0}", (this.TotalLotBudget / this.AreaDivider));
+		}
+	}
 }
