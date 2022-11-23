@@ -42,3 +42,6 @@ button.accept-policy {
 input[readonly] {
     background-color: #eaecf4 !important;
 }
+textarea[readonly] {
+    background-color: #eaecf4 !important;
+}

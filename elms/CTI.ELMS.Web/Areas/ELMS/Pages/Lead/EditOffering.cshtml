@@ -31,11 +31,8 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
-<partial name="_ModalPartial" />
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-<partial name="_DataTableScripts" />
-<partial name="_LeadTaskScripts" />
 <partial name="_DisableFieldsViaClassPartial" model="@("Lock_OfferSheetRates")" />
 <script asp-add-nonce>
     $(document).ready(function () {

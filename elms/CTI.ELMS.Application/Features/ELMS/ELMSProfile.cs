@@ -193,6 +193,7 @@ public class ELMSProfile : Profile
             .ForMember(e => e.TotalMinimumMonthlyRent, c => c.Ignore())
             .ForMember(e => e.TotalLotBudget, c => c.Ignore())
             .ForMember(e => e.TotalPercentageRent, c => c.Ignore())
+            .ForMember(e => e.UnitsInformation, c => c.Ignore())
             .IgnoreBaseEntityProperties();
     }
 }
