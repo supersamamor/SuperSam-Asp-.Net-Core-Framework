@@ -1,7 +1,6 @@
 using CTI.ELMS.Application.Features.ELMS.Offering.Commands;
 using CTI.ELMS.Application.Features.ELMS.Offering.Queries;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
-using CTI.ELMS.Core.ELMS;
 using CTI.ELMS.Web.Areas.ELMS.Models;
 using CTI.ELMS.Web.Models;
 using CTI.ELMS.Web.Service;
@@ -42,7 +41,7 @@ public class EditOfferingModel : BasePageModel<EditOfferingModel>
             return Page();
         }
         LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(Offering.LeadID!, Constants.TabNavigation.Offerings)));
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddOfferingCommand>(Offering)), "EditOffering", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditOfferingCommand>(Offering)), "EditOffering", true);
     }
     public async Task<IActionResult> OnPostChangeFormValue()
     {

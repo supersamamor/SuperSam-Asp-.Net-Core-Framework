@@ -12,6 +12,7 @@
                         <div class="card-body">
                             <input type="hidden" asp-for="@Model.Id" name="Id" />
                             <input type="hidden" asp-for="@Model.TotalBasicFixedMonthlyRent" name="TotalBasicFixedMonthlyRent" />
+                            <input type="hidden" asp-for="@Model.OfferingHistoryID" name="OfferingHistoryID" />
                             <partial name="_EditOfferingDetails" model="Model" />
                         </div>
                     </div>
