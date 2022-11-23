@@ -185,7 +185,14 @@ public class ELMSProfile : Profile
             .ForMember(e => e.WitnessName, c => c.Ignore())
             .ForMember(e => e.ModifiedCategory, c => c.Ignore())
             .ForMember(e => e.IsDisabledModifiedCategory, c => c.Ignore())
-            .ForMember(e => e.ContractNumber, c => c.Ignore())   
+            .ForMember(e => e.ContractNumber, c => c.Ignore())
+            .ForMember(e => e.TotalUnitArea, c => c.Ignore())
+            .ForMember(e => e.Location, c => c.Ignore())
+            .ForMember(e => e.UnitType, c => c.Ignore())
+            .ForMember(e => e.TotalBasicFixedMonthlyRent, c => c.Ignore())
+            .ForMember(e => e.TotalMinimumMonthlyRent, c => c.Ignore())
+            .ForMember(e => e.TotalLotBudget, c => c.Ignore())
+            .ForMember(e => e.TotalPercentageRent, c => c.Ignore())
             .IgnoreBaseEntityProperties();
     }
 }

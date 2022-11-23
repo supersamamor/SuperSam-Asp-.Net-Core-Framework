@@ -211,7 +211,7 @@ public record OfferingViewModel : BaseViewModel
 
     public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
     public IList<PreSelectedUnitViewModel>? PreSelectedUnitList { get; set; }
-    public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }  
+    public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
     [Display(Name = "OS Reference No")]
     public string? OfferSheetNo { get; init; } = "";
     public decimal AreaDivider
@@ -225,10 +225,10 @@ public record OfferingViewModel : BaseViewModel
     {
         get
         {
-            var FixedRent = (this.TotalBasicFixedMonthlyRent == null || this.TotalBasicFixedMonthlyRent == 0 ? 1 : (decimal)this.TotalBasicFixedMonthlyRent) / this.AreaDivider;
-            var PercentRent = (this.TotalPercentageRent == null || this.TotalPercentageRent == 0 ? 1 : (decimal)this.TotalPercentageRent) / this.AreaDivider;
-            var MinimumRent = (this.TotalMinimumMonthlyRent == null || this.TotalMinimumMonthlyRent == 0 ? 1 : (decimal)this.TotalMinimumMonthlyRent) / this.AreaDivider;
-            return String.Format("{0:n0}", FixedRent) + "/" + (PercentRent).ToString("0.##") + "%/" + String.Format("{0:n0}", MinimumRent);
+            var FixedRent = (this.TotalBasicFixedMonthlyRent == null || this.TotalBasicFixedMonthlyRent == 0 ? 1 : (decimal)this.TotalBasicFixedMonthlyRent / this.AreaDivider);
+            var PercentRent = (this.TotalPercentageRent == null || this.TotalPercentageRent == 0 ? 0 : (decimal)this.TotalPercentageRent / this.AreaDivider);
+            var MinimumRent = (this.TotalMinimumMonthlyRent == null || this.TotalMinimumMonthlyRent == 0 ? 1 : (decimal)this.TotalMinimumMonthlyRent / this.AreaDivider);
+            return FixedRent.ToString("##,##.00") + "/" + (PercentRent).ToString("0.##") + "%/" + MinimumRent.ToString("##,##.00");
         }
     }
     public string TotalLotBudgetString

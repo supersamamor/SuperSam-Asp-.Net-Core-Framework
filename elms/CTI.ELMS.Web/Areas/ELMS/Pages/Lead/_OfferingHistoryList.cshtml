@@ -43,7 +43,7 @@
                                 <span>@item.UnitsInformation</span>
                             </td>
                             <td>
-                                <span>@item.TotalUnitArea</span>
+                                <span>@(((decimal)item.TotalUnitArea!).ToString("##,##.00"))</span>
                             </td>
                             <td>
                                 <span>@item.TotalRentalRateString</span>

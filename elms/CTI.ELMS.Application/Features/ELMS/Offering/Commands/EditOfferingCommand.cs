@@ -33,9 +33,16 @@ public class EditOfferingCommandHandler : BaseCommandHandler<ApplicationContext,
 		var entity = await Context.Offering.Where(l => l.Id == request.Id).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
         Context.Update(entity);
-		_ = await Context.SaveChangesAsync(cancellationToken);
+        await UpdateOfferingHistory(entity);
+        _ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, OfferingState>(entity);
 	}
+    private async Task UpdateOfferingHistory(OfferingState entity)
+    {
+        var offeringHistory = await Context.OfferingHistory.Where(l => l.Id == entity.OfferingHistoryID).AsNoTracking().FirstOrDefaultAsync();
+        Mapper.Map(entity, offeringHistory); 
+        Context.Entry(offeringHistory!).State = EntityState.Modified;        
+    }
 }
 
 public class EditOfferingCommandValidator : AbstractValidator<EditOfferingCommand>
