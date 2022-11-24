@@ -10,10 +10,7 @@
         <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
     </div>
     <div class="card-body">
-        <form id="offering-form" method="post">
-            <div class="alert alert-info" role="alert">
-                @Localizer["You are about to sign this offer sheet."]
-            </div>
+        <form id="offering-form" method="post">           
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
             <input type="hidden" asp-for="@Model.Offering.ProjectID" name="ProjectID" />
