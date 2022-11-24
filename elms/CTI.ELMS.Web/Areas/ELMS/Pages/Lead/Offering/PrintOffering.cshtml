@@ -10,19 +10,15 @@
         <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
     </div>
     <div class="card-body">
-        <form id="offering-form" method="post">           
+        <form id="offering-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
-            <input type="hidden" asp-for="@Model.Offering.ProjectID" name="ProjectID" />
             <div id="PartialLoaderContainer">
-                <partial name="_OfferingInputFieldsPartial" model="Model.Offering" />
+                <iframe src="@Model.Document.FileUrl" frameborder="0" height="500px" width="100%">
+                </iframe>
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-                <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.SignOffersheet)).Succeeded)
-                {
-                    <button type="submit" class="btn btn-success" title="@Localizer["Sign Offer Sheet"]" style="color:#fff;"><i class="fas fa-check"></i></button>
-                }
+                <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>              
             </div>
         </form>
     </div>
@@ -32,14 +28,11 @@
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
-<partial name="_DisableFieldsPartial" model="@("offering-form")" />
+
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
         {
-            //For Sign Offering
-            $(".ProjectId").hide();
         }
         InitializeForm();
     });

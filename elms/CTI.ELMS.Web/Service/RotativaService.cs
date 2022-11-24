@@ -46,11 +46,14 @@ namespace CTI.ELMS.Web.Service
     }
     public class RotativaDocumentModel
     {
+        public RotativaDocumentModel()
+        {
+        }
         public RotativaDocumentModel(string fileName, string staticFolderPath, string subFolderPath, string staticFolder)
         {
             this.FileName = fileName;
             this.CompleteFilePath = staticFolderPath + "\\" + subFolderPath + "\\" + this.FileName;
-            this.FileUrl = "..\\" + staticFolder + "\\" + subFolderPath + "\\" + this.FileName;
+            this.FileUrl = "\\" + staticFolder + "\\" + subFolderPath + "\\" + this.FileName;
         }
         public string FileName { get; set; } = "";
         public string CompleteFilePath { get; private set; } = "";

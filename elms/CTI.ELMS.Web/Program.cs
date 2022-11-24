@@ -12,6 +12,8 @@ using Serilog;
 using CTI.ELMS.Scheduler;
 using CTI.ELMS.EmailSending;
 using CTI.ELMS.LocationApi;
+using Rotativa.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
@@ -113,7 +115,7 @@ app.MapControllers();
 app.MapRazorPages();
 app.MapHealthChecks("/health").AllowAnonymous();
 app.UseNotyf();
-
+RotativaConfiguration.Setup(app.Environment.WebRootPath, "Rotativa");
 // Seed the database
 if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
 {
