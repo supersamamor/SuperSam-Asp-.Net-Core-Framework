@@ -47,6 +47,7 @@ public class OfferingListModel : BasePageModel<OfferingListModel>
                 e.LastModifiedDate,
                 e.OfferSheetNo,
                 IsSigned = e?.SignedOfferSheetDate != null,
+                IsANSigned = e?.SignedAwardNoticeDate != null,
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }

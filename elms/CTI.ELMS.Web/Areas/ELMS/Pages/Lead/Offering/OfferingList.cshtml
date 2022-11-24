@@ -84,8 +84,11 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Lead/Offering/EditOffering", new { area = "ELMS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                        if(row.isSigned==false)
+                        {
+                            url = '@Url.Page("/Lead/Offering/EditOffering", new { area = "ELMS" })' + '?id=' + row.id;
+                            button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                        }                        
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Print)).Succeeded)
@@ -94,21 +97,21 @@
                         url = '@Url.Page("/Lead/Offering/PrintOffering", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Print"]"><i class="fas fa-print"></i></a>';
                     </text>
-                }           
+                }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.SignOffersheet)).Succeeded)
                 {
-                    <text>                      
+                    <text>
                         if(row.isSigned==false)
                         {
                             url = '@Url.Page("/Lead/Offering/SignOffering", new { area = "ELMS" })' + '?id=' + row.id;
                             button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Sign Offer Sheet"]"><i class="fas fa-check"></i></a>';
-                        }                 
+                        }
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.CancelOffersheet)).Succeeded)
                 {
                     <text>
-                        if(row.isSigned==true)
+                        if(row.isSigned==true && row.isANSigned==false)
                         {
                             button =  button + '&nbsp;<a href="#" class="btn btnMaterial btn-flat success semicircle" title="@Localizer["Signed Offer Sheet"]"><i class="fas fa-check"></i></a>';
                             url = '@Url.Page("/Lead/Offering/CancelOffering", new { area = "ELMS" })' + '?id=' + row.id;
@@ -122,6 +125,7 @@
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
                 { data: "isSigned", name: "IsSigned", visible: false },
+                { data: "isANSigned", name: "IsANSigned", visible: false },
             ],
             buttons: [
         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Create)).Succeeded)
