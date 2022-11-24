@@ -5,7 +5,7 @@ using CTI.ELMS.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
+namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead.LeadInformation;
 
 [Authorize(Policy = Permission.Lead.View)]
 public class DetailsModel : BasePageModel<DetailsModel>

@@ -1,13 +1,12 @@
 using CTI.ELMS.Application.Features.ELMS.Offering.Commands;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
-using CTI.ELMS.Application.Features.ELMS.Unit.Queries;
 using CTI.ELMS.Web.Areas.ELMS.Models;
 using CTI.ELMS.Web.Models;
 using CTI.ELMS.Web.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
+namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead.Offering;
 
 [Authorize(Policy = Permission.Offering.Create)]
 public class AddOfferingModel : BasePageModel<AddOfferingModel>

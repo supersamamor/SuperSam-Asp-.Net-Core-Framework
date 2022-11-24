@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using CTI.ELMS.Web.Helper;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
 
-namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
+namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead.AwardNotice;
 
 [Authorize(Policy = Permission.Offering.View)]
 public class AwardNoticeListModel : BasePageModel<AwardNoticeListModel>

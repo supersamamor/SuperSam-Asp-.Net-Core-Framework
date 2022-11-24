@@ -82,7 +82,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Lead.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Lead/Edit", new { area = "ELMS" })' + '?id=' + row.id;
+                        url = '@Url.Page("/Lead/LeadInformation/Edit", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditLead" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
@@ -107,7 +107,7 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Lead/Add", new { area = "ELMS" })';
+                        var url = '@Url.Page("/Lead/LeadInformation/Add", new { area = "ELMS" })';
                         window.location.href = url;
                     },
                     className: 'btn btn-success text-light',

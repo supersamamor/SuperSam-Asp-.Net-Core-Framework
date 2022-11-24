@@ -6,7 +6,7 @@ using CTI.ELMS.Web.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
+namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead.Offering;
 
 [Authorize(Policy = Permission.Offering.View)]
 public class OfferingDetailsModel : BasePageModel<OfferingDetailsModel>

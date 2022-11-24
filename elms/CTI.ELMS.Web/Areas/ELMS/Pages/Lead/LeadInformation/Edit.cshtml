@@ -1,13 +1,13 @@
-@page
-@model AddModel
+﻿@page
+@model EditModel
 @{
-    ViewData["Title"] = Localizer["Add Prospects"];
+    ViewData["Title"] = Localizer["Edit Prospects"];
     ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
 }
 <div class="card">
     <div class="card-header">
-        <partial name="_TabNavigation" model="@(new CTI.ELMS.Web.Areas.ELMS.Models.LeadTabNavigationPartial() { TabName = CTI.ELMS.Web.Constants.TabNavigation.Info })" />
+        <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
     </div>
     <div class="card-body">
         <form id="lead-form" method="post">
@@ -18,12 +18,13 @@
                 <partial name="_InputFieldsPartial" model="Model.Lead" />
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-                <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+                <a href="..\Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
                 <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
             </div>
         </form>
     </div>
 </div>
+
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
@@ -86,32 +87,8 @@
             var salutationlistdropdowns = document.getElementsByClassName('SelectSalutation');
             for ( var i=0; i< salutationlistdropdowns.length; i++) {
                 $("#ContactPersonList_"+i+"_SalutationID").salutationSelect();
-            }          
-            $('.RemoveOfferingHistoryButton ').on( 'click', function () {
-                $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                $('#AsyncAction').val('RemoveOfferingHistory');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-            });
-
-            $('#btnAddOfferingHistory').on( 'click', function () {
-                $('#AsyncAction').val('AddOfferingHistory');
-                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#lead-form', InitializeForm);
-            });
-
-            $.fn.offeringSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            };
-            var offeringlistdropdowns = document.getElementsByClassName('SelectOffering');
-            for ( var i=0; i< offeringlistdropdowns.length; i++) {
-                $("#OfferingHistoryList_"+i+"_OfferingID").offeringSelect();
             }
+
 
             $.fn.projectSelect = function() {
                 this.filter("select").each(function() {
@@ -123,10 +100,7 @@
                 });
                 return this;
             };
-            var projectlistdropdowns = document.getElementsByClassName('SelectProject');
-            for ( var i=0; i< projectlistdropdowns.length; i++) {
-                $("#OfferingHistoryList_"+i+"_ProjectID").projectSelect();
-            }
+
             $.fn.leadsourceSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({
@@ -138,7 +112,6 @@
                 return this;
             };
             $("#LeadSourceId").leadsourceSelect();
-
             $.fn.businessnatureSelect = function() {
                 this.filter("select").each(function() {
                     $(this).ajaxSelect({

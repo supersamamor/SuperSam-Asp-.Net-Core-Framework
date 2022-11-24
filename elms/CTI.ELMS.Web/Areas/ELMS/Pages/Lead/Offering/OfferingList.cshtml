@@ -37,7 +37,7 @@
             </thead>
         </table>
         <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-            <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+            <a href="..\Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
             order: [[ 2, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/Lead/OfferingList", new { area = "ELMS", handler = "ListAll" })',
+                url: '@Url.Page("/Lead/Offering/OfferingList", new { area = "ELMS", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
@@ -79,19 +79,19 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/Lead/OfferingDetails", new { area = "ELMS" })' + '?id=' + row.id;
+                        var url = '@Url.Page("/Lead/Offering/OfferingDetails", new { area = "ELMS" })' + '?id=' + row.id;
                         var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewOffering" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Lead/EditOffering", new { area = "ELMS" })' + '?id=' + row.id;
+                        url = '@Url.Page("/Lead/Offering/EditOffering", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Print)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Lead/PrintOffering", new { area = "ELMS" })' + '?id=' + row.id;
+                        url = '@Url.Page("/Lead/Offering/PrintOffering", new { area = "ELMS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Print"]"><i class="fas fa-print"></i></a>';
                     </text>
                 }           
@@ -100,7 +100,7 @@
                     <text>                      
                         if(row.isSigned==false)
                         {
-                            url = '@Url.Page("/Lead/SignOffering", new { area = "ELMS" })' + '?id=' + row.id;
+                            url = '@Url.Page("/Lead/Offering/SignOffering", new { area = "ELMS" })' + '?id=' + row.id;
                             button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Sign Offer Sheet"]"><i class="fas fa-check"></i></a>';
                         }                 
                     </text>
@@ -111,7 +111,7 @@
                         if(row.isSigned==true)
                         {
                             button =  button + '&nbsp;<a href="#" class="btn btnMaterial btn-flat success semicircle" title="@Localizer["Signed Offer Sheet"]"><i class="fas fa-check"></i></a>';
-                            url = '@Url.Page("/Lead/CancelOffering", new { area = "ELMS" })' + '?id=' + row.id;
+                            url = '@Url.Page("/Lead/Offering/CancelOffering", new { area = "ELMS" })' + '?id=' + row.id;
                             button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle" title="@Localizer["Cancel Offer Sheet"]"><i class="fas fa-ban"></i></a>';
                         }
                     </text>
@@ -130,7 +130,7 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Lead/AddOffering", new { area = "ELMS" })'+ '?leadId=' + '@Model.LeadTabNavigation.LeadId';
+                        var url = '@Url.Page("/Lead/Offering/AddOffering", new { area = "ELMS" })'+ '?leadId=' + '@Model.LeadTabNavigation.LeadId';
                         window.location.href = url;
                     },
                     className: 'btn btn-success text-light',

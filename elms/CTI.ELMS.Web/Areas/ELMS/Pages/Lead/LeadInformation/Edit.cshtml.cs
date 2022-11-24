@@ -1,13 +1,15 @@
 using CTI.ELMS.Application.Features.ELMS.Lead.Commands;
+using CTI.ELMS.Application.Features.ELMS.Lead.Queries;
+using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
 using CTI.ELMS.Web.Areas.ELMS.Models;
 using CTI.ELMS.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
+namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead.LeadInformation;
 
-[Authorize(Policy = Permission.Lead.Create)]
-public class AddModel : BasePageModel<AddModel>
+[Authorize(Policy = Permission.Lead.Edit)]
+public class EditModel : BasePageModel<EditModel>
 {
     [BindProperty]
     public LeadViewModel Lead { get; set; } = new();
@@ -15,21 +17,25 @@ public class AddModel : BasePageModel<AddModel>
     public string? RemoveSubDetailId { get; set; }
     [BindProperty]
     public string? AsyncAction { get; set; }
-    public IActionResult OnGet()
+	public LeadTabNavigationPartial LeadTabNavigation { get; set; } = new();
+	public async Task<IActionResult> OnGet(string? id)
     {
-		
-        return Page();
+        if (id == null)
+        {
+            return NotFound();
+        }
+		LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(id, Constants.TabNavigation.Info)));
+		return await PageFrom(async () => await Mediatr.Send(new GetLeadByIdQuery(id)), Lead);
     }
 
     public async Task<IActionResult> OnPost()
-    {
-		
+    {		
         if (!ModelState.IsValid)
         {
             return Page();
         }
-		
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddLeadCommand>(Lead)), "Details", true);
+		LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(Lead.Id, Constants.TabNavigation.Info)));
+		return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditLeadCommand>(Lead)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()
     {

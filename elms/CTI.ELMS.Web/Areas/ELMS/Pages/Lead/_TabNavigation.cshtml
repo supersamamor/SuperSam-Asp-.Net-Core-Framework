@@ -4,21 +4,21 @@
 <ul class="nav nav-tabs card-header-tabs" role="tablist">
     @if (Model.TabName == CTI.ELMS.Web.Constants.TabNavigation.Info)
     {
-        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="Edit?Id=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Info]</a></li>
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\LeadInformation\Edit?Id=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Info]</a></li>
     }
     else
     {
-        <li class="nav-item"><a class="nav-link" href="Edit?Id=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Info]</a></li>
+        <li class="nav-item"><a class="nav-link" href="..\LeadInformation\Edit?Id=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Info]</a></li>
     }
     @if (Model.TabName == CTI.ELMS.Web.Constants.TabNavigation.Activities)
     {
-        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="ActivityList?LeadId=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Activities]</a></li>
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\Activity\ActivityList?LeadId=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Activities]</a></li>
     }
     else
     {
         if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.View)).Succeeded && !string.IsNullOrEmpty(Model.LeadName))
         {
-            <li class="nav-item"><a class="nav-link" href="ActivityList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Activities]</a></li>
+            <li class="nav-item"><a class="nav-link" href="..\Activity\ActivityList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Activities]</a></li>
         }
         else
         {
@@ -27,13 +27,13 @@
     }
     @if (Model.TabName == CTI.ELMS.Web.Constants.TabNavigation.Offerings)
     {
-        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="OfferingList?LeadId=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Offerings]</a></li>
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\Offering\OfferingList?LeadId=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Offerings]</a></li>
     }
     else
     {
         if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.View)).Succeeded && !string.IsNullOrEmpty(Model.LeadName))
         {
-            <li class="nav-item"><a class="nav-link" href="OfferingList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Offerings]</a></li>
+            <li class="nav-item"><a class="nav-link" href="..\Offering\OfferingList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.Offerings]</a></li>
         }
         else
         {
@@ -42,13 +42,13 @@
     }
     @if (Model.TabName == CTI.ELMS.Web.Constants.TabNavigation.AwardNotice)
     {
-        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="AwardNoticeList?LeadId=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.AwardNotice]</a></li>
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\AwardNotice\AwardNoticeList?LeadId=@(Model.LeadId)">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.AwardNotice]</a></li>
     }
     else
     {
         if ((await AuthorizationService.AuthorizeAsync(User, Permission.AwardNotice.View)).Succeeded && !string.IsNullOrEmpty(Model.LeadName) && Model.ForAwardNoticeCount > 0)
         {
-            <li class="nav-item"><a class="nav-link" href="AwardNoticeList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.AwardNotice]</a></li>
+            <li class="nav-item"><a class="nav-link" href="..\AwardNotice\AwardNoticeList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[CTI.ELMS.Web.Constants.TabNavigation.AwardNotice]</a></li>
         }
         else
         {
@@ -57,13 +57,13 @@
     }
     @if (Model.TabName == CTI.ELMS.Web.Constants.TabNavigation.LeaseContract)
     {
-        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="LeaseContractList?LeadId=@(Model.LeadId)">@Localizer[ CTI.ELMS.Web.Constants.TabNavigation.LeaseContract]</a></li>
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\LeaseContract\LeaseContractList?LeadId=@(Model.LeadId)">@Localizer[ CTI.ELMS.Web.Constants.TabNavigation.LeaseContract]</a></li>
     }
     else
     {
         if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeaseContract.View)).Succeeded && !string.IsNullOrEmpty(Model.LeadName) && Model.ForContractCount > 0)
         {
-            <li class="nav-item"><a class="nav-link" href="LeaseContractList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[ CTI.ELMS.Web.Constants.TabNavigation.LeaseContract]</a></li>
+            <li class="nav-item"><a class="nav-link" href="..\LeaseContract\LeaseContractList?LeadId=@(Model.LeadId)" style="cursor:pointer;">@Localizer[ CTI.ELMS.Web.Constants.TabNavigation.LeaseContract]</a></li>
         }
         else
         {

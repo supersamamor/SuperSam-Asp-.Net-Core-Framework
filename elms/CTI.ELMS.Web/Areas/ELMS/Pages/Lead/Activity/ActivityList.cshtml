@@ -1,34 +1,37 @@
 @page
-@model AwardNoticeListModel
+@model ActivityListModel
 
 @section Styles {
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Offering List"];
+    ViewData["Title"] = Localizer["Activity List"];
     ViewData["ActiveMainPage"] = "Lead";
     ViewData["Level1"] = "ELMS";
 }
+<input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" id="LeadId" />
 <div class="card">
     <div class="card-header">
         <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
     </div>
     <div class="card-body">
-        <table id="offering" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+        <table id="activity" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
             <thead>
                 <tr>
                     <th>
-                        @Localizer["Project"]
-                    </th>
-                    <th>
-                        @Localizer["Offering History"]
+                        @Localizer["Project / Spaces"]
                     </th>
                     <th>
                         @Localizer["Status"]
                     </th>
-
                     <th>
-                        @Localizer["Status"]
+                        @Localizer["Latest Activity"]
+                    </th>
+                    <th>
+                        @Localizer["Client Feedback"]
+                    </th>
+                    <th>
+                        @Localizer["Next Step"]
                     </th>
                     <th>
                         @Localizer["Actions"]
@@ -37,7 +40,7 @@
             </thead>
         </table>
         <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-            <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+            <a href="..\Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
         </div>
     </div>
 </div>
@@ -48,28 +51,31 @@
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
-        var table = $('#offering').DataTable({
+        var table = $('#activity').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 4, 'desc' ]],
+            order: [[ 5, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/Offering/Index", new { area = "ELMS", handler = "ListAll" })',
+                url: '@Url.Page("/Lead/Activity/ActivityList", new { area = "ELMS", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                data: function(d) {
+                     d.leadId = $("#LeadId").val();
                 },
             },
             initComplete: function( settings, json ) {
                 BindTableRowCollapseEvent();
             },
             columns: [
-                { data: "projectID", name: "ProjectID", responsivePriority: 1, title: '@Localizer["Project"]', searchable: false },
-                { data: "offeringHistoryID", name: "OfferingHistoryID", responsivePriority: 1, title: '@Localizer["Offering History"]', searchable: false },
-                { data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false },
-
-                { data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+                { data: "projectSpaces", name: "Project.ProjectName", responsivePriority: 1, title: '@Localizer["Project / Spaces"]', searchable: true },
+                { data: "status", name: "LeadTask.LeadTaskName", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false, orderable: false },
+                { data: "latestActivity", name: "LeadTask.LeadTaskName", responsivePriority: 1, title: '@Localizer["Latest Activity"]', searchable: true },
+                { data: "clientFeedback", name: "ClientFeedback.ClientFeedbackName", responsivePriority: 1, title: '@Localizer["Client Feedback"]', searchable: true },
+                { data: "nextStep", name: "NextStep.NextStepTaskName", responsivePriority: 1, title: '@Localizer["Next Step"]', searchable: true },
                 {
                     data: null,
                     searchable: false,
@@ -77,20 +83,13 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/Offering/Details", new { area = "ELMS" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewOffering" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Edit)).Succeeded)
+                        var url = '';
+                        var button = '';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/Offering/Edit", new { area = "ELMS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditOffering" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
-                    </text>
-                }             
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Approve)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Offering/Approve", new { area = "ELMS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
+                        url = '@Url.Page("/Lead/Activity/EditActivity", new { area = "ELMS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditActivity" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
                         return button;
@@ -100,13 +99,14 @@
                 { data: "id", name: "Id", visible: false },
             ],
             buttons: [
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Create)).Succeeded)
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Activity.Create)).Succeeded)
         {
             <text>
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Offering/Add", new { area = "ELMS" })';
+                        var url = '@Url.Page("/Lead/Activity/AddActivity", new { area = "ELMS" })'+ '?leadId=' + '@Model.LeadTabNavigation.LeadId';
+
                         window.location.href = url;
                     },
                     className: 'btn btn-success text-light',
@@ -123,11 +123,11 @@
         });
         function BindTableRowCollapseEvent()
         {
-            $('#offering tbody').on('click', 'td.dtr-control', function () {
-                $.showAjaxLoaderOnClick([".btnAddOffering",".btnEditOffering",".btnViewOffering",".btnDeleteOffering"]);
+            $('#activity tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddActivity",".btnEditActivity",".btnViewActivity",".btnDeleteActivity"]);
             });
         }
-        $.showAjaxLoaderOnClick([".btnAddOffering",".btnEditOffering",".btnViewOffering",".btnDeleteOffering"]);
+        $.showAjaxLoaderOnClick([".btnAddActivity",".btnEditActivity",".btnViewActivity",".btnDeleteActivity"]);
 
         $('#navbar_search').keyup(function(){
               table.search($(this).val()).draw();

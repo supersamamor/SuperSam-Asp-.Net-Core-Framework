@@ -1,15 +1,17 @@
 using CTI.ELMS.Application.Features.ELMS.Activity.Commands;
+using CTI.ELMS.Application.Features.ELMS.Activity.Queries;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
 using CTI.ELMS.Application.Features.ELMS.Unit.Queries;
+using CTI.ELMS.Core.ELMS;
 using CTI.ELMS.Web.Areas.ELMS.Models;
 using CTI.ELMS.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead;
+namespace CTI.ELMS.Web.Areas.ELMS.Pages.Lead.Activity;
 
 [Authorize(Policy = Permission.Activity.Create)]
-public class AddActivityModel : BasePageModel<AddActivityModel>
+public class EditActivityModel : BasePageModel<EditActivityModel>
 {
     [BindProperty]
     public ActivityViewModel Activity { get; set; } = new();
@@ -20,10 +22,10 @@ public class AddActivityModel : BasePageModel<AddActivityModel>
     [BindProperty]
     public string? AddUnitActivityUnitId { get; set; }
     public LeadTabNavigationPartial LeadTabNavigation { get; set; } = new();
-    public async Task<IActionResult> OnGet(string leadId)
+    public async Task<IActionResult> OnGet(string id)
     {
-        LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(leadId, Constants.TabNavigation.Activities)));
-        return Page();
+        LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByActivityIdQuery(id, Constants.TabNavigation.Activities)));       
+        return await PageFrom(async () => await Mediatr.Send(new GetActivityByIdQuery(id)), Activity);
     }
 
     public async Task<IActionResult> OnPost()
@@ -46,10 +48,6 @@ public class AddActivityModel : BasePageModel<AddActivityModel>
         {
             return await AddUnitActivity();
         }
-        if (AsyncAction == "ChangeProject")
-        {
-            return ChangeProject();
-        }
         return Partial("_ActivityInputFieldsPartial", Activity);
     }
     private IActionResult RemoveUnitActivity()
@@ -66,12 +64,6 @@ public class AddActivityModel : BasePageModel<AddActivityModel>
         unitActivityToAdd.ActivityID = Activity.Id;
         if (Activity!.UnitActivityList == null) { Activity!.UnitActivityList = new List<UnitActivityViewModel>(); }
         Activity!.UnitActivityList!.Add(unitActivityToAdd);
-        return Partial("_ActivityInputFieldsPartial", Activity);
-    }
-    private IActionResult ChangeProject()
-    {
-        ModelState.Clear();
-        Activity.UnitActivityList = new List<UnitActivityViewModel>();
         return Partial("_ActivityInputFieldsPartial", Activity);
     }
 }
