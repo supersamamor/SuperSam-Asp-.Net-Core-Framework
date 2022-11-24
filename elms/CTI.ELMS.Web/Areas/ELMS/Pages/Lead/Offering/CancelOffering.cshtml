@@ -1,0 +1,47 @@
+@page
+@model CancelOfferingModel
+@{
+    ViewData["Title"] = Localizer["Cancel Signed Offering"];
+    ViewData["ActiveMainPage"] = "Lead";
+    ViewData["Level1"] = "ELMS";
+}
+<div class="card">
+    <div class="card-header">
+        <partial name="_TabNavigation" model="@Model.LeadTabNavigation" />
+    </div>
+    <div class="card-body">
+        <form id="offering-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
+            <input type="hidden" asp-for="@Model.Offering.ProjectID" name="ProjectID" />
+            <div id="PartialLoaderContainer">
+                <partial name="_OfferingInputFieldsPartial" model="Model.Offering" />
+            </div>
+            <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+                <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.SignOffersheet)).Succeeded)
+                {
+                    <button type="submit" class="btn btn-danger" title="@Localizer["Cancel Signed Offer Sheet"]" style="color:#fff;"><i class="fas fa-times"></i></button>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_DisableFieldsPartial" model="@("offering-form")" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            //For Sign Offering
+            $(".ProjectId").hide();
+        }
+        InitializeForm();
+    });
+</script>
+}

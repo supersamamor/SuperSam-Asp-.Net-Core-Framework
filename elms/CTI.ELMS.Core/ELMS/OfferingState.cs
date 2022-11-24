@@ -115,9 +115,17 @@ public record OfferingState : BaseEntity
     public void SignOffering(string userId)
     {
         this.SignedOfferSheetDate = DateTime.Now;
-        this.TagSignedOfferSheetBy = userId;     
+        this.TagSignedOfferSheetBy = userId;
         this.Status = OfferingStatus.SignedOS;
         this.SignatoryName = this.Project.SignatoryName;
         this.SignatoryPosition = this.Project.SignatoryPosition;
+    }
+    public void CancelOffering()
+    {
+        this.SignedOfferSheetDate = null;
+        this.TagSignedOfferSheetBy = null;
+        this.Status = OfferingStatus.NewOS;
+        this.SignatoryName = null;
+        this.SignatoryPosition = null;
     }
 }

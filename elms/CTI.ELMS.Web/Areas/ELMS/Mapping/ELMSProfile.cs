@@ -247,5 +247,7 @@ public class ELMSProfile : Profile
             .ForMember(e => e.Status, c => c.Ignore());
         CreateMap<OfferingViewModel, SignOfferingCommand>()
            .ForMember(e => e.Status, c => c.Ignore());
+        CreateMap<OfferingViewModel, CancelOfferingCommand>()
+           .ForMember(e => e.Status, c => c.Ignore());
     }
 }
