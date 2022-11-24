@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = Localizer["Add Offering"];
     ViewData["ActiveMainPage"] = "Lead";
-    ViewData["Level1"] = "ELMS"; 
+    ViewData["Level1"] = "ELMS";
 }
 <div class="card">
     <div class="card-header">
@@ -22,6 +22,10 @@
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
                 <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.CreateNewVersion)).Succeeded)
+                {
+                    <a asp-page="NewVersionOffering" asp-route-id="@Model.Offering.Id" class="btn btn-primary" title="@Localizer["New Version"]"><i class="fas fa-file"></i></a>
+                }
                 <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
             </div>
         </form>

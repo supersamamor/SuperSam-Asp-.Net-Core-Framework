@@ -85,6 +85,7 @@ public static class Permission
             permissions.Add($"Permission.{module}.Print");
             permissions.Add($"Permission.{module}.CancelOffersheet");
             permissions.Add($"Permission.{module}.SignOffersheet");
+            permissions.Add($"Permission.{module}.CreateNewVersion");            
         }
         else
         {
@@ -307,6 +308,7 @@ public static class Permission
         public const string Print = "Permission.Offering.Print";
         public const string CancelOffersheet = "Permission.Offering.CancelOffersheet";
         public const string SignOffersheet = "Permission.Offering.SignOffersheet";
+        public const string CreateNewVersion = "Permission.Offering.CreateNewVersion";
     }
     public static class Contact
     {

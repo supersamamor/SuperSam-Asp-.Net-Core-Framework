@@ -46,6 +46,11 @@
                                 {
                                     <a class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Re-print"]"><i class="fas fa-print" style="font-size:18px;"></i></a>
                                 }
+                                <input type="hidden" name="OfferingHistoryList[@counter].OfferingVersion" value="@item.OfferingVersion" />
+                                <input type="hidden" name="OfferingHistoryList[@counter].UnitsInformation" value="@item.UnitsInformation" />
+                                <input type="hidden" name="OfferingHistoryList[@counter].TotalUnitArea" value="@item.TotalUnitArea" />
+                                <input type="hidden" name="OfferingHistoryList[@counter].TotalRentalRateString" value="@item.TotalRentalRateString" />
+                                <input type="hidden" name="OfferingHistoryList[@counter].TotalLotBudgetString" value="@item.TotalLotBudgetString" />
                             </td>
                             <td>
                                 <span>@item.OfferingVersion</span>
