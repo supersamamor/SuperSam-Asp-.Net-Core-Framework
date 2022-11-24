@@ -11,6 +11,9 @@
     </div>
     <div class="card-body">
         <form id="offering-form" method="post">
+            <div class="alert alert-info" role="alert">
+                @Localizer["You are about to create New Offer Sheet Version. Please save your progress."]
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
             <input type="hidden" asp-for="@Model.AsyncAction" />
@@ -41,7 +44,7 @@
             //For New Offering Version
             $(".ProjectId").hide();
             $("#OfferSheetNoContainer").hide();
-            $("#StatusContainer").hide(); 
+            $("#StatusContainer").hide();
             $('#ProjectID').on( 'change', function () {
                 $('#AsyncAction').val('ChangeProject');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
@@ -50,29 +53,18 @@
                 setTimeout(function() {
                     $('#AsyncAction').val('Action_AutocalculateTerminationTurnOverDate');
                     $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-                }, 600);                
-            });            
+                }, 600);
+            });
             $('#TerminationDate').on( 'change', function () {
                 setTimeout(function() {
                     $('#AsyncAction').val('Action_AutocalculateYearMonthDay');
                     $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-                }, 600); 
+                }, 600);
             });
             $('.HasAnnualIncrement, .AnnualIncrement, .BasicFixedMonthlyRent, .PercentageRent, .MinimumMonthlyRent, .IsFixedMonthlyRent').on( 'change', function () {
                 $('#AsyncAction').val('Action_AutoCalculateAnnualIncrement');
                 $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#offering-form', InitializeForm);
-            });
-            $.fn.projectSelect = function() {
-                this.filter("select").each(function() {
-                    $(this).ajaxSelect({
-                        ajax: {
-                            url: '@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })',
-                        }
-                    });
-                });
-                return this;
-            }; 
-            $("#ProjectID").projectSelect();
+            });            
             $(".btn-add-unit").on('click', function (e) {
                 modelPopup();
             });
