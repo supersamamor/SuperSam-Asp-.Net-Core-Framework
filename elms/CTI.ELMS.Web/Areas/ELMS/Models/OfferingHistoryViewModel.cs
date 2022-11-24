@@ -97,9 +97,7 @@ public record OfferingHistoryViewModel : BaseViewModel
     [Display(Name = "Is POS")]
     public bool IsPOS { get; init; }
     [Display(Name = "Location")]
-    [Required]
-
-    public string Location { get; init; } = "";
+    public string? Location { get; init; } = "";
     [Display(Name = "Offering Version")]
     public int? OfferingVersion { get; init; }
     [Display(Name = "Total Basic Fixed Monthly Rent")]
@@ -127,9 +125,7 @@ public record OfferingHistoryViewModel : BaseViewModel
     [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     public decimal? MinimumSalesQuota { get; init; }
     [Display(Name = "Unit Type")]
-    [Required]
-
-    public string UnitType { get; init; } = "";
+    public string? UnitType { get; init; } = "";
     [Display(Name = "Provision")]
 
     public string? Provision { get; init; }

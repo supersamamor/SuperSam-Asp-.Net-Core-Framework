@@ -41,7 +41,7 @@ public class NewVersionOfferingModel : BasePageModel<NewVersionOfferingModel>
             return Page();
         }
         LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(Offering.LeadID!, Constants.TabNavigation.Offerings)));
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddOfferingCommand>(Offering)), "EditOffering", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<NewOfferingVersionCommand>(Offering)), "EditOffering", true);
     }
     public async Task<IActionResult> OnPostChangeFormValue()
     {

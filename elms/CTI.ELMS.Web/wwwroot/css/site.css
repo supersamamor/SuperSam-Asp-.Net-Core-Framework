@@ -45,3 +45,7 @@ input[readonly] {
 textarea[readonly] {
     background-color: #eaecf4 !important;
 }
+.super-mid {
+    vertical-align: middle;
+    text-align: center;
+}

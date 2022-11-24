@@ -41,6 +41,7 @@ public class GetOfferingQueryHandler : BaseQueryHandler<ApplicationContext, Offe
         return await query.Include(l => l.Project)
                             .Include(l => l.Lead)
                             .Include(l => l.Project)
+                            .Include(l => l.OfferingHistoryList)
                          .ToPagedResponse(request.SearchColumns, request.SearchValue,
                           request.SortColumn, request.SortOrder,
                           request.PageNumber, request.PageSize,

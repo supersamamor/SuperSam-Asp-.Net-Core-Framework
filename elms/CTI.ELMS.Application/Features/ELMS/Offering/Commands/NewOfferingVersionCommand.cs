@@ -9,49 +9,48 @@ using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using static LanguageExt.Prelude;
 using System.Data;
-using Microsoft.Extensions.Configuration;
 using CTI.Common.Identity.Abstractions;
 using System.Text;
 
 namespace CTI.ELMS.Application.Features.ELMS.Offering.Commands;
 
-public record AddOfferingCommand : OfferingState, IRequest<Validation<Error, OfferingState>>;
+public record NewOfferingVersionCommand : OfferingState, IRequest<Validation<Error, OfferingState>>;
 
-public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, OfferingState, AddOfferingCommand>, IRequestHandler<AddOfferingCommand, Validation<Error, OfferingState>>
+public class NewOfferingVersionCommandHandler : BaseCommandHandler<ApplicationContext, OfferingState, NewOfferingVersionCommand>, IRequestHandler<NewOfferingVersionCommand, Validation<Error, OfferingState>>
 {
     private readonly IdentityContext _identityContext;
-    private readonly IConfiguration _config;
     private readonly IAuthenticatedUser _authenticatedUser;
-    public AddOfferingCommandHandler(ApplicationContext context,
+    public NewOfferingVersionCommandHandler(ApplicationContext context,
                                     IMapper mapper,
-                                    CompositeValidator<AddOfferingCommand> validator,
-                                    IdentityContext identityContext,
-                                    IConfiguration config,
+                                    CompositeValidator<NewOfferingVersionCommand> validator,
+                                    IdentityContext identityContext,                          
                                     IAuthenticatedUser authenticatedUser) : base(context, mapper, validator)
     {
         _identityContext = identityContext;
-        _config = config;
         _authenticatedUser = authenticatedUser;
     }
 
-    public async Task<Validation<Error, OfferingState>> Handle(AddOfferingCommand request, CancellationToken cancellationToken) =>
+    public async Task<Validation<Error, OfferingState>> Handle(NewOfferingVersionCommand request, CancellationToken cancellationToken) =>
         await Validators.ValidateTAsync(request, cancellationToken).BindT(
             async request => await AddOffering(request, cancellationToken));
 
 
-    public async Task<Validation<Error, OfferingState>> AddOffering(AddOfferingCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, OfferingState>> AddOffering(NewOfferingVersionCommand request, CancellationToken cancellationToken)
     {
-        OfferingState entity = Mapper.Map<OfferingState>(request);
-        entity.SetOfferSheetId(await GenerateOfferSheetIdAsync());
-        AddPreSelectedUnitList(entity);   
-        entity.SetOfferSheetPerProjectCounter(await GetOfferSheetPerProjectCounter(entity.ProjectID!));
+        var entity = await Context.Offering.Where(l => l.Id == request.Id).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);
+        Mapper.Map(request, entity);
+        await RemovePreSelectedUnitList(entity.Id); //exclusive
+        await RemoveUnitOfferedList(entity.Id); //exclusive
+        //Same On Add Onwards
+        //entity.SetOfferSheetId(await GenerateOfferSheetIdAsync());
+        AddPreSelectedUnitList(entity);
+        //entity.SetOfferSheetPerProjectCounter(await GetOfferSheetPerProjectCounter(entity.ProjectID!));
         await AutoCalculateOfferSheetFields(entity);
         var offeringHistoryId = await AddOfferingHistory(entity);
         AddUnitOfferedList(entity, offeringHistoryId);
-        _ = await Context.AddAsync(entity, cancellationToken);
+        Context.Update(entity);  //Diff    
         await AddApprovers(entity.Id, cancellationToken);
         await UpdateLeadLatestUpdateDate(entity.LeadID!);
         _ = await Context.SaveChangesAsync(cancellationToken);
@@ -62,7 +61,7 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
         var offeringVersion = await Context.OfferingHistory.Where(l => l.OfferingID == entity.Id).AsNoTracking().MaxAsync(l => l.OfferingVersion);
         var offeringHistory = Mapper.Map<OfferingHistoryState>(entity);
         offeringHistory.SetOfferingVersion(offeringVersion == null ? 1 : (int)offeringVersion + 1);
-        entity.SetOfferingHistoryId(offeringHistory.Id);     
+        entity.SetOfferingHistoryId(offeringHistory.Id);
         Context.Entry(offeringHistory!).State = EntityState.Added;
         return offeringHistory.Id;
     }
@@ -115,40 +114,40 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
         annualIncrementHistory.UnitOfferedHistoryID = unitOfferedHistoryID;
         Context.Entry(annualIncrementHistory).State = EntityState.Added;
     }
-    private async Task<string> GenerateOfferSheetIdAsync()
-    {
-        string offerSheetNo = "";
-        using (var sqlConnection = new SqlConnection(_config.GetConnectionString("ApplicationContext")))
-        {
-            using var cmd = new SqlCommand()
-            {
-                CommandText = $"SELECT RIGHT('00000' + CAST(NEXT VALUE FOR {Infrastructure.Constants.OfferSheetNoSequence} AS VARCHAR), 5)",
-                CommandType = CommandType.Text,
-                Connection = sqlConnection
-            };
-            sqlConnection.Open();
-            using (var reader = await cmd.ExecuteReaderAsync()) { if (await reader.ReadAsync()) { offerSheetNo = reader[0].ToString()!; } }
-            sqlConnection.Close();
-        }
-        return string.IsNullOrEmpty(offerSheetNo) ? string.Empty : offerSheetNo;
-    }
+    //private async Task<string> GenerateOfferSheetIdAsync()
+    //{
+    //    string offerSheetNo = "";
+    //    using (var sqlConnection = new SqlConnection(_config.GetConnectionString("ApplicationContext")))
+    //    {
+    //        using var cmd = new SqlCommand()
+    //        {
+    //            CommandText = $"SELECT RIGHT('00000' + CAST(NEXT VALUE FOR {Infrastructure.Constants.OfferSheetNoSequence} AS VARCHAR), 5)",
+    //            CommandType = CommandType.Text,
+    //            Connection = sqlConnection
+    //        };
+    //        sqlConnection.Open();
+    //        using (var reader = await cmd.ExecuteReaderAsync()) { if (await reader.ReadAsync()) { offerSheetNo = reader[0].ToString()!; } }
+    //        sqlConnection.Close();
+    //    }
+    //    return string.IsNullOrEmpty(offerSheetNo) ? string.Empty : offerSheetNo;
+    //}
     private async Task UpdateLeadLatestUpdateDate(string leadID)
     {
         var leadToUpdate = await Context.Lead.FindAsync(leadID);
         leadToUpdate!.SetLatestUpdatedInformation(_authenticatedUser.UserId!);
     }
-    private async Task<int> GetOfferSheetPerProjectCounter(string projectId)
-    {
-        var projectOffers = await Context.Project.Include(l => l.OfferingList).Where(l => l.Id == projectId).AsNoTracking().FirstOrDefaultAsync();
-        if (projectOffers?.OfferingList != null && projectOffers.OfferingList.Count > 0)
-        {
-            return projectOffers!.OfferingList!.Count + 1;
-        }
-        else
-        {
-            return 1;
-        }
-    }
+    //private async Task<int> GetOfferSheetPerProjectCounter(string projectId)
+    //{
+    //    var projectOffers = await Context.Project.Include(l => l.OfferingList).Where(l => l.Id == projectId).AsNoTracking().FirstOrDefaultAsync();
+    //    if (projectOffers?.OfferingList != null && projectOffers.OfferingList.Count > 0)
+    //    {
+    //        return projectOffers!.OfferingList!.Count + 1;
+    //    }
+    //    else
+    //    {
+    //        return 1;
+    //    }
+    //}
     private static void AutoCalculateUnitOfferedAnnualIncrementInformation(UnitOfferedState unitOffered)
     {
         StringBuilder sbannualIncrementInformation = new();
@@ -269,7 +268,15 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
         }
         offering.ANTermType = anTermType;
     }
-
+    private async Task RemovePreSelectedUnitList(string offeringId)
+    {
+        Context.RemoveRange(await Context.PreSelectedUnit.Where(l => l.OfferingID == offeringId).ToListAsync());
+    }
+    private async Task RemoveUnitOfferedList(string offeringId)
+    {   
+        Context.RemoveRange(await Context.UnitOffered.Where(l => l.OfferingID == offeringId).SelectMany(l => l.AnnualIncrementList!).ToListAsync());
+        Context.RemoveRange(await Context.UnitOffered.Where(l => l.OfferingID == offeringId).ToListAsync());
+    }
     private async Task AddApprovers(string offeringId, CancellationToken cancellationToken)
     {
         var approverList = await Context.ApproverAssignment.Include(l => l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.Offering).AsNoTracking().ToListAsync(cancellationToken);
@@ -323,16 +330,14 @@ public class AddOfferingCommandHandler : BaseCommandHandler<ApplicationContext, 
     }
 }
 
-public class AddOfferingCommandValidator : AbstractValidator<AddOfferingCommand>
+public class NewOfferingVersionCommandValidator : AbstractValidator<NewOfferingVersionCommand>
 {
     readonly ApplicationContext _context;
 
-    public AddOfferingCommandValidator(ApplicationContext context)
+    public NewOfferingVersionCommandValidator(ApplicationContext context)
     {
         _context = context;
-
-        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<OfferingState>(x => x.Id == id, cancellationToken: cancellation))
-                          .WithMessage("Offering with id {PropertyValue} already exists");
-
+        RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<OfferingState>(x => x.Id == id, cancellationToken: cancellation))
+                          .WithMessage("Offering with id {PropertyValue} does not exists");
     }
 }

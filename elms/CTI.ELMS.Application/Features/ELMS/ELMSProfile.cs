@@ -195,5 +195,11 @@ public class ELMSProfile : Profile
             .ForMember(e => e.TotalPercentageRent, c => c.Ignore())
             .ForMember(e => e.UnitsInformation, c => c.Ignore())
             .IgnoreBaseEntityProperties();
+        CreateMap<NewOfferingVersionCommand, OfferingState>()
+            .ForMember(e => e.Id, c => c.Ignore())
+            .ForMember(e => e.OfferSheetId, c => c.Ignore())
+            .ForMember(e => e.OfferSheetPerProjectCounter, c => c.Ignore())
+            .ForMember(e => e.OfferingHistoryList, c => c.Ignore())
+            .IgnoreBaseEntityProperties();
     }
 }

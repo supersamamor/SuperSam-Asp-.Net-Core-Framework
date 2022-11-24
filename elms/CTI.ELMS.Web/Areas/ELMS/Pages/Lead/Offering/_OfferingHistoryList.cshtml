@@ -34,7 +34,7 @@
                 @if (Model?.OfferingHistoryList != null)
                 {
                     int counter = 0;
-                    foreach (var item in Model.OfferingHistoryList)
+                    foreach (var item in Model.OfferingHistoryList.OrderByDescending(l=>l.OfferingVersion))
                     {
                         <tr>
                             <td>
@@ -52,19 +52,19 @@
                                 <input type="hidden" name="OfferingHistoryList[@counter].TotalRentalRateString" value="@item.TotalRentalRateString" />
                                 <input type="hidden" name="OfferingHistoryList[@counter].TotalLotBudgetString" value="@item.TotalLotBudgetString" />
                             </td>
-                            <td>
+                            <td class="super-mid">
                                 <span>@item.OfferingVersion</span>
                             </td>
-                            <td>
+                            <td class="super-mid">
                                 <span>@item.UnitsInformation</span>
                             </td>
-                            <td>
+                            <td class="super-mid">
                                 <span>@(((decimal)item.TotalUnitArea!).ToString("##,##.00"))</span>
                             </td>
-                            <td>
+                            <td class="super-mid">
                                 <span>@item.TotalRentalRateString</span>
                             </td>
-                            <td>
+                            <td class="super-mid">
                                 <span>@item.TotalLotBudgetString</span>
                             </td>
                         </tr>

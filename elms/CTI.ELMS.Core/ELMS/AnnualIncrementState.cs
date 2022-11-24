@@ -5,7 +5,7 @@ namespace CTI.ELMS.Core.ELMS;
 
 public record AnnualIncrementState : BaseEntity
 {
-	public string? UnitOfferedID { get; init; }
+	public string? UnitOfferedID { get; set; }
 	public int? Year { get; init; }
 	public decimal? BasicFixedMonthlyRent { get; init; }
 	public decimal? PercentageRent { get; init; }
