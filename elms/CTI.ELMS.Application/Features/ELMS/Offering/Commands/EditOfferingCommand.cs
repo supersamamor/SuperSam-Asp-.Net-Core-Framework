@@ -2,6 +2,7 @@ using AutoMapper;
 using CTI.Common.Core.Commands;
 using CTI.Common.Data;
 using CTI.Common.Utility.Validators;
+using CTI.ELMS.Application.Repositories;
 using CTI.ELMS.Core.ELMS;
 using CTI.ELMS.Infrastructure.Data;
 using FluentValidation;
@@ -17,10 +18,13 @@ public record EditOfferingCommand : OfferingState, IRequest<Validation<Error, Of
 
 public class EditOfferingCommandHandler : BaseCommandHandler<ApplicationContext, OfferingState, EditOfferingCommand>, IRequestHandler<EditOfferingCommand, Validation<Error, OfferingState>>
 {
+    private readonly OfferingRepository _offeringRepository;
     public EditOfferingCommandHandler(ApplicationContext context,
                                      IMapper mapper,
-                                     CompositeValidator<EditOfferingCommand> validator) : base(context, mapper, validator)
+                                     CompositeValidator<EditOfferingCommand> validator,
+                                     OfferingRepository offeringRepository) : base(context, mapper, validator)
     {
+        _offeringRepository = offeringRepository;
     }
 
     public async Task<Validation<Error, OfferingState>> Handle(EditOfferingCommand request, CancellationToken cancellationToken) =>
@@ -33,16 +37,10 @@ public class EditOfferingCommandHandler : BaseCommandHandler<ApplicationContext,
 		var entity = await Context.Offering.Where(l => l.Id == request.Id).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
         Context.Update(entity);
-        await UpdateOfferingHistory(entity);
+        await _offeringRepository.UpdateOfferingHistory(entity);
         _ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, OfferingState>(entity);
-	}
-    private async Task UpdateOfferingHistory(OfferingState entity)
-    {
-        var offeringHistory = await Context.OfferingHistory.Where(l => l.Id == entity.OfferingHistoryID).AsNoTracking().FirstOrDefaultAsync();
-        Mapper.Map(entity, offeringHistory); 
-        Context.Entry(offeringHistory!).State = EntityState.Modified;        
-    }
+	}    
 }
 
 public class EditOfferingCommandValidator : AbstractValidator<EditOfferingCommand>

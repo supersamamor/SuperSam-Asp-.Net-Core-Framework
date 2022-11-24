@@ -1,4 +1,5 @@
 using CTI.Common.Utility.Validators;
+using CTI.ELMS.Application.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(CompositeValidator<>));
+        services.AddTransient<OfferingRepository>();
         return services;
     }
 }
