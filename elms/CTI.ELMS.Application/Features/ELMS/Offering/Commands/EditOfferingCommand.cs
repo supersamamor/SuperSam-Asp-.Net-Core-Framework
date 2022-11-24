@@ -38,6 +38,7 @@ public class EditOfferingCommandHandler : BaseCommandHandler<ApplicationContext,
 		Mapper.Map(request, entity);
         Context.Update(entity);
         await _offeringRepository.UpdateOfferingHistory(entity);
+        await _offeringRepository.UpdateLeadLatestUpdateDate(entity.LeadID!);
         _ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, OfferingState>(entity);
 	}    

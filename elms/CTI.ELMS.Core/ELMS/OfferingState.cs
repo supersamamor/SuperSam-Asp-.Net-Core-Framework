@@ -8,7 +8,7 @@ public record OfferingState : BaseEntity
 {
     public string ProjectID { get; init; } = "";
     public string? OfferingHistoryID { get; private set; }
-    public string? Status { get; init; } = OfferingStatus.NewOS;
+    public string? Status { get; private set; } = OfferingStatus.NewOS;
     public DateTime? CommencementDate { get; init; }
     public DateTime? TerminationDate { get; init; }
     public int? Year { get; init; }
@@ -28,8 +28,8 @@ public record OfferingState : BaseEntity
     public decimal? DocStamp { get; init; }
     public DateTime? AwardNoticeCreatedDate { get; init; }
     public string? AwardNoticeCreatedBy { get; init; }
-    public DateTime? SignedOfferSheetDate { get; init; }
-    public string? TagSignedOfferSheetBy { get; init; }
+    public DateTime? SignedOfferSheetDate { get; private set; }
+    public string? TagSignedOfferSheetBy { get; private set; }
     public decimal? TotalUnitArea { get; set; }
     public bool IsPOS { get; set; }
     public string Location { get; set; } = "";
@@ -58,8 +58,8 @@ public record OfferingState : BaseEntity
     public DateTime? TurnOverDate { get; init; }
     public bool AutoComputeAnnualAdvertisingFee { get; init; }
     public DateTime? BookingDate { get; init; }
-    public string? SignatoryName { get; init; }
-    public string? SignatoryPosition { get; init; }
+    public string? SignatoryName { get; private set; }
+    public string? SignatoryPosition { get; private set; }
     public string? ANSignatoryName { get; init; }
     public string? ANSignatoryPosition { get; init; }
     public DateTime? LeaseContractCreatedDate { get; init; }
@@ -111,5 +111,13 @@ public record OfferingState : BaseEntity
     public void SetOfferSheetPerProjectCounter(int offerSheetPerProjectCounter)
     {
         this.OfferSheetPerProjectCounter = offerSheetPerProjectCounter;
+    }
+    public void SignOffering(string userId)
+    {
+        this.SignedOfferSheetDate = DateTime.Now;
+        this.TagSignedOfferSheetBy = userId;     
+        this.Status = OfferingStatus.SignedOS;
+        this.SignatoryName = this.Project.SignatoryName;
+        this.SignatoryPosition = this.Project.SignatoryPosition;
     }
 }

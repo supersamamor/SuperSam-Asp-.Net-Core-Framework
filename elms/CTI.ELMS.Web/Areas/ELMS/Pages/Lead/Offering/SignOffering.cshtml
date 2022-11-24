@@ -13,6 +13,7 @@
         <form id="offering-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
+            <input type="hidden" asp-for="@Model.Offering.ProjectID" name="ProjectID" />
             <div id="PartialLoaderContainer">
                 <partial name="_OfferingInputFieldsPartial" model="Model.Offering" />
             </div>
@@ -37,7 +38,7 @@
     $(document).ready(function () {
         function InitializeForm()
         {
-            //For Edit Offering
+            //For Sign Offering
             $(".ProjectId").hide();
         }
         InitializeForm();
