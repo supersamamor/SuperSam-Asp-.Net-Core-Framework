@@ -53,8 +53,8 @@
                                     <input type="hidden" name="OfferingHistoryList[@counter].TotalUnitArea" value="@item.TotalUnitArea" />
                                     <input type="hidden" name="OfferingHistoryList[@counter].TotalRentalRateString" value="@item.TotalRentalRateString" />
                                     <input type="hidden" name="OfferingHistoryList[@counter].TotalLotBudgetString" value="@item.TotalLotBudgetString" />
-                                    <input type="hidden" name="OfferingHistoryList[@counter].ProjectID" value="_" />
-                                    <input type="hidden" name="OfferingHistoryList[@counter].FitOutPeriod" value="2" />
+                                    <input type="hidden" name="OfferingHistoryList[@counter].ProjectID" value="@item.ProjectID" />
+                                    <input type="hidden" name="OfferingHistoryList[@counter].FitOutPeriod" value="@item.FitOutPeriod" />
                                 </td>
                                 <td class="super-mid">
                                     <span>@item.OfferingVersion</span>
