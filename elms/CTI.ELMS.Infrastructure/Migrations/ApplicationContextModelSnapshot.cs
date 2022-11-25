@@ -1817,8 +1817,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ContractTypeID")
-                        .HasColumnType("int");
+                    b.Property<string>("ContractType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");

@@ -189,7 +189,7 @@ public record OfferingViewModel : BaseViewModel
     [Display(Name = "AN Term Type")]
     public string? ANTermType { get; init; }
     [Display(Name = "Contract Type")]
-    public int? ContractTypeID { get; init; }
+    public string? ContractType { get; init; }
     [Display(Name = "Witness Name")]
     [StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
     public string? WitnessName { get; init; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.ELMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221122022847_RemoveRequiredAttributeFromDateFieldsInOfferingHistory")]
-    partial class RemoveRequiredAttributeFromDateFieldsInOfferingHistory
+    [Migration("20221125151030_InitialDatabaseStructure")]
+    partial class InitialDatabaseStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.HasSequence("OfferSheetNoSequence");
 
             modelBuilder.Entity("CTI.Common.Data.Audit", b =>
                 {
@@ -1817,8 +1819,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ContractTypeID")
-                        .HasColumnType("int");
+                    b.Property<string>("ContractType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1886,6 +1888,10 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<int?>("Month")
                         .HasColumnType("int");
+
+                    b.Property<string>("OfferSheetId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("OfferSheetPerProjectCounter")
                         .HasColumnType("int");
@@ -2006,9 +2012,16 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LeadID");
 
+                    b.HasIndex("OfferSheetId")
+                        .IsUnique();
+
                     b.HasIndex("OfferingHistoryID");
 
                     b.HasIndex("ProjectID");
+
+                    b.HasIndex("OfferSheetPerProjectCounter", "ProjectID")
+                        .IsUnique()
+                        .HasFilter("[OfferSheetPerProjectCounter] IS NOT NULL");
 
                     b.ToTable("Offering");
                 });
@@ -2898,6 +2911,11 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<decimal>("LotArea")
                         .HasColumnType("decimal(18,6)");
 
@@ -2912,6 +2930,11 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UnitType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 

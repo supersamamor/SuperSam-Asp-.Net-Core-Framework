@@ -169,7 +169,7 @@ public class ELMSProfile : Profile
             .ForMember(e => e.ForFinalPrintLeaseContractDate, c => c.Ignore())
             .ForMember(e => e.LeaseContractStatus, c => c.Ignore())
             .ForMember(e => e.ANTermType, c => c.Ignore())
-            .ForMember(e => e.ContractTypeID, c => c.Ignore())
+            .ForMember(e => e.ContractType, c => c.Ignore())
             .ForMember(e => e.WitnessName, c => c.Ignore())
             .ForMember(e => e.ModifiedCategory, c => c.Ignore())
             .ForMember(e => e.IsDisabledModifiedCategory, c => c.Ignore())

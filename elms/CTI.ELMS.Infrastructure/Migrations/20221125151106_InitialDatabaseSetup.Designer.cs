@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.ELMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221104054523_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20221125151106_InitialDatabaseSetup")]
+    partial class InitialDatabaseSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.HasSequence("OfferSheetNoSequence");
 
             modelBuilder.Entity("CTI.Common.Data.Audit", b =>
                 {
@@ -111,9 +113,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<DateTime?>("TargetDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UnitsInformation")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -766,8 +765,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ContactType")
-                        .HasColumnType("int");
+                    b.Property<string>("ContactType")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1321,6 +1321,13 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("LatestUpdatedByUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LatestUpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LeadSourceId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1588,10 +1595,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<bool>("AutoComputeTotalSecurityDeposit")
                         .HasColumnType("bit");
 
-                    b.Property<decimal?>("BoardUp")
-                        .HasColumnType("decimal(18,6)");
-
-                    b.Property<DateTime>("BookingDate")
+                    b.Property<DateTime?>("BookingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("CAMCConstructionTotalUnitArea")
@@ -1713,7 +1717,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<decimal?>("TotalUnitArea")
                         .HasColumnType("decimal(18,6)");
 
-                    b.Property<DateTime>("TurnOverDate")
+                    b.Property<DateTime?>("TurnOverDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UnitType")
@@ -1721,7 +1725,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UnitsInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Year")
@@ -1755,8 +1758,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ANTermTypeID")
-                        .HasColumnType("int");
+                    b.Property<string>("ANTermType")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ANType")
                         .HasMaxLength(100)
@@ -1780,9 +1784,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<DateTime?>("AwardNoticeCreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("BoardUp")
-                        .HasColumnType("decimal(18,6)");
 
                     b.Property<DateTime?>("BookingDate")
                         .HasColumnType("datetime2");
@@ -1818,8 +1819,8 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ContractTypeID")
-                        .HasColumnType("int");
+                    b.Property<string>("ContractType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1870,8 +1871,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<DateTime?>("LeaseContractCreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("LeaseContractStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("LeaseContractStatus")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -1887,11 +1889,16 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<int?>("Month")
                         .HasColumnType("int");
 
+                    b.Property<string>("OfferSheetId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("OfferSheetPerProjectCounter")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OfferingHistoryID")
-                        .HasColumnType("int");
+                    b.Property<string>("OfferingHistoryID")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OffersheetRemarks")
                         .HasColumnType("nvarchar(max)");
@@ -1904,6 +1911,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ProjectID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Provision")
@@ -2004,7 +2012,16 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasIndex("LeadID");
 
+                    b.HasIndex("OfferSheetId")
+                        .IsUnique();
+
+                    b.HasIndex("OfferingHistoryID");
+
                     b.HasIndex("ProjectID");
+
+                    b.HasIndex("OfferSheetPerProjectCounter", "ProjectID")
+                        .IsUnique()
+                        .HasFilter("[OfferSheetPerProjectCounter] IS NOT NULL");
 
                     b.ToTable("Offering");
                 });
@@ -2550,7 +2567,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActivityID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -2740,7 +2756,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("AnnualIncrementInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("BasicFixedMonthlyRent")
@@ -2809,7 +2824,6 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("AnnualIncrementInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("BasicFixedMonthlyRent")
@@ -2823,6 +2837,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.Property<string>("Entity")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("HasAnnualIncrement")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsFixedMonthlyRent")
                         .HasColumnType("bit");
@@ -2894,6 +2911,11 @@ namespace CTI.ELMS.Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<decimal>("LotArea")
                         .HasColumnType("decimal(18,6)");
 
@@ -2908,6 +2930,11 @@ namespace CTI.ELMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UnitType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -3300,7 +3327,9 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasOne("CTI.ELMS.Core.ELMS.ProjectState", "Project")
                         .WithMany("OfferingList")
-                        .HasForeignKey("ProjectID");
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Lead");
 
@@ -3354,9 +3383,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
                     b.HasOne("CTI.ELMS.Core.ELMS.ActivityState", "Activity")
                         .WithMany("UnitActivityList")
-                        .HasForeignKey("ActivityID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ActivityID");
 
                     b.HasOne("CTI.ELMS.Core.ELMS.UnitState", "Unit")
                         .WithMany("UnitActivityList")

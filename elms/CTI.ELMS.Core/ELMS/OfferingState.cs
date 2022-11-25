@@ -72,7 +72,7 @@ public record OfferingState : BaseEntity
     public DateTime? ForFinalPrintLeaseContractDate { get; init; }
     public string? LeaseContractStatus { get; init; } = Constants.LeaseContractStatus.NoContract;
     public string? ANTermType { get; set; }
-    public int? ContractTypeID { get; init; }
+    public string? ContractType { get; init; }
     public string? WitnessName { get; init; }
     public string? PermittedUse { get; init; }
     public string? ModifiedCategory { get; init; }

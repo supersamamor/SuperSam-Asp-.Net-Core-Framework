@@ -4,25 +4,10 @@
 
 namespace CTI.ELMS.Infrastructure.Migrations
 {
-    public partial class CreateSequenceForOfferSheetNo : Migration
+    public partial class InitialDatabaseSetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "OfferSheetNoSequence");
-
-            migrationBuilder.AddColumn<string>(
-                name: "OfferSheetId",
-                table: "Offering",
-                type: "nvarchar(450)",
-                nullable: false,
-                defaultValue: "");
-            migrationBuilder.Sql("Update Offering Set OfferSheetId = Id");
-            migrationBuilder.CreateIndex(
-                name: "IX_Offering_OfferSheetId",
-                table: "Offering",
-                column: "OfferSheetId",
-                unique: true);
             migrationBuilder.Sql(@"Declare @MaxId Int
                     Declare @CurrentValue Int
                     Set @MaxId = (SELECT Max(Convert(Int,Id))
@@ -44,16 +29,7 @@ namespace CTI.ELMS.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Offering_OfferSheetId",
-                table: "Offering");
 
-            migrationBuilder.DropSequence(
-                name: "OfferSheetNoSequence");
-
-            migrationBuilder.DropColumn(
-                name: "OfferSheetId",
-                table: "Offering");
         }
     }
 }
