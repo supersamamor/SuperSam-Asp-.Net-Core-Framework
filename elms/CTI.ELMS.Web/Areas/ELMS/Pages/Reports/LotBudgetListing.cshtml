@@ -5,9 +5,9 @@
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Unit Budget List"];
-    ViewData["ActiveMainPage"] = "UnitBudget";
-    ViewData["Level1"] = "ELMS";
+    ViewData["Title"] = Localizer["Lot Budget Listing"];
+    ViewData["ActiveMainPage"] = "LotBudgetListing";
+    ViewData["Level1"] = "Reports";
 }
 <div class="row">
     <div class="col-12">
@@ -17,8 +17,56 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Year"]
-							</th>	
+                                @Localizer["Year"]
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -36,32 +84,48 @@
         var table = $('#unitBudget').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 1, 'desc' ]],
+            order: [[ 1, 'asc' ]],
             ajax:
             {
-                url: '@Url.Page("/UnitBudget/Index", new { area = "ELMS", handler = "ListAll" })',
+                url: '@Url.Page("/Reports/LotBudgetListing", new { area = "ELMS", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
             },
-			initComplete: function( settings, json ) {
-              
+            initComplete: function( settings, json ) {
+
             },
-			columns: [
-                { data: "year", name: "Year", responsivePriority: 1, title: '@Localizer["Year"]', searchable: false },	         
+            columns: [
+                { data: "projectName", name: "Project.ProjectName", responsivePriority: 1, title: '@Localizer["Project Name"]', searchable: true },
+                { data: "unitNo", name: "Unit.UnitNo", responsivePriority: 1, title: '@Localizer["Unit No"]', searchable: true },
+                { data: "january", name: "January", responsivePriority: 1, title: '@Localizer["January"]', searchable: false },
+                { data: "february", name: "February", responsivePriority: 1, title: '@Localizer["February"]', searchable: false },
+                { data: "march", name: "March", responsivePriority: 1, title: '@Localizer["March"]', searchable: false },
+                { data: "april", name: "April", responsivePriority: 1, title: '@Localizer["April"]', searchable: false },
+                { data: "may", name: "May", responsivePriority: 1, title: '@Localizer["May"]', searchable: false },
+                { data: "june", name: "June", responsivePriority: 1, title: '@Localizer["June"]', searchable: false },
+                { data: "july", name: "July", responsivePriority: 1, title: '@Localizer["July"]', searchable: false },
+                { data: "august", name: "August", responsivePriority: 1, title: '@Localizer["August"]', searchable: false },
+                { data: "september", name: "September", responsivePriority: 1, title: '@Localizer["September"]', searchable: false },
+                { data: "october", name: "October", responsivePriority: 1, title: '@Localizer["October"]', searchable: false },
+                { data: "november", name: "November", responsivePriority: 1, title: '@Localizer["November"]', searchable: false },
+                { data: "december", name: "December", responsivePriority: 1, title: '@Localizer["December"]', searchable: false },
+                { data: "lotArea", name: "Unit.LotArea", responsivePriority: 1, title: '@Localizer["Lot Area"]', searchable: false },
+                { data: "year", name: "Year", responsivePriority: 1, title: '@Localizer["Year"]', searchable: false },
+                { data: "location", name: "Location", responsivePriority: 1, title: '@Localizer["Level"]', searchable: true },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: [     
+            buttons: [
                'pageLength',
             ],
         });
         var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
         $('.btn-table_filter').on('click', function(e) {
             table.ajax.reload(null, false);
-        });	
+        });
         $('#navbar_search').keyup(function(){
               table.search($(this).val()).draw();
         })

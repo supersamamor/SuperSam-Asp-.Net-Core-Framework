@@ -21,7 +21,7 @@ public class GetLotBudgetListingQueryHandler : BaseQueryHandler<ApplicationConte
     {
         var query = (from unitBudget in Context.UnitBudget
                      select unitBudget).AsNoTracking();
-        return await query.Include(l => l.Unit).ThenInclude(l => l!.Project)
+        return await query.Include(l => l.Unit).Include(l => l.Project)
                            .ToPagedResponse(request.SearchColumns, request.SearchValue,
                            request.SortColumn, request.SortOrder,
                            request.PageNumber, request.PageSize,
