@@ -13,7 +13,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <table id="unitBudget" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                <table id="report-table" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
                             <th>
@@ -81,7 +81,7 @@
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
-        var table = $('#unitBudget').DataTable({
+        var table = $('#report-table').DataTable({
             select: false,
             serverSide: true,
             order: [[ 1, 'asc' ]],
@@ -89,6 +89,9 @@
             {
                 url: '@Url.Page("/Reports/LotBudgetListing", new { area = "ELMS", handler = "ListAll" })',
                 type: "POST",
+                data: function(d) {
+                     d.projectId = $("#ProjectFilter").val();
+                },
                 headers: {
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
@@ -131,6 +134,9 @@
         })
         $(".dataTables_filter").hide();
         $("#navbar_search_container").show();
+        //Start Code for generating project list dropdown
+        $.fn.DataTable.PrepareDataTableStyleForFilters("report-table");
+        $.fn.DataTable.AddDropdownFilter(table,"report-table","ProjectFilter","Project",'@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })');
     });
 </script>
 }

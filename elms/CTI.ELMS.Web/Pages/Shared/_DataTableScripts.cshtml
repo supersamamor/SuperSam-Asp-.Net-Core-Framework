@@ -95,5 +95,58 @@
 				});
 			});
 		};
+        $.fn.DataTable.PrepareDataTableStyleForFilters = function(tableId)
+        {
+            let rows = $("#" + tableId + "_wrapper").children(".row");
+            let target = rows[0];
+            $(target).addClass("row-header");
+            let divs = $(target).children();
+            for (let i = divs.length; i >= 0; i--)
+            {
+                $(divs[i]).removeClass();
+                $(divs[i]).addClass("col-6").addClass("row-buttons");
+                if (i == 0)
+                {
+                    $(divs[i]).addClass("row-buttons-right");  
+                    $(divs[i]).css("padding-top","30px");
+                }               
+                else
+                    $(divs[i]).addClass("row-buttons-left");
+            }
+            $(divs[0]).insertAfter(divs[1]);
+            let d = $(divs[0]).children(".btn-group");
+            $(d[0]).removeClass("btn-group");
+            let buttons = $(d[0]).children();          
+        }
+
+        $.fn.initializeSelect = function(table, filterUrl) {           
+            this.filter("select").each(function() {
+                $(this).ajaxSelect({
+                    ajax: {
+                        url: filterUrl,
+                    }
+                });
+            });
+            $(this).on("change", function() {
+                table.ajax.reload();
+            });
+            return this;
+        }; 
+
+        $.fn.DataTable.AddDropdownFilter = function(table, tableId, filterId, filterLabel, filterUrl)
+        {
+            let rbl = $("#" + tableId + "_wrapper").find(".row-buttons-left");
+            rbl.append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-4' style='margin-bottom:5px;'><label class='form-label'>" + filterLabel + " : </label><span></span></div>");
+            let span = rbl.find("span");
+            span.append(`
+                <select
+                    id='` + filterId + `'
+                    class='form-select'
+                    aria-label='` + filterLabel + `'>
+                    <option value="" selected>- Select a ` + filterLabel + ` -</option>
+                </select>`);
+                
+            $("#" + filterId).initializeSelect(table,filterUrl);            
+        }        
     });
 </script>
