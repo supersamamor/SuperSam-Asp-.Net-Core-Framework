@@ -137,6 +137,7 @@
         //Start Code for generating project list dropdown
         $.fn.DataTable.PrepareDataTableStyleForFilters("report-table");
         $.fn.DataTable.AddDropdownFilter(table,"report-table","ProjectFilter","Project",'@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })');
+        $.fn.DataTable.AddButton("report-table", "GenerateReport", null);
     });
 </script>
 }

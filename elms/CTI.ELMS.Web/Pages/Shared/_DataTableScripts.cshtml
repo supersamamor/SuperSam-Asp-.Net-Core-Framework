@@ -136,7 +136,7 @@
         $.fn.DataTable.AddDropdownFilter = function(table, tableId, filterId, filterLabel, filterUrl)
         {
             let rbl = $("#" + tableId + "_wrapper").find(".row-buttons-left");
-            rbl.append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-4' style='margin-bottom:5px;'><label class='form-label'>" + filterLabel + " : </label><span></span></div>");
+            rbl.append("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-4' style='margin-bottom:5px;float:left;'><label class='form-label'>" + filterLabel + " : </label><span></span></div>");
             let span = rbl.find("span");
             span.append(`
                 <select
@@ -147,6 +147,17 @@
                 </select>`);
                 
             $("#" + filterId).initializeSelect(table,filterUrl);            
-        }        
+        }   
+        $.fn.DataTable.AddButton = function(tableId, buttonId, callBack)
+        {
+            let rbl = $("#" + tableId + "_wrapper").find(".row-buttons-left");
+            rbl.append("<button id='" + buttonId + "' class='btn btn-secondary btn-success text-light' style='float:left;margin-top: 32px;margin-left: 5px;'><span>Generate</span></button>"); 
+            $('#' + buttonId).on('click', function(e) {
+                if(callBack!=null)
+                {
+                    callBack();
+                }                
+            });
+        }   
     });
 </script>
