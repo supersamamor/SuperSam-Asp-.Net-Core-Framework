@@ -48,7 +48,8 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("ReportTableYTDExpirySummary"))
             .Concat(GeneratePermissionsForModule("AwardNotice"))
             .Concat(GeneratePermissionsForModule("LeaseContract"))
-            .Concat(GeneratePermissionsForModule("ApproverSetup"));
+            .Concat(GeneratePermissionsForModule("ApproverSetup"))
+            .Concat(GeneratePermissionsForModule("Reports"));
     }
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
@@ -82,6 +83,11 @@ public static class Permission
             permissions.Add($"Permission.{module}.CancelOffersheet");
             permissions.Add($"Permission.{module}.SignOffersheet");
             permissions.Add($"Permission.{module}.CreateNewVersion");
+        }
+        else if (module == "Reports")
+        {
+            permissions.Add($"Permission.{module}.LotBudgetListing");
+            permissions.Add($"Permission.{module}.View");
         }
         else
         {
@@ -423,4 +429,9 @@ public static class Permission
     {
         public const string View = "Permission.LeaseContract.View";
     }
+    public static class Reports
+    {
+        public const string View = "Permission.Reports.View";
+        public const string LotBudgetListing = "Permission.Reports.LotBudgetListing";
+    }    
 }

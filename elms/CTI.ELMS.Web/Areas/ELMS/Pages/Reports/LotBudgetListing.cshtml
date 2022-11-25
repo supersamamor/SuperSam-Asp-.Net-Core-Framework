@@ -1,0 +1,72 @@
+@page
+@model LotBudgetListingModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Unit Budget List"];
+    ViewData["ActiveMainPage"] = "UnitBudget";
+    ViewData["Level1"] = "ELMS";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="unitBudget" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Year"]
+							</th>	
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#unitBudget').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 1, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/UnitBudget/Index", new { area = "ELMS", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+              
+            },
+			columns: [
+                { data: "year", name: "Year", responsivePriority: 1, title: '@Localizer["Year"]', searchable: false },	         
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [     
+               'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });	
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
+    });
+</script>
+}
