@@ -57,8 +57,10 @@ public class LotBudgetListingModel : BasePageModel<LotBudgetListingModel>
     }
     public async Task<IActionResult> OnGetPreviewReport(string projectId)
     {
-        var query = new GetLotBudgetListingQuery();
-        query.ProjectId = projectId;
+        var query = new GetLotBudgetListingQuery
+        {
+            ProjectId = projectId
+        };
         var result = await Mediatr.Send(query);
         List<UnitBudgetViewModel> unitBudgetList = Mapper.Map<List<UnitBudgetViewModel>>(result.Data.ToList());
         var rotativaService = new RotativaService<List<UnitBudgetViewModel>>(unitBudgetList, "Reports\\Pdf\\LotBudgetListingReport", $"LotBudgetListingReport.pdf",

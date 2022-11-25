@@ -33,7 +33,7 @@ namespace CTI.ELMS.Web.Service
             var document = new ViewAsPdf($"..\\{_reportTemplatePath}", _model)
             {
                 PageOrientation = _orientation,
-                PageSize = Size.A4,
+                PageSize = _size,
                 PageMargins = new Margins(5, 0, 10, 0)
             };
             var byteArray = await document.BuildFile(pageContext);
