@@ -52,17 +52,7 @@ public class EditModel : BasePageModel<EditModel>
 		if (AsyncAction == "RemoveLeadTaskNextStep")
 		{
 			return RemoveLeadTaskNextStep();
-		}
-		if (AsyncAction == "AddActivityHistory")
-		{
-			return AddActivityHistory();
-		}
-		if (AsyncAction == "RemoveActivityHistory")
-		{
-			return RemoveActivityHistory();
-		}
-		
-		
+		}	
         return Partial("_InputFieldsPartial", ClientFeedback);
     }
 	
@@ -93,19 +83,4 @@ public class EditModel : BasePageModel<EditModel>
 		ClientFeedback.LeadTaskNextStepList = ClientFeedback!.LeadTaskNextStepList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", ClientFeedback);
 	}
-
-	private IActionResult AddActivityHistory()
-	{
-		ModelState.Clear();
-		if (ClientFeedback!.ActivityHistoryList == null) { ClientFeedback!.ActivityHistoryList = new List<ActivityHistoryViewModel>(); }
-		ClientFeedback!.ActivityHistoryList!.Add(new ActivityHistoryViewModel() { ClientFeedbackId = ClientFeedback.Id });
-		return Partial("_InputFieldsPartial", ClientFeedback);
-	}
-	private IActionResult RemoveActivityHistory()
-	{
-		ModelState.Clear();
-		ClientFeedback.ActivityHistoryList = ClientFeedback!.ActivityHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", ClientFeedback);
-	}
-	
 }

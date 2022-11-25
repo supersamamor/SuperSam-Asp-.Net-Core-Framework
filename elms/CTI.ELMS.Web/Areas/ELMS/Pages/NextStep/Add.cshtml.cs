@@ -42,16 +42,6 @@ public class AddModel : BasePageModel<AddModel>
 		{
 			return RemoveLeadTaskNextStep();
 		}
-		if (AsyncAction == "AddActivityHistory")
-		{
-			return AddActivityHistory();
-		}
-		if (AsyncAction == "RemoveActivityHistory")
-		{
-			return RemoveActivityHistory();
-		}
-		
-		
         return Partial("_InputFieldsPartial", NextStep);
     }
 	
@@ -68,19 +58,4 @@ public class AddModel : BasePageModel<AddModel>
 		NextStep.LeadTaskNextStepList = NextStep!.LeadTaskNextStepList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", NextStep);
 	}
-
-	private IActionResult AddActivityHistory()
-	{
-		ModelState.Clear();
-		if (NextStep!.ActivityHistoryList == null) { NextStep!.ActivityHistoryList = new List<ActivityHistoryViewModel>(); }
-		NextStep!.ActivityHistoryList!.Add(new ActivityHistoryViewModel() { NextStepId = NextStep.Id });
-		return Partial("_InputFieldsPartial", NextStep);
-	}
-	private IActionResult RemoveActivityHistory()
-	{
-		ModelState.Clear();
-		NextStep.ActivityHistoryList = NextStep!.ActivityHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", NextStep);
-	}
-	
 }

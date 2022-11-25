@@ -39,7 +39,8 @@ public record ActivityViewModel : BaseViewModel
 	public LeadTaskViewModel? LeadTask { get; init; }
 	public ClientFeedbackViewModel? ClientFeedback { get; init; }
 	public NextStepViewModel? NextStep { get; init; }		
-	public IList<ActivityHistoryViewModel>? ActivityHistoryList { get; set; }
+	public IList<ActivityViewModel>? ActivityHistoryList { get; set; }
 	public IList<UnitActivityViewModel>? UnitActivityList { get; set; }
-	
+	public string? UnitsInformation { get; set; }
+	public string? LastModifiedBy { get; set; }
 }

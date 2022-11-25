@@ -83,13 +83,14 @@
                 window.focus();
             });
             //Pop-up for Offer Sheet Preview
-            function modelPopup() {
-                var url = '@Url.Page("/Lead/Offering/PrintOffering", new { area = "ELMS" })' + '?handler=OffersheetViaOfferingHistory&id=' + '@Model.Offering.Id';
+            function modelPopup(reff) {
+                var offeringHistoryId = $(reff)[0].dataset.offeringhistoryid;
+                var url = '@Url.Page("/Lead/Offering/PrintOffering", new { area = "ELMS" })' + '?handler=OffersheetViaOfferingHistory&offeringHistoryId=' + offeringHistoryId;
                 var title = "Offer Sheet Preview";
                 openModal(url, title, null);
             }
             $(".btn-print-offering-version").on('click', function (e) {
-                modelPopup();
+                modelPopup(this);
             });
         }
         InitializeForm();

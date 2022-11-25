@@ -14,13 +14,15 @@ public class GetOfferingHistoryByIdQueryHandler : BaseQueryByIdHandler<Applicati
     public GetOfferingHistoryByIdQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	
-	public override async Task<Option<OfferingHistoryState>> Handle(GetOfferingHistoryByIdQuery request, CancellationToken cancellationToken = default)
-	{
-		return await Context.OfferingHistory.Include(l=>l.Lead).Include(l=>l.Offering).Include(l=>l.Project)
-			.Include(l=>l.UnitOfferedHistoryList)
-			.Include(l=>l.UnitGroupList)
-			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-	}
-	
+
+    public override async Task<Option<OfferingHistoryState>> Handle(GetOfferingHistoryByIdQuery request, CancellationToken cancellationToken = default)
+    {
+        return await Context.OfferingHistory.Include(l => l.Lead)
+            .Include(l => l.UnitOfferedHistoryList)
+            .Include(l => l.UnitGroupList)
+            .Include(l => l.Offering)
+            .Include(l => l.Project)
+            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+    }
+
 }

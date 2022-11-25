@@ -1,5 +1,7 @@
 using CTI.ELMS.Application.Features.ELMS.Offering.Queries;
+using CTI.ELMS.Application.Features.ELMS.OfferingHistory.Queries;
 using CTI.ELMS.Application.Features.ELMS.TabNavigation.Queries;
+using CTI.ELMS.Core.ELMS;
 using CTI.ELMS.Web.Areas.ELMS.Models;
 using CTI.ELMS.Web.Models;
 using CTI.ELMS.Web.Service;
@@ -29,11 +31,11 @@ public class PrintOfferingModel : BasePageModel<PrintOfferingModel>
         Document = await rotativaService.GeneratePDFAsync(PageContext);
         return Page();
     }
-    public async Task<IActionResult> OnGetOffersheetViaOfferingHistory(string id)
+    public async Task<IActionResult> OnGetOffersheetViaOfferingHistory(string offeringHistoryId)
     {
-        LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByOfferingIdQuery(id, Constants.TabNavigation.Offerings)));
         OfferingViewModel offering = new();
-        _ = (await Mediatr.Send(new GetOfferingByIdQuery(id))).Select(l => offering = Mapper.Map<OfferingViewModel>(l));
+        _ = (await Mediatr.Send(new GetOfferingHistoryByIdQuery(offeringHistoryId))).Select(l => offering = Mapper.Map<OfferingViewModel>(l));      
+        LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByOfferingIdQuery(offering.Id, Constants.TabNavigation.Offerings)));       
         var rotativaService = new RotativaService<OfferingViewModel>(offering, "Pdf\\OfferSheet", $"{offering.OfferSheetNo}.pdf",
                                                             WebConstants.UploadFilesPath, _staticFolderPath, "OfferSheet");
         Document = await rotativaService.GeneratePDFAsync(PageContext);

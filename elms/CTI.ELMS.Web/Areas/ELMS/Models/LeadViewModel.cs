@@ -79,6 +79,6 @@ public record LeadViewModel : BaseViewModel
 	public IList<ContactPersonViewModel>? ContactPersonList { get; set; }
 	public IList<ActivityViewModel>? ActivityList { get; set; }
 	public IList<OfferingViewModel>? OfferingList { get; set; }
-	public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
+	public IList<OfferingViewModel>? OfferingHistoryList { get; set; }
 	
 }

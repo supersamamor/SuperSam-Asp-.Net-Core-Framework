@@ -58,16 +58,6 @@ public class AddModel : BasePageModel<AddModel>
 		{
 			return RemoveUnitOffered();
 		}
-		if (AsyncAction == "AddUnitOfferedHistory")
-		{
-			return AddUnitOfferedHistory();
-		}
-		if (AsyncAction == "RemoveUnitOfferedHistory")
-		{
-			return RemoveUnitOfferedHistory();
-		}
-		
-		
         return Partial("_InputFieldsPartial", Unit);
     }
 	
@@ -112,19 +102,4 @@ public class AddModel : BasePageModel<AddModel>
 		Unit.UnitOfferedList = Unit!.UnitOfferedList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Unit);
 	}
-
-	private IActionResult AddUnitOfferedHistory()
-	{
-		ModelState.Clear();
-		if (Unit!.UnitOfferedHistoryList == null) { Unit!.UnitOfferedHistoryList = new List<UnitOfferedHistoryViewModel>(); }
-		Unit!.UnitOfferedHistoryList!.Add(new UnitOfferedHistoryViewModel() { UnitID = Unit.Id });
-		return Partial("_InputFieldsPartial", Unit);
-	}
-	private IActionResult RemoveUnitOfferedHistory()
-	{
-		ModelState.Clear();
-		Unit.UnitOfferedHistoryList = Unit!.UnitOfferedHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Unit);
-	}
-	
 }

@@ -17,6 +17,6 @@ public record LeadTaskViewModel : BaseViewModel
 	public IList<LeadTaskClientFeedBackViewModel>? LeadTaskClientFeedBackList { get; set; }
 	public IList<LeadTaskNextStepViewModel>? LeadTaskNextStepList { get; set; }
 	public IList<ActivityViewModel>? ActivityList { get; set; }
-	public IList<ActivityHistoryViewModel>? ActivityHistoryList { get; set; }
+	public IList<ActivityViewModel>? ActivityHistoryList { get; set; }
 	
 }

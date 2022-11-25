@@ -42,16 +42,6 @@ public class AddModel : BasePageModel<AddModel>
 		{
 			return RemoveUserProjectAssignment();
 		}
-		if (AsyncAction == "AddOfferingHistory")
-		{
-			return AddOfferingHistory();
-		}
-		if (AsyncAction == "RemoveOfferingHistory")
-		{
-			return RemoveOfferingHistory();
-		}
-		
-		
         return Partial("_InputFieldsPartial", Project);
     }
 	
@@ -68,19 +58,4 @@ public class AddModel : BasePageModel<AddModel>
 		Project.UserProjectAssignmentList = Project!.UserProjectAssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Project);
 	}
-
-	private IActionResult AddOfferingHistory()
-	{
-		ModelState.Clear();
-		if (Project!.OfferingHistoryList == null) { Project!.OfferingHistoryList = new List<OfferingHistoryViewModel>(); }
-		Project!.OfferingHistoryList!.Add(new OfferingHistoryViewModel() { ProjectID = Project.Id });
-		return Partial("_InputFieldsPartial", Project);
-	}
-	private IActionResult RemoveOfferingHistory()
-	{
-		ModelState.Clear();
-		Project.OfferingHistoryList = Project!.OfferingHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Project);
-	}
-	
 }

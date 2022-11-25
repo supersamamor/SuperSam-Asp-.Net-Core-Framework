@@ -33,16 +33,12 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("Contact"))
             .Concat(GeneratePermissionsForModule("ContactPerson"))
             .Concat(GeneratePermissionsForModule("Activity"))
-            .Concat(GeneratePermissionsForModule("ActivityHistory"))
             .Concat(GeneratePermissionsForModule("UnitActivity"))
             .Concat(GeneratePermissionsForModule("Offering"))
-            .Concat(GeneratePermissionsForModule("OfferingHistory"))
             .Concat(GeneratePermissionsForModule("PreSelectedUnit"))
             .Concat(GeneratePermissionsForModule("UnitOffered"))
-            .Concat(GeneratePermissionsForModule("UnitOfferedHistory"))
             .Concat(GeneratePermissionsForModule("UnitGroup"))
             .Concat(GeneratePermissionsForModule("AnnualIncrement"))
-            .Concat(GeneratePermissionsForModule("AnnualIncrementHistory"))
             .Concat(GeneratePermissionsForModule("IFCATransactionType"))
             .Concat(GeneratePermissionsForModule("IFCATenantInformation"))
             .Concat(GeneratePermissionsForModule("IFCAUnitInformation"))
@@ -85,7 +81,7 @@ public static class Permission
             permissions.Add($"Permission.{module}.Print");
             permissions.Add($"Permission.{module}.CancelOffersheet");
             permissions.Add($"Permission.{module}.SignOffersheet");
-            permissions.Add($"Permission.{module}.CreateNewVersion");            
+            permissions.Add($"Permission.{module}.CreateNewVersion");
         }
         else
         {
@@ -325,13 +321,6 @@ public static class Permission
         public const string Delete = "Permission.ContactPerson.Delete";
     }
 
-    public static class ActivityHistory
-    {
-        public const string View = "Permission.ActivityHistory.View";
-        public const string Create = "Permission.ActivityHistory.Create";
-        public const string Edit = "Permission.ActivityHistory.Edit";
-        public const string Delete = "Permission.ActivityHistory.Delete";
-    }
     public static class UnitActivity
     {
         public const string View = "Permission.UnitActivity.View";
@@ -340,13 +329,6 @@ public static class Permission
         public const string Delete = "Permission.UnitActivity.Delete";
     }
 
-    public static class OfferingHistory
-    {
-        public const string View = "Permission.OfferingHistory.View";
-        public const string Create = "Permission.OfferingHistory.Create";
-        public const string Edit = "Permission.OfferingHistory.Edit";
-        public const string Delete = "Permission.OfferingHistory.Delete";
-    }
     public static class PreSelectedUnit
     {
         public const string View = "Permission.PreSelectedUnit.View";
@@ -361,13 +343,6 @@ public static class Permission
         public const string Edit = "Permission.UnitOffered.Edit";
         public const string Delete = "Permission.UnitOffered.Delete";
     }
-    public static class UnitOfferedHistory
-    {
-        public const string View = "Permission.UnitOfferedHistory.View";
-        public const string Create = "Permission.UnitOfferedHistory.Create";
-        public const string Edit = "Permission.UnitOfferedHistory.Edit";
-        public const string Delete = "Permission.UnitOfferedHistory.Delete";
-    }
     public static class UnitGroup
     {
         public const string View = "Permission.UnitGroup.View";
@@ -381,13 +356,6 @@ public static class Permission
         public const string Create = "Permission.AnnualIncrement.Create";
         public const string Edit = "Permission.AnnualIncrement.Edit";
         public const string Delete = "Permission.AnnualIncrement.Delete";
-    }
-    public static class AnnualIncrementHistory
-    {
-        public const string View = "Permission.AnnualIncrementHistory.View";
-        public const string Create = "Permission.AnnualIncrementHistory.Create";
-        public const string Edit = "Permission.AnnualIncrementHistory.Edit";
-        public const string Delete = "Permission.AnnualIncrementHistory.Delete";
     }
     public static class IFCATransactionType
     {

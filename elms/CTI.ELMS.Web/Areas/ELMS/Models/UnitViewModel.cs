@@ -41,7 +41,7 @@ public record UnitViewModel : BaseViewModel
 	public IList<UnitActivityViewModel>? UnitActivityList { get; set; }
 	public IList<PreSelectedUnitViewModel>? PreSelectedUnitList { get; set; }
 	public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
-	public IList<UnitOfferedHistoryViewModel>? UnitOfferedHistoryList { get; set; }
+	public IList<UnitOfferedViewModel>? UnitOfferedHistoryList { get; set; }
 	public IList<IFCAUnitInformationViewModel>? IFCAUnitInformationList { get; set; }
 	
 }

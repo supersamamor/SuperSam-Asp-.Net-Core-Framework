@@ -25,7 +25,7 @@ public record UnitActivityViewModel : BaseViewModel
 
     public DateTime LastModifiedDate { get; set; }
     public UnitViewModel? Unit { get; init; }
-    public ActivityHistoryViewModel? ActivityHistory { get; init; }
+    public ActivityViewModel? ActivityHistory { get; init; }
     public ActivityViewModel? Activity { get; init; }
     public string? UnitNo { get; set; }
     public decimal? LotArea { get; set; }

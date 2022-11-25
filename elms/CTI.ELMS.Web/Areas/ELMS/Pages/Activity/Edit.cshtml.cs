@@ -36,15 +36,7 @@ public class EditModel : BasePageModel<EditModel>
     }	
 	public IActionResult OnPostChangeFormValue()
     {
-        ModelState.Clear();
-		if (AsyncAction == "AddActivityHistory")
-		{
-			return AddActivityHistory();
-		}
-		if (AsyncAction == "RemoveActivityHistory")
-		{
-			return RemoveActivityHistory();
-		}
+        ModelState.Clear();	
 		if (AsyncAction == "AddUnitActivity")
 		{
 			return AddUnitActivity();
@@ -52,25 +44,9 @@ public class EditModel : BasePageModel<EditModel>
 		if (AsyncAction == "RemoveUnitActivity")
 		{
 			return RemoveUnitActivity();
-		}
-		
-		
+		}	
         return Partial("_InputFieldsPartial", Activity);
-    }
-	
-	private IActionResult AddActivityHistory()
-	{
-		ModelState.Clear();
-		if (Activity!.ActivityHistoryList == null) { Activity!.ActivityHistoryList = new List<ActivityHistoryViewModel>(); }
-		Activity!.ActivityHistoryList!.Add(new ActivityHistoryViewModel() { ActivityID = Activity.Id });
-		return Partial("_InputFieldsPartial", Activity);
-	}
-	private IActionResult RemoveActivityHistory()
-	{
-		ModelState.Clear();
-		Activity.ActivityHistoryList = Activity!.ActivityHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Activity);
-	}
+    }	
 
 	private IActionResult AddUnitActivity()
 	{

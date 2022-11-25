@@ -56,16 +56,6 @@ public class EditModel : BasePageModel<EditModel>
 		{
 			return RemoveContactPerson();
 		}
-		if (AsyncAction == "AddOfferingHistory")
-		{
-			return AddOfferingHistory();
-		}
-		if (AsyncAction == "RemoveOfferingHistory")
-		{
-			return RemoveOfferingHistory();
-		}
-		
-		
         return Partial("_InputFieldsPartial", Lead);
     }
 	
@@ -96,19 +86,4 @@ public class EditModel : BasePageModel<EditModel>
 		Lead.ContactPersonList = Lead!.ContactPersonList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Lead);
 	}
-
-	private IActionResult AddOfferingHistory()
-	{
-		ModelState.Clear();
-		if (Lead!.OfferingHistoryList == null) { Lead!.OfferingHistoryList = new List<OfferingHistoryViewModel>(); }
-		Lead!.OfferingHistoryList!.Add(new OfferingHistoryViewModel() { LeadID = Lead.Id });
-		return Partial("_InputFieldsPartial", Lead);
-	}
-	private IActionResult RemoveOfferingHistory()
-	{
-		ModelState.Clear();
-		Lead.OfferingHistoryList = Lead!.OfferingHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Lead);
-	}
-	
 }

@@ -57,5 +57,12 @@ public record OfferingHistoryState : BaseEntity
 	public void SetOfferingVersion(int offeringVersion)
 	{
 		this.OfferingVersion = offeringVersion;
-	}	
+	}
+	public string OfferSheetNo
+	{
+		get
+		{		
+			return this.Project?.IFCAProjectCode?.ToString() + "-" + this.Offering?.OfferSheetId + "-" + this.OfferingVersion?.ToString().PadLeft(2, '0');
+		}
+	}
 }

@@ -33,7 +33,7 @@ public record UnitGroupViewModel : BaseViewModel
 	public string AreaTypeDescription { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }
-	public OfferingHistoryViewModel? OfferingHistory { get; init; }
+	public OfferingViewModel? OfferingHistory { get; init; }
 		
 	
 }

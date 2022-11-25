@@ -24,16 +24,12 @@ using CTI.ELMS.Application.Features.ELMS.Lead.Commands;
 using CTI.ELMS.Application.Features.ELMS.Contact.Commands;
 using CTI.ELMS.Application.Features.ELMS.ContactPerson.Commands;
 using CTI.ELMS.Application.Features.ELMS.Activity.Commands;
-using CTI.ELMS.Application.Features.ELMS.ActivityHistory.Commands;
 using CTI.ELMS.Application.Features.ELMS.UnitActivity.Commands;
 using CTI.ELMS.Application.Features.ELMS.Offering.Commands;
-using CTI.ELMS.Application.Features.ELMS.OfferingHistory.Commands;
 using CTI.ELMS.Application.Features.ELMS.PreSelectedUnit.Commands;
 using CTI.ELMS.Application.Features.ELMS.UnitOffered.Commands;
-using CTI.ELMS.Application.Features.ELMS.UnitOfferedHistory.Commands;
 using CTI.ELMS.Application.Features.ELMS.UnitGroup.Commands;
 using CTI.ELMS.Application.Features.ELMS.AnnualIncrement.Commands;
-using CTI.ELMS.Application.Features.ELMS.AnnualIncrementHistory.Commands;
 using CTI.ELMS.Application.Features.ELMS.IFCATransactionType.Commands;
 using CTI.ELMS.Application.Features.ELMS.IFCATenantInformation.Commands;
 using CTI.ELMS.Application.Features.ELMS.IFCAUnitInformation.Commands;
@@ -134,10 +130,7 @@ public class ELMSProfile : Profile
             .ForPath(e => e.ForeignKeyClientFeedback, o => o.MapFrom(s => s.ClientFeedback!.ClientFeedbackName))
             .ForPath(e => e.ForeignKeyNextStep, o => o.MapFrom(s => s.NextStep!.NextStepTaskName));
         CreateMap<ActivityViewModel, ActivityState>();
-        CreateMap<ActivityHistoryViewModel, AddActivityHistoryCommand>();
-        CreateMap<ActivityHistoryViewModel, EditActivityHistoryCommand>();
-        CreateMap<ActivityHistoryState, ActivityHistoryViewModel>().ForPath(e => e.ForeignKeyActivity, o => o.MapFrom(s => s.Activity!.Id)).ForPath(e => e.ForeignKeyLeadTask, o => o.MapFrom(s => s.LeadTask!.LeadTaskName)).ForPath(e => e.ForeignKeyClientFeedback, o => o.MapFrom(s => s.ClientFeedback!.ClientFeedbackName)).ForPath(e => e.ForeignKeyNextStep, o => o.MapFrom(s => s.NextStep!.NextStepTaskName));
-        CreateMap<ActivityHistoryViewModel, ActivityHistoryState>();
+
         CreateMap<UnitActivityViewModel, AddUnitActivityCommand>();
         CreateMap<UnitActivityViewModel, EditUnitActivityCommand>();
         CreateMap<UnitActivityState, UnitActivityViewModel>()
@@ -151,16 +144,12 @@ public class ELMSProfile : Profile
         CreateMap<UnitState, UnitActivityViewModel>()
             .ForMember(e => e.Id, c => c.Ignore())
             .ForMember(e => e.Availability, c => c.Ignore())
-            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));      
+            .ForPath(e => e.UnitID, o => o.MapFrom(s => s.Id));
         CreateMap<OfferingState, OfferingViewModel>()
             .ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id))
             .ForPath(e => e.ForeignKeyProjectName, o => o.MapFrom(s => s.Project!.ProjectName))
             .ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id));
         CreateMap<OfferingViewModel, OfferingState>();
-        CreateMap<OfferingHistoryViewModel, AddOfferingHistoryCommand>();
-        CreateMap<OfferingHistoryViewModel, EditOfferingHistoryCommand>();
-        CreateMap<OfferingHistoryState, OfferingHistoryViewModel>().ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id)).ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id)).ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id));
-        CreateMap<OfferingHistoryViewModel, OfferingHistoryState>();
         CreateMap<PreSelectedUnitViewModel, AddPreSelectedUnitCommand>();
         CreateMap<PreSelectedUnitViewModel, EditPreSelectedUnitCommand>();
         CreateMap<PreSelectedUnitState, PreSelectedUnitViewModel>()
@@ -173,10 +162,6 @@ public class ELMSProfile : Profile
         CreateMap<UnitOfferedViewModel, AddUnitOfferedCommand>();
         CreateMap<UnitOfferedViewModel, EditUnitOfferedCommand>();
         CreateMap<UnitOfferedViewModel, UnitOfferedState>();
-        CreateMap<UnitOfferedHistoryViewModel, AddUnitOfferedHistoryCommand>();
-        CreateMap<UnitOfferedHistoryViewModel, EditUnitOfferedHistoryCommand>();
-        CreateMap<UnitOfferedHistoryState, UnitOfferedHistoryViewModel>().ForPath(e => e.ForeignKeyOfferingHistory, o => o.MapFrom(s => s.OfferingHistory!.Id)).ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id)).ForPath(e => e.ForeignKeyUnit, o => o.MapFrom(s => s.Unit!.Id));
-        CreateMap<UnitOfferedHistoryViewModel, UnitOfferedHistoryState>();
         CreateMap<UnitGroupViewModel, AddUnitGroupCommand>();
         CreateMap<UnitGroupViewModel, EditUnitGroupCommand>();
         CreateMap<UnitGroupState, UnitGroupViewModel>().ForPath(e => e.ForeignKeyOfferingHistory, o => o.MapFrom(s => s.OfferingHistory!.Id));
@@ -185,10 +170,7 @@ public class ELMSProfile : Profile
         CreateMap<AnnualIncrementViewModel, EditAnnualIncrementCommand>();
         CreateMap<AnnualIncrementState, AnnualIncrementViewModel>().ForPath(e => e.ForeignKeyUnitOffered, o => o.MapFrom(s => s.UnitOffered!.Id));
         CreateMap<AnnualIncrementViewModel, AnnualIncrementState>();
-        CreateMap<AnnualIncrementHistoryViewModel, AddAnnualIncrementHistoryCommand>();
-        CreateMap<AnnualIncrementHistoryViewModel, EditAnnualIncrementHistoryCommand>();
-        CreateMap<AnnualIncrementHistoryState, AnnualIncrementHistoryViewModel>().ForPath(e => e.ForeignKeyUnitOfferedHistory, o => o.MapFrom(s => s.UnitOfferedHistory!.Id));
-        CreateMap<AnnualIncrementHistoryViewModel, AnnualIncrementHistoryState>();
+
         CreateMap<IFCATransactionTypeViewModel, AddIFCATransactionTypeCommand>();
         CreateMap<IFCATransactionTypeViewModel, EditIFCATransactionTypeCommand>();
         CreateMap<IFCATransactionTypeState, IFCATransactionTypeViewModel>().ForPath(e => e.ForeignKeyEntityGroup, o => o.MapFrom(s => s.EntityGroup!.Id));
@@ -249,5 +231,31 @@ public class ELMSProfile : Profile
            .ForMember(e => e.Status, c => c.Ignore());
         CreateMap<OfferingViewModel, CancelOfferingCommand>()
            .ForMember(e => e.Status, c => c.Ignore());
+        CreateMap<OfferingHistoryState, OfferingViewModel>()
+            .ForPath(e => e.ForeignKeyLead, o => o.MapFrom(s => s.Lead!.Id))
+            .ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id))
+            .ForPath(e => e.Id, o => o.MapFrom(s => s.OfferingID))
+            .ForPath(e => e.OfferingHistoryID, o => o.MapFrom(s => s.Id));
+        CreateMap<OfferingViewModel, OfferingHistoryState>();
+
+        //CreateMap<ActivityHistoryViewModel, AddActivityHistoryCommand>();
+        //CreateMap<ActivityHistoryViewModel, EditActivityHistoryCommand>();
+        CreateMap<ActivityHistoryState, ActivityViewModel>()
+            .ForPath(e => e.ForeignKeyLeadTask, o => o.MapFrom(s => s.LeadTask!.LeadTaskName))
+            .ForPath(e => e.ForeignKeyClientFeedback, o => o.MapFrom(s => s.ClientFeedback!.ClientFeedbackName))
+            .ForPath(e => e.ForeignKeyNextStep, o => o.MapFrom(s => s.NextStep!.NextStepTaskName));
+        CreateMap<ActivityViewModel, ActivityHistoryState>();
+
+        //CreateMap<UnitOfferedHistoryViewModel, AddUnitOfferedHistoryCommand>();
+        //CreateMap<UnitOfferedHistoryViewModel, EditUnitOfferedHistoryCommand>();
+        CreateMap<UnitOfferedHistoryState, UnitOfferedViewModel>()
+            .ForPath(e => e.ForeignKeyOffering, o => o.MapFrom(s => s.Offering!.Id))
+            .ForPath(e => e.ForeignKeyUnit, o => o.MapFrom(s => s.Unit!.Id));
+        CreateMap<UnitOfferedViewModel, UnitOfferedHistoryState>();
+
+        //CreateMap<AnnualIncrementHistoryViewModel, AddAnnualIncrementHistoryCommand>();
+        //CreateMap<AnnualIncrementHistoryViewModel, EditAnnualIncrementHistoryCommand>();
+        CreateMap<AnnualIncrementHistoryState, AnnualIncrementViewModel>();
+        CreateMap<AnnualIncrementViewModel, AnnualIncrementHistoryState>();
     }
 }

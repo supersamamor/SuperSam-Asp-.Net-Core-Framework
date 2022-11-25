@@ -209,11 +209,16 @@ public record OfferingViewModel : BaseViewModel
     public ProjectViewModel? Project { get; init; }
     public LeadViewModel? Lead { get; init; }
 
-    public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
+    public IList<OfferingViewModel>? OfferingHistoryList { get; set; }
     public IList<PreSelectedUnitViewModel>? PreSelectedUnitList { get; set; }
     public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
     [Display(Name = "OS Reference No")]
     public string? OfferSheetNo { get; init; } = "";
+    public string? OfferingID { get; init; }
+    public string? Location { get; init; }
+    public string? UnitType { get; init; }
+    public int? OfferingVersion { get; init; }
+    public decimal? TotalUnitArea { get; init; }    
     public decimal AreaDivider
     {
         get

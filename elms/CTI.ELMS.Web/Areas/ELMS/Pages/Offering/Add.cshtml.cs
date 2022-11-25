@@ -34,14 +34,6 @@ public class AddModel : BasePageModel<AddModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddOfferingHistory")
-		{
-			return AddOfferingHistory();
-		}
-		if (AsyncAction == "RemoveOfferingHistory")
-		{
-			return RemoveOfferingHistory();
-		}
 		if (AsyncAction == "AddPreSelectedUnit")
 		{
 			return AddPreSelectedUnit();
@@ -60,21 +52,6 @@ public class AddModel : BasePageModel<AddModel>
 		}
         return Partial("_InputFieldsPartial", Offering);
     }
-	
-	private IActionResult AddOfferingHistory()
-	{
-		ModelState.Clear();
-		if (Offering!.OfferingHistoryList == null) { Offering!.OfferingHistoryList = new List<OfferingHistoryViewModel>(); }
-		Offering!.OfferingHistoryList!.Add(new OfferingHistoryViewModel() { OfferingID = Offering.Id });
-		return Partial("_InputFieldsPartial", Offering);
-	}
-	private IActionResult RemoveOfferingHistory()
-	{
-		ModelState.Clear();
-		Offering.OfferingHistoryList = Offering!.OfferingHistoryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Offering);
-	}
-
 	private IActionResult AddPreSelectedUnit()
 	{
 		ModelState.Clear();

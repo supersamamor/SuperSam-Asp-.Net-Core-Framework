@@ -105,7 +105,7 @@ public record ProjectViewModel : BaseViewModel
 	public IList<UnitBudgetViewModel>? UnitBudgetList { get; set; }
 	public IList<ActivityViewModel>? ActivityList { get; set; }
 	public IList<OfferingViewModel>? OfferingList { get; set; }
-	public IList<OfferingHistoryViewModel>? OfferingHistoryList { get; set; }
+	public IList<OfferingViewModel>? OfferingHistoryList { get; set; }
 	public IList<IFCATenantInformationViewModel>? IFCATenantInformationList { get; set; }
 	public IList<IFCAARLedgerViewModel>? IFCAARLedgerList { get; set; }
 	public IList<IFCAARAllocationViewModel>? IFCAARAllocationList { get; set; }
