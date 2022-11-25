@@ -5,7 +5,8 @@ namespace CTI.ELMS.Web.Service
 {
     public class RotativaService<TModel>
     {
-        public RotativaService(TModel model, string reportTemplatePath, string fileName, string staticFolder, string staticFolderPath, string subFolderPath)
+        public RotativaService(TModel model, string reportTemplatePath, string fileName, string staticFolder, string staticFolderPath, string subFolderPath, Orientation orientation = Orientation.Portrait,
+            Size size = Size.A4)
         {
             _model = model;
             _reportTemplatePath = reportTemplatePath;
@@ -13,6 +14,8 @@ namespace CTI.ELMS.Web.Service
             _staticFolder = staticFolder;
             _staticFolderPath = staticFolderPath;
             _subFolderPath = subFolderPath;
+            _orientation = orientation;
+            _size = size;
         }
         private readonly TModel _model;
         private readonly string _reportTemplatePath;
@@ -20,6 +23,8 @@ namespace CTI.ELMS.Web.Service
         private readonly string _staticFolder;
         private readonly string _staticFolderPath;
         private readonly string _subFolderPath;
+        private readonly Orientation _orientation;
+        private readonly Size _size;
         public async Task<RotativaDocumentModel> GeneratePDFAsync(Microsoft.AspNetCore.Mvc.ActionContext pageContext)
         {
             RotativaService<TModel>.CreateFolderIfNotExists(_staticFolderPath + "\\" + _subFolderPath);
@@ -27,7 +32,7 @@ namespace CTI.ELMS.Web.Service
             if (File.Exists(rotativaDocument.CompleteFilePath)) { File.Delete(rotativaDocument.CompleteFilePath); }
             var document = new ViewAsPdf($"..\\{_reportTemplatePath}", _model)
             {
-                PageOrientation = Orientation.Portrait,
+                PageOrientation = _orientation,
                 PageSize = Size.A4,
                 PageMargins = new Margins(5, 0, 10, 0)
             };

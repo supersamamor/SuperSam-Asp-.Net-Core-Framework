@@ -3,4 +3,130 @@
     Layout = null;
 }
 
-<p>Test</p>
+<p>@Localizer["Lot Budget Listings"]</p>
+<div class="card">
+    <h5 class="card-header">
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Offered Space(s)"]</span>
+        <button class="cancel" type="button" id="btnRemoveUnitOffered" value="RemoveUnitOffered" style="display:none;"></button>
+    </h5>
+    <div class="card-body" style="overflow:auto;">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Localizer["Project Name"]
+                    </th>
+                    <th>
+                        @Localizer["Unit No."]
+                    </th>
+                    <th>
+                        @Localizer["January"]
+                    </th>
+                    <th>
+                        @Localizer["February"]
+                    </th>
+                    <th>
+                        @Localizer["March"]
+                    </th>
+                    <th>
+                        @Localizer["April"]
+                    </th>
+                    <th>
+                        @Localizer["May"]
+                    </th>
+                    <th>
+                        @Localizer["June"]
+                    </th>
+                    <th>
+                        @Localizer["July"]
+                    </th>
+                    <th>
+                        @Localizer["August"]
+                    </th>
+                    <th>
+                        @Localizer["September"]
+                    </th>
+                    <th>
+                        @Localizer["October"]
+                    </th>
+                    <th>
+                        @Localizer["November"]
+                    </th>
+                    <th>
+                        @Localizer["December"]
+                    </th>
+                    <th>
+                        @Localizer["Lot Area"]
+                    </th>
+                    <th>
+                        @Localizer["Year"]
+                    </th>
+                    <th>
+                        @Localizer["Level"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.Project?.ProjectName</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.Unit?.UnitNo</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.January</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.February</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.March</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.April</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.May</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.June</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.July</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.August</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.September</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.October</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.November</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.December</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.LotArea</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.Year</span>
+                            </td>
+                            <td>
+                                <span class="form-control" style="background:transparent;border:none;">@item?.Unit?.Location</span>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

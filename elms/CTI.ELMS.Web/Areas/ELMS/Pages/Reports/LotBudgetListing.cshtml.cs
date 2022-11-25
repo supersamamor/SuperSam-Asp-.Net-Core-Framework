@@ -56,13 +56,15 @@ public class LotBudgetListingModel : BasePageModel<LotBudgetListingModel>
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }
     public async Task<IActionResult> OnGetPreviewReport(string projectId)
-    {     
+    {
         var query = new GetLotBudgetListingQuery();
         query.ProjectId = projectId;
         var result = await Mediatr.Send(query);
         List<UnitBudgetViewModel> unitBudgetList = Mapper.Map<List<UnitBudgetViewModel>>(result.Data.ToList());
         var rotativaService = new RotativaService<List<UnitBudgetViewModel>>(unitBudgetList, "Reports\\Pdf\\LotBudgetListingReport", $"LotBudgetListingReport.pdf",
-                                                            WebConstants.UploadFilesPath, _staticFolderPath, "Reports");
+                                                            WebConstants.UploadFilesPath, _staticFolderPath, "Reports",
+                                                            orientation: Rotativa.AspNetCore.Options.Orientation.Landscape,
+                                                            size: Rotativa.AspNetCore.Options.Size.A3);
         Document = await rotativaService.GeneratePDFAsync(PageContext);
         return Partial("ReportViewer", Document);
     }
