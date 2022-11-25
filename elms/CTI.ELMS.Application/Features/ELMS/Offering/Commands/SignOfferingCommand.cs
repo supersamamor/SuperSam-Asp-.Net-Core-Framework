@@ -33,10 +33,10 @@ public class SignOfferingCommandHandler : BaseCommandHandler<ApplicationContext,
 
     public async Task<Validation<Error, OfferingState>> Handle(SignOfferingCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await EditOffering(request, cancellationToken));
+			async request => await SignOffering(request, cancellationToken));
 
 
-	public async Task<Validation<Error, OfferingState>> EditOffering(SignOfferingCommand request, CancellationToken cancellationToken)
+	public async Task<Validation<Error, OfferingState>> SignOffering(SignOfferingCommand request, CancellationToken cancellationToken)
 	{
 		var entity = await Context.Offering.Where(l => l.Id == request.Id)
             .Include(l=>l.Project).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);

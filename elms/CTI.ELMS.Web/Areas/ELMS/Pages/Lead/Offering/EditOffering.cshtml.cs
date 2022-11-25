@@ -34,14 +34,21 @@ public class EditOfferingModel : BasePageModel<EditOfferingModel>
         return await PageFrom(async () => await Mediatr.Send(new GetOfferingByIdQuery(id)), Offering);
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPost(string? signOfferingHistoryId = null)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
         LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByLeadIdQuery(Offering.LeadID!, Constants.TabNavigation.Offerings)));
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditOfferingCommand>(Offering)), "EditOffering", true);
+        if (string.IsNullOrEmpty(signOfferingHistoryId))
+        {
+            return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditOfferingCommand>(Offering)), "EditOffering", true);
+        }
+        else
+        {
+            return await TryThenRedirectToPage(async () => await Mediatr.Send(new ApproveOfferingVersionCommand(signOfferingHistoryId)), "OfferingDetails", true);
+        }
     }
     public async Task<IActionResult> OnPostChangeFormValue()
     {

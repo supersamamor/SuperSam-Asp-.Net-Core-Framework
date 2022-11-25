@@ -189,5 +189,15 @@ public class ELMSProfile : Profile
             .ForMember(e => e.OfferSheetPerProjectCounter, c => c.Ignore())
             .ForMember(e => e.OfferingHistoryList, c => c.Ignore())
             .IgnoreBaseEntityProperties();
+        CreateMap<OfferingHistoryState, OfferingState>()
+           .ForMember(e => e.Project, c => c.Ignore())
+           .ForPath(e => e.OfferingHistoryID, o => o.MapFrom(s => s.Id))
+           .ForPath(e => e.UnitOfferedList, o => o.MapFrom(s => s.UnitOfferedHistoryList))
+           .IgnoreBaseEntityProperties();
+        CreateMap<UnitOfferedHistoryState, UnitOfferedState>()           
+           .ForPath(e => e.AnnualIncrementList, o => o.MapFrom(s => s.AnnualIncrementHistoryList))
+           .IgnoreBaseEntityProperties();
+        CreateMap<AnnualIncrementHistoryState, AnnualIncrementState>()
+          .IgnoreBaseEntityProperties();
     }
 }

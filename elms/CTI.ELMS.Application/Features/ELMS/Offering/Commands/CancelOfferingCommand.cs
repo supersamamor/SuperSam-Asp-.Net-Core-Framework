@@ -30,10 +30,10 @@ public class CancelOfferingCommandHandler : BaseCommandHandler<ApplicationContex
 
     public async Task<Validation<Error, OfferingState>> Handle(CancelOfferingCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await EditOffering(request, cancellationToken));
+			async request => await CancelOffering(request, cancellationToken));
 
 
-	public async Task<Validation<Error, OfferingState>> EditOffering(CancelOfferingCommand request, CancellationToken cancellationToken)
+	public async Task<Validation<Error, OfferingState>> CancelOffering(CancelOfferingCommand request, CancellationToken cancellationToken)
 	{
 		var entity = await Context.Offering.Where(l => l.Id == request.Id)
             .Include(l=>l.Project).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);

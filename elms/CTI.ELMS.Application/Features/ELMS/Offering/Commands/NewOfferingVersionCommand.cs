@@ -30,10 +30,10 @@ public class NewOfferingVersionCommandHandler : BaseCommandHandler<ApplicationCo
 
     public async Task<Validation<Error, OfferingState>> Handle(NewOfferingVersionCommand request, CancellationToken cancellationToken) =>
         await Validators.ValidateTAsync(request, cancellationToken).BindT(
-            async request => await AddOffering(request, cancellationToken));
+            async request => await CreateNewOfferingVersion(request, cancellationToken));
 
 
-    public async Task<Validation<Error, OfferingState>> AddOffering(NewOfferingVersionCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, OfferingState>> CreateNewOfferingVersion(NewOfferingVersionCommand request, CancellationToken cancellationToken)
     {
         var entity = await Context.Offering.Where(l => l.Id == request.Id).AsNoTracking().SingleAsync(cancellationToken: cancellationToken);
         Mapper.Map(request, entity);

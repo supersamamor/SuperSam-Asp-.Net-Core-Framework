@@ -36,13 +36,14 @@
                     int counter = 0;
                     foreach (var item in Model.OfferingHistoryList.OrderByDescending(l => l.OfferingVersion))
                     {
-                        if (item.Id != Model.OfferingHistoryID)
+                        if (item.OfferingHistoryID != Model.OfferingHistoryID)
                         {
                             <tr>
                                 <td>
                                     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.SignOffersheet)).Succeeded && Model.IsSigned == false)
                                     {
-                                        <a class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Sign"]"><i class="fas fa-check" style="font-size:18px;"></i></a>
+                                        <button type="submit" class="btn btnMaterial btn-flat primary semicircle cancel"
+                                            title="@Localizer["Sign"]" name="SignOfferingHistoryId" value="@item.OfferingHistoryID"><i class="fas fa-check" style="font-size:18px;"></i></button>
                                     }
                                     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.Print)).Succeeded)
                                     {
@@ -55,6 +56,7 @@
                                     <input type="hidden" name="OfferingHistoryList[@counter].TotalLotBudgetString" value="@item.TotalLotBudgetString" />
                                     <input type="hidden" name="OfferingHistoryList[@counter].ProjectID" value="@item.ProjectID" />
                                     <input type="hidden" name="OfferingHistoryList[@counter].FitOutPeriod" value="@item.FitOutPeriod" />
+                                    <input type="hidden" name="OfferingHistoryList[@counter].OfferingHistoryID" value="@item.OfferingHistoryID" />
                                 </td>
                                 <td class="super-mid">
                                     <span>@item.OfferingVersion</span>

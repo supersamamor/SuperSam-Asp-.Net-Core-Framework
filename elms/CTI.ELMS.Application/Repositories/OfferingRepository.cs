@@ -50,7 +50,7 @@ namespace CTI.ELMS.Application.Repositories
                 }
             }
         }
-        public void AddUnitOfferedList(OfferingState entity, string offeringHistoryId)
+        public void AddUnitOfferedList(OfferingState entity, string offeringHistoryId, bool disableHistory = false)
         {
             if (entity.UnitOfferedList?.Count > 0)
             {
@@ -60,7 +60,11 @@ namespace CTI.ELMS.Application.Repositories
                     unitOffered.OfferingID = entity.Id;
                     AutoCalculateUnitOfferedAnnualIncrementInformation(unitOffered);
                     _context.Entry(unitOffered).State = EntityState.Added;
-                    var unitOfferedHistoryId = AddUnitOfferedHistory(unitOffered, offeringHistoryId);
+                    string unitOfferedHistoryId = "";
+                    if (disableHistory == false)
+                    {
+                        unitOfferedHistoryId = AddUnitOfferedHistory(unitOffered, offeringHistoryId);
+                    }
                     if (unitOffered.AnnualIncrementList?.Count > 0)
                     {
                         foreach (var annualIncrement in unitOffered.AnnualIncrementList!)
@@ -68,14 +72,15 @@ namespace CTI.ELMS.Application.Repositories
                             annualIncrement.UnitOfferedID = unitOffered.Id;
                             annualIncrement.Id = Guid.NewGuid().ToString();
                             _context.Entry(annualIncrement).State = EntityState.Added;
-                            AddAnnualIncrementHistory(annualIncrement, unitOfferedHistoryId);
+                            if (disableHistory == false)
+                            {
+                                AddAnnualIncrementHistory(annualIncrement, unitOfferedHistoryId);
+                            }
                         }
                     }
                 }
             }
         }
-
-
         public async Task<string> GenerateOfferSheetIdAsync()
         {
             string offerSheetNo = "";
@@ -118,7 +123,7 @@ namespace CTI.ELMS.Application.Repositories
         {
             _context.RemoveRange(await _context.UnitOffered.Where(l => l.OfferingID == offeringId).SelectMany(l => l.AnnualIncrementList!).ToListAsync());
             _context.RemoveRange(await _context.UnitOffered.Where(l => l.OfferingID == offeringId).ToListAsync());
-        }       
+        }
         public async Task AutoCalculateOfferSheetFields(OfferingState offering)
         {
             StringBuilder sbUnitInfo = new();
