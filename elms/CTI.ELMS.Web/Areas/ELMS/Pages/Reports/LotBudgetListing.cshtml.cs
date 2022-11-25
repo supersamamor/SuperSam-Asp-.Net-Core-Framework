@@ -22,6 +22,7 @@ public class LotBudgetListingModel : BasePageModel<LotBudgetListingModel>
     public async Task<IActionResult> OnPostListAllAsync(string projectId)
     {
         var query = DataRequest!.ToQuery<GetLotBudgetListingQuery>();
+        query.ProjectId = projectId;
         var result = await Mediatr.Send(query);
         return new JsonResult(result.Data
             .Select(e => new
