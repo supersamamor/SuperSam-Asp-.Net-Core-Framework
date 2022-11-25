@@ -77,6 +77,7 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
+<partial name="_ModalPartial" />
 @section Scripts {
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
@@ -134,10 +135,16 @@
         })
         $(".dataTables_filter").hide();
         $("#navbar_search_container").show();
+        //Pop-up for Report
+        function reportModalPopUp() {          
+            var url = '@Url.Page("/Reports/LotBudgetListing", new { area = "ELMS" })' + '?handler=PreviewReport&projectId=' + $("#ProjectFilter").val();
+            var title = "Report Preview";
+            openModal(url, title, null);
+        }
         //Start Code for generating project list dropdown
         $.fn.DataTable.PrepareDataTableStyleForFilters("report-table");
         $.fn.DataTable.AddDropdownFilter(table,"report-table","ProjectFilter","Project",'@Url.Page("/Project/Index", new { area = "ELMS", handler = "Select2Data" })');
-        $.fn.DataTable.AddButton("report-table", "GenerateReport", null);
+        $.fn.DataTable.AddButton("report-table", "GenerateReport", reportModalPopUp);
     });
 </script>
 }

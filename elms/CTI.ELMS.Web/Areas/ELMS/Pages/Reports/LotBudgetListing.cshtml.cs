@@ -1,5 +1,7 @@
 using CTI.ELMS.Application.Features.ELMS.Reports.Queries;
+using CTI.ELMS.Web.Areas.ELMS.Models;
 using CTI.ELMS.Web.Models;
+using CTI.ELMS.Web.Service;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +11,15 @@ namespace CTI.ELMS.Web.Areas.ELMS.Pages.Reports;
 [Authorize(Policy = Permission.Reports.LotBudgetListing)]
 public class LotBudgetListingModel : BasePageModel<LotBudgetListingModel>
 {
-
-
+    private readonly string _staticFolderPath;
+    public LotBudgetListingModel(IConfiguration configuration)
+    {
+        _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+    }
     [DataTablesRequest]
     public DataTablesRequest? DataRequest { get; set; }
-
+    [BindProperty]
+    public RotativaDocumentModel Document { get; set; } = new();
     public IActionResult OnGet()
     {
         return Page();
@@ -48,5 +54,16 @@ public class LotBudgetListingModel : BasePageModel<LotBudgetListingModel>
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
+    }
+    public async Task<IActionResult> OnGetPreviewReport(string projectId)
+    {     
+        var query = new GetLotBudgetListingQuery();
+        query.ProjectId = projectId;
+        var result = await Mediatr.Send(query);
+        List<UnitBudgetViewModel> unitBudgetList = Mapper.Map<List<UnitBudgetViewModel>>(result.Data.ToList());
+        var rotativaService = new RotativaService<List<UnitBudgetViewModel>>(unitBudgetList, "Reports\\Pdf\\LotBudgetListingReport", $"LotBudgetListingReport.pdf",
+                                                            WebConstants.UploadFilesPath, _staticFolderPath, "Reports");
+        Document = await rotativaService.GeneratePDFAsync(PageContext);
+        return Partial("ReportViewer", Document);
     }
 }

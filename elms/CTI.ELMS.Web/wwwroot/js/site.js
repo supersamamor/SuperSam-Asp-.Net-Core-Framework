@@ -203,7 +203,7 @@ $(document).ready(function () {
             placeholderElement.find('#table-container').html(data);
             placeholderElement.find('.modal-title').html(title);
             placeholderElement.find('.modal').modal('show');
-            callback();
+            if (callback != null) { callback(); }            
         });       
     }
     fillPartial = (url, elementToFill, callBack) => {
