@@ -100,6 +100,20 @@ public record OfferingState : BaseEntity
             return this.Project?.IFCAProjectCode?.ToString() + "-" + this.OfferSheetId + "-" + version.ToString().PadLeft(2, '0');
         }
     }
+    public bool IsSigned
+    {
+        get
+        {
+            return this?.SignedOfferSheetDate != null;
+        }
+    }
+    public bool IsANSigned
+    {
+        get
+        {
+            return this?.SignedAwardNoticeDate != null;
+        }
+    }
     public void SetOfferingHistoryId(string offeringHistoryId)
     {
         this.OfferingHistoryID = offeringHistoryId;

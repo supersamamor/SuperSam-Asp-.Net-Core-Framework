@@ -46,8 +46,8 @@ public class OfferingListModel : BasePageModel<OfferingListModel>
                 Status = OfferingStatusHelper.GetOfferingStatus(e.Status!),
                 e.LastModifiedDate,
                 e.OfferSheetNo,
-                IsSigned = e?.SignedOfferSheetDate != null,
-                IsANSigned = e?.SignedAwardNoticeDate != null,
+                e.IsSigned,
+                e.IsANSigned,
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }

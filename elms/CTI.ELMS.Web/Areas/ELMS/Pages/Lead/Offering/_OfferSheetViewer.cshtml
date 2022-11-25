@@ -1,0 +1,9 @@
+﻿@model CTI.ELMS.Web.Service.RotativaDocumentModel
+@{
+    Layout = null;
+}
+@if (@Model.FileUrl != null)
+{
+    <iframe src="@Model.FileUrl" frameborder="0" height="500px" width="100%">
+    </iframe>
+}

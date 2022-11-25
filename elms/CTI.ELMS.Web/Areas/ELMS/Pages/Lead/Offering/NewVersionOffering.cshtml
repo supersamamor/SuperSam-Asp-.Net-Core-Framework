@@ -25,7 +25,10 @@
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
                 <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-                <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                  @if (Model.Offering.IsSigned == false)
+                {
+                   <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                }               
             </div>
         </form>
     </div>

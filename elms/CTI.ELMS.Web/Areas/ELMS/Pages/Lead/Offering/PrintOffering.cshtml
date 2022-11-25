@@ -14,11 +14,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.LeadTabNavigation.LeadId" name="LeadID" />
             <div id="PartialLoaderContainer">
-                <iframe src="@Model.Document.FileUrl" frameborder="0" height="500px" width="100%">
-                </iframe>
+                @Model?.Document.FileUrl
+                <partial name="_OfferSheetViewer" model="Model?.Document" />
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-                <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>              
+                <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
             </div>
         </form>
     </div>

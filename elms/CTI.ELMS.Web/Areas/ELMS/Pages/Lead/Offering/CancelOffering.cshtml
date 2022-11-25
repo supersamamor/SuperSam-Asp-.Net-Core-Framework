@@ -22,7 +22,7 @@
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
                 <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.SignOffersheet)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.SignOffersheet)).Succeeded && Model.Offering.IsSigned && Model.Offering.IsANSigned == false)
                 {
                     <button type="submit" class="btn btn-danger" title="@Localizer["Cancel Signed Offer Sheet"]" style="color:#fff;"><i class="fas fa-times"></i></button>
                 }

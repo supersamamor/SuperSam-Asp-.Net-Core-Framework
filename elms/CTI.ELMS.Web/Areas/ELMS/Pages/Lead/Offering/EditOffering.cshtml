@@ -22,11 +22,14 @@
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
                 <a asp-page="OfferingList" asp-route-leadid="@Model.LeadTabNavigation.LeadId" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.CreateNewVersion)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Offering.CreateNewVersion)).Succeeded && Model.Offering.IsSigned == false)
                 {
                     <a asp-page="NewVersionOffering" asp-route-id="@Model.Offering.Id" class="btn btn-primary" title="@Localizer["New Version"]"><i class="fas fa-file"></i></a>
                 }
-                <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                @if (Model.Offering.IsSigned == false)
+                {
+                    <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                }
             </div>
         </form>
     </div>
@@ -35,6 +38,7 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
+<partial name="_ModalPartial" />
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <partial name="_DisableFieldsViaClassPartial" model="@("Lock_OfferSheetRates")" />
@@ -77,6 +81,15 @@
                 e.preventDefault();
                 this.blur();
                 window.focus();
+            });
+            //Pop-up for Offer Sheet Preview
+            function modelPopup() {
+                var url = '@Url.Page("/Lead/Offering/PrintOffering", new { area = "ELMS" })' + '?handler=OffersheetViaOfferingHistory&id=' + '@Model.Offering.Id';
+                var title = "Offer Sheet Preview";
+                openModal(url, title, null);
+            }
+            $(".btn-print-offering-version").on('click', function (e) {
+                modelPopup();
             });
         }
         InitializeForm();

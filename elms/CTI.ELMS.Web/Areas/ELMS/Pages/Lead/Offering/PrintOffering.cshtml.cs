@@ -16,6 +16,7 @@ public class PrintOfferingModel : BasePageModel<PrintOfferingModel>
     {
         _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
     }
+    [BindProperty]
     public RotativaDocumentModel Document { get; set; } = new();
     public LeadTabNavigationPartial LeadTabNavigation { get; set; } = new();
     public async Task<IActionResult> OnGet(string id)
@@ -27,5 +28,15 @@ public class PrintOfferingModel : BasePageModel<PrintOfferingModel>
                                                             WebConstants.UploadFilesPath, _staticFolderPath, "OfferSheet");
         Document = await rotativaService.GeneratePDFAsync(PageContext);
         return Page();
+    }
+    public async Task<IActionResult> OnGetOffersheetViaOfferingHistory(string id)
+    {
+        LeadTabNavigation = Mapper.Map<LeadTabNavigationPartial>(await Mediatr.Send(new GetTabNavigationByOfferingIdQuery(id, Constants.TabNavigation.Offerings)));
+        OfferingViewModel offering = new();
+        _ = (await Mediatr.Send(new GetOfferingByIdQuery(id))).Select(l => offering = Mapper.Map<OfferingViewModel>(l));
+        var rotativaService = new RotativaService<OfferingViewModel>(offering, "Pdf\\OfferSheet", $"{offering.OfferSheetNo}.pdf",
+                                                            WebConstants.UploadFilesPath, _staticFolderPath, "OfferSheet");
+        Document = await rotativaService.GeneratePDFAsync(PageContext);
+        return Partial("_OfferSheetViewer", Document);
     }
 }

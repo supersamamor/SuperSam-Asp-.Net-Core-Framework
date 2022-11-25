@@ -238,4 +238,6 @@ public record OfferingViewModel : BaseViewModel
             return String.Format("{0:n0}", (this.TotalLotBudget / this.AreaDivider));
         }
     }
+    public bool IsSigned { get; init; }
+    public bool IsANSigned { get; init; }
 }
