@@ -98,171 +98,6 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @*  @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PPlusConnectionSetup.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/PPlusConnectionSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PPlusConnectionSetup")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["FICO Connection Setup"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EntityGroup.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/EntityGroup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EntityGroup")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Entity"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/Project" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Project")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Project"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Unit.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/Unit" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Unit")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Unit"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.UnitBudget.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/UnitBudget" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "UnitBudget")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Unit Budget"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeadSource.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/LeadSource" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadSource")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Lead Source"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeadTouchPoint.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/LeadTouchPoint" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadTouchPoint")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Lead Touch Point"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeadTask.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/LeadTask" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadTask")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Lead Task"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.NextStep.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/NextStep" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "NextStep")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Next Step"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ClientFeedback.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/ClientFeedback" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ClientFeedback")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Client Feedback"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNature.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/BusinessNature" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "BusinessNature")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Business Nature"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNatureSubItem.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/BusinessNatureSubItem" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "BusinessNatureSubItem")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Business Nature / Sub Item Setup"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNatureCategory.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/BusinessNatureCategory" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "BusinessNatureCategory")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Business Nature Category"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.OperationType.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/OperationType" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "OperationType")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Operation Type"]
-                        </span>
-                        </a>
-                        </li>
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Salutation.View)).Succeeded)
-                        {
-                        <li class="nav-item">
-                        <a href="/ELMS/Salutation" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Salutation")">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <span>
-                        @Localizer["Salutation"]
-                        </span>
-                        </a>
-                        </li>
-                        }*@
                     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Lead.View)).Succeeded)
                     {
                         <li class="nav-item">
@@ -270,6 +105,171 @@
                                 <i class="fas fa-circle nav-icon"></i>
                                 <span>
                                     @Localizer["Prospects"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PPlusConnectionSetup.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/PPlusConnectionSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PPlusConnectionSetup")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["FICO Connection Setup"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EntityGroup.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/EntityGroup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EntityGroup")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Entity"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/Project" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Project")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Project"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Unit.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/Unit" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Unit")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Unit"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.UnitBudget.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/UnitBudget" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "UnitBudget")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Unit Budget"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeadSource.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/LeadSource" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadSource")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Lead Source"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeadTouchPoint.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/LeadTouchPoint" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadTouchPoint")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Lead Touch Point"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.LeadTask.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/LeadTask" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "LeadTask")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Lead Task"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.NextStep.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/NextStep" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "NextStep")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Next Step"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ClientFeedback.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/ClientFeedback" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ClientFeedback")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Client Feedback"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNature.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/BusinessNature" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "BusinessNature")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Business Nature"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNatureSubItem.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/BusinessNatureSubItem" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "BusinessNatureSubItem")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Business Nature / Sub Item Setup"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.BusinessNatureCategory.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/BusinessNatureCategory" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "BusinessNatureCategory")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Business Nature Category"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.OperationType.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/OperationType" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "OperationType")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Operation Type"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Salutation.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/ELMS/Salutation" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Salutation")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Salutation"]
                                 </span>
                             </a>
                         </li>

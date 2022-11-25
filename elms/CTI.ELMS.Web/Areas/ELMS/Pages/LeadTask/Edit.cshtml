@@ -103,17 +103,7 @@
 				$("#LeadTaskNextStepList_"+i+"_ClientFeedbackId").clientfeedbackSelect();
 			}
 
-			$.InitializeActivityHistoryFieldValidations($('#ActivityHistoryCount').val());
-			$('.RemoveActivityHistoryButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveActivityHistory');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#leadTask-form', InitializeForm);
-			});
 
-			$('#btnAddActivityHistory').on( 'click', function () {
-				$('#AsyncAction').val('AddActivityHistory');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#leadTask-form', InitializeForm);
-			});
 
 			$.fn.activitySelect = function() {
 				this.filter("select").each(function() {
@@ -125,10 +115,7 @@
 				});
 				return this;
 			};
-			var activitylistdropdowns = document.getElementsByClassName('SelectActivity');
-			for ( var i=0; i< activitylistdropdowns.length; i++) {
-				$("#ActivityHistoryList_"+i+"_ActivityID").activitySelect();
-			}
+		
 
 			$.fn.clientfeedbackSelect = function() {
 				this.filter("select").each(function() {
@@ -140,11 +127,7 @@
 				});
 				return this;
 			};
-			var clientfeedbacklistdropdowns = document.getElementsByClassName('SelectClientFeedback');
-			for ( var i=0; i< clientfeedbacklistdropdowns.length; i++) {
-				$("#ActivityHistoryList_"+i+"_ClientFeedbackId").clientfeedbackSelect();
-			}
-
+			
 			$.fn.nextstepSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -155,10 +138,7 @@
 				});
 				return this;
 			};
-			var nextsteplistdropdowns = document.getElementsByClassName('SelectNextStep');
-			for ( var i=0; i< nextsteplistdropdowns.length; i++) {
-				$("#ActivityHistoryList_"+i+"_NextStepId").nextstepSelect();
-			}
+		
 
 
         }

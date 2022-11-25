@@ -3,60 +3,77 @@
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.UnitNo" class="form-label fieldrequired"><strong>@Localizer["Unit No"] :</strong></label>
-			<input asp-for="@Model.UnitNo" class="form-control" maxlength="20" />
-			<span asp-validation-for="@Model.UnitNo" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ProjectID" class="form-label fieldrequired"><strong>@Localizer["Project"] :</strong></label>
-			<select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
-			<span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.LotBudget" class="form-label fieldrequired"><strong>@Localizer["Lot Budget"] :</strong></label>
-			<input asp-for="@Model.LotBudget" class="form-control"  />
-			<span asp-validation-for="@Model.LotBudget" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.LotArea" class="form-label fieldrequired"><strong>@Localizer["Lot Area"] :</strong></label>
-			<input asp-for="@Model.LotArea" class="form-control"  />
-			<span asp-validation-for="@Model.LotArea" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.AvailabilityDate" class="form-label "><strong>@Localizer["Availability Date"] :</strong></label>
-			<input type="date" asp-for="@Model.AvailabilityDate" class="form-control" />
-			<span asp-validation-for="@Model.AvailabilityDate" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.CommencementDate" class="form-label "><strong>@Localizer["Commencement Date"] :</strong></label>
-			<input type="date" asp-for="@Model.CommencementDate" class="form-control" />
-			<span asp-validation-for="@Model.CommencementDate" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.CurrentTenantContractNo" class="form-label "><strong>@Localizer["Current Tenant Contract No."] :</strong></label>
-			<input asp-for="@Model.CurrentTenantContractNo" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.CurrentTenantContractNo" class="text-danger"></span>
-			
-	</div>
-</div>
+        <div class="mb-3">
+            <label asp-for="@Model.UnitNo" class="form-label fieldrequired"><strong>@Localizer["Unit No"] :</strong></label>
+            <input asp-for="@Model.UnitNo" class="form-control" maxlength="20" />
+            <span asp-validation-for="@Model.UnitNo" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ProjectID" class="form-label fieldrequired"><strong>@Localizer["Project"] :</strong></label>
+            <select asp-for="@Model.ProjectID" class="form-control" asp-items="@(dropdownService.GetProjectList(Model.ProjectID))"><option value="">- Select Project -</option></select>
+            <span asp-validation-for="@Model.ProjectID" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.LotBudget" class="form-label fieldrequired"><strong>@Localizer["Lot Budget"] :</strong></label>
+            <input asp-for="@Model.LotBudget" class="form-control" />
+            <span asp-validation-for="@Model.LotBudget" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.LotArea" class="form-label fieldrequired"><strong>@Localizer["Lot Area"] :</strong></label>
+            <input asp-for="@Model.LotArea" class="form-control" />
+            <span asp-validation-for="@Model.LotArea" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.AvailabilityDate" class="form-label "><strong>@Localizer["Availability Date"] :</strong></label>
+            <input type="date" asp-for="@Model.AvailabilityDate" class="form-control" />
+            <span asp-validation-for="@Model.AvailabilityDate" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.CommencementDate" class="form-label "><strong>@Localizer["Commencement Date"] :</strong></label>
+            <input type="date" asp-for="@Model.CommencementDate" class="form-control" />
+            <span asp-validation-for="@Model.CommencementDate" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.CurrentTenantContractNo" class="form-label "><strong>@Localizer["Current Tenant Contract No."] :</strong></label>
+            <input asp-for="@Model.CurrentTenantContractNo" class="form-control" maxlength="50" />
+            <span asp-validation-for="@Model.CurrentTenantContractNo" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Location" class="form-label fieldrequired"><strong>@Localizer["Location"] :</strong></label>
+            <input asp-for="@Model.Location" class="form-control" maxlength="50" />
+            <span asp-validation-for="@Model.Location" class="text-danger"></span>
+
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.UnitType" class="form-label fieldrequired"><strong>@Localizer["Unit Type"] :</strong></label>
+            <input asp-for="@Model.UnitType" class="form-control" maxlength="50" />
+            <span asp-validation-for="@Model.UnitType" class="text-danger"></span>
+
+        </div>
+    </div>
 
 </div>

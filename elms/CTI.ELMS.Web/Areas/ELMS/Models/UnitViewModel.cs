@@ -43,6 +43,8 @@ public record UnitViewModel : BaseViewModel
 	public IList<UnitOfferedViewModel>? UnitOfferedList { get; set; }
 	public IList<UnitOfferedViewModel>? UnitOfferedHistoryList { get; set; }
 	public IList<IFCAUnitInformationViewModel>? IFCAUnitInformationList { get; set; }
+	[Required]
 	public string? Location { get; init; }
+	[Required]
 	public string? UnitType { get; init; }
 }
