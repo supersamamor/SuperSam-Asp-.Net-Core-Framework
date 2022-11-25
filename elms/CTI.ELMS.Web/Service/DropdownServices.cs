@@ -262,6 +262,16 @@ namespace CTI.ELMS.Web.Service
             };
             return items;
         }
+        public IEnumerable<SelectListItem> ContractTypeList()
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem { Text = Core.Constants.ContractType.Mall, Value = Core.Constants.ContractType.Mall, },
+                new SelectListItem { Text = Core.Constants.ContractType.Building, Value = Core.Constants.ContractType.Building, },
+                new SelectListItem { Text = Core.Constants.ContractType.Lot, Value = Core.Constants.ContractType.Lot, },
+            };
+            return items;
+        }
         public IEnumerable<SelectListItem> ContactTypeList()
         {
             IList<SelectListItem> items = new List<SelectListItem>
