@@ -36,7 +36,7 @@ namespace SuperSam.InstallerCreator
                 MessageBox.Show("File path is required", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (txtFilePath.Text == applicationPath)
+            if (txtFilePath.Text.ToLower().Trim() == applicationPath.ToLower().Trim())
             {
                 MessageBox.Show("Sales upload file path cannot be same with installation path", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
