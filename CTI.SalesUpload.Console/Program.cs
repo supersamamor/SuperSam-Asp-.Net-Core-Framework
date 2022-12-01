@@ -47,11 +47,13 @@ namespace CTI.SalesUpload.Console
                 {
                     uploadSalesFileService.Upload(ConfigurationManager.AppSettings["FilePath"] + "\\" + file.Name, token.AccessToken, new System.Threading.CancellationToken());
                     MoveFiles("Success", file.Name);
+                    System.Console.WriteLine($"Successfully uploaded the file : {file.Name}.");
                 }
                 catch (Exception ex)
                 {
                     _logger.Error(ex, $"An error has occured while uploading the file : {file.Name}");
                     MoveFiles("Failed", file.Name);
+                    System.Console.WriteLine($"Failed uploading the file : {file.Name}.");
                 }             
             }
         }
