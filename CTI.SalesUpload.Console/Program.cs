@@ -6,6 +6,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 
 namespace CTI.SalesUpload.Console
 {
@@ -14,6 +15,7 @@ namespace CTI.SalesUpload.Console
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
+            System.Console.WriteLine($"Initializing sales upload . . .");
             var authHttpClient = new HttpClient();
             var authService = new AuthenticationService(authHttpClient);
             string apiConnectionType = ApiConnectionType.Public;
@@ -56,6 +58,8 @@ namespace CTI.SalesUpload.Console
                     System.Console.WriteLine($"Failed uploading the file : {file.Name}.");
                 }             
             }
+            System.Console.WriteLine($"Sales upload completed . . .");
+            Thread.Sleep(1000);         
         }
         private static FileInfo[] GetFiles(string directory)
         {
