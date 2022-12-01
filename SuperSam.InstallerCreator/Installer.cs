@@ -65,7 +65,7 @@ namespace SuperSam.InstallerCreator
                 string[] fileEntries = Directory.GetFiles(applicationPath);
                 foreach (var fileFullPath in fileEntries)
                 {
-                    if (fileFullPath.Contains("CTI.SalesUpload.Console.exe.config"))
+                    if (fileFullPath.ToLower().Contains(ConfigurationManager.AppSettings["AppConfig"].ToLower()))
                     {
                         string text = File.ReadAllText(fileFullPath);
                         text = text.Replace("{{ClientId}}", txtClientId.Text);
