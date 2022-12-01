@@ -13,7 +13,7 @@ namespace CTI.SalesUpload.Console.Services
             _client = client;
         }
 
-        public void Upload(string tenantSalesUrl, string filePath, string accessToken, CancellationToken token)
+        public void Upload(string filePath, string accessToken, CancellationToken token)
         {
             using (var content = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
@@ -21,10 +21,9 @@ namespace CTI.SalesUpload.Console.Services
                 {
                     _client.DefaultRequestHeaders.Clear();
                     form.Add(content, "FileUpload", Path.GetFileName(filePath));
-                    form.Add(new StringContent(ConfigurationManager.AppSettings["IntegrationId"]), "IntegrationId");
-                    _client.BaseAddress = new System.Uri(tenantSalesUrl);
+                    form.Add(new StringContent(ConfigurationManager.AppSettings["IntegrationId"]), "IntegrationId");                  
                     _client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", accessToken));
-                    using (var response = _client.PostAsync($"/api/TenantPOSSales?api-version={ConfigurationManager.AppSettings["IntegrationId"]}", form, token))
+                    using (var response = _client.PostAsync($"/api/TenantPOSSales?api-version={ConfigurationManager.AppSettings["ApiVersion"]}", form, token))
                     {
                         response.Result.EnsureSuccessStatusCode();
                     }                        

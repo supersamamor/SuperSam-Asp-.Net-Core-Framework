@@ -14,8 +14,8 @@ namespace CTI.SalesUpload.Console
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
-            var httpClient = new HttpClient();
-            var authService = new AuthenticationService(httpClient);
+            var authHttpClient = new HttpClient();
+            var authService = new AuthenticationService(authHttpClient);
             string apiConnectionType = ApiConnectionType.Public;
             JwToken token;
             try
@@ -27,9 +27,6 @@ namespace CTI.SalesUpload.Console
                 apiConnectionType = ApiConnectionType.Private;
                 token = authService.GetJwTokenAsync(ConfigurationManager.AppSettings["AuthenticationUrlPrivate"], new System.Threading.CancellationToken()).Result;
             }
-            
-            var uploadSalesFileService = new SalesFileUploadService(httpClient);
-
             bool exists = Directory.Exists(ConfigurationManager.AppSettings["FilePath"]);
             if (!exists)
             {
@@ -41,11 +38,14 @@ namespace CTI.SalesUpload.Console
             {
                 tenantSalesUrl = ConfigurationManager.AppSettings["TenantSalesApiUrlPrivate"];
             }
+            var salesUploadHttpClient = new HttpClient();
+            salesUploadHttpClient.BaseAddress = new Uri(tenantSalesUrl);
+            var uploadSalesFileService = new SalesFileUploadService(salesUploadHttpClient);
             foreach (var file in files)
             {
                 try
                 {
-                    uploadSalesFileService.Upload(tenantSalesUrl, ConfigurationManager.AppSettings["FilePath"] + "\\" + file.Name, token.AccessToken, new System.Threading.CancellationToken());
+                    uploadSalesFileService.Upload(ConfigurationManager.AppSettings["FilePath"] + "\\" + file.Name, token.AccessToken, new System.Threading.CancellationToken());
                     MoveFiles("Success", file.Name);
                 }
                 catch (Exception ex)
