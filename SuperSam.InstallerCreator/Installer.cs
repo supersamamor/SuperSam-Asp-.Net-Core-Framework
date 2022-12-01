@@ -57,7 +57,11 @@ namespace SuperSam.InstallerCreator
                 return;
             }
             try
-            {              
+            {
+                bool exists = System.IO.Directory.Exists(txtFilePath.Text);
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(txtFilePath.Text);
+
                 string[] fileEntries = Directory.GetFiles(applicationPath);
                 foreach (var fileFullPath in fileEntries)
                 {
@@ -75,9 +79,16 @@ namespace SuperSam.InstallerCreator
                 Application.Exit();
                 this.Close();
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("An error has occured, please report to system administrator.", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (ex.Message == "Illegal characters in path.")
+                {
+                    MessageBox.Show("Invalid sales upload file path.", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);                   
+                }
+                else
+                {
+                    MessageBox.Show("An error has occured, please report to system administrator.", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }              
             }
         }
     }
