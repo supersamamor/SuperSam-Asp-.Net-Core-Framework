@@ -30,9 +30,15 @@ namespace SuperSam.InstallerCreator
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string applicationPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             if (string.IsNullOrEmpty(txtFilePath.Text))
             {
                 MessageBox.Show("File path is required", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (txtFilePath.Text == applicationPath)
+            {
+                MessageBox.Show("Sales upload file path cannot be same with installation path", ConfigurationManager.AppSettings["Title"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrEmpty(txtClientSecret.Text))
@@ -51,8 +57,7 @@ namespace SuperSam.InstallerCreator
                 return;
             }
             try
-            {
-                string applicationPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            {              
                 string[] fileEntries = Directory.GetFiles(applicationPath);
                 foreach (var fileFullPath in fileEntries)
                 {
