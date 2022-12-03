@@ -1,0 +1,132 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Check Release Option List"];
+    ViewData["ActiveMainPage"] = "CheckReleaseOption";
+    ViewData["Level1"] = "FAS";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="checkReleaseOption" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Creditor"]
+							</th>
+							<th>
+								@Localizer["Name"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#checkReleaseOption').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 2, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/CheckReleaseOption/Index", new { area = "FAS", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "creditorId", name: "CreditorId", responsivePriority: 1, title: '@Localizer["Creditor"]', searchable: false },
+				{ data: "name", name: "Name", responsivePriority: 1, title: '@Localizer["Name"]', searchable: true },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/CheckReleaseOption/Details", new { area = "FAS" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewCheckReleaseOption" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.CheckReleaseOption.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/CheckReleaseOption/Edit", new { area = "FAS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditCheckReleaseOption" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.CheckReleaseOption.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/CheckReleaseOption/Delete", new { area = "FAS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteCheckReleaseOption" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
+                    </text>
+                }
+				  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.CheckReleaseOption.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/CheckReleaseOption/Add", new { area = "FAS" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#checkReleaseOption tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddCheckReleaseOption",".btnEditCheckReleaseOption",".btnViewCheckReleaseOption",".btnDeleteCheckReleaseOption"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddCheckReleaseOption",".btnEditCheckReleaseOption",".btnViewCheckReleaseOption",".btnDeleteCheckReleaseOption"]);
+
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
+    });
+</script>
+}

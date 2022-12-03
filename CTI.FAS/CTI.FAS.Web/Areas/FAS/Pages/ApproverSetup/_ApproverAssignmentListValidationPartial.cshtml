@@ -1,0 +1,47 @@
+@using Models
+@model ApproverSetupViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeApproverAssignmentFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {			
+				reqs.push({name: "ApproverAssignmentList[" + idx + "].ApproverSetupId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Approver Setup"});
+				reqs.push({name: "ApproverAssignmentList[" + idx + "].Sequence", el: "Input", minlength:0, maxlength:9, isrequired: true, description: "Sequence"});			
+				if($(`*[name='ApproverAssignmentList[` + idx + `].ApproverType']`).val() == '@CTI.FAS.Core.FAS.ApproverTypes.User')
+				{
+						reqs.push({name: "ApproverAssignmentList[" + idx + "].ApproverUserId", el: "Input", minlength:0, maxlength:250, isrequired: true, description: "Approver"});
+						reqs.push({name: "ApproverAssignmentList[" + idx + "].ApproverRoleId", el: "Input", minlength:0, maxlength:250, isrequired: false, description: "Approver Role"});
+				}
+				else if($(`*[name='ApproverAssignmentList[` + idx + `].ApproverType']`).val() == '@CTI.FAS.Core.FAS.ApproverTypes.Role')
+				{
+						reqs.push({name: "ApproverAssignmentList[" + idx + "].ApproverUserId", el: "Input", minlength:0, maxlength:250, isrequired: false, description: "Approver"});
+						reqs.push({name: "ApproverAssignmentList[" + idx + "].ApproverRoleId", el: "Input", minlength:0, maxlength:250, isrequired: true, description: "Approver Role"});
+				}
+			}
+			let validator = $("#approverSetup-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

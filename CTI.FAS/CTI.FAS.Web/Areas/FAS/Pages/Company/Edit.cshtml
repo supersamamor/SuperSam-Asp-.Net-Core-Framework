@@ -1,0 +1,66 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Company"];
+    ViewData["ActiveMainPage"] = "Company";
+    ViewData["Level1"] = "FAS";
+}
+<form enctype="multipart/form-data" id="company-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Company" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_UserEntityListValidationPartial" model="@Model.Company" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeUserEntityFieldValidations($('#UserEntityCount').val());
+			$('.RemoveUserEntityButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveUserEntity');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#company-form', InitializeForm);
+			});
+
+			$('#btnAddUserEntity').on( 'click', function () {
+				$('#AsyncAction').val('AddUserEntity');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#company-form', InitializeForm);
+			});
+
+			$.fn.databaseconnectionsetupSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/DatabaseConnectionSetup/Index", new { area = "FAS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#DatabaseConnectionSetupId").databaseconnectionsetupSelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

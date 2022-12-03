@@ -1,0 +1,63 @@
+@using Models
+@model AuditLogViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TraceId" class="form-label"><strong>Trace Id :</strong></label>
+            <input asp-for="@Model.TraceId" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Timestamp" class="form-label"><strong>Time stamp :</strong></label>
+            <input asp-for="@Model.Timestamp" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TableName" class="form-label"><strong>Table Name :</strong></label>
+            <input asp-for="@Model.TableName" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Type" class="form-label"><strong>Type :</strong></label>
+            <input asp-for="@Model.Type" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.PrimaryKey" class="form-label"><strong>Primary Key :</strong></label>
+            <textarea rows="3" asp-for="@Model.PrimaryKeyPretty" class="form-control" readonly></textarea>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.User.Name" class="form-label"><strong>User Name :</strong></label>
+            <input asp-for="@Model.User.Name" class="form-control" readonly />
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.AffectedColumns" class="form-label"><strong>Affected Columns :</strong></label>
+            <textarea rows="5" asp-for="@Model.AffectedColumnsPretty" class="form-control" readonly></textarea>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.OldValues" class="form-label"><strong>Old Values :</strong></label>
+            <textarea rows="5" asp-for="@Model.OldValuesPretty" class="form-control" readonly></textarea>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.NewValues" class="form-label"><strong>New Values :</strong></label>
+            <textarea rows="5" asp-for="@Model.NewValuesPretty" class="form-control" readonly></textarea>
+        </div>
+    </div>
+</div>

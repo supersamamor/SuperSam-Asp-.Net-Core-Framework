@@ -1,0 +1,79 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Creditor"];
+    ViewData["ActiveMainPage"] = "Creditor";
+    ViewData["Level1"] = "FAS";
+}
+<form id="creditor-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Creditor" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_CheckReleaseOptionListValidationPartial" model="@Model.Creditor" />
+<partial name="_CreditorEmailListValidationPartial" model="@Model.Creditor" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeCheckReleaseOptionFieldValidations($('#CheckReleaseOptionCount').val());
+			$('.RemoveCheckReleaseOptionButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveCheckReleaseOption');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
+			});
+
+			$('#btnAddCheckReleaseOption').on( 'click', function () {
+				$('#AsyncAction').val('AddCheckReleaseOption');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
+			});
+
+			$.InitializeCreditorEmailFieldValidations($('#CreditorEmailCount').val());
+			$('.RemoveCreditorEmailButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveCreditorEmail');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
+			});
+
+			$('#btnAddCreditorEmail').on( 'click', function () {
+				$('#AsyncAction').val('AddCreditorEmail');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
+			});
+
+			$.fn.companySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Company/Index", new { area = "FAS", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#CompanyId").companySelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}
