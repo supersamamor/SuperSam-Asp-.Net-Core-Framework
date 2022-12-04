@@ -3,148 +3,137 @@
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.DatabaseConnectionSetupId" class="form-label fieldrequired"><strong>@Localizer["Database Connection Setup"] :</strong></label>
-			<input asp-for="ForeignKeyDatabaseConnectionSetup" class="form-control"   readonly />
-			<span asp-validation-for="@Model.DatabaseConnectionSetupId" class="text-danger"></span>
-			<input type="hidden" asp-for="@Model.DatabaseConnectionSetupId"/>
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Name" class="form-label fieldrequired"><strong>@Localizer["Name"] :</strong></label>
-			<input asp-for="@Model.Name" class="form-control" maxlength="255"  readonly/>
-			<span asp-validation-for="@Model.Name" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Code" class="form-label fieldrequired"><strong>@Localizer["Code"] :</strong></label>
-			<input asp-for="@Model.Code" class="form-control" maxlength="5"  readonly/>
-			<span asp-validation-for="@Model.Code" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.EntityAddress" class="form-label "><strong>@Localizer["Address Line 1"] :</strong></label>
-			<input asp-for="@Model.EntityAddress" class="form-control" maxlength="255"  readonly/>
-			<span asp-validation-for="@Model.EntityAddress" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.EntityAddressSecondLine" class="form-label "><strong>@Localizer["Address Line 2"] :</strong></label>
-			<input asp-for="@Model.EntityAddressSecondLine" class="form-control" maxlength="255"  readonly/>
-			<span asp-validation-for="@Model.EntityAddressSecondLine" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.EntityDescription" class="form-label "><strong>@Localizer["Description"] :</strong></label>
-			<input asp-for="@Model.EntityDescription" class="form-control" maxlength="100" />
-			<span asp-validation-for="@Model.EntityDescription" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.EntityShortName" class="form-label "><strong>@Localizer["Short Name"] :</strong></label>
-			<input asp-for="@Model.EntityShortName" class="form-control" maxlength="20" />
-			<span asp-validation-for="@Model.EntityShortName" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.IsDisabled" class="form-label "><strong>@Localizer["Disabled"] :</strong></label>
-			<input asp-for="@Model.IsDisabled" class="custom-checkbox-label"/>
-			<span asp-validation-for="@Model.IsDisabled" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.TINNo" class="form-label "><strong>@Localizer["TINNo"] :</strong></label>
-			<input asp-for="@Model.TINNo" class="form-control" maxlength="17"  readonly/>
-			<span asp-validation-for="@Model.TINNo" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.SubmitPlace" class="form-label "><strong>@Localizer["Submit Place"] :</strong></label>
-			<input asp-for="@Model.SubmitPlace" class="form-control" maxlength="1000" />
-			<span asp-validation-for="@Model.SubmitPlace" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.SubmitDeadline" class="form-label "><strong>@Localizer["Submit Deadline"] :</strong></label>
-			<input asp-for="@Model.SubmitDeadline" class="form-control"  />
-			<span asp-validation-for="@Model.SubmitDeadline" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.EmailTelephoneNumber" class="form-label "><strong>@Localizer["Email / Telephone Number"] :</strong></label>
-			<input asp-for="@Model.EmailTelephoneNumber" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.EmailTelephoneNumber" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ImageLogo" class="form-label "><strong>@Localizer["Image Logo"] :</strong></label>
-			<input asp-for="@Model.ImageLogoForm" class="file-upload-control" style="display:block" /> @if (!string.IsNullOrEmpty(Model.ImageLogo)) { <div class="input-group col-md-12" style="padding-left:0px;padding-right:0px;margin-top:10px;"><input asp-for="@Model.ImageLogo" class="form-control" readonly /><a href="/@WebConstants.UploadFilesPath/@Model.ImageLogo" class="input-group-text btn btn-success" style="cursor:pointer;color:#fff;font-weight:700;" target="_blank">@Localizer["View"]</a></div> }
-			<span asp-validation-for="@Model.ImageLogo" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.BankName" class="form-label "><strong>@Localizer["Bank"] :</strong></label>
-			<input asp-for="@Model.BankName" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.BankName" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.BankCode" class="form-label "><strong>@Localizer["Bank Code"] :</strong></label>
-			<input asp-for="@Model.BankCode" class="form-control" maxlength="12" />
-			<span asp-validation-for="@Model.BankCode" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.AccountName" class="form-label "><strong>@Localizer["Account Name"] :</strong></label>
-			<input asp-for="@Model.AccountName" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.AccountName" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.AccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
-			<input asp-for="@Model.AccountType" class="form-control" maxlength="30" />
-			<span asp-validation-for="@Model.AccountType" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.AccountNumber" class="form-label "><strong>@Localizer["Account Number"] :</strong></label>
-			<input asp-for="@Model.AccountNumber" class="form-control" maxlength="14" />
-			<span asp-validation-for="@Model.AccountNumber" class="text-danger"></span>
-			
-	</div>
-</div>
+        <div class="mb-3">
+            <label asp-for="@Model.DatabaseConnectionSetupId" class="form-label fieldrequired"><strong>@Localizer["Database Connection Setup"] :</strong></label>
+            <input asp-for="ForeignKeyDatabaseConnectionSetup" class="form-control" readonly />
+            <span asp-validation-for="@Model.DatabaseConnectionSetupId" class="text-danger"></span>
+            <input type="hidden" asp-for="@Model.DatabaseConnectionSetupId" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Name" class="form-label fieldrequired"><strong>@Localizer["Name"] :</strong></label>
+            <input asp-for="@Model.Name" class="form-control" maxlength="255" readonly />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Code" class="form-label fieldrequired"><strong>@Localizer["Code"] :</strong></label>
+            <input asp-for="@Model.Code" class="form-control" maxlength="5" readonly />
+            <span asp-validation-for="@Model.Code" class="text-danger"></span>
 
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.EntityAddress" class="form-label "><strong>@Localizer["Address Line 1"] :</strong></label>
+            <input asp-for="@Model.EntityAddress" class="form-control" maxlength="255" readonly />
+            <span asp-validation-for="@Model.EntityAddress" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.EntityAddressSecondLine" class="form-label "><strong>@Localizer["Address Line 2"] :</strong></label>
+            <input asp-for="@Model.EntityAddressSecondLine" class="form-control" maxlength="255" readonly />
+            <span asp-validation-for="@Model.EntityAddressSecondLine" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.TINNo" class="form-label "><strong>@Localizer["TINNo"] :</strong></label>
+            <input asp-for="@Model.TINNo" class="form-control" maxlength="17" readonly />
+            <span asp-validation-for="@Model.TINNo" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.EntityDescription" class="form-label "><strong>@Localizer["Description"] :</strong></label>
+            <input asp-for="@Model.EntityDescription" class="form-control" maxlength="100" />
+            <span asp-validation-for="@Model.EntityDescription" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.EntityShortName" class="form-label "><strong>@Localizer["Short Name"] :</strong></label>
+            <input asp-for="@Model.EntityShortName" class="form-control" maxlength="20" />
+            <span asp-validation-for="@Model.EntityShortName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.SubmitPlace" class="form-label "><strong>@Localizer["Submit Place"] :</strong></label>
+            <input asp-for="@Model.SubmitPlace" class="form-control" maxlength="1000" />
+            <span asp-validation-for="@Model.SubmitPlace" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.SubmitDeadline" class="form-label "><strong>@Localizer["Submit Deadline"] :</strong></label>
+            <input asp-for="@Model.SubmitDeadline" class="form-control" />
+            <span asp-validation-for="@Model.SubmitDeadline" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.EmailTelephoneNumber" class="form-label "><strong>@Localizer["Email / Telephone Number"] :</strong></label>
+            <input asp-for="@Model.EmailTelephoneNumber" class="form-control" maxlength="50" />
+            <span asp-validation-for="@Model.EmailTelephoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ImageLogo" class="form-label "><strong>@Localizer["Image Logo"] :</strong></label>
+            <input asp-for="@Model.ImageLogoForm" class="file-upload-control" style="display:block" /> @if (!string.IsNullOrEmpty(Model.ImageLogo))
+            {
+                <div class="input-group col-md-12" style="padding-left:0px;padding-right:0px;margin-top:10px;"><input asp-for="@Model.ImageLogo" class="form-control" readonly /><a href="/@WebConstants.UploadFilesPath/@Model.ImageLogo" class="input-group-text btn btn-success" style="cursor:pointer;color:#fff;font-weight:700;" target="_blank">@Localizer["View"]</a></div>
+            }
+            <span asp-validation-for="@Model.ImageLogo" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.BankName" class="form-label "><strong>@Localizer["Bank"] :</strong></label>
+            <input asp-for="@Model.BankName" class="form-control" maxlength="255" />
+            <span asp-validation-for="@Model.BankName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.BankCode" class="form-label "><strong>@Localizer["Bank Code"] :</strong></label>
+            <input asp-for="@Model.BankCode" class="form-control" maxlength="12" />
+            <span asp-validation-for="@Model.BankCode" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.AccountName" class="form-label "><strong>@Localizer["Account Name"] :</strong></label>
+            <input asp-for="@Model.AccountName" class="form-control" maxlength="255" />
+            <span asp-validation-for="@Model.AccountName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.AccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
+            <input asp-for="@Model.AccountType" class="form-control" maxlength="30" />
+            <span asp-validation-for="@Model.AccountType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.AccountNumber" class="form-label "><strong>@Localizer["Account Number"] :</strong></label>
+            <input asp-for="@Model.AccountNumber" class="form-control" maxlength="14" />
+            <span asp-validation-for="@Model.AccountNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.IsDisabled" class="form-label "><strong>@Localizer["Disabled"] :</strong></label>
+            <input asp-for="@Model.IsDisabled" class="custom-checkbox-label" />
+            <span asp-validation-for="@Model.IsDisabled" class="text-danger"></span>
+        </div>
+    </div>
 </div>
