@@ -31,15 +31,14 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                DatabaseConnectionSetupId = e.DatabaseConnectionSetup?.Code,
+                DatabaseConnectionSetupId = e.DatabaseConnectionSetup?.Name,
 				e.Name,
 				e.Code,
 				e.EntityShortName,
 				e.SubmitPlace,
-				SubmitDeadline = e.SubmitDeadline.ToString("##,##.00"),
+				SubmitDeadline = e.SubmitDeadline?.ToString("##,##.00"),
 				e.EmailTelephoneNumber,
-				Active =  e.Active == true ? "Yes" : "No",
-				e.Bank,
+				e.BankName,
 				e.BankCode,
 				e.AccountNumber,
 						

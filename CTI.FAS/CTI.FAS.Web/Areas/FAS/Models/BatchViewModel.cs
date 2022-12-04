@@ -16,6 +16,6 @@ public record BatchViewModel : BaseViewModel
 	
 	public DateTime LastModifiedDate { get; set; }
 		
-	public IList<GeneratedViewModel>? GeneratedList { get; set; }
+	public IList<PaymentTransactionViewModel>? PaymentTransactionList { get; set; }
 	
 }

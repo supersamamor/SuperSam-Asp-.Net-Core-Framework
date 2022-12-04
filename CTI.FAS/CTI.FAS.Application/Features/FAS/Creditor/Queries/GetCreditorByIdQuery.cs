@@ -17,9 +17,7 @@ public class GetCreditorByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	
 	public override async Task<Option<CreditorState>> Handle(GetCreditorByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.Creditor.Include(l=>l.Company)
-			.Include(l=>l.CheckReleaseOptionList)
-			.Include(l=>l.CreditorEmailList)
+		return await Context.Creditor.Include(l=>l.DatabaseConnectionSetup)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

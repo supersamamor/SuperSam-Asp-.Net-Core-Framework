@@ -16,7 +16,7 @@ public class GetCreditorQueryHandler : BaseQueryHandler<ApplicationContext, Cred
     {
     }
 	public override async Task<PagedListResponse<CreditorState>> Handle(GetCreditorQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<CreditorState>().Include(l=>l.Company)
+		await Context.Set<CreditorState>().Include(l=>l.DatabaseConnectionSetup)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

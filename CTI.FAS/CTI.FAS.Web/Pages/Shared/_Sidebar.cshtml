@@ -153,13 +153,13 @@
 								</a>
 							</li>
 						}
-						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Generated.View)).Succeeded)
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.View)).Succeeded)
 						{
 							<li class="nav-item">
-								<a href = "/FAS/Generated" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Generated")">
+								<a href = "/FAS/PaymentTransaction" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PaymentTransaction")">
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
-										@Localizer["Generated"]
+										@Localizer["Payment Transaction"]
 									</span>
 								</a>
 							</li>
@@ -171,6 +171,17 @@
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
 										@Localizer["Creditor"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/FAS/EnrolledPayee" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EnrolledPayee")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Payee Enrollment"]
 									</span>
 								</a>
 							</li>

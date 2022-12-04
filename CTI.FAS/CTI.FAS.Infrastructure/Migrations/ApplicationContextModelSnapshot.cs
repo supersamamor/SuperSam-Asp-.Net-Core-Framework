@@ -320,46 +320,6 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.ToTable("Batch");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.CheckReleaseOptionState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreditorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreditorId");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.ToTable("CheckReleaseOption");
-                });
-
             modelBuilder.Entity("CTI.FAS.Core.FAS.CompanyState", b =>
                 {
                     b.Property<string>("Id")
@@ -370,7 +330,6 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AccountNumber")
-                        .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
@@ -378,18 +337,13 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Bank")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("BankCode")
-                        .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -406,18 +360,7 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DeliveryMethod")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("EWBDelMethod")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
                     b.Property<string>("EmailTelephoneNumber")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -457,16 +400,10 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<decimal>("SubmitDeadline")
+                    b.Property<decimal?>("SubmitDeadline")
                         .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("SubmitPlace")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -485,68 +422,9 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.ToTable("Company");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.CreditorEmailState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreditorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreditorId");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.ToTable("CreditorEmail");
-                });
-
             modelBuilder.Entity("CTI.FAS.Core.FAS.CreditorState", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AccountName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("AccountType")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("CompanyId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
@@ -560,10 +438,14 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("DatabaseConnectionSetupId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.Property<string>("Entity")
                         .HasColumnType("nvarchar(450)");
@@ -576,36 +458,29 @@ namespace CTI.FAS.Infrastructure.Migrations
 
                     b.Property<string>("PayeeAccountAddress")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PayeeAccountCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PayeeAccountLongDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("PayeeAccountName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PayeeAccountNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PayeeAccountTIN")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Status")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("DatabaseConnectionSetupId");
 
                     b.HasIndex("Entity");
 
@@ -675,19 +550,50 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.ToTable("DatabaseConnectionSetup");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.GeneratedState", b =>
+            modelBuilder.Entity("CTI.FAS.Core.FAS.EnrolledPayeeEmailState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BatchId")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("EnrolledPayeeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CheckNumber")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                    b.Property<string>("Entity")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrolledPayeeId");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.ToTable("EnrolledPayeeEmail");
+                });
+
+            modelBuilder.Entity("CTI.FAS.Core.FAS.EnrolledPayeeState", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyId")
                         .IsRequired()
@@ -703,6 +609,61 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Entity")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PayeeAccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PayeeAccountType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreditorId");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.ToTable("EnrolledPayee");
+                });
+
+            modelBuilder.Entity("CTI.FAS.Core.FAS.PaymentTransactionState", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BatchId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CheckNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("DocumentAmount")
                         .HasColumnType("decimal(18,6)");
 
@@ -714,28 +675,41 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<int>("EmailSentCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EmailSentDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("Emailed")
-                        .HasMaxLength(9)
                         .HasColumnType("bit");
+
+                    b.Property<string>("EnrolledPayeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Entity")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("GroupCode")
                         .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("IfcaBatchNumber")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("IfcaLineNumber")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<bool>("IsForSending")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PaymentType")
                         .IsRequired()
@@ -747,37 +721,30 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Release")
-                        .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
-
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("TextFileName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("TransmissionDate")
+                    b.Property<DateTime?>("TransmissionDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BatchId");
 
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CreditorId");
+                    b.HasIndex("EnrolledPayeeId");
 
                     b.HasIndex("Entity");
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Generated");
+                    b.ToTable("PaymentTransaction");
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.ProjectState", b =>
@@ -969,17 +936,6 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Navigation("ApproverSetup");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.CheckReleaseOptionState", b =>
-                {
-                    b.HasOne("CTI.FAS.Core.FAS.CreditorState", "Creditor")
-                        .WithMany("CheckReleaseOptionList")
-                        .HasForeignKey("CreditorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Creditor");
-                });
-
             modelBuilder.Entity("CTI.FAS.Core.FAS.CompanyState", b =>
                 {
                     b.HasOne("CTI.FAS.Core.FAS.DatabaseConnectionSetupState", "DatabaseConnectionSetup")
@@ -991,53 +947,62 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Navigation("DatabaseConnectionSetup");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.CreditorEmailState", b =>
+            modelBuilder.Entity("CTI.FAS.Core.FAS.CreditorState", b =>
                 {
-                    b.HasOne("CTI.FAS.Core.FAS.CreditorState", "Creditor")
-                        .WithMany("CreditorEmailList")
-                        .HasForeignKey("CreditorId")
+                    b.HasOne("CTI.FAS.Core.FAS.DatabaseConnectionSetupState", "DatabaseConnectionSetup")
+                        .WithMany("CreditorList")
+                        .HasForeignKey("DatabaseConnectionSetupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Creditor");
+                    b.Navigation("DatabaseConnectionSetup");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.CreditorState", b =>
+            modelBuilder.Entity("CTI.FAS.Core.FAS.EnrolledPayeeEmailState", b =>
+                {
+                    b.HasOne("CTI.FAS.Core.FAS.EnrolledPayeeState", "EnrolledPayee")
+                        .WithMany("EnrolledPayeeEmailList")
+                        .HasForeignKey("EnrolledPayeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EnrolledPayee");
+                });
+
+            modelBuilder.Entity("CTI.FAS.Core.FAS.EnrolledPayeeState", b =>
                 {
                     b.HasOne("CTI.FAS.Core.FAS.CompanyState", "Company")
-                        .WithMany("CreditorList")
+                        .WithMany("EnrolledPayeeList")
                         .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CTI.FAS.Core.FAS.CreditorState", "Creditor")
+                        .WithMany("EnrolledPayeeList")
+                        .HasForeignKey("CreditorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Company");
+
+                    b.Navigation("Creditor");
                 });
 
-            modelBuilder.Entity("CTI.FAS.Core.FAS.GeneratedState", b =>
+            modelBuilder.Entity("CTI.FAS.Core.FAS.PaymentTransactionState", b =>
                 {
                     b.HasOne("CTI.FAS.Core.FAS.BatchState", "Batch")
-                        .WithMany("GeneratedList")
-                        .HasForeignKey("BatchId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany("PaymentTransactionList")
+                        .HasForeignKey("BatchId");
 
-                    b.HasOne("CTI.FAS.Core.FAS.CompanyState", "Company")
-                        .WithMany("GeneratedList")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CTI.FAS.Core.FAS.CreditorState", "Creditor")
-                        .WithMany("GeneratedList")
-                        .HasForeignKey("CreditorId")
+                    b.HasOne("CTI.FAS.Core.FAS.EnrolledPayeeState", "EnrolledPayee")
+                        .WithMany("PaymentTransactionList")
+                        .HasForeignKey("EnrolledPayeeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Batch");
 
-                    b.Navigation("Company");
-
-                    b.Navigation("Creditor");
+                    b.Navigation("EnrolledPayee");
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.ProjectState", b =>
@@ -1085,14 +1050,12 @@ namespace CTI.FAS.Infrastructure.Migrations
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.BatchState", b =>
                 {
-                    b.Navigation("GeneratedList");
+                    b.Navigation("PaymentTransactionList");
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.CompanyState", b =>
                 {
-                    b.Navigation("CreditorList");
-
-                    b.Navigation("GeneratedList");
+                    b.Navigation("EnrolledPayeeList");
 
                     b.Navigation("ProjectList");
 
@@ -1101,16 +1064,21 @@ namespace CTI.FAS.Infrastructure.Migrations
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.CreditorState", b =>
                 {
-                    b.Navigation("CheckReleaseOptionList");
-
-                    b.Navigation("CreditorEmailList");
-
-                    b.Navigation("GeneratedList");
+                    b.Navigation("EnrolledPayeeList");
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.DatabaseConnectionSetupState", b =>
                 {
                     b.Navigation("CompanyList");
+
+                    b.Navigation("CreditorList");
+                });
+
+            modelBuilder.Entity("CTI.FAS.Core.FAS.EnrolledPayeeState", b =>
+                {
+                    b.Navigation("EnrolledPayeeEmailList");
+
+                    b.Navigation("PaymentTransactionList");
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.FAS.ProjectState", b =>

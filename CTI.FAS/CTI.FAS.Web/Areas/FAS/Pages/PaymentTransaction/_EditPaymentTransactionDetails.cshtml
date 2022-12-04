@@ -1,0 +1,150 @@
+@using Models
+@model PaymentTransactionViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EnrolledPayeeId" class="form-label fieldrequired"><strong>@Localizer["Enrolled Payee"] :</strong></label>
+			<select asp-for="@Model.EnrolledPayeeId" class="form-control" asp-items="@(dropdownService.GetEnrolledPayeeList(Model.EnrolledPayeeId))"><option value="">- Select Enrolled Payee -</option></select>
+			<span asp-validation-for="@Model.EnrolledPayeeId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.BatchId" class="form-label "><strong>@Localizer["Batch"] :</strong></label>
+			<select asp-for="@Model.BatchId" class="form-control" asp-items="@(dropdownService.GetBatchList(Model.BatchId))"><option value="">- Select Batch -</option></select>
+			<span asp-validation-for="@Model.BatchId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TransmissionDate" class="form-label "><strong>@Localizer["Transmission Date"] :</strong></label>
+			<input asp-for="@Model.TransmissionDate" class="form-control"  />
+			<span asp-validation-for="@Model.TransmissionDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DocumentNumber" class="form-label fieldrequired"><strong>@Localizer["Document Number"] :</strong></label>
+			<input asp-for="@Model.DocumentNumber" class="form-control" maxlength="15" />
+			<span asp-validation-for="@Model.DocumentNumber" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DocumentDate" class="form-label fieldrequired"><strong>@Localizer["Document Date"] :</strong></label>
+			<input asp-for="@Model.DocumentDate" class="form-control"  />
+			<span asp-validation-for="@Model.DocumentDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DocumentAmount" class="form-label fieldrequired"><strong>@Localizer["Document Amount"] :</strong></label>
+			<input asp-for="@Model.DocumentAmount" class="form-control"  />
+			<span asp-validation-for="@Model.DocumentAmount" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.CheckNumber" class="form-label fieldrequired"><strong>@Localizer["Check Number"] :</strong></label>
+			<input asp-for="@Model.CheckNumber" class="form-control" maxlength="15" />
+			<span asp-validation-for="@Model.CheckNumber" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PaymentType" class="form-label fieldrequired"><strong>@Localizer["Payment Type"] :</strong></label>
+			<input asp-for="@Model.PaymentType" class="form-control" maxlength="9" />
+			<span asp-validation-for="@Model.PaymentType" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TextFileName" class="form-label fieldrequired"><strong>@Localizer["Text File Name"] :</strong></label>
+			<input asp-for="@Model.TextFileName" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.TextFileName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PdfReport" class="form-label fieldrequired"><strong>@Localizer["Pdf Report"] :</strong></label>
+			<input asp-for="@Model.PdfReport" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.PdfReport" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Emailed" class="form-label fieldrequired"><strong>@Localizer["Emailed"] :</strong></label>
+			<input asp-for="@Model.Emailed" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.Emailed" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.GroupCode" class="form-label fieldrequired"><strong>@Localizer["Group"] :</strong></label>
+			<input asp-for="@Model.GroupCode" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.GroupCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Status" class="form-label fieldrequired"><strong>@Localizer["Status"] :</strong></label>
+			<input asp-for="@Model.Status" class="form-control" maxlength="30" />
+			<span asp-validation-for="@Model.Status" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IfcaBatchNumber" class="form-label fieldrequired"><strong>@Localizer["Ifca Batch Number"] :</strong></label>
+			<input asp-for="@Model.IfcaBatchNumber" class="form-control"  />
+			<span asp-validation-for="@Model.IfcaBatchNumber" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IfcaLineNumber" class="form-label fieldrequired"><strong>@Localizer["Ifca Line Number"] :</strong></label>
+			<input asp-for="@Model.IfcaLineNumber" class="form-control"  />
+			<span asp-validation-for="@Model.IfcaLineNumber" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EmailSentCount" class="form-label fieldrequired"><strong>@Localizer["Email Sent Count"] :</strong></label>
+			<input asp-for="@Model.EmailSentCount" class="form-control"  />
+			<span asp-validation-for="@Model.EmailSentCount" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EmailSentDateTime" class="form-label "><strong>@Localizer["Email Sent Date / Time"] :</strong></label>
+			<input asp-for="@Model.EmailSentDateTime" class="form-control"  />
+			<span asp-validation-for="@Model.EmailSentDateTime" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IsForSending" class="form-label fieldrequired"><strong>@Localizer["For Sending"] :</strong></label>
+			<input asp-for="@Model.IsForSending" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.IsForSending" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

@@ -26,41 +26,11 @@ public class AddCreditorCommandHandler : BaseCommandHandler<ApplicationContext, 
 		_identityContext = identityContext;
     }
 
-    public async Task<Validation<Error, CreditorState>> Handle(AddCreditorCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, CreditorState>> Handle(AddCreditorCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await AddCreditor(request, cancellationToken));
-
-
-	public async Task<Validation<Error, CreditorState>> AddCreditor(AddCreditorCommand request, CancellationToken cancellationToken)
-	{
-		CreditorState entity = Mapper.Map<CreditorState>(request);
-		UpdateCheckReleaseOptionList(entity);
-		UpdateCreditorEmailList(entity);
-		_ = await Context.AddAsync(entity, cancellationToken);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, CreditorState>(entity);
-	}
+			async request => await Add(request, cancellationToken));
 	
-	private void UpdateCheckReleaseOptionList(CreditorState entity)
-	{
-		if (entity.CheckReleaseOptionList?.Count > 0)
-		{
-			foreach (var checkReleaseOption in entity.CheckReleaseOptionList!)
-			{
-				Context.Entry(checkReleaseOption).State = EntityState.Added;
-			}
-		}
-	}
-	private void UpdateCreditorEmailList(CreditorState entity)
-	{
-		if (entity.CreditorEmailList?.Count > 0)
-		{
-			foreach (var creditorEmail in entity.CreditorEmailList!)
-			{
-				Context.Entry(creditorEmail).State = EntityState.Added;
-			}
-		}
-	}
 	
 	
 }

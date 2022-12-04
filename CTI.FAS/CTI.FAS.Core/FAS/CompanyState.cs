@@ -14,25 +14,20 @@ public record CompanyState : BaseEntity
 	public string? EntityShortName { get; init; }
 	public bool IsDisabled { get; init; }
 	public string? TINNo { get; init; }
-	public string SubmitPlace { get; init; } = "";
-	public decimal SubmitDeadline { get; init; }
-	public string EmailTelephoneNumber { get; init; } = "";
-	public bool Active { get; init; }
+	public string? SubmitPlace { get; init; }
+	public decimal? SubmitDeadline { get; init; }
+	public string? EmailTelephoneNumber { get; init; }
 	public string? ImageLogo { get; init; }
-	public string Bank { get; init; } = "";
-	public string BankCode { get; init; } = "";
+	public string? BankName { get; init; }
+	public string? BankCode { get; init; }
 	public string? AccountName { get; init; }
 	public string? AccountType { get; init; }
-	public string AccountNumber { get; init; } = "";
-	public string DeliveryMethod { get; init; } = "";
-	public string EWBDelMethod { get; init; } = "";
-	public string PaymentType { get; init; } = "";
+	public string? AccountNumber { get; init; }
 	
 	public DatabaseConnectionSetupState? DatabaseConnectionSetup { get; init; }
 	
 	public IList<ProjectState>? ProjectList { get; set; }
 	public IList<UserEntityState>? UserEntityList { get; set; }
-	public IList<GeneratedState>? GeneratedList { get; set; }
-	public IList<CreditorState>? CreditorList { get; set; }
+	public IList<EnrolledPayeeState>? EnrolledPayeeList { get; set; }
 	
 }

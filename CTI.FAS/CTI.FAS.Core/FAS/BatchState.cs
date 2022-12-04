@@ -9,6 +9,6 @@ public record BatchState : BaseEntity
 	public int Batch { get; init; }
 	
 	
-	public IList<GeneratedState>? GeneratedList { get; set; }
+	public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
 	
 }

@@ -23,78 +23,11 @@ public class EditCreditorCommandHandler : BaseCommandHandler<ApplicationContext,
     {
     }
 
-    public async Task<Validation<Error, CreditorState>> Handle(EditCreditorCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, CreditorState>> Handle(EditCreditorCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await EditCreditor(request, cancellationToken));
-
-
-	public async Task<Validation<Error, CreditorState>> EditCreditor(EditCreditorCommand request, CancellationToken cancellationToken)
-	{
-		var entity = await Context.Creditor.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
-		Mapper.Map(request, entity);
-		await UpdateCheckReleaseOptionList(entity, request, cancellationToken);
-		await UpdateCreditorEmailList(entity, request, cancellationToken);
-		Context.Update(entity);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, CreditorState>(entity);
-	}
+			async request => await Edit(request, cancellationToken));
 	
-	private async Task UpdateCheckReleaseOptionList(CreditorState entity, EditCreditorCommand request, CancellationToken cancellationToken)
-	{
-		IList<CheckReleaseOptionState> checkReleaseOptionListForDeletion = new List<CheckReleaseOptionState>();
-		var queryCheckReleaseOptionForDeletion = Context.CheckReleaseOption.Where(l => l.CreditorId == request.Id).AsNoTracking();
-		if (entity.CheckReleaseOptionList?.Count > 0)
-		{
-			queryCheckReleaseOptionForDeletion = queryCheckReleaseOptionForDeletion.Where(l => !(entity.CheckReleaseOptionList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		checkReleaseOptionListForDeletion = await queryCheckReleaseOptionForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var checkReleaseOption in checkReleaseOptionListForDeletion!)
-		{
-			Context.Entry(checkReleaseOption).State = EntityState.Deleted;
-		}
-		if (entity.CheckReleaseOptionList?.Count > 0)
-		{
-			foreach (var checkReleaseOption in entity.CheckReleaseOptionList.Where(l => !checkReleaseOptionListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<CheckReleaseOptionState>(x => x.Id == checkReleaseOption.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(checkReleaseOption).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(checkReleaseOption).State = EntityState.Modified;
-				}
-			}
-		}
-	}
-	private async Task UpdateCreditorEmailList(CreditorState entity, EditCreditorCommand request, CancellationToken cancellationToken)
-	{
-		IList<CreditorEmailState> creditorEmailListForDeletion = new List<CreditorEmailState>();
-		var queryCreditorEmailForDeletion = Context.CreditorEmail.Where(l => l.CreditorId == request.Id).AsNoTracking();
-		if (entity.CreditorEmailList?.Count > 0)
-		{
-			queryCreditorEmailForDeletion = queryCreditorEmailForDeletion.Where(l => !(entity.CreditorEmailList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		creditorEmailListForDeletion = await queryCreditorEmailForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var creditorEmail in creditorEmailListForDeletion!)
-		{
-			Context.Entry(creditorEmail).State = EntityState.Deleted;
-		}
-		if (entity.CreditorEmailList?.Count > 0)
-		{
-			foreach (var creditorEmail in entity.CreditorEmailList.Where(l => !creditorEmailListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<CreditorEmailState>(x => x.Id == creditorEmail.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(creditorEmail).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(creditorEmail).State = EntityState.Modified;
-				}
-			}
-		}
-	}
 	
 }
 

@@ -18,9 +18,9 @@ namespace CTI.FAS.Web.Service
 			_context = context;
 			_mediaTr = mediaTr;
 		}       
-		public SelectList GetProjectList(string id)
+		public SelectList GetCompanyList(string id)
 		{
-			return _context.GetSingle<ProjectState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
@@ -32,23 +32,30 @@ namespace CTI.FAS.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetCompanyList(string id)
-		{
-			return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
 		public SelectList GetDatabaseConnectionSetupList(string id)
 		{
 			return _context.GetSingle<DatabaseConnectionSetupState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Code } }, "Value", "Text", e.Id),
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Name } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetEnrolledPayeeList(string id)
+		{
+			return _context.GetSingle<EnrolledPayeeState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
 		public SelectList GetBatchList(string id)
 		{
 			return _context.GetSingle<BatchState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetProjectList(string id)
+		{
+			return _context.GetSingle<ProjectState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);

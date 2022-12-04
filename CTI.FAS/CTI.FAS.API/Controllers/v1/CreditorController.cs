@@ -44,39 +44,25 @@ public class CreditorController : BaseApiController<CreditorController>
 public record CreditorViewModel
 {
     [Required]
-	
-	public string CompanyId { get;set; } = "";
-	[Required]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string CreditorAccount { get;set; } = "";
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AccountName { get;set; } = "";
-	[Required]
-	[StringLength(2, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AccountType { get;set; } = "";
-	[Required]
-	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AccountNumber { get;set; } = "";
-	[Required]
-	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string PayeeAccountName { get;set; } = "";
-	[Required]
+	[StringLength(500, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? PayeeAccountLongDescription { get;set; }
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PayeeAccountNumber { get;set; } = "";
+	public string? PayeeAccountCode { get;set; }
+	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? PayeeAccountTIN { get;set; }
 	[Required]
-	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string PayeeAccountAddress { get;set; } = "";
+	[Required]
+	[StringLength(70, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Email { get;set; } = "";
 	[Required]
-	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PayeeAccountCode { get;set; } = "";
-	[Required]
-	[StringLength(20, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PayeeAccountTIN { get;set; } = "";
-	[Required]
-	[StringLength(60, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PayeeAccountAddress { get;set; } = "";
-	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? Status { get;set; }
+	
+	public string DatabaseConnectionSetupId { get;set; } = "";
 	   
 }

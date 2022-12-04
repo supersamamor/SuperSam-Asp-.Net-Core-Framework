@@ -17,19 +17,10 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Entity"]
-							</th>
-							<th>
 								@Localizer["Creditor Account"]
 							</th>
 							<th>
-								@Localizer["Account Name"]
-							</th>
-							<th>
-								@Localizer["Account Type"]
-							</th>
-							<th>
-								@Localizer["Status"]
+								@Localizer["Database Connection Setup"]
 							</th>
 							  
 														
@@ -53,7 +44,7 @@
         var table = $('#creditor').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 5, 'desc' ]],
+            order: [[ 2, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Creditor/Index", new { area = "FAS", handler = "ListAll" })',
@@ -67,11 +58,8 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "companyId", name: "CompanyId", responsivePriority: 1, title: '@Localizer["Entity"]', searchable: false },
-				{ data: "creditorAccount", name: "CreditorAccount", responsivePriority: 1, title: '@Localizer["Creditor Account"]', searchable: true },
-				{ data: "accountName", name: "AccountName", responsivePriority: 1, title: '@Localizer["Account Name"]', searchable: true },
-				{ data: "accountType", name: "AccountType", responsivePriority: 1, title: '@Localizer["Account Type"]', searchable: false },
-				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false },
+                { data: "creditorAccount", name: "CreditorAccount", responsivePriority: 1, title: '@Localizer["Creditor Account"]', searchable: true },
+				{ data: "databaseConnectionSetupId", name: "DatabaseConnectionSetupId", responsivePriority: 1, title: '@Localizer["Database Connection Setup"]', searchable: false },
 				   
 				
                 {

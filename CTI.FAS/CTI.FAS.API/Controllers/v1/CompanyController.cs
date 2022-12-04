@@ -63,40 +63,23 @@ public record CompanyViewModel
 	public bool IsDisabled { get;set; }
 	[StringLength(17, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? TINNo { get;set; }
-	[Required]
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SubmitPlace { get;set; } = "";
-	[Required]
+	public string? SubmitPlace { get;set; }
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal SubmitDeadline { get;set; }
-	[Required]
+	public decimal? SubmitDeadline { get;set; }
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EmailTelephoneNumber { get;set; } = "";
-	[Required]
-	public bool Active { get;set; }
+	public string? EmailTelephoneNumber { get;set; }
 	public string? ImageLogo { get;set; }
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Bank { get;set; } = "";
-	[Required]
+	public string? BankName { get;set; }
 	[StringLength(12, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string BankCode { get;set; } = "";
+	public string? BankCode { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? AccountName { get;set; }
 	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? AccountType { get;set; }
-	[Required]
 	[StringLength(14, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AccountNumber { get;set; } = "";
-	[Required]
-	[StringLength(3, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string DeliveryMethod { get;set; } = "";
-	[Required]
-	[StringLength(3, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EWBDelMethod { get;set; } = "";
-	[Required]
-	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PaymentType { get;set; } = "";
+	public string? AccountNumber { get;set; }
 	   
 }

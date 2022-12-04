@@ -22,8 +22,6 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-<partial name="_CheckReleaseOptionListValidationPartial" model="@Model.Creditor" />
-<partial name="_CreditorEmailListValidationPartial" model="@Model.Creditor" />
 
 <script asp-add-nonce>
     $(document).ready(function () {
@@ -35,41 +33,17 @@
                 window.focus();
             });
             
-			$.InitializeCheckReleaseOptionFieldValidations($('#CheckReleaseOptionCount').val());
-			$('.RemoveCheckReleaseOptionButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveCheckReleaseOption');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
-			});
-
-			$('#btnAddCheckReleaseOption').on( 'click', function () {
-				$('#AsyncAction').val('AddCheckReleaseOption');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
-			});
-
-			$.InitializeCreditorEmailFieldValidations($('#CreditorEmailCount').val());
-			$('.RemoveCreditorEmailButton ').on( 'click', function () {
-				$('#RemoveSubDetailId').val($(this).attr('removeid'));
-				$('#AsyncAction').val('RemoveCreditorEmail');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
-			});
-
-			$('#btnAddCreditorEmail').on( 'click', function () {
-				$('#AsyncAction').val('AddCreditorEmail');
-				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#creditor-form', InitializeForm);
-			});
-
-			$.fn.companySelect = function() {
+			$.fn.databaseconnectionsetupSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Company/Index", new { area = "FAS", handler = "Select2Data" })',
+							url: '@Url.Page("/DatabaseConnectionSetup/Index", new { area = "FAS", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#CompanyId").companySelect();
+			$("#DatabaseConnectionSetupId").databaseconnectionsetupSelect();
 
 
         }

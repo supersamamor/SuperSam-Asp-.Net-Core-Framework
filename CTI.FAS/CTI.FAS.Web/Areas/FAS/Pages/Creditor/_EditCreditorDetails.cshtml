@@ -4,14 +4,6 @@
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.CompanyId" class="form-label fieldrequired"><strong>@Localizer["Entity"] :</strong></label>
-			<select asp-for="@Model.CompanyId" class="form-control" asp-items="@(dropdownService.GetCompanyList(Model.CompanyId))"><option value="">- Select Entity -</option></select>
-			<span asp-validation-for="@Model.CompanyId" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
 		<label asp-for="@Model.CreditorAccount" class="form-label fieldrequired"><strong>@Localizer["Creditor Account"] :</strong></label>
 			<input asp-for="@Model.CreditorAccount" class="form-control" maxlength="50" />
 			<span asp-validation-for="@Model.CreditorAccount" class="text-danger"></span>
@@ -20,55 +12,23 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.AccountName" class="form-label fieldrequired"><strong>@Localizer["Account Name"] :</strong></label>
-			<input asp-for="@Model.AccountName" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.AccountName" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.AccountType" class="form-label fieldrequired"><strong>@Localizer["Account Type"] :</strong></label>
-			<input asp-for="@Model.AccountType" class="form-control" maxlength="2" />
-			<span asp-validation-for="@Model.AccountType" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.AccountNumber" class="form-label fieldrequired"><strong>@Localizer["Account Number"] :</strong></label>
-			<input asp-for="@Model.AccountNumber" class="form-control" maxlength="20" />
-			<span asp-validation-for="@Model.AccountNumber" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.PayeeAccountName" class="form-label fieldrequired"><strong>@Localizer["Payee Account Name"] :</strong></label>
-			<input asp-for="@Model.PayeeAccountName" class="form-control" maxlength="50" />
+		<label asp-for="@Model.PayeeAccountName" class="form-label fieldrequired"><strong>@Localizer["Account Name"] :</strong></label>
+			<input asp-for="@Model.PayeeAccountName" class="form-control" maxlength="255" />
 			<span asp-validation-for="@Model.PayeeAccountName" class="text-danger"></span>
 			
 	</div>
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.PayeeAccountNumber" class="form-label fieldrequired"><strong>@Localizer["Payee Account Number"] :</strong></label>
-			<input asp-for="@Model.PayeeAccountNumber" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.PayeeAccountNumber" class="text-danger"></span>
+		<label asp-for="@Model.PayeeAccountLongDescription" class="form-label "><strong>@Localizer["Account Name"] :</strong></label>
+			<input asp-for="@Model.PayeeAccountLongDescription" class="form-control" maxlength="500" />
+			<span asp-validation-for="@Model.PayeeAccountLongDescription" class="text-danger"></span>
 			
 	</div>
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.Email" class="form-label fieldrequired"><strong>@Localizer["Email"] :</strong></label>
-			<input asp-for="@Model.Email" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.Email" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.PayeeAccountCode" class="form-label fieldrequired"><strong>@Localizer["Payee Account Code"] :</strong></label>
+		<label asp-for="@Model.PayeeAccountCode" class="form-label "><strong>@Localizer["Account Code"] :</strong></label>
 			<input asp-for="@Model.PayeeAccountCode" class="form-control" maxlength="50" />
 			<span asp-validation-for="@Model.PayeeAccountCode" class="text-danger"></span>
 			
@@ -76,26 +36,34 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.PayeeAccountTIN" class="form-label fieldrequired"><strong>@Localizer["Payee Account TIN"] :</strong></label>
-			<input asp-for="@Model.PayeeAccountTIN" class="form-control" maxlength="20" />
+		<label asp-for="@Model.PayeeAccountTIN" class="form-label "><strong>@Localizer["Account TIN"] :</strong></label>
+			<input asp-for="@Model.PayeeAccountTIN" class="form-control" maxlength="30" />
 			<span asp-validation-for="@Model.PayeeAccountTIN" class="text-danger"></span>
 			
 	</div>
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.PayeeAccountAddress" class="form-label fieldrequired"><strong>@Localizer["Payee Account Address"] :</strong></label>
-			<input asp-for="@Model.PayeeAccountAddress" class="form-control" maxlength="60" />
+		<label asp-for="@Model.PayeeAccountAddress" class="form-label fieldrequired"><strong>@Localizer["Account Address"] :</strong></label>
+			<input asp-for="@Model.PayeeAccountAddress" class="form-control" maxlength="255" />
 			<span asp-validation-for="@Model.PayeeAccountAddress" class="text-danger"></span>
 			
 	</div>
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.Status" class="form-label "><strong>@Localizer["Status"] :</strong></label>
-			<input asp-for="@Model.Status" class="form-control" maxlength="30" />
-			<span asp-validation-for="@Model.Status" class="text-danger"></span>
+		<label asp-for="@Model.Email" class="form-label fieldrequired"><strong>@Localizer["Email"] :</strong></label>
+			<input asp-for="@Model.Email" class="form-control" maxlength="70" />
+			<span asp-validation-for="@Model.Email" class="text-danger"></span>
 			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DatabaseConnectionSetupId" class="form-label fieldrequired"><strong>@Localizer["Database Connection Setup"] :</strong></label>
+			<input asp-for="ForeignKeyDatabaseConnectionSetup" class="form-control"   readonly />
+			<span asp-validation-for="@Model.DatabaseConnectionSetupId" class="text-danger"></span>
+			<input type="hidden" asp-for="@Model.DatabaseConnectionSetupId"/>
 	</div>
 </div>
 

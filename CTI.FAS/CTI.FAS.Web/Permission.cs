@@ -16,11 +16,11 @@ public static class Permission
 			.Concat(GeneratePermissionsForModule("Project"))
 			.Concat(GeneratePermissionsForModule("Tenant"))
 			.Concat(GeneratePermissionsForModule("UserEntity"))
-			.Concat(GeneratePermissionsForModule("CheckReleaseOption"))
 			.Concat(GeneratePermissionsForModule("Batch"))
-			.Concat(GeneratePermissionsForModule("Generated"))
+			.Concat(GeneratePermissionsForModule("PaymentTransaction"))
 			.Concat(GeneratePermissionsForModule("Creditor"))
-			.Concat(GeneratePermissionsForModule("CreditorEmail"))
+			.Concat(GeneratePermissionsForModule("EnrolledPayee"))
+			.Concat(GeneratePermissionsForModule("EnrolledPayeeEmail"))
 			
 			.Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
@@ -134,13 +134,6 @@ public static class Permission
 		public const string Edit = "Permission.UserEntity.Edit";
 		public const string Delete = "Permission.UserEntity.Delete";
 	}
-	public static class CheckReleaseOption
-	{
-		public const string View = "Permission.CheckReleaseOption.View";
-		public const string Create = "Permission.CheckReleaseOption.Create";
-		public const string Edit = "Permission.CheckReleaseOption.Edit";
-		public const string Delete = "Permission.CheckReleaseOption.Delete";
-	}
 	public static class Batch
 	{
 		public const string View = "Permission.Batch.View";
@@ -148,12 +141,12 @@ public static class Permission
 		public const string Edit = "Permission.Batch.Edit";
 		public const string Delete = "Permission.Batch.Delete";
 	}
-	public static class Generated
+	public static class PaymentTransaction
 	{
-		public const string View = "Permission.Generated.View";
-		public const string Create = "Permission.Generated.Create";
-		public const string Edit = "Permission.Generated.Edit";
-		public const string Delete = "Permission.Generated.Delete";
+		public const string View = "Permission.PaymentTransaction.View";
+		public const string Create = "Permission.PaymentTransaction.Create";
+		public const string Edit = "Permission.PaymentTransaction.Edit";
+		public const string Delete = "Permission.PaymentTransaction.Delete";
 	}
 	public static class Creditor
 	{
@@ -162,12 +155,19 @@ public static class Permission
 		public const string Edit = "Permission.Creditor.Edit";
 		public const string Delete = "Permission.Creditor.Delete";
 	}
-	public static class CreditorEmail
+	public static class EnrolledPayee
 	{
-		public const string View = "Permission.CreditorEmail.View";
-		public const string Create = "Permission.CreditorEmail.Create";
-		public const string Edit = "Permission.CreditorEmail.Edit";
-		public const string Delete = "Permission.CreditorEmail.Delete";
+		public const string View = "Permission.EnrolledPayee.View";
+		public const string Create = "Permission.EnrolledPayee.Create";
+		public const string Edit = "Permission.EnrolledPayee.Edit";
+		public const string Delete = "Permission.EnrolledPayee.Delete";
+	}
+	public static class EnrolledPayeeEmail
+	{
+		public const string View = "Permission.EnrolledPayeeEmail.View";
+		public const string Create = "Permission.EnrolledPayeeEmail.Create";
+		public const string Edit = "Permission.EnrolledPayeeEmail.Edit";
+		public const string Delete = "Permission.EnrolledPayeeEmail.Delete";
 	}
 	
 	public static class ApproverSetup

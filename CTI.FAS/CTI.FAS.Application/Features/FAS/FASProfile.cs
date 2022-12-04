@@ -7,11 +7,11 @@ using CTI.FAS.Application.Features.FAS.Company.Commands;
 using CTI.FAS.Application.Features.FAS.Project.Commands;
 using CTI.FAS.Application.Features.FAS.Tenant.Commands;
 using CTI.FAS.Application.Features.FAS.UserEntity.Commands;
-using CTI.FAS.Application.Features.FAS.CheckReleaseOption.Commands;
 using CTI.FAS.Application.Features.FAS.Batch.Commands;
-using CTI.FAS.Application.Features.FAS.Generated.Commands;
+using CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 using CTI.FAS.Application.Features.FAS.Creditor.Commands;
-using CTI.FAS.Application.Features.FAS.CreditorEmail.Commands;
+using CTI.FAS.Application.Features.FAS.EnrolledPayee.Commands;
+using CTI.FAS.Application.Features.FAS.EnrolledPayeeEmail.Commands;
 
 
 
@@ -31,16 +31,16 @@ public class FASProfile : Profile
 		CreateMap <EditTenantCommand, TenantState>().IgnoreBaseEntityProperties();
 		CreateMap<AddUserEntityCommand, UserEntityState>();
 		CreateMap <EditUserEntityCommand, UserEntityState>().IgnoreBaseEntityProperties();
-		CreateMap<AddCheckReleaseOptionCommand, CheckReleaseOptionState>();
-		CreateMap <EditCheckReleaseOptionCommand, CheckReleaseOptionState>().IgnoreBaseEntityProperties();
 		CreateMap<AddBatchCommand, BatchState>();
 		CreateMap <EditBatchCommand, BatchState>().IgnoreBaseEntityProperties();
-		CreateMap<AddGeneratedCommand, GeneratedState>();
-		CreateMap <EditGeneratedCommand, GeneratedState>().IgnoreBaseEntityProperties();
+		CreateMap<AddPaymentTransactionCommand, PaymentTransactionState>();
+		CreateMap <EditPaymentTransactionCommand, PaymentTransactionState>().IgnoreBaseEntityProperties();
 		CreateMap<AddCreditorCommand, CreditorState>();
 		CreateMap <EditCreditorCommand, CreditorState>().IgnoreBaseEntityProperties();
-		CreateMap<AddCreditorEmailCommand, CreditorEmailState>();
-		CreateMap <EditCreditorEmailCommand, CreditorEmailState>().IgnoreBaseEntityProperties();
+		CreateMap<AddEnrolledPayeeCommand, EnrolledPayeeState>();
+		CreateMap <EditEnrolledPayeeCommand, EnrolledPayeeState>().IgnoreBaseEntityProperties();
+		CreateMap<AddEnrolledPayeeEmailCommand, EnrolledPayeeEmailState>();
+		CreateMap <EditEnrolledPayeeEmailCommand, EnrolledPayeeEmailState>().IgnoreBaseEntityProperties();
 		
 		CreateMap<EditApproverSetupCommand, ApproverSetupState>().IgnoreBaseEntityProperties();
 		CreateMap<AddApproverSetupCommand, ApproverSetupState>().IgnoreBaseEntityProperties();

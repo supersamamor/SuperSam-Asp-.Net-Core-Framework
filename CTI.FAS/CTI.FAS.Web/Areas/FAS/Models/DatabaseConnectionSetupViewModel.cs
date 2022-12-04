@@ -31,5 +31,6 @@ public record DatabaseConnectionSetupViewModel : BaseViewModel
 	public DateTime LastModifiedDate { get; set; }
 		
 	public IList<CompanyViewModel>? CompanyList { get; set; }
+	public IList<CreditorViewModel>? CreditorList { get; set; }
 	
 }

@@ -76,7 +76,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.SubmitPlace" class="form-label fieldrequired"><strong>@Localizer["Submit Place"] :</strong></label>
+		<label asp-for="@Model.SubmitPlace" class="form-label "><strong>@Localizer["Submit Place"] :</strong></label>
 			<input asp-for="@Model.SubmitPlace" class="form-control" maxlength="1000" />
 			<span asp-validation-for="@Model.SubmitPlace" class="text-danger"></span>
 			
@@ -84,7 +84,7 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.SubmitDeadline" class="form-label fieldrequired"><strong>@Localizer["Submit Deadline"] :</strong></label>
+		<label asp-for="@Model.SubmitDeadline" class="form-label "><strong>@Localizer["Submit Deadline"] :</strong></label>
 			<input asp-for="@Model.SubmitDeadline" class="form-control"  />
 			<span asp-validation-for="@Model.SubmitDeadline" class="text-danger"></span>
 			
@@ -92,17 +92,9 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.EmailTelephoneNumber" class="form-label fieldrequired"><strong>@Localizer["Email / Telephone Number"] :</strong></label>
+		<label asp-for="@Model.EmailTelephoneNumber" class="form-label "><strong>@Localizer["Email / Telephone Number"] :</strong></label>
 			<input asp-for="@Model.EmailTelephoneNumber" class="form-control" maxlength="50" />
 			<span asp-validation-for="@Model.EmailTelephoneNumber" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.Active" class="form-label fieldrequired"><strong>@Localizer["Active"] :</strong></label>
-			<input asp-for="@Model.Active" class="custom-checkbox-label"/>
-			<span asp-validation-for="@Model.Active" class="text-danger"></span>
 			
 	</div>
 </div>
@@ -116,15 +108,15 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.Bank" class="form-label fieldrequired"><strong>@Localizer["Bank"] :</strong></label>
-			<input asp-for="@Model.Bank" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.Bank" class="text-danger"></span>
+		<label asp-for="@Model.BankName" class="form-label "><strong>@Localizer["Bank"] :</strong></label>
+			<input asp-for="@Model.BankName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.BankName" class="text-danger"></span>
 			
 	</div>
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.BankCode" class="form-label fieldrequired"><strong>@Localizer["BankCode"] :</strong></label>
+		<label asp-for="@Model.BankCode" class="form-label "><strong>@Localizer["Bank Code"] :</strong></label>
 			<input asp-for="@Model.BankCode" class="form-control" maxlength="12" />
 			<span asp-validation-for="@Model.BankCode" class="text-danger"></span>
 			
@@ -148,33 +140,9 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.AccountNumber" class="form-label fieldrequired"><strong>@Localizer["Account Number"] :</strong></label>
+		<label asp-for="@Model.AccountNumber" class="form-label "><strong>@Localizer["Account Number"] :</strong></label>
 			<input asp-for="@Model.AccountNumber" class="form-control" maxlength="14" />
 			<span asp-validation-for="@Model.AccountNumber" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.DeliveryMethod" class="form-label fieldrequired"><strong>@Localizer["Delivery Method"] :</strong></label>
-			<input asp-for="@Model.DeliveryMethod" class="form-control" maxlength="3" />
-			<span asp-validation-for="@Model.DeliveryMethod" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.EWBDelMethod" class="form-label fieldrequired"><strong>@Localizer["EWB Delivery Method"] :</strong></label>
-			<input asp-for="@Model.EWBDelMethod" class="form-control" maxlength="3" />
-			<span asp-validation-for="@Model.EWBDelMethod" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.PaymentType" class="form-label fieldrequired"><strong>@Localizer["Payment Type"] :</strong></label>
-			<input asp-for="@Model.PaymentType" class="form-control" maxlength="30" />
-			<span asp-validation-for="@Model.PaymentType" class="text-danger"></span>
 			
 	</div>
 </div>

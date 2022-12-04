@@ -38,21 +38,15 @@ public record CompanyViewModel : BaseViewModel
 	[StringLength(17, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? TINNo { get; init; }
 	[Display(Name = "Submit Place")]
-	[Required]
 	[StringLength(1000, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string SubmitPlace { get; init; } = "";
+	public string? SubmitPlace { get; init; }
 	[Display(Name = "Submit Deadline")]
-	[Required]
 	
 	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-	public decimal SubmitDeadline { get; init; }
+	public decimal? SubmitDeadline { get; init; }
 	[Display(Name = "Email / Telephone Number")]
-	[Required]
 	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EmailTelephoneNumber { get; init; } = "";
-	[Display(Name = "Active")]
-	[Required]
-	public bool Active { get; init; }
+	public string? EmailTelephoneNumber { get; init; }
 	[Display(Name = "Image Logo")]
 	
 	public IFormFile? ImageLogoForm { get; set; }public string? ImageLogo { get; init; }
@@ -64,13 +58,11 @@ public record CompanyViewModel : BaseViewModel
 		}
 	}
 	[Display(Name = "Bank")]
-	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Bank { get; init; } = "";
-	[Display(Name = "BankCode")]
-	[Required]
+	public string? BankName { get; init; }
+	[Display(Name = "Bank Code")]
 	[StringLength(12, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string BankCode { get; init; } = "";
+	public string? BankCode { get; init; }
 	[Display(Name = "Account Name")]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? AccountName { get; init; }
@@ -78,28 +70,14 @@ public record CompanyViewModel : BaseViewModel
 	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? AccountType { get; init; }
 	[Display(Name = "Account Number")]
-	[Required]
 	[StringLength(14, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string AccountNumber { get; init; } = "";
-	[Display(Name = "Delivery Method")]
-	[Required]
-	[StringLength(3, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string DeliveryMethod { get; init; } = "";
-	[Display(Name = "EWB Delivery Method")]
-	[Required]
-	[StringLength(3, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string EWBDelMethod { get; init; } = "";
-	[Display(Name = "Payment Type")]
-	[Required]
-	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string PaymentType { get; init; } = "";
+	public string? AccountNumber { get; init; }
 	
 	public DateTime LastModifiedDate { get; set; }
 	public DatabaseConnectionSetupViewModel? DatabaseConnectionSetup { get; init; }
 		
 	public IList<ProjectViewModel>? ProjectList { get; set; }
 	public IList<UserEntityViewModel>? UserEntityList { get; set; }
-	public IList<GeneratedViewModel>? GeneratedList { get; set; }
-	public IList<CreditorViewModel>? CreditorList { get; set; }
+	public IList<EnrolledPayeeViewModel>? EnrolledPayeeList { get; set; }
 	
 }

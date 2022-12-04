@@ -14,5 +14,6 @@ public record DatabaseConnectionSetupState : BaseEntity
 	
 	
 	public IList<CompanyState>? CompanyList { get; set; }
+	public IList<CreditorState>? CreditorList { get; set; }
 	
 }

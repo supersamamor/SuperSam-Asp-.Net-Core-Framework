@@ -31,11 +31,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                CompanyId = e.Company?.Id,
-				e.CreditorAccount,
-				e.AccountName,
-				e.AccountType,
-				e.Status,
+                e.CreditorAccount,
+				DatabaseConnectionSetupId = e.DatabaseConnectionSetup?.Name,
 						
 				
                 e.LastModifiedDate

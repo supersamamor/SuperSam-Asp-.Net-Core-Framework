@@ -38,13 +38,10 @@
 								@Localizer["Email / Telephone Number"]
 							</th>
 							<th>
-								@Localizer["Active"]
-							</th>
-							<th>
 								@Localizer["Bank"]
 							</th>
 							<th>
-								@Localizer["BankCode"]
+								@Localizer["Bank Code"]
 							</th>
 							<th>
 								@Localizer["Account Number"]
@@ -71,7 +68,7 @@
         var table = $('#company').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 11, 'desc' ]],
+            order: [[ 10, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Company/Index", new { area = "FAS", handler = "ListAll" })',
@@ -92,9 +89,8 @@
 				{ data: "submitPlace", name: "SubmitPlace", responsivePriority: 1, title: '@Localizer["Submit Place"]', searchable: true },
 				{ data: "submitDeadline", name: "SubmitDeadline", responsivePriority: 1, title: '@Localizer["Submit Deadline"]', searchable: false },
 				{ data: "emailTelephoneNumber", name: "EmailTelephoneNumber", responsivePriority: 1, title: '@Localizer["Email / Telephone Number"]', searchable: true },
-				{ data: "active", name: "Active", responsivePriority: 1, title: '@Localizer["Active"]', searchable: false },
-				{ data: "bank", name: "Bank", responsivePriority: 1, title: '@Localizer["Bank"]', searchable: true },
-				{ data: "bankCode", name: "BankCode", responsivePriority: 1, title: '@Localizer["BankCode"]', searchable: true },
+				{ data: "bankName", name: "BankName", responsivePriority: 1, title: '@Localizer["Bank"]', searchable: true },
+				{ data: "bankCode", name: "BankCode", responsivePriority: 1, title: '@Localizer["Bank Code"]', searchable: true },
 				{ data: "accountNumber", name: "AccountNumber", responsivePriority: 1, title: '@Localizer["Account Number"]', searchable: true },
 				   
 				
