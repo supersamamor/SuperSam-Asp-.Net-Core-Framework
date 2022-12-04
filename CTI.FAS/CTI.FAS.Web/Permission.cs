@@ -15,8 +15,7 @@ public static class Permission
 			.Concat(GeneratePermissionsForModule("Company"))
 			.Concat(GeneratePermissionsForModule("Project"))
 			.Concat(GeneratePermissionsForModule("Tenant"))
-			.Concat(GeneratePermissionsForModule("UserEntity"))
-			.Concat(GeneratePermissionsForModule("Batch"))
+			.Concat(GeneratePermissionsForModule("UserEntity"))			
 			.Concat(GeneratePermissionsForModule("PaymentTransaction"))
 			.Concat(GeneratePermissionsForModule("Creditor"))
 			.Concat(GeneratePermissionsForModule("EnrolledPayee"))
@@ -134,13 +133,7 @@ public static class Permission
 		public const string Edit = "Permission.UserEntity.Edit";
 		public const string Delete = "Permission.UserEntity.Delete";
 	}
-	public static class Batch
-	{
-		public const string View = "Permission.Batch.View";
-		public const string Create = "Permission.Batch.Create";
-		public const string Edit = "Permission.Batch.Edit";
-		public const string Delete = "Permission.Batch.Delete";
-	}
+
 	public static class PaymentTransaction
 	{
 		public const string View = "Permission.PaymentTransaction.View";
