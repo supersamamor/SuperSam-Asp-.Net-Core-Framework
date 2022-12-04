@@ -50,7 +50,7 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.EntityDescription" class="form-label "><strong>@Localizer["Description"] :</strong></label>
-            <input asp-for="@Model.EntityDescription" class="form-control" maxlength="100" />
+            <input asp-for="@Model.EntityDescription" class="form-control" maxlength="100" readonly/>
             <span asp-validation-for="@Model.EntityDescription" class="text-danger"></span>
         </div>
     </div>

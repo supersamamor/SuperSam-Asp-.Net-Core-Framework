@@ -29,15 +29,15 @@ public class FASProfile : Profile
 		CreateMap<CompanyViewModel, CompanyState>();
 		CreateMap<ProjectViewModel, AddProjectCommand>();
 		CreateMap<ProjectViewModel, EditProjectCommand>();
-		CreateMap<ProjectState, ProjectViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.Id));
+		CreateMap<ProjectState, ProjectViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name));
 		CreateMap<ProjectViewModel, ProjectState>();
 		CreateMap<TenantViewModel, AddTenantCommand>();
 		CreateMap<TenantViewModel, EditTenantCommand>();
-		CreateMap<TenantState, TenantViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Id));
+		CreateMap<TenantState, TenantViewModel>().ForPath(e => e.ForeignKeyProject, o => o.MapFrom(s => s.Project!.Name));
 		CreateMap<TenantViewModel, TenantState>();
 		CreateMap<UserEntityViewModel, AddUserEntityCommand>();
 		CreateMap<UserEntityViewModel, EditUserEntityCommand>();
-		CreateMap<UserEntityState, UserEntityViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.Id));
+		CreateMap<UserEntityState, UserEntityViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name));
 		CreateMap<UserEntityViewModel, UserEntityState>();
 		CreateMap<BatchViewModel, AddBatchCommand>();
 		CreateMap<BatchViewModel, EditBatchCommand>();

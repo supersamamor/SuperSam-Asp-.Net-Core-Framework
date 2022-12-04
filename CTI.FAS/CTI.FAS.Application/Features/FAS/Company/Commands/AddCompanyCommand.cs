@@ -17,13 +17,12 @@ public record AddCompanyCommand : CompanyState, IRequest<Validation<Error, Compa
 
 public class AddCompanyCommandHandler : BaseCommandHandler<ApplicationContext, CompanyState, AddCompanyCommand>, IRequestHandler<AddCompanyCommand, Validation<Error, CompanyState>>
 {
-	private readonly IdentityContext _identityContext;
+
     public AddCompanyCommandHandler(ApplicationContext context,
                                     IMapper mapper,
-                                    CompositeValidator<AddCompanyCommand> validator,
-									IdentityContext identityContext) : base(context, mapper, validator)
+                                    CompositeValidator<AddCompanyCommand> validator) : base(context, mapper, validator)
     {
-		_identityContext = identityContext;
+	
     }
 
     public async Task<Validation<Error, CompanyState>> Handle(AddCompanyCommand request, CancellationToken cancellationToken) =>
