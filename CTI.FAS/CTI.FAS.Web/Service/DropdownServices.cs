@@ -21,14 +21,14 @@ namespace CTI.FAS.Web.Service
 		public SelectList GetCompanyList(string id)
 		{
 			return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.EntityDisplayDescription } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
 		public SelectList GetCreditorList(string id)
 		{
 			return _context.GetSingle<CreditorState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.CreditorDisplayDescription } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
