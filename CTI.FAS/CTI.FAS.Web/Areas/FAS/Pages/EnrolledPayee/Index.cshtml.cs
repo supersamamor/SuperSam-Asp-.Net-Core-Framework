@@ -31,8 +31,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                CompanyId = e.Company?.Id,
-				CreditorId = e.Creditor?.Id,
+                Entity = e.Company?.EntityDisplayDescription,
+				Creditor = e.Creditor?.CreditorDisplayDescription,
 				e.PayeeAccountType,
 				e.Status,
 						

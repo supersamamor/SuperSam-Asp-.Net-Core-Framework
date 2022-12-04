@@ -16,7 +16,7 @@ public class GetEnrolledPayeeQueryHandler : BaseQueryHandler<ApplicationContext,
     {
     }
 	public override async Task<PagedListResponse<EnrolledPayeeState>> Handle(GetEnrolledPayeeQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<EnrolledPayeeState>().Include(l=>l.Company).Include(l=>l.Creditor)
+		await Context.Set<EnrolledPayeeState>().Include(l=>l.Company).ThenInclude(l => l.DatabaseConnectionSetup).Include(l=>l.Creditor)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,
