@@ -17,13 +17,11 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Creditor Account"]
-							</th>
-							<th>
-								@Localizer["Database Connection Setup"]
-							</th>
-							  
-														
+                                @Localizer["Database Connection Setup"]
+                            </th>
+                            <th>
+                                @Localizer["Creditor Account"]
+                            </th>
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -54,14 +52,12 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
             },
-			initComplete: function( settings, json ) {
+            initComplete: function( settings, json ) {
                 BindTableRowCollapseEvent();
             },
-			columns: [
+            columns: [
+                { data: "databaseConnectionSetupId", name: "DatabaseConnectionSetupId", responsivePriority: 1, title: '@Localizer["Database Connection Setup"]', searchable: false },
                 { data: "creditorAccount", name: "CreditorAccount", responsivePriority: 1, title: '@Localizer["Creditor Account"]', searchable: true },
-				{ data: "databaseConnectionSetupId", name: "DatabaseConnectionSetupId", responsivePriority: 1, title: '@Localizer["Database Connection Setup"]', searchable: false },
-				   
-				
                 {
                     data: null,
                     searchable: false,
@@ -83,8 +79,9 @@
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
+                { data: "payeeAccountName", name: "PayeeAccountName", visible: false, searchable: true },
             ],
-            buttons: [        
+            buttons: [
                 'excel', 'pdf', 'pageLength',
             ],
         });
@@ -93,7 +90,7 @@
         $('.btn-table_filter').on('click', function(e) {
             table.ajax.reload(null, false);
         });
-		function BindTableRowCollapseEvent()
+        function BindTableRowCollapseEvent()
         {
             $('#creditor tbody').on('click', 'td.dtr-control', function () {
                 $.showAjaxLoaderOnClick([".btnAddCreditor",".btnEditCreditor",".btnViewCreditor",".btnDeleteCreditor"]);

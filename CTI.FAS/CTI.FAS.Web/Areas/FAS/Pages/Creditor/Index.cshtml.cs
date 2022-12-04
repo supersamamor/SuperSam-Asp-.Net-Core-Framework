@@ -31,11 +31,10 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.CreditorAccount,
-				DatabaseConnectionSetupId = e.DatabaseConnectionSetup?.Name,
-						
-				
-                e.LastModifiedDate
+                CreditorAccount = e.CreditorDisplayDescription,
+				DatabaseConnectionSetupId = e.DatabaseConnectionSetup?.Name,	
+                e.LastModifiedDate,
+                e.PayeeAccountName,
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     } 
