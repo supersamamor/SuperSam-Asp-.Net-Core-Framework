@@ -50,7 +50,7 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.EntityDescription" class="form-label "><strong>@Localizer["Description"] :</strong></label>
-            <input asp-for="@Model.EntityDescription" class="form-control" maxlength="100" readonly/>
+            <input asp-for="@Model.EntityDescription" class="form-control" maxlength="100" readonly />
             <span asp-validation-for="@Model.EntityDescription" class="text-danger"></span>
         </div>
     </div>
@@ -118,7 +118,7 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.AccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
-            <input asp-for="@Model.AccountType" class="form-control" maxlength="30" />
+            <select asp-for="@Model.AccountType" class="form-control" asp-items="@(dropdownService.AccountTypeList())"><option value="">- Select Account Type -</option></select>
             <span asp-validation-for="@Model.AccountType" class="text-danger"></span>
         </div>
     </div>

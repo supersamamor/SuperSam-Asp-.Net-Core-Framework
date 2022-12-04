@@ -32,8 +32,8 @@
     </div>
     <div class="col">
         <div class="mb-3">
-            <label asp-for="@Model.PayeeAccountType" class="form-label fieldrequired"><strong>@Localizer["Account Type"] :</strong></label>
-            <input asp-for="@Model.PayeeAccountType" class="form-control" maxlength="30" />
+            <label asp-for="@Model.PayeeAccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
+            <select asp-for="@Model.PayeeAccountType" class="form-control" asp-items="@(dropdownService.AccountTypeList())"><option value="">- Select Account Type -</option></select>
             <span asp-validation-for="@Model.PayeeAccountType" class="text-danger"></span>
         </div>
     </div>
