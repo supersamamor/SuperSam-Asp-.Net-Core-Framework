@@ -6,6 +6,7 @@ public static class Permission
     {
         return GeneratePermissionsForModule("Admin")
             .Concat(GeneratePermissionsForModule("Entities"))
+            .Concat(GeneratePermissionsForModule("Group"))
             .Concat(GeneratePermissionsForModule("Roles"))
             .Concat(GeneratePermissionsForModule("Users"))
             .Concat(GeneratePermissionsForModule("Apis"))
@@ -71,7 +72,13 @@ public static class Permission
         public const string Edit = "Permission.Entities.Edit";
         public const string Delete = "Permission.Entities.Delete";
     }
-
+    public static class Group
+    {
+        public const string View = "Permission.Group.View";
+        public const string Create = "Permission.Group.Create";
+        public const string Edit = "Permission.Group.Edit";
+        public const string Delete = "Permission.Group.Delete";
+    }
     public static class Roles
     {
         public const string View = "Permission.Roles.View";

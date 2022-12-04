@@ -4,6 +4,7 @@ using CTI.FAS.Web.Areas.Admin.Models;
 using CTI.Common.Data;
 using Microsoft.AspNetCore.Identity;
 using CTI.FAS.Core.Identity;
+using CTI.FAS.Web.Areas.Admin.Commands.Group;
 
 namespace CTI.FAS.Web.Areas.Admin.Mapping;
 
@@ -19,5 +20,10 @@ public class AdminProfile : Profile
 
         CreateMap<Audit, AuditLogViewModel>();
         CreateMap<ApplicationUser, AuditLogUserViewModel>();
+
+
+        CreateMap<Group, GroupViewModel>().ReverseMap();
+        CreateMap<GroupViewModel, AddOrEditGroupCommand>();
+        CreateMap<AddOrEditGroupCommand, Group>();
     }
 }

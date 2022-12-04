@@ -39,6 +39,7 @@ public class AddModel : BasePageModel<AddModel>
     public async Task<IActionResult> OnGetAsync()
     {
         Input.Entities = await _context.GetEntitiesList(Input.EntityId);
+        Input.Groups = await _context.GetGroupList(Input.GroupId);
         Roles = GetRoles();
         return Page();
     }
@@ -46,6 +47,7 @@ public class AddModel : BasePageModel<AddModel>
     public async Task<IActionResult> OnPost()
     {
         Input.Entities = await _context.GetEntitiesList(Input.EntityId);
+        Input.Groups = await _context.GetGroupList(Input.GroupId);
         if (!ModelState.IsValid)
         {
             return Page();
@@ -148,6 +150,9 @@ public record AddViewModel
     [Required]
     [Display(Name = "Entity")]
     public string EntityId { get; set; } = Guid.NewGuid().ToString();
-
+    [Required]
+    [Display(Name = "Group")]
+    public string GroupId { get; set; } = "";
     public SelectList Entities { get; set; } = new(new List<SelectListItem>());
+    public SelectList Groups { get; set; } = new(new List<SelectListItem>());
 }

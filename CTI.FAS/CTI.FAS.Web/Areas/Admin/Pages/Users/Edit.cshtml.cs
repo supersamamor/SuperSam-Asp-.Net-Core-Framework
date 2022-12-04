@@ -64,37 +64,50 @@ public class EditModel : BasePageModel<EditModel>
             IsActive = user.IsActive,
         };
         userModel.Entities = await _context.GetEntitiesList(userModel.EntityId);
+        userModel.Groups = await _context.GetGroupList(userModel.GroupId);
         return userModel;
     }
 
     public async Task<IActionResult> OnPost()
     {
         Input.Entities = await _context.GetEntitiesList(Input.EntityId);
+        Input.Groups = await _context.GetGroupList(Input.GroupId);
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        return await Mediatr.Send(new GetUserByIdQuery(Input.Id))
-            .ToActionResult(
-            async user =>
-            {
-                using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-                return await UpdateUser(user).BindT(async u => await UpdateRolesForUser(u))
-                .ToActionResult(
-                    user =>
-                    {
-                        scope.Complete();
-                        Logger.LogInformation("Updated User. ID: {ID}, User: {User}", user.Id, user.ToString());
-                        NotyfService.Success(Localizer["Record saved successfully"]);
-                        return RedirectToPage("View", new { id = user.Id });
-                    },
-                    errors =>
-                    {
-                        Logger.LogError("Error in OnPost. Error: {Errors}", string.Join(",", errors));
-                        ModelState.AddModelError("", Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
-                        return Page();
-                    });
-            }, none: null);
+        try
+        {
+            var test = await Mediatr.Send(new GetUserByIdQuery(Input.Id));
+            ApplicationUser test2;
+            test.Select(l => test2 = l);
+            return await Mediatr.Send(new GetUserByIdQuery(Input.Id))
+           .ToActionResult(
+           async user =>
+           {
+               using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+               return await UpdateUser(user).BindT(async u => await UpdateRolesForUser(u))
+               .ToActionResult(
+                   user =>
+                   {
+                       scope.Complete();
+                       Logger.LogInformation("Updated User. ID: {ID}, User: {User}", user.Id, user.ToString());
+                       NotyfService.Success(Localizer["Record saved successfully"]);
+                       return RedirectToPage("View", new { id = user.Id });
+                   },
+                   errors =>
+                   {
+                       Logger.LogError("Error in OnPost. Error: {Errors}", string.Join(",", errors));
+                       ModelState.AddModelError("", Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
+                       return Page();
+                   });
+           }, none: null);
+        }
+        catch (Exception ex)
+        {
+            return Page();
+        }
+       
     }
 
     async Task<IList<UserRoleViewModel>> GetRolesForUser(ApplicationUser user)
@@ -150,7 +163,11 @@ public record UserEditViewModel
     [Required]
     [Display(Name = "Status")]
     public bool IsActive { get; set; }
+    [Required]
+    [Display(Name = "Group")]
+    public string GroupId { get; set; } = "";
 
     public SelectList Entities { get; set; } = new(new List<SelectListItem>());
+    public SelectList Groups { get; set; } = new(new List<SelectListItem>());
     public SelectList Statuses { get; set; } = AdminUtilities.GetUserStatusList();
 }

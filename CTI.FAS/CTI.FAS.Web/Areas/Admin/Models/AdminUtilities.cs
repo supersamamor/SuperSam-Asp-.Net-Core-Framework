@@ -23,4 +23,7 @@ public static class AdminUtilities
             new SelectListItem() { Value = "false", Text = "Inactive" });
         return new SelectList(statuses, "Value", "Text");
     }
+    public static async Task<SelectList> GetGroupList(this IdentityContext _context, string selectedGroudId) =>
+       new SelectList(await _context.Group.Select(e => new SelectListItem { Value = e.Id, Text = e.Name })
+                                             .ToListAsync(), "Value", "Text", selectedGroudId);
 }

@@ -22,5 +22,6 @@ namespace CTI.FAS.Infrastructure.Data
         }
 
         public DbSet<Entity> Entities { get; set; } = default!;
+        public DbSet<Group> Group { get; set; } = default!;
     }
 }

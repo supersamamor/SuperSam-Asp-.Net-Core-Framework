@@ -13,13 +13,19 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     public Entity? Entity { get; set; }
     public string? EntityId { get; set; }
-
+    [PersonalData]
+    public Group? Group { get; set; }
+    public string? GroupId { get; set; }
     public bool IsActive { get; set; } = false;
     public DateTime RegisteredDate { get; set; } = DateTime.UtcNow;
     public DateTime? LastUnsucccessfulLogin { get; set; }
 }
 
 public record Entity(string Id, string Name)
+{
+    public IEnumerable<ApplicationUser>? Users { get; set; }
+}
+public record Group(string Id, string Name)
 {
     public IEnumerable<ApplicationUser>? Users { get; set; }
 }

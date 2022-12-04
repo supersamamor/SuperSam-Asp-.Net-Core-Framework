@@ -10,6 +10,7 @@
 }
 <form id="user-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.Input!.Id" />
     <div class="card">
         <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["User Info"]</span><br></h5>
         <div class="card-body">

@@ -30,6 +30,15 @@
                                 </a>
                             </li>
                         }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Group.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Group" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Group")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Group"]</span>
+                                </a>
+                            </li>
+                        }
                         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.View)).Succeeded)
                         {
                             <li class="nav-item">
