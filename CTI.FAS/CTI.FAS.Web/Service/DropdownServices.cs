@@ -5,6 +5,7 @@ using CTI.Common.Data;
 using CTI.FAS.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using CTI.FAS.Web.Areas.Admin.Queries.Roles;
+using Microsoft.EntityFrameworkCore;
 
 namespace CTI.FAS.Web.Service
 {
@@ -20,10 +21,23 @@ namespace CTI.FAS.Web.Service
 		}       
 		public SelectList GetCompanyList(string id)
 		{
-			return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.EntityDisplayDescription } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
+			var companyList = _context.Company.Where(e => e.Id == id)
+			 .Include(l => l.DatabaseConnectionSetup).ToList();
+			if (companyList.Count > 0)
+			{
+				return new SelectList(companyList.ConvertAll(a =>
+				{
+					return new SelectListItem()
+					{
+						Value = a.Id,
+						Text = a.EntityDisplayDescription,
+					};
+				}), "Value", "Text", id);
+			}
+			else
+			{
+				return new SelectList(new List<SelectListItem>(), "Value", "Text");
+			}
 		}
 		public SelectList GetCreditorList(string id)
 		{

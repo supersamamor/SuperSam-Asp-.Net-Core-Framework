@@ -9,6 +9,7 @@ public record EnrolledPayeeEmailViewModel : BaseViewModel
 {	
 	[Display(Name = "Email")]
 	[Required]
+	[EmailAddress]
 	[StringLength(70, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Email { get; init; } = "";
 	[Display(Name = "Creditor")]

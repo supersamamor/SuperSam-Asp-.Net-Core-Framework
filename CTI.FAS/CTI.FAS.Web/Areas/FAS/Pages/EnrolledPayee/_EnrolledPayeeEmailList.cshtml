@@ -13,9 +13,8 @@
                 <tr>
                     <th style="display:none;"></th>
                     <th>
-								@Localizer["Email"]
-							</th>
-							
+                        @Localizer["Email"]
+                    </th>
                     <th>
                         @Localizer["Action"]
                     </th>
@@ -33,11 +32,9 @@
                                 <input type="hidden" name="EnrolledPayeeEmailList[@counter].EnrolledPayeeId" value="@item.EnrolledPayeeId" />
                             </td>
                             <td>
-										<input  asp-for="@item.Email" name="EnrolledPayeeEmailList[@counter].Email" class="form-control" maxlength="70" />
-										<span data-valmsg-for="EnrolledPayeeEmailList[@counter].Email" asp-validation-for="@item.Email" class="text-danger"></span>
-										
-									</td>
-									
+                                <input asp-for="@item.Email" name="EnrolledPayeeEmailList[@counter].Email" class="form-control" maxlength="70" />
+                                <span data-valmsg-for="EnrolledPayeeEmailList[@counter].Email" asp-validation-for="@item.Email" class="text-danger"></span>
+                            </td>
                             <td>
                                 <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveEnrolledPayeeEmailButton" title="@Localizer["Remove EnrolledPayeeEmail"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
                             </td>
