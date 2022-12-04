@@ -44,6 +44,12 @@
             </div>
             <div class="col">
                 <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.Group" class="form-label"><strong>Group :</strong></label>
+                    <input asp-for="@Model.UserDetails.Group" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
                     <label asp-for="@Model.UserDetails.IsActive" class="form-label" style="margin-right:10px;"><strong>Status :</strong></label>
                     @if (Model.UserDetails.IsActive)
                     {

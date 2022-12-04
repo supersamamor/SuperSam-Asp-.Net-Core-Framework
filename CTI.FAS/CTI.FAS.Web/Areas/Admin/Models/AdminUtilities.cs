@@ -26,4 +26,6 @@ public static class AdminUtilities
     public static async Task<SelectList> GetGroupList(this IdentityContext _context, string selectedGroudId) =>
        new SelectList(await _context.Group.Select(e => new SelectListItem { Value = e.Id, Text = e.Name })
                                              .ToListAsync(), "Value", "Text", selectedGroudId);
+    public static async Task<Option<string>> GetGroupName(this IdentityContext _context, string groupId) =>
+      ToOption(await _context.Group.Where(e => e.Id == groupId).Select(e => e.Name).FirstOrDefaultAsync());
 }

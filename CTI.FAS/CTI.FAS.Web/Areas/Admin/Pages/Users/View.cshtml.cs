@@ -39,6 +39,7 @@ public class ViewModel : BasePageModel<ViewModel>
                             .ToActionResult(async user =>
                             {
                                 UserDetails = await GetViewModel(user);
+                                UserDetails = await GetGroup(UserDetails);
                                 Roles = await GetRolesForUser(user);
                                 return Page();
                             }, none: null);
@@ -53,7 +54,7 @@ public class ViewModel : BasePageModel<ViewModel>
                 BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
                 Email = user.Email,
                 Entity = entity,
-                IsActive = user.IsActive,
+                GroupId = user.GroupId,
             },
             () => new UserDetailsViewModel
             {
@@ -64,7 +65,26 @@ public class ViewModel : BasePageModel<ViewModel>
                 Entity =  Core.Constants.Entities.Default,
                 IsActive = user.IsActive,
             });
-
+    async Task<UserDetailsViewModel> GetGroup(UserDetailsViewModel user) =>
+        await _context.GetGroupName(user.GroupId!).Match(
+            group => new UserDetailsViewModel
+            {
+                Id = user.Id,
+                Name = user.Name ?? "",
+                BirthDate = user.BirthDate,
+                Email = user.Email,
+                Entity = user.Entity,
+                Group = group,
+            },
+            () => new UserDetailsViewModel
+            {
+                Id = user.Id,
+                Name = user.Name ?? "",
+                BirthDate = user.BirthDate,
+                Email = user.Email,
+                Entity = Core.Constants.Entities.Default,
+                IsActive = user.IsActive,
+            });
     async Task<IList<UserRoleViewModel>> GetRolesForUser(ApplicationUser user)
     {
         var userRoles = await _userManager.GetRolesAsync(user);
@@ -95,4 +115,7 @@ public record UserDetailsViewModel
 
     [Display(Name = "Status")]
     public bool IsActive { get; set; }
+    [Display(Name = "Group")]
+    public string? Group { get; set; } = "";
+    public string? GroupId { get; set; } = "";
 }
