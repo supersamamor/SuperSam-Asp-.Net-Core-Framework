@@ -78,34 +78,13 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditCreditor" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Creditor.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/Creditor/Delete", new { area = "FAS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteCreditor" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
-                    </text>
-                }
-				  
                         return button;
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: [
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Creditor.Create)).Succeeded)
-        {
-            <text>
-                {
-                    text: '@Localizer["Add"]',
-                    action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/Creditor/Add", new { area = "FAS" })';
-                        window.location.href = url;
-                    },
-                    className: 'btn btn-success text-light',
-                },
-            </text>
-        }
+            buttons: [        
                 'excel', 'pdf', 'pageLength',
             ],
         });

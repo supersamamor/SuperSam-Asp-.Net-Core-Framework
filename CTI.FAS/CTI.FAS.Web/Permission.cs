@@ -26,18 +26,33 @@ public static class Permission
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
-        var permissions = new List<string>()
+        var permissions = new List<string>(); 
+        if (module == "DatabaseConnectionSetup" || module == "Company" || module == "Project"
+            || module == "Tenant" || module == "Creditor" || module == "PaymentTransaction")
         {
-            $"Permission.{module}.Create",
-            $"Permission.{module}.View",
-            $"Permission.{module}.Edit",
-            $"Permission.{module}.Delete",
-			$"Permission.{module}.Approve",
-        };
-		if (module == "ApproverSetup")
-		{
-			permissions.Add($"Permission.{module}.PendingApprovals");
-		}
+            permissions.Add($"Permission.{module}.View");
+            permissions.Add($"Permission.{module}.Edit");
+        }
+        else if (module == "EnrolledPayee")
+        {
+            permissions.Add($"Permission.{module}.View");
+            permissions.Add($"Permission.{module}.Create");
+            permissions.Add($"Permission.{module}.Edit");
+        }
+        else if (module == "ApproverSetup")
+        {
+            permissions.Add($"Permission.{module}.Create");
+            permissions.Add($"Permission.{module}.View");
+            permissions.Add($"Permission.{module}.Edit");
+            permissions.Add($"Permission.{module}.PendingApprovals");
+        }
+        else
+        {
+            permissions.Add($"Permission.{module}.View");
+            permissions.Add($"Permission.{module}.Create");
+            permissions.Add($"Permission.{module}.Edit");
+            permissions.Add($"Permission.{module}.Delete");
+        }
 		return permissions;
     }
 
@@ -95,73 +110,44 @@ public static class Permission
         public const string Create = "Permission.AuditTrail.Create";
         public const string Edit = "Permission.AuditTrail.Edit";
         public const string Delete = "Permission.AuditTrail.Delete";
-    }
-
+    }   
     public static class DatabaseConnectionSetup
 	{
 		public const string View = "Permission.DatabaseConnectionSetup.View";
-		public const string Create = "Permission.DatabaseConnectionSetup.Create";
 		public const string Edit = "Permission.DatabaseConnectionSetup.Edit";
-		public const string Delete = "Permission.DatabaseConnectionSetup.Delete";
-		public const string Approve = "Permission.DatabaseConnectionSetup.Approve";
 	}
 	public static class Company
 	{
-		public const string View = "Permission.Company.View";
-		public const string Create = "Permission.Company.Create";
-		public const string Edit = "Permission.Company.Edit";
-		public const string Delete = "Permission.Company.Delete";
+		public const string View = "Permission.Company.View";		
+		public const string Edit = "Permission.Company.Edit";		
 	}
 	public static class Project
 	{
-		public const string View = "Permission.Project.View";
-		public const string Create = "Permission.Project.Create";
+		public const string View = "Permission.Project.View";	
 		public const string Edit = "Permission.Project.Edit";
-		public const string Delete = "Permission.Project.Delete";
 	}
 	public static class Tenant
 	{
-		public const string View = "Permission.Tenant.View";
-		public const string Create = "Permission.Tenant.Create";
+		public const string View = "Permission.Tenant.View";	
 		public const string Edit = "Permission.Tenant.Edit";
-		public const string Delete = "Permission.Tenant.Delete";
 	}
-	public static class UserEntity
+    public static class Creditor
+    {
+        public const string View = "Permission.Creditor.View";
+        public const string Edit = "Permission.Creditor.Edit";
+    }
+    public static class PaymentTransaction
 	{
-		public const string View = "Permission.UserEntity.View";
-		public const string Create = "Permission.UserEntity.Create";
-		public const string Edit = "Permission.UserEntity.Edit";
-		public const string Delete = "Permission.UserEntity.Delete";
+		public const string View = "Permission.PaymentTransaction.View";		
+		public const string Edit = "Permission.PaymentTransaction.Edit";
 	}
 
-	public static class PaymentTransaction
-	{
-		public const string View = "Permission.PaymentTransaction.View";
-		public const string Create = "Permission.PaymentTransaction.Create";
-		public const string Edit = "Permission.PaymentTransaction.Edit";
-		public const string Delete = "Permission.PaymentTransaction.Delete";
-	}
-	public static class Creditor
-	{
-		public const string View = "Permission.Creditor.View";
-		public const string Create = "Permission.Creditor.Create";
-		public const string Edit = "Permission.Creditor.Edit";
-		public const string Delete = "Permission.Creditor.Delete";
-	}
 	public static class EnrolledPayee
 	{
 		public const string View = "Permission.EnrolledPayee.View";
 		public const string Create = "Permission.EnrolledPayee.Create";
-		public const string Edit = "Permission.EnrolledPayee.Edit";
-		public const string Delete = "Permission.EnrolledPayee.Delete";
-	}
-	public static class EnrolledPayeeEmail
-	{
-		public const string View = "Permission.EnrolledPayeeEmail.View";
-		public const string Create = "Permission.EnrolledPayeeEmail.Create";
-		public const string Edit = "Permission.EnrolledPayeeEmail.Edit";
-		public const string Delete = "Permission.EnrolledPayeeEmail.Delete";
-	}
+		public const string Edit = "Permission.EnrolledPayee.Edit";	
+	}	
 	
 	public static class ApproverSetup
 	{

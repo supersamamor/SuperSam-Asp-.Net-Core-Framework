@@ -85,15 +85,7 @@
                         url = '@Url.Page("/EnrolledPayee/Edit", new { area = "FAS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditEnrolledPayee" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/EnrolledPayee/Delete", new { area = "FAS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteEnrolledPayee" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
-                    </text>
-                }
-				  
+                }   
                         return button;
                     },
                 },

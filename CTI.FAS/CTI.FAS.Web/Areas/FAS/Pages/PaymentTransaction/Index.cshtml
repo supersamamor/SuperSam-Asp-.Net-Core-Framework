@@ -101,35 +101,14 @@
                         url = '@Url.Page("/PaymentTransaction/Edit", new { area = "FAS" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditPaymentTransaction" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Delete)).Succeeded)
-                {
-                    <text>
-                        url = '@Url.Page("/PaymentTransaction/Delete", new { area = "FAS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeletePaymentTransaction" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>';
-                    </text>
-                }
-				  
+                }     
                         return button;
                     },
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
             ],
-            buttons: [
-        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Create)).Succeeded)
-        {
-            <text>
-                {
-                    text: '@Localizer["Add"]',
-                    action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/PaymentTransaction/Add", new { area = "FAS" })';
-                        window.location.href = url;
-                    },
-                    className: 'btn btn-success text-light',
-                },
-            </text>
-        }
+            buttons: [      
                 'excel', 'pdf', 'pageLength',
             ],
         });
