@@ -32,9 +32,13 @@ namespace CTI.FAS.CsvGenerator.Services
     {
         public CsvDocumentModel(string fileName, string staticFolderPath, string subFolderPath, string staticFolder)
         {
+            var folderPath = staticFolderPath + "\\" + subFolderPath;
             this.FileName = fileName;
-            this.CompleteFilePath = staticFolderPath + "\\" + subFolderPath + "\\" + this.FileName;
-            this.FileUrl = "\\" + staticFolder + "\\" + subFolderPath + "\\" + this.FileName;            
+            this.CompleteFilePath = folderPath + "\\" + this.FileName;
+            this.FileUrl = "\\" + staticFolder + "\\" + subFolderPath + "\\" + this.FileName;
+            bool folderPathExists = Directory.Exists(folderPath);
+            if (!folderPathExists)
+               Directory.CreateDirectory(folderPath);
         }
         public string FileName { get; set; } = "";
         public string CompleteFilePath { get; private set; } = "";
