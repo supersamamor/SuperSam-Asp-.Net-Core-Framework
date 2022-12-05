@@ -122,7 +122,7 @@ public record UserDetailsViewModel
     [Display(Name = "Group")]
     public string? Group { get; set; } = "";
     public string? GroupId { get; set; } = "";
-    [Display(Name = "PplusId")]
+    [Display(Name = "Pplus Id")]
     public string? PplusId { get; set; }
 
 }

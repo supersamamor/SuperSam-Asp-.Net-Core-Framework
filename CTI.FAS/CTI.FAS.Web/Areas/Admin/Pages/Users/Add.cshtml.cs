@@ -154,7 +154,7 @@ public record AddViewModel
     [Required]
     [Display(Name = "Group")]
     public string GroupId { get; set; } = "";
-    [Display(Name = "PplusId")]
+    [Display(Name = "Pplus Id")]
     public string? PplusId { get; set; }
     public SelectList Entities { get; set; } = new(new List<SelectListItem>());
     public SelectList Groups { get; set; } = new(new List<SelectListItem>());

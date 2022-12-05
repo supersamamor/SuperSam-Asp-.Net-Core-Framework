@@ -67,6 +67,8 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
+        [Display(Name = "Pplus Id")]
+        public string? PplusId { get; set; }
 
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please agree to the terms")]
         public bool TermsAccepted { get; set; }
@@ -162,7 +164,8 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
                 Email = Input?.Email,
                 Name = Input?.Name,
                 BirthDate = Input?.BirthDate,
-                EntityId = defaultEntity!.Id
+                EntityId = defaultEntity!.Id,
+                PplusId = Input?.PplusId,
             };
 
             var result = await _userManager.CreateAsync(user);
