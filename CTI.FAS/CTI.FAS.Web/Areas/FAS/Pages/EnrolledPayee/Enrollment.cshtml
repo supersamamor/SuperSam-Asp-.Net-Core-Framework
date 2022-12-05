@@ -83,6 +83,9 @@
             </a>
         </div>
     </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">      
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
 </form>
 @section Scripts {
 <partial name="_DataTableScripts" />
@@ -92,6 +95,7 @@
             select: false,
             searching: true,
             paging: true,
+            pageLength: 10,
             info: true,
             buttons: [
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded)
