@@ -16,10 +16,11 @@ public class DefaultAuthenticatedUser : IAuthenticatedUser
     /// <param name="httpContextAccessor"></param>
     public DefaultAuthenticatedUser(IHttpContextAccessor httpContextAccessor)
     {
-        UserId = httpContextAccessor.HttpContext?.User.FindFirst(Claims.Subject)?.Value;
-        Username = httpContextAccessor.HttpContext?.User.FindFirst(Claims.Name)?.Value;
-        Entity = httpContextAccessor.HttpContext?.User.FindFirst(CustomClaimTypes.Entity)?.Value;
-        TraceId = Activity.Current?.Id ?? httpContextAccessor.HttpContext?.TraceIdentifier;
+        ClaimsPrincipal = httpContextAccessor?.HttpContext?.User;
+        UserId = ClaimsPrincipal?.FindFirst(Claims.Subject)?.Value;
+        Username = ClaimsPrincipal?.FindFirst(Claims.Name)?.Value;
+        Entity = ClaimsPrincipal?.FindFirst(CustomClaimTypes.Entity)?.Value;
+        TraceId = Activity.Current?.Id ?? httpContextAccessor?.HttpContext?.TraceIdentifier;      
     }
 
     /// <summary>
@@ -41,4 +42,5 @@ public class DefaultAuthenticatedUser : IAuthenticatedUser
     /// Unique identifier for the current request.
     /// </summary>
     public string? TraceId { get; }
+    public System.Security.Claims.ClaimsPrincipal? ClaimsPrincipal { get; }
 }

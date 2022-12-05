@@ -24,4 +24,5 @@ public interface IAuthenticatedUser
     /// Username of this user.
     /// </summary>
     string? Username { get; }
+    public System.Security.Claims.ClaimsPrincipal? ClaimsPrincipal { get; }
 }
