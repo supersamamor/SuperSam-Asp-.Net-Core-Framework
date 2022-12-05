@@ -42,33 +42,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < Model.EnrolledPayeeList.Count(); i++)
+                                    @for (int i = 0; i < Model.ForEnrollmentList.Count(); i++)
                                     {
                                         <tr>
                                             <td>
                                                 <div class="form-check m-1">
-                                                    @if (Model.EnrolledPayeeList[i].Enabled)
+                                                    @if (Model.ForEnrollmentList[i].Enabled)
                                                     {
-                                                        <input type="checkbox" name="EnrolledPayeeList[@(i)].Enabled" class="form-check-input" value=true checked />
+                                                        <input type="checkbox" name="ForEnrollmentList[@(i)].Enabled" class="form-check-input" value=true checked />
                                                     }
                                                     else
                                                     {
-                                                        <input type="checkbox" name="EnrolledPayeeList[@(i)].Enabled" class="form-check-input" value=true />
+                                                        <input type="checkbox" name="ForEnrollmentList[@(i)].Enabled" class="form-check-input" value=true />
                                                     }
-                                                    <input type="hidden" asp-for="@Model.EnrolledPayeeList[i].Id" />
+                                                    <input type="hidden" asp-for="@Model.ForEnrollmentList[i].Id" />
+                                                    <input type="hidden" asp-for="@Model.ForEnrollmentList[i].Company" />
+                                                    <input type="hidden" asp-for="@Model.ForEnrollmentList[i].Creditor" />
+                                                    <input type="hidden" asp-for="@Model.ForEnrollmentList[i].PayeeAccountType" />
+                                                    <input type="hidden" asp-for="@Model.ForEnrollmentList[i].Status" />
                                                 </div>
                                             </td>
                                             <td>
-                                                @Model.EnrolledPayeeList[i].ForeignKeyCompany
+                                                @Model.ForEnrollmentList[i].Company
                                             </td>
                                             <td>
-                                                @Model.EnrolledPayeeList[i].ForeignKeyCreditor
+                                                @Model.ForEnrollmentList[i].Creditor
                                             </td>
                                             <td>
-                                                @Model.EnrolledPayeeList[i].PayeeAccountType
+                                                @Model.ForEnrollmentList[i].PayeeAccountType
                                             </td>
                                             <td>
-                                                @Model.EnrolledPayeeList[i].Status
+                                                @Model.ForEnrollmentList[i].Status
                                             </td>
                                         </tr>
                                     }
@@ -83,7 +87,7 @@
             </a>
         </div>
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">      
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
         <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
     </div>
 </form>

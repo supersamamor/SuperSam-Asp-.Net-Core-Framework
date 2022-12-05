@@ -9,12 +9,21 @@ namespace CTI.FAS.Web.Areas.FAS.Pages.EnrolledPayee;
 [Authorize(Policy = Permission.EnrolledPayee.View)]
 public class EnrollmentModel : BasePageModel<EnrollmentModel>
 {
-    public IList<EnrolledPayeeViewModel> EnrolledPayeeList { get; set; } = new List<EnrolledPayeeViewModel>();
+    [BindProperty]
+    public IList<PayeeEnrollmentViewModel> ForEnrollmentList { get; set; } = new List<PayeeEnrollmentViewModel>();
 
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Enrollment };
     public async Task<IActionResult> OnGet()
     {
-        EnrolledPayeeList = Mapper.Map<IList<EnrolledPayeeViewModel>>(await Mediatr.Send(new GetPayeeForEnrollmentQuery()));        
+        ForEnrollmentList = Mapper.Map<IList<PayeeEnrollmentViewModel>>(await Mediatr.Send(new GetPayeeForEnrollmentQuery()));        
+        return Page();
+    }
+    public async Task<IActionResult> OnPost()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
         return Page();
     }
 }

@@ -67,5 +67,8 @@ public class FASProfile : Profile
 		CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
 		CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
 		CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
-    }
+		CreateMap<EnrolledPayeeState, PayeeEnrollmentViewModel>()
+			.ForPath(e => e.Company, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name))
+			.ForPath(e => e.Creditor, o => o.MapFrom(s => s.Creditor!.PayeeAccountName + " - " + s.Creditor!.CreditorAccount));
+	}
 }
