@@ -20,6 +20,7 @@ public class DropdownModel : BasePageModel<DropdownModel>
     {
         var query = request.ToQuery<GetCreditorQuery>(nameof(CreditorState.PayeeAccountName));
         query.CompanyId = companyId;
+        query.ExcludeEnrolled = true;
         var result = await Mediatr.Send(query);
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e?.CreditorDisplayDescription == null ? "N/A" : e?.CreditorDisplayDescription! }));
     }
