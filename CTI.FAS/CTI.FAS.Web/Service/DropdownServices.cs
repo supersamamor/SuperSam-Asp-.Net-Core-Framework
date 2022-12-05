@@ -95,9 +95,7 @@ namespace CTI.FAS.Web.Service
         public IEnumerable<SelectListItem> EnrollmentStatusList()
         {
             IList<SelectListItem> items = new List<SelectListItem>
-            {
-                new SelectListItem { Text = Core.Constants.EnrollmentStatus.New, Value = Core.Constants.EnrollmentStatus.New, },
-                new SelectListItem { Text = Core.Constants.EnrollmentStatus.ForEnrollment, Value = Core.Constants.EnrollmentStatus.ForEnrollment, },
+            {     
                 new SelectListItem { Text = Core.Constants.EnrollmentStatus.Active, Value = Core.Constants.EnrollmentStatus.Active, },
                 new SelectListItem { Text = Core.Constants.EnrollmentStatus.InActive, Value = Core.Constants.EnrollmentStatus.InActive, },
             };

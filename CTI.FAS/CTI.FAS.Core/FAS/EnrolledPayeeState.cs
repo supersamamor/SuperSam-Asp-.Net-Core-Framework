@@ -9,13 +9,13 @@ public record EnrolledPayeeState : BaseEntity
     public string PayeeAccountNumber { get; init; } = "";
     public string PayeeAccountType { get; init; } = "";
     public string Email { get; init; } = "";
-    public string? Status { get; private set; } = Constants.EnrollmentStatus.New;
+    public string? Status { get; private set; } = Constants.EnrollmentStatus.Active;
     public CompanyState? Company { get; init; }
     public CreditorState? Creditor { get; init; }
     public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
     public IList<EnrolledPayeeEmailState>? EnrolledPayeeEmailList { get; set; }
-    public void TagAsNew()
+    public void TagAsActive()
     {
-        this.Status = Constants.EnrollmentStatus.New;
+        this.Status = Constants.EnrollmentStatus.Active;
     }
 }
