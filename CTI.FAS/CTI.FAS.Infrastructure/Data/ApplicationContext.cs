@@ -24,13 +24,13 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 	public DbSet<PaymentTransactionState> PaymentTransaction { get; set; } = default!;
 	public DbSet<CreditorState> Creditor { get; set; } = default!;
 	public DbSet<EnrolledPayeeState> EnrolledPayee { get; set; } = default!;
-	public DbSet<EnrolledPayeeEmailState> EnrolledPayeeEmail { get; set; } = default!;
-	
+	public DbSet<EnrolledPayeeEmailState> EnrolledPayeeEmail { get; set; } = default!;	
 	public DbSet<ApprovalState> Approval { get; set; } = default!;
 	public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
 	public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
 	public DbSet<ApprovalRecordState> ApprovalRecord { get; set; } = default!;
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	public DbSet<EnrollmentBatchState> EnrollmentBatch { get; set; } = default!;
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
                                                    .SelectMany(t => t.GetProperties())
@@ -151,6 +151,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<PaymentTransactionState>().HasIndex(e => new { e.IfcaBatchNumber });
 		modelBuilder.Entity<CreditorState>().HasIndex(e => new { e.PayeeAccountName });
 		modelBuilder.Entity<CreditorState>().HasIndex(e => new { e.CreditorAccount });
+		modelBuilder.Entity<EnrollmentBatchState>().HasMany(t => t.EnrolledPayeeList).WithOne(l => l.EnrollmentBatch).HasForeignKey(t => t.EnrollmentBatchId);
+		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
+		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
 		base.OnModelCreating(modelBuilder);
     }
 }
