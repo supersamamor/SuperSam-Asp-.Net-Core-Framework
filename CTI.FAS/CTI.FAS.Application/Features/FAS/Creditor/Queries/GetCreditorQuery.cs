@@ -48,7 +48,7 @@ public class GetCreditorQueryHandler : BaseQueryHandler<ApplicationContext, Cred
             var databaseIdList = await (from db in Context.DatabaseConnectionSetup
                                         join c in Context.Company on db.Id equals c.DatabaseConnectionSetupId
                                         join ue in Context.UserEntity on c.Id equals ue.CompanyId
-                                        where ue.PplusUserId == _authenticatedUser.UserId && c.IsDisabled == false
+                                        where ue.PplusUserId == pplusUserId && c.IsDisabled == false
                                         select db.Id).Distinct().ToListAsync(cancellationToken: cancellationToken);
             query = from a in query
                     where databaseIdList.Contains(a.DatabaseConnectionSetupId)

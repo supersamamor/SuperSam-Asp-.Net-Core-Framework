@@ -32,7 +32,7 @@ public class GetDatabaseConnectionSetupQueryHandler : BaseQueryHandler<Applicati
             query = from a in query
                     join c in Context.Company on a.Id equals c.DatabaseConnectionSetupId
                     join ue in Context.UserEntity on c.Id equals ue.CompanyId
-                    where ue.PplusUserId == _authenticatedUser.UserId && a.IsDisabled == false && c.IsDisabled == false
+                    where ue.PplusUserId == pplusUserId && a.IsDisabled == false && c.IsDisabled == false
                     select a;
         }
         return await query

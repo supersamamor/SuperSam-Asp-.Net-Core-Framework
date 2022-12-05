@@ -31,7 +31,7 @@ public class GetCompanyQueryHandler : BaseQueryHandler<ApplicationContext, Compa
             var pplusUserId = await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().Select(l => l.PplusId).FirstOrDefaultAsync(cancellationToken: cancellationToken);
             query = from a in query
                     join ue in Context.UserEntity on a.Id equals ue.CompanyId
-                    where ue.PplusUserId == _authenticatedUser.UserId && a.IsDisabled == false
+                    where ue.PplusUserId == pplusUserId && a.IsDisabled == false
                     select a;
         }
         return await query.Include(l => l.DatabaseConnectionSetup)

@@ -34,7 +34,7 @@ public class GetPaymentTransactionQueryHandler : BaseQueryHandler<ApplicationCon
                     join ep in Context.EnrolledPayee on a.EnrolledPayeeId equals ep.Id
                     join c in Context.Company on ep.CompanyId equals c.Id
                     join ue in Context.UserEntity on c.Id equals ue.CompanyId
-                    where ue.PplusUserId == _authenticatedUser.UserId && c.IsDisabled == false
+                    where ue.PplusUserId == pplusUserId && c.IsDisabled == false
                     select a;
         }
         return await query.Include(l => l.Batch).Include(l => l!.EnrolledPayee)

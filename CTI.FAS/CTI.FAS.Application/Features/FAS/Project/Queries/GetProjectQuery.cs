@@ -32,7 +32,7 @@ public class GetProjectQueryHandler : BaseQueryHandler<ApplicationContext, Proje
             query = from a in query
                     join ue in Context.UserEntity on a.Id equals ue.CompanyId
                     join c in Context.Company on ue.CompanyId equals c.Id
-                    where ue.PplusUserId == _authenticatedUser.UserId && a.IsDisabled == false && c.IsDisabled == false
+                    where ue.PplusUserId == pplusUserId && a.IsDisabled == false && c.IsDisabled == false
                     select a;
         }
         return await query.Include(l => l.Company)

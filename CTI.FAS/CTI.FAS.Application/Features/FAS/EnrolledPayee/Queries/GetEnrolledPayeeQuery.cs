@@ -33,7 +33,7 @@ public class GetEnrolledPayeeQueryHandler : BaseQueryHandler<ApplicationContext,
             query = from a in query
                     join c in Context.Company on a.CompanyId equals c.Id
                     join ue in Context.UserEntity on c.Id equals ue.CompanyId
-                    where ue.PplusUserId == _authenticatedUser.UserId && c.IsDisabled == false
+                    where ue.PplusUserId == pplusUserId && c.IsDisabled == false
                     select a;
         }
         return await query.Include(l => l.Company).ThenInclude(l => l!.DatabaseConnectionSetup).Include(l => l.Creditor)
