@@ -19,6 +19,7 @@ public class ApplicationUser : IdentityUser
     public bool IsActive { get; set; } = false;
     public DateTime RegisteredDate { get; set; } = DateTime.UtcNow;
     public DateTime? LastUnsucccessfulLogin { get; set; }
+    public string? PplusId { get; set; }
 }
 
 public record Entity(string Id, string Name)

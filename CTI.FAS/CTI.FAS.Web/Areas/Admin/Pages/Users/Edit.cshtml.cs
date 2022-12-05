@@ -62,6 +62,7 @@ public class EditModel : BasePageModel<EditModel>
             BirthDate = user.BirthDate,
             EntityId = user.EntityId!,
             GroupId = user.GroupId!,
+            PplusId = user.PplusId!,
             IsActive = user.IsActive,
         };
         userModel.Entities = await _context.GetEntitiesList(userModel.EntityId);
@@ -118,6 +119,7 @@ public class EditModel : BasePageModel<EditModel>
         user.EntityId = Input.EntityId;
         user.IsActive = Input.IsActive;
         user.GroupId = Input.GroupId;
+        user.PplusId = Input.PplusId;
         return await ToValidation<ApplicationUser>(_userManager.UpdateAsync)(user);
     }
 
@@ -157,6 +159,9 @@ public record UserEditViewModel
     [Required]
     [Display(Name = "Group")]
     public string GroupId { get; set; } = "";
+
+    [Display(Name = "PplusId")]
+    public string? PplusId { get; set; }
 
     public SelectList Entities { get; set; } = new(new List<SelectListItem>());
     public SelectList Groups { get; set; } = new(new List<SelectListItem>());

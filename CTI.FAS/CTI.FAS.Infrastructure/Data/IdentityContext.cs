@@ -18,6 +18,7 @@ namespace CTI.FAS.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Entity>().HasIndex(e => e.Name).IsUnique();
+            builder.Entity<ApplicationUser>().HasIndex(e => e.PplusId).IsUnique();
             base.OnModelCreating(builder);
         }
 

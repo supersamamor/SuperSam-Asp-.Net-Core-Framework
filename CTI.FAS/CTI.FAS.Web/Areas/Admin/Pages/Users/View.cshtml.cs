@@ -54,6 +54,7 @@ public class ViewModel : BasePageModel<ViewModel>
                 BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
                 Email = user.Email,
                 Entity = entity,
+                PplusId = user.PplusId,
                 GroupId = user.GroupId,
             },
             () => new UserDetailsViewModel
@@ -63,6 +64,7 @@ public class ViewModel : BasePageModel<ViewModel>
                 BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
                 Email = user.Email,
                 Entity =  Core.Constants.Entities.Default,
+                PplusId = user.PplusId,
                 IsActive = user.IsActive,
             });
     async Task<UserDetailsViewModel> GetGroup(UserDetailsViewModel user) =>
@@ -75,6 +77,7 @@ public class ViewModel : BasePageModel<ViewModel>
                 Email = user.Email,
                 Entity = user.Entity,
                 Group = group,
+                PplusId = user.PplusId,
             },
             () => new UserDetailsViewModel
             {
@@ -84,6 +87,7 @@ public class ViewModel : BasePageModel<ViewModel>
                 Email = user.Email,
                 Entity = Core.Constants.Entities.Default,
                 IsActive = user.IsActive,
+                PplusId = user.PplusId,
             });
     async Task<IList<UserRoleViewModel>> GetRolesForUser(ApplicationUser user)
     {
@@ -118,4 +122,7 @@ public record UserDetailsViewModel
     [Display(Name = "Group")]
     public string? Group { get; set; } = "";
     public string? GroupId { get; set; } = "";
+    [Display(Name = "PplusId")]
+    public string? PplusId { get; set; }
+
 }

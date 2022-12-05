@@ -50,6 +50,12 @@
             </div>
             <div class="col">
                 <div class="mb-3">
+                    <label asp-for="@Model.UserDetails.PplusId" class="form-label"><strong>Pplus Id :</strong></label>
+                    <input asp-for="@Model.UserDetails.PplusId" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
                     <label asp-for="@Model.UserDetails.IsActive" class="form-label" style="margin-right:10px;"><strong>Status :</strong></label>
                     @if (Model.UserDetails.IsActive)
                     {

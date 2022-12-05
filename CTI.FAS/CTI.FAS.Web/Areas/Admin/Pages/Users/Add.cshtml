@@ -72,6 +72,13 @@
                         <span asp-validation-for="@Model.Input.GroupId" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Input.PplusId" class="form-label fieldrequired"><strong>Pplus Id :</strong></label>
+                        <input asp-for="@Model.Input.PplusId" class="form-control" />
+                        <span asp-validation-for="@Model.Input.PplusId" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

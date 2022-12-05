@@ -95,6 +95,7 @@ public class AddModel : BasePageModel<AddModel>
                 EntityId = Input.EntityId,
                 IsActive = true,
                 EmailConfirmed = true,
+                PplusId = Input.PplusId,
             };
             var result = await _userManager.CreateAsync(user, Input.Password);
             if (!result.Succeeded)
@@ -153,6 +154,8 @@ public record AddViewModel
     [Required]
     [Display(Name = "Group")]
     public string GroupId { get; set; } = "";
+    [Display(Name = "PplusId")]
+    public string? PplusId { get; set; }
     public SelectList Entities { get; set; } = new(new List<SelectListItem>());
     public SelectList Groups { get; set; } = new(new List<SelectListItem>());
 }
