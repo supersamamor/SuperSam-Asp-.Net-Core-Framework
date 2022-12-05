@@ -1,3 +1,4 @@
+using CTI.FAS.Application.Features.FAS.Creditor.Queries;
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Commands;
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
 using CTI.FAS.Web.Areas.FAS.Models;
@@ -34,7 +35,7 @@ public class EditModel : BasePageModel<EditModel>
 		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditEnrolledPayeeCommand>(EnrolledPayee)), "Details", true);
     }	
-	public IActionResult OnPostChangeFormValue()
+	public async Task<IActionResult> OnPostChangeFormValue()
     {
         ModelState.Clear();
 		if (AsyncAction == "AddEnrolledPayeeEmail")
@@ -45,8 +46,11 @@ public class EditModel : BasePageModel<EditModel>
 		{
 			return RemoveEnrolledPayeeEmail();
 		}
-		
-		
+        if (AsyncAction == "GetDefaultEmail")
+        {
+            return await GetDefaultEmail();
+        }
+
         return Partial("_InputFieldsPartial", EnrolledPayee);
     }
 	
@@ -63,5 +67,10 @@ public class EditModel : BasePageModel<EditModel>
 		EnrolledPayee.EnrolledPayeeEmailList = EnrolledPayee!.EnrolledPayeeEmailList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", EnrolledPayee);
 	}
-	
+    private async Task<IActionResult> GetDefaultEmail()
+    {
+        ModelState.Clear();
+        _ = (await Mediatr.Send(new GetCreditorByIdQuery(EnrolledPayee.CreditorId))).Select(l => EnrolledPayee.Email = l.Email);
+        return Partial("_InputFieldsPartial", EnrolledPayee);
+    }
 }

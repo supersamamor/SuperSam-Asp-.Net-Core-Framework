@@ -37,6 +37,10 @@
 				$('#AsyncAction').val('');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#enrolledPayee-form', InitializeForm);
 			});
+			$('#CreditorId').on( 'change', function () {				
+				$('#AsyncAction').val('GetDefaultEmail');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#enrolledPayee-form', InitializeForm);
+			});
 			$.InitializeEnrolledPayeeEmailFieldValidations($('#EnrolledPayeeEmailCount').val());
 			$('.RemoveEnrolledPayeeEmailButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));

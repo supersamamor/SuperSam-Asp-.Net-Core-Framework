@@ -8,6 +8,7 @@ public record EnrolledPayeeState : BaseEntity
     public string CreditorId { get; init; } = "";
     public string PayeeAccountNumber { get; init; } = "";
     public string PayeeAccountType { get; init; } = "";
+    public string Email { get; init; } = "";
     public string? Status { get; private set; } = Constants.EnrollmentStatus.New;
     public CompanyState? Company { get; init; }
     public CreditorState? Creditor { get; init; }

@@ -18,7 +18,7 @@ public class DropdownModel : BasePageModel<DropdownModel>
 
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request,string companyId)
     {
-        var query = request.ToQuery<GetCreditorQuery>(nameof(CreditorState.PayeeAccountName));
+        var query = request.ToQuery<GetCreditorQuery>(nameof(CreditorState.CreditorAccount));
         query.CompanyId = companyId;
         query.ExcludeEnrolled = true;
         var result = await Mediatr.Send(query);

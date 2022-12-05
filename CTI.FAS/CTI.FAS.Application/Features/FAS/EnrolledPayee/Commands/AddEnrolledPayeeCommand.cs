@@ -17,13 +17,12 @@ public record AddEnrolledPayeeCommand : EnrolledPayeeState, IRequest<Validation<
 
 public class AddEnrolledPayeeCommandHandler : BaseCommandHandler<ApplicationContext, EnrolledPayeeState, AddEnrolledPayeeCommand>, IRequestHandler<AddEnrolledPayeeCommand, Validation<Error, EnrolledPayeeState>>
 {
-	private readonly IdentityContext _identityContext;
+
     public AddEnrolledPayeeCommandHandler(ApplicationContext context,
                                     IMapper mapper,
-                                    CompositeValidator<AddEnrolledPayeeCommand> validator,
-									IdentityContext identityContext) : base(context, mapper, validator)
+                                    CompositeValidator<AddEnrolledPayeeCommand> validator) : base(context, mapper, validator)
     {
-		_identityContext = identityContext;
+
     }
 
     public async Task<Validation<Error, EnrolledPayeeState>> Handle(AddEnrolledPayeeCommand request, CancellationToken cancellationToken) =>

@@ -28,7 +28,10 @@ public record EnrolledPayeeViewModel : BaseViewModel
 	[Display(Name = "Status")]
 	[StringLength(30, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? Status { get; init; }
-	
+	[Display(Name = "Email")]
+	[StringLength(70, ErrorMessage = "{0} length can't be more than {1}.")]
+	[Required]
+	public string Email { get; set; } = "";
 	public DateTime LastModifiedDate { get; set; }
 	public CompanyViewModel? Company { get; init; }
 	public CreditorViewModel? Creditor { get; init; }
