@@ -2,49 +2,19 @@ using CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.Web.Areas.FAS.Models;
 using CTI.FAS.Web.Models;
-using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
-
 namespace CTI.FAS.Web.Areas.FAS.Pages.EnrolledPayee;
 
 [Authorize(Policy = Permission.EnrolledPayee.View)]
 public class EnrollmentModel : BasePageModel<EnrollmentModel>
 {
-    public EnrolledPayeeViewModel EnrolledPayee { get; set; } = new();
+    public IList<EnrolledPayeeViewModel> EnrolledPayeeList { get; set; } = new List<EnrolledPayeeViewModel>();
 
-    [DataTablesRequest]
-    public DataTablesRequest? DataRequest { get; set; }
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Enrollment };
-    public IActionResult OnGet()
-    {    
+    public async Task<IActionResult> OnGet()
+    {
+        EnrolledPayeeList = Mapper.Map<IList<EnrolledPayeeViewModel>>(await Mediatr.Send(new GetPayeeForEnrollmentQuery()));        
         return Page();
-    }
-
-    public async Task<IActionResult> OnPostListAllAsync()
-    {
-		
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetEnrolledPayeeQuery>());
-        return new JsonResult(result.Data
-            .Select(e => new
-            {
-                e.Id,
-                Entity = e.Company?.EntityDisplayDescription,
-				Creditor = e.Creditor?.CreditorDisplayDescription,
-				e.PayeeAccountType,
-				e.Status,
-						
-				
-                e.LastModifiedDate
-            })
-            .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
-    {
-        var result = await Mediatr.Send(request.ToQuery<GetEnrolledPayeeQuery>(nameof(EnrolledPayeeState.Id)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
     }
 }

@@ -31,5 +31,6 @@ public record EnrolledPayeeViewModel : BaseViewModel
 	public CreditorViewModel? Creditor { get; init; }
 	public bool DisableFields { get; set; }
 	public IList<PaymentTransactionViewModel>? PaymentTransactionList { get; set; }
-	public IList<EnrolledPayeeEmailViewModel>? EnrolledPayeeEmailList { get; set; }	
+	public IList<EnrolledPayeeEmailViewModel>? EnrolledPayeeEmailList { get; set; }
+	public bool Enabled { get; set; } 
 }
