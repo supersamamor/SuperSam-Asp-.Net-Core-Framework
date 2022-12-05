@@ -12,6 +12,8 @@ using Serilog;
 using CTI.FAS.Scheduler;
 using CTI.FAS.EmailSending;
 using Rotativa.AspNetCore;
+using CTI.FAS.Core.Constants;
+using CTI.FAS.CsvGenerator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +46,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddScheduler(configuration);
 services.AddEmailSendingAService(configuration);
+services.AddCsvGeneratorService();
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
@@ -59,7 +62,7 @@ app.UseStaticFiles(new StaticFileOptions
             "public,max-age=" + durationInSeconds;
     },
     FileProvider = new PhysicalFileProvider(uploadFilesPath),
-    RequestPath = "/" + WebConstants.UploadFilesPath
+    RequestPath = "/" + GlobalConstants.UploadFilesPath
 });
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

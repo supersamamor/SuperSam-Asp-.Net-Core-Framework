@@ -89,7 +89,7 @@
             <label asp-for="@Model.ImageLogo" class="form-label "><strong>@Localizer["Image Logo"] :</strong></label>
             <input asp-for="@Model.ImageLogoForm" class="file-upload-control" style="display:block" /> @if (!string.IsNullOrEmpty(Model.ImageLogo))
             {
-                <div class="input-group col-md-12" style="padding-left:0px;padding-right:0px;margin-top:10px;"><input asp-for="@Model.ImageLogo" class="form-control" readonly /><a href="/@WebConstants.UploadFilesPath/@Model.ImageLogo" class="input-group-text btn btn-success" style="cursor:pointer;color:#fff;font-weight:700;" target="_blank">@Localizer["View"]</a></div>
+                <div class="input-group col-md-12" style="padding-left:0px;padding-right:0px;margin-top:10px;"><input asp-for="@Model.ImageLogo" class="form-control" readonly /><a href="/@CTI.FAS.Core.Constants.GlobalConstants.UploadFilesPath/@Model.ImageLogo" class="input-group-text btn btn-success" style="cursor:pointer;color:#fff;font-weight:700;" target="_blank">@Localizer["View"]</a></div>
             }
             <span asp-validation-for="@Model.ImageLogo" class="text-danger"></span>
         </div>
