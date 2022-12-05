@@ -23,7 +23,8 @@ namespace CTI.FAS.Scheduler
             });
             services.AddTransient<FileScanJob>();
             services.AddTransient<ApprovalNotificationJob>();
-            services.AddTransient<MasterfileSynchronizationRepository>();            
+            services.AddTransient<MasterfileSynchronizationRepository>();
+            services.AddTransient<MasterfileSynchronizationJob>();
         }
     }
 }
