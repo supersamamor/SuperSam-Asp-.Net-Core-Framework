@@ -9,7 +9,10 @@ using CTI.Common.Identity.Abstractions;
 
 namespace CTI.FAS.Application.Features.FAS.Creditor.Queries;
 
-public record GetCreditorQuery : BaseQuery, IRequest<PagedListResponse<CreditorState>>;
+public record GetCreditorQuery : BaseQuery, IRequest<PagedListResponse<CreditorState>>
+{
+    public string? CompanyId { get; set; }
+}
 
 public class GetCreditorQueryHandler : BaseQueryHandler<ApplicationContext, CreditorState, GetCreditorQuery>, IRequestHandler<GetCreditorQuery, PagedListResponse<CreditorState>>
 {
@@ -20,8 +23,8 @@ public class GetCreditorQueryHandler : BaseQueryHandler<ApplicationContext, Cred
         _authenticatedUser = authenticatedUser;
         _identityContext = identityContext;
     }
-  
-	public override async Task<PagedListResponse<CreditorState>> Handle(GetCreditorQuery request, CancellationToken cancellationToken = default)
+
+    public override async Task<PagedListResponse<CreditorState>> Handle(GetCreditorQuery request, CancellationToken cancellationToken = default)
     {
         var query = (from creditor in Context.Creditor
                      select creditor)
@@ -35,6 +38,11 @@ public class GetCreditorQueryHandler : BaseQueryHandler<ApplicationContext, Cred
                     join ue in Context.UserEntity on c.Id equals ue.CompanyId
                     where ue.PplusUserId == _authenticatedUser.UserId && c.IsDisabled == false
                     select a;
+        }
+        if (!string.IsNullOrEmpty(request.CompanyId))
+        {
+            var databaseConnectionSetupId = await Context.Company.Where(l => l.Id == request.CompanyId).AsNoTracking().Select(l => l.DatabaseConnectionSetupId).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+            query = query.Where(l => l.DatabaseConnectionSetupId == databaseConnectionSetupId);
         }
         return await query.Include(l => l.DatabaseConnectionSetup)
                     .AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,

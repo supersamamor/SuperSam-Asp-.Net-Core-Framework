@@ -33,7 +33,10 @@
 				this.blur();
 				window.focus();
 			});
-			
+			$('#CompanyId').on( 'change', function () {				
+				$('#AsyncAction').val('');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#enrolledPayee-form', InitializeForm);
+			});
 			$.InitializeEnrolledPayeeEmailFieldValidations($('#EnrolledPayeeEmailCount').val());
 			$('.RemoveEnrolledPayeeEmailButton ').on( 'click', function () {
 				$('#RemoveSubDetailId').val($(this).attr('removeid'));
@@ -62,7 +65,7 @@
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Creditor/Index", new { area = "FAS", handler = "Select2Data" })',
+							url: '@Url.Page("/Creditor/Dropdown", new { area = "FAS", handler = "Select2Data" })' + '&companyId=' + $('#CompanyId').val(),
 						}
 					});
 				});
