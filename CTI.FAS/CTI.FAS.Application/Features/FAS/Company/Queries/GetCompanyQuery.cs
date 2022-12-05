@@ -28,7 +28,7 @@ public class GetCompanyQueryHandler : BaseQueryHandler<ApplicationContext, Compa
 
         if (_authenticatedUser.ClaimsPrincipal != null && !_authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.Admin))
         {
-            var pplusUserId = await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().Select(l => l.PplusId).FirstOrDefaultAsync();
+            var pplusUserId = await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().Select(l => l.PplusId).FirstOrDefaultAsync(cancellationToken: cancellationToken);
             query = from a in query
                     join ue in Context.UserEntity on a.Id equals ue.CompanyId
                     where ue.PplusUserId == _authenticatedUser.UserId && a.IsDisabled == false
