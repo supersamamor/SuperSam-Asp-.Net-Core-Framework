@@ -44,7 +44,7 @@
 				<description>Run Masterfile Synchronization Notification Job</description>
 				<job-name>Masterfile Synchronization Notification Job</job-name>
 				<job-group>Masterfile Synchronization Job</job-group>
-				<cron-expression>0 */30 * * * ?</cron-expression>
+				<cron-expression>0 0 */12 * * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>
