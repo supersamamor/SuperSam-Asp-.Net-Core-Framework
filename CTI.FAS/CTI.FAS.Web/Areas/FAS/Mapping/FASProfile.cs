@@ -54,11 +54,13 @@ public class FASProfile : Profile
 		CreateMap<EnrolledPayeeViewModel, EditEnrolledPayeeCommand>();
 		CreateMap<EnrolledPayeeState, EnrolledPayeeViewModel>()
 			.ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name))
-			.ForPath(e => e.ForeignKeyCreditor, o => o.MapFrom(s => s.Creditor!.PayeeAccountName + " - " + s.Creditor!.CreditorAccount));
+			.ForPath(e => e.ForeignKeyCreditor, o => o.MapFrom(s => s.Creditor!.PayeeAccountName + " - " + s.Creditor!.CreditorAccount))
+			.ForPath(e => e.DisableFields, o => o.MapFrom(s => true));
 		CreateMap<EnrolledPayeeViewModel, EnrolledPayeeState>();
 		CreateMap<EnrolledPayeeEmailViewModel, AddEnrolledPayeeEmailCommand>();
 		CreateMap<EnrolledPayeeEmailViewModel, EditEnrolledPayeeEmailCommand>();
-		CreateMap<EnrolledPayeeEmailState, EnrolledPayeeEmailViewModel>().ForPath(e => e.ForeignKeyEnrolledPayee, o => o.MapFrom(s => s.EnrolledPayee!.Id));
+		CreateMap<EnrolledPayeeEmailState, EnrolledPayeeEmailViewModel>()
+			.ForPath(e => e.ForeignKeyEnrolledPayee, o => o.MapFrom(s => s.EnrolledPayee!.Id));
 		CreateMap<EnrolledPayeeEmailViewModel, EnrolledPayeeEmailState>();
 		
 		CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();
