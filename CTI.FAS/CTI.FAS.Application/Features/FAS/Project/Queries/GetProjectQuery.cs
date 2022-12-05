@@ -31,7 +31,8 @@ public class GetProjectQueryHandler : BaseQueryHandler<ApplicationContext, Proje
             var pplusUserId = await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().Select(l => l.PplusId).FirstOrDefaultAsync();
             query = from a in query
                     join ue in Context.UserEntity on a.Id equals ue.CompanyId
-                    where ue.PplusUserId == _authenticatedUser.UserId
+                    join c in Context.Company on ue.CompanyId equals c.Id
+                    where ue.PplusUserId == _authenticatedUser.UserId && a.IsDisabled == false && c.IsDisabled == false
                     select a;
         }
         return await query.Include(l => l.Company)
