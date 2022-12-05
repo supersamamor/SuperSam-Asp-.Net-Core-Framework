@@ -23,16 +23,17 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <partial name="_EnrolledPayeeEmailListValidationPartial" model="@Model.EnrolledPayee" />
-
+<partial name="_DisableFieldsViaClassPartial" model="@("DisableOnEdit")" />
 <script asp-add-nonce>
     $(document).ready(function () {
         function InitializeForm()
         {
+            $.DisableFieldsViaClass();
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();
                 window.focus();
-            });
+            });			
             $('#CompanyId').on( 'change', function () {				
 				$('#AsyncAction').val('');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#enrolledPayee-form', InitializeForm);
@@ -52,32 +53,6 @@
 				$('#AsyncAction').val('AddEnrolledPayeeEmail');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#enrolledPayee-form', InitializeForm);
 			});
-
-			$.fn.companySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#CompanyId").companySelect();
-
-			$.fn.creditorSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Creditor/Dropdown", new { area = "FAS", handler = "Select2Data" })'+ '&companyId=' + $('#CompanyId').val(),
-						}
-					});
-				});
-				return this;
-			};
-			$("#CreditorId").creditorSelect();
-
-
         }
         InitializeForm();
     });

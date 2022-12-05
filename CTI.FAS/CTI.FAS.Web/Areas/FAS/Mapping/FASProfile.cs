@@ -52,7 +52,9 @@ public class FASProfile : Profile
 		CreateMap<CreditorViewModel, CreditorState>();
 		CreateMap<EnrolledPayeeViewModel, AddEnrolledPayeeCommand>();
 		CreateMap<EnrolledPayeeViewModel, EditEnrolledPayeeCommand>();
-		CreateMap<EnrolledPayeeState, EnrolledPayeeViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.Id)).ForPath(e => e.ForeignKeyCreditor, o => o.MapFrom(s => s.Creditor!.Id));
+		CreateMap<EnrolledPayeeState, EnrolledPayeeViewModel>()
+			.ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name))
+			.ForPath(e => e.ForeignKeyCreditor, o => o.MapFrom(s => s.Creditor!.PayeeAccountName + " - " + s.Creditor!.CreditorAccount));
 		CreateMap<EnrolledPayeeViewModel, EnrolledPayeeState>();
 		CreateMap<EnrolledPayeeEmailViewModel, AddEnrolledPayeeEmailCommand>();
 		CreateMap<EnrolledPayeeEmailViewModel, EditEnrolledPayeeEmailCommand>();

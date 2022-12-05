@@ -33,6 +33,7 @@
 				this.blur();
 				window.focus();
 			});
+			$('#StatusContainer').hide();
 			$('#CompanyId').on( 'change', function () {				
 				$('#AsyncAction').val('');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#enrolledPayee-form', InitializeForm);

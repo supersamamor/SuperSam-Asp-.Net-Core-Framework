@@ -17,7 +17,7 @@ public class GetEnrolledPayeeByIdQueryHandler : BaseQueryByIdHandler<Application
 	
 	public override async Task<Option<EnrolledPayeeState>> Handle(GetEnrolledPayeeByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.EnrolledPayee.Include(l=>l.Company).Include(l=>l.Creditor)
+		return await Context.EnrolledPayee.Include(l=>l.Company).ThenInclude(l=>l!.DatabaseConnectionSetup).Include(l=>l.Creditor)
 			.Include(l=>l.EnrolledPayeeEmailList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
