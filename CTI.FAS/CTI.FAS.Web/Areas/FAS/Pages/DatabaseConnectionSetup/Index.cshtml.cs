@@ -39,9 +39,8 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+    }
+    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
         var result = await Mediatr.Send(request.ToQuery<GetDatabaseConnectionSetupQuery>(nameof(DatabaseConnectionSetupState.Name)));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
