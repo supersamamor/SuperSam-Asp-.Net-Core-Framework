@@ -133,7 +133,7 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Entities");
+                    b.ToTable("Entities", (string)null);
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.Identity.Group", b =>
@@ -147,7 +147,7 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
 
                     b.HasKey("Id");
 
-                    b.ToTable("Group");
+                    b.ToTable("Group", (string)null);
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.Oidc.OidcApplication", b =>
@@ -197,7 +197,7 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
 
                     b.HasKey("Id");
 
-                    b.ToTable("OpenIddictApplications");
+                    b.ToTable("OpenIddictApplications", (string)null);
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.Oidc.OidcAuthorization", b =>
@@ -233,7 +233,7 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
 
                     b.HasIndex("ApplicationId");
 
-                    b.ToTable("OpenIddictAuthorizations");
+                    b.ToTable("OpenIddictAuthorizations", (string)null);
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.Oidc.OidcScope", b =>
@@ -267,7 +267,7 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
 
                     b.HasKey("Id");
 
-                    b.ToTable("OpenIddictScopes");
+                    b.ToTable("OpenIddictScopes", (string)null);
                 });
 
             modelBuilder.Entity("CTI.FAS.Core.Oidc.OidcToken", b =>
@@ -317,7 +317,7 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
 
                     b.HasIndex("AuthorizationId");
 
-                    b.ToTable("OpenIddictTokens");
+                    b.ToTable("OpenIddictTokens", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -146,6 +146,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverRoleId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId, e.ApproverRoleId }).IsUnique();
-        base.OnModelCreating(modelBuilder);
+		modelBuilder.Entity<EnrolledPayeeState>().HasIndex(e => new { e.CompanyId, e.CreditorId }).IsUnique();
+		modelBuilder.Entity<PaymentTransactionState>().HasIndex(e => new { e.IfcaLineNumber });
+		modelBuilder.Entity<PaymentTransactionState>().HasIndex(e => new { e.IfcaBatchNumber });
+		base.OnModelCreating(modelBuilder);
     }
 }
