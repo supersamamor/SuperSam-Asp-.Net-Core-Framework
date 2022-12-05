@@ -11,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using CTI.FAS.Scheduler;
 using CTI.FAS.EmailSending;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,7 +113,7 @@ app.MapControllers();
 app.MapRazorPages();
 app.MapHealthChecks("/health").AllowAnonymous();
 app.UseNotyf();
-
+RotativaConfiguration.Setup(app.Environment.WebRootPath, "Rotativa");
 // Seed the database
 if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
 {
