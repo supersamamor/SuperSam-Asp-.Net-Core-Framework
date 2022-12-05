@@ -1,0 +1,42 @@
+@using Models
+@model LeadPayeeEnrollmentTabNavigationPartial
+<ul class="nav nav-tabs card-header-tabs" role="tablist">
+    @if (Model.TabName == CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Enrollment)
+    {
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\Enrollment">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Enrollment]</a></li>
+    }
+    else
+    {
+        <li class="nav-item"><a class="nav-link" href="..\Enrollment" style="cursor:pointer;">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Enrollment]</a></li>
+    }
+    @if (Model.TabName == CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Active)
+    {
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\ActivePayee">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Active]</a></li>
+    }
+    else
+    {
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="..\ActivePayee" style="cursor:pointer;">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Active]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;background:#ddd;color:#000;">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.Active]</a></li>
+        }
+    }
+    @if (Model.TabName == CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.InActive)
+    {
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="..\InActivePayee">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.InActive]</a></li>
+    }
+    else
+    {
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="..\InActivePayee" style="cursor:pointer;">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.InActive]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;background:#ddd;color:#000;">@Localizer[CTI.FAS.Web.Constants.PayeeEnrollmentTabNavigation.InActive]</a></li>
+        }
+    }    
+</ul>
