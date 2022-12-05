@@ -1,4 +1,5 @@
 using CTI.FAS.Scheduler.Jobs;
+using CTI.FAS.Scheduler.Repository.DataSynchronizationRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
@@ -22,6 +23,7 @@ namespace CTI.FAS.Scheduler
             });
             services.AddTransient<FileScanJob>();
             services.AddTransient<ApprovalNotificationJob>();
+            services.AddTransient<MasterfileSynchronizationRepository>();            
         }
     }
 }
