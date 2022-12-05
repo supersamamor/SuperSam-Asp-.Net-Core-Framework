@@ -26,7 +26,7 @@ public record Entity(string Id, string Name)
 {
     public IEnumerable<ApplicationUser>? Users { get; set; }
 }
-public record Group(string Id, string Name)
+public record Group(string Id, string Name, string Location, string ContactDetails)
 {
     public IEnumerable<ApplicationUser>? Users { get; set; }
 }

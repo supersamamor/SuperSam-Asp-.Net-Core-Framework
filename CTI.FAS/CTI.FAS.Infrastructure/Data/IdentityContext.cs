@@ -19,6 +19,7 @@ namespace CTI.FAS.Infrastructure.Data
         {
             builder.Entity<Entity>().HasIndex(e => e.Name).IsUnique();
             builder.Entity<ApplicationUser>().HasIndex(e => e.PplusId).IsUnique();
+            builder.Entity<Group>().HasIndex(e => e.Name).IsUnique();
             base.OnModelCreating(builder);
         }
 
