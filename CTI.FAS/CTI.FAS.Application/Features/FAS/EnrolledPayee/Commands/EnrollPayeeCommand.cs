@@ -35,7 +35,7 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, boo
     {
         var date = DateTime.Now.Date;
         var payeeToEnrollList = await _context.EnrolledPayee
-            .Where(l => request.EnrolledPayeeIdList.Contains(l.Id)).ToListAsync(cancellationToken);
+            .Where(l => request.EnrolledPayeeIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var batchCount = (await _context.EnrollmentBatch
                              .Where(l => l.Date == date)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
@@ -44,8 +44,9 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, boo
         //Todo: Use Bulk Update
         foreach (var item in payeeToEnrollList)
         {
-            item.TagAsActiveAndSetBatch(enrollmentBatchToAdd.Id);
+            item.TagAsActiveAndSetBatch(enrollmentBatchToAdd.Id);           
         }
+        _context.UpdateRange(payeeToEnrollList);
         _ = await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
