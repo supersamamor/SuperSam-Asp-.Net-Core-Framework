@@ -47,5 +47,25 @@
 				<cron-expression>0 0 */12 * * ?</cron-expression>
 			</cron>
 		</trigger>
+		<!--Jobs-->
+		<job>
+			<name>Transactional Data Synchronization Notification Job</name>
+			<group>Transactional Data Synchronization Job</group>
+			<description>Scheduled Job for Transactional Data Synchronization</description>
+			<job-type>CTI.FAS.Scheduler.Jobs.TransactionalDataSynchronizationJob, CTI.FAS.Scheduler</job-type>
+			<durable>true</durable>
+			<recover>false</recover>
+		</job>
+		<!--Triggers-->
+		<trigger>
+			<cron>
+				<name>Trigger for Transactional Data Synchronization Notification Job</name>
+				<group>Transactional Data Synchronization Job</group>
+				<description>Run Transactional Data Synchronization Notification Job</description>
+				<job-name>Transactional Data Synchronization Notification Job</job-name>
+				<job-group>Transactional Data Synchronization Job</job-group>
+				<cron-expression>0 */30 * * * ?</cron-expression>
+			</cron>
+		</trigger>	
 	</schedule>
 </job-scheduling-data>
