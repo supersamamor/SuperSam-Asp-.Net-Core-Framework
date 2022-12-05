@@ -150,6 +150,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<PaymentTransactionState>().HasIndex(e => new { e.IfcaLineNumber });
 		modelBuilder.Entity<PaymentTransactionState>().HasIndex(e => new { e.IfcaBatchNumber });
 		modelBuilder.Entity<CreditorState>().HasIndex(e => new { e.PayeeAccountName });
+		modelBuilder.Entity<CreditorState>().HasIndex(e => new { e.CreditorAccount });
 		base.OnModelCreating(modelBuilder);
     }
 }
