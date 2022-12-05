@@ -50,7 +50,7 @@
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Company/Index", new { area = "FAS", handler = "Select2Data" })',
+							url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
 						}
 					});
 				});
