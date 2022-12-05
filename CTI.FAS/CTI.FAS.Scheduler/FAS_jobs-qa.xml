@@ -66,6 +66,26 @@
 				<job-group>Transactional Data Synchronization Job</job-group>
 				<cron-expression>0 */30 * * * ?</cron-expression>
 			</cron>
-		</trigger>	
+		</trigger>
+		<!--Jobs-->
+		<job>
+			<name>Scheduled ESettle Notification Job</name>
+			<group>ESettle Notification Job</group>
+			<description>Scheduled Job for proccessing approval notification</description>
+			<job-type>CTI.FAS.Scheduler.Jobs.ESettleNotificationJob, CTI.FAS.Scheduler</job-type>
+			<durable>true</durable>
+			<recover>false</recover>
+		</job>
+		<!--Triggers-->
+		<trigger>
+			<cron>
+				<name>Trigger for Scheduled ESettle Notification Job</name>
+				<group>ESettle Notification Job</group>
+				<description>Run Scheduled ESettle Notification Job</description>
+				<job-name>Scheduled ESettle Notification Job</job-name>
+				<job-group>ESettle Notification Job</job-group>
+				<cron-expression>* */5 * * * ?</cron-expression>
+			</cron>
+		</trigger>
 	</schedule>
 </job-scheduling-data>
