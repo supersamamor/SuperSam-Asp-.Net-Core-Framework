@@ -176,7 +176,7 @@
                     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
                     {
                         <li class="nav-item">
-                            <a href="/FAS/EnrolledPayee" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EnrolledPayee")">
+                            <a href="/FAS/EnrolledPayee/Enrollment" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EnrolledPayee")">
                                 <i class="fas fa-circle nav-icon"></i>
                                 <span>
                                     @Localizer["Payee Enrollment"]
