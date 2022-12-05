@@ -18,4 +18,8 @@ public record EnrolledPayeeState : BaseEntity
     {
         this.Status = Constants.EnrollmentStatus.New;
     }
+    public void TagAsActive()
+    {
+        this.Status = Constants.EnrollmentStatus.Active;
+    }
 }

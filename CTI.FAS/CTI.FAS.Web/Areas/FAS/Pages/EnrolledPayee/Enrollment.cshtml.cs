@@ -1,3 +1,4 @@
+using CTI.FAS.Application.Features.FAS.EnrolledPayee.Commands;
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.Web.Areas.FAS.Models;
@@ -15,7 +16,7 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Enrollment };
     public async Task<IActionResult> OnGet()
     {
-        ForEnrollmentList = Mapper.Map<IList<PayeeEnrollmentViewModel>>(await Mediatr.Send(new GetPayeeForEnrollmentQuery()));        
+        ForEnrollmentList = Mapper.Map<IList<PayeeEnrollmentViewModel>>(await Mediatr.Send(new GetPayeeForEnrollmentQuery()));
         return Page();
     }
     public async Task<IActionResult> OnPost()
@@ -23,6 +24,17 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
         if (!ModelState.IsValid)
         {
             return Page();
+        }
+        try
+        {
+            await Mediatr.Send(new EnrollPayeeCommand(ForEnrollmentList.Where(l => l.Enabled).Select(l => l.Id).ToList()));
+            NotyfService.Success(Localizer["Enrollment success."]);
+            return RedirectToPage("Enrollment");
+        }
+        catch (Exception ex)
+        {
+            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
+            Logger.LogError(ex, "Exception encountered");
         }
         return Page();
     }
