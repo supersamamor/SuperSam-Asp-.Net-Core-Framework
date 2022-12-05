@@ -14,8 +14,8 @@ public record EnrolledPayeeState : BaseEntity
     public CreditorState? Creditor { get; init; }
     public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
     public IList<EnrolledPayeeEmailState>? EnrolledPayeeEmailList { get; set; }
-    public void TagAsActive()
+    public void TagAsNew()
     {
-        this.Status = Constants.EnrollmentStatus.Active;
+        this.Status = Constants.EnrollmentStatus.New;
     }
 }

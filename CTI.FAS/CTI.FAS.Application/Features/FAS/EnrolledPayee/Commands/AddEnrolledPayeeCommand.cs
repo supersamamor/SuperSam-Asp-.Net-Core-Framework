@@ -33,7 +33,7 @@ public class AddEnrolledPayeeCommandHandler : BaseCommandHandler<ApplicationCont
 	public async Task<Validation<Error, EnrolledPayeeState>> AddEnrolledPayee(AddEnrolledPayeeCommand request, CancellationToken cancellationToken)
 	{
 		EnrolledPayeeState entity = Mapper.Map<EnrolledPayeeState>(request);
-		entity.TagAsActive();
+		entity.TagAsNew();
 		UpdateEnrolledPayeeEmailList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
