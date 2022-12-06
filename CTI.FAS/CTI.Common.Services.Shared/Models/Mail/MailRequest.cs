@@ -19,4 +19,5 @@ public class MailRequest
     /// The body of the email.
     /// </summary>
     public string Body { get; set; } = "";
+    public IList<string>? Attachments {get; set; }
 }

@@ -5,6 +5,6 @@ namespace CTI.FAS.Core.Constants
     {
         public const string Pending = "Pending";
         public const string Failed = "Failed";
-        public const string Done = "Done";
+        public const string Sent = "Sent";
     }
 }

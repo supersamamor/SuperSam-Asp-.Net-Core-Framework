@@ -17,8 +17,15 @@ namespace CTI.FAS.EmailSending.Services
         {
             var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body)
             {
-                IsBodyHtml = true
+                IsBodyHtml = true,
             };
+            if (request.Attachments != null && request.Attachments.Count > 0)
+            {
+                foreach (var item in request.Attachments)
+                {
+                    mailMessage.Attachments.Add(new Attachment(item));
+                }
+            }
             using var client = new SmtpClient();
             client.Host = _settings.SMTPHost!;
             client.Port = _settings.SMTPPort;
