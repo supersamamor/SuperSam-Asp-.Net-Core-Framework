@@ -99,7 +99,18 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,[PaymentType]
 								  ,[IfcaBatchNumber]
 								  ,[IfcaLineNumber]	
-								  ,[Status])			
+								  ,[Status]
+							      ,[Entity]
+								  ,[CreatedBy]
+								  ,[CreatedDate]
+								  ,[LastModifiedBy]
+							  	  ,[LastModifiedDate]
+								  ,[TextFileName]
+								  ,[PdfReport]
+								  ,[Emailed]
+								  ,[GroupCode]
+								  ,[EmailSentCount]
+								  ,[IsForSending])			
 							   SELECT NewID()
 									,d.Id [EnrolledPayeeId]
 									,a.doc_no
@@ -110,7 +121,18 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 										  when e.descs like 'ESETTLE%' then '" + PaymentType.ESettle + @"' end	[PaymentType]		  
 									,a.[batch_no]
 									,a.[line_no]
-									,'" + PaymentTransactionStatus.New + @"'					
+									,'" + PaymentTransactionStatus.New + @"'	
+									,@Entity	
+									,'System'
+									,GetDate()
+									,'System'	
+									,GetDate()	
+									,''
+									,''
+									,0
+									,''
+									,0
+									,0
 									FROM " + databaseConnectionSetup.DatabaseAndServerName + @".ap_paytrx a       
 									INNER JOIN [dbo].Company as b on a.entity_cd = b.Code and b.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
 									INNER JOIN [dbo].Creditor as c on a.[creditor_acct] = c.CreditorAccount and c.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
