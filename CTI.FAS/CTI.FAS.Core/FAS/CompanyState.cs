@@ -29,7 +29,7 @@ public record CompanyState : BaseEntity
     {
         get
         {
-            return this.DatabaseConnectionSetup?.Name + " - " + this.Name;
+            return this.DatabaseConnectionSetup?.Name + " - " + this.Code + " - " + this.Name;
         }
     }
 }

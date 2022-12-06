@@ -29,7 +29,7 @@ public class FASProfile : Profile
 		CreateMap<CompanyViewModel, CompanyState>();
 		CreateMap<ProjectViewModel, AddProjectCommand>();
 		CreateMap<ProjectViewModel, EditProjectCommand>();
-		CreateMap<ProjectState, ProjectViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name));
+		CreateMap<ProjectState, ProjectViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Code + " - " + s.Company!.Name));
 		CreateMap<ProjectViewModel, ProjectState>();
 		CreateMap<TenantViewModel, AddTenantCommand>();
 		CreateMap<TenantViewModel, EditTenantCommand>();
@@ -37,7 +37,7 @@ public class FASProfile : Profile
 		CreateMap<TenantViewModel, TenantState>();
 		CreateMap<UserEntityViewModel, AddUserEntityCommand>();
 		CreateMap<UserEntityViewModel, EditUserEntityCommand>();
-		CreateMap<UserEntityState, UserEntityViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name));
+		CreateMap<UserEntityState, UserEntityViewModel>().ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Code + " - " + s.Company!.Name));
 		CreateMap<UserEntityViewModel, UserEntityState>();
 		CreateMap<BatchViewModel, AddBatchCommand>();
 		CreateMap<BatchViewModel, EditBatchCommand>();
@@ -53,7 +53,7 @@ public class FASProfile : Profile
 		CreateMap<EnrolledPayeeViewModel, AddEnrolledPayeeCommand>();
 		CreateMap<EnrolledPayeeViewModel, EditEnrolledPayeeCommand>();
 		CreateMap<EnrolledPayeeState, EnrolledPayeeViewModel>()
-			.ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Name))
+			.ForPath(e => e.ForeignKeyCompany, o => o.MapFrom(s => s.Company!.DatabaseConnectionSetup!.Name + " - " + s.Company!.Code + " - " + s.Company!.Name))
 			.ForPath(e => e.ForeignKeyCreditor, o => o.MapFrom(s => s.Creditor!.PayeeAccountName + " - " + s.Creditor!.CreditorAccount))
 			.ForPath(e => e.DisableFields, o => o.MapFrom(s => true));
 		CreateMap<EnrolledPayeeViewModel, EnrolledPayeeState>();
