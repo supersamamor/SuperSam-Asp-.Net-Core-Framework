@@ -110,7 +110,8 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,[Emailed]
 								  ,[GroupCode]
 								  ,[EmailSentCount]
-								  ,[IsForSending])			
+								  ,[IsForSending]
+							      ,[AccountTransaction])			
 							   SELECT NewID()
 									,d.Id [EnrolledPayeeId]
 									,a.doc_no
@@ -133,6 +134,8 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 									,''
 									,0
 									,0
+									,case when e.trx_class = '" + IFCAConstant.APTransactionClass_M + @"' then '" + IFCAConstant.APTransactionClass_Payment + @"' 
+									      when e.trx_class = '" + IFCAConstant.APTransactionClass_A + @"' then '" + IFCAConstant.APTransactionClass_Advances + @"' end [AccountTransaction]		
 									FROM " + databaseConnectionSetup.DatabaseAndServerName + @".ap_paytrx a       
 									INNER JOIN [dbo].Company as b on a.entity_cd = b.Code and b.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
 									INNER JOIN [dbo].Creditor as c on a.[creditor_acct] = c.CreditorAccount and c.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'

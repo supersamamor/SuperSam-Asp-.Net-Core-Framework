@@ -23,7 +23,7 @@ public record PaymentTransactionState : BaseEntity
 	public int EmailSentCount { get; init; }
 	public DateTime? EmailSentDateTime { get; init; }
 	public bool IsForSending { get; init; }
-	
+	public string AccountTransaction { get; init; } = "";
 	public EnrolledPayeeState? EnrolledPayee { get; init; }
 	public BatchState? Batch { get; init; }
 	

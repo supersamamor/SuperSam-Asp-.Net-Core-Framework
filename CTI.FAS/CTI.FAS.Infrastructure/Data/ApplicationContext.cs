@@ -99,6 +99,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.PdfReport).HasMaxLength(50);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.GroupCode).HasMaxLength(50);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.Status).HasMaxLength(30);
+		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.AccountTransaction).HasMaxLength(30);
 		modelBuilder.Entity<CreditorState>().Property(e => e.CreditorAccount).HasMaxLength(50);
 		modelBuilder.Entity<CreditorState>().Property(e => e.PayeeAccountName).HasMaxLength(255);
 		modelBuilder.Entity<CreditorState>().Property(e => e.PayeeAccountLongDescription).HasMaxLength(500);
