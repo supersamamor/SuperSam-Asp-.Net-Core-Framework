@@ -84,11 +84,11 @@
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/EnrolledPayee/Details", new { area = "FAS" })' + '?id=' + row.id;
                         var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewEnrolledPayee" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Edit)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Deactivate)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/EnrolledPayee/Edit", new { area = "FAS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditEnrolledPayee" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                        url = '@Url.Page("/EnrolledPayee/Deactivate", new { area = "FAS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeactivateEnrolledPayee" title="@Localizer["Dis-enroll"]"><i class="fas fa-user-slash"></i></a>';
                     </text>
                 }
                         return button;
@@ -125,7 +125,7 @@
                 $.showAjaxLoaderOnClick([".btnAddEnrolledPayee",".btnEditEnrolledPayee",".btnViewEnrolledPayee",".btnDeleteEnrolledPayee"]);
             });
         }
-        $.showAjaxLoaderOnClick([".btnAddEnrolledPayee",".btnEditEnrolledPayee",".btnViewEnrolledPayee",".btnDeleteEnrolledPayee"]);
+        $.showAjaxLoaderOnClick([".btnAddEnrolledPayee",".btnDeactivateEnrolledPayee",".btnViewEnrolledPayee",".btnDeleteEnrolledPayee"]);
 
         $('#navbar_search').keyup(function(){
               table.search($(this).val()).draw();

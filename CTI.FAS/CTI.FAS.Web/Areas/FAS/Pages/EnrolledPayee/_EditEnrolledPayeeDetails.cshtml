@@ -27,6 +27,22 @@
                 <span asp-validation-for="@Model.CreditorId" class="text-danger"></span>
             </div>
         </div>
+        <div class="col">
+            <div class="mb-3">
+                <label asp-for="@Model.PayeeAccountNumber" class="form-label fieldrequired"><strong>@Localizer["Account Number"] :</strong></label>
+                <input type="hidden" asp-for="@Model.PayeeAccountNumber" />
+                <input asp-for="@Model.PayeeAccountNumber DisableOnEdit" class="form-control" maxlength="50" />
+                <span asp-validation-for="@Model.PayeeAccountNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label asp-for="@Model.PayeeAccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
+                <input type="hidden" asp-for="@Model.PayeeAccountType" />
+                <select asp-for="@Model.PayeeAccountType DisableOnEdit" class="form-control" asp-items="@(dropdownService.AccountTypeList())"><option value="">- Select Account Type -</option></select>
+                <span asp-validation-for="@Model.PayeeAccountType" class="text-danger"></span>
+            </div>
+        </div>
     }
     else
     {
@@ -44,21 +60,21 @@
                 <span asp-validation-for="@Model.CreditorId" class="text-danger"></span>
             </div>
         </div>
+        <div class="col">
+            <div class="mb-3">
+                <label asp-for="@Model.PayeeAccountNumber" class="form-label fieldrequired"><strong>@Localizer["Account Number"] :</strong></label>
+                <input asp-for="@Model.PayeeAccountNumber DisableOnEdit" class="form-control" maxlength="50" />
+                <span asp-validation-for="@Model.PayeeAccountNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label asp-for="@Model.PayeeAccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
+                <select asp-for="@Model.PayeeAccountType DisableOnEdit" class="form-control" asp-items="@(dropdownService.AccountTypeList())"><option value="">- Select Account Type -</option></select>
+                <span asp-validation-for="@Model.PayeeAccountType" class="text-danger"></span>
+            </div>
+        </div>
     }
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.PayeeAccountNumber" class="form-label fieldrequired"><strong>@Localizer["Account Number"] :</strong></label>
-            <input asp-for="@Model.PayeeAccountNumber DisableOnEdit" class="form-control" maxlength="50" />
-            <span asp-validation-for="@Model.PayeeAccountNumber" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.PayeeAccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
-            <select asp-for="@Model.PayeeAccountType DisableOnEdit" class="form-control" asp-items="@(dropdownService.AccountTypeList())"><option value="">- Select Account Type -</option></select>
-            <span asp-validation-for="@Model.PayeeAccountType" class="text-danger"></span>
-        </div>
-    </div>
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.Email" class="form-label fieldrequired"><strong>@Localizer["Email"] :</strong></label>

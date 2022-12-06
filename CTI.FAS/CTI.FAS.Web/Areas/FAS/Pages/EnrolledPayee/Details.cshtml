@@ -13,15 +13,7 @@
     </div>
 </div>
 <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-    <a asp-page="Enrollment" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
-    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded)
-    {
-        <a asp-page="Add" class="btn btn-success" title="@Localizer["Add"]" style="color:#fff;"><i class="fas fa-plus"></i></a>
-    }
-    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Edit)).Succeeded)
-    {
-        <a asp-page="Edit" asp-route-id="@Model.EnrolledPayee.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
-    }   
+    <a asp-page="ActivePayee" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>    
 </div>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>

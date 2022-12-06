@@ -1,13 +1,12 @@
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Commands;
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
-using CTI.FAS.Core.FAS;
 using CTI.FAS.Web.Areas.FAS.Models;
 using CTI.FAS.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace CTI.FAS.Web.Areas.FAS.Pages.EnrolledPayee;
 
-[Authorize(Policy = Permission.EnrolledPayee.View)]
+[Authorize(Policy = Permission.EnrolledPayee.Create)]
 public class EnrollmentModel : BasePageModel<EnrollmentModel>
 {
     [BindProperty]
