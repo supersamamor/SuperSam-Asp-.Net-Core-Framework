@@ -19,7 +19,7 @@ namespace CTI.FAS.Web.Service
             _context = context;
             _mediaTr = mediaTr;
         }
-        public SelectList GetCompanyList(string id)
+        public SelectList GetCompanyList(string? id)
         {
             var companyList = _context.Company.Where(e => e.Id == id)
              .Include(l => l.DatabaseConnectionSetup).ToList();

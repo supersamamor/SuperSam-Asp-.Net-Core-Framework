@@ -5,24 +5,44 @@ using CTI.FAS.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
+using System.ComponentModel.DataAnnotations;
 
 namespace CTI.FAS.Web.Areas.FAS.Pages.PaymentTransaction;
 
 [Authorize(Policy = Permission.PaymentTransaction.View)]
 public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
 {
-    public PaymentTransactionViewModel PaymentTransaction { get; set; } = new();
-
     [DataTablesRequest]
     public DataTablesRequest? DataRequest { get; set; }
     public PaymentTransactionTabNavigationPartial PaymentTransactionTabNavigation { get; set; } = new() { TabName = Constants.PaymentTransactionTabNavigation.New };
+    [BindProperty]
+    [Required]
+    public string? Entity { get; set; }
+    [BindProperty]
+    [Required]
+    public string? PaymentType { get; set; }
+    [BindProperty]
+    [Required]
+    public string? AccountTransaction { get; set; }
+    [BindProperty]
+    [Required]
+    public DateTime? DateFrom { get; set; }
+    [BindProperty]
+    [Required]
+    public DateTime? DateTo { get; set; }
     public IActionResult OnGet()
     {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
         return Page();
     }
-
+    public IActionResult OnPost()
+    {
+      
+        return Page();
+    }
     public async Task<IActionResult> OnPostListAllAsync()
     {
 		

@@ -14,56 +14,109 @@
         <partial name="_PaymentTransactionTabNavigation" model="@Model.PaymentTransactionTabNavigation" />
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="paymentTransaction" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Localizer["Enrolled Payee"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Batch"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Transmission Date"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Document Number"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Document Date"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Document Amount"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Check Number"]
-                                    </th>
-                                    <th>
-                                        @Localizer["Payment Type"]
-                                    </th>
-
-
-                                    <th>
-                                        @Localizer["Actions"]
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
+        <form role="search" method="get">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span asp-validation-for="@Model.Entity" class="text-danger" style="display:block;"></span>
+            <span asp-validation-for="@Model.PaymentType" class="text-danger" style="display:block;"></span>
+            <span asp-validation-for="@Model.AccountTransaction" class="text-danger" style="display:block;"></span>
+            <span asp-validation-for="@Model.DateFrom" class="text-danger" style="display:block;"></span>
+            <span asp-validation-for="@Model.DateTo" class="text-danger" style="display:block;"></span>
+            <nav class="navbar bg-light">
+                <div class="container-fluid" style="">
+                    <div class="d-flex">
+                        <div>
+                            <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:250px;">
+                                <option value="">- Select Entity -</option>
+                            </select>
+                        </div>
+                        <div style="width:380px;padding-top:7px;margin-left:5px;">
+                            <label class="form-check-label" style="min-width:120px;">
+                                <b>@Localizer["Payment Type"] : </b>
+                            </label>
+                            <input class="form-check-input" type="radio" asp-for="@Model.PaymentType" id="PaymentType1" value="@Core.Constants.PaymentType.ESettle" style="width:16px;margin-right:5px;" checked>
+                            <label class="form-check-label" style="min-width:70px;">
+                                @Core.Constants.PaymentType.ESettle
+                            </label>
+                            <input class="form-check-input" type="radio" asp-for="@Model.PaymentType" id="PaymentType2" value="@Core.Constants.PaymentType.CheckPrepare" style="width:16px;margin-right:5px;">
+                            <label class="form-check-label" style="min-width:120px;">
+                                @Core.Constants.PaymentType.CheckPrepare
+                            </label>
+                        </div>
+                        <div style="width:470px;padding-top:7px;">
+                            <label class="form-check-label" style="min-width:120px;">
+                                <b>@Localizer["Account Transaction"] : </b>
+                            </label>
+                            <input class="form-check-input" type="radio" asp-for="@Model.AccountTransaction" id="AccountTransaction1" value="@Core.Constants.IFCAConstant.APTransactionClass_Payment" style="width:16px;margin-right:5px;" checked>
+                            <label class="form-check-label" style="min-width:70px;">
+                                @Core.Constants.IFCAConstant.APTransactionClass_Payment
+                            </label>
+                            <input class="form-check-input" type="radio" asp-for="@Model.AccountTransaction" id="AccountTransaction2" value="@Core.Constants.IFCAConstant.APTransactionClass_Advances" style="width:16px;margin-right:5px;">
+                            <label class="form-check-label" style="min-width:120px;">
+                                @Core.Constants.IFCAConstant.APTransactionClass_Advances
+                            </label>
+                        </div>
                     </div>
+                </div>
+                <div class="container-fluid" style="margin-top:10px;">
+                    <div class="d-flex">
+                        <div style="width:470px;padding-top:7px;">
+                            <input class="form-control me-2" type="date" asp-for="@Model.DateFrom" style="width:45%;float:left;margin-right:10px;">
+                            <input class="form-control me-2" type="date" asp-for="@Model.DateTo" style="width:45%;float:left">
+                        </div>
+                        <button class="btn btn-outline-success" type="submit" style="width:250px;">@Localizer["Retrieve Payment"]</button>
+                    </div>
+                </div>
+            </nav>
+        </form>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="paymentTransaction" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Localizer["Enrolled Payee"]
+                                </th>
+                                <th>
+                                    @Localizer["Batch"]
+                                </th>
+                                <th>
+                                    @Localizer["Transmission Date"]
+                                </th>
+                                <th>
+                                    @Localizer["Document Number"]
+                                </th>
+                                <th>
+                                    @Localizer["Document Date"]
+                                </th>
+                                <th>
+                                    @Localizer["Document Amount"]
+                                </th>
+                                <th>
+                                    @Localizer["Check Number"]
+                                </th>
+                                <th>
+                                    @Localizer["Payment Type"]
+                                </th>
+
+
+                                <th>
+                                    @Localizer["Actions"]
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
-        <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
-            <i class="fas fa-chevron-up"></i>
-        </a>
     </div>
+    <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
 </div>
 @section Scripts {
 <partial name="_DataTableScripts" />
+<partial name="_ValidationScriptsPartial" />
 <script asp-add-nonce>
     $(document).ready(function () {
         var table = $('#paymentTransaction').DataTable({
@@ -137,6 +190,17 @@
         })
         $(".dataTables_filter").hide();
         $("#navbar_search_container").show();
+        $.fn.companySelect = function() {
+            this.filter("select").each(function() {
+                $(this).ajaxSelect({
+                    ajax: {
+                        url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
+                    }
+                });
+            });
+            return this;
+        };
+        $("#Entity").companySelect();
     });
 </script>
 }
