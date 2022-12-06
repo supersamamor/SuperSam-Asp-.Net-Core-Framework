@@ -15,6 +15,10 @@ namespace CTI.FAS.EmailSending.Services
 
         public async Task SendAsync(MailRequest request, CancellationToken cancellationToken = default)
         {
+            if (!string.IsNullOrEmpty(_settings.TestEmailRecipient))
+            {
+                request.To = _settings.TestEmailRecipient;
+            }
             var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body)
             {
                 IsBodyHtml = true,

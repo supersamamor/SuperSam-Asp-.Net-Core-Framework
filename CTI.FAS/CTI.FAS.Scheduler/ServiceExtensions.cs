@@ -28,6 +28,7 @@ namespace CTI.FAS.Scheduler
             services.AddTransient<TransactionalDataSynchronizationRepository>();
             services.AddTransient<TransactionalDataSynchronizationJob>();
             services.AddTransient<ESettleNotificationJob>();
+            services.AddTransient<EnrollmentNotificationJob>();
         }
     }
 }
