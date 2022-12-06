@@ -71,13 +71,13 @@ namespace CTI.FAS.Scheduler.Jobs
             str += "Creditor Account Approval Notification";
             str += "<br />";
             str += "</span>";
-            str += "<br />";
-            str += "<br />";
+            str += "<br />";            
             str += "<span style+='font-size:10pt; font-family:Arial;'> ";
             str += $"Hi {user.Name},";
             str += "<br />";
             str += "<br />";
             str += "See Attached for the list of creditor account for approval.";
+            str += "<br />";
             str += "<br />";
             str += "<i>This is a system-generated email. Please do not reply.<i/>";
             return str;
