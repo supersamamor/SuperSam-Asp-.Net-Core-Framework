@@ -63,7 +63,15 @@
                             <input class="form-control me-2" type="date" asp-for="@Model.DateFrom" style="width:45%;float:left;margin-right:10px;">
                             <input class="form-control me-2" type="date" asp-for="@Model.DateTo" style="width:45%;float:left">
                         </div>
-                        <button class="btn btn-outline-success" type="submit" style="width:250px;">@Localizer["Retrieve Payment"]</button>
+                        <button class="btn btn-outline-success" type="submit" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.NewPaymentTransactionList.Count() > 0)
+                        {
+                            <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Localizer["Generate"]</button>
+                        }                       
+                        @if (!string.IsNullOrEmpty(Model.DownloadUrl))
+                        {
+                            <a class="btn btn-outline-success" href="@Model.DownloadUrl" style="width:100px;">@Localizer["Downliad"]</a>
+                        }
                     </div>
                 </div>
             </nav>
@@ -81,7 +89,7 @@
                                     </th>
                                     <th>
                                         @Localizer["Payee"]
-                                    </th>                                  
+                                    </th>
                                     <th>
                                         @Localizer["Document No."]
                                     </th>
@@ -90,7 +98,7 @@
                                     </th>
                                     <th>
                                         @Localizer["Document Amount."]
-                                    </th>                                  
+                                    </th>
                                     <th>
                                         @Localizer["Payment Type"]
                                     </th>
@@ -131,7 +139,7 @@
                                         </td>
                                         <td>
                                             @Model.NewPaymentTransactionList[i].ForeignKeyEnrolledPayee
-                                        </td>                                        
+                                        </td>
                                         <td>
                                             @Model.NewPaymentTransactionList[i].DocumentNumber
                                         </td>
@@ -140,7 +148,7 @@
                                         </td>
                                         <td>
                                             @Model.NewPaymentTransactionList[i].DocumentAmount.ToString("##,##.00")
-                                        </td>                                       
+                                        </td>
                                         <td>
                                             @Model.NewPaymentTransactionList[i].PaymentType
                                         </td>
@@ -178,30 +186,6 @@
             pageLength: 10,
             info: true,
             buttons: [
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.NewPaymentTransactionList.Count() > 0)
-                {
-                    <text>
-                        {
-                            text: '@Localizer["Generate"]',
-                            action: function (e, dt, button, config) {
-                                $('#btnGenerate').click();
-                            },
-                            className: 'btn btn-success text-light',
-                        },
-                    </text>
-                }
-                @if (!string.IsNullOrEmpty(Model.DownloadUrl))
-                {
-                    <text>
-                        {
-                            text: '@Localizer["Download File"]',
-                            action: function (e, dt, button, config) {
-                                window.location.href = '@Model.DownloadUrl';
-                            },
-                            className: 'btn btn-primary text-light',
-                        },
-                    </text>
-                }
             ],
             columnDefs: [
                 {
@@ -213,16 +197,19 @@
         $('#paymentransaction-generate-form').onSubmitIncludeAllFieldsFromTable(roles);
 
         $.fn.companySelect = function() {
-			this.filter("select").each(function() {
-				$(this).ajaxSelect({
-					ajax: {
-						url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
-					}
-				});
-			});
-			return this;
-		};
-		$("#Entity").companySelect();
+            this.filter("select").each(function() {
+                $(this).ajaxSelect({
+                    ajax: {
+                        url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
+                    }
+                });
+            });
+            return this;
+        };
+        $("#Entity").companySelect();
+         $('#btnTriggerGenerate').on( 'click', function () {				
+			$('#btnGenerate').click();			
+		});        
     });
 </script>
 }
