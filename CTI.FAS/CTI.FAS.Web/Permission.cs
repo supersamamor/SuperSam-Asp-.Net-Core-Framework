@@ -39,8 +39,9 @@ public static class Permission
             permissions.Add($"Permission.{module}.View");
             permissions.Add($"Permission.{module}.Create");
             permissions.Add($"Permission.{module}.Edit");
-            permissions.Add($"Permission.{module}.Deactivate");            
-        }
+            permissions.Add($"Permission.{module}.Deactivate");
+            permissions.Add($"Permission.{module}.ReEnroll");
+        }        
         else if (module == "ApproverSetup")
         {
             permissions.Add($"Permission.{module}.Create");
@@ -155,7 +156,8 @@ public static class Permission
 		public const string View = "Permission.EnrolledPayee.View";
 		public const string Create = "Permission.EnrolledPayee.Create";
 		public const string Edit = "Permission.EnrolledPayee.Edit";
-        public const string Deactivate = "Permission.EnrolledPayee.Deactivate";        
+        public const string Deactivate = "Permission.EnrolledPayee.Deactivate";
+        public const string ReEnroll = "Permission.EnrolledPayee.ReEnroll";
     }	
 	
 	public static class ApproverSetup

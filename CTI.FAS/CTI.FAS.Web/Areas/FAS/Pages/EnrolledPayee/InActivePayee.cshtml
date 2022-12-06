@@ -58,7 +58,7 @@
             order: [[ 4, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/EnrolledPayee/Index", new { area = "FAS", handler = "ListAll" })',
+                url: '@Url.Page("/EnrolledPayee/InActivePayee", new { area = "FAS", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
@@ -83,12 +83,12 @@
                     width: "10%",
                     render: function (data, type, row, meta) {
                         var url = '@Url.Page("/EnrolledPayee/Details", new { area = "FAS" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewEnrolledPayee" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Edit)).Succeeded)
+                        var button = '';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.ReEnroll)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/EnrolledPayee/Edit", new { area = "FAS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditEnrolledPayee" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                        url = '@Url.Page("/EnrolledPayee/ReEnroll", new { area = "FAS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnReEnrollPayee" title="@Localizer["Re-enroll"]"><i class="fas fa-user-plus"></i></a>';
                     </text>
                 }
                         return button;
@@ -122,7 +122,7 @@
         function BindTableRowCollapseEvent()
         {
             $('#enrolledPayee tbody').on('click', 'td.dtr-control', function () {
-                $.showAjaxLoaderOnClick([".btnAddEnrolledPayee",".btnEditEnrolledPayee",".btnViewEnrolledPayee",".btnDeleteEnrolledPayee"]);
+                $.showAjaxLoaderOnClick([".btnAddEnrolledPayee",".btnReEnrollPayee",".btnViewEnrolledPayee",".btnDeleteEnrolledPayee"]);
             });
         }
         $.showAjaxLoaderOnClick([".btnAddEnrolledPayee",".btnEditEnrolledPayee",".btnViewEnrolledPayee",".btnDeleteEnrolledPayee"]);

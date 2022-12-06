@@ -9,7 +9,10 @@ using CTI.Common.Identity.Abstractions;
 
 namespace CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
 
-public record GetEnrolledPayeeQuery : BaseQuery, IRequest<PagedListResponse<EnrolledPayeeState>>;
+public record GetEnrolledPayeeQuery : BaseQuery, IRequest<PagedListResponse<EnrolledPayeeState>> 
+{ 
+    public string? Status { get; set; }
+}
 
 public class GetEnrolledPayeeQueryHandler : BaseQueryHandler<ApplicationContext, EnrolledPayeeState, GetEnrolledPayeeQuery>, IRequestHandler<GetEnrolledPayeeQuery, PagedListResponse<EnrolledPayeeState>>
 {
@@ -26,7 +29,10 @@ public class GetEnrolledPayeeQueryHandler : BaseQueryHandler<ApplicationContext,
         var query = (from creditor in Context.EnrolledPayee
                      select creditor)
                             .AsNoTracking();
-
+        if (!string.IsNullOrEmpty(request.Status))
+        {
+            query = query.Where(l => l.Status == request.Status);
+        }
         if (_authenticatedUser.ClaimsPrincipal != null && !_authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.Admin))
         {
             var pplusUserId = await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().Select(l => l.PplusId).FirstOrDefaultAsync(cancellationToken: cancellationToken);

@@ -87,8 +87,8 @@
             </a>
         </div>
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
+        <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
     </div>
 </form>
 @section Scripts {
@@ -110,6 +110,18 @@
                             action: function (e, dt, button, config) {
                                 var url = '@Url.Page("/EnrolledPayee/Add", new { area = "FAS" })';
                                 window.location.href = url;
+                            },
+                            className: 'btn btn-info text-light',
+                        },
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded && Model.ForEnrollmentList.Count() > 0)
+                {
+                    <text>
+                        {
+                            text: '@Localizer["Generate"]',
+                            action: function (e, dt, button, config) {
+                                $('#btnGenerate').click();
                             },
                             className: 'btn btn-success text-light',
                         },

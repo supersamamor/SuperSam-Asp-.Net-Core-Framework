@@ -58,7 +58,7 @@
             order: [[ 4, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/EnrolledPayee/Index", new { area = "FAS", handler = "ListAll" })',
+                url: '@Url.Page("/EnrolledPayee/ActivePayee", new { area = "FAS", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:

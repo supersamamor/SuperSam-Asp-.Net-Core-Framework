@@ -24,9 +24,15 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
         {
             return Page();
         }
+        var selectedCreditorForEnrollment = ForEnrollmentList.Where(l => l.Enabled).Select(l => l.Id).ToList();
+        if (selectedCreditorForEnrollment.Count == 0)
+        {
+            NotyfService.Warning(Localizer["Please select atleast 1 creditor to enroll."]);
+            return Page();
+        }       
         try
         {
-            await Mediatr.Send(new EnrollPayeeCommand(ForEnrollmentList.Where(l => l.Enabled).Select(l => l.Id).ToList()));
+            await Mediatr.Send(new EnrollPayeeCommand(selectedCreditorForEnrollment));
             NotyfService.Success(Localizer["Enrollment success."]);
             return RedirectToPage("Enrollment");
         }

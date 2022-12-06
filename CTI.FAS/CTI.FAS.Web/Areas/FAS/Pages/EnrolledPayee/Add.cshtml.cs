@@ -30,7 +30,7 @@ public class AddModel : BasePageModel<AddModel>
             return Page();
         }
 
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddEnrolledPayeeCommand>(EnrolledPayee)), "Details", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddEnrolledPayeeCommand>(EnrolledPayee)), "Enrollment", false);
     }
     public async Task<IActionResult> OnPostChangeFormValue()
     {

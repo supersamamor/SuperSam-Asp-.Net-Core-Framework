@@ -1,4 +1,5 @@
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
+using CTI.FAS.Core.Constants;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.Web.Areas.FAS.Models;
 using CTI.FAS.Web.Models;
@@ -19,30 +20,29 @@ public class ActivePayeeModel : BasePageModel<ActivePayeeModel>
     public DataTablesRequest? DataRequest { get; set; }
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Active };
     public IActionResult OnGet()
-    {    
+    {
         return Page();
     }
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetEnrolledPayeeQuery>());
+        var query = DataRequest!.ToQuery<GetEnrolledPayeeQuery>();
+        query.Status = EnrollmentStatus.Active;
+        var result = await Mediatr.Send(query);
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
                 Entity = e.Company?.EntityDisplayDescription,
-				Creditor = e.Creditor?.CreditorDisplayDescription,
-				e.PayeeAccountType,
-				e.Status,
-						
-				
+                Creditor = e.Creditor?.CreditorDisplayDescription,
+                e.PayeeAccountType,
+                e.Status,
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+    }
+
+    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
         var result = await Mediatr.Send(request.ToQuery<GetEnrolledPayeeQuery>(nameof(EnrolledPayeeState.Id)));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));

@@ -32,6 +32,6 @@ public class DeactivateModel : BasePageModel<DeactivateModel>
         {
             return Page();
         }		
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditEnrolledPayeeCommand>(EnrolledPayee)), "Deactivate", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<DeactivatePayeeCommand>(EnrolledPayee)), "Deactivate", true);
     }	
 }

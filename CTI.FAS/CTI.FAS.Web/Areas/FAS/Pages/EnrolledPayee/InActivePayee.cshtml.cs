@@ -1,4 +1,5 @@
 using CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
+using CTI.FAS.Core.Constants;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.Web.Areas.FAS.Models;
 using CTI.FAS.Web.Models;
@@ -25,8 +26,9 @@ public class InActivePayeeModel : BasePageModel<InActivePayeeModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetEnrolledPayeeQuery>());
+        var query = DataRequest!.ToQuery<GetEnrolledPayeeQuery>();
+        query.Status = EnrollmentStatus.InActive;
+        var result = await Mediatr.Send(query);      
         return new JsonResult(result.Data
             .Select(e => new
             {
@@ -34,9 +36,7 @@ public class InActivePayeeModel : BasePageModel<InActivePayeeModel>
                 Entity = e.Company?.EntityDisplayDescription,
 				Creditor = e.Creditor?.CreditorDisplayDescription,
 				e.PayeeAccountType,
-				e.Status,
-						
-				
+				e.Status,	
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

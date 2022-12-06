@@ -20,9 +20,17 @@ public record EnrolledPayeeState : BaseEntity
     {
         this.Status = Constants.EnrollmentStatus.New;
     }
+    public void TagAsInActive()
+    {
+        this.Status = Constants.EnrollmentStatus.InActive;
+    }
     public void TagAsActiveAndSetBatch(string enrollmentBatch)
     {
         this.Status = Constants.EnrollmentStatus.Active;
         this.EnrollmentBatchId = enrollmentBatch;
+    }
+    public void TagAsForReEnroll()
+    {
+        this.Status = Constants.EnrollmentStatus.ForReEnrollment;
     }
 }
