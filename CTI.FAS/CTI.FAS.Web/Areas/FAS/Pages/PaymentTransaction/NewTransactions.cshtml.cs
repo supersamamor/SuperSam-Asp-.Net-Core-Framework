@@ -30,43 +30,48 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
     [BindProperty]
     [Required]
     public DateTime? DateTo { get; set; }
-    public IActionResult OnGet()
+    public IActionResult OnGet(string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
+        Entity = entity;
+        PaymentType = paymentType;
+        AccountTransaction = accountTransaction;
+        DateFrom = dateFrom;
+        DateTo = dateTo;
         return Page();
     }
     public IActionResult OnPost()
     {
-      
+
         return Page();
     }
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
+
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetPaymentTransactionQuery>());
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
                 EnrolledPayeeId = e.EnrolledPayee?.Id,
-				BatchId = e.Batch?.Id,
-				TransmissionDate = e.TransmissionDate?.ToString("MMM dd, yyyy HH:mm"),
-				e.DocumentNumber,
-				DocumentDate = e.DocumentDate.ToString("MMM dd, yyyy HH:mm"),
-				DocumentAmount = e.DocumentAmount.ToString("##,##.00"),
-				e.CheckNumber,
-				e.PaymentType,
-						
-				
+                BatchId = e.Batch?.Id,
+                TransmissionDate = e.TransmissionDate?.ToString("MMM dd, yyyy HH:mm"),
+                e.DocumentNumber,
+                DocumentDate = e.DocumentDate.ToString("MMM dd, yyyy HH:mm"),
+                DocumentAmount = e.DocumentAmount.ToString("##,##.00"),
+                e.CheckNumber,
+                e.PaymentType,
+
+
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
+    }
+
+    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
         var result = await Mediatr.Send(request.ToQuery<GetPaymentTransactionQuery>(nameof(PaymentTransactionState.Id)));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
