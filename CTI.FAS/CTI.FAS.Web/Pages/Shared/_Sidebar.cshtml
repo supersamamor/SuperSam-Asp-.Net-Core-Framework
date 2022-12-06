@@ -187,7 +187,7 @@
                     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.View)).Succeeded)
                     {
                         <li class="nav-item">
-                            <a href="/FAS/PaymentTransaction" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PaymentTransaction")">
+                            <a href="/FAS/PaymentTransaction/NewTransactions" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PaymentTransaction")">
                                 <i class="fas fa-circle nav-icon"></i>
                                 <span>
                                     @Localizer["Payment Transaction"]

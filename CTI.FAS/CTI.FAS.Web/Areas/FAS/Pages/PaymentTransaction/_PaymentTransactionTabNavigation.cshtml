@@ -1,0 +1,43 @@
+@using Models
+@model PaymentTransactionTabNavigationPartial
+<input type="hidden" asp-for="@Model.TabName" />
+<ul class="nav nav-tabs card-header-tabs" role="tablist">
+    @if (Model.TabName == CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.New)
+    {
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="NewTransactions">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.New]</a></li>
+    }
+    else
+    {
+        <li class="nav-item"><a class="nav-link" href="NewTransactions" style="cursor:pointer;">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.New]</a></li>
+    }
+    @if (Model.TabName == CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Generated)
+    {
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="GeneratedTransactions">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Generated]</a></li>
+    }
+    else
+    {
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="GeneratedTransactions" style="cursor:pointer;">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Generated]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;background:#ddd;color:#000;">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Generated]</a></li>
+        }
+    }
+    @if (Model.TabName == CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Sent)
+    {
+        <li class="nav-item"><a class="nav-link active" style="cursor:pointer;" href="SentTransactions">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Sent]</a></li>
+    }
+    else
+    {
+        if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
+        {
+            <li class="nav-item"><a class="nav-link" href="SentTransactions" style="cursor:pointer;">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Sent]</a></li>
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" style="cursor:pointer;background:#ddd;color:#000;">@Localizer[CTI.FAS.Web.Constants.PaymentTransactionTabNavigation.Sent]</a></li>
+        }
+    }
+</ul>

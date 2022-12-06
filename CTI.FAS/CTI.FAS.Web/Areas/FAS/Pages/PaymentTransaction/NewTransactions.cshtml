@@ -1,0 +1,142 @@
+@page
+@model NewTransactionsModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Payment Transaction List"];
+    ViewData["ActiveMainPage"] = "PaymentTransaction";
+    ViewData["Level1"] = "AP";
+}
+<div class="card">
+    <div class="card-header">
+        <partial name="_PaymentTransactionTabNavigation" model="@Model.PaymentTransactionTabNavigation" />
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="paymentTransaction" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Localizer["Enrolled Payee"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Batch"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Transmission Date"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Document Number"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Document Date"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Document Amount"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Check Number"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Payment Type"]
+                                    </th>
+
+
+                                    <th>
+                                        @Localizer["Actions"]
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+</div>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#paymentTransaction').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 8, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/PaymentTransaction/NewTransactions", new { area = "FAS", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+            initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+            columns: [
+                { data: "enrolledPayeeId", name: "EnrolledPayeeId", responsivePriority: 1, title: '@Localizer["Enrolled Payee"]', searchable: false },
+                { data: "batchId", name: "BatchId", responsivePriority: 1, title: '@Localizer["Batch"]', searchable: false },
+                { data: "transmissionDate", name: "TransmissionDate", responsivePriority: 1, title: '@Localizer["Transmission Date"]', searchable: false },
+                { data: "documentNumber", name: "DocumentNumber", responsivePriority: 1, title: '@Localizer["Document Number"]', searchable: true },
+                { data: "documentDate", name: "DocumentDate", responsivePriority: 1, title: '@Localizer["Document Date"]', searchable: false },
+                { data: "documentAmount", name: "DocumentAmount", responsivePriority: 1, title: '@Localizer["Document Amount"]', searchable: false },
+                { data: "checkNumber", name: "CheckNumber", responsivePriority: 1, title: '@Localizer["Check Number"]', searchable: true },
+                { data: "paymentType", name: "PaymentType", responsivePriority: 1, title: '@Localizer["Payment Type"]', searchable: false },
+
+
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/PaymentTransaction/Details", new { area = "FAS" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewPaymentTransaction" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/PaymentTransaction/Edit", new { area = "FAS" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditPaymentTransaction" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+        function BindTableRowCollapseEvent()
+        {
+            $('#paymentTransaction tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddPaymentTransaction",".btnEditPaymentTransaction",".btnViewPaymentTransaction",".btnDeletePaymentTransaction"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddPaymentTransaction",".btnEditPaymentTransaction",".btnViewPaymentTransaction",".btnDeletePaymentTransaction"]);
+
+        $('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
+    });
+</script>
+}
