@@ -11,11 +11,14 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
 {
     [BindProperty]
     public IList<PayeeEnrollmentViewModel> ForEnrollmentList { get; set; } = new List<PayeeEnrollmentViewModel>();
+    [BindProperty]
+    public string? DownloadUrl { get; set; }
 
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Enrollment };
-    public async Task<IActionResult> OnGet()
+    public async Task<IActionResult> OnGet(string? downloadUrl)
     {
         ForEnrollmentList = Mapper.Map<IList<PayeeEnrollmentViewModel>>(await Mediatr.Send(new GetPayeeForEnrollmentQuery()));
+        DownloadUrl = downloadUrl;
         return Page();
     }
     public async Task<IActionResult> OnPost()
@@ -29,12 +32,12 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
         {
             NotyfService.Warning(Localizer["Please select atleast 1 creditor to enroll."]);
             return Page();
-        }       
+        }
         try
         {
-            await Mediatr.Send(new EnrollPayeeCommand(selectedCreditorForEnrollment));
+            var downloadUrl = await Mediatr.Send(new EnrollPayeeCommand(selectedCreditorForEnrollment));
             NotyfService.Success(Localizer["Enrollment success."]);
-            return RedirectToPage("Enrollment");
+            return RedirectToPage("Enrollment", new { DownloadUrl = downloadUrl });
         }
         catch (Exception ex)
         {

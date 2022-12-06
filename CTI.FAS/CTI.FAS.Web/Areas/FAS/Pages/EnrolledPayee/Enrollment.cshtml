@@ -89,7 +89,7 @@
     </div>
     <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
         <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
-    </div>
+    </div>  
 </form>
 @section Scripts {
 <partial name="_DataTableScripts" />
@@ -124,6 +124,18 @@
                                 $('#btnGenerate').click();
                             },
                             className: 'btn btn-success text-light',
+                        },
+                    </text>
+                }
+                @if (!string.IsNullOrEmpty(Model.DownloadUrl))
+                {
+                    <text>
+                        {
+                            text: '@Localizer["Download File"]',
+                            action: function (e, dt, button, config) {                               
+                                window.location.href = '@Model.DownloadUrl';
+                            },
+                            className: 'btn btn-primary text-light',
                         },
                     </text>
                 }

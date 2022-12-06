@@ -35,7 +35,7 @@ namespace CTI.FAS.CsvGenerator.Services
             var folderPath = staticFolderPath + "\\" + subFolderPath;
             this.FileName = fileName;
             this.CompleteFilePath = folderPath + "\\" + this.FileName;
-            this.FileUrl = "\\" + staticFolder + "\\" + subFolderPath + "\\" + this.FileName;
+            this.FileUrl = "../../" + staticFolder + "/" + subFolderPath + "/" + this.FileName;
             bool folderPathExists = Directory.Exists(folderPath);
             if (!folderPathExists)
                Directory.CreateDirectory(folderPath);

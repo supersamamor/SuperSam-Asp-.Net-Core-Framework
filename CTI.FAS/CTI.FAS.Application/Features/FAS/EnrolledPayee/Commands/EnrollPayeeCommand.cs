@@ -15,9 +15,9 @@ using static LanguageExt.Prelude;
 
 namespace CTI.FAS.Application.Features.FAS.EnrolledPayee.Commands;
 
-public record EnrollPayeeCommand(IList<string> EnrolledPayeeIdList) : IRequest<bool>;
+public record EnrollPayeeCommand(IList<string> EnrolledPayeeIdList) : IRequest<string>;
 
-public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, bool>
+public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, string>
 {
     private readonly ApplicationContext _context;
     private readonly PayeeEnrollmentCsvService _payeeEnrollmentCsvService;
@@ -30,11 +30,11 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, boo
         _authenticatedUser = authenticatedUser;
     }
 
-    public async Task<bool> Handle(EnrollPayeeCommand request, CancellationToken cancellationToken) =>
+    public async Task<string> Handle(EnrollPayeeCommand request, CancellationToken cancellationToken) =>
         await AddEnrolledPayee(request, cancellationToken);
 
 
-    public async Task<bool> AddEnrolledPayee(EnrollPayeeCommand request, CancellationToken cancellationToken)
+    public async Task<string> AddEnrolledPayee(EnrollPayeeCommand request, CancellationToken cancellationToken)
     {
         var date = DateTime.Now.Date;
         var payeeToEnrollList = await _context.EnrolledPayee
@@ -59,6 +59,6 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, boo
         }
         _context.UpdateRange(payeeToEnrollList);
         _ = await _context.SaveChangesAsync(cancellationToken);
-        return true;
+        return csvDocument.FileUrl;
     }
 }
