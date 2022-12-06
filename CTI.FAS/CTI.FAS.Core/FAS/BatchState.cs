@@ -10,8 +10,17 @@ public record BatchState : BaseEntity
 	public string? FilePath { get; init; }
 	public string? Url { get; init; }
 	public string? UserId { get; init; }
-	public string? EmailStatus { get; init; } = Constants.EmailStatus.Pending;
-	public DateTime? EmailDateTime { get; init; }
+	public string? EmailStatus { get; private set; } = Constants.EmailStatus.Pending;
+	public DateTime? EmailDateTime { get; private set; }
 	public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
-	
+    public void TagAsSent()
+    {
+        this.EmailStatus = Constants.EmailStatus.Sent;
+        this.EmailDateTime = DateTime.Now;
+    }
+    public void TagAsFailed()
+    {
+        this.EmailStatus = Constants.EmailStatus.Failed;
+        this.EmailDateTime = DateTime.Now;
+    }
 }
