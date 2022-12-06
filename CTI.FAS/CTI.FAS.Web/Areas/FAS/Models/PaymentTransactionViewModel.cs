@@ -79,6 +79,4 @@ public record PaymentTransactionViewModel : BaseViewModel
 	public DateTime LastModifiedDate { get; set; }
 	public EnrolledPayeeViewModel? EnrolledPayee { get; init; }
 	public BatchViewModel? Batch { get; init; }
-		
-	
 }

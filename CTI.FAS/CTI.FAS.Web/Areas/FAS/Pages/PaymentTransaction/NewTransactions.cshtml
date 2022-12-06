@@ -68,47 +68,99 @@
                 </div>
             </nav>
         </form>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table id="paymentTransaction" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Localizer["Enrolled Payee"]
-                                </th>
-                                <th>
-                                    @Localizer["Batch"]
-                                </th>
-                                <th>
-                                    @Localizer["Transmission Date"]
-                                </th>
-                                <th>
-                                    @Localizer["Document Number"]
-                                </th>
-                                <th>
-                                    @Localizer["Document Date"]
-                                </th>
-                                <th>
-                                    @Localizer["Document Amount"]
-                                </th>
-                                <th>
-                                    @Localizer["Check Number"]
-                                </th>
-                                <th>
-                                    @Localizer["Payment Type"]
-                                </th>
+        <form id="paymentransaction-generate-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="paymentTransaction" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Localizer["Actions"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Payee"]
+                                    </th>                                  
+                                    <th>
+                                        @Localizer["Document No."]
+                                    </th>
+                                    <th>
+                                        @Localizer["Document Date"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Document Amount."]
+                                    </th>                                  
+                                    <th>
+                                        @Localizer["Payment Type"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Account Transaction"]
+                                    </th>
+                                    <th>
+                                        @Localizer["Status"]
+                                    </th>
 
-
-                                <th>
-                                    @Localizer["Actions"]
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.NewPaymentTransactionList.Count(); i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="form-check m-1">
+                                                @if (Model.NewPaymentTransactionList[i].Enabled)
+                                                {
+                                                    <input type="checkbox" name="NewPaymentTransactionList[@(i)].Enabled" class="form-check-input" value=true checked />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" name="NewPaymentTransactionList[@(i)].Enabled" class="form-check-input" value=true />
+                                                }
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].Id" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].ForeignKeyEnrolledPayee" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].ForeignKeyBatch" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].DocumentNumber" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].DocumentDate" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].DocumentAmount" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].CheckNumber" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].PaymentType" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].AccountTransaction" />
+                                                <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].Status" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].ForeignKeyEnrolledPayee
+                                        </td>                                        
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].DocumentNumber
+                                        </td>
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].DocumentDate.ToString("MMMM dd, yyyy")
+                                        </td>
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].DocumentAmount.ToString("##,##.00")
+                                        </td>                                       
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].PaymentType
+                                        </td>
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].AccountTransaction
+                                        </td>
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].Status
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
+                <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+            </div>
+        </form>
     </div>
     <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
         <i class="fas fa-chevron-up"></i>
@@ -119,88 +171,58 @@
 <partial name="_ValidationScriptsPartial" />
 <script asp-add-nonce>
     $(document).ready(function () {
-        var table = $('#paymentTransaction').DataTable({
+        var roles = $("#paymentTransaction").DataTable({
             select: false,
-            serverSide: true,
-            order: [[ 8, 'desc' ]],
-            ajax:
-            {
-                url: '@Url.Page("/PaymentTransaction/NewTransactions", new { area = "FAS", handler = "ListAll" })',
-                type: "POST",
-                headers: {
-                    RequestVerificationToken:
-                        $('input:hidden[name="__RequestVerificationToken"]').val()
-                },
-            },
-            initComplete: function( settings, json ) {
-                BindTableRowCollapseEvent();
-            },
-            columns: [
-                { data: "enrolledPayeeId", name: "EnrolledPayeeId", responsivePriority: 1, title: '@Localizer["Enrolled Payee"]', searchable: false },
-                { data: "batchId", name: "BatchId", responsivePriority: 1, title: '@Localizer["Batch"]', searchable: false },
-                { data: "transmissionDate", name: "TransmissionDate", responsivePriority: 1, title: '@Localizer["Transmission Date"]', searchable: false },
-                { data: "documentNumber", name: "DocumentNumber", responsivePriority: 1, title: '@Localizer["Document Number"]', searchable: true },
-                { data: "documentDate", name: "DocumentDate", responsivePriority: 1, title: '@Localizer["Document Date"]', searchable: false },
-                { data: "documentAmount", name: "DocumentAmount", responsivePriority: 1, title: '@Localizer["Document Amount"]', searchable: false },
-                { data: "checkNumber", name: "CheckNumber", responsivePriority: 1, title: '@Localizer["Check Number"]', searchable: true },
-                { data: "paymentType", name: "PaymentType", responsivePriority: 1, title: '@Localizer["Payment Type"]', searchable: false },
-
-
-                {
-                    data: null,
-                    searchable: false,
-                    orderable: false,
-                    responsivePriority: 2,
-                    width: "10%",
-                    render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/PaymentTransaction/Details", new { area = "FAS" })' + '?id=' + row.id;
-                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewPaymentTransaction" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Edit)).Succeeded)
+            searching: true,
+            paging: true,
+            pageLength: 10,
+            info: true,
+            buttons: [
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.NewPaymentTransactionList.Count() > 0)
                 {
                     <text>
-                        url = '@Url.Page("/PaymentTransaction/Edit", new { area = "FAS" })' + '?id=' + row.id;
-                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditPaymentTransaction" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                        {
+                            text: '@Localizer["Generate"]',
+                            action: function (e, dt, button, config) {
+                                $('#btnGenerate').click();
+                            },
+                            className: 'btn btn-success text-light',
+                        },
                     </text>
                 }
-                        return button;
-                    },
-                },
-                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
-                { data: "id", name: "Id", visible: false },
+                @if (!string.IsNullOrEmpty(Model.DownloadUrl))
+                {
+                    <text>
+                        {
+                            text: '@Localizer["Download File"]',
+                            action: function (e, dt, button, config) {
+                                window.location.href = '@Model.DownloadUrl';
+                            },
+                            className: 'btn btn-primary text-light',
+                        },
+                    </text>
+                }
             ],
-            buttons: [
-                'excel', 'pdf', 'pageLength',
-            ],
+            columnDefs: [
+                {
+                    targets: [1],
+                    orderDataType: 'dom-checkbox',
+                }
+            ]
         });
-        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+        $('#paymentransaction-generate-form').onSubmitIncludeAllFieldsFromTable(roles);
 
-        $('.btn-table_filter').on('click', function(e) {
-            table.ajax.reload(null, false);
-        });
-        function BindTableRowCollapseEvent()
-        {
-            $('#paymentTransaction tbody').on('click', 'td.dtr-control', function () {
-                $.showAjaxLoaderOnClick([".btnAddPaymentTransaction",".btnEditPaymentTransaction",".btnViewPaymentTransaction",".btnDeletePaymentTransaction"]);
-            });
-        }
-        $.showAjaxLoaderOnClick([".btnAddPaymentTransaction",".btnEditPaymentTransaction",".btnViewPaymentTransaction",".btnDeletePaymentTransaction"]);
-
-        $('#navbar_search').keyup(function(){
-              table.search($(this).val()).draw();
-        })
-        $(".dataTables_filter").hide();
-        $("#navbar_search_container").show();
         $.fn.companySelect = function() {
-            this.filter("select").each(function() {
-                $(this).ajaxSelect({
-                    ajax: {
-                        url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
-                    }
-                });
-            });
-            return this;
-        };
-        $("#Entity").companySelect();
+			this.filter("select").each(function() {
+				$(this).ajaxSelect({
+					ajax: {
+						url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
+					}
+				});
+			});
+			return this;
+		};
+		$("#Entity").companySelect();
     });
 </script>
 }
