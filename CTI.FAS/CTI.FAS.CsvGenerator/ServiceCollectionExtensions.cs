@@ -7,6 +7,7 @@ namespace CTI.FAS.CsvGenerator
         public static void AddCsvGeneratorService(this IServiceCollection services)
         {
             services.AddTransient<PayeeEnrollmentCsvService>();
+            services.AddTransient<PaymentTransactionCsvService>();            
         }
     }
 }

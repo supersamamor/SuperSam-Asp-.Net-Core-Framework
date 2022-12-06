@@ -1,4 +1,5 @@
 using CTI.Common.Core.Base.Models;
+using CTI.FAS.Core.Constants;
 using System.ComponentModel;
 
 namespace CTI.FAS.Core.FAS;
@@ -6,7 +7,7 @@ namespace CTI.FAS.Core.FAS;
 public record PaymentTransactionState : BaseEntity
 {
 	public string EnrolledPayeeId { get; init; } = "";
-	public string? BatchId { get; init; }
+	public string? BatchId { get; private set; }
 	public DateTime? TransmissionDate { get; init; }
 	public string DocumentNumber { get; init; } = "";
 	public DateTime DocumentDate { get; init; }
@@ -17,7 +18,7 @@ public record PaymentTransactionState : BaseEntity
 	public string PdfReport { get; init; } = "";
 	public bool Emailed { get; init; }
 	public string GroupCode { get; init; } = "";
-	public string Status { get; init; } = "";
+	public string Status { get; private set; } = "";
 	public decimal IfcaBatchNumber { get; init; }
 	public decimal IfcaLineNumber { get; init; }
 	public int EmailSentCount { get; init; }
@@ -26,6 +27,9 @@ public record PaymentTransactionState : BaseEntity
 	public string AccountTransaction { get; init; } = "";
 	public EnrolledPayeeState? EnrolledPayee { get; init; }
 	public BatchState? Batch { get; init; }
-	
-	
+	public void TagAsGeneratedAndSetBatch(string batchId)
+	{
+		this.Status = PaymentTransactionStatus.Generated;
+		this.BatchId = batchId; 
+	}	
 }

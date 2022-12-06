@@ -1,3 +1,4 @@
+using CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
 using CTI.FAS.Core.Constants;
 using CTI.FAS.Core.FAS;
@@ -57,8 +58,37 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         DownloadUrl = downloadUrl;
         return Page();
     }
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        var selectedNewPaymentTransactionList = NewPaymentTransactionList.Where(l => l.Enabled).Select(l => l.Id).ToList();
+        if (selectedNewPaymentTransactionList.Count == 0)
+        {
+            NotyfService.Warning(Localizer["Please select atleast 1 payment transaction to process."]);
+            return Page();
+        }
+        try
+        {
+            var downloadUrl = await Mediatr.Send(new ProcessPaymentCommand(selectedNewPaymentTransactionList));
+            NotyfService.Success(Localizer["Generation success."]);
+            return RedirectToPage("NewTransactions", new
+            {
+                downloadUrl,
+                Entity,
+                PaymentType,
+                AccountTransaction,
+                DateFrom,
+                DateTo,
+            });
+        }
+        catch (Exception ex)
+        {
+            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
+            Logger.LogError(ex, "Exception encountered");
+        }
         return Page();
     }
 }

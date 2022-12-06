@@ -12,7 +12,6 @@ public record NewPaymentTransactionViewModel : BaseViewModel
 	public string DocumentNumber { get; init; } = "";	
 	public DateTime DocumentDate { get; init; } = DateTime.Now.Date;
 	public decimal DocumentAmount { get; init; }	
-	public string CheckNumber { get; init; } = "";	
 	public string PaymentType { get; init; } = "";	
 	public string Status { get; init; } = "";	
 	public DateTime LastModifiedDate { get; set; }

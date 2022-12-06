@@ -6,17 +6,17 @@ using System.Text;
 
 namespace CTI.FAS.CsvGenerator.Services
 {
-    public class PayeeEnrollmentCsvService
+    public class PaymentTransactionCsvService
     {
         private readonly string _staticFolderPath;
-        public PayeeEnrollmentCsvService(IConfiguration configuration)
+        public PaymentTransactionCsvService(IConfiguration configuration)
         {
             _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
         }
        
-        public CsvDocumentModel Export(IList<EnrolledPayeeState> input, string subfolder)
+        public CsvDocumentModel Export(IList<PaymentTransactionState> input, string subfolder)
         {
-            var csvDocument = new CsvDocumentModel($"AccountEnrollment{DateTime.Now:yyyyMMddHHmmss}.csv",
+            var csvDocument = new CsvDocumentModel($"ESettle{DateTime.Now:yyyyMMddHHmmss}.csv",
                 _staticFolderPath, subfolder, GlobalConstants.UploadFilesPath);
             var csv = new StringBuilder();
             foreach (var item in input)
@@ -28,5 +28,5 @@ namespace CTI.FAS.CsvGenerator.Services
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;
         }
-    } 
+    }   
 }
