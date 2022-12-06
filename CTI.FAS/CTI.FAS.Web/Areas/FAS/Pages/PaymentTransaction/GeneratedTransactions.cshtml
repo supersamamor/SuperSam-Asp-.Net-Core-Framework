@@ -1,11 +1,11 @@
 @page
-@model NewTransactionsModel
+@model GeneratedTransactionsModel
 
 @section Styles {
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["New Transactions"];
+    ViewData["Title"] = Localizer["Generated Transactions"];
     ViewData["ActiveMainPage"] = "PaymentTransaction";
     ViewData["Level1"] = "AP";
 }
@@ -72,7 +72,7 @@
             order: [[ 8, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/PaymentTransaction/NewTransactions", new { area = "FAS", handler = "ListAll" })',
+                url: '@Url.Page("/PaymentTransaction/GeneratedTransactions", new { area = "FAS", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
