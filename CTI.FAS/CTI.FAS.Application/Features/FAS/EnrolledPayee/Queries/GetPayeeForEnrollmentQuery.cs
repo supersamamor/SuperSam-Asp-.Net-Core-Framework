@@ -37,7 +37,7 @@ public class GetPayeeForEnrollmentQueryHandler : IRequestHandler<GetPayeeForEnro
         if (_authenticatedUser.ClaimsPrincipal != null && !_authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.Admin))
         {
             query = from a in query
-                    where a.CreatedBy == _authenticatedUser.UserId
+                    where a.LastModifiedBy == _authenticatedUser.UserId
                     select a;
         }
         return await query.Include(l => l.Company).ThenInclude(l => l!.DatabaseConnectionSetup).Include(l => l.Creditor)
