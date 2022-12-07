@@ -23,6 +23,7 @@ public record EnrolledPayeeState : BaseEntity
     public void TagAsInActive()
     {
         this.Status = Constants.EnrollmentStatus.InActive;
+        this.EnrollmentBatchId = null;
     }
     public void TagAsActiveAndSetBatch(string enrollmentBatch)
     {
