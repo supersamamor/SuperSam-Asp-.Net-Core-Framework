@@ -12,6 +12,7 @@ namespace CTI.FAS.Application.Features.FAS.Batch.Queries;
 public record GetBatchQuery : BaseQuery, IRequest<PagedListResponse<BatchState>>
 {
     public string? CompanyId { get; set; }
+    public string? PaymentStatus { get; set; }
 }
 
 public class GetBatchQueryHandler : BaseQueryHandler<ApplicationContext, BatchState, GetBatchQuery>, IRequestHandler<GetBatchQuery, PagedListResponse<BatchState>>
@@ -40,6 +41,13 @@ public class GetBatchQueryHandler : BaseQueryHandler<ApplicationContext, BatchSt
                     join ue in Context.UserEntity on a.Id equals ue.CompanyId
                     where ue.PplusUserId == pplusUserId && c.IsDisabled == false
                     select a;
+        }
+        if (!string.IsNullOrEmpty(request.PaymentStatus))
+        {
+            query = (from a in query
+                    join c in Context.PaymentTransaction on a.Id equals c.BatchId                 
+                    where c.Status == request.PaymentStatus
+                    select a).Distinct();
         }
         return await query.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
                         request.SortColumn, request.SortOrder,

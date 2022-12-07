@@ -17,10 +17,11 @@ public class DropdownModel : BasePageModel<DropdownModel>
         return Page();
     }
 
-    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request, string companyId)
+    public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request, string companyId, string paymentStatus)
     {
         var query = request.ToQuery<GetBatchQuery>(nameof(BatchState.Batch));
-        query.CompanyId = companyId;       
+        query.CompanyId = companyId;
+        query.PaymentStatus = paymentStatus;
         var result = await Mediatr.Send(query);
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text =  e?.BatchNumber! }));
     }

@@ -28,7 +28,7 @@ public class SentTransactionsModel : BasePageModel<SentTransactionsModel>
         return await FetchTransactionDetails(handler, entity, paymentType, accountTransaction, dateFrom, dateTo, batchId, downloadUrl);
     }
 
-    public async Task<IActionResult> OnPost(string? handler)
+    public async Task<IActionResult> OnPost()
     {
         if (!ModelState.IsValid)
         {

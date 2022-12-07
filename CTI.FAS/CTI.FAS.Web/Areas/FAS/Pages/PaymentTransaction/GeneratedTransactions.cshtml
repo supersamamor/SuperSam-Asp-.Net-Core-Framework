@@ -27,6 +27,9 @@
                                         @Localizer["Actions"]
                                     </th>
                                     <th>
+                                        @Localizer["Batch No."]
+                                    </th>
+                                    <th>
                                         @Localizer["Payee"]
                                     </th>
                                     <th>
@@ -74,6 +77,9 @@
                                                 <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].AccountTransaction" />
                                                 <input type="hidden" asp-for="@Model.NewPaymentTransactionList[i].Status" />
                                             </div>
+                                        </td>
+                                        <td>
+                                            @Model.NewPaymentTransactionList[i].ForeignKeyBatch
                                         </td>
                                         <td>
                                             @Model.NewPaymentTransactionList[i].ForeignKeyEnrolledPayee
@@ -150,7 +156,7 @@
             this.filter("select").each(function() {
                 $(this).ajaxSelect({
                     ajax: {
-                        url: '@Url.Page("/Batch/Dropdown", new { area = "FAS", handler = "Select2Data" })' + '&companyId=' + $('#Entity').val()
+                        url: '@Url.Page("/Batch/Dropdown", new { area = "FAS", handler = "Select2Data" })' + '&companyId=' + $('#Entity').val() + '&paymentStatus=@CTI.FAS.Core.Constants.PaymentTransactionStatus.Generated'
                     }
                 });
             });
