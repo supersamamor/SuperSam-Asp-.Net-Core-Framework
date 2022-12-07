@@ -1,7 +1,7 @@
 ﻿using Rotativa.AspNetCore;
 using Rotativa.AspNetCore.Options;
 
-namespace CTI.FAS.Web.Service
+namespace CTI.FAS.Application.Services
 {
     public class RotativaService<TModel>
     {
@@ -56,9 +56,13 @@ namespace CTI.FAS.Web.Service
         }
         public RotativaDocumentModel(string fileName, string staticFolderPath, string subFolderPath, string staticFolder)
         {
+            var folderPath = staticFolderPath + "\\" + subFolderPath;
             this.FileName = fileName;
-            this.CompleteFilePath = staticFolderPath + "\\" + subFolderPath + "\\" + this.FileName;
-            this.FileUrl = "\\" + staticFolder + "\\" + subFolderPath + "\\" + this.FileName;
+            this.CompleteFilePath = folderPath + "\\" + this.FileName;
+            this.FileUrl = "../../" + staticFolder + "/" + subFolderPath + "/" + this.FileName;
+            bool folderPathExists = Directory.Exists(folderPath);
+            if (!folderPathExists)
+                Directory.CreateDirectory(folderPath);
         }
         public string FileName { get; set; } = "";
         public string CompleteFilePath { get; private set; } = "";

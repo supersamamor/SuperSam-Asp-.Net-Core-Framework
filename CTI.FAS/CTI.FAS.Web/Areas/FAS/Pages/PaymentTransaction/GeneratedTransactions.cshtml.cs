@@ -105,7 +105,7 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
         }
         try
         {
-            var downloadUrl = await Mediatr.Send(new SendPaymentCommand(selectedNewPaymentTransactionList));
+            var downloadUrl = await Mediatr.Send(new SendPaymentCommand(selectedNewPaymentTransactionList, PageContext));
             NotyfService.Success(Localizer["Success sending."]);
             return RedirectToPage("GeneratedTransactions", new
             {

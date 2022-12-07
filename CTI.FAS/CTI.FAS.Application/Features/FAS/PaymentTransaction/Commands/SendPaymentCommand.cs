@@ -1,27 +1,30 @@
 using CTI.Common.Identity.Abstractions;
+using CTI.FAS.Application.Services;
+using CTI.FAS.Core.Constants;
 using CTI.FAS.CsvGenerator.Services;
 using CTI.FAS.Infrastructure.Data;
 using FluentValidation;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using static LanguageExt.Prelude;
 
 namespace CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 
-public record SendPaymentCommand(IList<string> NewPaymentTransactionIdList) : IRequest<string>;
+public record SendPaymentCommand(IList<string> NewPaymentTransactionIdList, Microsoft.AspNetCore.Mvc.ActionContext PageContext) : IRequest<string>;
 
 public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, string>
 {
-    private readonly ApplicationContext _context;
-    private readonly PaymentTransactionCsvService _paymentTransactionCsvService;
+    private readonly ApplicationContext _context;    
     private readonly IAuthenticatedUser _authenticatedUser;
-    public SendPaymentCommandHandler(ApplicationContext context, PaymentTransactionCsvService paymentTransactionCsvService,
-        IAuthenticatedUser authenticatedUser)
+    private readonly string _staticFolderPath;
+    public SendPaymentCommandHandler(ApplicationContext context,
+        IAuthenticatedUser authenticatedUser, IConfiguration configuration)
     {
-        _context = context;
-        _paymentTransactionCsvService = paymentTransactionCsvService;
+        _context = context;      
         _authenticatedUser = authenticatedUser;
+        _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
     }
 
     public async Task<string> Handle(SendPaymentCommand request, CancellationToken cancellationToken) =>
@@ -33,7 +36,9 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         var date = DateTime.Now.Date;
         var paymentTransactionToProcessList = await _context.PaymentTransaction
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
-        var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
+        var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"test.pdf",
+                                                           GlobalConstants.UploadFilesPath, _staticFolderPath, "OfferSheet");
+        var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
         var batchCount = (await _context.Batch
                              .Where(l => l.Date == date)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
@@ -47,6 +52,6 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         }
         _context.UpdateRange(paymentTransactionToProcessList);
         _ = await _context.SaveChangesAsync(cancellationToken);
-        return csvDocument.FileUrl;
+        return rotativaDocument.FileUrl;
     }
 }
