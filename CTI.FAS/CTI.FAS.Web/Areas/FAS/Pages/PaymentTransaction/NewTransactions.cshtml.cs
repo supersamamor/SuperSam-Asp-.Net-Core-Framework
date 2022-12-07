@@ -76,6 +76,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         {
             batchId = (await Mediatr.Send(new GetBatchQuery() { CompanyId = entity })).Data.ToList().FirstOrDefault()?.Id;
         }
+        PaymentTransactionTabNavigation.SetEntity(entity);
         Filter.Entity = entity;
         Filter.PaymentType = paymentType;
         Filter.AccountTransaction = accountTransaction;
