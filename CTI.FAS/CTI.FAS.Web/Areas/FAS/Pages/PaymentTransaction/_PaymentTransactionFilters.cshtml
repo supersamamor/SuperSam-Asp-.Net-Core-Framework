@@ -11,9 +11,14 @@
     <nav class="navbar bg-light">
         <div class="container-fluid" style="">
             <div class="d-flex">
-                <div>
-                    <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:740px;">
+                <div style="margin-right:10px;">
+                    <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:600px;">
                         <option value="">- Select Entity -</option>
+                    </select>
+                </div>
+                 <div>
+                    <select asp-for="@Model.BatchId" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:130px;">
+                        <option value="">- Select Batch -</option>
                     </select>
                 </div>
             </div>
