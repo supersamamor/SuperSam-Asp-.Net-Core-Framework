@@ -72,10 +72,10 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         {
             entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
         }
-        if (Filter.ShowBatchFilter && string.IsNullOrEmpty(batchId))
-        {
-            batchId = (await Mediatr.Send(new GetBatchQuery() { CompanyId = entity })).Data.ToList().FirstOrDefault()?.Id;
-        }
+        //if (Filter.ShowBatchFilter && string.IsNullOrEmpty(batchId))
+        //{
+        //    batchId = (await Mediatr.Send(new GetBatchQuery() { CompanyId = entity })).Data.ToList().FirstOrDefault()?.Id;
+        //}
         PaymentTransactionTabNavigation.SetEntity(entity);
         Filter.Entity = entity;
         Filter.PaymentType = paymentType;
