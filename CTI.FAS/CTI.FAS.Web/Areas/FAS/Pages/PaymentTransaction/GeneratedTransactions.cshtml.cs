@@ -112,6 +112,7 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
             NewPaymentTransactionList = Mapper.Map<IList<NewPaymentTransactionViewModel>>(await Mediatr.Send(query));
         }
         Filter.DisplayGenerateButton = NewPaymentTransactionList.Count > 0;
+        Filter.DisplayRevokeButton = NewPaymentTransactionList.Count > 0;
         return Page();
     }
 }

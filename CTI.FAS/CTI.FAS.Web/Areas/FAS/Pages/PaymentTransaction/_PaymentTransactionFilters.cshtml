@@ -81,6 +81,10 @@
                 {
                     <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Model.ProccessButtonLabel</button>
                 }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Revoke)).Succeeded && Model.DisplayRevokeButton)
+                {
+                    <button class="btn btn-outline-warning" id="btnTriggerRevoke" type="button" style="width:100px;margin-right:5px;"><b>@Localizer["Revoke"]</b></button>
+                }
                 @if (!string.IsNullOrEmpty(Model.DownloadUrl))
                 {
                     <a class="btn btn-outline-success" href="@Model.DownloadUrl" style="width:120px;padding-top:10px;">@Localizer["Download"]</a>

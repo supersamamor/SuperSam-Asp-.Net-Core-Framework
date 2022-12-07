@@ -39,6 +39,7 @@ public static class Permission
             permissions.Add($"Permission.{module}.View");
             permissions.Add($"Permission.{module}.Edit");
             permissions.Add($"Permission.{module}.Generate");
+            permissions.Add($"Permission.{module}.Revoke");            
         }
         else if (module == "EnrolledPayee")
         {
@@ -156,6 +157,7 @@ public static class Permission
         public const string View = "Permission.PaymentTransaction.View";
         public const string Edit = "Permission.PaymentTransaction.Edit";
         public const string Generate = "Permission.PaymentTransaction.Generate";
+        public const string Revoke = "Permission.PaymentTransaction.Revoke";
     }
 
     public static class EnrolledPayee
