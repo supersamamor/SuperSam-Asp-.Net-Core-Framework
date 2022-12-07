@@ -60,12 +60,24 @@ namespace CTI.FAS.Web.Service
                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
             );
         }
-        public SelectList GetBatchList(string id)
+        public SelectList GetBatchList(string? id)
         {
-            return _context.GetSingle<BatchState>(e => e.Id == id, new()).Result.Match(
-                Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-                None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-            );
+            var batchList = _context.Batch.Where(e => e.Id == id).ToList();
+            if (batchList.Count > 0)
+            {
+                return new SelectList(batchList.ConvertAll(a =>
+                {
+                    return new SelectListItem()
+                    {
+                        Value = a.Id,
+                        Text = a.BatchNumber,
+                    };
+                }), "Value", "Text", id);
+            }
+            else
+            {
+                return new SelectList(new List<SelectListItem>(), "Value", "Text");
+            }
         }
         public SelectList GetProjectList(string id)
         {

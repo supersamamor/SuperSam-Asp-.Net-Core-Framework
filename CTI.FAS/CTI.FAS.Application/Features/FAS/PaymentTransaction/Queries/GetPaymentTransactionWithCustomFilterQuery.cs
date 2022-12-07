@@ -51,14 +51,21 @@ public class GetPaymentTransactionWithCustomFilterQueryHandler : IRequestHandler
         {
             query = query.Where(l => l.AccountTransaction == request.AccountTransaction);
         }
-        if (request.DateFrom != null && request.DateFrom != DateTime.MinValue)
+        if (!string.IsNullOrEmpty(request.BatchId))
         {
-            query = query.Where(l => l.DocumentDate >= request.DateFrom);
+            query = query.Where(l => l.BatchId == request.BatchId);
         }
-        if (request.DateTo != null && request.DateTo != DateTime.MinValue)
+        else
         {
-            query = query.Where(l => l.DocumentDate <= request.DateTo);
-        }
+            if (request.DateFrom != null && request.DateFrom != DateTime.MinValue)
+            {
+                query = query.Where(l => l.DocumentDate >= request.DateFrom);
+            }
+            if (request.DateTo != null && request.DateTo != DateTime.MinValue)
+            {
+                query = query.Where(l => l.DocumentDate <= request.DateTo);
+            }
+        }       
         if (_authenticatedUser.ClaimsPrincipal != null && !_authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.Admin))
         {
             var pplusUserId = await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().Select(l => l.PplusId).FirstOrDefaultAsync(cancellationToken: cancellationToken);

@@ -1,6 +1,6 @@
 @using Models
 @model PaymentTransactionFilterModel
-<form role="search" method="get">
+<form role="search" method="get" asp-page-handler="Filter">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <span asp-validation-for="@Model.Entity" class="text-danger" style="display:block;"></span>
     <span asp-validation-for="@Model.PaymentType" class="text-danger" style="display:block;"></span>
@@ -8,6 +8,7 @@
     <span asp-validation-for="@Model.DateFrom" class="text-danger" style="display:block;"></span>
     <span asp-validation-for="@Model.DateTo" class="text-danger" style="display:block;"></span>
     <input type="hidden" asp-for="@Model.DisplayGenerateButton">
+    <input type="hidden" asp-for="@Model.ShowBatchFilter">
     <nav class="navbar bg-light">
         <div class="container-fluid" style="">
             <div class="d-flex">
@@ -16,11 +17,18 @@
                         <option value="">- Select Entity -</option>
                     </select>
                 </div>
-                 <div>
-                    <select asp-for="@Model.BatchId" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:130px;">
-                        <option value="">- Select Batch -</option>
-                    </select>
-                </div>
+                @if (Model.ShowBatchFilter)
+                {
+                    <div>
+                        <select asp-for="@Model.BatchId" class="form-control me-2" asp-items="@(dropdownService.GetBatchList(Model.BatchId))" style="width:150px;">
+                            <option value="">- Select Batch -</option>
+                        </select>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="@Model.BatchId">
+                }
             </div>
         </div>
         <div class="container-fluid" style="margin-top:10px;">
@@ -55,11 +63,19 @@
         </div>
         <div class="container-fluid" style="margin-top:10px;">
             <div class="d-flex">
-                <div style="width:470px;padding-top:7px;">
-                    <input class="form-control me-2" type="date" asp-for="@Model.DateFrom" style="width:45%;float:left;margin-right:10px;">
-                    <input class="form-control me-2" type="date" asp-for="@Model.DateTo" style="width:45%;float:left">
-                </div>
-                <button class="btn btn-outline-success" id="btnRetrieve" type="submit" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
+                @if (string.IsNullOrEmpty(Model.BatchId))
+                {
+                    <div style="width:470px;padding-top:7px;">
+                        <input class="form-control me-2" type="date" asp-for="@Model.DateFrom" style="width:45%;float:left;margin-right:10px;">
+                        <input class="form-control me-2" type="date" asp-for="@Model.DateTo" style="width:45%;float:left">
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="@Model.DateFrom">
+                    <input type="hidden" asp-for="@Model.DateTo">
+                }
+                <button class="btn btn-outline-success" id="btnRetrieve" type="submit" name="handler" value="Retrieve" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.DisplayGenerateButton)
                 {
                     <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Localizer["Generate"]</button>

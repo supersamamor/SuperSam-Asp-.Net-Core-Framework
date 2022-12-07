@@ -14,6 +14,13 @@ public record BatchState : BaseEntity
 	public DateTime? EmailDateTime { get; private set; }
     public string? CompanyId { get; init; }
     public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
+    public string? BatchNumber 
+    {
+        get
+        {
+            return this.Date.ToString("yyyyMMdd") + "-" + this.Batch;
+        }
+    }
     public void TagAsSent()
     {
         this.EmailStatus = Constants.EmailStatus.Sent;

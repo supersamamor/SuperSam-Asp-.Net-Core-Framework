@@ -1,14 +1,9 @@
-using AutoMapper;
-using CTI.Common.Core.Commands;
-using CTI.Common.Data;
 using CTI.Common.Identity.Abstractions;
-using CTI.Common.Utility.Validators;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.CsvGenerator.Services;
 using CTI.FAS.Infrastructure.Data;
 using FluentValidation;
 using LanguageExt;
-using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static LanguageExt.Prelude;
@@ -37,12 +32,15 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
     public async Task<string> AddEnrolledPayee(ProcessPaymentCommand request, CancellationToken cancellationToken)
     {
         var date = DateTime.Now.Date;
-        var paymentTransactionToProcessList = await _context.PaymentTransaction.Include(l=>l.EnrolledPayee)
+        var paymentTransactionToProcessList = await _context.PaymentTransaction
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
         var batchCount = (await _context.Batch
                              .Where(l => l.Date == date)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
+        var companyId = (await _context.PaymentTransaction
+            .Where(l => l.Id == request.NewPaymentTransactionIdList.FirstOrDefault()).Include(l => l.EnrolledPayee).AsNoTracking().FirstOrDefaultAsync())!
+            .EnrolledPayee!.CompanyId;
         var batchToAdd = new BatchState()
         {
             Date = date,
@@ -50,7 +48,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
             FilePath = csvDocument.CompleteFilePath,
             Url = csvDocument.FileUrl,
             UserId = _authenticatedUser.UserId,
-            CompanyId = paymentTransactionToProcessList.FirstOrDefault()!.EnrolledPayee!.CompanyId,
+            CompanyId = companyId,
         };
         await _context.AddAsync(batchToAdd, cancellationToken);
         //Todo: Use Bulk Update

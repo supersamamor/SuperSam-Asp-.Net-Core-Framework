@@ -16,5 +16,6 @@ namespace CTI.FAS.Web.Areas.FAS.Models
         public string? BatchId { get; set; }
         public string? DownloadUrl { get; set; }
         public bool DisplayGenerateButton { get; set; }
+        public bool ShowBatchFilter { get; set; }
     }
 }

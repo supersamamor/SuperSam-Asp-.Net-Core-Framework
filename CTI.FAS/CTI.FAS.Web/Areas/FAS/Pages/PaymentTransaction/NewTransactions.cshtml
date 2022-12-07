@@ -145,7 +145,18 @@
             return this;
         };
         $("#Entity").companySelect();
-         $('#btnTriggerGenerate').on( 'click', function () {
+        $.fn.batchSelect = function() {
+            this.filter("select").each(function() {
+                $(this).ajaxSelect({
+                    ajax: {
+                        url: '@Url.Page("/Batch/Dropdown", new { area = "FAS", handler = "Select2Data" })' + '&companyId=' + $('#Entity').val()
+                    }
+                });
+            });
+            return this;
+        };
+        $("#BatchId").batchSelect();
+        $('#btnTriggerGenerate').on( 'click', function () {
             $('#btnGenerate').click();
         });
         $('#Entity').on( 'change', function () {
