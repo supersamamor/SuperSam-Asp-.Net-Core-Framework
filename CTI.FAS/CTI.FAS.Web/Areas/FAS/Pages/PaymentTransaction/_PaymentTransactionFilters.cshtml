@@ -9,6 +9,7 @@
     <span asp-validation-for="@Model.DateTo" class="text-danger" style="display:block;"></span>
     <input type="hidden" asp-for="@Model.DisplayGenerateButton">
     <input type="hidden" asp-for="@Model.ShowBatchFilter">
+    <input type="hidden" asp-for="@Model.ProccessButtonLabel">
     <nav class="navbar bg-light">
         <div class="container-fluid" style="">
             <div class="d-flex">
@@ -78,7 +79,7 @@
                 <button class="btn btn-outline-success" id="btnRetrieve" type="submit" name="handler" value="Retrieve" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.DisplayGenerateButton)
                 {
-                    <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Localizer["Generate"]</button>
+                    <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Model.ProccessButtonLabel</button>
                 }
                 @if (!string.IsNullOrEmpty(Model.DownloadUrl))
                 {

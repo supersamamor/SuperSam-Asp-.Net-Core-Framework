@@ -68,14 +68,11 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
     {       
         ModelState.Clear();
         Filter.ShowBatchFilter = true;
+        Filter.ProccessButtonLabel = "Send";
         if (string.IsNullOrEmpty(entity))
         {
             entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
-        }
-        //if (Filter.ShowBatchFilter && string.IsNullOrEmpty(batchId))
-        //{
-        //    batchId = (await Mediatr.Send(new GetBatchQuery() { CompanyId = entity })).Data.ToList().FirstOrDefault()?.Id;
-        //}
+        }   
         PaymentTransactionTabNavigation.SetEntity(entity);
         Filter.Entity = entity;
         Filter.PaymentType = paymentType;
@@ -110,7 +107,7 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
                 }
             }
         }
-        if (!string.IsNullOrEmpty(entity))
+        if (!string.IsNullOrEmpty(batchId) || dateFrom != null || dateFrom != null)
         {
             NewPaymentTransactionList = Mapper.Map<IList<NewPaymentTransactionViewModel>>(await Mediatr.Send(query));
         }
