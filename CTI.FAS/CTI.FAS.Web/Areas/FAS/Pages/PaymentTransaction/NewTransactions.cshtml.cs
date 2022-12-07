@@ -20,8 +20,8 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
     [BindProperty]
     public PaymentTransactionFilterModel Filter { get; set; } = new();
     public PaymentTransactionTabNavigationPartial PaymentTransactionTabNavigation { get; set; } = new() { TabName = Constants.PaymentTransactionTabNavigation.New };
-   
-    public async Task<IActionResult> OnGet(string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? downloadUrl)
+
+    public async Task<IActionResult> OnGet(string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? downloadUrl)
     {
         if (!ModelState.IsValid)
         {
@@ -37,6 +37,8 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         Filter.AccountTransaction = accountTransaction;
         Filter.DateFrom = dateFrom;
         Filter.DateTo = dateTo;
+        Filter.BatchId = batchId;
+        Filter.DownloadUrl = downloadUrl;
         var query = new GetPaymentTransactionWithCustomFilterQuery()
         {
             Status = PaymentTransactionStatus.New,
@@ -45,11 +47,24 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
             AccountTransaction = accountTransaction,
             DateFrom = dateFrom,
             DateTo = dateTo,
+            BatchId = batchId,
         };
         if (!string.IsNullOrEmpty(entity))
-        { NewPaymentTransactionList = Mapper.Map<IList<NewPaymentTransactionViewModel>>(await Mediatr.Send(query)); }
+        {
+            if (string.IsNullOrEmpty(batchId) && dateFrom == null && dateFrom == null)
+            {
+                NotyfService.Warning(Localizer["Please select batch or date filters."]);
+                return Page();
+            }
+            else if (string.IsNullOrEmpty(batchId) && (dateFrom == null || dateTo == null))
+            {
+                NotyfService.Warning(Localizer["Invalid date filters. Check 'date from' and 'date to' fields."]);
+                return Page();
+            }
+            NewPaymentTransactionList = Mapper.Map<IList<NewPaymentTransactionViewModel>>(await Mediatr.Send(query));
+        }
         Filter.DisplayGenerateButton = NewPaymentTransactionList.Count > 0;
-        Filter.DownloadUrl = downloadUrl;
+      
         return Page();
     }
     public async Task<IActionResult> OnPost()
@@ -76,6 +91,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
                 Filter.AccountTransaction,
                 Filter.DateFrom,
                 Filter.DateTo,
+                Filter.BatchId
             });
         }
         catch (Exception ex)

@@ -155,6 +155,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<EnrollmentBatchState>().HasMany(t => t.EnrolledPayeeList).WithOne(l => l.EnrollmentBatch).HasForeignKey(t => t.EnrollmentBatchId);
 		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
 		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
+		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.CompanyId });
+		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.CompanyId });
 		base.OnModelCreating(modelBuilder);
     }
 }

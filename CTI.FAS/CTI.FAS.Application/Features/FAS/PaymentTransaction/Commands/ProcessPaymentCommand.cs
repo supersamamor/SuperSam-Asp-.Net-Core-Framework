@@ -37,7 +37,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
     public async Task<string> AddEnrolledPayee(ProcessPaymentCommand request, CancellationToken cancellationToken)
     {
         var date = DateTime.Now.Date;
-        var paymentTransactionToProcessList = await _context.PaymentTransaction
+        var paymentTransactionToProcessList = await _context.PaymentTransaction.Include(l=>l.EnrolledPayee)
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
         var batchCount = (await _context.Batch
@@ -50,6 +50,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
             FilePath = csvDocument.CompleteFilePath,
             Url = csvDocument.FileUrl,
             UserId = _authenticatedUser.UserId,
+            CompanyId = paymentTransactionToProcessList.FirstOrDefault()!.EnrolledPayee!.CompanyId,
         };
         await _context.AddAsync(batchToAdd, cancellationToken);
         //Todo: Use Bulk Update

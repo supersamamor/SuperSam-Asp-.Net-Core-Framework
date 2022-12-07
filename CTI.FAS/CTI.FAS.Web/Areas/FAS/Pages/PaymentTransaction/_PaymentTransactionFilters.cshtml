@@ -54,7 +54,7 @@
                     <input class="form-control me-2" type="date" asp-for="@Model.DateFrom" style="width:45%;float:left;margin-right:10px;">
                     <input class="form-control me-2" type="date" asp-for="@Model.DateTo" style="width:45%;float:left">
                 </div>
-                <button class="btn btn-outline-success" type="submit" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
+                <button class="btn btn-outline-success" id="btnRetrieve" type="submit" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.DisplayGenerateButton)
                 {
                     <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Localizer["Generate"]</button>

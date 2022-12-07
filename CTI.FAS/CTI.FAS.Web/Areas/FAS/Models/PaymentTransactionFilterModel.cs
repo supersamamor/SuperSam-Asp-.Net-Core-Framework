@@ -10,11 +10,10 @@ namespace CTI.FAS.Web.Areas.FAS.Models
         [Required]
         public string? PaymentType { get; set; }       
         [Required]
-        public string? AccountTransaction { get; set; }      
-        [Required]
+        public string? AccountTransaction { get; set; }   
         public DateTime? DateFrom { get; set; }       
-        [Required]
         public DateTime? DateTo { get; set; }
+        public string? BatchId { get; set; }
         public string? DownloadUrl { get; set; }
         public bool DisplayGenerateButton { get; set; }
     }

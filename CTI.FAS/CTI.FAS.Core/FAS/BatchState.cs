@@ -12,7 +12,8 @@ public record BatchState : BaseEntity
 	public string? UserId { get; init; }
 	public string? EmailStatus { get; private set; } = Constants.EmailStatus.Pending;
 	public DateTime? EmailDateTime { get; private set; }
-	public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
+    public string? CompanyId { get; init; }
+    public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
     public void TagAsSent()
     {
         this.EmailStatus = Constants.EmailStatus.Sent;

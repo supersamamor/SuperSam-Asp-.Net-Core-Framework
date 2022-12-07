@@ -12,6 +12,7 @@ public record EnrollmentBatchState : BaseEntity
     public string? UserId { get; init; }
     public string? EmailStatus { get; private set; } = Constants.EmailStatus.Pending;
     public DateTime? EmailDateTime { get; private set; }
+    public string? CompanyId { get; init; }
     public IList<EnrolledPayeeState>? EnrolledPayeeList { get; set; }
     public void TagAsSent()
     {

@@ -15,6 +15,7 @@ public record GetPaymentTransactionWithCustomFilterQuery : IRequest<IList<Paymen
     public string? AccountTransaction { get; set; }
     public DateTime? DateFrom { get; set; }
     public DateTime? DateTo { get; set; }
+    public string? BatchId { get; set; }
 }
 
 public class GetPaymentTransactionWithCustomFilterQueryHandler : IRequestHandler<GetPaymentTransactionWithCustomFilterQuery, IList<PaymentTransactionState>>

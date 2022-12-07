@@ -50,6 +50,7 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
             FilePath = csvDocument.CompleteFilePath,
             Url = csvDocument.FileUrl,
             UserId = _authenticatedUser.UserId,
+            CompanyId = payeeToEnrollList.FirstOrDefault()!.CompanyId,
         };
         await _context.AddAsync(enrollmentBatchToAdd, cancellationToken);
         //Todo: Use Bulk Update
