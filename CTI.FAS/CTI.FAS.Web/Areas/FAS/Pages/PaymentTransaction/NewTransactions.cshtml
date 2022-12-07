@@ -25,10 +25,14 @@
                 <div class="container-fluid" style="">
                     <div class="d-flex">
                         <div>
-                            <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:250px;">
+                            <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:740px;">
                                 <option value="">- Select Entity -</option>
                             </select>
-                        </div>
+                        </div>                     
+                    </div>
+                </div>
+                 <div class="container-fluid" style="margin-top:10px;">
+                    <div class="d-flex">                     
                         <div style="width:380px;padding-top:7px;margin-left:5px;">
                             <label class="form-check-label" style="min-width:120px;">
                                 <b>@Localizer["Payment Type"] : </b>
