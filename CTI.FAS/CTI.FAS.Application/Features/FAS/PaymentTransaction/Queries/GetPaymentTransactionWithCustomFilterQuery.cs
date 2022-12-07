@@ -7,7 +7,7 @@ using CTI.Common.Identity.Abstractions;
 
 namespace CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
 
-public record GetNewPaymentTransactionQuery : IRequest<IList<PaymentTransactionState>>
+public record GetPaymentTransactionWithCustomFilterQuery : IRequest<IList<PaymentTransactionState>>
 {
     public string? Status { get; set; }
     public string? Entity { get; set; }
@@ -17,19 +17,19 @@ public record GetNewPaymentTransactionQuery : IRequest<IList<PaymentTransactionS
     public DateTime? DateTo { get; set; }
 }
 
-public class GetNewPaymentTransactionQueryHandler : IRequestHandler<GetNewPaymentTransactionQuery, IList<PaymentTransactionState>>
+public class GetPaymentTransactionWithCustomFilterQueryHandler : IRequestHandler<GetPaymentTransactionWithCustomFilterQuery, IList<PaymentTransactionState>>
 {
     private readonly ApplicationContext _context;
     private readonly IAuthenticatedUser _authenticatedUser;
     private readonly IdentityContext _identityContext;
-    public GetNewPaymentTransactionQueryHandler(ApplicationContext context, IAuthenticatedUser authenticatedUser, IdentityContext identityContext)
+    public GetPaymentTransactionWithCustomFilterQueryHandler(ApplicationContext context, IAuthenticatedUser authenticatedUser, IdentityContext identityContext)
     {
         _context = context;
         _authenticatedUser = authenticatedUser;
         _identityContext = identityContext;
     }
 
-    public async Task<IList<PaymentTransactionState>> Handle(GetNewPaymentTransactionQuery request, CancellationToken cancellationToken = default)
+    public async Task<IList<PaymentTransactionState>> Handle(GetPaymentTransactionWithCustomFilterQuery request, CancellationToken cancellationToken = default)
     {
         var query = (from paymentTransaction in _context.PaymentTransaction
                      select paymentTransaction)

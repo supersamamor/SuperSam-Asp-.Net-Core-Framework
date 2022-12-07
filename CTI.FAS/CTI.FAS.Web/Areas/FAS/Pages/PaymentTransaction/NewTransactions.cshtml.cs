@@ -37,7 +37,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         Filter.AccountTransaction = accountTransaction;
         Filter.DateFrom = dateFrom;
         Filter.DateTo = dateTo;
-        var query = new GetNewPaymentTransactionQuery()
+        var query = new GetPaymentTransactionWithCustomFilterQuery()
         {
             Status = PaymentTransactionStatus.New,
             Entity = entity,
