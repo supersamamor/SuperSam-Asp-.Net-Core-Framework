@@ -94,7 +94,7 @@
                                             @Model.NewPaymentTransactionList[i].AccountTransaction
                                         </td>
                                         <td>
-                                            @Model.NewPaymentTransactionList[i].Status
+                                              @Html.Raw(CTI.FAS.Web.Helper.PaymentStatusHelper.GetPaymentStatus(Model.NewPaymentTransactionList[i].Status))
                                         </td>
                                     </tr>
                                 }

@@ -36,7 +36,7 @@ public class InActivePayeeModel : BasePageModel<InActivePayeeModel>
                 Entity = e.Company?.EntityDisplayDescription,
 				Creditor = e.Creditor?.CreditorDisplayDescription,
 				e.PayeeAccountType,
-				e.Status,	
+                Status = Helper.EnrollmentStatusHelper.GetEnrollmentStatus(e.Status),
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

@@ -104,7 +104,7 @@
                                                 @Model.ForEnrollmentList[i].PayeeAccountType
                                             </td>
                                             <td>
-                                                @Model.ForEnrollmentList[i].Status
+                                                @Html.Raw(CTI.FAS.Web.Helper.EnrollmentStatusHelper.GetEnrollmentStatus(Model.ForEnrollmentList[i].Status))
                                             </td>
                                         </tr>
                                     }
