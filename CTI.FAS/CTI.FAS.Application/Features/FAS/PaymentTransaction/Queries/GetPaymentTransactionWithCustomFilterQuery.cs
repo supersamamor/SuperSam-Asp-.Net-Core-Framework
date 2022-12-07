@@ -65,9 +65,7 @@ public class GetPaymentTransactionWithCustomFilterQueryHandler : IRequestHandler
                     join ue in _context.UserEntity on a.EnrolledPayee!.CompanyId equals ue.CompanyId
                     where ue.PplusUserId == pplusUserId && a.EnrolledPayee!.Company!.IsDisabled == false
                     select a;
-        }
-        var test = await query.Include(l => l.Batch).Include(l => l!.EnrolledPayee).ThenInclude(l => l!.Creditor)
-                    .AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
+        } 
         return await query.Include(l => l.Batch).Include(l => l!.EnrolledPayee).ThenInclude(l => l!.Creditor)
                     .AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
     }
