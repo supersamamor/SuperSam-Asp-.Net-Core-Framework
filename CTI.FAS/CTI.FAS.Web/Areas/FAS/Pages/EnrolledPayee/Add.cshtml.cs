@@ -16,21 +16,33 @@ public class AddModel : BasePageModel<AddModel>
     public string? RemoveSubDetailId { get; set; }
     [BindProperty]
     public string? AsyncAction { get; set; }
-    public IActionResult OnGet()
+    public IActionResult OnGet(string? entity)
     {
-
+        if (!string.IsNullOrEmpty(entity))
+        {
+            EnrolledPayee.CompanyId = entity;
+        }
         return Page();
     }
 
     public async Task<IActionResult> OnPost()
     {
-
         if (!ModelState.IsValid)
         {
             return Page();
         }
-
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddEnrolledPayeeCommand>(EnrolledPayee)), "Enrollment", false);
+        try
+        {
+            await Mediatr.Send(Mapper.Map<AddEnrolledPayeeCommand>(EnrolledPayee));
+            NotyfService.Success(Localizer["Successfully saved the data."]);
+            return RedirectToPage("Enrollment", new { Entity = EnrolledPayee.CompanyId });
+        }
+        catch (Exception ex)
+        {
+            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
+            Logger.LogError(ex, "Exception encountered");
+        }
+        return Page();
     }
     public async Task<IActionResult> OnPostChangeFormValue()
     {

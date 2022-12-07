@@ -9,14 +9,46 @@
     ViewData["ActiveMainPage"] = "EnrolledPayee";
     ViewData["Level1"] = "AP";
 }
-<form id="enrollment-form" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="card">
-        <div class="card-header">
-            <partial name="_PayeeEnrollmentTabNavigation" model="@Model.PayeeEnrollmentTabNavigation" />
-        </div>
-        <div class="card-body">
-            <div class="row">
+
+<div class="card">
+    <div class="card-header">
+        <partial name="_PayeeEnrollmentTabNavigation" model="@Model.PayeeEnrollmentTabNavigation" />
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <form role="search" method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <span asp-validation-for="@Model.Entity" class="text-danger" style="display:block;"></span>
+                <nav class="navbar bg-light">
+                    <div class="container-fluid" style="">
+                        <div class="d-flex">
+                            <div>
+                                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded)
+                                {
+                                    <a class="btn btn-outline-success" href="@(Url.Page("/EnrolledPayee/Add", new { area = "FAS" }) + "?Entity=" + Model.Entity)" style="width:120px;padding-top:10px;">@Localizer["Add"]</a>
+                                }
+                                <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:350px;">
+                                    <option value="">- Select Entity -</option>
+                                </select>
+                                @if (Model.ForEnrollmentList.Count() == 0)
+                                {
+                                    <button class="btn btn-outline-success" type="submit" id="btnRetrieveForEnrollment">@Localizer["Retrieve"]</button>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded && Model.ForEnrollmentList.Count() > 0)
+                                {
+                                    <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Localizer["Generate"]</button>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DownloadUrl))
+                                {
+                                    <a class="btn btn-outline-success" href="@Model.DownloadUrl" style="width:120px;padding-top:10px;">@Localizer["Download"]</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </form>
+            <form id="enrollment-form" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -81,16 +113,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
-                <i class="fas fa-chevron-up"></i>
-            </a>
+                <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
+                    <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                </div>
+            </form>
         </div>
+        <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
-        <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
-    </div>  
-</form>
+</div>
 @section Scripts {
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
@@ -102,43 +134,6 @@
             pageLength: 10,
             info: true,
             buttons: [
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded)
-                {
-                    <text>
-                        {
-                            text: '@Localizer["Add"]',
-                            action: function (e, dt, button, config) {
-                                var url = '@Url.Page("/EnrolledPayee/Add", new { area = "FAS" })';
-                                window.location.href = url;
-                            },
-                            className: 'btn btn-info text-light',
-                        },
-                    </text>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded && Model.ForEnrollmentList.Count() > 0)
-                {
-                    <text>
-                        {
-                            text: '@Localizer["Generate"]',
-                            action: function (e, dt, button, config) {
-                                $('#btnGenerate').click();
-                            },
-                            className: 'btn btn-success text-light',
-                        },
-                    </text>
-                }
-                @if (!string.IsNullOrEmpty(Model.DownloadUrl))
-                {
-                    <text>
-                        {
-                            text: '@Localizer["Download File"]',
-                            action: function (e, dt, button, config) {                               
-                                window.location.href = '@Model.DownloadUrl';
-                            },
-                            className: 'btn btn-primary text-light',
-                        },
-                    </text>
-                }
             ],
             columnDefs: [
                 {
@@ -148,6 +143,23 @@
             ]
         });
         $('#enrollment-form').onSubmitIncludeAllFieldsFromTable(roles);
+        $.fn.companySelect = function() {
+            this.filter("select").each(function() {
+                $(this).ajaxSelect({
+                    ajax: {
+                        url: '@Url.Page("/Company/Dropdown", new { area = "FAS", handler = "Select2Data" })',
+                    }
+                });
+            });
+            return this;
+        };
+        $("#Entity").companySelect();
+        $('#btnTriggerGenerate').on( 'click', function () {
+            $('#btnGenerate').click();
+        });
+        $('#Entity').on( 'change', function () {
+            $('#btnRetrieveForEnrollment').click();
+        });
     });
 </script>
 }

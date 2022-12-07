@@ -5,7 +5,7 @@ public record EnrolledPayeeViewModel : BaseViewModel
 {	
 	[Display(Name = "Entity")]
 	[Required]	
-	public string CompanyId { get; init; } = "";
+	public string CompanyId { get; set; } = "";
 	public string?  ForeignKeyCompany { get; set; }
 	[Display(Name = "Creditor")]
 	[Required]	

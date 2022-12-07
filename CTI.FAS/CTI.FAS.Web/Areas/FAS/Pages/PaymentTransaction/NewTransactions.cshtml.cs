@@ -1,3 +1,4 @@
+using CTI.FAS.Application.Features.FAS.Company.Queries;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
 using CTI.FAS.Core.Constants;
@@ -38,6 +39,10 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         if (!ModelState.IsValid)
         {
             return Page();
+        }
+        if (string.IsNullOrEmpty(entity))
+        {
+            entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
         }
         Entity = entity;
         PaymentType = paymentType;

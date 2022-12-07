@@ -8,7 +8,10 @@ using CTI.FAS.Core.Constants;
 
 namespace CTI.FAS.Application.Features.FAS.EnrolledPayee.Queries;
 
-public record GetPayeeForEnrollmentQuery : IRequest<IList<EnrolledPayeeState>>;
+public record GetPayeeForEnrollmentQuery : IRequest<IList<EnrolledPayeeState>>
+{ 
+    public string? Entity { get; set; }
+}
 
 public class GetPayeeForEnrollmentQueryHandler : IRequestHandler<GetPayeeForEnrollmentQuery, IList<EnrolledPayeeState>>
 {
@@ -27,7 +30,10 @@ public class GetPayeeForEnrollmentQueryHandler : IRequestHandler<GetPayeeForEnro
                      where enrolledPayee.Status == EnrollmentStatus.New || enrolledPayee.Status == EnrollmentStatus.ForReEnrollment
                      select enrolledPayee)
                             .AsNoTracking();
-
+        if (!string.IsNullOrEmpty(request.Entity))
+        {
+            query = query.Where(l => l.CompanyId == request.Entity);
+        }
         if (_authenticatedUser.ClaimsPrincipal != null && !_authenticatedUser.ClaimsPrincipal.IsInRole(Core.Constants.Roles.Admin))
         {
             query = from a in query
