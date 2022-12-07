@@ -11,5 +11,6 @@ namespace CTI.FAS.Core.Constants
         public const string New = "New";
         public const string Generated = "Generated";
         public const string Sent = "Sent";
+        public const string Revoked = "Revoked";
     }
 }

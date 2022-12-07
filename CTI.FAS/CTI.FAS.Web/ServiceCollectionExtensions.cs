@@ -15,6 +15,7 @@ using Quartz;
 using System.Globalization;
 using System.Reflection;
 using CTI.FAS.Web.Service;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace CTI.FAS.Web;
 
@@ -44,6 +45,10 @@ public static class ServiceCollectionExtensions
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
 		services.AddTransient<DropdownServices>();
+        services.Configure<FormOptions>(options =>
+        {
+            options.ValueCountLimit = int.MaxValue;
+        });
     }
 
     public static IServiceCollection ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)

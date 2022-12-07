@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
-                <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                <button type="submit" id="btnGenerate" class="btn btn-success" name="handler" value="Process" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
             </div>
         </form>
     </div>
@@ -156,7 +156,7 @@
             return this;
         };
         $("#BatchId").batchSelect();
-        $('#btnTriggerGenerate').on( 'click', function () {
+        $('#btnTriggerProcess').on( 'click', function () {
             $('#btnGenerate').click();
         });
         $('#Entity, #BatchId').on( 'change', function () {

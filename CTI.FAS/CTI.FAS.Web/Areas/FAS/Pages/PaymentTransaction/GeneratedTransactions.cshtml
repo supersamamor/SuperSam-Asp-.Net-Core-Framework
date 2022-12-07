@@ -104,7 +104,8 @@
                 </div>
             </div>
             <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;display:none;">
-                <button type="submit" id="btnGenerate" class="btn btn-success" title="@Localizer["Generate"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                <button type="submit" id="btnGenerate" class="btn btn-success" name="handler" value="Send" title="@Localizer["Send"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+                <button type="submit" id="btnRevoke" class="btn btn-success" name="handler" value="Revoke" title="@Localizer["Revoke"]" style="color:#fff;"><i class="fas fa-save"></i></button>
             </div>
         </form>
     </div>
@@ -156,8 +157,11 @@
             return this;
         };
         $("#BatchId").batchSelect();
-        $('#btnTriggerGenerate').on( 'click', function () {
+        $('#btnTriggerProcess').on( 'click', function () {
             $('#btnGenerate').click();
+        });
+        $('#btnTriggerRevoke').on( 'click', function () {
+            $('#btnRevoke').click();
         });
         $('#Entity, #BatchId').on( 'change', function () {
             $('#btnRetrieve').click();

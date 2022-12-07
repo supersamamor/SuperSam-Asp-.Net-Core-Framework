@@ -1,4 +1,3 @@
-using CTI.FAS.Application.Features.FAS.Batch.Queries;
 using CTI.FAS.Application.Features.FAS.Company.Queries;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
@@ -29,38 +28,19 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
         return await FetchTransactionDetails(handler, entity, paymentType, accountTransaction, dateFrom, dateTo, batchId, downloadUrl);   
     }
     
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPost(string? handler)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        var selectedNewPaymentTransactionList = NewPaymentTransactionList.Where(l => l.Enabled).Select(l => l.Id).ToList();
-        if (selectedNewPaymentTransactionList.Count == 0)
+        if (handler == "Send")
         {
-            NotyfService.Warning(Localizer["Please select atleast 1 payment transaction to process."]);
-            return Page();
+            return await Send();
         }
-        try
+        if (handler == "Revoke")
         {
-            var downloadUrl = await Mediatr.Send(new ProcessPaymentCommand(selectedNewPaymentTransactionList));
-            NotyfService.Success(Localizer["Generation success."]);
-            return RedirectToPage("NewTransactions", new
-            {
-                downloadUrl,
-                Filter.Entity,
-                Filter.PaymentType,
-                Filter.AccountTransaction,
-                Filter.DateFrom,
-                Filter.DateTo,
-                Filter.BatchId,
-                Filter.ShowBatchFilter,
-            });
-        }
-        catch (Exception ex)
-        {
-            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
-            Logger.LogError(ex, "Exception encountered");
+            return await Revoked();
         }
         return Page();
     }
@@ -113,6 +93,68 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
         }
         Filter.DisplayGenerateButton = NewPaymentTransactionList.Count > 0;
         Filter.DisplayRevokeButton = NewPaymentTransactionList.Count > 0;
+        return Page();
+    }
+    private async Task<IActionResult> Send()
+    {
+        var selectedNewPaymentTransactionList = NewPaymentTransactionList.Where(l => l.Enabled).Select(l => l.Id).ToList();
+        if (selectedNewPaymentTransactionList.Count == 0)
+        {
+            NotyfService.Warning(Localizer["Please select atleast 1 payment transaction to send."]);
+            return Page();
+        }
+        try
+        {
+            var downloadUrl = await Mediatr.Send(new SendPaymentCommand(selectedNewPaymentTransactionList));
+            NotyfService.Success(Localizer["Success sending."]);
+            return RedirectToPage("GeneratedTransactions", new
+            {
+                downloadUrl,
+                Filter.Entity,
+                Filter.PaymentType,
+                Filter.AccountTransaction,
+                Filter.DateFrom,
+                Filter.DateTo,
+                Filter.BatchId,
+                Filter.ShowBatchFilter,
+            });
+        }
+        catch (Exception ex)
+        {
+            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
+            Logger.LogError(ex, "Exception encountered");
+        }
+        return Page();
+    }
+    private async Task<IActionResult> Revoked()
+    {
+        var selectedNewPaymentTransactionList = NewPaymentTransactionList.Where(l => l.Enabled).Select(l => l.Id).ToList();
+        if (selectedNewPaymentTransactionList.Count == 0)
+        {
+            NotyfService.Warning(Localizer["Please select atleast 1 payment transaction to revoke."]);
+            return Page();
+        }
+        try
+        {
+            var downloadUrl = await Mediatr.Send(new RevokePaymentCommand(selectedNewPaymentTransactionList));
+            NotyfService.Success(Localizer["Successfully revoked."]);
+            return RedirectToPage("GeneratedTransactions", new
+            {
+                downloadUrl,
+                Filter.Entity,
+                Filter.PaymentType,
+                Filter.AccountTransaction,
+                Filter.DateFrom,
+                Filter.DateTo,
+                Filter.BatchId,
+                Filter.ShowBatchFilter,
+            });
+        }
+        catch (Exception ex)
+        {
+            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
+            Logger.LogError(ex, "Exception encountered");
+        }
         return Page();
     }
 }

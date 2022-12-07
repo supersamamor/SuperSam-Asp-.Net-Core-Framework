@@ -31,5 +31,13 @@ public record PaymentTransactionState : BaseEntity
 	{
 		this.Status = PaymentTransactionStatus.Generated;
 		this.BatchId = batchId; 
-	}	
+	}
+	public void TagAsSent()
+	{
+		this.Status = PaymentTransactionStatus.Sent;		
+	}
+	public void TagAsRevoked()
+	{
+		this.Status = PaymentTransactionStatus.Revoked;
+	}
 }

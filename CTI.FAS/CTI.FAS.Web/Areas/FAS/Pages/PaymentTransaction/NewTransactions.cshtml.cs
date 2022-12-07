@@ -1,4 +1,3 @@
-using CTI.FAS.Application.Features.FAS.Batch.Queries;
 using CTI.FAS.Application.Features.FAS.Company.Queries;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
@@ -29,39 +28,16 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         return await FetchTransactionDetails(handler, entity, paymentType, accountTransaction, dateFrom, dateTo, batchId, downloadUrl);
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPost(string? handler)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        var selectedNewPaymentTransactionList = NewPaymentTransactionList.Where(l => l.Enabled).Select(l => l.Id).ToList();
-        if (selectedNewPaymentTransactionList.Count == 0)
+        if (handler == "Process")
         {
-            NotyfService.Warning(Localizer["Please select atleast 1 payment transaction to process."]);
-            return Page();
-        }
-        try
-        {
-            var downloadUrl = await Mediatr.Send(new ProcessPaymentCommand(selectedNewPaymentTransactionList));
-            NotyfService.Success(Localizer["Generation success."]);
-            return RedirectToPage("NewTransactions", new
-            {
-                downloadUrl,
-                Filter.Entity,
-                Filter.PaymentType,
-                Filter.AccountTransaction,
-                Filter.DateFrom,
-                Filter.DateTo,
-                Filter.BatchId,
-                Filter.ShowBatchFilter,
-            });
-        }
-        catch (Exception ex)
-        {
-            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
-            Logger.LogError(ex, "Exception encountered");
-        }
+            return await Process();
+        }       
         return Page();
     }
     private async Task<IActionResult> FetchTransactionDetails(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? downloadUrl)
@@ -113,6 +89,37 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         }
         Filter.DisplayGenerateButton = NewPaymentTransactionList.Count > 0;
         Filter.DisplayRevokeButton = false;
+        return Page();
+    }
+    private async Task<IActionResult> Process()
+    {
+        var selectedNewPaymentTransactionList = NewPaymentTransactionList.Where(l => l.Enabled).Select(l => l.Id).ToList();
+        if (selectedNewPaymentTransactionList.Count == 0)
+        {
+            NotyfService.Warning(Localizer["Please select atleast 1 payment transaction to process."]);
+            return Page();
+        }
+        try
+        {
+            var downloadUrl = await Mediatr.Send(new ProcessPaymentCommand(selectedNewPaymentTransactionList));
+            NotyfService.Success(Localizer["Generation success."]);
+            return RedirectToPage("NewTransactions", new
+            {
+                downloadUrl,
+                Filter.Entity,
+                Filter.PaymentType,
+                Filter.AccountTransaction,
+                Filter.DateFrom,
+                Filter.DateTo,
+                Filter.BatchId,
+                Filter.ShowBatchFilter,
+            });
+        }
+        catch (Exception ex)
+        {
+            NotyfService.Error(Localizer["An error has ocurred, please contact System administrator."]);
+            Logger.LogError(ex, "Exception encountered");
+        }
         return Page();
     }
 }

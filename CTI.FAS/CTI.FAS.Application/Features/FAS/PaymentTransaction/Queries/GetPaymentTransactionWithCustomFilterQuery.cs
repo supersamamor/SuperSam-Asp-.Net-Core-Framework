@@ -4,6 +4,7 @@ using MediatR;
 using CTI.Common.Utility.Extensions;
 using Microsoft.EntityFrameworkCore;
 using CTI.Common.Identity.Abstractions;
+using CTI.FAS.Core.Constants;
 
 namespace CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
 
@@ -37,7 +38,14 @@ public class GetPaymentTransactionWithCustomFilterQueryHandler : IRequestHandler
                             .AsNoTracking();
         if (!string.IsNullOrEmpty(request.Status))
         {
-            query = query.Where(l => l.Status == request.Status);
+            if (request.Status == PaymentTransactionStatus.New)
+            {
+                query = query.Where(l => l.Status == request.Status || l.Status == PaymentTransactionStatus.Revoked);
+            }
+            else
+            {
+                query = query.Where(l => l.Status == request.Status);
+            }
         }
         if (!string.IsNullOrEmpty(request.Entity))
         {
