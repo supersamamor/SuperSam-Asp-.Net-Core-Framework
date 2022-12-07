@@ -14,72 +14,7 @@
         <partial name="_PaymentTransactionTabNavigation" model="@Model.PaymentTransactionTabNavigation" />
     </div>
     <div class="card-body">
-        <form role="search" method="get">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <span asp-validation-for="@Model.Entity" class="text-danger" style="display:block;"></span>
-            <span asp-validation-for="@Model.PaymentType" class="text-danger" style="display:block;"></span>
-            <span asp-validation-for="@Model.AccountTransaction" class="text-danger" style="display:block;"></span>
-            <span asp-validation-for="@Model.DateFrom" class="text-danger" style="display:block;"></span>
-            <span asp-validation-for="@Model.DateTo" class="text-danger" style="display:block;"></span>
-            <nav class="navbar bg-light">
-                <div class="container-fluid" style="">
-                    <div class="d-flex">
-                        <div>
-                            <select asp-for="@Model.Entity" class="form-control me-2" asp-items="@(dropdownService.GetCompanyList(Model.Entity))" style="width:740px;">
-                                <option value="">- Select Entity -</option>
-                            </select>
-                        </div>                     
-                    </div>
-                </div>
-                 <div class="container-fluid" style="margin-top:10px;">
-                    <div class="d-flex">                     
-                        <div style="width:380px;padding-top:7px;margin-left:5px;">
-                            <label class="form-check-label" style="min-width:120px;">
-                                <b>@Localizer["Payment Type"] : </b>
-                            </label>
-                            <input class="form-check-input" type="radio" asp-for="@Model.PaymentType" id="PaymentType1" value="@Core.Constants.PaymentType.ESettle" style="width:16px;margin-right:5px;" checked>
-                            <label class="form-check-label" style="min-width:70px;">
-                                @Core.Constants.PaymentType.ESettle
-                            </label>
-                            <input class="form-check-input" type="radio" asp-for="@Model.PaymentType" id="PaymentType2" value="@Core.Constants.PaymentType.CheckPrepare" style="width:16px;margin-right:5px;">
-                            <label class="form-check-label" style="min-width:120px;">
-                                @Core.Constants.PaymentType.CheckPrepare
-                            </label>
-                        </div>
-                        <div style="width:470px;padding-top:7px;">
-                            <label class="form-check-label" style="min-width:120px;">
-                                <b>@Localizer["Account Transaction"] : </b>
-                            </label>
-                            <input class="form-check-input" type="radio" asp-for="@Model.AccountTransaction" id="AccountTransaction1" value="@Core.Constants.IFCAConstant.APTransactionClass_Payment" style="width:16px;margin-right:5px;" checked>
-                            <label class="form-check-label" style="min-width:70px;">
-                                @Core.Constants.IFCAConstant.APTransactionClass_Payment
-                            </label>
-                            <input class="form-check-input" type="radio" asp-for="@Model.AccountTransaction" id="AccountTransaction2" value="@Core.Constants.IFCAConstant.APTransactionClass_Advances" style="width:16px;margin-right:5px;">
-                            <label class="form-check-label" style="min-width:120px;">
-                                @Core.Constants.IFCAConstant.APTransactionClass_Advances
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid" style="margin-top:10px;">
-                    <div class="d-flex">
-                        <div style="width:470px;padding-top:7px;">
-                            <input class="form-control me-2" type="date" asp-for="@Model.DateFrom" style="width:45%;float:left;margin-right:10px;">
-                            <input class="form-control me-2" type="date" asp-for="@Model.DateTo" style="width:45%;float:left">
-                        </div>
-                        <button class="btn btn-outline-success" type="submit" style="width:160px;margin-right:5px;">@Localizer["Retrieve Payment"]</button>
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.Generate)).Succeeded && Model.NewPaymentTransactionList.Count() > 0)
-                        {
-                            <button class="btn btn-outline-success" id="btnTriggerGenerate" type="button" style="width:100px;margin-right:5px;">@Localizer["Generate"]</button>
-                        }                       
-                        @if (!string.IsNullOrEmpty(Model.DownloadUrl))
-                        {
-                            <a class="btn btn-outline-success" href="@Model.DownloadUrl" style="width:120px;padding-top:10px;">@Localizer["Download"]</a>
-                        }
-                    </div>
-                </div>
-            </nav>
-        </form>
+        <partial name="_PaymentTransactionFilters" model="Model.Filter" />
         <form id="paymentransaction-generate-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-12">
@@ -210,9 +145,9 @@
             return this;
         };
         $("#Entity").companySelect();
-         $('#btnTriggerGenerate').on( 'click', function () {				
-			$('#btnGenerate').click();			
-		});        
+         $('#btnTriggerGenerate').on( 'click', function () {
+            $('#btnGenerate').click();
+        });
     });
 </script>
 }

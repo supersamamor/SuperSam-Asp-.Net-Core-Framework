@@ -16,24 +16,11 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
 {
     [BindProperty]
     public IList<NewPaymentTransactionViewModel> NewPaymentTransactionList { get; set; } = new List<NewPaymentTransactionViewModel>();
+  
     [BindProperty]
-    public string? DownloadUrl { get; set; }
+    public PaymentTransactionFilterModel Filter { get; set; } = new();
     public PaymentTransactionTabNavigationPartial PaymentTransactionTabNavigation { get; set; } = new() { TabName = Constants.PaymentTransactionTabNavigation.New };
-    [BindProperty]
-    [Required]
-    public string? Entity { get; set; }
-    [BindProperty]
-    [Required]
-    public string? PaymentType { get; set; }
-    [BindProperty]
-    [Required]
-    public string? AccountTransaction { get; set; }
-    [BindProperty]
-    [Required]
-    public DateTime? DateFrom { get; set; }
-    [BindProperty]
-    [Required]
-    public DateTime? DateTo { get; set; }
+   
     public async Task<IActionResult> OnGet(string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? downloadUrl)
     {
         if (!ModelState.IsValid)
@@ -44,11 +31,12 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         {
             entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
         }
-        Entity = entity;
-        PaymentType = paymentType;
-        AccountTransaction = accountTransaction;
-        DateFrom = dateFrom;
-        DateTo = dateTo;
+        ModelState.Clear();
+        Filter.Entity = entity;
+        Filter.PaymentType = paymentType;
+        Filter.AccountTransaction = accountTransaction;
+        Filter.DateFrom = dateFrom;
+        Filter.DateTo = dateTo;
         var query = new GetNewPaymentTransactionQuery()
         {
             Status = PaymentTransactionStatus.New,
@@ -60,7 +48,8 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         };
         if (!string.IsNullOrEmpty(entity))
         { NewPaymentTransactionList = Mapper.Map<IList<NewPaymentTransactionViewModel>>(await Mediatr.Send(query)); }
-        DownloadUrl = downloadUrl;
+        Filter.DisplayGenerateButton = NewPaymentTransactionList.Count > 0;
+        Filter.DownloadUrl = downloadUrl;
         return Page();
     }
     public async Task<IActionResult> OnPost()
@@ -82,11 +71,11 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
             return RedirectToPage("NewTransactions", new
             {
                 downloadUrl,
-                Entity,
-                PaymentType,
-                AccountTransaction,
-                DateFrom,
-                DateTo,
+                Filter.Entity,
+                Filter.PaymentType,
+                Filter.AccountTransaction,
+                Filter.DateFrom,
+                Filter.DateTo,
             });
         }
         catch (Exception ex)

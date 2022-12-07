@@ -30,6 +30,7 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
         {
             entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
         }
+        ModelState.Clear();
         Entity = entity;       
         var query = new GetPayeeForEnrollmentQuery()
         {
