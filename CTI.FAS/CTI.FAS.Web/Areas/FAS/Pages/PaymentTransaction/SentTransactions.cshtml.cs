@@ -1,54 +1,90 @@
+using CTI.FAS.Application.Features.FAS.Company.Queries;
+using CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 using CTI.FAS.Application.Features.FAS.PaymentTransaction.Queries;
-using CTI.FAS.Core.FAS;
+using CTI.FAS.Core.Constants;
 using CTI.FAS.Web.Areas.FAS.Models;
 using CTI.FAS.Web.Models;
-using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
 
 namespace CTI.FAS.Web.Areas.FAS.Pages.PaymentTransaction;
 
 [Authorize(Policy = Permission.PaymentTransaction.View)]
 public class SentTransactionsModel : BasePageModel<SentTransactionsModel>
 {
-    public PaymentTransactionViewModel PaymentTransaction { get; set; } = new();
+    [BindProperty]
+    public IList<NewPaymentTransactionViewModel> NewPaymentTransactionList { get; set; } = new List<NewPaymentTransactionViewModel>();
 
-    [DataTablesRequest]
-    public DataTablesRequest? DataRequest { get; set; }
+    [BindProperty]
+    public PaymentTransactionFilterModel Filter { get; set; } = new();
     public PaymentTransactionTabNavigationPartial PaymentTransactionTabNavigation { get; set; } = new() { TabName = Constants.PaymentTransactionTabNavigation.Sent };
-    public IActionResult OnGet()
+
+    public async Task<IActionResult> OnGet(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? downloadUrl)
     {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        return await FetchTransactionDetails(handler, entity, paymentType, accountTransaction, dateFrom, dateTo, batchId, downloadUrl);
+    }
+
+    public async Task<IActionResult> OnPost(string? handler)
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }         
         return Page();
     }
-
-    public async Task<IActionResult> OnPostListAllAsync()
+    private async Task<IActionResult> FetchTransactionDetails(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? downloadUrl)
     {
-		
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetPaymentTransactionQuery>());
-        return new JsonResult(result.Data
-            .Select(e => new
+        ModelState.Clear();
+        Filter.ShowBatchFilter = true;
+        Filter.ProccessButtonLabel = "";
+        if (string.IsNullOrEmpty(entity))
+        {
+            entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
+        }
+        PaymentTransactionTabNavigation.SetEntity(entity);
+        Filter.Entity = entity;
+        Filter.PaymentType = paymentType;
+        Filter.AccountTransaction = accountTransaction;
+        Filter.DateFrom = dateFrom;
+        Filter.DateTo = dateTo;
+        Filter.BatchId = batchId;
+        Filter.DownloadUrl = downloadUrl;
+        var query = new GetPaymentTransactionWithCustomFilterQuery()
+        {
+            Status = PaymentTransactionStatus.Sent,
+            Entity = entity,
+            PaymentType = paymentType,
+            AccountTransaction = accountTransaction,
+            DateFrom = dateFrom,
+            DateTo = dateTo,
+            BatchId = batchId,
+        };
+        if (handler == "Retrieve")
+        {
+            if (!string.IsNullOrEmpty(entity))
             {
-                e.Id,
-                EnrolledPayeeId = e.EnrolledPayee?.Id,
-				BatchId = e.Batch?.Id,
-				TransmissionDate = e.TransmissionDate?.ToString("MMM dd, yyyy HH:mm"),
-				e.DocumentNumber,
-				DocumentDate = e.DocumentDate.ToString("MMM dd, yyyy HH:mm"),
-				DocumentAmount = e.DocumentAmount.ToString("##,##.00"),
-				e.CheckNumber,
-				e.PaymentType,
-						
-				
-                e.LastModifiedDate
-            })
-            .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-    } 
-	
-	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
-    {
-        var result = await Mediatr.Send(request.ToQuery<GetPaymentTransactionQuery>(nameof(PaymentTransactionState.Id)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
-    }
+                if (Filter.ShowBatchFilter && string.IsNullOrEmpty(batchId) && dateFrom == null && dateFrom == null)
+                {
+                    NotyfService.Warning(Localizer["Please select batch or date filters."]);
+                    return Page();
+                }
+                else if (string.IsNullOrEmpty(batchId) && (dateFrom == null || dateTo == null))
+                {
+                    NotyfService.Warning(Localizer["Invalid date filters. Check `date from` and `date to` fields."]);
+                    return Page();
+                }
+            }
+        }
+        if (!string.IsNullOrEmpty(batchId) || dateFrom != null || dateFrom != null)
+        {
+            NewPaymentTransactionList = Mapper.Map<IList<NewPaymentTransactionViewModel>>(await Mediatr.Send(query));
+        }
+        Filter.DisplayGenerateButton = false;
+        Filter.DisplayRevokeButton = false;
+        return Page();
+    }  
 }
