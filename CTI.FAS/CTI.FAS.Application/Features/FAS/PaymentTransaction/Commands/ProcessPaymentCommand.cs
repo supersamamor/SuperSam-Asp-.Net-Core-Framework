@@ -38,7 +38,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
             .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Creditor)
             .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Company)
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
-        var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
+        var entityCode = paymentTransactionToProcessList.FirstOrDefault()?.EnrolledPayee?.Company?.Code;
         var batchCount = (await _context.Batch
                              .Where(l => l.Date == date && l.BatchStatusType == paymentStatus)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
@@ -46,6 +46,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
             .Where(l => l.Id == request.NewPaymentTransactionIdList.FirstOrDefault()).Include(l => l.EnrolledPayee)
             .AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken))!
             .EnrolledPayee!.CompanyId;
+        var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, entityCode, batchCount, _authenticatedUser.UserId!);
         var batchToAdd = new BatchState()
         {
             Date = date,

@@ -32,14 +32,17 @@ public class RevokePaymentCommandHandler : IRequestHandler<RevokePaymentCommand,
     {
         var date = DateTime.Now.Date;
         var paymentTransactionToProcessList = await _context.PaymentTransaction
-            .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
-        var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
+           .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Creditor)
+           .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Company)
+           .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
+        var entityCode = paymentTransactionToProcessList.FirstOrDefault()?.EnrolledPayee?.Company?.Code;
         var batchCount = (await _context.Batch
                              .Where(l => l.Date == date)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
+        var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, entityCode, batchCount, _authenticatedUser.UserId!);
         var companyId = (await _context.PaymentTransaction
             .Where(l => l.Id == request.NewPaymentTransactionIdList.FirstOrDefault()).Include(l => l.EnrolledPayee).AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken))!
-            .EnrolledPayee!.CompanyId; 
+            .EnrolledPayee!.CompanyId;
         //Todo: Use Bulk Update
         foreach (var item in paymentTransactionToProcessList)
         {
