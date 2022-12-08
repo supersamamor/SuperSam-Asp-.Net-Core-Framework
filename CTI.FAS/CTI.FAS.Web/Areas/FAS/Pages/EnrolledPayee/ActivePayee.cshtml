@@ -96,6 +96,7 @@
                 },
                 { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
                 { data: "id", name: "Id", visible: false },
+                { data: "creditorAccount", name: "Creditor.CreditorAccount", searchable: true, visible: false },
             ],
             buttons: [
         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.Create)).Succeeded)
