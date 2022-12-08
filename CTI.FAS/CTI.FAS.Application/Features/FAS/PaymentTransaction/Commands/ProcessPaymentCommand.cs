@@ -35,13 +35,16 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
         var paymentStatus = PaymentTransactionStatus.Generated;
         var date = DateTime.Now.Date;
         var paymentTransactionToProcessList = await _context.PaymentTransaction
+            .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Creditor)
+            .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Company)
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
         var batchCount = (await _context.Batch
                              .Where(l => l.Date == date && l.BatchStatusType == paymentStatus)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
         var companyId = (await _context.PaymentTransaction
-            .Where(l => l.Id == request.NewPaymentTransactionIdList.FirstOrDefault()).Include(l => l.EnrolledPayee).AsNoTracking().FirstOrDefaultAsync())!
+            .Where(l => l.Id == request.NewPaymentTransactionIdList.FirstOrDefault()).Include(l => l.EnrolledPayee)
+            .AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken))!
             .EnrolledPayee!.CompanyId;
         var batchToAdd = new BatchState()
         {
@@ -57,6 +60,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
         //Todo: Use Bulk Update
         foreach (var item in paymentTransactionToProcessList)
         {
+            item.EnrolledPayee = null;
             item.TagAsGeneratedAndSetBatch(batchToAdd.Id);
         }
         _context.UpdateRange(paymentTransactionToProcessList);

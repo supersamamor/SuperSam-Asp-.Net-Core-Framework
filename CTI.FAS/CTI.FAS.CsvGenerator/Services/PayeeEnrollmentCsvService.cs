@@ -27,7 +27,7 @@ namespace CTI.FAS.CsvGenerator.Services
             var csvDocument = new CsvDocumentModel($"{companyShortName}_ACCOUNTENROLL_{DateTime.Now:MMddyyyy}_{batchNo}.csv",
                 _staticFolderPath, subfolder, GlobalConstants.UploadFilesPath);
             var csv = new StringBuilder();
-            //Append Header FAI_ACCOUNTENROLL_11162022_23
+            //Append Header 
             csv.AppendLine(String.Format("{0,220}", "HDR,Participating Account Number,Participating Account Name,Participating Account Currency,Participating Account Type,Participating Account Reference Number,Participating Account TIN,Participating Account Address,Remarks"));
             //Append Detail
             foreach (var item in input)

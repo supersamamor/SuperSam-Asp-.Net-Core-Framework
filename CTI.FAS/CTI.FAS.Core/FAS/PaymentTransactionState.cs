@@ -25,7 +25,7 @@ public record PaymentTransactionState : BaseEntity
 	public DateTime? EmailSentDateTime { get; init; }
 	public bool IsForSending { get; init; }
 	public string AccountTransaction { get; init; } = "";
-	public EnrolledPayeeState? EnrolledPayee { get; init; }
+	public EnrolledPayeeState? EnrolledPayee { get; set; }
 	public BatchState? Batch { get; init; }
 	public void TagAsGeneratedAndSetBatch(string batchId)
 	{
@@ -33,8 +33,9 @@ public record PaymentTransactionState : BaseEntity
 		this.BatchId = batchId; 
 	}
 	public void TagAsSent(string batchId)
-	{
-		this.Status = PaymentTransactionStatus.Sent;		
+	{	
+		this.Status = PaymentTransactionStatus.Sent;
+		this.BatchId = batchId;
 	}
 	public void TagAsRevoked()
 	{
