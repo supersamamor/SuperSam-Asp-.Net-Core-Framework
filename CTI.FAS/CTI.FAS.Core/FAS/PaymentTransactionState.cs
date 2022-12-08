@@ -12,6 +12,7 @@ public record PaymentTransactionState : BaseEntity
     public string DocumentNumber { get; init; } = "";
     public DateTime DocumentDate { get; init; }
     public decimal DocumentAmount { get; init; }
+    public string DocumentDescription { get; init; } = "";
     public string CheckNumber { get; init; } = "";
     public string PaymentType { get; init; } = "";
     public string TextFileName { get; init; } = "";

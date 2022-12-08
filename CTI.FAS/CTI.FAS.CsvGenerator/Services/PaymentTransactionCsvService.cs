@@ -89,6 +89,8 @@ namespace CTI.FAS.CsvGenerator.Services
                                           taxPeriodFrom, taxPeriodTo, amtIncomePay1stQtr,
                                           amtIncomePay2ndQtr, amtIncomePay3rdQtr, taxWithheldQtr);
                 csv.AppendLine(newLine);
+                var particulars = SanitizeParticulars(item.DocumentDescription);
+                csv.AppendLine(String.Format("{0},{1},{2},{3}","VCH", particulars, item.DocumentNumber, ",,,,,,,,,,,,,,,,,,,,,"));
             }
             //Append Summary
             var totalAmount = input.Sum(l => l.DocumentAmount);
@@ -96,7 +98,7 @@ namespace CTI.FAS.CsvGenerator.Services
                              "TLR",
                              input.Count,
                              totalAmount,
-                             ",,,,,,,,,,,,,"));
+                             ",,,,,,,,,,,,,,,,,,,,,"));
 
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;
@@ -116,7 +118,7 @@ namespace CTI.FAS.CsvGenerator.Services
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
                 var newLine = String.Format("{0,3},{1,12},{2," + supplier.Length + "},{3," + accountNo.Length + "},{4," + item.DocumentAmount.ToString().Length + "},{5," + item.DocumentNumber.Length + "},{6,2},{7,0}",
                                         "DTL", accountNo, supplier,
-                                        creditorAccount, item.DocumentAmount, item.DocumentNumber, "No", ",,,,,,,,,");
+                                        creditorAccount, item.DocumentAmount, item.DocumentNumber, "No", ",,,,,,,,");
                 csv.AppendLine(newLine);
             }
             //Append Summary
@@ -181,6 +183,20 @@ namespace CTI.FAS.CsvGenerator.Services
                 return "";
             }
             return tin.Replace("&nbsp;", "").Replace("&#241;", "ñ").Replace("&amp;", "&").Replace("-", "").Replace("NV", "").Replace("V", "").Trim();
+        }
+        private static string SanitizeParticulars(string? particulars)
+        {
+            if (particulars == null)
+            {
+                return "";
+            }
+            particulars = particulars.Replace(",", "").Trim();
+            var lenParticulars = particulars.Length;
+            if (lenParticulars >= 110)
+            {
+                return particulars.Remove(110, (lenParticulars -= 110));
+            }
+            return particulars;
         }
     }
 }

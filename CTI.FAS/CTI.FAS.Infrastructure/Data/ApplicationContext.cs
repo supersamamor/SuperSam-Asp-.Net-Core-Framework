@@ -164,6 +164,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<CompanyState>().Property(e => e.SignatoryType).HasMaxLength(50);
 		modelBuilder.Entity<CompanyState>().Property(e => e.Signatory1).HasMaxLength(100);
 		modelBuilder.Entity<CompanyState>().Property(e => e.Signatory2).HasMaxLength(100);
+		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.DocumentDescription).HasMaxLength(1000);		
 		base.OnModelCreating(modelBuilder);
     }
 }
