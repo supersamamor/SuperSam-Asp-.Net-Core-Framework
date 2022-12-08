@@ -15,9 +15,9 @@ public record PaymentTransactionState : BaseEntity
     public string DocumentDescription { get; init; } = "";
     public string CheckNumber { get; init; } = "";
     public string PaymentType { get; init; } = "";
-    public string TextFileName { get; init; } = "";
-    public string PdfReport { get; init; } = "";
-    public string GroupCode { get; init; } = "";
+    public string PdfUrl { get; private set; } = "";
+    public string PdfFilePath { get; private set; } = "";
+    public string? GroupCode { get; private set; } = "";
     public string Status { get; private set; } = "";
     public decimal IfcaBatchNumber { get; init; }
     public decimal IfcaLineNumber { get; init; }
@@ -27,17 +27,20 @@ public record PaymentTransactionState : BaseEntity
     public string AccountTransaction { get; init; } = "";
     public EnrolledPayeeState? EnrolledPayee { get; set; }
     public BatchState? Batch { get; init; }
-    public void TagAsGeneratedAndSetBatch(string batchId)
+    public void TagAsGeneratedAndSetBatch(string batchId, string? groupId)
     {
         this.Status = PaymentTransactionStatus.Generated;
         this.BatchId = batchId;
         this.TransmissionDate = DateTime.Now.Date;
+        this.GroupCode = groupId;
     }
-    public void TagAsSent(string batchId)
+    public void TagAsSent(string batchId, string pdfUrl, string pdfFilePath)
     {
         this.Status = PaymentTransactionStatus.Sent;
         this.BatchId = batchId;
         this.IsForSending = true;
+        this.PdfUrl = pdfUrl;
+        this.PdfFilePath = pdfFilePath;
     }
     public void TagAsRevoked()
     {

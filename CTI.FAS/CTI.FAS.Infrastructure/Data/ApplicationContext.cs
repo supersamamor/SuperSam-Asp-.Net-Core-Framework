@@ -95,8 +95,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.DocumentNumber).HasMaxLength(15);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.CheckNumber).HasMaxLength(15);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.PaymentType).HasMaxLength(20);
-		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.TextFileName).HasMaxLength(50);
-		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.PdfReport).HasMaxLength(50);
+		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.PdfUrl).HasMaxLength(1000);
+		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.PdfFilePath).HasMaxLength(1000);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.GroupCode).HasMaxLength(50);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.Status).HasMaxLength(30);
 		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.AccountTransaction).HasMaxLength(30);

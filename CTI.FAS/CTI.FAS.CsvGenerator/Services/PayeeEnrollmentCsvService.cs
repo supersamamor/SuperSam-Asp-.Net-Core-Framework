@@ -84,14 +84,7 @@ namespace CTI.FAS.CsvGenerator.Services
             }
             return "";
         }
-        private static string SanitizeForCsv(string? text)
-        {
-            if (text == null)
-            {
-                return "";
-            }
-            return text.Replace(",", " ");
-        }
+     
         private static string SanitizeForCsvToUpper(string? text)
         {
             if (text == null)

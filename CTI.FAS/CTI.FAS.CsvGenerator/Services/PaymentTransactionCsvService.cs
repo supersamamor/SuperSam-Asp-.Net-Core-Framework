@@ -148,18 +148,7 @@ namespace CTI.FAS.CsvGenerator.Services
             }
             return creditorCode!.Replace("&nbsp;", "").Replace("&#241;", "ñ").Replace("&amp;", "&").Replace("-", "").Replace("NV", "").Replace("V", "").Trim();
         }
-        private static string SanitizeAccountType(string? accountType)
-        {
-            if (accountType == AccountType.Savings)
-            {
-                return "SA";
-            }
-            else if (accountType == AccountType.Checking)
-            {
-                return "CA";
-            }
-            return "";
-        }
+       
         private static string SanitizeForCsv(string? text)
         {
             if (text == null)
@@ -176,14 +165,7 @@ namespace CTI.FAS.CsvGenerator.Services
             }
             return text.Replace(",", " ").ToUpper();
         }
-        private static string SanitizeTIN(string? tin)
-        {
-            if (tin == null)
-            {
-                return "";
-            }
-            return tin.Replace("&nbsp;", "").Replace("&#241;", "ñ").Replace("&amp;", "&").Replace("-", "").Replace("NV", "").Replace("V", "").Trim();
-        }
+
         private static string SanitizeParticulars(string? particulars)
         {
             if (particulars == null)

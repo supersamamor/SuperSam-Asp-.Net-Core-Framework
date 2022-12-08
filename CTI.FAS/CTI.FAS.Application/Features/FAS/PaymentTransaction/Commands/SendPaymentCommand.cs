@@ -17,13 +17,13 @@ public record SendPaymentCommand(IList<string> NewPaymentTransactionIdList, Micr
 
 public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, string>
 {
-    private readonly ApplicationContext _context;    
+    private readonly ApplicationContext _context;
     private readonly IAuthenticatedUser _authenticatedUser;
     private readonly string _staticFolderPath;
     public SendPaymentCommandHandler(ApplicationContext context,
         IAuthenticatedUser authenticatedUser, IConfiguration configuration)
     {
-        _context = context;      
+        _context = context;
         _authenticatedUser = authenticatedUser;
         _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
     }
@@ -38,9 +38,6 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         var date = DateTime.Now.Date;
         var paymentTransactionToProcessList = await _context.PaymentTransaction
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
-        var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"test.pdf",
-                                                           GlobalConstants.UploadFilesPath, _staticFolderPath, "OfferSheet");
-        var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
         var batchCount = (await _context.Batch
                            .Where(l => l.Date == date && l.BatchStatusType == paymentStatus)
                            .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
@@ -51,8 +48,8 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         {
             Date = date,
             Batch = batchCount,
-            FilePath = rotativaDocument.CompleteFilePath,
-            Url = rotativaDocument.FileUrl,
+            FilePath = "",
+            Url = "",
             UserId = _authenticatedUser.UserId,
             CompanyId = companyId,
             BatchStatusType = paymentStatus,
@@ -61,10 +58,19 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         //Todo: Use Bulk Update
         foreach (var item in paymentTransactionToProcessList)
         {
-            item.TagAsSent(batchToAdd.Id);
+            var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"ESettle_{MakeValidFileName(item.DocumentNumber)}_{DateTime.Now:MMddyyyy_HHmm}.pdf",
+                                                          GlobalConstants.UploadFilesPath, _staticFolderPath, "ESettle");
+            var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
+            item.TagAsSent(batchToAdd.Id, rotativaDocument.FileUrl, rotativaDocument.CompleteFilePath);
         }
         _context.UpdateRange(paymentTransactionToProcessList);
         _ = await _context.SaveChangesAsync(cancellationToken);
-        return rotativaDocument.FileUrl;
+        return "";
+    }
+    private static string MakeValidFileName(string name)
+    {
+        string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+        string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+        return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
     }
 }

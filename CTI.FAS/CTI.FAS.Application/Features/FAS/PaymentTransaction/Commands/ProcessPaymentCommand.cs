@@ -18,12 +18,14 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
     private readonly ApplicationContext _context;
     private readonly PaymentTransactionCsvService _paymentTransactionCsvService;
     private readonly IAuthenticatedUser _authenticatedUser;
+    private readonly IdentityContext _identityContext;
     public ProcessPaymentCommandHandler(ApplicationContext context, PaymentTransactionCsvService paymentTransactionCsvService,
-        IAuthenticatedUser authenticatedUser)
+        IAuthenticatedUser authenticatedUser, IdentityContext identityContext)
     {
         _context = context;
         _paymentTransactionCsvService = paymentTransactionCsvService;
         _authenticatedUser = authenticatedUser;
+        _identityContext = identityContext;
     }
 
     public async Task<string> Handle(ProcessPaymentCommand request, CancellationToken cancellationToken) =>
@@ -47,6 +49,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
             .AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken))!
             .EnrolledPayee!.CompanyId;
         var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, entityCode, batchCount, _authenticatedUser.UserId!);
+        var groupId = (await _identityContext.Users.Where(l => l.Id == _authenticatedUser.UserId).AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken))?.GroupId;
         var batchToAdd = new BatchState()
         {
             Date = date,
@@ -62,7 +65,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
         foreach (var item in paymentTransactionToProcessList)
         {
             item.EnrolledPayee = null;
-            item.TagAsGeneratedAndSetBatch(batchToAdd.Id);
+            item.TagAsGeneratedAndSetBatch(batchToAdd.Id, groupId);
         }
         _context.UpdateRange(paymentTransactionToProcessList);
         _ = await _context.SaveChangesAsync(cancellationToken);
