@@ -36,7 +36,7 @@ public record PaymentTransactionState : BaseEntity
         this.TransmissionDate = DateTime.Now.Date;
         this.GroupCode = groupId;
     }
-    public void TagAsSent(string batchId, string userId, string pdfUrl, string pdfFilePath)
+    public void TagAsSent(string batchId, string? userId, string pdfUrl, string pdfFilePath)
     {
         this.Status = PaymentTransactionStatus.Sent;
         this.BatchId = batchId;

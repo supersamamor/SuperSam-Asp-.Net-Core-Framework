@@ -20,12 +20,14 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
     private readonly ApplicationContext _context;
     private readonly IAuthenticatedUser _authenticatedUser;
     private readonly string _staticFolderPath;
+    private readonly IdentityContext _identityContext;
     public SendPaymentCommandHandler(ApplicationContext context,
-        IAuthenticatedUser authenticatedUser, IConfiguration configuration)
+        IAuthenticatedUser authenticatedUser, IConfiguration configuration, IdentityContext identityContext)
     {
         _context = context;
         _authenticatedUser = authenticatedUser;
         _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+        _identityContext = identityContext;
     }
 
     public async Task<string> Handle(SendPaymentCommand request, CancellationToken cancellationToken) =>
@@ -58,10 +60,11 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         //Todo: Use Bulk Update
         foreach (var item in paymentTransactionToProcessList)
         {
+            var group = await _identityContext.Group.Where(l => l.Id == item.GroupCode).AsNoTracking().FirstOrDefaultAsync();
             var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"ESettle_{MakeValidFileName(item.DocumentNumber)}_{DateTime.Now:MMddyyyy_HHmm}.pdf",
                                                           GlobalConstants.UploadFilesPath, _staticFolderPath, "ESettle");
             var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
-            item.TagAsSent(batchToAdd.Id, _authenticatedUser.UserId, rotativaDocument.FileUrl, rotativaDocument.CompleteFilePath);
+            item.TagAsSent(batchToAdd.Id, _authenticatedUser?.UserId, rotativaDocument.FileUrl, rotativaDocument.CompleteFilePath);
         }
         _context.UpdateRange(paymentTransactionToProcessList);
         _ = await _context.SaveChangesAsync(cancellationToken);
