@@ -67,7 +67,8 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 									  ,[CreatedBy]
 									  ,[CreatedDate]
 									  ,[LastModifiedBy]
-									  ,[LastModifiedDate])				
+									  ,[LastModifiedDate]
+								      ,[DeliveryOptions])				
 							  SELECT 
 								newID()				
 								,a.[creditor_acct]
@@ -82,7 +83,8 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								,'System'
 								,GetDate()
 								,'System'	
-								,GetDate()						
+								,GetDate()		
+							    ,'" + DeliveryOptions.Delivery + @"',
 							  FROM " + databaseConnectionSetup.DatabaseAndServerName + @".[ap_creditor] as a
 							LEFT JOIN  " + databaseConnectionSetup.DatabaseAndServerName + @".[cf_business] as b on a.assoc_id = b.business_id
 							LEFT JOIN [dbo].Creditor as c on a.[creditor_acct] = c.CreditorAccount and c.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
@@ -112,7 +114,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,[EmailSentCount]
 								  ,[IsForSending]
 							      ,[AccountTransaction])			
-							   SELECT NewID()
+							   SELECT Distinct NewID()
 									,d.Id [EnrolledPayeeId]
 									,a.doc_no
 									,a.doc_date
