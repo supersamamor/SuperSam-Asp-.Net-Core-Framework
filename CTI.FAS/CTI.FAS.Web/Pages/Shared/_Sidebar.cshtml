@@ -98,105 +98,111 @@
                     </ul>
                 </li>
             }
-            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "FAS")">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-list-alt nav-icon"></i>
-                    <span>
-                        @Localizer["Masterfile Setup"]
-                        <i class="right fas level-one-nav-icon fa-angle-left"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-treeview">
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.DatabaseConnectionSetup.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/DatabaseConnectionSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "DatabaseConnectionSetup")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Database Setup"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Company.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/Company" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Company")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Company"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/Project" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Project")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Project"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/Tenant" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Tenant")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Tenant"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Creditor.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/Creditor" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Creditor")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Creditor"]
-                                </span>
-                            </a>
-                        </li>
-                    }                  
-                </ul>
-            </li>
-            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "AP")">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-list-alt nav-icon"></i>
-                    <span>
-                        @Localizer["Accounts Payable"]
-                        <i class="right fas level-one-nav-icon fa-angle-left"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-treeview">                    
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/EnrolledPayee/Enrollment" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EnrolledPayee")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Payee Enrollment"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/FAS/PaymentTransaction/NewTransactions" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PaymentTransaction")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Payment Transaction"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </li>
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MasterFile.View)).Succeeded)
+            {
+                <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "FAS")">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-list-alt nav-icon"></i>
+                        <span>
+                            @Localizer["Masterfile Setup"]
+                            <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.DatabaseConnectionSetup.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/DatabaseConnectionSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "DatabaseConnectionSetup")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Database Setup"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Company.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/Company" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Company")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Company"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Project.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/Project" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Project")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Project"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Tenant.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/Tenant" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Tenant")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Tenant"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Creditor.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/Creditor" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Creditor")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Creditor"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.AccountsPayable.View)).Succeeded)
+            {
+                <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "AP")">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-list-alt nav-icon"></i>
+                        <span>
+                            @Localizer["Accounts Payable"]
+                            <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.EnrolledPayee.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/EnrolledPayee/Enrollment" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "EnrolledPayee")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Payee Enrollment"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.PaymentTransaction.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/FAS/PaymentTransaction/NewTransactions" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PaymentTransaction")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Payment Transaction"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
         </ul>
         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
     </div>

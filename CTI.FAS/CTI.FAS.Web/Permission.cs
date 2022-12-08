@@ -56,6 +56,10 @@ public static class Permission
             permissions.Add($"Permission.{module}.Edit");
             permissions.Add($"Permission.{module}.PendingApprovals");
         }
+        else if (module == "MasterFile" || module == "AccountsPayable")
+        {          
+            permissions.Add($"Permission.{module}.View");        
+        }
         else
         {
             permissions.Add($"Permission.{module}.View");
@@ -65,7 +69,14 @@ public static class Permission
         }
         return permissions;
     }
-
+    public static class MasterFile
+    {
+        public const string View = "Permission.MasterFile.View";      
+    }
+    public static class AccountsPayable
+    {
+        public const string View = "Permission.AccountsPayable.View";
+    }
     public static class Admin
     {
         public const string View = "Permission.Admin.View";
