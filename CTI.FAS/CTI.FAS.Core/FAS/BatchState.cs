@@ -13,6 +13,7 @@ public record BatchState : BaseEntity
 	public string? EmailStatus { get; private set; } = Constants.EmailStatus.Pending;
 	public DateTime? EmailDateTime { get; private set; }
     public string? CompanyId { get; init; }
+    public string? BatchStatusType { get; init; }
     public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
     public string? BatchNumber 
     {

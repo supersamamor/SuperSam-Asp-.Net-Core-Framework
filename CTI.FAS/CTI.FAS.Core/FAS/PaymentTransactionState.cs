@@ -32,7 +32,7 @@ public record PaymentTransactionState : BaseEntity
 		this.Status = PaymentTransactionStatus.Generated;
 		this.BatchId = batchId; 
 	}
-	public void TagAsSent()
+	public void TagAsSent(string batchId)
 	{
 		this.Status = PaymentTransactionStatus.Sent;		
 	}

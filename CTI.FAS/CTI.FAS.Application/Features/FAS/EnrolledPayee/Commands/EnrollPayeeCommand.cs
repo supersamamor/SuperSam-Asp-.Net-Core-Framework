@@ -1,4 +1,5 @@
 using CTI.Common.Identity.Abstractions;
+using CTI.FAS.Core.Constants;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.CsvGenerator.Services;
 using CTI.FAS.Infrastructure.Data;
@@ -31,12 +32,13 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
 
     public async Task<string> AddEnrolledPayee(EnrollPayeeCommand request, CancellationToken cancellationToken)
     {
+        var enrollmentStatus = EnrollmentStatus.Active;
         var date = DateTime.Now.Date;
         var payeeToEnrollList = await _context.EnrolledPayee.Include(l => l.Creditor)
             .Where(l => request.EnrolledPayeeIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var csvDocument = _payeeEnrollmentCsvService.Export(payeeToEnrollList, _authenticatedUser.UserId!);
         var batchCount = (await _context.EnrollmentBatch
-                             .Where(l => l.Date == date)
+                             .Where(l => l.Date == date && l.BatchStatusType == enrollmentStatus)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
         var enrollmentBatchToAdd = new EnrollmentBatchState()
         {
@@ -46,6 +48,7 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
             Url = csvDocument.FileUrl,
             UserId = _authenticatedUser.UserId,
             CompanyId = payeeToEnrollList.FirstOrDefault()!.CompanyId,
+            BatchStatusType = enrollmentStatus,
         };
         await _context.AddAsync(enrollmentBatchToAdd, cancellationToken);
         //Todo: Use Bulk Update

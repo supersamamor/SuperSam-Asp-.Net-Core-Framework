@@ -22,6 +22,8 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Enrollment };
     public async Task<IActionResult> OnGet(string? entity, string? downloadUrl)
     {
+        ModelState.Clear();
+        Entity = entity;
         if (!ModelState.IsValid)
         {
             return Page();
@@ -29,9 +31,8 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
         if (string.IsNullOrEmpty(entity))
         {
             entity = (await Mediatr.Send(new GetCompanyQuery())).Data.ToList().FirstOrDefault()?.Id;
-        }
-        ModelState.Clear();
-        Entity = entity;       
+            Entity = entity;
+        }        
         var query = new GetPayeeForEnrollmentQuery()
         {
             Entity = entity,

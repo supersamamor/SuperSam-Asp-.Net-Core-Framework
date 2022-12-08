@@ -157,6 +157,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
 		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.CompanyId });
 		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.CompanyId });
+		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.BatchStatusType });
+		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.BatchStatusType });
 		base.OnModelCreating(modelBuilder);
     }
 }

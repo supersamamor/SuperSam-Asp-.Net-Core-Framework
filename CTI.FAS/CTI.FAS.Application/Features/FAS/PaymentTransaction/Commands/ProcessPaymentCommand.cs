@@ -1,4 +1,5 @@
 using CTI.Common.Identity.Abstractions;
+using CTI.FAS.Core.Constants;
 using CTI.FAS.Core.FAS;
 using CTI.FAS.CsvGenerator.Services;
 using CTI.FAS.Infrastructure.Data;
@@ -31,12 +32,13 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
 
     public async Task<string> AddEnrolledPayee(ProcessPaymentCommand request, CancellationToken cancellationToken)
     {
+        var paymentStatus = PaymentTransactionStatus.Generated;
         var date = DateTime.Now.Date;
         var paymentTransactionToProcessList = await _context.PaymentTransaction
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var csvDocument = _paymentTransactionCsvService.Export(paymentTransactionToProcessList, _authenticatedUser.UserId!);
         var batchCount = (await _context.Batch
-                             .Where(l => l.Date == date)
+                             .Where(l => l.Date == date && l.BatchStatusType == paymentStatus)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
         var companyId = (await _context.PaymentTransaction
             .Where(l => l.Id == request.NewPaymentTransactionIdList.FirstOrDefault()).Include(l => l.EnrolledPayee).AsNoTracking().FirstOrDefaultAsync())!
@@ -49,6 +51,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
             Url = csvDocument.FileUrl,
             UserId = _authenticatedUser.UserId,
             CompanyId = companyId,
+            BatchStatusType = paymentStatus,
         };
         await _context.AddAsync(batchToAdd, cancellationToken);
         //Todo: Use Bulk Update
