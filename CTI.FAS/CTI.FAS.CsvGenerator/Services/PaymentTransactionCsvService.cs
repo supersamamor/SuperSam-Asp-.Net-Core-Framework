@@ -31,7 +31,7 @@ namespace CTI.FAS.CsvGenerator.Services
             else
             {
                 return CheckPrepare(input!, entityCode, batchNo, subfolder);
-            }           
+            }
         }
         private CsvDocumentModel CheckPrepare(IList<PaymentTransactionState> input, string? entityCode, int? batchNo, string subfolder)
         {
@@ -45,48 +45,50 @@ namespace CTI.FAS.CsvGenerator.Services
                                           "Tax Withheld for the Quarter"));
             //Append Detail
             foreach (var item in input)
-            {   
-                var remarks  = "" ; 
-                //var xSignatories  = IIf(dtr("signatoryType") = 0, "Select Signatories", "Auto Populate") ;
-                //var xSignatoryName1  = dtr("signatory1").ToString.Trim ;
-                //var xSignatoryName2  = dtr("signatory2").ToString.Trim ;
-                var xSignatoryName3  = "" ;
-                var xPrintEWT  = "No" ;
-                var xRecordType  = "" ;
-                var xATCCode  = "" ;
-                var xTaxPeriodFrom  = "" ;
-                var xTaxPeriodTo  = "" ;
-                var xAmtIncomePay1stQtr  = "" ;
-                var xAmtIncomePay2ndQtr  = "" ;
-                var xAmtIncomePay3rdQtr  = "" ;
-                var xTaxWithheldQtr  = "" ;
+            {
+                var remarks = "";
+
+                var printEWT = "No";
+                var recordType = "";
+                var atcCode = "";
+                var taxPeriodFrom = "";
+                var taxPeriodTo = "";
+                var amtIncomePay1stQtr = "";
+                var amtIncomePay2ndQtr = "";
+                var amtIncomePay3rdQtr = "";
+                var taxWithheldQtr = "";
                 var pickupStore = "";
-                var pickupRep= "";
-                var authorizedRepName= "";
-                var authorizedRepID= "";
+                var pickupRep = "";
+                var authorizedRepName = "";
+                var authorizedRepID = "";
                 var isPayeeAcctOnly = "YES";
                 var supplier = SanitizeSupplierName(item.EnrolledPayee!.Creditor!.PayeeAccountName);
                 var accountNo = SanitizeAccountNo(item.EnrolledPayee!.PayeeAccountNumber);
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
                 var checkDate = item.TransmissionDate != null ? ((DateTime)item.TransmissionDate).ToString("MM/dd/yyyy").Trim() : "";
                 var checkAmount = item.DocumentAmount;
-                //var newLine = String.Format("{0,3},{1," + item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length + "},{2," + pickupStore.Length + "}," +
-                //                          "{3," + pickupRep.Length + "},{4," + authorizedRepName.Length + "},{5," + authorizedRepID.Length + "}," +
-                //                          "{6," + xDeliveryCorpBranchLen + "},{7," + checkDate.Length + "},{8," + checkAmount.ToString().Length + "}," +
-                //                          "{9," + supplier.Length + "},{10," + isPayeeAcctOnly.Length + "},{11," + remarks.Length + "}," +
-                //                          "{12," + xSignatoriesLen + "},{13," + xSignatoryName1Len + "},{14," + xSignatoryName2Len + "}," +
-                //                          "{15," + xSignatoryName3Len + "},{16," + xPrintEWTLen + "},{17," + xRecordTypeLen + "}," +
-                //                          "{18," + xATCCodeLen + "},{19," + xTaxPeriodFromLen + "},{20," + xTaxPeriodToLen + "}," +
-                //                          "{21," + xAmtIncomePay1stQtrLen + "},{22," + xAmtIncomePay2ndQtrLen + "},{23," + xAmtIncomePay3rdQtrLen + "},{24," + xTaxWithheldQtrLen + "}",
-                //                          "DTL", item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length, pickupStore, pickupRep,
-                //                          authorizedRepName, authorizedRepID, xDeliveryCorpBranch,
-                //                          checkDate, checkAmount, supplier,
-                //                          isPayeeAcctOnly, remarks, xSignatories,
-                //                          xSignatoryName1, xSignatoryName2, xSignatoryName3,
-                //                          xPrintEWT, xRecordType, xATCCode,
-                //                          xTaxPeriodFrom, xTaxPeriodTo, xAmtIncomePay1stQtr,
-                //                          xAmtIncomePay2ndQtr, xAmtIncomePay3rdQtr, xTaxWithheldQtr);
-                //csv.AppendLine(newLine);
+                var signatories = SanitizeForCsv(item.EnrolledPayee.Company?.SignatoryType);
+                var signatoryName1 = SanitizeForCsv(item.EnrolledPayee.Company?.Signatory1);
+                var signatoryName2 = SanitizeForCsv(item.EnrolledPayee.Company?.Signatory2);
+                var signatoryName3 = "";
+                var deliveryCorpBranch = SanitizeForCsvToUpper(item.EnrolledPayee.Company?.DeliveryCorporationBranch);
+                var newLine = String.Format("{0,3},{1," + item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length + "},{2," + pickupStore.Length + "}," +
+                                          "{3," + pickupRep.Length + "},{4," + authorizedRepName.Length + "},{5," + authorizedRepID.Length + "}," +
+                                          "{6," + deliveryCorpBranch.Length + "},{7," + checkDate.Length + "},{8," + checkAmount.ToString().Length + "}," +
+                                          "{9," + supplier.Length + "},{10," + isPayeeAcctOnly.Length + "},{11," + remarks.Length + "}," +
+                                          "{12," + signatories.Length + "},{13," + signatoryName1.Length + "},{14," + signatoryName2.Length + "}," +
+                                          "{15," + signatoryName3.Length + "},{16," + printEWT.Length + "},{17," + recordType.Length + "}," +
+                                          "{18," + atcCode.Length + "},{19," + taxPeriodFrom.Length + "},{20," + taxPeriodTo.Length + "}," +
+                                          "{21," + amtIncomePay1stQtr.Length + "},{22," + amtIncomePay2ndQtr.Length + "},{23," + amtIncomePay3rdQtr.Length + "},{24," + taxWithheldQtr.Length + "}",
+                                          "DTL", item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length, pickupStore, pickupRep,
+                                          authorizedRepName, authorizedRepID, deliveryCorpBranch,
+                                          checkDate, checkAmount, supplier,
+                                          isPayeeAcctOnly, remarks, signatories,
+                                          signatoryName1, signatoryName2, signatoryName3,
+                                          printEWT, recordType, atcCode,
+                                          taxPeriodFrom, taxPeriodTo, amtIncomePay1stQtr,
+                                          amtIncomePay2ndQtr, amtIncomePay3rdQtr, taxWithheldQtr);
+                csv.AppendLine(newLine);
             }
             //Append Summary
             var totalAmount = input.Sum(l => l.DocumentAmount);
@@ -124,7 +126,7 @@ namespace CTI.FAS.CsvGenerator.Services
                              input.Count,
                              totalAmount,
                              ",,,,,,,,,,,,,"));
-          
+
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;
         }
@@ -156,9 +158,21 @@ namespace CTI.FAS.CsvGenerator.Services
             }
             return "";
         }
-        private static string SanitizeAddress(string address)
+        private static string SanitizeForCsv(string? text)
         {
-            return address.Replace(",", " ").ToUpper();
+            if (text == null)
+            {
+                return "";
+            }
+            return text.Replace(",", " ");
+        }
+        private static string SanitizeForCsvToUpper(string? text)
+        {
+            if (text == null)
+            {
+                return "";
+            }
+            return text.Replace(",", " ").ToUpper();
         }
         private static string SanitizeTIN(string? tin)
         {

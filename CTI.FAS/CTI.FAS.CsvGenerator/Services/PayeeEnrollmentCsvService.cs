@@ -43,7 +43,7 @@ namespace CTI.FAS.CsvGenerator.Services
                                      SanitizeAccountType(item.PayeeAccountType),
                                      creditorAccount,
                                      SanitizeTIN(item.Creditor.PayeeAccountTIN),
-                                     SanitizeAddress(item.Creditor.PayeeAccountAddress),
+                                     SanitizeForCsvToUpper(item.Creditor.PayeeAccountAddress),
                                      "");
                 csv.AppendLine(newLine);
             }
@@ -84,9 +84,21 @@ namespace CTI.FAS.CsvGenerator.Services
             }
             return "";
         }
-        private static string SanitizeAddress(string address)
+        private static string SanitizeForCsv(string? text)
         {
-            return address.Replace(",", " ").ToUpper();
+            if (text == null)
+            {
+                return "";
+            }
+            return text.Replace(",", " ");
+        }
+        private static string SanitizeForCsvToUpper(string? text)
+        {
+            if (text == null)
+            {
+                return "";
+            }
+            return text.Replace(",", " ").ToUpper();
         }
         private static string SanitizeTIN(string? tin)
         {
