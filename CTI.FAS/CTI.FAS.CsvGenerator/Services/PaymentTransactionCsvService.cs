@@ -45,12 +45,8 @@ namespace CTI.FAS.CsvGenerator.Services
                                           "Tax Withheld for the Quarter"));
             //Append Detail
             foreach (var item in input)
-            {
-                var xCheckDate  = item.DocumentDate.ToString("MM/dd/yyyy").Trim();
-                var xCheckAmount  = item.DocumentAmount;
-                var xPayeeName  = item.EnrolledPayee!.Creditor!.PayeeAccountName;
-                var xIsPayeeAcctOnly  = "YES" ;
-                var xRemarks  = "" ; 
+            {   
+                var remarks  = "" ; 
                 //var xSignatories  = IIf(dtr("signatoryType") = 0, "Select Signatories", "Auto Populate") ;
                 //var xSignatoryName1  = dtr("signatory1").ToString.Trim ;
                 //var xSignatoryName2  = dtr("signatory2").ToString.Trim ;
@@ -68,21 +64,24 @@ namespace CTI.FAS.CsvGenerator.Services
                 var pickupRep= "";
                 var authorizedRepName= "";
                 var authorizedRepID= "";
+                var isPayeeAcctOnly = "YES";
                 var supplier = SanitizeSupplierName(item.EnrolledPayee!.Creditor!.PayeeAccountName);
                 var accountNo = SanitizeAccountNo(item.EnrolledPayee!.PayeeAccountNumber);
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
+                var checkDate = item.TransmissionDate != null ? ((DateTime)item.TransmissionDate).ToString("MM/dd/yyyy").Trim() : "";
+                var checkAmount = item.DocumentAmount;
                 //var newLine = String.Format("{0,3},{1," + item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length + "},{2," + pickupStore.Length + "}," +
                 //                          "{3," + pickupRep.Length + "},{4," + authorizedRepName.Length + "},{5," + authorizedRepID.Length + "}," +
-                //                          "{6," + xDeliveryCorpBranchLen + "},{7," + xCheckDateLen + "},{8," + xCheckAmountLen + "}," +
-                //                          "{9," + xPayeeNameLen + "},{10," + xIsPayeeAcctOnlyLen + "},{11," + xRemarksLen + "}," +
+                //                          "{6," + xDeliveryCorpBranchLen + "},{7," + checkDate.Length + "},{8," + checkAmount.ToString().Length + "}," +
+                //                          "{9," + supplier.Length + "},{10," + isPayeeAcctOnly.Length + "},{11," + remarks.Length + "}," +
                 //                          "{12," + xSignatoriesLen + "},{13," + xSignatoryName1Len + "},{14," + xSignatoryName2Len + "}," +
                 //                          "{15," + xSignatoryName3Len + "},{16," + xPrintEWTLen + "},{17," + xRecordTypeLen + "}," +
                 //                          "{18," + xATCCodeLen + "},{19," + xTaxPeriodFromLen + "},{20," + xTaxPeriodToLen + "}," +
                 //                          "{21," + xAmtIncomePay1stQtrLen + "},{22," + xAmtIncomePay2ndQtrLen + "},{23," + xAmtIncomePay3rdQtrLen + "},{24," + xTaxWithheldQtrLen + "}",
                 //                          "DTL", item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length, pickupStore, pickupRep,
                 //                          authorizedRepName, authorizedRepID, xDeliveryCorpBranch,
-                //                          xCheckDate, xCheckAmount, xPayeeName,
-                //                          xIsPayeeAcctOnly, xRemarks, xSignatories,
+                //                          checkDate, checkAmount, supplier,
+                //                          isPayeeAcctOnly, remarks, xSignatories,
                 //                          xSignatoryName1, xSignatoryName2, xSignatoryName3,
                 //                          xPrintEWT, xRecordType, xATCCode,
                 //                          xTaxPeriodFrom, xTaxPeriodTo, xAmtIncomePay1stQtr,

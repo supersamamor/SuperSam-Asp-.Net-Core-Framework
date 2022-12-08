@@ -21,6 +21,10 @@ public record CompanyState : BaseEntity
     public string? AccountName { get; init; }
     public string? AccountType { get; init; }
     public string? AccountNumber { get; init; }
+    public string? DeliveryCorporationBranch { get; init; }
+    public string? SignatoryType { get; init; }
+    public string? Signatory1 { get; init; }
+    public string? Signatory2 { get; init; }
     public DatabaseConnectionSetupState? DatabaseConnectionSetup { get; init; }
     public IList<ProjectState>? ProjectList { get; set; }
     public IList<UserEntityState>? UserEntityList { get; set; }

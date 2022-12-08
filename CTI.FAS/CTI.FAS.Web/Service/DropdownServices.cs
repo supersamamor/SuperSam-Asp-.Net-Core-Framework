@@ -142,5 +142,14 @@ namespace CTI.FAS.Web.Service
             };
             return items;
         }
+        public IEnumerable<SelectListItem> SignatoryTypeList()
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem { Text = Core.Constants.SignatoryType.SelectSignatories, Value = Core.Constants.SignatoryType.SelectSignatories, },
+                new SelectListItem { Text = Core.Constants.SignatoryType.AutoPopulate, Value = Core.Constants.SignatoryType.AutoPopulate, },
+            };
+            return items;
+        }
     }
 }
