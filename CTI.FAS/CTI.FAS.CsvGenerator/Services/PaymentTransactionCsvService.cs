@@ -39,10 +39,32 @@ namespace CTI.FAS.CsvGenerator.Services
              _staticFolderPath, subfolder, GlobalConstants.UploadFilesPath);
             var csv = new StringBuilder();
             //Append Header 
-            csv.AppendLine(String.Format("{0,380}", "HDR,Participating Account Number,Participating Account Name,Participating Reference Number,Transaction Amount,Transaction Reference Number,Print EWT?,Record Type,ATC Code,Tax Period From,Tax Period To,Amount of Income Payments (1st Quarter),Amount of Income Payments (2nd Quarter),Amount of Income Payment (3rd Quarter),Total Amount of Income Payments,Tax Withheld for the Quarter"));
+            csv.AppendLine(String.Format("{0,517}", "HDR,Pick-up or Delivery,Pick-up Store,Pick-up Representative,Authorized Representative Name,Authorized Representative ID,Delivery Corporation Branch,Check Date," +
+                                          "Check Amount,Payee Name,Is Payee Account Only?,Remarks,Signatories,Signatory Name1,Signatory Name2,Signatory Name3,Print EWT?,Record Type,ATC Code,Tax Period From,Tax Period To," +
+                                          "Amount of Income Payments (1st Quarter),Amount of Income Payments (2nd Quarter),Amount of Income Payments (3rd Quarter),Total Amount of Income Payments," +
+                                          "Tax Withheld for the Quarter"));
             //Append Detail
             foreach (var item in input)
             {
+                var xCheckDate  = item.DocumentDate.ToString("MM/dd/yyyy").Trim();
+                var xCheckAmount  = item.DocumentAmount;
+                var xPayeeName  = item.EnrolledPayee!.Creditor!.PayeeAccountName;
+                var xIsPayeeAcctOnly  = "YES" ;
+                var xRemarks  = "" ; 
+                var xSignatories  = IIf(dtr("signatoryType") = 0, "Select Signatories", "Auto Populate") ;
+                var xSignatoryName1  = dtr("signatory1").ToString.Trim ;
+                var xSignatoryName2  = dtr("signatory2").ToString.Trim ;
+                var xSignatoryName3  = "" ;
+                var xPrintEWT  = "No" ;
+                var xRecordType  = "" ;
+                var xATCCode  = "" ;
+                var xTaxPeriodFrom  = "" ;
+                var xTaxPeriodTo  = "" ;
+                var xAmtIncomePay1stQtr  = "" ;
+                var xAmtIncomePay2ndQtr  = "" ;
+                var xAmtIncomePay3rdQtr  = "" ;
+                var xTaxWithheldQtr  = "" ;
+
                 var supplier = SanitizeSupplierName(item.EnrolledPayee!.Creditor!.PayeeAccountName);
                 var accountNo = SanitizeAccountNo(item.EnrolledPayee!.PayeeAccountNumber);
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
