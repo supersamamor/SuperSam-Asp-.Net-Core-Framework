@@ -11,11 +11,11 @@ public record EnrolledPayeeState : BaseEntity
     public string Email { get; init; } = "";
     public string? Status { get; private set; } = Constants.EnrollmentStatus.Active;
     public string? EnrollmentBatchId { get; private set; }
-    public CompanyState? Company { get; init; }
+    public CompanyState? Company { get; set; }
     public CreditorState? Creditor { get; set; }
     public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
     public IList<EnrolledPayeeEmailState>? EnrolledPayeeEmailList { get; set; }
-    public EnrollmentBatchState? EnrollmentBatch { get; init; }
+    public EnrollmentBatchState? EnrollmentBatch { get; set; }
     public void TagAsNew()
     {
         this.Status = Constants.EnrollmentStatus.New;

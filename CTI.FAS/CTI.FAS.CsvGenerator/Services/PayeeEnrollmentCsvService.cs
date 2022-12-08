@@ -14,9 +14,17 @@ namespace CTI.FAS.CsvGenerator.Services
             _staticFolderPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
         }
 
-        public CsvDocumentModel Export(IList<EnrolledPayeeState> input, string subfolder)
+        public CsvDocumentModel Export(IList<EnrolledPayeeState> input, string? companyShortName, int? batchNo, string subfolder)
         {
-            var csvDocument = new CsvDocumentModel($"FAI_ACCOUNTENROLL_11162022_23{DateTime.Now:MMddyyyy}.csv",
+            if (string.IsNullOrEmpty(companyShortName))
+            {
+                companyShortName = "FILINVEST";
+            }
+            if (batchNo == null)
+            {
+                batchNo = 1;
+            }
+            var csvDocument = new CsvDocumentModel($"{companyShortName}_ACCOUNTENROLL_{DateTime.Now:MMddyyyy}_{batchNo}.csv",
                 _staticFolderPath, subfolder, GlobalConstants.UploadFilesPath);
             var csv = new StringBuilder();
             //Append Header FAI_ACCOUNTENROLL_11162022_23
@@ -44,7 +52,7 @@ namespace CTI.FAS.CsvGenerator.Services
                             "TLR",
                             input.Count,
                             ",,,,,,"));
-         
+
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;
         }

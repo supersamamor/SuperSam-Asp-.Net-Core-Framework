@@ -16,8 +16,7 @@ public class EnrollmentModel : BasePageModel<EnrollmentModel>
     public IList<PayeeEnrollmentViewModel> ForEnrollmentList { get; set; } = new List<PayeeEnrollmentViewModel>();
     [BindProperty]
     public string? DownloadUrl { get; set; }
-    [BindProperty]
-    [Required]
+    [BindProperty]   
     public string? Entity { get; set; }
     public PayeeEnrollmentTabNavigationPartial PayeeEnrollmentTabNavigation { get; set; } = new() { TabName = Constants.PayeeEnrollmentTabNavigation.Enrollment };
     public async Task<IActionResult> OnGet(string? entity, string? downloadUrl)

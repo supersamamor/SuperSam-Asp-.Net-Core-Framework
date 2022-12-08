@@ -153,8 +153,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<CreditorState>().HasIndex(e => new { e.PayeeAccountName });
 		modelBuilder.Entity<CreditorState>().HasIndex(e => new { e.CreditorAccount });
 		modelBuilder.Entity<EnrollmentBatchState>().HasMany(t => t.EnrolledPayeeList).WithOne(l => l.EnrollmentBatch).HasForeignKey(t => t.EnrollmentBatchId);
-		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
-		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.Date, e.Batch }).IsUnique();
+		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.Date, e.Batch, e.BatchStatusType }).IsUnique();
+		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.Date, e.Batch, e.BatchStatusType }).IsUnique();
 		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.CompanyId });
 		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.CompanyId });
 		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.BatchStatusType });

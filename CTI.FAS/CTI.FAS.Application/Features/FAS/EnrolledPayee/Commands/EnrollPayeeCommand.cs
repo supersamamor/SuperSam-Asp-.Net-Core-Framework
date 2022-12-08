@@ -34,12 +34,15 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
     {
         var enrollmentStatus = EnrollmentStatus.Active;
         var date = DateTime.Now.Date;
-        var payeeToEnrollList = await _context.EnrolledPayee.Include(l => l.Creditor)
+        var payeeToEnrollList = await _context.EnrolledPayee.Include(l => l.Creditor).Include(l => l.Company)
             .Where(l => request.EnrolledPayeeIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
-        var csvDocument = _payeeEnrollmentCsvService.Export(payeeToEnrollList, _authenticatedUser.UserId!);
+        var companyShortName = payeeToEnrollList.FirstOrDefault()?.Company?.EntityShortName;
+
+
         var batchCount = (await _context.EnrollmentBatch
                              .Where(l => l.Date == date && l.BatchStatusType == enrollmentStatus)
                              .AsNoTracking().CountAsync(cancellationToken: cancellationToken)) + 1;
+        var csvDocument = _payeeEnrollmentCsvService.Export(payeeToEnrollList, companyShortName, batchCount, _authenticatedUser.UserId!);
         var enrollmentBatchToAdd = new EnrollmentBatchState()
         {
             Date = date,
@@ -55,6 +58,7 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
         foreach (var item in payeeToEnrollList)
         {
             item.Creditor = null;
+            item.Company = null;          
             item.TagAsActiveAndSetBatch(enrollmentBatchToAdd.Id);
         }
         _context.UpdateRange(payeeToEnrollList);
