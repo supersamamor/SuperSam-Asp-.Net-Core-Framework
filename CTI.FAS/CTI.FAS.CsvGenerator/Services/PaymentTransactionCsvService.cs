@@ -64,20 +64,23 @@ namespace CTI.FAS.CsvGenerator.Services
                 var xAmtIncomePay2ndQtr  = "" ;
                 var xAmtIncomePay3rdQtr  = "" ;
                 var xTaxWithheldQtr  = "" ;
-
+                var pickupStore = "";
+                var pickupRep= "";
+                var authorizedRepName= "";
+                var authorizedRepID= "";
                 var supplier = SanitizeSupplierName(item.EnrolledPayee!.Creditor!.PayeeAccountName);
                 var accountNo = SanitizeAccountNo(item.EnrolledPayee!.PayeeAccountNumber);
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
-                //var newLine = String.Format("{0,3},{1," + xPickupDeliveryLen + "},{2," + xPickupStoreLen + "}," +
-                //                          "{3," + xPickupRepLen + "},{4," + xAuthorizedRepNameLen + "},{5," + xAuthorizedRepIDLen + "}," +
+                //var newLine = String.Format("{0,3},{1," + item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length + "},{2," + pickupStore.Length + "}," +
+                //                          "{3," + pickupRep.Length + "},{4," + authorizedRepName.Length + "},{5," + authorizedRepID.Length + "}," +
                 //                          "{6," + xDeliveryCorpBranchLen + "},{7," + xCheckDateLen + "},{8," + xCheckAmountLen + "}," +
                 //                          "{9," + xPayeeNameLen + "},{10," + xIsPayeeAcctOnlyLen + "},{11," + xRemarksLen + "}," +
                 //                          "{12," + xSignatoriesLen + "},{13," + xSignatoryName1Len + "},{14," + xSignatoryName2Len + "}," +
                 //                          "{15," + xSignatoryName3Len + "},{16," + xPrintEWTLen + "},{17," + xRecordTypeLen + "}," +
                 //                          "{18," + xATCCodeLen + "},{19," + xTaxPeriodFromLen + "},{20," + xTaxPeriodToLen + "}," +
                 //                          "{21," + xAmtIncomePay1stQtrLen + "},{22," + xAmtIncomePay2ndQtrLen + "},{23," + xAmtIncomePay3rdQtrLen + "},{24," + xTaxWithheldQtrLen + "}",
-                //                          "DTL", xPickupDelivery, xPickupStore, xPickupRep,
-                //                          xAuthorizedRepName, xAuthorizedRepID, xDeliveryCorpBranch,
+                //                          "DTL", item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length, pickupStore, pickupRep,
+                //                          authorizedRepName, authorizedRepID, xDeliveryCorpBranch,
                 //                          xCheckDate, xCheckAmount, xPayeeName,
                 //                          xIsPayeeAcctOnly, xRemarks, xSignatories,
                 //                          xSignatoryName1, xSignatoryName2, xSignatoryName3,

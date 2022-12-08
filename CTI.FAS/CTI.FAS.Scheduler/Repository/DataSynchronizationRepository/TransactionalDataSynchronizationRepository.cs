@@ -108,8 +108,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,[LastModifiedBy]
 							  	  ,[LastModifiedDate]
 								  ,[TextFileName]
-								  ,[PdfReport]
-								  ,[Emailed]
+								  ,[PdfReport]								
 								  ,[GroupCode]
 								  ,[EmailSentCount]
 								  ,[IsForSending]
@@ -131,8 +130,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 									,'System'	
 									,GetDate()	
 									,''
-									,''
-									,0
+									,''								
 									,''
 									,0
 									,0
