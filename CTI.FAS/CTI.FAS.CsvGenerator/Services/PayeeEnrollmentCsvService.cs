@@ -48,10 +48,10 @@ namespace CTI.FAS.CsvGenerator.Services
                 csv.AppendLine(newLine);
             }
             //Append Summary
-            csv.AppendLine(String.Format("{0,3},{1,2},{2,0},",
+            csv.AppendLine(String.Format("{0,3},{1,2},{2,0}",
                             "TLR",
                             input.Count,
-                            ",,,,,"));
+                            ",,,,,,"));
 
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;

@@ -90,7 +90,7 @@ namespace CTI.FAS.CsvGenerator.Services
                                           amtIncomePay2ndQtr, amtIncomePay3rdQtr, taxWithheldQtr);
                 csv.AppendLine(newLine);
                 var particulars = SanitizeParticulars(item.DocumentDescription);
-                csv.AppendLine(String.Format("{0},{1},{2},{3}","VCH", particulars, item.DocumentNumber, ",,,,,,,,,,,,,,,,,,,,,"));
+                csv.AppendLine(String.Format("{0},{1},{2},{3}","VCH", particulars, item.DocumentNumber, ",,,,,,,,,,,,,,,,,,,,,,"));
             }
             //Append Summary
             var totalAmount = input.Sum(l => l.DocumentAmount);
@@ -98,7 +98,7 @@ namespace CTI.FAS.CsvGenerator.Services
                              "TLR",
                              input.Count,
                              totalAmount,
-                             ",,,,,,,,,,,,,,,,,,,,,"));
+                             ",,,,,,,,,,,,,,,,,,,,,,,"));
 
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;
@@ -127,7 +127,7 @@ namespace CTI.FAS.CsvGenerator.Services
                              "TLR",
                              input.Count,
                              totalAmount,
-                             ",,,,,,,,,,,,,"));
+                             ",,,,,,,,,,,,"));
 
             File.WriteAllText(csvDocument.CompleteFilePath, csv.ToString());
             return csvDocument;
