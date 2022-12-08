@@ -133,5 +133,14 @@ namespace CTI.FAS.Web.Service
             };
             return items;
         }
+        public IEnumerable<SelectListItem> DeliveryOptionsList()
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem { Text = Core.Constants.DeliveryOptions.Delivery, Value = Core.Constants.DeliveryOptions.Delivery, },
+                new SelectListItem { Text = Core.Constants.DeliveryOptions.PickUp, Value = Core.Constants.DeliveryOptions.PickUp, },
+            };
+            return items;
+        }
     }
 }

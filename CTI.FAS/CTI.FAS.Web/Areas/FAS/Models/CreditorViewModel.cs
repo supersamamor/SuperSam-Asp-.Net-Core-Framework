@@ -33,9 +33,12 @@ public record CreditorViewModel : BaseViewModel
 	[StringLength(70, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string Email { get; init; } = "";
 	[Display(Name = "Database Connection Setup")]
-	[Required]
-	
+	[Required]	
 	public string DatabaseConnectionSetupId { get; init; } = "";
+	[Display(Name = "Delivery Options")]
+	[Required]
+	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? DeliveryOptions { get; init; } = Core.Constants.DeliveryOptions.Delivery;
 	public string?  ForeignKeyDatabaseConnectionSetup { get; set; }
 	
 	public DateTime LastModifiedDate { get; set; }

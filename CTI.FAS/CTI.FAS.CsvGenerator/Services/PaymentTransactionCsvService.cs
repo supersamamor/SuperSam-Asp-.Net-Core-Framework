@@ -51,9 +51,9 @@ namespace CTI.FAS.CsvGenerator.Services
                 var xPayeeName  = item.EnrolledPayee!.Creditor!.PayeeAccountName;
                 var xIsPayeeAcctOnly  = "YES" ;
                 var xRemarks  = "" ; 
-                var xSignatories  = IIf(dtr("signatoryType") = 0, "Select Signatories", "Auto Populate") ;
-                var xSignatoryName1  = dtr("signatory1").ToString.Trim ;
-                var xSignatoryName2  = dtr("signatory2").ToString.Trim ;
+                //var xSignatories  = IIf(dtr("signatoryType") = 0, "Select Signatories", "Auto Populate") ;
+                //var xSignatoryName1  = dtr("signatory1").ToString.Trim ;
+                //var xSignatoryName2  = dtr("signatory2").ToString.Trim ;
                 var xSignatoryName3  = "" ;
                 var xPrintEWT  = "No" ;
                 var xRecordType  = "" ;
@@ -68,10 +68,23 @@ namespace CTI.FAS.CsvGenerator.Services
                 var supplier = SanitizeSupplierName(item.EnrolledPayee!.Creditor!.PayeeAccountName);
                 var accountNo = SanitizeAccountNo(item.EnrolledPayee!.PayeeAccountNumber);
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
-                var newLine = String.Format("{0,3},{1,12},{2," + supplier.Length + "},{3," + accountNo.Length + "},{4," + item.DocumentAmount.ToString().Length + "},{5," + item.DocumentNumber.Length + "},{6,2},{7,0}",
-                                        "DTL", accountNo, supplier,
-                                        creditorAccount, item.DocumentAmount, item.DocumentNumber, "No", ",,,,,,,,,");
-                csv.AppendLine(newLine);
+                //var newLine = String.Format("{0,3},{1," + xPickupDeliveryLen + "},{2," + xPickupStoreLen + "}," +
+                //                          "{3," + xPickupRepLen + "},{4," + xAuthorizedRepNameLen + "},{5," + xAuthorizedRepIDLen + "}," +
+                //                          "{6," + xDeliveryCorpBranchLen + "},{7," + xCheckDateLen + "},{8," + xCheckAmountLen + "}," +
+                //                          "{9," + xPayeeNameLen + "},{10," + xIsPayeeAcctOnlyLen + "},{11," + xRemarksLen + "}," +
+                //                          "{12," + xSignatoriesLen + "},{13," + xSignatoryName1Len + "},{14," + xSignatoryName2Len + "}," +
+                //                          "{15," + xSignatoryName3Len + "},{16," + xPrintEWTLen + "},{17," + xRecordTypeLen + "}," +
+                //                          "{18," + xATCCodeLen + "},{19," + xTaxPeriodFromLen + "},{20," + xTaxPeriodToLen + "}," +
+                //                          "{21," + xAmtIncomePay1stQtrLen + "},{22," + xAmtIncomePay2ndQtrLen + "},{23," + xAmtIncomePay3rdQtrLen + "},{24," + xTaxWithheldQtrLen + "}",
+                //                          "DTL", xPickupDelivery, xPickupStore, xPickupRep,
+                //                          xAuthorizedRepName, xAuthorizedRepID, xDeliveryCorpBranch,
+                //                          xCheckDate, xCheckAmount, xPayeeName,
+                //                          xIsPayeeAcctOnly, xRemarks, xSignatories,
+                //                          xSignatoryName1, xSignatoryName2, xSignatoryName3,
+                //                          xPrintEWT, xRecordType, xATCCode,
+                //                          xTaxPeriodFrom, xTaxPeriodTo, xAmtIncomePay1stQtr,
+                //                          xAmtIncomePay2ndQtr, xAmtIncomePay3rdQtr, xTaxWithheldQtr);
+                //csv.AppendLine(newLine);
             }
             //Append Summary
             var totalAmount = input.Sum(l => l.DocumentAmount);

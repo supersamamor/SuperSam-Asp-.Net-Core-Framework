@@ -12,6 +12,7 @@ public record CreditorState : BaseEntity
     public string? PayeeAccountTIN { get; init; }
     public string PayeeAccountAddress { get; init; } = "";
     public string Email { get; init; } = "";
+    public string? DeliveryOptions { get; init; } = Constants.DeliveryOptions.Delivery;
     public string DatabaseConnectionSetupId { get; init; } = "";
 
     public DatabaseConnectionSetupState? DatabaseConnectionSetup { get; init; }
