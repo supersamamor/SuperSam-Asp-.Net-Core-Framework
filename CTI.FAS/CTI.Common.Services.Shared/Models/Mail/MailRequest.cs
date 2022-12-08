@@ -20,4 +20,6 @@ public class MailRequest
     /// </summary>
     public string Body { get; set; } = "";
     public IList<string>? Attachments {get; set; }
+    public IList<string>? Ccs { get; set; }
+    public IList<string>? Bcc { get; set; }
 }

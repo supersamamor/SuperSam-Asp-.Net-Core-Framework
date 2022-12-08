@@ -39,6 +39,19 @@ namespace CTI.FAS.Scheduler.Jobs
                 .IgnoreQueryFilters().Where(l => l.IsForSending == true).ToListAsync();
             foreach (var paymentTransactionForEmailSending in paymentTransactionToEmailList)
             {
+                try
+                {
+                    var user = await _userManager.FindByIdAsync(paymentTransactionForEmailSending.ProcessedByUserId);
+                    await SendPaymentTransactionNotification(paymentTransactionForEmailSending, user);
+                    paymentTransactionForEmailSending.TagAsEmailSent();
+                }
+                catch (Exception ex)
+                {
+                    paymentTransactionForEmailSending.TagAsEmailFailed(ex.Message);
+                    _logger.LogError(ex, @"ProcessESettleNotificationAsync Error Message : {Message} / StackTrace : {StackTrace}", ex.Message, ex.StackTrace);
+                }
+                _context.Update(paymentTransactionForEmailSending);
+                await _context.SaveChangesAsync();
             }
         }
         private string GenerateEmailTemplate(PaymentTransactionState paymentTransaction)
@@ -69,7 +82,7 @@ namespace CTI.FAS.Scheduler.Jobs
             str += "<br />";
             str += "<br />";
             str += "<i>This is a system-generated email. Please do not reply.<i/>";
-            str += "<br />";   
+            str += "<br />";
             str += "Copyright &copy; 2015 Filinvest Alabang Inc. All rights reserved.";
             str += "<br /> ";
             str += "<br /> ";
@@ -83,6 +96,30 @@ namespace CTI.FAS.Scheduler.Jobs
             str += "</span> ";
             return str;
         }
-
+        private async Task SendPaymentTransactionNotification(PaymentTransactionState paymentTransaction, ApplicationUser? user)
+        {
+            string subject = $"E-Settlement Notification - {paymentTransaction.DocumentNumber}";
+            string message = GenerateEmailTemplate(paymentTransaction);
+            var emailRequest = new MailRequest()
+            {
+                To = paymentTransaction.EnrolledPayee!.Email,
+                Subject = subject,
+                Body = message,
+                Attachments = new List<string>() { paymentTransaction.PdfFilePath! }
+            };
+            if (user?.Email != null)
+            {
+                emailRequest.Bcc = new List<string>() { user!.Email };
+            }
+            if (paymentTransaction?.EnrolledPayee?.EnrolledPayeeEmailList != null)
+            {
+                emailRequest.Ccs = new List<string>();
+                foreach (var ccItem in paymentTransaction!.EnrolledPayee!.EnrolledPayeeEmailList)
+                {
+                    emailRequest!.Ccs!.Add(ccItem.Email);
+                }
+            }
+            await _emailSender.SendAsync(emailRequest);
+        }
     }
 }

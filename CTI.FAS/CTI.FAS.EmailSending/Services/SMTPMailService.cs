@@ -18,6 +18,8 @@ namespace CTI.FAS.EmailSending.Services
             if (!string.IsNullOrEmpty(_settings.TestEmailRecipient))
             {
                 request.To = _settings.TestEmailRecipient;
+                request.Ccs = new List<string>() { _settings.TestEmailRecipient };
+                request.Bcc = new List<string>() { _settings.TestEmailRecipient };
             }
             var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body)
             {
@@ -28,6 +30,20 @@ namespace CTI.FAS.EmailSending.Services
                 foreach (var item in request.Attachments)
                 {
                     mailMessage.Attachments.Add(new Attachment(item));
+                }
+            }
+            if (request.Ccs != null && request.Ccs.Count > 0)
+            {
+                foreach (var item in request.Ccs)
+                {
+                    mailMessage.CC.Add(new MailAddress(item));
+                }
+            }
+            if (request.Bcc != null && request.Bcc.Count > 0)
+            {
+                foreach (var item in request.Bcc)
+                {
+                    mailMessage.Bcc.Add(new MailAddress(item));
                 }
             }
             using var client = new SmtpClient();

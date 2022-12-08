@@ -27,6 +27,8 @@ public record PaymentTransactionState : BaseEntity
     public string AccountTransaction { get; init; } = "";
     public EnrolledPayeeState? EnrolledPayee { get; set; }
     public BatchState? Batch { get; init; }
+    public string? EmailSendingError { get; private set; } = "";
+    public string? ProcessedByUserId { get; private set; } = "";
     public void TagAsGeneratedAndSetBatch(string batchId, string? groupId)
     {
         this.Status = PaymentTransactionStatus.Generated;
@@ -34,13 +36,14 @@ public record PaymentTransactionState : BaseEntity
         this.TransmissionDate = DateTime.Now.Date;
         this.GroupCode = groupId;
     }
-    public void TagAsSent(string batchId, string pdfUrl, string pdfFilePath)
+    public void TagAsSent(string batchId, string userId, string pdfUrl, string pdfFilePath)
     {
         this.Status = PaymentTransactionStatus.Sent;
         this.BatchId = batchId;
         this.IsForSending = true;
         this.PdfUrl = pdfUrl;
         this.PdfFilePath = pdfFilePath;
+        this.ProcessedByUserId = userId;
     }
     public void TagAsRevoked()
     {
@@ -52,5 +55,10 @@ public record PaymentTransactionState : BaseEntity
         this.EmailSentDateTime = DateTime.Now;        
         this.IsForSending = false;
         this.EmailSentCount += 1;
+    }
+    public void TagAsEmailFailed(string error)
+    {
+        this.IsForSending = false;
+        this.EmailSendingError = error;
     }
 }

@@ -61,7 +61,7 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
             var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"ESettle_{MakeValidFileName(item.DocumentNumber)}_{DateTime.Now:MMddyyyy_HHmm}.pdf",
                                                           GlobalConstants.UploadFilesPath, _staticFolderPath, "ESettle");
             var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
-            item.TagAsSent(batchToAdd.Id, rotativaDocument.FileUrl, rotativaDocument.CompleteFilePath);
+            item.TagAsSent(batchToAdd.Id, _authenticatedUser.UserId, rotativaDocument.FileUrl, rotativaDocument.CompleteFilePath);
         }
         _context.UpdateRange(paymentTransactionToProcessList);
         _ = await _context.SaveChangesAsync(cancellationToken);
