@@ -12,7 +12,7 @@ public record EnrolledPayeeState : BaseEntity
     public string? Status { get; private set; } = Constants.EnrollmentStatus.Active;
     public string? EnrollmentBatchId { get; private set; }
     public CompanyState? Company { get; init; }
-    public CreditorState? Creditor { get; init; }
+    public CreditorState? Creditor { get; set; }
     public IList<PaymentTransactionState>? PaymentTransactionList { get; set; }
     public IList<EnrolledPayeeEmailState>? EnrolledPayeeEmailList { get; set; }
     public EnrollmentBatchState? EnrollmentBatch { get; init; }

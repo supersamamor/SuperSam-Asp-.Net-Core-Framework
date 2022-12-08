@@ -21,7 +21,8 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("Creditor"))
             .Concat(GeneratePermissionsForModule("EnrolledPayee"))
             .Concat(GeneratePermissionsForModule("EnrolledPayeeEmail"))
-
+            .Concat(GeneratePermissionsForModule("MasterFile"))
+            .Concat(GeneratePermissionsForModule("AccountsPayable"))
             .Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
 

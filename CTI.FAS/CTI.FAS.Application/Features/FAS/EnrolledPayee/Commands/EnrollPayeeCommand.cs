@@ -32,7 +32,7 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
     public async Task<string> AddEnrolledPayee(EnrollPayeeCommand request, CancellationToken cancellationToken)
     {
         var date = DateTime.Now.Date;
-        var payeeToEnrollList = await _context.EnrolledPayee
+        var payeeToEnrollList = await _context.EnrolledPayee.Include(l => l.Creditor)
             .Where(l => request.EnrolledPayeeIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var csvDocument = _payeeEnrollmentCsvService.Export(payeeToEnrollList, _authenticatedUser.UserId!);
         var batchCount = (await _context.EnrollmentBatch
@@ -51,6 +51,7 @@ public class EnrollPayeeCommandHandler : IRequestHandler<EnrollPayeeCommand, str
         //Todo: Use Bulk Update
         foreach (var item in payeeToEnrollList)
         {
+            item.Creditor = null;
             item.TagAsActiveAndSetBatch(enrollmentBatchToAdd.Id);
         }
         _context.UpdateRange(payeeToEnrollList);
