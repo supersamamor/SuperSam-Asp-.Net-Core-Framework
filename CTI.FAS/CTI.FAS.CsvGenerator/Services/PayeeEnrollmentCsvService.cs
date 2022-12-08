@@ -46,7 +46,7 @@ namespace CTI.FAS.CsvGenerator.Services
         }
         private static string SanitizeAccountNo(string accountNo)
         {
-            return accountNo.Replace("&nbsp;", "").Replace("&#241;", "ñ").Replace("&amp;", "&").Replace("-", "").Replace("NV", "").Replace("V", "").Trim();
+            return accountNo.Replace("&nbsp;", "").Replace("&#241;", "ñ").Replace("&amp;", "&").Replace("-", "").Replace("NV", "").Replace("V", "").Trim().ToUpper();
         }
         private static string SanitizeSupplierName(string supplierName)
         {
@@ -70,7 +70,7 @@ namespace CTI.FAS.CsvGenerator.Services
             {
                 return "CA";
             }
-            return "";           
+            return "";
         }
         private static string SanitizeAddress(string address)
         {
