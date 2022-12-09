@@ -141,7 +141,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 									FROM " + databaseConnectionSetup.DatabaseAndServerName + @".ap_paytrx a       
 									INNER JOIN [dbo].Company as b on a.entity_cd = b.Code and b.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
 									INNER JOIN [dbo].Creditor as c on a.[creditor_acct] = c.CreditorAccount and c.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
-									INNER JOIN " + databaseConnectionSetup.DatabaseAndServerName + @".cf_trx_type as e on a.trx_type = e.trx_type and e.module = '" + IFCAModule.AP + @"' and e.trx_class in (" + IFCAConstant.APTransactionClass + @") and (e.descs like '" + IFCAConstant.TransactionTypeDescriptionPrefix_CheckPrepare + @"%' or e.descs like '" + IFCAConstant.TransactionTypeDescriptionPrefix_ESettle + @"%')									
+									INNER JOIN " + databaseConnectionSetup.DatabaseAndServerName + @".cf_trx_type as e on a.trx_type = e.trx_type and a.entity_cd = e.entity_cd and e.module = '" + IFCAModule.AP + @"' and e.trx_class in (" + IFCAConstant.APTransactionClass + @") and (e.descs like '" + IFCAConstant.TransactionTypeDescriptionPrefix_CheckPrepare + @"%' or e.descs like '" + IFCAConstant.TransactionTypeDescriptionPrefix_ESettle + @"%')									
 									INNER JOIN [dbo].EnrolledPayee as d on b.Id = d.CompanyId and c.Id = d.CreditorId									
 									LEFT JOIN [dbo].PaymentTransaction as f on d.Id = f.EnrolledPayeeId and a.batch_no = f.IfcaBatchNumber and a.line_no = f.IfcaLineNumber
 									Where d.Status = '" + EnrollmentStatus.Active + @"' and f.Id Is Null	
