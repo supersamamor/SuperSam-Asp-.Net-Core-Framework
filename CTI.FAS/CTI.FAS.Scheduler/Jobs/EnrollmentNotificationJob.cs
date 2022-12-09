@@ -12,6 +12,7 @@ using CTI.FAS.Core.Constants;
 
 namespace CTI.FAS.Scheduler.Jobs
 {
+    [DisallowConcurrentExecution]
     public class EnrollmentNotificationJob : IJob
     {
         private readonly ApplicationContext _context;

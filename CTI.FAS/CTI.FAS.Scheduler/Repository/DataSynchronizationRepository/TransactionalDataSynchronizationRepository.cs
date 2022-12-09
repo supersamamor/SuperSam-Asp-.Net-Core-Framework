@@ -50,7 +50,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 									,@Entity	
 								FROM " + databaseConnectionSetup.DatabaseAndServerName + @".[cfs_user_entity] as a
 								INNER JOIN [dbo].[Company]  as b on b.DatabaseConnectionSetupId='" + databaseConnectionSetup.Id + @"' And a.[entity_cd] = b.Code
-								INNER JOIN [dbo].[UserEntity] as c on b.Id = c.CompanyId And a.[userid] = c.[PplusUserId]
+								LEFT JOIN [dbo].[UserEntity] as c on b.Id = c.CompanyId And a.[userid] = c.[PplusUserId]
 								Where c.id is null	
 								
 							--INSERT CREDITOR

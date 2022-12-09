@@ -6,6 +6,7 @@ using System.Data;
 
 namespace CTI.FAS.Scheduler.Jobs
 {
+    [DisallowConcurrentExecution]
     public class MasterfileSynchronizationJob : IJob
     {
         private readonly ApplicationContext _context;

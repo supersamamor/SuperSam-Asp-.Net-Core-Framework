@@ -11,6 +11,7 @@ using CTI.Common.Services.Shared.Models.Mail;
 
 namespace CTI.FAS.Scheduler.Jobs
 {
+    [DisallowConcurrentExecution]
     public class ApprovalNotificationJob : IJob
     {
         private readonly ApplicationContext _context;
