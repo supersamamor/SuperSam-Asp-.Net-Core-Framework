@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.FAS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221205152425_AddEnrollmentBatchStateTable")]
-    partial class AddEnrollmentBatchStateTable
+    [Migration("20221209004718_InitialDatabaseStructure")]
+    partial class InitialDatabaseStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -295,6 +295,12 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<int>("Batch")
                         .HasColumnType("int");
 
+                    b.Property<string>("BatchStatusType")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -304,8 +310,17 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EmailDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Entity")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
@@ -313,14 +328,25 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BatchStatusType");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("Entity");
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.HasIndex("Date", "Batch")
-                        .IsUnique();
+                    b.HasIndex("Date", "Batch", "BatchStatusType")
+                        .IsUnique()
+                        .HasFilter("[BatchStatusType] IS NOT NULL");
 
                     b.ToTable("Batch");
                 });
@@ -365,6 +391,10 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("DeliveryCorporationBranch")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("EmailTelephoneNumber")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -404,6 +434,18 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Signatory1")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Signatory2")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SignatoryType")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal?>("SubmitDeadline")
                         .HasColumnType("decimal(18,6)");
@@ -446,6 +488,10 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<string>("DatabaseConnectionSetupId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeliveryOptions")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -672,6 +718,12 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<int>("Batch")
                         .HasColumnType("int");
 
+                    b.Property<string>("BatchStatusType")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -681,7 +733,16 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EmailDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Entity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
@@ -690,10 +751,21 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Date", "Batch")
-                        .IsUnique();
+                    b.HasIndex("BatchStatusType");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("Date", "Batch", "BatchStatusType")
+                        .IsUnique()
+                        .HasFilter("[BatchStatusType] IS NOT NULL");
 
                     b.ToTable("EnrollmentBatch");
                 });
@@ -702,6 +774,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountTransaction")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("BatchId")
                         .HasColumnType("nvarchar(450)");
@@ -723,19 +800,24 @@ namespace CTI.FAS.Infrastructure.Migrations
                     b.Property<DateTime>("DocumentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DocumentDescription")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("EmailSendingError")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmailSentCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("EmailSentDateTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Emailed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("EnrolledPayeeId")
                         .IsRequired()
@@ -745,7 +827,6 @@ namespace CTI.FAS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("GroupCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -766,23 +847,26 @@ namespace CTI.FAS.Infrastructure.Migrations
 
                     b.Property<string>("PaymentType")
                         .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("PdfReport")
+                    b.Property<string>("PdfFilePath")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("PdfUrl")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ProcessedByUserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("TextFileName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("TransmissionDate")
                         .HasColumnType("datetime2");

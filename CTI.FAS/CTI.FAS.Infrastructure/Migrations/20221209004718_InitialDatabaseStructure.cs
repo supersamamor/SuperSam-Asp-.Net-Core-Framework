@@ -60,6 +60,13 @@ namespace CTI.FAS.Infrastructure.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Batch = table.Column<int>(type: "int", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BatchStatusType = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -91,6 +98,31 @@ namespace CTI.FAS.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DatabaseConnectionSetup", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EnrollmentBatch",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Batch = table.Column<int>(type: "int", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BatchStatusType = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Entity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnrollmentBatch", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,6 +200,10 @@ namespace CTI.FAS.Infrastructure.Migrations
                     AccountName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AccountType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     AccountNumber = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
+                    DeliveryCorporationBranch = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SignatoryType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Signatory1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Signatory2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -197,6 +233,7 @@ namespace CTI.FAS.Infrastructure.Migrations
                     PayeeAccountTIN = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     PayeeAccountAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    DeliveryOptions = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     DatabaseConnectionSetupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -309,7 +346,9 @@ namespace CTI.FAS.Infrastructure.Migrations
                     CreditorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PayeeAccountNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PayeeAccountType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    EnrollmentBatchId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -331,6 +370,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                         principalTable: "Creditor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EnrolledPayee_EnrollmentBatch_EnrollmentBatchId",
+                        column: x => x.EnrollmentBatchId,
+                        principalTable: "EnrollmentBatch",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -396,18 +440,21 @@ namespace CTI.FAS.Infrastructure.Migrations
                     DocumentNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     DocumentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DocumentAmount = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    DocumentDescription = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     CheckNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    PaymentType = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
-                    TextFileName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PdfReport = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Emailed = table.Column<bool>(type: "bit", nullable: false),
-                    GroupCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PaymentType = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    PdfUrl = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    PdfFilePath = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    GroupCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     IfcaBatchNumber = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     IfcaLineNumber = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     EmailSentCount = table.Column<int>(type: "int", nullable: false),
                     EmailSentDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsForSending = table.Column<bool>(type: "bit", nullable: false),
+                    AccountTransaction = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    EmailSendingError = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProcessedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -485,6 +532,23 @@ namespace CTI.FAS.Infrastructure.Migrations
                 column: "PrimaryKey");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Batch_BatchStatusType",
+                table: "Batch",
+                column: "BatchStatusType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Batch_CompanyId",
+                table: "Batch",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Batch_Date_Batch_BatchStatusType",
+                table: "Batch",
+                columns: new[] { "Date", "Batch", "BatchStatusType" },
+                unique: true,
+                filter: "[BatchStatusType] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Batch_Entity",
                 table: "Batch",
                 column: "Entity");
@@ -510,6 +574,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                 column: "LastModifiedDate");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Creditor_CreditorAccount",
+                table: "Creditor",
+                column: "CreditorAccount");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Creditor_DatabaseConnectionSetupId",
                 table: "Creditor",
                 column: "DatabaseConnectionSetupId");
@@ -523,6 +592,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                 name: "IX_Creditor_LastModifiedDate",
                 table: "Creditor",
                 column: "LastModifiedDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Creditor_PayeeAccountName",
+                table: "Creditor",
+                column: "PayeeAccountName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DatabaseConnectionSetup_Code",
@@ -547,14 +621,20 @@ namespace CTI.FAS.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnrolledPayee_CompanyId",
+                name: "IX_EnrolledPayee_CompanyId_CreditorId",
                 table: "EnrolledPayee",
-                column: "CompanyId");
+                columns: new[] { "CompanyId", "CreditorId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_EnrolledPayee_CreditorId",
                 table: "EnrolledPayee",
                 column: "CreditorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EnrolledPayee_EnrollmentBatchId",
+                table: "EnrolledPayee",
+                column: "EnrollmentBatchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EnrolledPayee_Entity",
@@ -582,6 +662,23 @@ namespace CTI.FAS.Infrastructure.Migrations
                 column: "LastModifiedDate");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EnrollmentBatch_BatchStatusType",
+                table: "EnrollmentBatch",
+                column: "BatchStatusType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EnrollmentBatch_CompanyId",
+                table: "EnrollmentBatch",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EnrollmentBatch_Date_Batch_BatchStatusType",
+                table: "EnrollmentBatch",
+                columns: new[] { "Date", "Batch", "BatchStatusType" },
+                unique: true,
+                filter: "[BatchStatusType] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PaymentTransaction_BatchId",
                 table: "PaymentTransaction",
                 column: "BatchId");
@@ -595,6 +692,16 @@ namespace CTI.FAS.Infrastructure.Migrations
                 name: "IX_PaymentTransaction_Entity",
                 table: "PaymentTransaction",
                 column: "Entity");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentTransaction_IfcaBatchNumber",
+                table: "PaymentTransaction",
+                column: "IfcaBatchNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentTransaction_IfcaLineNumber",
+                table: "PaymentTransaction",
+                column: "IfcaLineNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PaymentTransaction_LastModifiedDate",
@@ -687,6 +794,9 @@ namespace CTI.FAS.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Creditor");
+
+            migrationBuilder.DropTable(
+                name: "EnrollmentBatch");
 
             migrationBuilder.DropTable(
                 name: "Company");

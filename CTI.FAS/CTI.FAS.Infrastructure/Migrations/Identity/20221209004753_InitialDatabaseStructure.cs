@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace CTI.FAS.Infrastructure.Migrations.Identity
 {
-    public partial class Initial : Migration
+    public partial class InitialDatabaseStructure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,6 +33,20 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Group",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactDetails = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Group", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,9 +121,11 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EntityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RegisteredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUnsucccessfulLogin = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PplusId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -132,6 +148,11 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                         name: "FK_AspNetUsers_Entities_EntityId",
                         column: x => x.EntityId,
                         principalTable: "Entities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
                         principalColumn: "Id");
                 });
 
@@ -315,6 +336,18 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_GroupId",
+                table: "AspNetUsers",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PplusId",
+                table: "AspNetUsers",
+                column: "PplusId",
+                unique: true,
+                filter: "[PplusId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -324,6 +357,12 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
             migrationBuilder.CreateIndex(
                 name: "IX_Entities_Name",
                 table: "Entities",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Group_Name",
+                table: "Group",
                 column: "Name",
                 unique: true);
 
@@ -377,6 +416,9 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
 
             migrationBuilder.DropTable(
                 name: "Entities");
+
+            migrationBuilder.DropTable(
+                name: "Group");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictApplications");

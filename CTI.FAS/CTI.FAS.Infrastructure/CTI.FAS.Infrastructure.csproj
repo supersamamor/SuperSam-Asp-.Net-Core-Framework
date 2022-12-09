@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CTI.Common.Utility\CTI.Common.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\Identity\" />
+  </ItemGroup>
+
 </Project>

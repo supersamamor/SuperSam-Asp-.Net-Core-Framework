@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.FAS.Infrastructure.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20221204110401_AddGroupTableFromIdentity")]
-    partial class AddGroupTableFromIdentity
+    [Migration("20221209004753_InitialDatabaseStructure")]
+    partial class InitialDatabaseStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,6 +84,9 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PplusId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("RegisteredDate")
                         .HasColumnType("datetime2");
 
@@ -111,6 +114,10 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("PplusId")
+                        .IsUnique()
+                        .HasFilter("[PplusId] IS NOT NULL");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -136,11 +143,22 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ContactDetails")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Group");
                 });

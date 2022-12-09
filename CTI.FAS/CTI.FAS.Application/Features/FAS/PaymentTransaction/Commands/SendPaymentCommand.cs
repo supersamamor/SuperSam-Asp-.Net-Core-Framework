@@ -60,7 +60,7 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         //Todo: Use Bulk Update
         foreach (var item in paymentTransactionToProcessList)
         {
-            var group = await _identityContext.Group.Where(l => l.Id == item.GroupCode).AsNoTracking().FirstOrDefaultAsync();
+            var group = await _identityContext.Group.Where(l => l.Id == item.GroupCode).AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken);
             var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"ESettle_{MakeValidFileName(item.DocumentNumber)}_{DateTime.Now:MMddyyyy_HHmm}.pdf",
                                                           GlobalConstants.UploadFilesPath, _staticFolderPath, "ESettle");
             var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
