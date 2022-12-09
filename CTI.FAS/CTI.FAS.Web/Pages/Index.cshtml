@@ -2,10 +2,11 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    var appName = Configuration.GetValue<string>("Application");
 }
 
 <div class="card">
     <div class="card-body">
-        @Localizer["Welcome to Financial Application System"]
+        @Localizer["Welcome to "] + @appName
     </div>
 </div>
