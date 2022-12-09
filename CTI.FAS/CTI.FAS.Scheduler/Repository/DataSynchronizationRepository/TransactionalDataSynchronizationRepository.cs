@@ -49,8 +49,8 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 									,GetDate()									 									
 									,@Entity	
 								FROM " + databaseConnectionSetup.DatabaseAndServerName + @".[cfs_user_entity] as a
-								LEFT JOIN [dbo].[Company]  as b on b.DatabaseConnectionSetupId='" + databaseConnectionSetup.Id + @"' And a.[entity_cd] = b.Code
-								LEFT JOIN [dbo].[UserEntity] as c on b.Id = c.CompanyId And a.[userid] = c.[PplusUserId]
+								INNER JOIN [dbo].[Company]  as b on b.DatabaseConnectionSetupId='" + databaseConnectionSetup.Id + @"' And a.[entity_cd] = b.Code
+								INNER JOIN [dbo].[UserEntity] as c on b.Id = c.CompanyId And a.[userid] = c.[PplusUserId]
 								Where c.id is null	
 								
 							--INSERT CREDITOR
@@ -84,7 +84,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								,GetDate()
 								,'System'	
 								,GetDate()		
-							    ,'" + DeliveryOptions.Delivery + @"',
+							    ,'" + DeliveryOptions.Delivery + @"'
 							  FROM " + databaseConnectionSetup.DatabaseAndServerName + @".[ap_creditor] as a
 							LEFT JOIN  " + databaseConnectionSetup.DatabaseAndServerName + @".[cf_business] as b on a.assoc_id = b.business_id
 							LEFT JOIN [dbo].Creditor as c on a.[creditor_acct] = c.CreditorAccount and c.DatabaseConnectionSetupId = '" + databaseConnectionSetup.Id + @"'
@@ -107,8 +107,8 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,[CreatedDate]
 								  ,[LastModifiedBy]
 							  	  ,[LastModifiedDate]
-								  ,[TextFileName]
-								  ,[PdfReport]								
+								  ,[PdfUrl]
+								  ,[PdfFilePath]								
 								  ,[GroupCode]
 								  ,[EmailSentCount]
 								  ,[IsForSending]
