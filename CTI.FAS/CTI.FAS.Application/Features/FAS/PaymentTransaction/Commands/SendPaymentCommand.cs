@@ -1,4 +1,5 @@
 using CTI.Common.Identity.Abstractions;
+using CTI.FAS.Application.Features.FAS.PaymentTransaction.Models;
 using CTI.FAS.Application.Services;
 using CTI.FAS.Core.Constants;
 using CTI.FAS.Core.FAS;
@@ -39,6 +40,8 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         var paymentStatus = PaymentTransactionStatus.Sent;
         var date = DateTime.Now.Date;
         var paymentTransactionToProcessList = await _context.PaymentTransaction
+            .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Creditor)
+            .Include(l => l.EnrolledPayee).ThenInclude(l => l!.Company)
             .Where(l => request.NewPaymentTransactionIdList.Contains(l.Id)).AsNoTracking().ToListAsync(cancellationToken);
         var batchCount = (await _context.Batch
                            .Where(l => l.Date == date && l.BatchStatusType == paymentStatus)
@@ -61,9 +64,10 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
         foreach (var item in paymentTransactionToProcessList)
         {
             var group = await _identityContext.Group.Where(l => l.Id == item.GroupCode).AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken);
-            var rotativaService = new RotativaService<string>("", "PaymentTransaction\\Pdf\\ESettle", $"ESettle_{MakeValidFileName(item.DocumentNumber)}_{DateTime.Now:MMddyyyy_HHmm}.pdf",
-                                                          GlobalConstants.UploadFilesPath, _staticFolderPath, "ESettle");
+            var rotativaService = new RotativaService<ESettleModel>(GeneratePdfModel(item, group), "PaymentTransaction\\Pdf\\ESettle", $"ESettle_{MakeValidFileName(item.DocumentNumber)}_{DateTime.Now:MMddyyyy_HHmm}.pdf",
+                                                          GlobalConstants.UploadFilesPath, _staticFolderPath, "ESettle", orientation: Rotativa.AspNetCore.Options.Orientation.Landscape);
             var rotativaDocument = await rotativaService.GeneratePDFAsync(request.PageContext);
+            item.EnrolledPayee = null;
             item.TagAsSent(batchToAdd.Id, _authenticatedUser?.UserId, rotativaDocument.FileUrl, rotativaDocument.CompleteFilePath);
         }
         _context.UpdateRange(paymentTransactionToProcessList);
@@ -72,8 +76,28 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
     }
     private static string MakeValidFileName(string name)
     {
-        string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+        string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(Path.GetInvalidFileNameChars()));
         string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
         return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
     }
+    private ESettleModel GeneratePdfModel(PaymentTransactionState paymentTransaction, Core.Identity.Group? group)
+    {
+        return new ESettleModel()
+        {
+            EntityName = paymentTransaction?.EnrolledPayee?.Company?.Name,
+            EntityAddress = paymentTransaction?.EnrolledPayee?.Company?.EntityAddress,
+            EntityTINNumber = paymentTransaction?.EnrolledPayee?.Company?.TINNo,
+            PayeeBankAccountNumber = paymentTransaction?.EnrolledPayee?.PayeeAccountNumber,
+            LogoFilePath = paymentTransaction?.EnrolledPayee?.Company?.ImageLogo,
+            PayeeName = paymentTransaction?.EnrolledPayee?.Creditor?.PayeeAccountName,
+            DocumentDescription = paymentTransaction?.DocumentDescription,
+            DocumentAmount = paymentTransaction!.DocumentAmount,
+            PayeeTINNumber = paymentTransaction?.EnrolledPayee?.Creditor?.PayeeAccountTIN,
+            DocumentDate = paymentTransaction!.DocumentDate,
+            DocumentNumber = paymentTransaction.DocumentNumber,
+            ProcessingGroupLocation = group.Location,
+            ProcessingGroupEmail = "sam.amor@corptech.it",
+        };
+    }
 }
+

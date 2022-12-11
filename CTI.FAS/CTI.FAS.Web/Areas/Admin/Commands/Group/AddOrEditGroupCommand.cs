@@ -13,6 +13,8 @@ public record AddOrEditGroupCommand : IRequest<Validation<Error, Core.Identity.G
 {
     public string? Id { get; set; }
     public string? Name { get; set; }
+    public string? Location { get; set; }
+    public string? ContactDetails { get; set; }
 }
 
 public class AddOrEditGroupCommandHandler : IRequestHandler<AddOrEditGroupCommand, Validation<Error, Core.Identity.Group>>

@@ -8,7 +8,7 @@ public record GroupViewModel
     [Required]
     public string Name { get; set; } = "";
     [Required]
-    public string Location { get; set; } = "";
+    public string? Location { get; set; } = "";
     [Required]
-    public string ContactDetails { get; set; } = "";
+    public string? ContactDetails { get; set; } = "";
 }
