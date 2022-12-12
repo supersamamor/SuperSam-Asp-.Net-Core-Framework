@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.FAS.Infrastructure.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20221209004753_InitialDatabaseStructure")]
-    partial class InitialDatabaseStructure
+    [Migration("20221212070003_InitialDbStructure")]
+    partial class InitialDbStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -142,9 +142,11 @@ namespace CTI.FAS.Infrastructure.Migrations.Identity
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ContactDetails")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

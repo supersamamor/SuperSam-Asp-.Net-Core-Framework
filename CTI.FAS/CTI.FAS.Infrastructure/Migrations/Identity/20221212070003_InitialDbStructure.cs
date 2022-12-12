@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CTI.FAS.Infrastructure.Migrations.Identity
 {
-    public partial class InitialDatabaseStructure : Migration
+    public partial class InitialDbStructure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
