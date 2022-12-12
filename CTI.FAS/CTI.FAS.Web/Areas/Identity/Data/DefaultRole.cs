@@ -35,6 +35,9 @@ public static class DefaultRole
         eSettleCheckPrepareRole = await roleManager.FindByNameAsync(eSettleCheckPrepareRole.Name);
         var eSettleCheckPrepareRolePermissionList = new List<string>()
         {
+            Permission.MasterFile.View,
+            Permission.Company.View,
+            Permission.Company.Edit,
             Permission.EnrolledPayee.View,
             Permission.EnrolledPayee.Create,
             Permission.EnrolledPayee.Edit,

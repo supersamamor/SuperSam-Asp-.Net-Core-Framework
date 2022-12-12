@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.FAS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221212022948_AddedBankTable")]
-    partial class AddedBankTable
+    [Migration("20221212053010_InitialDatabaseStructure")]
+    partial class InitialDatabaseStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

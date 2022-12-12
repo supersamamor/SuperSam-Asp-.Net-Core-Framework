@@ -195,15 +195,6 @@ namespace CTI.FAS.Infrastructure.Migrations
                     SubmitDeadline = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
                     EmailTelephoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ImageLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    BankCode = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    AccountType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    AccountNumber = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
-                    DeliveryCorporationBranch = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SignatoryType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Signatory1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Signatory2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -279,6 +270,38 @@ namespace CTI.FAS.Infrastructure.Migrations
                         name: "FK_Approval_ApprovalRecord_ApprovalRecordId",
                         column: x => x.ApprovalRecordId,
                         principalTable: "ApprovalRecord",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bank",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BankName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    BankCode = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AccountType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    AccountNumber = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
+                    DeliveryCorporationBranch = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SignatoryType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Signatory1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Signatory2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Entity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bank", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bank_Company_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Company",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -455,6 +478,7 @@ namespace CTI.FAS.Infrastructure.Migrations
                     AccountTransaction = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     EmailSendingError = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProcessedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Entity = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -464,6 +488,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PaymentTransaction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentTransaction_Bank_BankId",
+                        column: x => x.BankId,
+                        principalTable: "Bank",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PaymentTransaction_Batch_BatchId",
                         column: x => x.BatchId,
@@ -530,6 +559,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                 name: "IX_AuditLogs_PrimaryKey",
                 table: "AuditLogs",
                 column: "PrimaryKey");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bank_CompanyId",
+                table: "Bank",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Batch_BatchStatusType",
@@ -679,6 +713,11 @@ namespace CTI.FAS.Infrastructure.Migrations
                 filter: "[BatchStatusType] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentTransaction_BankId",
+                table: "PaymentTransaction",
+                column: "BankId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PaymentTransaction_BatchId",
                 table: "PaymentTransaction",
                 column: "BatchId");
@@ -779,6 +818,9 @@ namespace CTI.FAS.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ApprovalRecord");
+
+            migrationBuilder.DropTable(
+                name: "Bank");
 
             migrationBuilder.DropTable(
                 name: "Batch");
