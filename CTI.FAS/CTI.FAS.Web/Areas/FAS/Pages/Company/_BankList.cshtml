@@ -1,0 +1,83 @@
+@using Models
+@model CompanyViewModel
+<input type="hidden" id="BankCount" value="@Model?.BankList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Bank Details"]</span>
+        <a id="btnAddBank" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        <button class="cancel" type="button" id="btnRemoveBank" value="RemoveBank" style="display:none;"></button>
+    </h5>
+    <div class="card-body" style="overflow:auto;">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th style="display:none;"></th>
+                    <th>
+                        @Localizer["Bank"]
+                    </th>
+                    <th>
+                        @Localizer["Bank Code"]
+                    </th>
+                    <th>
+                        @Localizer["Account Name"]
+                    </th>
+                    <th>
+                        @Localizer["Account Type"]
+                    </th>
+                    <th>
+                        @Localizer["Account Number"]
+                    </th>
+
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.BankList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.BankList)
+                    {
+                        <tr>
+                            <td style="display:none;">
+                                <input type="hidden" name="BankList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="BankList[@counter].CompanyId" value="@item.CompanyId" />
+                            </td>
+                            <td>
+                                <input asp-for="@item.BankName" name="BankList[@counter].BankName" class="form-control" maxlength="255" />
+                                <span data-valmsg-for="BankList[@counter].BankName" asp-validation-for="@item.BankName" class="text-danger"></span>
+
+                            </td>
+                            <td>
+                                <input asp-for="@item.BankCode" name="BankList[@counter].BankCode" class="form-control" maxlength="12" />
+                                <span data-valmsg-for="BankList[@counter].BankCode" asp-validation-for="@item.BankCode" class="text-danger"></span>
+
+                            </td>
+                            <td>
+                                <input asp-for="@item.AccountName" name="BankList[@counter].AccountName" class="form-control" maxlength="255" />
+                                <span data-valmsg-for="BankList[@counter].AccountName" asp-validation-for="@item.AccountName" class="text-danger"></span>
+
+                            </td>
+                            <td>
+                                <input asp-for="@item.AccountType" name="BankList[@counter].AccountType" class="form-control" maxlength="30" />
+                                <span data-valmsg-for="BankList[@counter].AccountType" asp-validation-for="@item.AccountType" class="text-danger"></span>
+
+                            </td>
+                            <td>
+                                <input asp-for="@item.AccountNumber" name="BankList[@counter].AccountNumber" class="form-control" maxlength="14" />
+                                <span data-valmsg-for="BankList[@counter].AccountNumber" asp-validation-for="@item.AccountNumber" class="text-danger"></span>
+
+                            </td>
+
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveBankButton" title="@Localizer["Remove Bank"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

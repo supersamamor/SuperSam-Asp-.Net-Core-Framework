@@ -32,10 +32,21 @@ public class AddCompanyCommandHandler : BaseCommandHandler<ApplicationContext, C
 
 	public async Task<Validation<Error, CompanyState>> AddCompany(AddCompanyCommand request, CancellationToken cancellationToken)
 	{
-		CompanyState entity = Mapper.Map<CompanyState>(request);		
+		CompanyState entity = Mapper.Map<CompanyState>(request);
+		UpdateBankList(entity);
 		_ = await Context.AddAsync(entity, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, CompanyState>(entity);
+	}
+	private void UpdateBankList(CompanyState entity)
+	{
+		if (entity.BankList?.Count > 0)
+		{
+			foreach (var bank in entity.BankList!)
+			{
+				Context.Entry(bank).State = EntityState.Added;
+			}
+		}
 	}
 }
 

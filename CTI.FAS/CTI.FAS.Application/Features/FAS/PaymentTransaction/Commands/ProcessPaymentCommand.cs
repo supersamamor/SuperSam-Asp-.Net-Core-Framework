@@ -11,7 +11,7 @@ using static LanguageExt.Prelude;
 
 namespace CTI.FAS.Application.Features.FAS.PaymentTransaction.Commands;
 
-public record ProcessPaymentCommand(IList<string> NewPaymentTransactionIdList) : IRequest<string>;
+public record ProcessPaymentCommand(IList<string> NewPaymentTransactionIdList, string BankId) : IRequest<string>;
 
 public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentCommand, string>
 {
@@ -65,7 +65,7 @@ public class ProcessPaymentCommandHandler : IRequestHandler<ProcessPaymentComman
         foreach (var item in paymentTransactionToProcessList)
         {
             item.EnrolledPayee = null;
-            item.TagAsGeneratedAndSetBatch(batchToAdd.Id, groupId);
+            item.TagAsGeneratedAndSetBatch(batchToAdd.Id, groupId, request.BankId);
         }
         _context.UpdateRange(paymentTransactionToProcessList);
         _ = await _context.SaveChangesAsync(cancellationToken);

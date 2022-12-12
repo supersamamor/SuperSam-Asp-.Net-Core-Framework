@@ -95,7 +95,7 @@ public class SendPaymentCommandHandler : IRequestHandler<SendPaymentCommand, str
             PayeeTINNumber = paymentTransaction?.EnrolledPayee?.Creditor?.PayeeAccountTIN,
             DocumentDate = paymentTransaction!.DocumentDate,
             DocumentNumber = paymentTransaction.DocumentNumber,
-            ProcessingGroupLocation = group.Location,
+            ProcessingGroupLocation = group?.Location,
             ProcessingGroupEmail = "sam.amor@corptech.it",
         };
     }

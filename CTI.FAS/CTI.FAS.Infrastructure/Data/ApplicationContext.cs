@@ -30,6 +30,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 	public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
 	public DbSet<ApprovalRecordState> ApprovalRecord { get; set; } = default!;
 	public DbSet<EnrollmentBatchState> EnrollmentBatch { get; set; } = default!;
+	public DbSet<BankState> Bank { get; set; } = default!;
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
@@ -80,11 +81,11 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<CompanyState>().Property(e => e.TINNo).HasMaxLength(17);
 		modelBuilder.Entity<CompanyState>().Property(e => e.SubmitPlace).HasMaxLength(1000);
 		modelBuilder.Entity<CompanyState>().Property(e => e.EmailTelephoneNumber).HasMaxLength(50);
-		modelBuilder.Entity<CompanyState>().Property(e => e.BankName).HasMaxLength(255);
-		modelBuilder.Entity<CompanyState>().Property(e => e.BankCode).HasMaxLength(12);
-		modelBuilder.Entity<CompanyState>().Property(e => e.AccountName).HasMaxLength(255);
-		modelBuilder.Entity<CompanyState>().Property(e => e.AccountType).HasMaxLength(30);
-		modelBuilder.Entity<CompanyState>().Property(e => e.AccountNumber).HasMaxLength(14);
+		modelBuilder.Entity<BankState>().Property(e => e.BankName).HasMaxLength(255);
+		modelBuilder.Entity<BankState>().Property(e => e.BankCode).HasMaxLength(12);
+		modelBuilder.Entity<BankState>().Property(e => e.AccountName).HasMaxLength(255);
+		modelBuilder.Entity<BankState>().Property(e => e.AccountType).HasMaxLength(30);
+		modelBuilder.Entity<BankState>().Property(e => e.AccountNumber).HasMaxLength(14);
 		modelBuilder.Entity<ProjectState>().Property(e => e.Name).HasMaxLength(255);
 		modelBuilder.Entity<ProjectState>().Property(e => e.Code).HasMaxLength(20);
 		modelBuilder.Entity<ProjectState>().Property(e => e.ProjectAddress).HasMaxLength(255);
@@ -160,11 +161,12 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<BatchState>().HasIndex(e => new { e.BatchStatusType });
 		modelBuilder.Entity<EnrollmentBatchState>().HasIndex(e => new { e.BatchStatusType });
 		modelBuilder.Entity<CreditorState>().Property(e => e.DeliveryOptions).HasMaxLength(20);
-		modelBuilder.Entity<CompanyState>().Property(e => e.DeliveryCorporationBranch).HasMaxLength(50);
-		modelBuilder.Entity<CompanyState>().Property(e => e.SignatoryType).HasMaxLength(50);
-		modelBuilder.Entity<CompanyState>().Property(e => e.Signatory1).HasMaxLength(100);
-		modelBuilder.Entity<CompanyState>().Property(e => e.Signatory2).HasMaxLength(100);
-		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.DocumentDescription).HasMaxLength(1000);		
+		modelBuilder.Entity<BankState>().Property(e => e.DeliveryCorporationBranch).HasMaxLength(50);
+		modelBuilder.Entity<BankState>().Property(e => e.SignatoryType).HasMaxLength(50);
+		modelBuilder.Entity<BankState>().Property(e => e.Signatory1).HasMaxLength(100);
+		modelBuilder.Entity<BankState>().Property(e => e.Signatory2).HasMaxLength(100);
+		modelBuilder.Entity<PaymentTransactionState>().Property(e => e.DocumentDescription).HasMaxLength(1000);
+		modelBuilder.Entity<CompanyState>().HasMany(t => t.BankList).WithOne(l => l.Company).HasForeignKey(t => t.CompanyId);
 		base.OnModelCreating(modelBuilder);
     }
 }

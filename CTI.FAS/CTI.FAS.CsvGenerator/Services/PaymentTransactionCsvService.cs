@@ -67,11 +67,11 @@ namespace CTI.FAS.CsvGenerator.Services
                 var creditorAccount = SanitizeCreditorCode(item.EnrolledPayee!.Creditor!.CreditorAccount);
                 var checkDate = item.TransmissionDate != null ? ((DateTime)item.TransmissionDate).ToString("MM/dd/yyyy").Trim() : "";
                 var checkAmount = item.DocumentAmount;
-                var signatories = SanitizeForCsv(item.EnrolledPayee.Company?.SignatoryType);
-                var signatoryName1 = SanitizeForCsv(item.EnrolledPayee.Company?.Signatory1);
-                var signatoryName2 = SanitizeForCsv(item.EnrolledPayee.Company?.Signatory2);
+                var signatories = SanitizeForCsv(item.Bank?.SignatoryType);
+                var signatoryName1 = SanitizeForCsv(item.Bank?.Signatory1);
+                var signatoryName2 = SanitizeForCsv(item.Bank?.Signatory2);
                 var signatoryName3 = "";
-                var deliveryCorpBranch = SanitizeForCsvToUpper(item.EnrolledPayee.Company?.DeliveryCorporationBranch);
+                var deliveryCorpBranch = SanitizeForCsvToUpper(item.Bank?.DeliveryCorporationBranch);
                 var newLine = String.Format("{0,3},{1," + item.EnrolledPayee!.Creditor!.DeliveryOptions!.Length + "},{2," + pickupStore.Length + "}," +
                                           "{3," + pickupRep.Length + "},{4," + authorizedRepName.Length + "},{5," + authorizedRepID.Length + "}," +
                                           "{6," + deliveryCorpBranch.Length + "},{7," + checkDate.Length + "},{8," + checkAmount.ToString().Length + "}," +

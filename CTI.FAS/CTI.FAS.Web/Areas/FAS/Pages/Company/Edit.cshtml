@@ -22,7 +22,7 @@
 </a>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-
+<partial name="_BankListValidationPartial" model="@Model.Company" />
 
 <script asp-add-nonce>
     $(document).ready(function () {

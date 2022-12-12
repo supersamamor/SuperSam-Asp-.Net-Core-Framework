@@ -19,13 +19,13 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
     public PaymentTransactionFilterModel Filter { get; set; } = new();
     public PaymentTransactionTabNavigationPartial PaymentTransactionTabNavigation { get; set; } = new() { TabName = Constants.PaymentTransactionTabNavigation.New };
 
-    public async Task<IActionResult> OnGet(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? downloadUrl)
+    public async Task<IActionResult> OnGet(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? bankId, string? downloadUrl)
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        return await FetchTransactionDetails(handler, entity, paymentType, accountTransaction, dateFrom, dateTo, batchId, downloadUrl);
+        return await FetchTransactionDetails(handler, entity, paymentType, accountTransaction, dateFrom, dateTo, batchId, bankId, downloadUrl);
     }
 
     public async Task<IActionResult> OnPost(string? handler)
@@ -40,7 +40,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         }       
         return Page();
     }
-    private async Task<IActionResult> FetchTransactionDetails(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? downloadUrl)
+    private async Task<IActionResult> FetchTransactionDetails(string? handler, string? entity, string? paymentType, string? accountTransaction, DateTime? dateFrom, DateTime? dateTo, string? batchId, string? bankId, string? downloadUrl)
     {
         ModelState.Clear();
         Filter.ShowBatchFilter = false;
@@ -56,6 +56,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         Filter.DateFrom = dateFrom;
         Filter.DateTo = dateTo;
         Filter.BatchId = batchId;
+        Filter.BankId = bankId;
         Filter.DownloadUrl = downloadUrl;
         var query = new GetPaymentTransactionWithCustomFilterQuery()
         {
@@ -101,7 +102,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
         }
         try
         {
-            var downloadUrl = await Mediatr.Send(new ProcessPaymentCommand(selectedNewPaymentTransactionList));
+            var downloadUrl = await Mediatr.Send(new ProcessPaymentCommand(selectedNewPaymentTransactionList, Filter.BankId!));
             NotyfService.Success(Localizer["Generation success."]);
             return RedirectToPage("NewTransactions", new
             {
@@ -113,6 +114,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
                 Filter.DateTo,
                 Filter.BatchId,
                 Filter.ShowBatchFilter,
+                Filter.BankId,
             });
         }
         catch (Exception ex)

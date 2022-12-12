@@ -6,7 +6,9 @@ namespace CTI.FAS.Web.Areas.FAS.Models
     public class PaymentTransactionFilterModel
     {       
         [Required]
-        public string? Entity { get; set; }      
+        public string? Entity { get; set; }
+        [Required]
+        public string? BankId { get; set; }
         [Required]
         public string? PaymentType { get; set; }       
         [Required]

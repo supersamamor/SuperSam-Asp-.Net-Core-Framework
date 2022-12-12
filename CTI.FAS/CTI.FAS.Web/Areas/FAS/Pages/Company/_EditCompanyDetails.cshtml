@@ -93,70 +93,7 @@
             }
             <span asp-validation-for="@Model.ImageLogo" class="text-danger"></span>
         </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.BankName" class="form-label "><strong>@Localizer["Bank"] :</strong></label>
-            <input asp-for="@Model.BankName" class="form-control" maxlength="255" />
-            <span asp-validation-for="@Model.BankName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.BankCode" class="form-label "><strong>@Localizer["Bank Code"] :</strong></label>
-            <input asp-for="@Model.BankCode" class="form-control" maxlength="12" />
-            <span asp-validation-for="@Model.BankCode" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.AccountName" class="form-label "><strong>@Localizer["Account Name"] :</strong></label>
-            <input asp-for="@Model.AccountName" class="form-control" maxlength="255" />
-            <span asp-validation-for="@Model.AccountName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.AccountType" class="form-label "><strong>@Localizer["Account Type"] :</strong></label>
-            <select asp-for="@Model.AccountType" class="form-control" asp-items="@(dropdownService.AccountTypeList())"><option value="">- Select Account Type -</option></select>
-            <span asp-validation-for="@Model.AccountType" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.AccountNumber" class="form-label "><strong>@Localizer["Account Number"] :</strong></label>
-            <input asp-for="@Model.AccountNumber" class="form-control" maxlength="14" />
-            <span asp-validation-for="@Model.AccountNumber" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.DeliveryCorporationBranch" class="form-label fieldrequired"><strong>@Localizer["Delivery Corporation Branch"] :</strong></label>
-            <input asp-for="@Model.DeliveryCorporationBranch" class="form-control" />
-            <span asp-validation-for="@Model.DeliveryCorporationBranch" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.SignatoryType" class="form-label fieldrequired"><strong>@Localizer["Signatory Type"] :</strong></label>
-            <select asp-for="@Model.SignatoryType" class="form-control" asp-items="@(dropdownService.SignatoryTypeList())"><option value="">- Select Signatory Type -</option></select>
-            <span asp-validation-for="@Model.SignatoryType" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.Signatory1" class="form-label "><strong>@Localizer["Signatory 1"] :</strong></label>
-            <input asp-for="@Model.Signatory1" class="form-control" />
-            <span asp-validation-for="@Model.Signatory1" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col">
-        <div class="mb-3">
-            <label asp-for="@Model.Signatory2" class="form-label "><strong>@Localizer["Signatory 2"] :</strong></label>
-            <input asp-for="@Model.Signatory2" class="form-control" />
-            <span asp-validation-for="@Model.Signatory2" class="text-danger"></span>
-        </div>
-    </div>
+    </div>   
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.IsDisabled" class="form-label "><strong>@Localizer["Disabled"] :</strong></label>

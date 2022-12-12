@@ -38,11 +38,6 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.SubmitPlace,
                 SubmitDeadline = e.SubmitDeadline?.ToString("##,##.00"),
                 e.EmailTelephoneNumber,
-                e.BankName,
-                e.BankCode,
-                e.AccountNumber,
-
-
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

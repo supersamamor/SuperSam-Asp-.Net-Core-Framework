@@ -29,12 +29,15 @@ public record PaymentTransactionState : BaseEntity
     public BatchState? Batch { get; init; }
     public string? EmailSendingError { get; private set; } = "";
     public string? ProcessedByUserId { get; private set; } = "";
-    public void TagAsGeneratedAndSetBatch(string batchId, string? groupId)
+    public string? BankId { get; private set; }
+    public BankState? Bank { get; init; }
+    public void TagAsGeneratedAndSetBatch(string batchId, string? groupId, string? bankId)
     {
         this.Status = PaymentTransactionStatus.Generated;
         this.BatchId = batchId;
         this.TransmissionDate = DateTime.Now.Date;
         this.GroupCode = groupId;
+        this.BankId = bankId;
     }
     public void TagAsSent(string batchId, string? userId, string pdfUrl, string pdfFilePath)
     {

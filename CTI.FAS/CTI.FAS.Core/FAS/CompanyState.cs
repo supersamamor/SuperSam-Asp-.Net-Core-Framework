@@ -15,17 +15,9 @@ public record CompanyState : BaseEntity
     public string? SubmitPlace { get; init; }
     public decimal? SubmitDeadline { get; init; }
     public string? EmailTelephoneNumber { get; init; }
-    public string? ImageLogo { get; init; }
-    public string? BankName { get; init; }
-    public string? BankCode { get; init; }
-    public string? AccountName { get; init; }
-    public string? AccountType { get; init; }
-    public string? AccountNumber { get; init; }
-    public string? DeliveryCorporationBranch { get; init; }
-    public string? SignatoryType { get; init; }
-    public string? Signatory1 { get; init; }
-    public string? Signatory2 { get; init; }
+    public string? ImageLogo { get; init; } 
     public DatabaseConnectionSetupState? DatabaseConnectionSetup { get; init; }
+    public IList<BankState>? BankList { get; set; }
     public IList<ProjectState>? ProjectList { get; set; }
     public IList<UserEntityState>? UserEntityList { get; set; }
     public IList<EnrolledPayeeState>? EnrolledPayeeList { get; set; }
