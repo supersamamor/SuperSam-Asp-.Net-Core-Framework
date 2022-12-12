@@ -57,7 +57,7 @@
         var table = $('#company').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 10, 'desc' ]],
+            order: [[ 7, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Company/Index", new { area = "FAS", handler = "ListAll" })',
