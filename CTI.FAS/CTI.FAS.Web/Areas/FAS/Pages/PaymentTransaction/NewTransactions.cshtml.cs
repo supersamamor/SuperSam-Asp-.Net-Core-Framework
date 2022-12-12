@@ -44,6 +44,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
     {
         ModelState.Clear();
         Filter.ShowBatchFilter = false;
+        Filter.ShowBankFilter = true;
         Filter.ProccessButtonLabel = "Generate";
         if (string.IsNullOrEmpty(entity))
         {
@@ -82,6 +83,12 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
                     NotyfService.Warning(Localizer["Invalid date filters. Check `date from` and `date to` fields."]);
                     return Page();
                 }
+
+                if (Filter.ShowBankFilter && string.IsNullOrEmpty(bankId))
+                {
+                    NotyfService.Warning(Localizer["Please select a bank details."]);
+                    return Page();
+                }
             }
         }
         if (!string.IsNullOrEmpty(batchId) || dateFrom != null || dateFrom != null)
@@ -114,6 +121,7 @@ public class NewTransactionsModel : BasePageModel<NewTransactionsModel>
                 Filter.DateTo,
                 Filter.BatchId,
                 Filter.ShowBatchFilter,
+                Filter.ShowBankFilter,
                 Filter.BankId,
             });
         }

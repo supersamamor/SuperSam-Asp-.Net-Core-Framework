@@ -39,6 +39,26 @@ namespace CTI.FAS.Web.Service
                 return new SelectList(new List<SelectListItem>(), "Value", "Text");
             }
         }
+        public SelectList GetBankList(string? id)
+        {
+            var bankList = _context.Bank.Where(e => e.Id == id)
+             .Include(l => l.Company).ToList();
+            if (bankList.Count > 0)
+            {
+                return new SelectList(bankList.ConvertAll(a =>
+                {
+                    return new SelectListItem()
+                    {
+                        Value = a.Id,
+                        Text = a.DisplayName,
+                    };
+                }), "Value", "Text", id);
+            }
+            else
+            {
+                return new SelectList(new List<SelectListItem>(), "Value", "Text");
+            }
+        }
         public SelectList GetCreditorList(string id)
         {
             return _context.GetSingle<CreditorState>(e => e.Id == id, new()).Result.Match(

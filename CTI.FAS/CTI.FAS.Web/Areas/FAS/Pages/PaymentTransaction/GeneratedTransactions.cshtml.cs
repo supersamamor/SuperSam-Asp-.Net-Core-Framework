@@ -48,6 +48,7 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
     {       
         ModelState.Clear();
         Filter.ShowBatchFilter = true;
+        Filter.ShowBankFilter = false;
         Filter.ProccessButtonLabel = "Send";
         if (string.IsNullOrEmpty(entity))
         {
@@ -117,6 +118,7 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
                 Filter.DateTo,
                 Filter.BatchId,
                 Filter.ShowBatchFilter,
+                Filter.ShowBankFilter,
             });
         }
         catch (Exception ex)
@@ -148,6 +150,7 @@ public class GeneratedTransactionsModel : BasePageModel<GeneratedTransactionsMod
                 Filter.DateTo,
                 Filter.BatchId,
                 Filter.ShowBatchFilter,
+                Filter.ShowBankFilter,
             });
         }
         catch (Exception ex)

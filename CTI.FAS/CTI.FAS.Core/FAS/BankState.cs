@@ -13,4 +13,11 @@ public record BankState : BaseEntity
 	public string? Signatory1 { get; init; }
 	public string? Signatory2 { get; init; }
 	public CompanyState? Company { get; init; }
+	public string? DisplayName
+	{
+		get
+		{ 
+			return this.BankName + " - " + this.AccountNumber;
+		}
+	}
 }

@@ -3,6 +3,8 @@
 <form role="search" method="get" asp-page-handler="Filter">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <span asp-validation-for="@Model.Entity" class="text-danger" style="display:block;"></span>
+    <span asp-validation-for="@Model.BankId" class="text-danger" style="display:block;"></span>
+    <span asp-validation-for="@Model.BatchId" class="text-danger" style="display:block;"></span>
     <span asp-validation-for="@Model.PaymentType" class="text-danger" style="display:block;"></span>
     <span asp-validation-for="@Model.AccountTransaction" class="text-danger" style="display:block;"></span>
     <span asp-validation-for="@Model.DateFrom" class="text-danger" style="display:block;"></span>
@@ -18,6 +20,18 @@
                         <option value="">- Select Entity -</option>
                     </select>
                 </div>
+                @if (Model.ShowBankFilter)
+                {
+                    <div style="margin-right:10px;">
+                        <select asp-for="@Model.BankId" class="form-control me-2" asp-items="@(dropdownService.GetBankList(Model.BankId))" style="width:150px;">
+                            <option value="">- Select Bank -</option>
+                        </select>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="@Model.BankId">
+                }
                 @if (Model.ShowBatchFilter)
                 {
                     <div>

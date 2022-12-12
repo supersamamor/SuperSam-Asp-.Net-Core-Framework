@@ -40,6 +40,7 @@ public class SentTransactionsModel : BasePageModel<SentTransactionsModel>
     {
         ModelState.Clear();
         Filter.ShowBatchFilter = true;
+        Filter.ShowBankFilter = false;
         Filter.ProccessButtonLabel = "";
         if (string.IsNullOrEmpty(entity))
         {

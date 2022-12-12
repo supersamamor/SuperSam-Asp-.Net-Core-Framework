@@ -160,6 +160,17 @@
             return this;
         };
         $("#BatchId").batchSelect();
+        $.fn.bankSelect = function() {
+            this.filter("select").each(function() {
+                $(this).ajaxSelect({
+                    ajax: {
+                        url: '@Url.Page("/Bank/Dropdown", new { area = "FAS", handler = "Select2Data" })' + '&companyId=' + $('#Entity').val()
+                    }
+                });
+            });
+            return this;
+        };
+        $("#BankId").bankSelect();
         $('#btnTriggerProcess').on( 'click', function () {
             $('#btnGenerate').click();
         });
