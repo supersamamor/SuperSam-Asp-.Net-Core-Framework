@@ -38,31 +38,28 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddUserEntity")
+		if (AsyncAction == "AddBank")
 		{
-			return AddUserEntity();
+			return AddBank();
 		}
-		if (AsyncAction == "RemoveUserEntity")
+		if (AsyncAction == "RemoveBank")
 		{
-			return RemoveUserEntity();
+			return RemoveBank();
 		}
-		
-		
-        return Partial("_InputFieldsPartial", Company);
+
+		return Partial("_InputFieldsPartial", Company);
     }
-	
-	private IActionResult AddUserEntity()
+	private IActionResult AddBank()
 	{
 		ModelState.Clear();
-		if (Company!.UserEntityList == null) { Company!.UserEntityList = new List<UserEntityViewModel>(); }
-		Company!.UserEntityList!.Add(new UserEntityViewModel() { CompanyId = Company.Id });
+		if (Company!.BankList == null) { Company!.BankList = new List<BankViewModel>(); }
+		Company!.BankList!.Add(new BankViewModel() { CompanyId = Company.Id });
 		return Partial("_InputFieldsPartial", Company);
 	}
-	private IActionResult RemoveUserEntity()
+	private IActionResult RemoveBank()
 	{
 		ModelState.Clear();
-		Company.UserEntityList = Company!.UserEntityList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		Company.BankList = Company!.BankList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", Company);
 	}
-	
 }

@@ -46,7 +46,17 @@
 			};
 			$("#DatabaseConnectionSetupId").databaseconnectionsetupSelect();
 
+            $.InitializeBankFieldValidations($('#BankCount').val());
+			$('.RemoveBankButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveBank');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#company-form', InitializeForm);
+			});
 
+			$('#btnAddBank').on( 'click', function () {
+				$('#AsyncAction').val('AddBank');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#company-form', InitializeForm);
+			});
         }
         InitializeForm();
     });

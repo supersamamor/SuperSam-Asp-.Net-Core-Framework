@@ -18,7 +18,7 @@ public class GetCompanyByIdQueryHandler : BaseQueryByIdHandler<ApplicationContex
 	public override async Task<Option<CompanyState>> Handle(GetCompanyByIdQuery request, CancellationToken cancellationToken = default)
 	{
 		return await Context.Company.Include(l=>l.DatabaseConnectionSetup)
-			.Include(l=>l.UserEntityList)
+			.Include(l=>l.BankList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

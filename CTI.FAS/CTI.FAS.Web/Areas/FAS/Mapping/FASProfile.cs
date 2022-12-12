@@ -75,5 +75,6 @@ public class FASProfile : Profile
         CreateMap<PaymentTransactionState, NewPaymentTransactionViewModel>()
             .ForPath(e => e.ForeignKeyBatch, o => o.MapFrom(s => s.Batch == null ? "" : s.Batch!.Date.ToString("yyyyMMdd") + "-" + s.Batch!.Batch))
             .ForPath(e => e.ForeignKeyEnrolledPayee, o => o.MapFrom(s => s.EnrolledPayee!.Creditor!.CreditorDisplayDescription));
+        CreateMap<BankViewModel, BankState>().ReverseMap();
     }
 }

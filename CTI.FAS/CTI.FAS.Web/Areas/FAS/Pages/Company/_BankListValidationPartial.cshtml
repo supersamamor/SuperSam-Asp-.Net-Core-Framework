@@ -7,12 +7,15 @@
 			let reqs = [];			
 			for (let idx = 0; idx < count; idx++) {
 				reqs.push({name: "BankList[" + idx + "].CompanyId", el: "Input", minlength:0, maxlength:0, isrequired: true, description: "Entity"});
-				reqs.push({name: "BankList[" + idx + "].BankName", el: "Input", minlength:0, maxlength:255, isrequired: false, description: "Bank"});
+				reqs.push({name: "BankList[" + idx + "].BankName", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "Bank"});
 				reqs.push({name: "BankList[" + idx + "].BankCode", el: "Input", minlength:0, maxlength:12, isrequired: false, description: "Bank Code"});
 				reqs.push({name: "BankList[" + idx + "].AccountName", el: "Input", minlength:0, maxlength:255, isrequired: false, description: "Account Name"});
-				reqs.push({name: "BankList[" + idx + "].AccountType", el: "Input", minlength:0, maxlength:30, isrequired: false, description: "Account Type"});
+				reqs.push({name: "BankList[" + idx + "].AccountType", el: "Input", minlength:0, maxlength:30, isrequired: true, description: "Account Type"});
 				reqs.push({name: "BankList[" + idx + "].AccountNumber", el: "Input", minlength:0, maxlength:14, isrequired: false, description: "Account Number"});
-				
+				reqs.push({name: "BankList[" + idx + "].DeliveryCorporationBranch", el: "Input", minlength:0, maxlength:14, isrequired: true, description: "Delivery Corporation Branch"});
+				reqs.push({name: "BankList[" + idx + "].SignatoryType", el: "Input", minlength:0, maxlength:14, isrequired: true, description: "Signatory Type"});
+				reqs.push({name: "BankList[" + idx + "].Signatory1", el: "Input", minlength:0, maxlength:14, isrequired: false, description: "Signatory 1"});
+				reqs.push({name: "BankList[" + idx + "].Signatory2", el: "Input", minlength:0, maxlength:14, isrequired: false, description: "Signatory 2"});
 			}
 			let validator = $("#company-form").validate();
 			for (let j in reqs)
