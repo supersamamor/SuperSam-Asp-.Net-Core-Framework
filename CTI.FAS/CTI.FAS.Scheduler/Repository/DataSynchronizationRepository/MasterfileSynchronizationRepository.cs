@@ -72,10 +72,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,[Entity]
 								  ,SubmitPlace
 								  ,SubmitDeadline
-								  ,EmailTelephoneNumber
-								  ,BankName
-								  ,BankCode
-								  ,AccountNumber
+								  ,EmailTelephoneNumber								  
 								 )
 								Select Distinct 
 								   NewID()
@@ -91,10 +88,7 @@ namespace CTI.FAS.Scheduler.Repository.DataSynchronizationRepository
 								  ,@Entity
 								  ,''
 								  ,1
-								  ,''
-								  ,''
-								  ,''
-								  ,''								 
+								  ,''																 
 								From #EntityToUpdateAndInsert as a
 								LEFT JOIN [dbo].[Company]  as b on b.DatabaseConnectionSetupId='" + databaseConnectionSetup.Id + @"' And a.[entity_cd] = b.Code
 								Where b.Id is null
