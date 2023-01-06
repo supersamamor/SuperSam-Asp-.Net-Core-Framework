@@ -107,7 +107,7 @@ public static class DbContextExtensions
     public static async Task<bool> Exists<T>(this DbContext context, Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false, CancellationToken cancellationToken = default)
         where T : class
     {
-        var query = ignoreQueryFilters ? context.Set<T>() : context.Set<T>().IgnoreQueryFilters();
+        var query = ignoreQueryFilters ? context.Set<T>().IgnoreQueryFilters() : context.Set<T>();
         return await query.AnyAsync(predicate, cancellationToken);
     }
 
