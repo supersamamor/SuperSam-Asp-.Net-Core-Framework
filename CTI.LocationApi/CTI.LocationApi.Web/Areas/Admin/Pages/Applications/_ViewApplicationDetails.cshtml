@@ -1,0 +1,35 @@
+@using Models
+@model ApplicationViewModel
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ClientId" class="form-label"><strong>Client Id :</strong></label>
+            <input asp-for="@Model.ClientId" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.DisplayName" class="form-label fieldrequired"><strong>Name :</strong></label>
+            <input asp-for="@Model.DisplayName" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.RedirectUri" class="form-label fieldrequired"><strong>Redirect URI :</strong></label>
+            <input asp-for="@Model.RedirectUri" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Scopes" class="form-label fieldrequired"><strong>Scopes :</strong></label>
+            <input asp-for="@Model.Scopes" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.EntityId" class="form-label fieldrequired"><strong>Entity :</strong></label>
+            <input asp-for="@Model.Entity" class="form-control" readonly />
+        </div>
+    </div>
+</div>
+

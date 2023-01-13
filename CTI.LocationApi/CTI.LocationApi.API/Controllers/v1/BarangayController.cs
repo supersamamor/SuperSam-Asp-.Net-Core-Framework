@@ -1,0 +1,56 @@
+using CTI.Common.Utility.Models;
+using CTI.LocationApi.Application.Features.LocationApi.Barangay.Commands;
+using CTI.LocationApi.Application.Features.LocationApi.Barangay.Queries;
+using CTI.LocationApi.Core.LocationApi;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using CTI.Common.API.Controllers;
+
+namespace CTI.LocationApi.API.Controllers.v1;
+
+[ApiVersion("1.0")]
+public class BarangayController : BaseApiController<BarangayController>
+{
+    [Authorize(Policy = Permission.Barangay.View)]
+    [HttpGet]
+    public async Task<ActionResult<PagedListResponse<BarangayState>>> GetAsync([FromQuery] GetBarangayQuery query) =>
+        Ok(await Mediator.Send(query));
+
+    [Authorize(Policy = Permission.Barangay.View)]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<BarangayState>> GetAsync(string id) =>
+        await ToActionResult(async () => await Mediator.Send(new GetBarangayByIdQuery(id)));
+
+    [Authorize(Policy = Permission.Barangay.Create)]
+    [HttpPost]
+    public async Task<ActionResult<BarangayState>> PostAsync([FromBody] BarangayViewModel request) =>
+        await ToActionResult(async () => await Mediator.Send(Mapper.Map<AddBarangayCommand>(request)));
+
+    [Authorize(Policy = Permission.Barangay.Edit)]
+    [HttpPut("{id}")]
+    public async Task<ActionResult<BarangayState>> PutAsync(string id, [FromBody] BarangayViewModel request)
+    {
+        var command = Mapper.Map<EditBarangayCommand>(request);
+        return await ToActionResult(async () => await Mediator.Send(command with { Id = id }));
+    }
+
+    [Authorize(Policy = Permission.Barangay.Delete)]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<BarangayState>> DeleteAsync(string id) =>
+        await ToActionResult(async () => await Mediator.Send(new DeleteBarangayCommand { Id = id }));
+}
+
+public record BarangayViewModel
+{
+    [Required]
+
+    public string CityId { get; set; } = "";
+    [Required]
+    [StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string Code { get; set; } = "";
+    [Required]
+    [StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string Name { get; set; } = "";
+
+}
