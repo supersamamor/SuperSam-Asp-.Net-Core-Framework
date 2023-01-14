@@ -12,10 +12,10 @@ namespace CTI.LocationApi.API.Controllers.v1;
 [ApiVersion("1.0")]
 public class ProvinceController : BaseApiController<ProvinceController>
 {
-    [Authorize(Policy = Permission.Province.View)]
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<PagedListResponse<ProvinceState>>> GetAsync([FromQuery] GetProvinceQuery query) =>
-        Ok(await Mediator.Send(query));
+          Ok(await Mediator.Send(query));
 
     [Authorize(Policy = Permission.Province.View)]
     [HttpGet("{id}")]
@@ -44,13 +44,13 @@ public class ProvinceController : BaseApiController<ProvinceController>
 public record ProvinceViewModel
 {
     [Required]
-	
-	public string RegionId { get;set; } = "";
-	[Required]
-	[StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Code { get;set; } = "";
-	[Required]
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string Name { get;set; } = "";
-	   
+
+    public string RegionId { get; set; } = "";
+    [Required]
+    [StringLength(50, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string Code { get; set; } = "";
+    [Required]
+    [StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string Name { get; set; } = "";
+
 }
