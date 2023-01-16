@@ -9,7 +9,8 @@ public record CountryState : BaseEntity
 	public string Code { get; init; } = "";
 	public string Citizenship { get; set; } = "";
 	public string AreaCode { get; set; } = "";
-
+	public string CountryCode { get; set; } = "";
+	public int NumberLength { get; set; }
 	public IList<RegionState>? RegionList { get; set; }
 	
 }

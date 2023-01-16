@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.LocationApi.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230112072546_InitialDatabaseStructure")]
-    partial class InitialDatabaseStructure
+    [Migration("20230116070029_InitialDatabaseSetup")]
+    partial class InitialDatabaseSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -388,10 +388,22 @@ namespace CTI.LocationApi.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AreaCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Citizenship")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -412,6 +424,9 @@ namespace CTI.LocationApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("NumberLength")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
