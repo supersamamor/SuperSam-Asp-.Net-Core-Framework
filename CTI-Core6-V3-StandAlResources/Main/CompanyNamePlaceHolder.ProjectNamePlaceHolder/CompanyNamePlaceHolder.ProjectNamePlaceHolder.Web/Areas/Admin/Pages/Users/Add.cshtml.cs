@@ -66,7 +66,7 @@ public class AddModel : BasePageModel<AddModel>
             fail: errors =>
             {
                 Logger.LogError("Error in OnPost. Error: {Errors}", string.Join(",", errors));
-                ModelState.AddModelError("", Localizer[$"Something went wrong. Please contact the system administrator."] + $" TraceId = {HttpContext.TraceIdentifier}");
+			    errors.Iter(error => ModelState.AddModelError("", error.ToString()));
                 return Page();
             });
     }
