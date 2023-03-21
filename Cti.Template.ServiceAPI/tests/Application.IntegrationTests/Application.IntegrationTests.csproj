@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>CHANGE_TO_APP_NAME.Services.Application.IntegrationTests</RootNamespace>
+    <AssemblyName>CHANGE_TO_APP_NAME.Services.Application.IntegrationTests</AssemblyName>
+    
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TodoItems\Commands\CreateTodoItemTests.cs" />
+    <Compile Remove="TodoItems\Commands\DeleteTodoItemTests.cs" />
+    <Compile Remove="TodoItems\Commands\UpdateTodoItemDetailTests.cs" />
+    <Compile Remove="TodoItems\Commands\UpdateTodoItemTests.cs" />
+    <Compile Remove="TodoLists\Commands\CreateTodoListTests.cs" />
+    <Compile Remove="TodoLists\Commands\DeleteTodoListTests.cs" />
+    <Compile Remove="TodoLists\Commands\PurgeTodoListsTests.cs" />
+    <Compile Remove="TodoLists\Commands\UpdateTodoListTests.cs" />
+    <Compile Remove="TodoLists\Queries\GetTodosTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Moq" Version="4.15.1" />
+    <PackageReference Include="Respawn" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Service.API\Service.API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TodoItems\Commands\" />
+    <Folder Include="TodoLists\Commands\" />
+    <Folder Include="TodoLists\Queries\" />
+  </ItemGroup>
+
+</Project>
