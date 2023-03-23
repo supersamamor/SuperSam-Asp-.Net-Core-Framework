@@ -9,54 +9,13 @@ namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Configurati
     {
         public void Configure(EntityTypeBuilder<MainModulePlaceHolder> builder)
         {
-            builder.ToTable("immMainModulePlaceHolder");
+            builder.ToTable("MainModulePlaceHolder");
 
-            builder.HasKey(t => t.ReferenceObject);
+            builder.HasKey(t => t.PrimaryKey);
 
-            builder.Property(t => t.ReferenceObject)
+            builder.Property(t => t.Code)
                 .IsRequired()
                 .HasMaxLength(20);
-
-            builder.Property(t => t.ProjectCode)
-                .IsRequired()
-                .HasMaxLength(10);
-
-            builder.Property(t => t.PhaseBuildingCode)
-                .HasMaxLength(10);
-
-            builder.Property(t => t.BlockFloorClusterCode)
-                .HasMaxLength(10);
-
-            builder.Property(t => t.LotUnitShareNumber)
-                .HasMaxLength(50);
-
-            builder.Property(t => t.MainModulePlaceHolderNumber)
-                .HasMaxLength(10);
-
-            builder.Property(t => t.CompanyCode)
-                .IsRequired()
-                .HasMaxLength(4);
-
-            builder.Property(t => t.UnitClassificationCode)
-                .HasMaxLength(4);
-
-            builder.Property(t => t.MarketProductTypeCode)
-                .HasMaxLength(4);
-
-            builder.Property(t => t.MarketProductID)
-                .HasMaxLength(5);
-
-            builder.Property(t => t.MarketProductUseCode)
-                .HasMaxLength(4);
-
-            builder.Property(t => t.MarketProductSubTypeCode)
-                .HasMaxLength(4);
-
-            builder.Property(t => t.MarketProductAttributeCode)
-                .HasMaxLength(4);
-
-            builder.Property(t => t.ParkingTypeCode)
-                .HasMaxLength(4);
 
             builder.Property(t => t.DateCreated)
                 .IsRequired();
@@ -68,7 +27,7 @@ namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Configurati
             builder.Property(t => t.ModifiedBy)
                 .HasMaxLength(50);
 
-            builder.AddColumnPrefix("inv");
+            builder.AddColumnPrefix("prefix");
         }
     }
 }
