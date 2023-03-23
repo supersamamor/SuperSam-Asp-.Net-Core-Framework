@@ -9,25 +9,13 @@ namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Configurati
     {
         public void Configure(EntityTypeBuilder<MainModulePlaceHolder> builder)
         {
-            builder.ToTable("MainModulePlaceHolder");
+            builder.ToTable("Template:[InsertNewTableNameTextHere]");
 
-            builder.HasKey(t => t.PrimaryKey);
+            Template:[InsertNewPrimaryKeyConfigTextHere]
 
-            builder.Property(t => t.Code)
-                .IsRequired()
-                .HasMaxLength(20);
+            Template:[InsertNewFieldAttributesTextHere]
 
-            builder.Property(t => t.DateCreated)
-                .IsRequired();
-
-            builder.Property(t => t.CreatedBy)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            builder.Property(t => t.ModifiedBy)
-                .HasMaxLength(50);
-
-            builder.AddColumnPrefix("prefix");
+            Template:[InsertNewTableNamePrefixTextHere]
         }
     }
 }
