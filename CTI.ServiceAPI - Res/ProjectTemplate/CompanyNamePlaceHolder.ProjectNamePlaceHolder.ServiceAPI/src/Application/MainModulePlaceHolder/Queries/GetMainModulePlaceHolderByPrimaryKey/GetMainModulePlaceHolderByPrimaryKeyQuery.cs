@@ -5,14 +5,14 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.Queries.GetMainModulePlaceHoldersByPrimaryKey
+namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.Queries.GetMainModulePlaceHoldersByTemplate:[InsertNewPrimaryKeyTextHere]
 {
-    public class GetMainModulePlaceHolderByPrimaryKeyQuery : IRequest<MainModulePlaceHolderDto>
+    public class GetMainModulePlaceHolderByTemplate:[InsertNewPrimaryKeyTextHere]Query : IRequest<MainModulePlaceHolderDto>
     {
-        public string PrimaryKey { get; set; } = "";
+        public string Template:[InsertNewPrimaryKeyTextHere] { get; set; } = "";
     }
 
-    public class GetMainModulePlaceHolderByProjectQueryHandler : IRequestHandler<GetMainModulePlaceHolderByPrimaryKeyQuery, MainModulePlaceHolderDto>
+    public class GetMainModulePlaceHolderByProjectQueryHandler : IRequestHandler<GetMainModulePlaceHolderByTemplate:[InsertNewPrimaryKeyTextHere]Query, MainModulePlaceHolderDto>
     {
         private readonly IRepository<Domain.Entities.MainModulePlaceHolder> _mainModulePlaceHolderRepository;
 
@@ -21,19 +21,19 @@ namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.Quer
             _mainModulePlaceHolderRepository = mainModulePlaceHolderRepository;
         }
 
-        public async Task<MainModulePlaceHolderDto> Handle(GetMainModulePlaceHolderByPrimaryKeyQuery request, CancellationToken cancellationToken)
+        public async Task<MainModulePlaceHolderDto> Handle(GetMainModulePlaceHolderByTemplate:[InsertNewPrimaryKeyTextHere]Query request, CancellationToken cancellationToken)
         {
-            var spec = new MainModulePlaceHolderByPrimaryKeyWithDetailsSpec(request.PrimaryKey);
+            var spec = new MainModulePlaceHolderByTemplate:[InsertNewPrimaryKeyTextHere]WithDetailsSpec(request.Template:[InsertNewPrimaryKeyTextHere]);
             var unitsDto = await _mainModulePlaceHolderRepository.SingleOrDefaultAsync(spec);
             return unitsDto;
         }
     }
 
-    public class MainModulePlaceHolderByPrimaryKeyWithDetailsSpec : SingleResultSpecification<Domain.Entities.MainModulePlaceHolder, MainModulePlaceHolderDto>
+    public class MainModulePlaceHolderByTemplate:[InsertNewPrimaryKeyTextHere]WithDetailsSpec : SingleResultSpecification<Domain.Entities.MainModulePlaceHolder, MainModulePlaceHolderDto>
     {
-        public MainModulePlaceHolderByPrimaryKeyWithDetailsSpec(string primaryKey)
+        public MainModulePlaceHolderByTemplate:[InsertNewPrimaryKeyTextHere]WithDetailsSpec(string Template:[InsertNewPrimaryKeyCamelCaseTextHere])
         {
-            Query.Where(x => x.PrimaryKey == primaryKey);
+            Query.Where(x => x.Template:[InsertNewPrimaryKeyTextHere] == Template:[InsertNewPrimaryKeyCamelCaseTextHere]);
         }
     }
 }

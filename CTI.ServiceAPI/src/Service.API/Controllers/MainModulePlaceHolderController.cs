@@ -17,7 +17,7 @@ namespace ProjectNamePlaceHolder.Services.API.Controllers
         }
 
         [HttpGet]
-        public async Task<PaginatedList<MainModulePlaceHolderDto>> GetByProjectsPaged(GetMainModulePlaceHolderPagedQuery request)
+        public async Task<PaginatedList<MainModulePlaceHolderDto>> GetAsync(GetMainModulePlaceHolderPagedQuery request)
         {
             var results = await Mediator.Send(request);
             return results;

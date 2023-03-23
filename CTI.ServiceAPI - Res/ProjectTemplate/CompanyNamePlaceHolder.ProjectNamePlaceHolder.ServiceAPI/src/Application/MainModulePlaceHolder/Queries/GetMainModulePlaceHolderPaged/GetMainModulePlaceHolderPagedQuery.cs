@@ -60,8 +60,7 @@ namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.Quer
     public static class GetMainModulePlaceHolderPagedSearchFields
     {
         public static string[] SearchFields => new[] {
-                    NameOf<Domain.Entities.MainModulePlaceHolder>.Full(x => x.PrimaryKey),                   
-                    NameOf<Domain.Entities.MainModulePlaceHolder>.Full(x => x.Code),                
+                    Template:[InsertNewDynamicSearchFieldTextHere]                
                 };
     }
 }
