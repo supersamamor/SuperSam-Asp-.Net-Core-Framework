@@ -1,0 +1,19 @@
+using Cti.Core.Application.Common.Interfaces;
+using Cti.Core.Infrastructure.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Repositories
+{
+    internal class TestRepository : GenericRepositoryAsync<SampleEntity>
+    {
+        public TestRepository(ApplicationDbContext dbContext, IDateTime dateTimeService, ICurrentUserService currentUserService) : base(dbContext, dateTimeService, currentUserService)
+        {            
+        }
+    }
+
+    internal class SampleEntity
+    {
+    }
+}

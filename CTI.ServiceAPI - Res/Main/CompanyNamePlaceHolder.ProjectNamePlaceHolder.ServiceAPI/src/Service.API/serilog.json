@@ -1,0 +1,27 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.Debug", "Serilog.Sinks.File" ],
+    "MinimumLevel": {
+      "Default": "Information"
+    },
+    "WriteTo": [
+      {
+        "Name": "Console"
+      },
+      {
+        "Name": "Debug" 
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs\\ProjectNamePlaceHolder.Services.API-.log",
+          "rollingInterval": "Day",
+          "shared": true
+        }
+      }
+    ],
+    "Properties": {
+      "Environment": "local"
+    }
+  }
+}

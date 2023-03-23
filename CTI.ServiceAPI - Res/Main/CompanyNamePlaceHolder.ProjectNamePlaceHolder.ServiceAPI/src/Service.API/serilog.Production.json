@@ -1,0 +1,23 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Seq" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft.AspNetCore": "Warning",
+        "Microsoft.EntityFrameworkCore": "Warning",
+        "System": "Warning"
+      }
+    },
+    "Enrich": [ "FromLogContext", "WithMachineName", "WithThreadId" ],
+    "WriteTo": [
+      {
+        "Name": "Seq",
+        "Args": {
+          "serverUrl": "http://10.76.11.111:5341",
+          "apiKey": "Zk6uKI6gwT9I7xpEbiIf"
+        }
+      }
+    ]
+  }
+}
