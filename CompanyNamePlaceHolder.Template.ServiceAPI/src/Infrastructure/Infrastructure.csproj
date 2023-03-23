@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>ProjectNamePlaceHolder.Services.Infrastructure</RootNamespace>
+    <AssemblyName>ProjectNamePlaceHolder.Services.Infrastructure</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Identity\**" />
+    <EmbeddedResource Remove="Identity\**" />
+    <None Remove="Identity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Persistence\Configurations\TodoItemConfiguration.cs" />
+    <Compile Remove="Persistence\Configurations\TodoListConfiguration.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Identity\IdentityService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.1.0" />
+    <PackageReference Include="AspNet.Security.OpenIdConnect.Primitives" Version="2.0.0" />
+    <PackageReference Include="Cti.Core.Infrastructure" Version="1.2.0" />
+    <PackageReference Include="Cti.Core.Infrastructure.EntityFrameworkCore" Version="1.2.1" />
+
+
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.8" />
+
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.8" />
+
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
