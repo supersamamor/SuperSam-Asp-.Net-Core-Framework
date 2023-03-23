@@ -3,14 +3,14 @@ using Cti.Core.Domain.Common.Contracts;
 
 namespace ProjectNamePlaceHolder.Services.Domain.Entities
 {
-    public class InventoryUnit : AuditableEntity, IAggregateRoot
+    public class MainModulePlaceHolder : AuditableEntity, IAggregateRoot
     {
         public string ReferenceObject { get; set; }
         public string ProjectCode { get; set; }
         public string PhaseBuildingCode { get; set; }
         public string BlockFloorClusterCode { get; set; }
         public string LotUnitShareNumber { get; set; }
-        public string InventoryUnitNumber { get; set; }
+        public string MainModulePlaceHolderNumber { get; set; }
         public string CompanyCode { get; set; }
         public string UnitClassificationCode { get; set; }
         public string MarketProductTypeCode { get; set; }

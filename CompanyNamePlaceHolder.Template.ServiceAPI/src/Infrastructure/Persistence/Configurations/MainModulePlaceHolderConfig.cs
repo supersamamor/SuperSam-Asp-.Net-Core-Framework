@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Configurations
 {
-    public class InventoryUnitConfig : IEntityTypeConfiguration<InventoryUnit>
+    public class MainModulePlaceHolderConfig : IEntityTypeConfiguration<MainModulePlaceHolder>
     {
-        public void Configure(EntityTypeBuilder<InventoryUnit> builder)
+        public void Configure(EntityTypeBuilder<MainModulePlaceHolder> builder)
         {
-            builder.ToTable("immInventoryUnit");
+            builder.ToTable("immMainModulePlaceHolder");
 
             builder.HasKey(t => t.ReferenceObject);
 
@@ -30,7 +30,7 @@ namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Configurati
             builder.Property(t => t.LotUnitShareNumber)
                 .HasMaxLength(50);
 
-            builder.Property(t => t.InventoryUnitNumber)
+            builder.Property(t => t.MainModulePlaceHolderNumber)
                 .HasMaxLength(10);
 
             builder.Property(t => t.CompanyCode)

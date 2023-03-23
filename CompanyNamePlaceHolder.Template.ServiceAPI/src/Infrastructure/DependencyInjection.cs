@@ -98,7 +98,7 @@ namespace ProjectNamePlaceHolder.Services.Infrastructure
             // Add Additional/Custom repositories here
 
             foreach (var aggregateRootType in
-                typeof(InventoryUnit).Assembly.GetExportedTypes()
+                typeof(MainModulePlaceHolder).Assembly.GetExportedTypes()
                     .Where(t => typeof(IAggregateRoot).IsAssignableFrom(t) && t.IsClass)
                     .ToList())
             {
