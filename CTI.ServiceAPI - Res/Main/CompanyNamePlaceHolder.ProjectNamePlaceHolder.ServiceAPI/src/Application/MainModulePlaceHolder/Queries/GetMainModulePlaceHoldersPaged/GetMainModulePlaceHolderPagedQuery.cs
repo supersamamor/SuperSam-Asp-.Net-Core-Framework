@@ -1,7 +1,6 @@
 using Ardalis.Specification;
 using ProjectNamePlaceHolder.Services.Application.Common.Extensions;
-using ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolders.DTOs;
-using ProjectNamePlaceHolder.Services.Domain.Entities;
+using ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.DTOs;
 using Cti.Core.Application.Common.Models;
 using Cti.Core.Application.Common.Persistence;
 using Cti.Core.Application.Common.Specification;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolders.Queries.GetMainModulePlaceHoldersPaged
+namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.Queries.GetMainModulePlaceHoldersPaged
 {
     // Define Query Request from PaginatedRequest
     public class GetMainModulePlaceHolderPagedQuery : PaginatedRequest, IRequest<PaginatedList<MainModulePlaceHolderDto>>
@@ -19,9 +18,9 @@ namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolders.Que
 
     public class GetMainModulePlaceHolderPagedQueryHandler : IRequestHandler<GetMainModulePlaceHolderPagedQuery, PaginatedList<MainModulePlaceHolderDto>>
     {
-        private readonly IRepository<MainModulePlaceHolder> _mainModulePlaceHolderRepository;
+        private readonly IRepository<Domain.Entities.MainModulePlaceHolder> _mainModulePlaceHolderRepository;
 
-        public GetMainModulePlaceHolderPagedQueryHandler(IRepository<MainModulePlaceHolder> mainModulePlaceHolderRepository)
+        public GetMainModulePlaceHolderPagedQueryHandler(IRepository<Domain.Entities.MainModulePlaceHolder> mainModulePlaceHolderRepository)
         {
             _mainModulePlaceHolderRepository = mainModulePlaceHolderRepository;
         }
@@ -49,7 +48,7 @@ namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolders.Que
     }
 
     // Define Specification for PaginatedRequest
-    public class MainModulePlaceHolderPagedQuerySpec : EntitiesByPaginatedRequestSpec<MainModulePlaceHolder, MainModulePlaceHolderDto>
+    public class MainModulePlaceHolderPagedQuerySpec : EntitiesByPaginatedRequestSpec<Domain.Entities.MainModulePlaceHolder, MainModulePlaceHolderDto>
     {
         public MainModulePlaceHolderPagedQuerySpec(GetMainModulePlaceHolderPagedQuery request) : base(request)
         {
@@ -61,8 +60,8 @@ namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolders.Que
     public static class GetMainModulePlaceHolderPagedSearchFields
     {
         public static string[] SearchFields => new[] {
-                    NameOf<MainModulePlaceHolder>.Full(x => x.PrimaryKey),                   
-                    NameOf<MainModulePlaceHolder>.Full(x => x.Code),                
+                    NameOf<Domain.Entities.MainModulePlaceHolder>.Full(x => x.PrimaryKey),                   
+                    NameOf<Domain.Entities.MainModulePlaceHolder>.Full(x => x.Code),                
                 };
     }
 }
