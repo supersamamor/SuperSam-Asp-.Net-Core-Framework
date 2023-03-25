@@ -6,5 +6,6 @@ namespace ProjectNamePlaceHolder.Services.Domain.Entities
     public class MainModulePlaceHolder : AuditableEntity, IAggregateRoot
     {
         Template:[InsertNewCoreModelColumnTextHere]       
+		Template:[InsertNewParentTable]
     }
 }
