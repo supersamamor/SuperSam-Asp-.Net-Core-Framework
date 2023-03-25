@@ -13,9 +13,21 @@ namespace ProjectNamePlaceHolder.Services.Infrastructure.Persistence.Configurati
 
             Template:[InsertNewPrimaryKeyConfigTextHere]
 
-            Template:[InsertNewFieldAttributesTextHere]
+            Template:[InsertNewFieldAttributesTextHere]			
 
+			builder.Property(t => t.DateCreated)
+                .IsRequired();
+
+            builder.Property(t => t.CreatedBy)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(t => t.ModifiedBy)
+                .HasMaxLength(50);
+			
             Template:[InsertNewTableNamePrefixTextHere]
+			
+			Template:[InsertNewSubCollectionFluentApiTextHere]
         }
     }
 }
