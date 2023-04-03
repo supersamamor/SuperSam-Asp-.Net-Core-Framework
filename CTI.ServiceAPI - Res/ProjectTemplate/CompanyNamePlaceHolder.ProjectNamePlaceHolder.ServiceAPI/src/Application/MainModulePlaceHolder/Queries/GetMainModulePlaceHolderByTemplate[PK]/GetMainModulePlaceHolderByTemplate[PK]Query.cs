@@ -12,11 +12,11 @@ namespace ProjectNamePlaceHolder.Services.Application.MainModulePlaceHolder.Quer
         public string Template[PK] { get; set; } = "";
     }
 
-    public class GetMainModulePlaceHolderByProjectQueryHandler : IRequestHandler<GetMainModulePlaceHolderByTemplate[PK]Query, MainModulePlaceHolderDto>
+    public class GetMainModulePlaceHolderByTemplate[PK]QueryHandler : IRequestHandler<GetMainModulePlaceHolderByTemplate[PK]Query, MainModulePlaceHolderDto>
     {
         private readonly IRepository<Domain.Entities.MainModulePlaceHolder> _mainModulePlaceHolderRepository;
 
-        public GetMainModulePlaceHolderByProjectQueryHandler(IRepository<Domain.Entities.MainModulePlaceHolder> mainModulePlaceHolderRepository)
+        public GetMainModulePlaceHolderByTemplate[PK]QueryHandler(IRepository<Domain.Entities.MainModulePlaceHolder> mainModulePlaceHolderRepository)
         {
             _mainModulePlaceHolderRepository = mainModulePlaceHolderRepository;
         }

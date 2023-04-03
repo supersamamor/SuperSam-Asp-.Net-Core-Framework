@@ -1,0 +1,17 @@
+#editor {
+  background-color: #efefef;
+  min-height: 320px;
+  border: 1px solid #ccc;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#toolbar .grp {
+  background-color: #efefef !important;
+  border: 1px solid #ccc;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom: none;
+}
+
