@@ -1,0 +1,33 @@
+@using Models
+@model PurchaseRequisitionViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.DateRequired" class="form-label fieldrequired"><strong>@Localizer["Date Required"] :</strong></label>
+            <input type="date" asp-for="@Model.DateRequired" class="form-control" />
+            <span asp-validation-for="@Model.DateRequired" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Purpose" class="form-label "><strong>@Localizer["Purpose"] :</strong></label>
+            <input asp-for="@Model.Purpose" class="form-control" maxlength="500" />
+            <span asp-validation-for="@Model.Purpose" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Remarks" class="form-label "><strong>@Localizer["Remarks"] :</strong></label>
+            <input asp-for="@Model.Remarks" class="form-control" maxlength="500" />
+            <span asp-validation-for="@Model.Remarks" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Status" class="form-label "><strong>@Localizer["Status"] :</strong></label>
+            <input asp-for="@Model.Status" class="form-control" maxlength="50" readonly />
+            <span asp-validation-for="@Model.Status" class="text-danger"></span>
+        </div>
+    </div>
+</div>

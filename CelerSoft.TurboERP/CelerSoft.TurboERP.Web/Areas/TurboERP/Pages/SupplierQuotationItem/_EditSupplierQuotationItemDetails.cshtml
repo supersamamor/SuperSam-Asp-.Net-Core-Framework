@@ -1,0 +1,46 @@
+@using Models
+@model SupplierQuotationItemViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.SupplierQuotationId" class="form-label fieldrequired"><strong>@Localizer["Supplier Quotation"] :</strong></label>
+			<input asp-for="ForeignKeySupplierQuotation" class="form-control"   readonly />
+			<span asp-validation-for="@Model.SupplierQuotationId" class="text-danger"></span>
+			<input type="hidden" asp-for="@Model.SupplierQuotationId"/>
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ProductId" class="form-label fieldrequired"><strong>@Localizer["Product"] :</strong></label>
+			<select asp-for="@Model.ProductId" class="form-control" asp-items="@(dropdownService.GetProductList(Model.ProductId))"><option value="">- Select Product -</option></select>
+			<span asp-validation-for="@Model.ProductId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Quantity" class="form-label fieldrequired"><strong>@Localizer["Quantity"] :</strong></label>
+			<input asp-for="@Model.Quantity" class="form-control"   readonly/>
+			<span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Amount" class="form-label fieldrequired"><strong>@Localizer["Amount"] :</strong></label>
+			<input asp-for="@Model.Amount" class="form-control"   readonly/>
+			<span asp-validation-for="@Model.Amount" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Remarks" class="form-label "><strong>@Localizer["Remarks"] :</strong></label>
+			<input asp-for="@Model.Remarks" class="form-control" maxlength="400" />
+			<span asp-validation-for="@Model.Remarks" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

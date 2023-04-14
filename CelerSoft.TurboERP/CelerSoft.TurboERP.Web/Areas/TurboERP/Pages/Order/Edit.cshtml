@@ -1,0 +1,81 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Orders"];
+    ViewData["ActiveMainPage"] = "Order";
+    ViewData["Level1"] = "TurboERP";
+}
+<form id="order-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Order" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_OrderItemListValidationPartial" model="@Model.Order" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeOrderItemFieldValidations($('#OrderItemCount').val());
+			$('.RemoveOrderItemButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveOrderItem');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#order-form', InitializeForm);
+			});
+
+			$('#btnAddOrderItem').on( 'click', function () {
+				$('#AsyncAction').val('AddOrderItem');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#order-form', InitializeForm);
+			});
+
+			$.fn.inventorySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Inventory/Index", new { area = "TurboERP", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var inventorylistdropdowns = document.getElementsByClassName('SelectInventory');
+			for ( var i=0; i< inventorylistdropdowns.length; i++) {
+				$("#OrderItemList_"+i+"_InventoryId").inventorySelect();
+			}
+
+			$.fn.customerSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Customer/Index", new { area = "TurboERP", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#CustomerId").customerSelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

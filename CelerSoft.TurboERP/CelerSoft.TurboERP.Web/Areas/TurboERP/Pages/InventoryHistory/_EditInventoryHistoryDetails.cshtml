@@ -1,0 +1,30 @@
+@using Models
+@model InventoryHistoryViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Activity" class="form-label fieldrequired"><strong>@Localizer["Activity"] :</strong></label>
+			<input asp-for="@Model.Activity" class="form-control" maxlength="400" />
+			<span asp-validation-for="@Model.Activity" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.InventoryId" class="form-label "><strong>@Localizer["Inventory"] :</strong></label>
+			<select asp-for="@Model.InventoryId" class="form-control" asp-items="@(dropdownService.GetInventoryList(Model.InventoryId))"><option value="">- Select Inventory -</option></select>
+			<span asp-validation-for="@Model.InventoryId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Quantity" class="form-label "><strong>@Localizer["Quantity"] :</strong></label>
+			<input asp-for="@Model.Quantity" class="form-control"  />
+			<span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

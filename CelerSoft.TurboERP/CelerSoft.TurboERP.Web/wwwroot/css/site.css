@@ -1,0 +1,41 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+/* Write your CSS code.*/
+
+.back-to-top {
+    bottom: 1.25rem;
+    position: fixed;
+    right: 1.25rem;
+    z-index: 1032;
+}
+
+.paginate_button {
+    margin-left: 2px;
+}
+
+.nav-treeview {
+    display: none;
+}
+
+.menu-open .nav-treeview {
+    display: block;
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.fieldrequired::after {
+    content: " *";
+    font-weight: bold;
+    color: red;
+}
+.select2-selection {
+    height: 40px !important;
+}
+
+.select2-selection__rendered {
+    padding-top: 5px;
+}

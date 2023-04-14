@@ -1,0 +1,69 @@
+@using Models
+@model ProductViewModel
+<input type="hidden" id="PurchaseRequisitionItemCount" value="@Model?.PurchaseRequisitionItemList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Purchase Requisition Items"]</span>
+        <a id="btnAddPurchaseRequisitionItem" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        <button class="cancel" type="button" id="btnRemovePurchaseRequisitionItem" value="RemovePurchaseRequisitionItem" style="display:none;"></button>
+    </h5>
+    <div class="card-body" style="overflow:auto;">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th style="display:none;"></th>
+                    <th>
+								@Localizer["Purchase Requisition"]
+							</th>
+							<th>
+								@Localizer["Quantity"]
+							</th>
+							<th>
+								@Localizer["Remarks"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.PurchaseRequisitionItemList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.PurchaseRequisitionItemList)
+                    {
+                        <tr>
+                            <td style="display:none;">
+                                <input type="hidden" name="PurchaseRequisitionItemList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="PurchaseRequisitionItemList[@counter].ProductId" value="@item.ProductId" />
+                            </td>
+                            <td>
+										<select asp-for="@item.PurchaseRequisitionId" id="PurchaseRequisitionItemList_@(counter)_PurchaseRequisitionId" name="PurchaseRequisitionItemList[@counter].PurchaseRequisitionId" class="form-control SelectPurchaseRequisition" asp-items="@(dropdownService.GetPurchaseRequisitionList(item.PurchaseRequisitionId))" >
+											<option value="">- Select Purchase Requisition -</option>
+										</select>
+										<span data-valmsg-for="PurchaseRequisitionItemList[@counter].PurchaseRequisitionId" asp-validation-for="@item.PurchaseRequisitionId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Quantity" name="PurchaseRequisitionItemList[@counter].Quantity" class="form-control"  />
+										<span data-valmsg-for="PurchaseRequisitionItemList[@counter].Quantity" asp-validation-for="@item.Quantity" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Remarks" name="PurchaseRequisitionItemList[@counter].Remarks" class="form-control" maxlength="400" />
+										<span data-valmsg-for="PurchaseRequisitionItemList[@counter].Remarks" asp-validation-for="@item.Remarks" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemovePurchaseRequisitionItemButton" title="@Localizer["Remove PurchaseRequisitionItem"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

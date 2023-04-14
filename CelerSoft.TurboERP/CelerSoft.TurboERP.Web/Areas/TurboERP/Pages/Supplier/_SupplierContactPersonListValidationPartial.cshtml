@@ -1,0 +1,42 @@
+@using Models
+@model SupplierViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeSupplierContactPersonFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "SupplierContactPersonList[" + idx + "].SupplierId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Supplier"});
+				reqs.push({name: "SupplierContactPersonList[" + idx + "].FullName", el: "Input", minlength:0, maxlength:450, isrequired: true, description: "Name"});
+				reqs.push({name: "SupplierContactPersonList[" + idx + "].Position", el: "Input", minlength:0, maxlength:100, isrequired: false, description: "Position"});
+				reqs.push({name: "SupplierContactPersonList[" + idx + "].Email", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "Email"});
+				reqs.push({name: "SupplierContactPersonList[" + idx + "].MobileNumber", el: "Input", minlength:0, maxlength:50, isrequired: true, description: "Mobile Number"});
+				reqs.push({name: "SupplierContactPersonList[" + idx + "].PhoneNumber", el: "Input", minlength:0, maxlength:50, isrequired: false, description: "Phone Number"});
+				
+			}
+			let validator = $("#supplier-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

@@ -1,0 +1,261 @@
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var appName = Configuration.GetValue<string>("Application");
+}
+<nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+    <div class="container-fluid d-flex flex-column p-0">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-th-large"></i></div>
+            <div class="sidebar-brand-text mx-3" style="max-width:100px;"><span>TurboERP</span></div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <ul class="navbar-nav text-light" id="accordionSidebar">
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Admin.View)).Succeeded)
+            {
+                <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Admin")">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cogs nav-icon"></i>
+                        <span>
+                            @Localizer["Admin"]
+                            <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Entities" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Entities")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Entities"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Roles" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Roles")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Roles"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Users" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Users")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Users"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Apis" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "APIs")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["APIs"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Applications.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/Applications" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Applications")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Applications"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.AuditTrail.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/AuditTrail" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "AuditTrail")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@Localizer["Audit Trail"]</span>
+                                </a>
+                            </li>
+                        }
+                        @if((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
+							{
+								<li class="nav-item">
+									<a href = "/TurboERP/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
+										<i class="fas fa-circle nav-icon"></i>
+										<span>
+											@Localizer["Approval"]
+										</span>
+									</a>
+								</li>
+							}
+                    </ul>
+                </li>
+            }
+            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "TurboERP")">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-list-alt nav-icon"></i>
+                    <span>
+                        @Localizer["Turbo ERP"]
+                        <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                    </span>
+                </a>
+                <ul class="nav nav-treeview">
+                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.Unit.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Unit" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Unit")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Unit"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.ItemType.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/ItemType" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ItemType")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Item Type"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Item.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Item" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Item")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Item"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Brand.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Brand" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Brand")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Brand"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Product.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Product" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Product")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Product"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Customer.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Customer" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Customer")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Customer"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Supplier.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Supplier" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Supplier")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Supplier"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.PurchaseRequisition.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/PurchaseRequisition" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "PurchaseRequisition")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Purchase Requisition"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.SupplierQuotation.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/SupplierQuotation" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "SupplierQuotation")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Supplier Quotation"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Purchase.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Purchase" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Purchase")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Purchase"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Inventory.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Inventory" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Inventory")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Inventory"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.ShoppingCart.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/ShoppingCart" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ShoppingCart")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Shopping Cart"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Order.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/Order" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Order")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Orders"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.WebContent.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/TurboERP/WebContent" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "WebContent")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Web Content"]
+									</span>
+								</a>
+							</li>
+						}
+						
+                </ul>
+            </li>
+        </ul>
+        <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+    </div>
+</nav>
