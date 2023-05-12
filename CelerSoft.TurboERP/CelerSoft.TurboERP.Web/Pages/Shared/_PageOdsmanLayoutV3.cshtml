@@ -1,0 +1,251 @@
+﻿@using Microsoft.Extensions.Options
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    var release = Configuration.GetValue<string>("Version:ReleaseName");
+    var build = Configuration.GetValue<string>("Version:BuildNumber");
+    var appName = Configuration.GetValue<string>("Application");
+    var facebookMessengerId = Configuration.GetValue<string>("FacebookMessengerId");
+    var googleAnalyticsMeasurementId = Configuration.GetValue<string>("GoogleAnalyticsMeasurementId");
+    var customerSupportEmail = Configuration.GetValue<string>("CustomerSupportEmail");
+    var companyName = Configuration.GetValue<string>("CompanyName");
+    var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
+    var user = await UserManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @appName</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/fontawesome.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/brands.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/solid.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/dist/css/regular.css" />
+    <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="~/css/odsmansitev2.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        body * {
+            /*outline: 1px dotted red;*/
+            font-family: 'Open Sans', sans-serif;
+            color: @WebConstants.FONT_COLOR;
+        }
+
+        .navigation-ul {
+            margin-top: 90px;
+            margin-bottom: 5px;
+        }
+
+            .navigation-ul li {
+                float: right;
+                text-decoration: none;
+                list-style: none;
+                margin-right: 10px;
+                font-size: 12px;
+            }
+
+                .navigation-ul li a {
+                    color: @WebConstants.FONT_COLOR;
+                    padding: 5px;
+                    border-radius: 5px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+
+                    .navigation-ul li a:hover {
+                        color: #fff;
+                        text-decoration: none;
+                        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#002060+1,4b83f3+100 */
+                        background: @WebConstants.COLOR_THEME; /* Old browsers */
+                        background: -moz-linear-gradient(-45deg, @WebConstants.COLOR_THEME 1%, #4b83f3 100%); /* FF3.6-15 */
+                        background: -webkit-linear-gradient(-45deg, @WebConstants.COLOR_THEME 1%,#4b83f3 100%); /* Chrome10-25,Safari5.1-6 */
+                        background: linear-gradient(135deg, @WebConstants.COLOR_THEME 1%,#4b83f3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@WebConstants.COLOR_THEME', endColorstr='#4b83f3',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+                    }
+
+            .navigation-ul .menu-icon-i {
+                font-size: 16px;
+                width: 20px;
+            }
+
+        .product-footer ul {
+            list-style: none;
+            margin-right: 20px;
+        }
+
+            .product-footer ul li {
+                float: left;
+                padding-right: 10px;
+                padding-left: 10px;
+                border-right: 1px dotted #ebebeb;
+                cursor: pointer;
+                color: #fff;
+            }
+
+        .odsman-footer {
+            min-height: 80px;
+            margin-bottom: 0px;
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            background: @WebConstants.COLOR_THEME;
+        }
+
+        .fadein-banner {
+            display: none;
+        }
+
+
+        .odsman-logo-img {
+            float: left;
+            margin-top: 10px;
+        }
+
+        .odsman-logo-text-container {
+            width: 70%;
+            font-weight: 800;
+            float: left;
+            font-size: 35px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-left: 5px;
+        }
+
+        .odsman-logo-textline {
+            display: inline-block;
+            width: 100%;
+        }
+
+        @@media (max-width: 575px) {
+            .odsman-footer {
+                position: absolute;
+            }
+
+            .product-footer {
+                width: 100%;
+            }
+
+            .footer-copyright {
+                width: 100%;
+                padding-top: 10px;
+            }
+
+            .odsman-logo-img, .odsman-logo-img > img {
+                width: 80px;
+            }
+
+            .odsman-logo-text-container {
+                font-size: 25px;
+                padding-top: 10px;
+            }
+
+            .navigation-ul {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body style="margin-bottom:0px;">
+    <header class="container">
+        <div class="row" style="padding-bottom:0px;">
+            <div class="col-lg-4">
+                <a class="odsman-logo-img" asp-page="@WebConstants.PAGE_CONTENT">
+                    <img src="\images\LogoV3.png" style="" />
+                </a>
+                <div class="odsman-logo-text-container">
+                    <span class="odsman-logo-textline">
+                        Our
+                    </span>
+                    <span class="odsman-logo-textline">
+                        Drugstore
+                    </span>
+                    <span class="odsman-logo-textline">
+                        Man
+                    </span>
+                </div>
+            </div>
+            <ul class="col-lg-8 navigation-ul">
+                <li>
+                    <a asp-page="@WebConstants.PAGE_CONTENT">
+                        <i class="fas fa-home menu-icon-i"></i>
+                        @Localizer["Home"]
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="container-fluid" style="min-height:800px;padding:0px;padding-bottom:20px;margin-top:10px;">
+        @RenderBody()
+    </div>
+    <footer class="odsman-footer">
+        <div class="product-footer">
+            <div class="container">
+                <ul>
+                    <li>FMCG</li>
+                    <li>OTC</li>
+                    <li>RX</li>
+                    <li>DERMA</li>
+                    <li>BEAUTY</li>
+                    <li>DRUG ESSENTIALS</li>
+                    <li>DEVICES</li>
+                    <li>VACCINES</li>
+                    <li>INSULIN</li>
+                    <li>ONCOLOGY</li>
+                    <li>FOOD SUPPLEMENT</li>
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="row footer-copyright">
+            <div class="container">
+                <center>
+                    <p style="font-size:12px;color:#fff;font-weight:700;padding-top:5px;">Copyright © 2021 oDSman Health. All rights reserved. Powered by CelerSoft (<a href="mailto:supersam@celersoftphilippines.com" target="_blank" style="text-decoration:none;color:#fff;">supersam@celersoftphilippines.com</a>)</p>
+                </center>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fb-customerchat"
+         page_id="@facebookMessengerId"
+         minimized="true">
+    </div>
+    <script src="~/lib/jquery/dist/jquery-3.5.1.min.js"></script>
+    <script src="~/lib/jquery-ui/dist/js/jquery-ui.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '912333495590130',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v2.11'
+            });
+        };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        $('.fadein-banner').fadeIn("slow");
+
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TVSH6WSHH7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '@googleAnalyticsMeasurementId');
+    </script>
+</body>
+</html>

@@ -112,7 +112,11 @@ app.MapControllers();
 app.MapRazorPages();
 app.MapHealthChecks("/health").AllowAnonymous();
 app.UseNotyf();
-
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+    endpoints.MapFallbackToPage(configuration.GetValue<string>("DefaultPage"));
+});
 // Seed the database
 if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
 {

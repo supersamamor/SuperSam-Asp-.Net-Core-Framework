@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
         });
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
-		services.AddTransient<DropdownServices>();
+        services.AddTransient<DropdownServices>();
     }
 
     public static IServiceCollection ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)
