@@ -12,9 +12,9 @@
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.MainModulePlaceHolder" />
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">  
+		<a href="..\Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>                
+        <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
@@ -27,6 +27,8 @@ Template:[NewSubDetailFieldValidationPartialJavascript]
     $(document).ready(function () {
         function InitializeForm()
         {
+			$.bindSaveConfirmationModal('Update', '#btnConfirmationModal','#mainModulePlaceHolder-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#mainModulePlaceHolder-form', 'Do you want to cancel the changes?');
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();

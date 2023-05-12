@@ -13,7 +13,7 @@
     </div>
 </div>
 <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
+	<a href="..\Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
     {
         <a asp-page="Add" class="btn btn-success" title="@Localizer["Add"]" style="color:#fff;"><i class="fas fa-plus"></i></a>
