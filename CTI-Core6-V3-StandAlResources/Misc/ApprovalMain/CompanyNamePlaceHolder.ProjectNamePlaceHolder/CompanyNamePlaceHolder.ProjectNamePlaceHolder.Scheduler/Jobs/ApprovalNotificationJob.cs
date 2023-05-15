@@ -11,6 +11,7 @@ using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
 {
+	[DisallowConcurrentExecution]
     public class ApprovalNotificationJob : IJob
     {
         private readonly ApplicationContext _context;
