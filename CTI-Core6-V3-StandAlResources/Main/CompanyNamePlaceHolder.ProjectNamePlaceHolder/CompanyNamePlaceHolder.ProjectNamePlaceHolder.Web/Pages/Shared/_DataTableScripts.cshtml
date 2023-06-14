@@ -95,5 +95,21 @@
 				});
 			});
 		};
+		$.EnableNavbarSearch = function(table) {
+            var tableId = table.settings()[0].sTableId;
+            $('#navbar_search').keyup(function () {
+                var searchKey = $(this).val();
+                $.cookie("searchKey-" + tableId, searchKey, { expires: 7 }); // Cookie expires after 7 days
+                table.search(searchKey).draw();
+            })
+            $(".dataTables_filter").hide();
+            $("#navbar_search_container").show();
+            //Retrieve search key from cookies
+            var searchKey = $.cookie("searchKey-" + tableId);
+            if (searchKey) {
+                $("#navbar_search").val(searchKey);
+                table.search(searchKey).draw();
+            }
+        };
     });
 </script>

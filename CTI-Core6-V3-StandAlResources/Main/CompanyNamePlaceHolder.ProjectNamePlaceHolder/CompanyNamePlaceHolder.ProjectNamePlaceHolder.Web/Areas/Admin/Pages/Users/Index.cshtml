@@ -105,11 +105,7 @@
             ],
         });
         var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
-        $('#navbar_search').keyup(function(){
-              table.search($(this).val()).draw();
-        })
-        $(".dataTables_filter").hide();
-        $("#navbar_search_container").show();
+        $.EnableNavbarSearch(table);
     });
 </script>
 }
