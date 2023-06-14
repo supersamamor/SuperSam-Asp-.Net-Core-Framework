@@ -22,6 +22,8 @@ builder.Services.AddDefaultApiServices(configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationContext>();
+builder.Services.AddDbContext<IdentityContext>(options
+       => options.UseSqlServer(configuration.GetConnectionString("ApplicationContext")));
 if (configuration.GetValue<bool>("UseInMemoryDatabase"))
 {
     builder.Services.AddDbContext<ApplicationContext>(options
