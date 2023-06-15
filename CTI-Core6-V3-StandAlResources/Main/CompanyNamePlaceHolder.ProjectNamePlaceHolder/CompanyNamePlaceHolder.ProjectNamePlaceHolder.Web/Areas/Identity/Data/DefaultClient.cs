@@ -18,8 +18,11 @@ public static class DefaultClient
         var context = serviceProvider.GetRequiredService<IdentityContext>();
         await context.Database.EnsureCreatedAsync(new CancellationToken());
 
-        await RegisterApplications(serviceProvider);
-        await RegisterScopes(serviceProvider);
+        if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
+        {
+            await RegisterApplications(serviceProvider);
+            await RegisterScopes(serviceProvider);
+        }
     }
 
     static async Task RegisterApplications(IServiceProvider serviceProvider)
