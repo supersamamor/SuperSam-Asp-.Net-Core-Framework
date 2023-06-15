@@ -17,7 +17,7 @@ public static class DefaultClient
     {
         var context = serviceProvider.GetRequiredService<IdentityContext>();
         await context.Database.EnsureCreatedAsync(new CancellationToken());
-
+		var configuration = serviceProvider.GetRequiredService<IConfiguration>();
         if (configuration.GetValue<bool>("IsIdentityServerEnabled"))
         {
             await RegisterApplications(serviceProvider);
