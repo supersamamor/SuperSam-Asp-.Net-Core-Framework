@@ -37,17 +37,27 @@ public static class IdentityServiceCollectionExtensions
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
 
-        services.AddAuthentication()
+        var microsoftClientId = configuration["Authentication:Microsoft:ClientId"];
+        if (!string.IsNullOrEmpty(microsoftClientId))
+        {
+            services.AddAuthentication()
                 .AddMicrosoftAccount(options =>
                 {
-                    options.ClientId = configuration["Authentication:Microsoft:ClientId"];
+                    options.ClientId = microsoftClientId;
                     options.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
-                })
+                });
+        }
+
+        var googleClientId = configuration["Authentication:Google:ClientId"];
+        if (!string.IsNullOrEmpty(googleClientId))
+        {
+            services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    options.ClientId = configuration["Authentication:Google:ClientId"];
+                    options.ClientId = googleClientId;
                     options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
                 });
+        }
 
         services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
         services.AddTransient<IAuthenticatedUser, DefaultAuthenticatedUser>();

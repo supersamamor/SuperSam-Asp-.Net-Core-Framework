@@ -37,14 +37,20 @@
                         <button type="submit" class="btn btn-primary d-block btn-user w-100">Login</button>
                     </form>
                     <hr>
-                    <form id="microsoft-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
-                        <input type="hidden" name="provider" value="Microsoft">
-                        <input class="mb-2" type="image" id="BtnLoginMicrosoft" src="~/img/ms_signin_dark.png" alt="Sign in using Microsoft">
-                    </form>
-                    <form id="google-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
-                        <input type="hidden" name="provider" value="Google">
-                        <input class="mb-2" type="image" id="BtnLoginGoogle" src="~/img/google_signin_dark.png" alt="Sign in using Google">
-                    </form>
+                    @if (!string.IsNullOrEmpty(Configuration["Authentication:Microsoft:ClientId"]))
+                    {
+                        <form id="microsoft-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
+                            <input type="hidden" name="provider" value="Microsoft">
+                            <input class="mb-2" type="image" id="BtnLoginMicrosoft" src="~/img/ms_signin_dark.png" alt="Sign in using Microsoft">
+                        </form>
+                    }
+                    @if (!string.IsNullOrEmpty(Configuration["Authentication:Google:ClientId"]))
+                    {
+                        <form id="google-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
+                            <input type="hidden" name="provider" value="Google">
+                            <input class="mb-2" type="image" id="BtnLoginGoogle" src="~/img/google_signin_dark.png" alt="Sign in using Google">
+                        </form>
+                    }
                     <hr>
                     <div class="text-center">
                         <a class="small" asp-page="./ForgotPassword">Forgot Password?</a>
