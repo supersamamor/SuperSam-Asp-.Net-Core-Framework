@@ -1,6 +1,6 @@
 using AutoMapper;
 using CompanyNamePlaceHolder.Common.Core.Mapping;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Approval.Commands;
+Template:[InsertNewImportAppLayerMappingConfig]
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 Template:[InsertNewImportAreaPlaceHolderTextHere]
 
