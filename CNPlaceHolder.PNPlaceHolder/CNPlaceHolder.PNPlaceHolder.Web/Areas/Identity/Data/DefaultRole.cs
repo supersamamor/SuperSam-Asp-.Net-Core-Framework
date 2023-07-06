@@ -1,4 +1,5 @@
 using CNPlaceHolder.Common.Utility.Extensions;
+using CNPlaceHolder.PNPlaceHolder.Core.Identity;
 using LanguageExt;
 using Microsoft.AspNetCore.Identity;
 
@@ -9,8 +10,8 @@ public static class DefaultRole
     public static async Task Seed(IServiceProvider serviceProvider)
     {
         var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var adminRole = new IdentityRole(Core.Constants.Roles.Admin);
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        var adminRole = new ApplicationRole(Core.Constants.Roles.Admin);
         if (!await roleManager.RoleExistsAsync(adminRole.Name))
         {
             _ = await roleManager.CreateAsync(adminRole);

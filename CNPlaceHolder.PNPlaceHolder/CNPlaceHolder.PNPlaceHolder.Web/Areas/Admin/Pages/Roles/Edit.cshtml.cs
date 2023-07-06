@@ -1,4 +1,5 @@
 using CNPlaceHolder.Common.Web.Utility.Extensions;
+using CNPlaceHolder.PNPlaceHolder.Core.Identity;
 using CNPlaceHolder.PNPlaceHolder.Web.Areas.Admin.Models;
 using CNPlaceHolder.PNPlaceHolder.Web.Areas.Admin.Queries.Roles;
 using CNPlaceHolder.PNPlaceHolder.Web.Models;
@@ -15,9 +16,9 @@ namespace CNPlaceHolder.PNPlaceHolder.Web.Areas.Admin.Pages.Roles;
 [Authorize(Policy = Permission.Roles.Edit)]
 public class EditModel : BasePageModel<EditModel>
 {
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
 
-    public EditModel(RoleManager<IdentityRole> roleManager)
+    public EditModel(RoleManager<ApplicationRole> roleManager)
     {
         _roleManager = roleManager;
     }
@@ -73,7 +74,7 @@ public class EditModel : BasePageModel<EditModel>
             none: null);
     }
 
-    async Task<IList<PermissionViewModel>> GetPermisionsForRole(IdentityRole role)
+    async Task<IList<PermissionViewModel>> GetPermisionsForRole(ApplicationRole role)
     {
         var roleClaims = (await _roleManager.GetClaimsAsync(role)).Map(c => c.Value);
         return Permission.GenerateAllPermissions().Map(p => new PermissionViewModel
@@ -83,23 +84,23 @@ public class EditModel : BasePageModel<EditModel>
         }).ToList();
     }
 
-    async Task<Validation<Error, IdentityRole>> UpdateRoleFromModel(IdentityRole roleToUpdate)
+    async Task<Validation<Error, ApplicationRole>> UpdateRoleFromModel(ApplicationRole roleToUpdate)
     {
         roleToUpdate.Name = Role.Name;
         roleToUpdate.NormalizedName = Role.Name.ToUpper();
         return await UpdateRole(roleToUpdate);
     }
 
-    async Task<Validation<Error, IdentityRole>> UpdatePermissionsForRole(IdentityRole role) =>
+    async Task<Validation<Error, ApplicationRole>> UpdatePermissionsForRole(ApplicationRole role) =>
         await _roleManager.RemoveAllPermissionClaims(role)
                           .BindT(async r => await AddPermissionsToRole(r));
 
-    async Task<Validation<Error, IdentityRole>> AddPermissionsToRole(IdentityRole role)
+    async Task<Validation<Error, ApplicationRole>> AddPermissionsToRole(ApplicationRole role)
     {
         var permissions = Permissions.Where(p => p.Enabled).Select(p => p.Permission);
         return await _roleManager.AddPermissionClaims(role, permissions);
     }
 
-    Func<IdentityRole, Task<Validation<Error, IdentityRole>>> UpdateRole =>
-        ToValidation<IdentityRole>(_roleManager.UpdateAsync);
+    Func<ApplicationRole, Task<Validation<Error, ApplicationRole>>> UpdateRole =>
+        ToValidation<ApplicationRole>(_roleManager.UpdateAsync);
 }

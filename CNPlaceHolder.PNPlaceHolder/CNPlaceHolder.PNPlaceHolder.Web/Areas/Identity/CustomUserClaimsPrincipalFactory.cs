@@ -6,10 +6,10 @@ using CNPlaceHolder.PNPlaceHolder.Core.Identity;
 
 namespace CNPlaceHolder.PNPlaceHolder.Web.Areas.Identity;
 
-public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
+public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
 {
     public CustomUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager,
-                                            RoleManager<IdentityRole> roleManager,
+                                            RoleManager<ApplicationRole> roleManager,
                                             IOptions<IdentityOptions> options) : base(userManager, roleManager, options)
     {
     }

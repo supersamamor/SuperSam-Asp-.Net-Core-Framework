@@ -19,23 +19,23 @@ public static class IdentityExtensions
                  : Fail<Error, T>(string.Join(",", result.Errors.Select(e => e.Description)));
         };
 
-    public static async Task<Validation<Error, IdentityRole>> AddPermissionClaimsForModule(this RoleManager<IdentityRole> roleManager, IdentityRole role, string module)
+    public static async Task<Validation<Error, ApplicationRole>> AddPermissionClaimsForModule(this RoleManager<ApplicationRole> roleManager, ApplicationRole role, string module)
     {
         var claims = Permission.GeneratePermissionsForModule(module)
                                .Map(p => new Claim(AuthorizationClaimTypes.Permission, p));
         return await roleManager.AddClaims(role, claims);
     }
 
-    public static async Task<Validation<Error, IdentityRole>> AddPermissionClaims(this RoleManager<IdentityRole> roleManager, IdentityRole role, IEnumerable<string> permissions)
+    public static async Task<Validation<Error, ApplicationRole>> AddPermissionClaims(this RoleManager<ApplicationRole> roleManager, ApplicationRole role, IEnumerable<string> permissions)
     {
         var claims = permissions.Map(p => new Claim(AuthorizationClaimTypes.Permission, p));
         return await roleManager.AddClaims(role, claims);
     }
 
-    public static async Task<Validation<Error, IdentityRole>> AddPermissionClaim(this RoleManager<IdentityRole> roleManager, IdentityRole role, string permission)
+    public static async Task<Validation<Error, ApplicationRole>> AddPermissionClaim(this RoleManager<ApplicationRole> roleManager, ApplicationRole role, string permission)
         => await roleManager.AddClaim(role, new Claim(AuthorizationClaimTypes.Permission, permission));
 
-    public static async Task<Validation<Error, IdentityRole>> AddClaims(this RoleManager<IdentityRole> roleManager, IdentityRole role, IEnumerable<Claim> claims)
+    public static async Task<Validation<Error, ApplicationRole>> AddClaims(this RoleManager<ApplicationRole> roleManager, ApplicationRole role, IEnumerable<Claim> claims)
     {
         var errors = new Seq<Error>();
         foreach (var claim in claims)
@@ -46,7 +46,7 @@ public static class IdentityExtensions
         return errors.Count > 0 ? errors : role;
     }
 
-    public static async Task<Validation<Error, IdentityRole>> AddClaim(this RoleManager<IdentityRole> roleManager, IdentityRole role, Claim claim)
+    public static async Task<Validation<Error, ApplicationRole>> AddClaim(this RoleManager<ApplicationRole> roleManager, ApplicationRole role, Claim claim)
     {
         var roleClaims = await roleManager.GetClaimsAsync(role);
         if (!roleClaims.Any(a => a.Type == claim.Type && a.Value == claim.Value))
@@ -59,7 +59,7 @@ public static class IdentityExtensions
         return role;
     }
 
-    public static async Task<Validation<Error, IdentityRole>> RemoveAllPermissionClaims(this RoleManager<IdentityRole> roleManager, IdentityRole role)
+    public static async Task<Validation<Error, ApplicationRole>> RemoveAllPermissionClaims(this RoleManager<ApplicationRole> roleManager, ApplicationRole role)
     {
         var errors = new Seq<Error>();
         var claims = await roleManager.GetClaimsAsync(role);

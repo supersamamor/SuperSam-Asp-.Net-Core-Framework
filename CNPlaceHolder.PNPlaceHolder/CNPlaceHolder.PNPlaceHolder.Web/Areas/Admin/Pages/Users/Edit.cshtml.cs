@@ -21,10 +21,10 @@ public class EditModel : BasePageModel<EditModel>
 {
     readonly IdentityContext _context;
     readonly UserManager<ApplicationUser> _userManager;
-    readonly RoleManager<IdentityRole> _roleManager;
+    readonly RoleManager<ApplicationRole> _roleManager;
 
     public EditModel(IdentityContext context,
-                         UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+                         UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
     {
         _context = context;
         _userManager = userManager;

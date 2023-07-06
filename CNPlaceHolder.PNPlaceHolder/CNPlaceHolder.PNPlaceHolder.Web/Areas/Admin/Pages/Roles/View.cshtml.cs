@@ -1,4 +1,5 @@
 using CNPlaceHolder.Common.Web.Utility.Extensions;
+using CNPlaceHolder.PNPlaceHolder.Core.Identity;
 using CNPlaceHolder.PNPlaceHolder.Web.Areas.Admin.Models;
 using CNPlaceHolder.PNPlaceHolder.Web.Areas.Admin.Queries.Roles;
 using CNPlaceHolder.PNPlaceHolder.Web.Models;
@@ -11,9 +12,9 @@ namespace CNPlaceHolder.PNPlaceHolder.Web.Areas.Admin.Pages.Roles;
 [Authorize(Policy = Permission.Roles.View)]
 public class ViewModel : BasePageModel<ViewModel>
 {
-    readonly RoleManager<IdentityRole> _roleManager;
+    readonly RoleManager<ApplicationRole> _roleManager;
 
-    public ViewModel(RoleManager<IdentityRole> roleManager)
+    public ViewModel(RoleManager<ApplicationRole> roleManager)
     {
         _roleManager = roleManager;
     }

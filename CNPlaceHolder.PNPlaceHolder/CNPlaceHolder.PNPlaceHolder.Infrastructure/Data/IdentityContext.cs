@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CNPlaceHolder.PNPlaceHolder.Infrastructure.Data
 {
-    public class IdentityContext : IdentityDbContext<ApplicationUser>
+    public class IdentityContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public IdentityContext(DbContextOptions<IdentityContext> options)
             : base(options)

@@ -21,9 +21,9 @@ public class AddModel : BasePageModel<AddModel>
 {
     readonly UserManager<ApplicationUser> _userManager;
     readonly IdentityContext _context;
-    readonly RoleManager<IdentityRole> _roleManager;
+    readonly RoleManager<ApplicationRole> _roleManager;
 
-    public AddModel(UserManager<ApplicationUser> userManager, IdentityContext context, RoleManager<IdentityRole> roleManager)
+    public AddModel(UserManager<ApplicationUser> userManager, IdentityContext context, RoleManager<ApplicationRole> roleManager)
     {
         _userManager = userManager;
         _context = context;
