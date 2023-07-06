@@ -16,10 +16,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Us
 public class ViewModel : BasePageModel<ViewModel>
 {
     readonly IdentityContext _context;
-    readonly RoleManager<IdentityRole> _roleManager;
+    readonly RoleManager<ApplicationRole> _roleManager;
     readonly UserManager<ApplicationUser> _userManager;
 
-    public ViewModel(IdentityContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+    public ViewModel(IdentityContext context, RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
     {
         _context = context;
         _roleManager = roleManager;

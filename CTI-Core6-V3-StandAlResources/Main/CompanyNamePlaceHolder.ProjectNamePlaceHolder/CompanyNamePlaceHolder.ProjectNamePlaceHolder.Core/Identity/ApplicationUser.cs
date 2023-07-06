@@ -23,3 +23,14 @@ public record Entity(string Id, string Name)
 {
     public IEnumerable<ApplicationUser>? Users { get; set; }
 }
+public class ApplicationRole : IdentityRole<string>
+{
+    public ApplicationRole() : base()
+    {
+    }
+
+    public ApplicationRole(string roleName) : base(roleName)
+    {
+        this.Id = Guid.NewGuid().ToString();
+    }
+}

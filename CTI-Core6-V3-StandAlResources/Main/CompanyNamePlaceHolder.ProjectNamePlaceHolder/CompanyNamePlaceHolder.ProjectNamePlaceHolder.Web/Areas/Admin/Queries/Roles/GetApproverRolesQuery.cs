@@ -5,14 +5,15 @@ using CompanyNamePlaceHolder.Common.Utility.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
 
-public record GetApproverRolesQuery(string CurrentSelectedApprover, IList<string> AllSelectedApprovers) : BaseQuery, IRequest<PagedListResponse<IdentityRole>>
+public record GetApproverRolesQuery(string CurrentSelectedApprover, IList<string> AllSelectedApprovers) : BaseQuery, IRequest<PagedListResponse<ApplicationRole>>
 {
 }
 
-public class GetApproverRolesQueryHandler : IRequestHandler<GetApproverRolesQuery, PagedListResponse<IdentityRole>>
+public class GetApproverRolesQueryHandler : IRequestHandler<GetApproverRolesQuery, PagedListResponse<ApplicationRole>>
 {
     private readonly IdentityContext _context;
 
@@ -21,7 +22,7 @@ public class GetApproverRolesQueryHandler : IRequestHandler<GetApproverRolesQuer
         _context = context;
     }
 
-    public async Task<PagedListResponse<IdentityRole>> Handle(GetApproverRolesQuery request, CancellationToken cancellationToken)
+    public async Task<PagedListResponse<ApplicationRole>> Handle(GetApproverRolesQuery request, CancellationToken cancellationToken)
     {
         var excludedUsers = request.AllSelectedApprovers.Where(l => l != request.CurrentSelectedApprover);
         var query = _context.Roles.Where(l => !excludedUsers.Contains(l.Id)).AsNoTracking();

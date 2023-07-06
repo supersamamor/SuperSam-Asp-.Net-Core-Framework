@@ -1,4 +1,5 @@
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using LanguageExt;
@@ -15,9 +16,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.Ro
 [Authorize(Policy = Permission.Roles.Create)]
 public class AddModel : BasePageModel<AddModel>
 {
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
 
-    public AddModel(RoleManager<IdentityRole> roleManager)
+    public AddModel(RoleManager<ApplicationRole> roleManager)
     {
         _roleManager = roleManager;
     }
@@ -45,8 +46,8 @@ public class AddModel : BasePageModel<AddModel>
         using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         return await Optional(await _roleManager.FindByNameAsync(Role.Name))
             .MatchAsync(
-                Some: role => Fail<Error, IdentityRole>($"Role with name {role.Name} already exists"),
-                None: async () => await CreateRole(new IdentityRole(Role.Name)).BindT(
+                Some: role => Fail<Error, ApplicationRole>($"Role with name {role.Name} already exists"),
+                None: async () => await CreateRole(new ApplicationRole(Role.Name)).BindT(
                     async r => await AddPermissionsToRole(r))
                 )
             .ToActionResult(
@@ -65,9 +66,9 @@ public class AddModel : BasePageModel<AddModel>
             });
     }
 
-    async Task<Validation<Error, IdentityRole>> CreateRole(IdentityRole role)
+    async Task<Validation<Error, ApplicationRole>> CreateRole(ApplicationRole role)
     {
-        return await TryAsync<Validation<Error, IdentityRole>>(async () =>
+        return await TryAsync<Validation<Error, ApplicationRole>>(async () =>
         {
             var result = await _roleManager.CreateAsync(role);
             if (!result.Succeeded)
@@ -82,7 +83,7 @@ public class AddModel : BasePageModel<AddModel>
         });
     }
 
-    async Task<Validation<Error, IdentityRole>> AddPermissionsToRole(IdentityRole role)
+    async Task<Validation<Error, ApplicationRole>> AddPermissionsToRole(ApplicationRole role)
     {
         var permissions = Permissions.Where(p => p.Enabled).Select(p => p.Permission);
         return await _roleManager.AddPermissionClaims(role, permissions);

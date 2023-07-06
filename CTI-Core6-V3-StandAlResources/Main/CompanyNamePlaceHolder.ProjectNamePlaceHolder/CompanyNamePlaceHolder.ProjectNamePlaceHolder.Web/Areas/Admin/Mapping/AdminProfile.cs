@@ -15,7 +15,7 @@ public class AdminProfile : Profile
         CreateMap<EntityViewModel, AddOrEditEntityCommand>();
         CreateMap<AddOrEditEntityCommand, Entity>();
 
-        CreateMap<IdentityRole, RoleViewModel>().ReverseMap();
+        CreateMap<ApplicationRole, RoleViewModel>().ReverseMap();
 
         CreateMap<Audit, AuditLogViewModel>();
         CreateMap<ApplicationUser, AuditLogUserViewModel>();
