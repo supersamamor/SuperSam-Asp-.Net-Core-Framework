@@ -40,7 +40,7 @@ public static class QueryableExtensions
         {
             query = query.OrderBy($"{sortColumn} {sortOrder}");
         }
-        var data = await query.ToPagedListAsync(pageNumber, pageSize, cancellationToken);
+        var data = await query.ToPagedListAsync(pageNumber, pageSize, null, cancellationToken);
         return new PagedListResponse<T>(data, query.Count());
     }
 }

@@ -174,15 +174,12 @@ public class AuthorizationController : Controller
                 // Automatically create a permanent authorization to avoid requiring explicit consent
                 // for future authorization or token requests containing the same scopes.
                 var authorization = authorizations.LastOrDefault();
-                if (authorization is null)
-                {
-                    authorization = await _authorizationManager.CreateAsync(
+                authorization ??= await _authorizationManager.CreateAsync(
                         principal: principal,
                         subject: await _userManager.GetUserIdAsync(user),
                         client: (await _applicationManager.GetIdAsync(application))!,
                         type: AuthorizationTypes.Permanent,
                         scopes: principal.GetScopes());
-                }
 
                 principal.SetAuthorizationId(await _authorizationManager.GetIdAsync(authorization));
 
@@ -265,15 +262,12 @@ public class AuthorizationController : Controller
         // Automatically create a permanent authorization to avoid requiring explicit consent
         // for future authorization or token requests containing the same scopes.
         var authorization = authorizations.LastOrDefault();
-        if (authorization is null)
-        {
-            authorization = await _authorizationManager.CreateAsync(
+        authorization ??= await _authorizationManager.CreateAsync(
                 principal: principal,
                 subject: await _userManager.GetUserIdAsync(user),
                 client: (await _applicationManager.GetIdAsync(application))!,
                 type: AuthorizationTypes.Permanent,
                 scopes: principal.GetScopes());
-        }
 
         principal.SetAuthorizationId(await _authorizationManager.GetIdAsync(authorization));
 
@@ -477,22 +471,18 @@ public class AuthorizationController : Controller
         {
             // Note: the client credentials are automatically validated by OpenIddict:
             // if client_id or client_secret are invalid, this action won't be invoked.
-            var application = await _applicationManager.FindByClientIdAsync(request.ClientId!);
-            if (application == null)
-            {
-                throw new InvalidOperationException("The application details cannot be found in the database.");
-            }
+            var application = await _applicationManager.FindByClientIdAsync(request.ClientId!) ?? throw new InvalidOperationException("The application details cannot be found in the database.");
 
             // Create a new ClaimsIdentity containing the claims that
             // will be used to create an id_token, a token or a code.
             var identity = new ClaimsIdentity(
                 TokenValidationParameters.DefaultAuthenticationType,
                 Claims.Name, Claims.Role);
-
+            
             // Use the client_id as the subject identifier.
-            identity.AddClaim(Claims.Subject, application.ClientId!, Destinations.AccessToken, Destinations.IdentityToken);
-            identity.AddClaim(Claims.Name, application.DisplayName!, Destinations.AccessToken, Destinations.IdentityToken);
-            identity.AddClaim(CustomClaimTypes.Entity, application.Entity, Destinations.AccessToken, Destinations.IdentityToken);
+            identity.AddClaim(new Claim(Claims.Subject, application.ClientId!, Destinations.AccessToken, Destinations.IdentityToken));
+            identity.AddClaim(new Claim(Claims.Name, application.DisplayName!, Destinations.AccessToken, Destinations.IdentityToken));
+            identity.AddClaim(new Claim(CustomClaimTypes.Entity, application.Entity, Destinations.AccessToken, Destinations.IdentityToken));
 
             var principal = new ClaimsPrincipal(identity);
 
