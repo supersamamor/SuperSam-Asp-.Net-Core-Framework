@@ -15,7 +15,7 @@
 		<PackageReference Include="LanguageExt.Core" Version="4.4.3" />
 		<PackageReference Include="LanguageExt.Transformers" Version="4.4.3" />
 		<PackageReference Include="OpenIddict.Abstractions" Version="4.5.0" />
-		<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 	</ItemGroup>
 	<ItemGroup>	
 		<ProjectReference Include="..\CNPlaceHolder.Common.Identity.Abstractions\CNPlaceHolder.Common.Identity.Abstractions.csproj" />
