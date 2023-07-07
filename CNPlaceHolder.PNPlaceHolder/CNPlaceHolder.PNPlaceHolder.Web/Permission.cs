@@ -11,8 +11,9 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("Apis"))
             .Concat(GeneratePermissionsForModule("Applications"))
             .Concat(GeneratePermissionsForModule("AuditTrail"))
-            .Concat(GeneratePermissionsForModule("TnamePlaceHolder"))
-			;
+            .Concat(GeneratePermissionsForModule("ModPlaceHolder"))
+			
+			.Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
@@ -23,8 +24,12 @@ public static class Permission
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
+			$"Permission.{module}.Approve",
         };
-		
+		if (module == "ApproverSetup")
+		{
+			permissions.Add($"Permission.{module}.PendingApprovals");
+		}
 		return permissions;
     }
 
@@ -84,13 +89,20 @@ public static class Permission
         public const string Delete = "Permission.AuditTrail.Delete";
     }
 
-    public static class TnamePlaceHolder
+    public static class ModPlaceHolder
 	{
-		public const string View = "Permission.TnamePlaceHolder.View";
-		public const string Create = "Permission.TnamePlaceHolder.Create";
-		public const string Edit = "Permission.TnamePlaceHolder.Edit";
-		public const string Delete = "Permission.TnamePlaceHolder.Delete";
+		public const string View = "Permission.ModPlaceHolder.View";
+		public const string Create = "Permission.ModPlaceHolder.Create";
+		public const string Edit = "Permission.ModPlaceHolder.Edit";
+		public const string Delete = "Permission.ModPlaceHolder.Delete";
+		public const string Approve = "Permission.ModPlaceHolder.Approve";
 	}
 	
-	
+	public static class ApproverSetup
+	{
+		public const string Create = "Permission.ApproverSetup.Create";
+		public const string View = "Permission.ApproverSetup.View";
+		public const string Edit = "Permission.ApproverSetup.Edit";
+		public const string PendingApprovals = "Permission.ApproverSetup.PendingApprovals";
+	}
 }

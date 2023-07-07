@@ -1,0 +1,115 @@
+@page
+@model PendingApprovalsModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Pending Approval List"];
+    ViewData["ActiveMainPage"] = "Approval";
+    ViewData["Level1"] = "Admin";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="pendingApproval" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Localizer["Record Id"]
+                            </th>
+                            <th>
+                                @Model.TableName
+                            </th>
+                            <th>
+                                @Localizer["Approval Status"]
+                            </th>
+                            <th>
+                                @Localizer["Sending Status"]
+                            </th>
+                            <th>
+                                @Localizer["Sending Remarks"]
+                            </th>
+                            <th>
+                                @Localizer["Sending Date/Time"]
+                            </th>
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+ <input type="hidden" asp-for="@Model.TableName" />
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#pendingApproval').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 2, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/ApproverSetup/PendingApprovals", new { area = "PNPlaceHolder", handler = "ListAll" })' + '&tableName=' + $('#TableName').val(),
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+            initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+            columns: [
+                { data: "dataId", name: "DataId", responsivePriority: 1, title: '@Localizer["Record Id"]', searchable: true },
+                { data: "recordName", name: "RecordName", responsivePriority: 1, searchable: false, orderable: false },
+                { data: "approvalStatus", name: "ApprovalStatus", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false },
+                { data: "emailSendingStatus", name: "EmailSendingStatus", responsivePriority: 1, title: '@Localizer["Sending Status"]', searchable: false },
+                { data: "emailSendingRemarks", name: "EmailSendingRemarks", responsivePriority: 1, title: '@Localizer["Sending Remarks"]', searchable: false },
+                { data: "emailSendingDateTime", name: "EmailSendingDateTime", responsivePriority: 1, title: '@Localizer["Sending Date/Time"]', searchable: false },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/ApproverSetup/PendingApprovals", new { area = "PNPlaceHolder" })' + '?handler=ResendApproval&approvalId=' + row.approvalId + '&tableName=' + $('#TableName').val();                           
+						var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Resend Approval"]"><i class="fas fa-paper-plane"></i></a>';						
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "approvalId", name: "ApprovalId", title: '@Localizer["Approval Id"]', visible: false, searchable: false },
+            ],
+            buttons: ['excel', 'pdf', 'pageLength',],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+        function BindTableRowCollapseEvent()
+        {
+            $('#pendingApproval tbody').on('click', 'td.dtr-control', function () {
+                 $.showAjaxLoaderOnClick([".btnResendApproval"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnResendApproval"]);
+		$('#navbar_search').keyup(function(){
+              table.search($(this).val()).draw();
+        })
+        $(".dataTables_filter").hide();
+        $("#navbar_search_container").show();
+    });
+</script>
+}

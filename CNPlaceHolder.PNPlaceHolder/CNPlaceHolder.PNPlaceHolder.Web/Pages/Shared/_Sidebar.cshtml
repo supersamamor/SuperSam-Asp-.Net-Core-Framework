@@ -76,7 +76,17 @@
                                 </a>
                             </li>
                         }
-                        
+                        @if((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
+							{
+								<li class="nav-item">
+									<a href = "/PNPlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
+										<i class="fas fa-circle nav-icon"></i>
+										<span>
+											@Localizer["Approval"]
+										</span>
+									</a>
+								</li>
+							}
                     </ul>
                 </li>
             }
@@ -89,13 +99,13 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.TnamePlaceHolder.View)).Succeeded)
+                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.ModPlaceHolder.View)).Succeeded)
 						{
 							<li class="nav-item">
-								<a href = "/PNPlaceHolder/TnamePlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "TnamePlaceHolder")">
+								<a href = "/PNPlaceHolder/ModPlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ModPlaceHolder")">
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
-										@Localizer["Tname Description"]
+										@Localizer["Mod Description"]
 									</span>
 								</a>
 							</li>

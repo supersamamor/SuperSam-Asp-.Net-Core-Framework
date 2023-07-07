@@ -9,6 +9,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
+using CNPlaceHolder.PNPlaceHolder.Scheduler;
+using CNPlaceHolder.PNPlaceHolder.EmailSending;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +41,8 @@ else
 services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
-
+services.AddScheduler(configuration);
+services.AddEmailSendingAService(configuration);
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");

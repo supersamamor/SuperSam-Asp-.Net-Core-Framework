@@ -39,7 +39,8 @@
     <PackageReference Include="OpenIddict.Quartz" Version="4.5.0" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.3" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
-	
+	<ProjectReference Include="..\CNPlaceHolder.PNPlaceHolder.EmailSending\CNPlaceHolder.PNPlaceHolder.EmailSending.csproj" />
+	<ProjectReference Include="..\CNPlaceHolder.PNPlaceHolder.Scheduler\CNPlaceHolder.PNPlaceHolder.Scheduler.csproj" />
   </ItemGroup>
 
   <ItemGroup>
