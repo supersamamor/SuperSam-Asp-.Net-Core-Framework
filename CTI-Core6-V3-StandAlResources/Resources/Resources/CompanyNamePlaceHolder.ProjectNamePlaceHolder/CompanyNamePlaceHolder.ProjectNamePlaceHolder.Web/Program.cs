@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.FileProviders;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
 using Serilog;Template:[ApprovalProgramImport]
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,7 @@ else
 services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
+services.AddEmailSendingAService(configuration);
 Template:[ApprovalProgramAddService]
 var app = builder.Build();
 // Static Files

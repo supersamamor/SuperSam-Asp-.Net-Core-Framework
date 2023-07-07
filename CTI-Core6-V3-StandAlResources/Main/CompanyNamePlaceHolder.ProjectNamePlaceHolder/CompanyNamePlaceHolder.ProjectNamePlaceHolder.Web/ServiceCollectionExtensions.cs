@@ -30,7 +30,6 @@ public static class ServiceCollectionExtensions
         services.ConfigureLocalization();
         services.AddRazorPages().ConfigureLocalization();
         services.AddApplicationServices();
-        services.AddSharedServices(Configuration);
         services.AddQuartz();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
