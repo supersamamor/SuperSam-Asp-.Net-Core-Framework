@@ -10,19 +10,22 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler
     {
         public static void AddScheduler(this IServiceCollection services, IConfiguration config)
         {
-            services.Configure<QuartzOptions>(config.GetSection("Quartz"));
-            services.AddQuartz(q =>
+			if (config.GetValue<bool>("EnableQuartzJob"))
             {
-                q.UseMicrosoftDependencyInjectionJobFactory();
-                q.UseSimpleTypeLoader();
-                q.UseInMemoryStore();
-            });
-            services.AddQuartzServer(options =>
-            {
-                options.WaitForJobsToComplete = true;
-            });
-            services.AddTransient<FileScanJob>();
-            services.AddTransient<ApprovalNotificationJob>();
+				services.Configure<QuartzOptions>(config.GetSection("Quartz"));
+				services.AddQuartz(q =>
+				{
+					q.UseMicrosoftDependencyInjectionJobFactory();
+					q.UseSimpleTypeLoader();
+					q.UseInMemoryStore();
+				});
+				services.AddQuartzServer(options =>
+				{
+					options.WaitForJobsToComplete = true;
+				});
+				services.AddTransient<FileScanJob>();
+				services.AddTransient<ApprovalNotificationJob>();
+            }            
         }
     }
 }
