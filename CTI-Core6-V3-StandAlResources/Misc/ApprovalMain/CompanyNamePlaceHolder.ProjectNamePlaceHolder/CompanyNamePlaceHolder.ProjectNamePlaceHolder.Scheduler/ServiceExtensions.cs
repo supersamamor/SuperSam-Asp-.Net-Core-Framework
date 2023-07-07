@@ -2,6 +2,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using Quartz.AspNetCore;
 using Quartz.Job;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler
 {
