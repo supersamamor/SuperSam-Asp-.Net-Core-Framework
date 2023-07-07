@@ -39,7 +39,7 @@ public static class ServiceCollectionExtensions
         {
             config.DurationInSeconds = 10;
             config.IsDismissable = true;
-            config.Position = NotyfPosition.BottomRight;
+            config.Position = NotyfPosition.TopRight;
         });
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
