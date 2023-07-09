@@ -99,7 +99,7 @@
             var tableId = table.settings()[0].sTableId;
             $('#navbar_search').keyup(function () {
                 var searchKey = $(this).val();
-                $.cookie("searchKey-" + tableId, searchKey, { expires: 7 }); // Cookie expires after 7 days
+                $.cookie("searchKey-" + tableId, searchKey, { expires: 1 / 288 }); // Cookie expires after 5 minutes
                 table.search(searchKey).draw();
             })
             $(".dataTables_filter").hide();
