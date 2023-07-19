@@ -1,0 +1,32 @@
+@using Models
+@model PLHealthDeclarationViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLVaccine" class="form-label "><strong>@Localizer["PL Vaccine"] :</strong></label>
+			<input asp-for="@Model.PLVaccine" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.PLVaccine" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLIsVaccinated" class="form-label "  style="padding-left: 7.5px;"><strong>@Localizer["PL Vaccinated"] :</strong></label>
+			<input type="radio" asp-for="@Model.PLIsVaccinated" value="true" /><span>Yes</span>
+
+			<input type="radio" asp-for="@Model.PLIsVaccinated" value="false" style="margin-left:15px;" /><span>No</span>
+			<span asp-validation-for="@Model.PLIsVaccinated" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLEmployeeId" class="form-label fieldrequired"><strong>@Localizer["PL Employee"] :</strong></label>
+			<select asp-for="@Model.PLEmployeeId" class="form-control" asp-items="@(dropdownService.GetPLEmployeeList(Model.PLEmployeeId))"><option value="">- Select PL Employee -</option></select>
+			<span asp-validation-for="@Model.PLEmployeeId" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

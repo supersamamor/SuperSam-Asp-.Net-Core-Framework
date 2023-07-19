@@ -1,0 +1,38 @@
+@using Models
+@model PLEmployeeViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLFirstName" class="form-label fieldrequired"><strong>@Localizer["PL First Name"] :</strong></label>
+			<input asp-for="@Model.PLFirstName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.PLFirstName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLMiddleName" class="form-label fieldrequired"><strong>@Localizer["PL Middle Name"] :</strong></label>
+			<input asp-for="@Model.PLMiddleName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.PLMiddleName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLEmployeeCode" class="form-label fieldrequired"><strong>@Localizer["PL Employee Code"] :</strong></label>
+			<input asp-for="@Model.PLEmployeeCode" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.PLEmployeeCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLLastName" class="form-label fieldrequired"><strong>@Localizer["PL Last Name"] :</strong></label>
+			<input asp-for="@Model.PLLastName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.PLLastName" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>
