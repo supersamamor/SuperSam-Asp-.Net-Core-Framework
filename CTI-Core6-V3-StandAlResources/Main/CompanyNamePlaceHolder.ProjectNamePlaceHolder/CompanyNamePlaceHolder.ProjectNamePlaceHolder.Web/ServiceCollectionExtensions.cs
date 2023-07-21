@@ -66,6 +66,11 @@ public static class ServiceCollectionExtensions
         {
             options.TokenLifespan = TimeSpan.FromHours(tokenLifespan);
         });
+		services.AddHttpsRedirection(options =>
+        {
+            options.RedirectStatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status307TemporaryRedirect;
+            options.HttpsPort = 443; // Replace with the port your HTTPS server listens on
+        });
         return services;
     }
 
