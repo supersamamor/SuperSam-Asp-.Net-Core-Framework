@@ -1,0 +1,13 @@
+@using Models
+@model PLEmployeeViewModel
+
+<div class="card">
+    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["PL Employee"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditPLEmployeeDetails" model="Model" />        
+    </div>
+</div>
+
+<br /><partial name="_PLContactInformationList" model="Model" />
+<br /><partial name="_PLHealthDeclarationItem" model="Model" />

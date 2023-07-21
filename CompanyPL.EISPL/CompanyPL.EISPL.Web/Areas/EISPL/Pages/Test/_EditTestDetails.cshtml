@@ -1,0 +1,22 @@
+@using Models
+@model TestViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PLEmployeeId" class="form-label fieldrequired"><strong>@Localizer["Employee"] :</strong></label>
+			<select asp-for="@Model.PLEmployeeId" class="form-control" asp-items="@(dropdownService.GetPLEmployeeList(Model.PLEmployeeId))"><option value="">- Select Employee -</option></select>
+			<span asp-validation-for="@Model.PLEmployeeId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TestColumn" class="form-label fieldrequired"><strong>@Localizer["Test Column"] :</strong></label>
+			<input asp-for="@Model.TestColumn" class="form-control"  />
+			<span asp-validation-for="@Model.TestColumn" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

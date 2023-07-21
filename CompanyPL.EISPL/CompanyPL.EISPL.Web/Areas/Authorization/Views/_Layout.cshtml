@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - CompanyPL.EISPL</title>
+
+    <link rel="stylesheet" href="~/lib/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Styles", required: false)
+    <script asp-add-nonce>
+        @Html.Raw(JavaScriptSnippet.ScriptBody)
+    </script>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="/Index" class="h1"><b>CompanyPL.EISPL</b></a>
+            </div>
+            <div class="card-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script asp-add-nonce src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script asp-add-nonce src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script asp-add-nonce src="~/lib/select2/dist/js/select2.min.js"></script>
+    <script asp-add-nonce src="~/lib/admin-lte/dist/js/adminlte.min.js"></script>
+    <script asp-add-nonce src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

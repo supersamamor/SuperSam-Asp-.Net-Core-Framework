@@ -1,0 +1,37 @@
+@using Models
+@model PLEmployeeViewModel
+<input type="hidden" id="PLHealthDeclarationCount" value="@Model?.PLHealthDeclarationList?.Count" />
+<div class="card">
+    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["PLHealth Declaration"]</span><br></h5>
+    <div class="card-body" style="overflow:auto;">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+            @if (Model?.PLHealthDeclarationList != null)
+            {
+                int counter = 0;
+                foreach (var item in Model.PLHealthDeclarationList)
+                {
+                    <input type="hidden" name="PLHealthDeclarationList[@counter].Id" value="@item.Id" />
+                    <input type="hidden" name="PLHealthDeclarationList[@counter].PLEmployeeId" value="@item.PLEmployeeId" />
+                    <div class="col">
+							<div class="mb-3">
+								<label asp-for="@item.PLVaccine" class="form-label "><strong>@Localizer["PL Vaccine"] :</strong></label>
+									<input asp-for="@item.PLVaccine"  name="PLHealthDeclarationList[@counter].PLVaccine" class="form-control" maxlength="255"/>
+									<span data-valmsg-for="PLHealthDeclarationList[@counter].PLVaccine" asp-validation-for="@item.PLVaccine" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="@item.PLIsVaccinated" class="form-label "><strong>@Localizer["PL Vaccinated"] :</strong></label>
+									<input type="radio" asp-for="@item.PLIsVaccinated" name="PLHealthDeclarationList[@counter].PLIsVaccinated" value="true"/><span>Yes</span>
+
+									<input type="radio" asp-for="@item.PLIsVaccinated" name="PLHealthDeclarationList[@counter].PLIsVaccinated" value="false" style="margin-left:15px;" /><span>No</span>
+									<span data-valmsg-for="PLHealthDeclarationList[@counter].PLIsVaccinated" asp-validation-for="@item.PLIsVaccinated" class="text-danger"></span>
+							</div>
+						</div>
+						
+                    counter++;
+                }
+            }
+        </div>
+    </div>
+</div>
