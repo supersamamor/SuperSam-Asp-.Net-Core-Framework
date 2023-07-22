@@ -79,8 +79,6 @@ app.UseSecurityHeaders(policies =>
                        .Self()
                        .StrictDynamic()
                        .WithNonce()
-                       .UnsafeInline()
-                       .UnsafeEval()
                        .OverHttps();
                 builder.AddStyleSrc()
                        .Self()
