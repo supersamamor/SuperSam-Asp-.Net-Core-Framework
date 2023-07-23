@@ -74,7 +74,7 @@ app.UseSecurityHeaders(policies =>
             {
                 builder.AddUpgradeInsecureRequests();
                 builder.AddBlockAllMixedContent();
-                builder.AddDefaultSrc().OverHttps();
+                builder.AddDefaultSrc().Self().OverHttps();
                 builder.AddScriptSrc()
                        .Self()
                        .StrictDynamic()
@@ -87,6 +87,8 @@ app.UseSecurityHeaders(policies =>
                 builder.AddImgSrc().OverHttps().Data();
                 builder.AddObjectSrc().None();
                 builder.AddBaseUri().None();
+                builder.AddFrameAncestors().Self();
+                builder.AddFormAction().Self();
             }));
 app.UseWebOptimizer();
 app.UseStaticFiles(new StaticFileOptions
