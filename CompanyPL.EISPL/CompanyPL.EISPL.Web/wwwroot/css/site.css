@@ -2,6 +2,31 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 /* Write your CSS code.*/
+footer .sticky-footer {
+    margin-top: 14px;
+}
+
+#themeSwitchContainer {
+    display: none;
+}
+
+#languangeSwitchContainer {
+    display: none !important;
+}
+
+.sidebar-brand-text {
+    max-width: 100px;
+}
+
+.bg-login-image {
+    background-image: url('/img/login-screen-banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#navbar_search_container {
+    display: none !important;
+}
 
 .back-to-top {
     bottom: 1.25rem;
@@ -32,6 +57,7 @@ button.accept-policy {
     font-weight: bold;
     color: red;
 }
+
 .select2-selection {
     height: 40px !important;
 }
@@ -39,6 +65,7 @@ button.accept-policy {
 .select2-selection__rendered {
     padding-top: 5px;
 }
+
 input[readonly] {
     background-color: #eaecf4 !important;
 }
