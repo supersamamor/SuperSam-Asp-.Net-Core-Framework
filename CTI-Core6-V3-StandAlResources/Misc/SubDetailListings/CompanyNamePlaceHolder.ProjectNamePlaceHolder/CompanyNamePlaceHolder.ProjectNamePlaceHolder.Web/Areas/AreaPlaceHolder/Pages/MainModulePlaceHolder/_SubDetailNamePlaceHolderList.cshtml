@@ -3,15 +3,15 @@
 <input type="hidden" id="SubDetailNamePlaceHolderCount" value="@Model?.SubDetailNamePlaceHolderList?.Count" />
 <div class="card">
     <h5 class="card-header">
-        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["SubDetailDescriptionPlaceHolder"]</span>
-        <a id="btnAddSubDetailNamePlaceHolder" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
-        <button class="cancel" type="button" id="btnRemoveSubDetailNamePlaceHolder" value="RemoveSubDetailNamePlaceHolder" style="display:none;"></button>
+        <span  class="card-header-custom">@Localizer["SubDetailDescriptionPlaceHolder"]</span>
+        <a id="btnAddSubDetailNamePlaceHolder" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveSubDetailNamePlaceHolder" value="RemoveSubDetailNamePlaceHolder"></button>
     </h5>
-    <div class="card-body" style="overflow:auto;">
+    <div class="card-body overflow-auto">
         <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
             <thead>
                 <tr>
-                    <th style="display:none;"></th>
+                    <th class="d-none"></th>
                     Template:[InsertNewSubDetailListDescription]
                     <th>
                         @Localizer["Action"]
@@ -25,13 +25,13 @@
                     foreach (var item in Model.SubDetailNamePlaceHolderList)
                     {
                         <tr>
-                            <td style="display:none;">
+                            <td class="d-none">
                                 <input type="hidden" name="SubDetailNamePlaceHolderList[@counter].Id" value="@item.Id" />
                                 <input type="hidden" name="SubDetailNamePlaceHolderList[@counter].SubDetailForeignKeyPlaceHolder" value="@item.SubDetailForeignKeyPlaceHolder" />
                             </td>
                             Template:[InsertNewSubDetailListName]
                             <td>
-                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveSubDetailNamePlaceHolderButton" title="@Localizer["Remove SubDetailNamePlaceHolder"]" removeId="@(item.Id)"><i class="fas fa-trash" style="font-size:18px;"></i></a>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveSubDetailNamePlaceHolderButton btnAddRemoveSubDetailList" title="@Localizer["Remove SubDetailNamePlaceHolder"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         counter++;

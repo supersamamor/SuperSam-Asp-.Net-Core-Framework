@@ -12,11 +12,11 @@
         <partial name="_InputFieldsPartial" model="Model.MainModulePlaceHolder" />
     </div>
 </div>
-<div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+<div id="toolbar-container" class="btn-group" role="group">
 	<a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Create)).Succeeded)
     {
-        <a asp-page="Add" class="btn btn-success" title="@Localizer["Add"]" style="color:#fff;"><i class="fas fa-plus"></i></a>
+        <a asp-page="Add"  id="btnAddRecord" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
     }
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Edit)).Succeeded)
     {

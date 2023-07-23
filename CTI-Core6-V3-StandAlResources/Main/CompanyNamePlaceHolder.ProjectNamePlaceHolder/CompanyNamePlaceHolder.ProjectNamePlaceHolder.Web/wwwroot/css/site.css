@@ -47,6 +47,31 @@ footer .sticky-footer {
     background: transparent;
     border: none;
 }
+.RadionButtonLabel
+{
+	padding-left: 7.5px;
+}
+.file-upload-control
+{
+	display:block;
+}
+.file-upload-filename
+{
+	padding-left:0px;
+	padding-right:0px;
+	margin-top:10px;
+}
+.file-view-button
+{
+	cursor:pointer;
+	color:#fff;
+	background:#28a745;
+	font-weight:700;
+}
+.overflow-x-scroll
+{
+	overflow-x: scroll;
+}
 .back-to-top {
     bottom: 1.25rem;
     position: fixed;
