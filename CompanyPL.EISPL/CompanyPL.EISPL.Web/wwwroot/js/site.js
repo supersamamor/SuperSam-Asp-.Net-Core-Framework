@@ -308,7 +308,7 @@ $(document).ready(function () {
             '<div class="modal-content">' +
             '<div class="modal-header">' +
             '<h5 class="modal-title">Confirmation</h5>' +
-            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background:transparent;border:none;" id="btnCloseIcon' + transactionName + '">' +
+            '<button type="button" class="close btnCloseModalIcon" data-dismiss="modal" aria-label="Close" id="btnCloseIcon' + transactionName + '">' +
             '<span aria-hidden="true">&times;</span>' +
             '</button>' +
             '</div>' +

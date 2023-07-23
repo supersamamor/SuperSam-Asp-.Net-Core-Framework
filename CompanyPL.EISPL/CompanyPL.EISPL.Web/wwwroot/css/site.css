@@ -27,7 +27,26 @@ footer .sticky-footer {
 #navbar_search_container {
     display: none !important;
 }
-
+.toolbar-container {
+    float: right;
+    margin-top: 10px;
+}
+#btnConfirmationModal, #btnAddRecord {
+    color: #fff;
+}
+.card-header-custom {
+    background-color: var(--bs-card-cap-bg);
+}
+.btnAddRemoveSubDetailList > i {
+    font-size: 18px;
+}
+.RadioButtonNo {
+    margin-left: 15px;
+}
+.btnCloseModalIcon {
+    background: transparent;
+    border: none;
+}
 .back-to-top {
     bottom: 1.25rem;
     position: fixed;
