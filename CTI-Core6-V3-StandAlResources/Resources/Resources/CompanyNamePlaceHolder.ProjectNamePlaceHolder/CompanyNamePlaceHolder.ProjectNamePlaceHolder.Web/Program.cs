@@ -87,7 +87,7 @@ app.UseSecurityHeaders(policies =>
                 builder.AddObjectSrc().None();
                 builder.AddBaseUri().None();
                 builder.AddFrameAncestors().Self();
-                builder.AddFormAction().Self();
+                builder.AddFormAction().OverHttps();
             }));
 app.UseWebOptimizer();
 app.UseStaticFiles(new StaticFileOptions
