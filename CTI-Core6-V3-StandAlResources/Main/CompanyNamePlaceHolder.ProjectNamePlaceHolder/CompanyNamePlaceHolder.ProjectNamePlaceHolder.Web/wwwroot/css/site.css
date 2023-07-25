@@ -27,7 +27,7 @@ footer .sticky-footer {
 #navbar_search_container {
     display: none !important;
 }
-.toolbar-container {
+#toolbar-container {
     float: right;
     margin-top: 10px;
 }

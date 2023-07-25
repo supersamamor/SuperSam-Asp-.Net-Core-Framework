@@ -3,44 +3,38 @@
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ReportName" class="form-label fieldrequired"><strong>@Localizer["Report Name"] :</strong></label>
-			<input asp-for="@Model.ReportName" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.ReportName" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.QueryType" class="form-label fieldrequired"><strong>@Localizer["Query Type"] :</strong></label>
-			<input asp-for="@Model.QueryType" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.QueryType" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.ReportOrChartType" class="form-label fieldrequired"><strong>@Localizer["Report / Chart Type"] :</strong></label>
-			<input asp-for="@Model.ReportOrChartType" class="form-control" maxlength="50" />
-			<span asp-validation-for="@Model.ReportOrChartType" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.IsDistinct" class="form-label fieldrequired"><strong>@Localizer["Distinct"] :</strong></label>
-			<input asp-for="@Model.IsDistinct" class="custom-checkbox-label"/>
-			<span asp-validation-for="@Model.IsDistinct" class="text-danger"></span>
-			
-	</div>
-</div>
-<div class="col">
-	<div class="mb-3">
-		<label asp-for="@Model.QueryString" class="form-label "><strong>@Localizer["Query String"] :</strong></label>
-			<input asp-for="@Model.QueryString" class="form-control" maxlength="8000" />
-			<span asp-validation-for="@Model.QueryString" class="text-danger"></span>
-			
-	</div>
-</div>
-
+        <div class="mb-3">
+            <label asp-for="@Model.ReportName" class="form-label fieldrequired"><strong>@Localizer["Report Name"] :</strong></label>
+            <input asp-for="@Model.ReportName" class="form-control" maxlength="255" />
+            <span asp-validation-for="@Model.ReportName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.QueryType" class="form-label fieldrequired"><strong>@Localizer["Query Type"] :</strong></label>
+            <select asp-for="@Model.QueryType" class="form-control" asp-items="@(dropdownService.QueryTypeList())">
+                <option value="">- Select Query Type -</option>
+            </select>
+            <span asp-validation-for="@Model.QueryType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ReportOrChartType" class="form-label fieldrequired"><strong>@Localizer["Report / Chart Type"] :</strong></label>        
+            <select asp-for="@Model.ReportOrChartType" class="form-control" asp-items="@(dropdownService.ReportChartTypeList())">
+                <option value="">- Select Report/Chart Type -</option>
+            </select>
+            <span asp-validation-for="@Model.ReportOrChartType" class="text-danger"></span>
+        </div>
+    </div>
+    @if (Model.QueryType == CTI.DPI.Core.Constants.QueryType.QueryBuilder)
+    {
+        <div class="col">
+            <div class="mb-3">
+                <label asp-for="@Model.IsDistinct" class="form-label fieldrequired"><strong>@Localizer["Distinct"] :</strong></label>
+                <input asp-for="@Model.IsDistinct" class="custom-checkbox-label" />
+                <span asp-validation-for="@Model.IsDistinct" class="text-danger"></span>
+            </div>
+        </div>
+    }
 </div>

@@ -11,7 +11,7 @@
     <div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.Report" />
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">   
+    <div id="toolbar-container" class="btn-group" role="group">   
         <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
         @if (Model.ApprovalStatus == CTI.DPI.Core.DPI.ApprovalStatus.ForApproval)
         {
