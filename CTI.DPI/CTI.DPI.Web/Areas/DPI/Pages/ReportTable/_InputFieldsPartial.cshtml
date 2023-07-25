@@ -1,0 +1,14 @@
+@using Models
+@model ReportTableViewModel
+
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Table"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditReportTableDetails" model="Model" />        
+    </div>
+</div>
+
+<br /><partial name="_ReportTableJoinParameterList" model="Model" />
+<br /><partial name="_ReportColumnDetailList" model="Model" />
+<br /><partial name="_ReportColumnFilterList" model="Model" />

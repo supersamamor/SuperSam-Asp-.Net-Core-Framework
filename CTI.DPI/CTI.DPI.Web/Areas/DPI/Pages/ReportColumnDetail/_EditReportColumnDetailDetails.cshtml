@@ -1,0 +1,54 @@
+@using Models
+@model ReportColumnDetailViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ReportColumnId" class="form-label "><strong>@Localizer["Report Column"] :</strong></label>
+			<select asp-for="@Model.ReportColumnId" class="form-control" asp-items="@(dropdownService.GetReportColumnHeaderList(Model.ReportColumnId))"><option value="">- Select Report Column -</option></select>
+			<span asp-validation-for="@Model.ReportColumnId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TableId" class="form-label "><strong>@Localizer["Table"] :</strong></label>
+			<select asp-for="@Model.TableId" class="form-control" asp-items="@(dropdownService.GetReportTableList(Model.TableId))"><option value="">- Select Table -</option></select>
+			<span asp-validation-for="@Model.TableId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.FieldName" class="form-label "><strong>@Localizer["Field Name"] :</strong></label>
+			<input asp-for="@Model.FieldName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.FieldName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Function" class="form-label "><strong>@Localizer["Function"] :</strong></label>
+			<input asp-for="@Model.Function" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Function" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ArithmeticOperator" class="form-label "><strong>@Localizer["Arithmetic Operator"] :</strong></label>
+			<input asp-for="@Model.ArithmeticOperator" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.ArithmeticOperator" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Sequence" class="form-label "><strong>@Localizer["Sequence"] :</strong></label>
+			<input asp-for="@Model.Sequence" class="form-control"  />
+			<span asp-validation-for="@Model.Sequence" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

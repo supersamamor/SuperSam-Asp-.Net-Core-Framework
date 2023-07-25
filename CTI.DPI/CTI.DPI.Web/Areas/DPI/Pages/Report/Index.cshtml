@@ -1,0 +1,147 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Report List"];
+    ViewData["ActiveMainPage"] = "Report";
+    ViewData["Level1"] = "DPI";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="report" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Report Name"]
+							</th>
+							<th>
+								@Localizer["Query Type"]
+							</th>
+							<th>
+								@Localizer["Report / Chart Type"]
+							</th>
+							<th>
+								@Localizer["Distinct"]
+							</th>
+							<th>
+								@Localizer["Query String"]
+							</th>
+							  
+							<th>
+								@Localizer["Status"]
+							</th> 							
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#report').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 6, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Report/Index", new { area = "DPI", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "reportName", name: "ReportName", responsivePriority: 1, title: '@Localizer["Report Name"]', searchable: true },
+				{ data: "queryType", name: "QueryType", responsivePriority: 1, title: '@Localizer["Query Type"]', searchable: false },
+				{ data: "reportOrChartType", name: "ReportOrChartType", responsivePriority: 1, title: '@Localizer["Report / Chart Type"]', searchable: false },
+				{ data: "isDistinct", name: "IsDistinct", responsivePriority: 1, title: '@Localizer["Distinct"]', searchable: false },
+				{ data: "queryString", name: "QueryString", responsivePriority: 1, title: '@Localizer["Query String"]', searchable: false },
+				   
+				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Report/Details", new { area = "DPI" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewReport" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Report/Edit", new { area = "DPI" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditReport" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Report/Delete", new { area = "DPI" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteReport" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.Approve)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Report/Approve", new { area = "DPI" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
+					</text>
+				}  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Report/Add", new { area = "DPI" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#report tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddReport",".btnEditReport",".btnViewReport",".btnDeleteReport"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddReport",".btnEditReport",".btnViewReport",".btnDeleteReport"]);
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}

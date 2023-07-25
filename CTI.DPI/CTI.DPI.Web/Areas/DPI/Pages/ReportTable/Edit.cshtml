@@ -1,0 +1,139 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Table"];
+    ViewData["ActiveMainPage"] = "ReportTable";
+    ViewData["Level1"] = "DPI";
+}
+<form id="reportTable-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ReportTable" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">  
+		<a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>                
+        <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ReportTableJoinParameterListValidationPartial" model="@Model.ReportTable" />
+<partial name="_ReportColumnDetailListValidationPartial" model="@Model.ReportTable" />
+<partial name="_ReportColumnFilterListValidationPartial" model="@Model.ReportTable" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+			$.bindSaveConfirmationModal('Update', '#btnConfirmationModal','#reportTable-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#reportTable-form', 'Do you want to cancel the changes?');
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeReportTableJoinParameterFieldValidations($('#ReportTableJoinParameterCount').val());
+			$('.RemoveReportTableJoinParameterButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveReportTableJoinParameter');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#reportTable-form', InitializeForm);
+			});
+
+			$('#btnAddReportTableJoinParameter').on( 'click', function () {
+				$('#AsyncAction').val('AddReportTableJoinParameter');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#reportTable-form', InitializeForm);
+			});
+
+			$.fn.reportSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Report/Index", new { area = "DPI", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var reportlistdropdowns = document.getElementsByClassName('SelectReport');
+			for ( var i=0; i< reportlistdropdowns.length; i++) {
+				$("#ReportTableJoinParameterList_"+i+"_ReportId").reportSelect();
+			}
+
+			$.InitializeReportColumnDetailFieldValidations($('#ReportColumnDetailCount').val());
+			$('.RemoveReportColumnDetailButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveReportColumnDetail');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#reportTable-form', InitializeForm);
+			});
+
+			$('#btnAddReportColumnDetail').on( 'click', function () {
+				$('#AsyncAction').val('AddReportColumnDetail');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#reportTable-form', InitializeForm);
+			});
+
+			$.fn.reportcolumnheaderSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ReportColumnHeader/Index", new { area = "DPI", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var reportcolumnheaderlistdropdowns = document.getElementsByClassName('SelectReportColumnHeader');
+			for ( var i=0; i< reportcolumnheaderlistdropdowns.length; i++) {
+				$("#ReportColumnDetailList_"+i+"_ReportColumnId").reportcolumnheaderSelect();
+			}
+
+			$.InitializeReportColumnFilterFieldValidations($('#ReportColumnFilterCount').val());
+			$('.RemoveReportColumnFilterButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveReportColumnFilter');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#reportTable-form', InitializeForm);
+			});
+
+			$('#btnAddReportColumnFilter').on( 'click', function () {
+				$('#AsyncAction').val('AddReportColumnFilter');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#reportTable-form', InitializeForm);
+			});
+
+			$.fn.reportfiltergroupingSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/ReportFilterGrouping/Index", new { area = "DPI", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var reportfiltergroupinglistdropdowns = document.getElementsByClassName('SelectReportFilterGrouping');
+			for ( var i=0; i< reportfiltergroupinglistdropdowns.length; i++) {
+				$("#ReportColumnFilterList_"+i+"_ReportFilterGroupingId").reportfiltergroupingSelect();
+			}
+
+			$.fn.reportSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Report/Index", new { area = "DPI", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#ReportId").reportSelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

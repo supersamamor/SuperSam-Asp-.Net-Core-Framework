@@ -1,0 +1,42 @@
+@using Models
+@model ReportTableViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeReportColumnDetailFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "ReportColumnDetailList[" + idx + "].ReportColumnId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Report Column"});
+				reqs.push({name: "ReportColumnDetailList[" + idx + "].TableId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Table"});
+				reqs.push({name: "ReportColumnDetailList[" + idx + "].FieldName", el: "Input", minlength:0, maxlength:255, isrequired: false, description: "Field Name"});
+				reqs.push({name: "ReportColumnDetailList[" + idx + "].Function", el: "Input", minlength:0, maxlength:50, isrequired: false, description: "Function"});
+				reqs.push({name: "ReportColumnDetailList[" + idx + "].ArithmeticOperator", el: "Input", minlength:0, maxlength:50, isrequired: false, description: "Arithmetic Operator"});
+				reqs.push({name: "ReportColumnDetailList[" + idx + "].Sequence", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Sequence"});
+				
+			}
+			let validator = $("#reportTable-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>

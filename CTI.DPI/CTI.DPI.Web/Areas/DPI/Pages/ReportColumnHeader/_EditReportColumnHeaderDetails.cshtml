@@ -1,0 +1,30 @@
+@using Models
+@model ReportColumnHeaderViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.ReportId" class="form-label "><strong>@Localizer["Report"] :</strong></label>
+			<select asp-for="@Model.ReportId" class="form-control" asp-items="@(dropdownService.GetReportList(Model.ReportId))"><option value="">- Select Report -</option></select>
+			<span asp-validation-for="@Model.ReportId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Alias" class="form-label "><strong>@Localizer["Alias"] :</strong></label>
+			<input asp-for="@Model.Alias" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.Alias" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.AggregationOperator" class="form-label "><strong>@Localizer["Aggregation Operator"] :</strong></label>
+			<input asp-for="@Model.AggregationOperator" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.AggregationOperator" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>
