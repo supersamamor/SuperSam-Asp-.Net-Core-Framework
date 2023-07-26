@@ -3,6 +3,7 @@ using CTI.DPI.Core.Constants;
 using CTI.DPI.Core.DPI;
 using CTI.DPI.Infrastructure.Data;
 using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -72,10 +73,34 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
         List<string?> results = new();
         List<string?> labels = new();
         List<string?> colors = new();
-        using (SqlDataReader reader = command.ExecuteReader())
+        List<Dictionary<string, object>> tableData = new();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        int index = 0;
+        if (report.ReportOrChartType == ReportChartType.Table)
         {
-            // Step 2 and 3: Iterate through the SqlDataReader and store rows as dictionaries
-            int index = 0;
+            while (reader.Read())
+            {
+                Dictionary<string, object> row = new Dictionary<string, object>();
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    if (index == 0)
+                    {
+                        labels.Add(reader.GetName(i));
+                    }
+                    row[reader.GetName(i)] = reader[i];
+                }
+                tableData.Add(row);
+                index++;
+            }
+            return new LabelResultAndStyle()
+            {
+                Results = JsonConvert.SerializeObject(tableData, Formatting.Indented),
+                Labels = JsonConvert.SerializeObject(labels, Formatting.Indented),
+            };
+        }
+        else
+        {
             while (reader.Read())
             {
                 for (int i = 0; i < reader.FieldCount; i++)
@@ -84,7 +109,7 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
                     {
                         labels.Add(reader[i]?.ToString());
                     }
-                    if (string.Equals(reader.GetName(i), "Data", StringComparison.OrdinalIgnoreCase))
+                    else if (string.Equals(reader.GetName(i), "Data", StringComparison.OrdinalIgnoreCase))
                     {
                         results.Add(reader[i]?.ToString());
                     }
@@ -92,14 +117,14 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
                 colors.Add(Colors.List[index]);
                 index++;
             }
+            return new LabelResultAndStyle()
+            {
+                Results = JsonConvert.SerializeObject(results, Formatting.Indented),
+                Labels = JsonConvert.SerializeObject(labels, Formatting.Indented),
+                Colors = JsonConvert.SerializeObject(colors, Formatting.Indented)
+            };
         }
-        // Step 4: Serialize the list of dictionaries to JSON
-        return new LabelResultAndStyle()
-        {
-            Results = JsonConvert.SerializeObject(results, Formatting.Indented),
-            Labels = JsonConvert.SerializeObject(labels, Formatting.Indented),
-            Colors = JsonConvert.SerializeObject(colors, Formatting.Indented)
-        };
+
     }
     public class LabelResultAndStyle
     {
