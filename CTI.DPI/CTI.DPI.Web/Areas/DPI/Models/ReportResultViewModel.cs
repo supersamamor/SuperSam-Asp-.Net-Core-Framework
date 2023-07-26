@@ -11,5 +11,9 @@ namespace CTI.DPI.Web.Areas.DPI.Models
         public string? Colors { get; set; }
         public string ReportOrChartType { get; set; } = "";
         public IList<ReportQueryFilterViewModel> Filters { get; set; } = new List<ReportQueryFilterViewModel>();
+        public string? DomId
+        {
+            get { return this.ReportId?.Replace("-",""); }
+        }
     }
 }
