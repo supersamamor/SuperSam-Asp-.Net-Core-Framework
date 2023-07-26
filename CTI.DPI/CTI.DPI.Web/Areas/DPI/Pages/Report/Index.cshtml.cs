@@ -33,7 +33,8 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.ReportName,
 				e.QueryType,
-				e.ReportOrChartType,
+                IsActive = IsActiveHelper.GetStatus(e.IsActive),
+                e.ReportOrChartType,
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

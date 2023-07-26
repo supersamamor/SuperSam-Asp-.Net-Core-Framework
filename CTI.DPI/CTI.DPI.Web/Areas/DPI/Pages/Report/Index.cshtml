@@ -24,7 +24,10 @@
 							</th>
 							<th>
 								@Localizer["Report / Chart Type"]
-							</th>				
+							</th>	
+                            <th>
+                                @Localizer["Status"]
+                            </th>
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -61,7 +64,8 @@
 			columns: [
                 { data: "reportName", name: "ReportName", responsivePriority: 1, title: '@Localizer["Report Name"]', searchable: true },
 				{ data: "queryType", name: "QueryType", responsivePriority: 1, title: '@Localizer["Query Type"]', searchable: false },
-				{ data: "reportOrChartType", name: "ReportOrChartType", responsivePriority: 1, title: '@Localizer["Report / Chart Type"]', searchable: false },				
+				{ data: "reportOrChartType", name: "ReportOrChartType", responsivePriority: 1, title: '@Localizer["Report / Chart Type"]', searchable: false },
+                { data: "isActive", name: "IsActive", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false },
                 {
                     data: null,
                     searchable: false,
