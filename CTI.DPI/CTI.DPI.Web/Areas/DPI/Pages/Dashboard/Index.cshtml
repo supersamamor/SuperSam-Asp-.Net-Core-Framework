@@ -13,8 +13,15 @@
         <div class="col">
             <div class="card">
                 <h5 class="card-header text-center"><span class="card-header-custom">@item.ReportName</span><br></h5>
-                <div class="card-body">
-                    <canvas id="@item.DomId"></canvas>
+                <div class="card-body custom-graph-body">
+                    @if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
+                    {
+                        <canvas id="@item.DomId" class="pie-graph-canvas"></canvas>
+                    }
+                    else
+                    {
+                        <canvas id="@item.DomId" class="default-graph-canvas"></canvas>
+                    }
                 </div>
             </div>
         </div>
@@ -27,14 +34,14 @@
     <script asp-add-nonce>
         $(document).ready(function () {
             function InitializeForm() {
-                @foreach (var item in Model.ReportList)
-                {
-                    <text>
+        @foreach (var item in Model.ReportList)
+        {
+            <text>
                         $.BuildChart('@item.DomId', '@item.ReportName', '@item.ReportOrChartType',
-                            @Html.Raw(item.Labels), @Html.Raw(item.Results), @Html.Raw(item.Colors));
-                    </text>
-                }
-            }
+                @Html.Raw(item.Labels), @Html.Raw(item.Results), @Html.Raw(item.Colors));
+            </text>
+        }
+                    }
             InitializeForm();
         });
     </script>
