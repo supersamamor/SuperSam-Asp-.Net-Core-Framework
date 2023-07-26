@@ -6,12 +6,27 @@
     ViewData["Level1"] = "DPI";
 }
 
-<div class="card">
-    <h5 class="card-header text-center"><span class="card-header-custom">@Model.Report.ReportName</span><br></h5>
-    <div class="card-body">
-        <canvas id="chart-container"></canvas>
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
+    <div class="col">
+        <div class="card">
+            <h5 class="card-header text-center"><span class="card-header-custom">@Model.Report.ReportName</span><br></h5>
+            <div class="card-body">
+                <canvas id="chart-container"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <h5 class="card-header text-center"><span class="card-header-custom">Test</span><br></h5>
+            <div class="card-body">
+                <span>Test</span>
+            </div>
+        </div>
     </div>
 </div>
+
+
 @section Scripts {
     <partial name="_ChartJsScripts" />
     <script asp-add-nonce>
@@ -20,7 +35,7 @@
         @if (Model.Report.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.HorizontalBar)
         {
             <text>
-                    const data = {
+                                            const data = {
                         labels: @Html.Raw(Model.Report.Labels),
                         datasets: [
                             {
@@ -57,7 +72,7 @@
         else if (Model.Report.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
         {
             <text>
-                    const data = {
+                                            const data = {
                         labels: @Html.Raw(Model.Report.Labels),
                         datasets: [
                             {
@@ -91,7 +106,7 @@
                     });
             </text>
         }
-                    }
+                                    }
             InitializeForm();
         });
     </script>

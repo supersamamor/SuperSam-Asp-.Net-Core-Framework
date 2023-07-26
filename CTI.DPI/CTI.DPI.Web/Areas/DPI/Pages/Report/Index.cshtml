@@ -24,17 +24,7 @@
 							</th>
 							<th>
 								@Localizer["Report / Chart Type"]
-							</th>
-							<th>
-								@Localizer["Distinct"]
-							</th>
-							<th>
-								@Localizer["Query String"]
-							</th>
-							  
-							<th>
-								@Localizer["Status"]
-							</th> 							
+							</th>				
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -55,7 +45,7 @@
         var table = $('#report').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 6, 'desc' ]],
+            order: [[ 3, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Report/Index", new { area = "DPI", handler = "ListAll" })',
@@ -71,11 +61,7 @@
 			columns: [
                 { data: "reportName", name: "ReportName", responsivePriority: 1, title: '@Localizer["Report Name"]', searchable: true },
 				{ data: "queryType", name: "QueryType", responsivePriority: 1, title: '@Localizer["Query Type"]', searchable: false },
-				{ data: "reportOrChartType", name: "ReportOrChartType", responsivePriority: 1, title: '@Localizer["Report / Chart Type"]', searchable: false },
-				{ data: "isDistinct", name: "IsDistinct", responsivePriority: 1, title: '@Localizer["Distinct"]', searchable: false },
-				{ data: "queryString", name: "QueryString", responsivePriority: 1, title: '@Localizer["Query String"]', searchable: false },
-				   
-				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
+				{ data: "reportOrChartType", name: "ReportOrChartType", responsivePriority: 1, title: '@Localizer["Report / Chart Type"]', searchable: false },				
                 {
                     data: null,
                     searchable: false,

@@ -34,10 +34,6 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.ReportName,
 				e.QueryType,
 				e.ReportOrChartType,
-				IsDistinct =  e.IsDistinct == true ? "Yes" : "No",
-				e.QueryString,
-						
-				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

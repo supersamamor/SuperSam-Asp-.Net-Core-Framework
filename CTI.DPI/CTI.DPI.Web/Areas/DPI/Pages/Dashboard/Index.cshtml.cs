@@ -13,7 +13,7 @@ namespace CTI.DPI.Web.Areas.DPI.Pages.Dashboard
         public ReportResultViewModel Report { get; set; } = new();
         public async Task<IActionResult> OnGet(string? id)
         {
-            id = "1d73b1cf-a55a-43b4-8043-bcf7e7678f2a";
+            id = "5c632344-f290-41ab-a156-765065d7b79f";
             if (id == null)
             {
                 return NotFound();
