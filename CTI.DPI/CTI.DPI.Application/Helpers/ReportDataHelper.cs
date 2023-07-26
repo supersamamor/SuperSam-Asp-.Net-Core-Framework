@@ -9,7 +9,7 @@ namespace CTI.DPI.Application.Helpers
 {
     public static class ReportDataHelper
     {
-        public static async Task<LabelResultAndStyle> ConvertSQLQueryToJsonAsync(string connectionString, ReportState report, IList<ReportQueryFilterModel> filters)
+        public static async Task<LabelResultAndStyle> ConvertSQLQueryToJsonAsync(string connectionString, ReportState report, IList<ReportQueryFilterModel>? filters = null)
         {
             using SqlConnection connection = new(connectionString);
             connection.Open();

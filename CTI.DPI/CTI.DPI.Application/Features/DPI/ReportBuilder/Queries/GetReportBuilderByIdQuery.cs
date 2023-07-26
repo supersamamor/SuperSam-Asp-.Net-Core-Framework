@@ -1,13 +1,8 @@
 using CTI.DPI.Application.DTOs;
-using CTI.DPI.Core.Constants;
-using CTI.DPI.Core.DPI;
 using CTI.DPI.Infrastructure.Data;
 using LanguageExt;
-using LanguageExt.Common;
 using MediatR;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System.Data;
 
 namespace CTI.DPI.Application.Features.DPI.Report.Queries;
