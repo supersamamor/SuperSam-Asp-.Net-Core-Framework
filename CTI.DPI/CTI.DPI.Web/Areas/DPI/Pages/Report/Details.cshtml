@@ -5,6 +5,7 @@
     ViewData["ActiveMainPage"] = "Report";
     ViewData["Level1"] = "DPI";
 }
+<partial name="_CodeMirrorStyles" />
 <div class="container-fluid" id="report-container">
     <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
@@ -13,10 +14,10 @@
     </div>
 </div>
 <div id="toolbar-container" class="btn-group" role="group">
-	<a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.Create)).Succeeded)
     {
-        <a asp-page="Add"  id="btnAddRecord" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <a asp-page="Add" id="btnAddRecord" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
     }
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.Edit)).Succeeded)
     {
@@ -31,5 +32,16 @@
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-<partial name="_DisableFieldsPartial" model="@("report-container")" />
+    <partial name="_DisableFieldsPartial" model="@("report-container")" />
+    <partial name="_CodeMirrorScripts" />
+    <script asp-add-nonce>
+        var editor = CodeMirror.fromTextArea(
+            document.getElementById('QueryString'), {
+            mode: 'sql',
+            theme: '3024-night',
+            lineNumbers: true,
+            autoCloseBrackets: true,
+            autoCloseTags: true
+        });
+    </script>
 }

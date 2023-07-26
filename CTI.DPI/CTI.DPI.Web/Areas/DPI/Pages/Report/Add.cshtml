@@ -5,6 +5,7 @@
     ViewData["ActiveMainPage"] = "Report";
     ViewData["Level1"] = "DPI";
 }
+<partial name="_CodeMirrorStyles" />
 <form id="report-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
@@ -27,7 +28,7 @@
     <partial name="_ReportColumnHeaderListValidationPartial" model="@Model.Report" />
     <partial name="_ReportFilterGroupingListValidationPartial" model="@Model.Report" />
     <partial name="_ReportQueryFilterListValidationPartial" model="@Model.Report" />
-
+    <partial name="_CodeMirrorScripts" />
     <script asp-add-nonce>
         $(document).ready(function () {
             function InitializeForm() {
@@ -113,9 +114,17 @@
                     $('#AsyncAction').val('AddReportQueryFilter');
                     $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
                 });
-                $('#QueryType').on('change', function () {                 
+                $('#QueryType').on('change', function () {
                     $('#AsyncAction').val('');
                     $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
+                });
+                var editor = CodeMirror.fromTextArea(
+                    document.getElementById('QueryString'), {
+                    mode: 'sql',
+                    theme: '3024-night',
+                    lineNumbers: true,
+                    autoCloseBrackets: true,
+                    autoCloseTags: true
                 });
             }
             InitializeForm();
