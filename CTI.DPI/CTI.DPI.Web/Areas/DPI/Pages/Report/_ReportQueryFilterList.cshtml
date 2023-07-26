@@ -14,11 +14,7 @@
                     <th class="d-none"></th>
                     <th>
 								@Localizer["Field Name"]
-							</th>
-							<th>
-								@Localizer["Comparison Operator"]
-							</th>
-							
+							</th>	
                     <th>
                         @Localizer["Action"]
                     </th>
@@ -40,12 +36,6 @@
 										<span data-valmsg-for="ReportQueryFilterList[@counter].FieldName" asp-validation-for="@item.FieldName" class="text-danger"></span>
 										
 									</td>
-									<td>
-										<input  asp-for="@item.ComparisonOperator" name="ReportQueryFilterList[@counter].ComparisonOperator" class="form-control" maxlength="50" />
-										<span data-valmsg-for="ReportQueryFilterList[@counter].ComparisonOperator" asp-validation-for="@item.ComparisonOperator" class="text-danger"></span>
-										
-									</td>
-									
                             <td>
                                 <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveReportQueryFilterButton btnAddRemoveSubDetailList" title="@Localizer["Remove ReportQueryFilter"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
                             </td>

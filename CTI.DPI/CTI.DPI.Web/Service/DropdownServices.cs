@@ -59,7 +59,7 @@ namespace CTI.DPI.Web.Service
         {
             IList<SelectListItem> items = new List<SelectListItem>
             {
-                new SelectListItem { Text = Core.Constants.QueryType.QueryBuilder, Value = Core.Constants.QueryType.QueryBuilder, },
+                //new SelectListItem { Text = Core.Constants.QueryType.QueryBuilder, Value = Core.Constants.QueryType.QueryBuilder, },
                 new SelectListItem { Text = Core.Constants.QueryType.TSql, Value = Core.Constants.QueryType.TSql, }
             };
             return items;

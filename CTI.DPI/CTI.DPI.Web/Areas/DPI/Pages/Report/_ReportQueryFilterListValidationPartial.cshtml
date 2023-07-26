@@ -7,9 +7,7 @@
 			let reqs = [];			
 			for (let idx = 0; idx < count; idx++) {
 				reqs.push({name: "ReportQueryFilterList[" + idx + "].ReportId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Report"});
-				reqs.push({name: "ReportQueryFilterList[" + idx + "].FieldName", el: "Input", minlength:0, maxlength:255, isrequired: false, description: "Field Name"});
-				reqs.push({name: "ReportQueryFilterList[" + idx + "].ComparisonOperator", el: "Input", minlength:0, maxlength:50, isrequired: false, description: "Comparison Operator"});
-				
+				reqs.push({name: "ReportQueryFilterList[" + idx + "].FieldName", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "Field Name"});
 			}
 			let validator = $("#report-form").validate();
 			for (let j in reqs)

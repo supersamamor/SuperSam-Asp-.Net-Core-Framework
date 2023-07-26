@@ -80,8 +80,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ReportColumnFilterState>().Property(e => e.LogicalOperator).HasMaxLength(50);
 		modelBuilder.Entity<ReportColumnFilterState>().Property(e => e.FieldName).HasMaxLength(255);
 		modelBuilder.Entity<ReportColumnFilterState>().Property(e => e.ComparisonOperator).HasMaxLength(50);
-		modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.FieldName).HasMaxLength(255);
-		modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.ComparisonOperator).HasMaxLength(50);
+		modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.FieldName).HasMaxLength(255);	
 		
         modelBuilder.Entity<ReportState>().HasMany(t => t.ReportTableList).WithOne(l => l.Report).HasForeignKey(t => t.ReportId);
 		modelBuilder.Entity<ReportState>().HasMany(t => t.ReportTableJoinParameterList).WithOne(l => l.Report).HasForeignKey(t => t.ReportId);

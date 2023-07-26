@@ -33,9 +33,6 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 ReportId = e.Report?.ReportName,
 				e.FieldName,
-				e.ComparisonOperator,
-						
-				
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));

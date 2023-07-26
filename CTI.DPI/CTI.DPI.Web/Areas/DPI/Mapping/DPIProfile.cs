@@ -10,7 +10,7 @@ using CTI.DPI.Application.Features.DPI.ReportColumnDetail.Commands;
 using CTI.DPI.Application.Features.DPI.ReportFilterGrouping.Commands;
 using CTI.DPI.Application.Features.DPI.ReportColumnFilter.Commands;
 using CTI.DPI.Application.Features.DPI.ReportQueryFilter.Commands;
-
+using CTI.DPI.Application.DTOs;
 
 namespace CTI.DPI.Web.Areas.DPI.Mapping;
 
@@ -54,5 +54,9 @@ public class DPIProfile : Profile
 		CreateMap<ApproverSetupViewModel, EditApproverSetupCommand>();
 		CreateMap<ApproverSetupViewModel, AddApproverSetupCommand>();
 		CreateMap<ApproverSetupState, ApproverSetupViewModel>().ReverseMap();
+
+
+        CreateMap<ReportResultModel, ReportResultViewModel>().ReverseMap();
+        CreateMap<ReportQueryFilterModel, ReportQueryFilterViewModel>().ReverseMap();
     }
 }
