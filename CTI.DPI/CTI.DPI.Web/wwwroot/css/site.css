@@ -37,6 +37,7 @@ footer .sticky-footer {
 .card-header-custom {
     background-color: var(--bs-card-cap-bg);
 }
+
 .btnAddRemoveSubDetailList > i {
     font-size: 18px;
 }

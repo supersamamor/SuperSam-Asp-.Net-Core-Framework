@@ -1,4 +1,5 @@
 using CTI.DPI.Application.DTOs;
+using CTI.DPI.Core.Constants;
 using CTI.DPI.Core.DPI;
 using CTI.DPI.Infrastructure.Data;
 using LanguageExt;
@@ -43,16 +44,19 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
                 }
             }
         }
+        var resultsAndLabels = ConvertSQLQueryToJson(report!, request.Filters);
         return new ReportResultModel()
         {
             ReportId = request.Id,
             ReportName = report!.ReportName,
-            Result = ConvertSQLQueryToJson(report!, request.Filters),
+            Results = resultsAndLabels.Results,
+            Labels = resultsAndLabels.Labels,
+            Colors = resultsAndLabels.Colors,
             ReportOrChartType = report!.ReportOrChartType,
             Filters = request.Filters,
         };
     }
-    private string ConvertSQLQueryToJson(ReportState report, IList<ReportQueryFilterModel> filters)
+    private LabelResultAndStyle ConvertSQLQueryToJson(ReportState report, IList<ReportQueryFilterModel> filters)
     {
         using SqlConnection connection = new(_context.Database.GetConnectionString());
         connection.Open();
@@ -65,22 +69,42 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
                 command.Parameters.Add($"@{filter.FieldName}", SqlDbType.NVarChar).Value = filter.FieldValue;
             }
         }
-        List<Dictionary<string, object>> result = new();
+        List<string?> results = new();
+        List<string?> labels = new();
+        List<string?> colors = new();
         using (SqlDataReader reader = command.ExecuteReader())
         {
             // Step 2 and 3: Iterate through the SqlDataReader and store rows as dictionaries
+            int index = 0;
             while (reader.Read())
             {
-                Dictionary<string, object> row = new();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    row[reader.GetName(i)] = reader[i];
+                    if (string.Equals(reader.GetName(i), "Label", StringComparison.OrdinalIgnoreCase))
+                    {
+                        labels.Add(reader[i]?.ToString());
+                    }
+                    if (string.Equals(reader.GetName(i), "Data", StringComparison.OrdinalIgnoreCase))
+                    {
+                        results.Add(reader[i]?.ToString());
+                    }
                 }
-                result.Add(row);
+                colors.Add(Colors.List[index]);
+                index++;
             }
         }
         // Step 4: Serialize the list of dictionaries to JSON
-        return JsonConvert.SerializeObject(result, Formatting.Indented);
+        return new LabelResultAndStyle()
+        {
+            Results = JsonConvert.SerializeObject(results, Formatting.Indented),
+            Labels = JsonConvert.SerializeObject(labels, Formatting.Indented),
+            Colors = JsonConvert.SerializeObject(colors, Formatting.Indented)
+        };
     }
-
+    public class LabelResultAndStyle
+    {
+        public string? Results { get; set; }
+        public string? Labels { get; set; }
+        public string? Colors { get; set; }
+    }
 }
