@@ -1,10 +1,6 @@
-using CTI.Common.Web.Utility.Extensions;
 using CTI.DPI.Web.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-
 namespace CTI.DPI.Web.Areas.DPI.Models;
-
 public record ReportViewModel : BaseViewModel
 {	
 	[Display(Name = "Report Name")]
@@ -25,8 +21,9 @@ public record ReportViewModel : BaseViewModel
 	[Display(Name = "Query String")]
 	[StringLength(8000, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? QueryString { get; init; }
-	
-	public DateTime LastModifiedDate { get; set; }
+	[Display(Name = "Active")]
+	public bool IsActive { get; set; } = true;
+    public DateTime LastModifiedDate { get; set; }
 		
 	public IList<ReportTableViewModel>? ReportTableList { get; set; }
 	public IList<ReportTableJoinParameterViewModel>? ReportTableJoinParameterList { get; set; }
