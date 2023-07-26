@@ -1,7 +1,7 @@
 @{
     var user = await UserManager.GetUserAsync(User);
     var appName = Configuration.GetValue<string>("Application");
-	var backgroundClass = Configuration.GetValue<string>("BackgroundClass");
+    var backgroundClass = Configuration.GetValue<string>("BackgroundClass");
 }
 <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion @backgroundClass p-0">
     <div class="container-fluid d-flex flex-column p-0">
@@ -76,17 +76,17 @@
                                 </a>
                             </li>
                         }
-                        @if((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
-							{
-								<li class="nav-item">
-									<a href = "/DPI/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
-										<i class="fas fa-circle nav-icon"></i>
-										<span>
-											@Localizer["Approval"]
-										</span>
-									</a>
-								</li>
-							}
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/DPI/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Approval"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
             }
@@ -99,18 +99,25 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.Report.View)).Succeeded)
-						{
-							<li class="nav-item">
-								<a href = "/DPI/Report" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Report")">
-									<i class="fas fa-circle nav-icon"></i>
-									<span>
-										@Localizer["Report"]
-									</span>
-								</a>
-							</li>
-						}
-						
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.View)).Succeeded)
+                    {
+                        <li class="nav-item">
+                            <a href="/DPI/Report" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Report")">
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["Report"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a href="/DPI/ReportBuilder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportBuilder")">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <span>
+                                @Localizer["Report Builder"]
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
