@@ -46,6 +46,7 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
         return new ReportResultModel()
         {
             ReportId = request.Id,
+            ReportName = report!.ReportName,
             Result = ConvertSQLQueryToJson(report!, request.Filters),
             ReportOrChartType = report!.ReportOrChartType,
             Filters = request.Filters,
