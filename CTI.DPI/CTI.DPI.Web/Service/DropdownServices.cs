@@ -74,5 +74,17 @@ namespace CTI.DPI.Web.Service
             };
             return items;
         }
+        public IEnumerable<SelectListItem> DataTypeList()
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem { Text = Core.Constants.DataTypes.CustomDropdown, Value = Core.Constants.DataTypes.CustomDropdown, },
+                new SelectListItem { Text = Core.Constants.DataTypes.Date, Value = Core.Constants.DataTypes.Date, },
+                new SelectListItem { Text = Core.Constants.DataTypes.DropdownFromTable, Value = Core.Constants.DataTypes.DropdownFromTable, },
+                new SelectListItem { Text = Core.Constants.DataTypes.Months, Value = Core.Constants.DataTypes.Months, },
+                new SelectListItem { Text = Core.Constants.DataTypes.Years, Value = Core.Constants.DataTypes.Years, },         
+            };
+            return items;
+        }
     }
 }

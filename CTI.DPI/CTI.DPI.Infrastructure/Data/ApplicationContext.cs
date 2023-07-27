@@ -80,8 +80,14 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ReportColumnFilterState>().Property(e => e.LogicalOperator).HasMaxLength(50);
 		modelBuilder.Entity<ReportColumnFilterState>().Property(e => e.FieldName).HasMaxLength(255);
 		modelBuilder.Entity<ReportColumnFilterState>().Property(e => e.ComparisonOperator).HasMaxLength(50);
-		modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.FieldName).HasMaxLength(255);	
-		
+		modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.FieldName).HasMaxLength(255);
+
+        modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.FieldDescription).HasMaxLength(255);
+        modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.DataType).HasMaxLength(50);
+        modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.CustomDropdownValues).HasMaxLength(1000);
+        modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.DropdownTableKeyAndValue).HasMaxLength(255);
+        modelBuilder.Entity<ReportQueryFilterState>().Property(e => e.DropdownFilter).HasMaxLength(255);
+
         modelBuilder.Entity<ReportState>().HasMany(t => t.ReportTableList).WithOne(l => l.Report).HasForeignKey(t => t.ReportId);
 		modelBuilder.Entity<ReportState>().HasMany(t => t.ReportTableJoinParameterList).WithOne(l => l.Report).HasForeignKey(t => t.ReportId);
 		modelBuilder.Entity<ReportTableState>().HasMany(t => t.ReportTableJoinParameterList).WithOne(l => l.ReportTable).HasForeignKey(t => t.TableId);
