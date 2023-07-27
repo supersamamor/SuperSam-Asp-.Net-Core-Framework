@@ -1,8 +1,7 @@
 ﻿using CTI.DPI.Application.DTOs;
 using CTI.DPI.Core.Constants;
 using CTI.DPI.Core.DPI;
-using LanguageExt.Common;
-using LanguageExt.Pipes;
+using CTI.DPI.Application.Helpers;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Data;
@@ -33,28 +32,33 @@ namespace CTI.DPI.Application.Helpers
             List<string?> labels = new();
             List<string?> colors = new();
             List<Dictionary<string, object>> tableData = new();
+            List<Dictionary<string, string>> tableColumnLabel = new();
             using SqlDataReader reader = await command.ExecuteReaderAsync();
             int index = 0;
             if (report.ReportOrChartType == ReportChartType.Table)
             {
                 while (reader.Read())
                 {
-                    Dictionary<string, object> row = new Dictionary<string, object>();
+                    Dictionary<string, object> rowData = new Dictionary<string, object>();
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
+                        var sanitizedDataName = StringHelper.Sanitize(reader.GetName(i));
                         if (index == 0)
                         {
-                            labels.Add(reader.GetName(i));
+                            Dictionary<string, string> columnLabel = new Dictionary<string, string>();
+                            columnLabel["title"] = StringHelper.ToProperCase(reader.GetName(i));
+                            columnLabel["data"] = sanitizedDataName;
+                            tableColumnLabel.Add(columnLabel);
                         }
-                        row[reader.GetName(i)] = reader[i];
+                        rowData[sanitizedDataName] = reader[i];
                     }
-                    tableData.Add(row);
+                    tableData.Add(rowData);
                     index++;
                 }
                 return new LabelResultAndStyle()
                 {
                     Results = JsonConvert.SerializeObject(tableData, Formatting.Indented),
-                    Labels = JsonConvert.SerializeObject(labels, Formatting.Indented),
+                    Labels = JsonConvert.SerializeObject(tableColumnLabel, Formatting.Indented),
                 };
             }
             else

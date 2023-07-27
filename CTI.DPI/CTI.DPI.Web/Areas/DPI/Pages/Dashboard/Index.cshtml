@@ -5,7 +5,9 @@
     ViewData["ActiveMainPage"] = "Dashboard";
     ViewData["Level1"] = "DPI";
 }
-
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
     @foreach (var item in Model.ReportList)
@@ -14,7 +16,13 @@
             <div class="card">
                 <h5 class="card-header text-center"><span class="card-header-custom">@item.ReportName</span><br></h5>
                 <div class="card-body custom-graph-body">
-                    @if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
+                    @if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Table)
+                    {
+                        <table id="@item.DomId" class="table table-hover table-bordered table-striped" width="100%">
+                          
+                        </table>
+                    }
+                    else if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
                     {
                         <canvas id="@item.DomId" class="pie-graph-canvas"></canvas>
                     }

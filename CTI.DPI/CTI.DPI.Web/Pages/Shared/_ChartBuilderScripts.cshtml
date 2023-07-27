@@ -1,55 +1,66 @@
 <script asp-add-nonce src="~/lib/chartjs/chart.js"></script>
+<partial name="_DataTableScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
         $.BuildChart = function (chartContainer, reportName, charType, labels, results, colors) {
-           
+
             let chartRenderType = '';
             switch (charType) {
-                case "@CTI.DPI.Core.Constants.ReportChartType.HorizontalBar":              
+                case "@CTI.DPI.Core.Constants.ReportChartType.HorizontalBar":
                     chartRenderType = 'bar';
                     break;
                 case "@CTI.DPI.Core.Constants.ReportChartType.Pie":
                     chartRenderType = 'pie';
                     break;
-                case "@CTI.DPI.Core.Constants.ReportChartType.Table":              
+                case "@CTI.DPI.Core.Constants.ReportChartType.Table":
+                    chartRenderType = 'table-custom';
                     break;
                 default:
                     break;
             }
-            if (chartRenderType!='')
-            {
-                const data = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            data: results,
-                            backgroundColor: colors,
-                            borderWidth: 1,
-                        }
-                    ]
-                };
-                const ctx = document.getElementById(chartContainer).getContext('2d');
-                const graph = new Chart(ctx, {
-                    type: chartRenderType,
-                    data: data,
-                    options: {
-                        scales: {
-                            x: {
-                                beginAtZero: true // To start the X-axis at zero
+            if (chartRenderType != '') {
+                if (charType == '@CTI.DPI.Core.Constants.ReportChartType.Table') {
+                    var table = $('#' + chartContainer).DataTable({
+                        data: results,
+                        columns: labels
+                    });
+                }
+                else
+                {
+                    const data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                data: results,
+                                backgroundColor: colors,
+                                borderWidth: 1,
                             }
-                        },
-                        plugins: {
-                            title: {
-                                display: false,
-                                text: reportName
+                        ]
+                    };
+                    const ctx = document.getElementById(chartContainer).getContext('2d');
+                    const graph = new Chart(ctx, {
+                        type: chartRenderType,
+                        data: data,
+                        options: {
+                            scales: {
+                                x: {
+                                    beginAtZero: true // To start the X-axis at zero
+                                }
                             },
-                            legend: {
-                                display: false,
-                                position: 'bottom'
+                            plugins: {
+                                title: {
+                                    display: false,
+                                    text: reportName
+                                },
+                                legend: {
+                                    display: false,
+                                    position: 'bottom'
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
+               
             }
         };
     });
