@@ -10,7 +10,7 @@ namespace CTI.DPI.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ReportRoleAssignmentState",
+                name: "ReportRoleAssignment",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -24,9 +24,9 @@ namespace CTI.DPI.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReportRoleAssignmentState", x => x.Id);
+                    table.PrimaryKey("PK_ReportRoleAssignment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReportRoleAssignmentState_Report_ReportId",
+                        name: "FK_ReportRoleAssignment_Report_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Report",
                         principalColumn: "Id",
@@ -34,15 +34,15 @@ namespace CTI.DPI.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReportRoleAssignmentState_ReportId",
-                table: "ReportRoleAssignmentState",
+                name: "IX_ReportRoleAssignment_ReportId",
+                table: "ReportRoleAssignment",
                 column: "ReportId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ReportRoleAssignmentState");
+                name: "ReportRoleAssignment");
         }
     }
 }

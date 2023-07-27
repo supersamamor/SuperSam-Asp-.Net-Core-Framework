@@ -45,7 +45,8 @@ public class AddReportCommandHandler : BaseCommandHandler<ApplicationContext, Re
 		UpdateReportColumnHeaderList(entity);
 		UpdateReportFilterGroupingList(entity);
 		UpdateReportQueryFilterList(entity);
-		_ = await Context.AddAsync(entity, cancellationToken);
+		UpdateReportRoleAssignmentList(entity);
+        _ = await Context.AddAsync(entity, cancellationToken);
 		await AddApprovers(entity.Id, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ReportState>(entity);
@@ -101,8 +102,18 @@ public class AddReportCommandHandler : BaseCommandHandler<ApplicationContext, Re
 			}
 		}
 	}
-	
-	private async Task AddApprovers(string reportId, CancellationToken cancellationToken)
+    private void UpdateReportRoleAssignmentList(ReportState entity)
+    {
+        if (entity.ReportQueryFilterList?.Count > 0)
+        {
+            foreach (var reportRoleAssignment in entity.ReportRoleAssignmentList!)
+            {
+                Context.Entry(reportRoleAssignment).State = EntityState.Added;
+            }
+        }
+    }
+
+    private async Task AddApprovers(string reportId, CancellationToken cancellationToken)
 	{
 		var approverList = await Context.ApproverAssignment.Include(l=>l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.Report).AsNoTracking().ToListAsync(cancellationToken);
 		if (approverList.Count > 0)

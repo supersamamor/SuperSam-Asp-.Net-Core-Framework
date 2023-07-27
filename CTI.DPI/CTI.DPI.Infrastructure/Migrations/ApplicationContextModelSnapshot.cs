@@ -575,7 +575,7 @@ namespace CTI.DPI.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportRoleAssignmentState");
+                    b.ToTable("ReportRoleAssignment");
                 });
 
             modelBuilder.Entity("CTI.DPI.Core.DPI.ReportState", b =>

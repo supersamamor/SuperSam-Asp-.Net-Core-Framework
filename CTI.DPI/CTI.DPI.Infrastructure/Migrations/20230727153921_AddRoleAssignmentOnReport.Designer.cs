@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTI.DPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230727093439_AddRoleAssignmentOnReport")]
+    [Migration("20230727153921_AddRoleAssignmentOnReport")]
     partial class AddRoleAssignmentOnReport
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -577,7 +577,7 @@ namespace CTI.DPI.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportRoleAssignmentState");
+                    b.ToTable("ReportRoleAssignment");
                 });
 
             modelBuilder.Entity("CTI.DPI.Core.DPI.ReportState", b =>
