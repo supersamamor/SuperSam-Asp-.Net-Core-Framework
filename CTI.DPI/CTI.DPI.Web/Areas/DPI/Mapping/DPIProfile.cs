@@ -13,9 +13,10 @@ public class DPIProfile : Profile
     {
         CreateMap<ReportViewModel, AddReportCommand>();
 		CreateMap<ReportViewModel, EditReportCommand>();
-		CreateMap<ReportState, ReportViewModel>().ReverseMap();
-	
-		CreateMap<ReportTableState, ReportTableViewModel>().ForPath(e => e.ForeignKeyReport, o => o.MapFrom(s => s.Report!.ReportName));
+		CreateMap<ReportState, ReportViewModel>()
+            .ForMember(dest => dest.ReportRoleAssignmentList, opt => opt.MapFrom(src => src.ReportRoleAssignmentList!.Select(x => x.RoleName)));
+        CreateMap<ReportViewModel, ReportState>();
+        CreateMap<ReportTableState, ReportTableViewModel>().ForPath(e => e.ForeignKeyReport, o => o.MapFrom(s => s.Report!.ReportName));
 		CreateMap<ReportTableViewModel, ReportTableState>();
 	
 		CreateMap<ReportTableJoinParameterState, ReportTableJoinParameterViewModel>().ForPath(e => e.ForeignKeyReportTable, o => o.MapFrom(s => s.ReportTable!.Id)).ForPath(e => e.ForeignKeyReport, o => o.MapFrom(s => s.Report!.ReportName));

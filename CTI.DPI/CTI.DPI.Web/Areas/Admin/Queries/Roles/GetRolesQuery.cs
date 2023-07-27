@@ -23,7 +23,7 @@ public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, PagedListResp
     }
 
     public async Task<PagedListResponse<ApplicationRole>> Handle(GetRolesQuery request, CancellationToken cancellationToken) =>
-        await _context.Roles.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
+        await _context.Roles.AsNoTracking().OrderBy(l=>l.Name).ToPagedResponse(request.SearchColumns, request.SearchValue,
                                                             request.SortColumn, request.SortOrder,
                                                             request.PageNumber, request.PageSize, cancellationToken);
 }

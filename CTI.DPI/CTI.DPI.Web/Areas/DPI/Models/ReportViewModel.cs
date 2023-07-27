@@ -32,7 +32,9 @@ public record ReportViewModel : BaseViewModel
 	public IList<ReportColumnHeaderViewModel>? ReportColumnHeaderList { get; set; }
 	public IList<ReportFilterGroupingViewModel>? ReportFilterGroupingList { get; set; }
 	public IList<ReportQueryFilterViewModel>? ReportQueryFilterList { get; set; }
-	
+    [Display(Name = "Role")]
+    public IEnumerable<string>? ReportRoleAssignmentList { get; set; }
+
 }
 public record ReportColumnDetailViewModel : BaseViewModel
 {

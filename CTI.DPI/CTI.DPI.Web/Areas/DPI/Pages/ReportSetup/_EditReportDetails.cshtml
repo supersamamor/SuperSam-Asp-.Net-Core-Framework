@@ -54,4 +54,14 @@
             </div>
         </div>
     }  
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.ReportRoleAssignmentList" class="form-label "><strong>@Localizer["Role"] :</strong></label>
+            <select asp-for="@Model.ReportRoleAssignmentList"
+                    class="select2MultipleBusinessUnits form-control"
+                    asp-items="@(await dropdownService.GetRoleList())" multiple>
+            </select>
+            <span asp-validation-for="@Model.ReportRoleAssignmentList" class="text-danger"></span>
+        </div>
+    </div>
 </div>

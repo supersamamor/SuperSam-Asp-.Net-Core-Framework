@@ -14,6 +14,7 @@ public record ReportState : BaseEntity
 	public IList<ReportColumnHeaderState>? ReportColumnHeaderList { get; set; }
 	public IList<ReportFilterGroupingState>? ReportFilterGroupingList { get; set; }
 	public IList<ReportQueryFilterState>? ReportQueryFilterList { get; set; }
+    public IList<ReportRoleAssignmentState>? ReportRoleAssignmentList { get; set; }
 }
 
 public record ReportTableState : BaseEntity
@@ -98,3 +99,11 @@ public record ReportQueryFilterState : BaseEntity
     public int Sequence { get; init; }
     public ReportState? Report { get; init; }
 }
+public record ReportRoleAssignmentState : BaseEntity
+{
+    public new string Id { get; set; } = Guid.NewGuid().ToString();
+    public string ReportId { get; init; } = "";
+    public string RoleName { get; init; } = "";
+    public ReportState? Report { get; init; }
+}
+

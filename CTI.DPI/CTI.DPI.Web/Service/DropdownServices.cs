@@ -55,6 +55,10 @@ namespace CTI.DPI.Web.Service
         {
             return (await _mediaTr.Send(new GetApproverRolesQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
         }
+        public async Task<IEnumerable<SelectListItem>> GetRoleList()
+        {
+            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+        }
         public IEnumerable<SelectListItem> QueryTypeList()
         {
             IList<SelectListItem> items = new List<SelectListItem>

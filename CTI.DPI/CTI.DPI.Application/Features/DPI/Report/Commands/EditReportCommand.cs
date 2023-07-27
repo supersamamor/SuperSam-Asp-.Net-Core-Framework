@@ -42,7 +42,8 @@ public class EditReportCommandHandler : BaseCommandHandler<ApplicationContext, R
 		await UpdateReportColumnHeaderList(entity, request, cancellationToken);
 		await UpdateReportFilterGroupingList(entity, request, cancellationToken);
 		await UpdateReportQueryFilterList(entity, request, cancellationToken);
-		Context.Update(entity);
+        await UpdateReportRoleAssignmentList(entity, request, cancellationToken);
+        Context.Update(entity);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ReportState>(entity);
 	}
@@ -187,7 +188,38 @@ public class EditReportCommandHandler : BaseCommandHandler<ApplicationContext, R
 			}
 		}
 	}
-	
+    private async Task UpdateReportRoleAssignmentList(ReportState entity, EditReportCommand request, CancellationToken cancellationToken)
+    {
+        IList<ReportRoleAssignmentState> reportRoleAssignmentListForDeletion = new List<ReportRoleAssignmentState>();
+        var queryReportRoleAssignmentListForDeletion = Context.ReportRoleAssignment.Where(l => l.ReportId == request.Id).AsNoTracking();
+        if (entity.ReportRoleAssignmentList?.Count > 0)
+        {
+            queryReportRoleAssignmentListForDeletion = queryReportRoleAssignmentListForDeletion.Where(l => !(entity.ReportRoleAssignmentList.Select(l => l.RoleName).ToList().Contains(l.RoleName)));
+        }
+        reportRoleAssignmentListForDeletion = await queryReportRoleAssignmentListForDeletion.ToListAsync(cancellationToken: cancellationToken);
+        foreach (var reportRoleAssignment in reportRoleAssignmentListForDeletion!)
+        {
+            Context.Entry(reportRoleAssignment).State = EntityState.Deleted;
+        }
+        if (entity.ReportRoleAssignmentList?.Count > 0)
+        {
+            foreach (var reportRoleAssignment in entity.ReportRoleAssignmentList.Where(l => !reportRoleAssignmentListForDeletion.Select(l => l.RoleName).Contains(l.RoleName)).ToList())
+            {
+                var existingBusinessUnitAssignment = await Context.ReportRoleAssignment.Where(x => x.RoleName == reportRoleAssignment.RoleName && x.ReportId == request.Id)
+                    .AsNoTracking().FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                if (existingBusinessUnitAssignment == null)
+                {
+                    Context.Entry(reportRoleAssignment).State = EntityState.Added;
+                }
+                else
+                {
+                    Mapper.Map(existingBusinessUnitAssignment, reportRoleAssignment);
+                    reportRoleAssignment.Id = existingBusinessUnitAssignment.Id;
+                    Context.Entry(reportRoleAssignment).State = EntityState.Modified;
+                }
+            }
+        }
+    }
 }
 
 public class EditReportCommandValidator : AbstractValidator<EditReportCommand>

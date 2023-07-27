@@ -23,8 +23,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 	public DbSet<ReportFilterGroupingState> ReportFilterGrouping { get; set; } = default!;
 	public DbSet<ReportColumnFilterState> ReportColumnFilter { get; set; } = default!;
 	public DbSet<ReportQueryFilterState> ReportQueryFilter { get; set; } = default!;
-	
-	public DbSet<ApprovalState> Approval { get; set; } = default!;
+    public DbSet<ReportRoleAssignmentState> ReportRoleAssignment { get; set; } = default!;
+
+    public DbSet<ApprovalState> Approval { get; set; } = default!;
 	public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
 	public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
 	public DbSet<ApprovalRecordState> ApprovalRecord { get; set; } = default!;
