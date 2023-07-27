@@ -23,6 +23,9 @@ public record ReportViewModel : BaseViewModel
 	public string? QueryString { get; init; }
 	[Display(Name = "Display on Dashboard")]
 	public bool DisplayOnDashboard { get; set; } = true;
+    [Display(Name = "Sequence")]
+    [Required]
+    public int Sequence { get; init; }
     public DateTime LastModifiedDate { get; set; }
 		
 	public IList<ReportTableViewModel>? ReportTableList { get; set; }

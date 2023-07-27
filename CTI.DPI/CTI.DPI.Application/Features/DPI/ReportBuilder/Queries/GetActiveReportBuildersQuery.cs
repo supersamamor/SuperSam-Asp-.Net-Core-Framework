@@ -24,7 +24,7 @@ public class GetActiveReportBuildersQueryHandler : IRequestHandler<GetActiveRepo
             .Include(l => l.ReportColumnHeaderList)
             .Include(l => l.ReportFilterGroupingList)
             .Include(l => l.ReportQueryFilterList)
-            .Where(e => e.DisplayOnDashboard == true).AsNoTracking().ToListAsync(cancellationToken);
+            .Where(e => e.DisplayOnDashboard == true).AsNoTracking().OrderBy(l => l.Sequence).ToListAsync(cancellationToken);
         IList<ReportResultModel> reportResult = new List<ReportResultModel>();
         foreach (var report in reportList)
         {
@@ -36,7 +36,7 @@ public class GetActiveReportBuildersQueryHandler : IRequestHandler<GetActiveRepo
                 Results = resultsAndLabels.Results,
                 Labels = resultsAndLabels.Labels,
                 Colors = resultsAndLabels.Colors,
-                ReportOrChartType = report!.ReportOrChartType,    
+                ReportOrChartType = report!.ReportOrChartType,
             });
         }
         return reportResult;

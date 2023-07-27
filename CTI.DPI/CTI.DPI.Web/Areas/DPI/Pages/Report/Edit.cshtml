@@ -114,7 +114,7 @@
                     $('#AsyncAction').val('AddReportQueryFilter');
                     $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
                 });
-                $('#QueryType, #ReportOrChartType, .DataType').on('change', function () {
+                $('#QueryType, #ReportOrChartType, .DataType, #DisplayOnDashboard').on('change', function () {
                     $('#AsyncAction').val('');
                     $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
                 });
