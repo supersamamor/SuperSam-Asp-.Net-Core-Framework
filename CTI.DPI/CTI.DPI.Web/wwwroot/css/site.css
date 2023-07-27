@@ -129,13 +129,18 @@ textarea[readonly] {
     width: 50% !important;
     height: 50% !important;
     position: relative;
-    left:25%;
+    left: 25%;
 }
+
 .default-graph-canvas {
     width: 100% !important;
     height: 100% !important;
 }
 
 .custom-graph-body {
-    position:relative;
+    position: relative;
+}
+
+.CodeMirror {
+    margin-bottom: 10px;
 }

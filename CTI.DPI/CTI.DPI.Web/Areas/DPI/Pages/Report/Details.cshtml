@@ -35,13 +35,16 @@
     <partial name="_DisableFieldsPartial" model="@("report-container")" />
     <partial name="_CodeMirrorScripts" />
     <script asp-add-nonce>
-        var editor = CodeMirror.fromTextArea(
-            document.getElementById('QueryString'), {
-            mode: 'sql',
-            theme: '3024-night',
-            lineNumbers: true,
-            autoCloseBrackets: true,
-            autoCloseTags: true
-        });
+        const textAreaQueryString = document.getElementById('QueryString');
+        if (textAreaQueryString) {
+            var editor = CodeMirror.fromTextArea(
+                textAreaQueryString, {
+                mode: 'sql',
+                theme: '3024-night',
+                lineNumbers: true,
+                autoCloseBrackets: true,
+                autoCloseTags: true
+            });
+        }
     </script>
 }

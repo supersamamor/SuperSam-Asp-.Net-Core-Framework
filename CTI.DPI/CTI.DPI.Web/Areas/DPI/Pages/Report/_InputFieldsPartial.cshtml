@@ -30,6 +30,11 @@ else if (Model.QueryType == CTI.DPI.Core.Constants.QueryType.TSql)
                     <label asp-for="@Model.QueryString" class="form-label "><strong>@Localizer["Query String"] :</strong></label>
                     <textarea asp-for="@Model.QueryString" class="form-control" maxlength="8000" rows=8></textarea>
                     <span asp-validation-for="@Model.QueryString" class="text-danger"></span>
+                    @if (!string.IsNullOrEmpty(Model.ReportOrChartType) && !string.IsNullOrEmpty(CTI.DPI.Core.Constants.ReportChartType.ChartToolTip[Model.ReportOrChartType]))
+                    {
+
+                        <span class="form-label margin-top-10"><i>@Html.Raw(CTI.DPI.Core.Constants.ReportChartType.ChartToolTip[Model.ReportOrChartType])</i></span>
+                    }
                 </div>
             </div>
         </div>
