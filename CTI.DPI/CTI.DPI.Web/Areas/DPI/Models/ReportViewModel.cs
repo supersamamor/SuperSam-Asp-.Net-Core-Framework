@@ -21,8 +21,8 @@ public record ReportViewModel : BaseViewModel
 	[Display(Name = "Query String")]
 	[StringLength(8000, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string? QueryString { get; init; }
-	[Display(Name = "Active")]
-	public bool IsActive { get; set; } = true;
+	[Display(Name = "Display on Dashboard")]
+	public bool DisplayOnDashboard { get; set; } = true;
     public DateTime LastModifiedDate { get; set; }
 		
 	public IList<ReportTableViewModel>? ReportTableList { get; set; }

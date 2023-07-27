@@ -33,7 +33,7 @@ public class IndexModel : BasePageModel<IndexModel>
                 e.Id,
                 e.ReportName,
 				e.QueryType,
-                IsActive = IsActiveHelper.GetStatus(e.IsActive),
+                DisplayOnDashboard = DisplayOnDashboardHelper.GetBadge(e.DisplayOnDashboard),
                 e.ReportOrChartType,
                 e.LastModifiedDate
             })

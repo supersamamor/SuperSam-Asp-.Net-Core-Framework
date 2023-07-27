@@ -24,7 +24,7 @@ public class GetActiveReportBuildersQueryHandler : IRequestHandler<GetActiveRepo
             .Include(l => l.ReportColumnHeaderList)
             .Include(l => l.ReportFilterGroupingList)
             .Include(l => l.ReportQueryFilterList)
-            .Where(e => e.IsActive == true).AsNoTracking().ToListAsync(cancellationToken);
+            .Where(e => e.DisplayOnDashboard == true).AsNoTracking().ToListAsync(cancellationToken);
         IList<ReportResultModel> reportResult = new List<ReportResultModel>();
         foreach (var report in reportList)
         {

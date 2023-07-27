@@ -4,16 +4,16 @@ using MediatR;
 
 namespace CTI.DPI.Web.Helper
 {
-    public static class IsActiveHelper
+    public static class DisplayOnDashboardHelper
     {
-        public static string GetStatus(bool isActive)
+        public static string GetBadge(bool isActive)
         {
             switch (isActive)
             {
                 case true:
-                    return @"<span class=""badge bg-success"">Active</span>";
+                    return @"<span class=""badge bg-success"">Show</span>";
                 case false:
-                    return @"<span class=""badge bg-secondary"">In-Active</span>";
+                    return @"<span class=""badge bg-secondary"">Hide</span>";
                 default:
             }
         }
