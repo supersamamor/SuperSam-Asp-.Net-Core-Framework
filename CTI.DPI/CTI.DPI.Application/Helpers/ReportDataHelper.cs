@@ -1,6 +1,8 @@
 ﻿using CTI.DPI.Application.DTOs;
 using CTI.DPI.Core.Constants;
 using CTI.DPI.Core.DPI;
+using LanguageExt.Common;
+using LanguageExt.Pipes;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Data;
@@ -11,6 +13,11 @@ namespace CTI.DPI.Application.Helpers
     {
         public static async Task<LabelResultAndStyle> ConvertSQLQueryToJsonAsync(string connectionString, ReportState report, IList<ReportQueryFilterModel>? filters = null)
         {
+            var error = Core.Helpers.SQLValidatorHelper.Validate(report.QueryString);
+            if (!string.IsNullOrEmpty(error))
+            {
+                throw new Exception(error);
+            }
             using SqlConnection connection = new(connectionString);
             connection.Open();
             // Step 1: Execute the SELECT query and retrieve the data as a SqlDataReader

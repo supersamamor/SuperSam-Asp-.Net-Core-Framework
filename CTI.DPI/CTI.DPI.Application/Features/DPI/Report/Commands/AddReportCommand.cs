@@ -6,6 +6,7 @@ using CTI.DPI.Core.DPI;
 using CTI.DPI.Infrastructure.Data;
 using FluentValidation;
 using LanguageExt;
+using LanguageExt.ClassInstances;
 using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,12 @@ public class AddReportCommandHandler : BaseCommandHandler<ApplicationContext, Re
 
 	public async Task<Validation<Error, ReportState>> AddReport(AddReportCommand request, CancellationToken cancellationToken)
 	{
-		ReportState entity = Mapper.Map<ReportState>(request);
+		var error = Core.Helpers.SQLValidatorHelper.Validate(request.QueryString) ;
+        if (!string.IsNullOrEmpty(error))
+        {
+            return Error.New(error);
+        }
+        ReportState entity = Mapper.Map<ReportState>(request);
 		UpdateReportTableList(entity);
 		UpdateReportTableJoinParameterList(entity);
 		UpdateReportColumnHeaderList(entity);

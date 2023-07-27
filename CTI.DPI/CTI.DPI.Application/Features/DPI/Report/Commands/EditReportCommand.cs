@@ -30,7 +30,12 @@ public class EditReportCommandHandler : BaseCommandHandler<ApplicationContext, R
 
 	public async Task<Validation<Error, ReportState>> EditReport(EditReportCommand request, CancellationToken cancellationToken)
 	{
-		var entity = await Context.Report.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
+        var error = Core.Helpers.SQLValidatorHelper.Validate(request.QueryString);
+        if (!string.IsNullOrEmpty(error))
+        {
+            return Error.New(error);
+        }
+        var entity = await Context.Report.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
 		Mapper.Map(request, entity);
 		await UpdateReportTableList(entity, request, cancellationToken);
 		await UpdateReportTableJoinParameterList(entity, request, cancellationToken);

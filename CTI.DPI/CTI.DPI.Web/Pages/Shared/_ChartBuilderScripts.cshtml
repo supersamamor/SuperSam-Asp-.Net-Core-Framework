@@ -2,74 +2,50 @@
 <script asp-add-nonce>
     $(document).ready(function () {
         $.BuildChart = function (chartContainer, reportName, charType, labels, results, colors) {
-            if (charType == '@CTI.DPI.Core.Constants.ReportChartType.HorizontalBar') {
-                const data = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            data: results,
-                            backgroundColor: colors,
-                            borderWidth: 1,
+           
+            let chartRenderType = '';
+            switch (charType) {
+                case "@CTI.DPI.Core.Constants.ReportChartType.HorizontalBar":              
+                    chartRenderType = 'bar';
+                    break;
+                case "@CTI.DPI.Core.Constants.ReportChartType.Pie":
+                    chartRenderType = 'pie';
+                    break;
+                default:
+                    break;
+            }
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        data: results,
+                        backgroundColor: colors,
+                        borderWidth: 1,
+                    }
+                ]
+            };
+            const ctx = document.getElementById(chartContainer).getContext('2d');
+            const graph = new Chart(ctx, {
+                type: chartRenderType,
+                data: data,
+                options: {
+                    scales: {
+                        x: {
+                            beginAtZero: true // To start the X-axis at zero
                         }
-                    ]
-                };
-                const ctx = document.getElementById(chartContainer).getContext('2d');
-                const graph = new Chart(ctx, {
-                    type: 'bar',
-                    data: data,
-                    options: {
-                        scales: {
-                            x: {
-                                beginAtZero: true // To start the X-axis at zero
-                            }
+                    },
+                    plugins: {
+                        title: {
+                            display: false,
+                            text: reportName
                         },
-                        plugins: {
-                            title: {
-                                display: false,
-                                text: reportName
-                            },
-                            legend: {
-                                display: false,
-                                position: 'bottom'
-                            }
+                        legend: {
+                            display: false,
+                            position: 'bottom'
                         }
                     }
-                });
-            }
-            else if (charType == '@CTI.DPI.Core.Constants.ReportChartType.Pie') {
-                const data = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            data: results,
-                            backgroundColor: colors,
-                            borderWidth: 1,
-                        }
-                    ]
-                };
-                const ctx = document.getElementById(chartContainer).getContext('2d');
-                const graph = new Chart(ctx, {
-                    type: 'pie',
-                    data: data,
-                    options: {
-                        scales: {
-                            x: {
-                                beginAtZero: true // To start the X-axis at zero
-                            }
-                        },
-                        plugins: {
-                            title: {
-                                display: false,
-                                text: reportName
-                            },
-                            legend: {
-                                display: false,
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
+                }
+            });
         };
     });
 </script>
