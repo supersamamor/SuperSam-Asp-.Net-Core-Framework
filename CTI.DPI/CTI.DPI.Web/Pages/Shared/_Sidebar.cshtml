@@ -87,6 +87,17 @@
                                 </a>
                             </li>
                         }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/DPI/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Report Setup"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
             }
@@ -99,17 +110,7 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/DPI/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Report Setup"]
-                                </span>
-                            </a>
-                        </li>
-                    }
+                   
                     <li class="nav-item">
                         <a href="/DPI/Dashboard" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Dashboard")">
                             <i class="fas fa-circle nav-icon"></i>
