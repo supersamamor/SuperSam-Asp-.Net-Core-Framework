@@ -22,7 +22,28 @@
                 if (charType == '@CTI.DPI.Core.Constants.ReportChartType.Table') {
                     var table = $('#' + chartContainer).DataTable({
                         data: results,
-                        columns: labels
+                        columns: labels,
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                text: 'Excel',
+                                title: reportName, // Set the custom title for Excel
+                                customize: function (xlsx) {
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    $('row c[r^="A"]', sheet).attr('s', '2');
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                text: 'PDF',
+                                title: reportName, // Set the custom title for PDF
+                                orientation: 'landscape', // Set the orientation to landscape
+                                customize: function (doc) {
+                                    doc.content[0].text = reportName; // Modify the title in the PDF content
+                                }
+                            },
+                            'pageLength'
+                        ]
                     });
                 }
                 else
