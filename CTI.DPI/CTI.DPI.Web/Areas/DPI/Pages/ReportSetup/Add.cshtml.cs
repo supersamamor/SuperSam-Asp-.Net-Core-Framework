@@ -4,9 +4,9 @@ using CTI.DPI.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.DPI.Web.Areas.DPI.Pages.Report;
+namespace CTI.DPI.Web.Areas.DPI.Pages.ReportSetup;
 
-[Authorize(Policy = Permission.Report.Create)]
+[Authorize(Policy = Permission.ReportSetup.Create)]
 public class AddModel : BasePageModel<AddModel>
 {
     [BindProperty]

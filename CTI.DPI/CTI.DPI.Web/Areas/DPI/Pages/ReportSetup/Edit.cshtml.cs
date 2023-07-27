@@ -5,9 +5,9 @@ using CTI.DPI.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CTI.DPI.Web.Areas.DPI.Pages.Report;
+namespace CTI.DPI.Web.Areas.DPI.Pages.ReportSetup;
 
-[Authorize(Policy = Permission.Report.Edit)]
+[Authorize(Policy = Permission.ReportSetup.Edit)]
 public class EditModel : BasePageModel<EditModel>
 {
     [BindProperty]

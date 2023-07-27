@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using CTI.DPI.Web.Helper;
 
 
-namespace CTI.DPI.Web.Areas.DPI.Pages.Report;
+namespace CTI.DPI.Web.Areas.DPI.Pages.ReportSetup;
 
-[Authorize(Policy = Permission.Report.View)]
+[Authorize(Policy = Permission.ReportSetup.View)]
 public class IndexModel : BasePageModel<IndexModel>
 {
     public ReportViewModel Report { get; set; } = new();

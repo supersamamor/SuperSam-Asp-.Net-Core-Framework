@@ -99,13 +99,13 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.View)).Succeeded)
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.View)).Succeeded)
                     {
                         <li class="nav-item">
-                            <a href="/DPI/Report" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Report")">
+                            <a href="/DPI/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
                                 <i class="fas fa-circle nav-icon"></i>
                                 <span>
-                                    @Localizer["Report"]
+                                    @Localizer["Report Setup"]
                                 </span>
                             </a>
                         </li>

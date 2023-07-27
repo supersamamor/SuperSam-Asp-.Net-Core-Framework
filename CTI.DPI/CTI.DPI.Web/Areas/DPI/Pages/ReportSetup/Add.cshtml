@@ -1,8 +1,8 @@
 @page
-@model EditModel
+@model AddModel
 @{
-    ViewData["Title"] = Localizer["Edit Report"];
-    ViewData["ActiveMainPage"] = "Report";
+    ViewData["Title"] = Localizer["Add Report"];
+    ViewData["ActiveMainPage"] = "ReportSetup";
     ViewData["Level1"] = "DPI";
 }
 <partial name="_CodeMirrorStyles" />
@@ -15,7 +15,7 @@
     </div>
     <div id="toolbar-container" class="btn-group" role="group">
         <a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
-        <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+        <button type="button" id="btnConfirmationModal" class="btn btn-success" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
@@ -32,7 +32,7 @@
     <script asp-add-nonce>
         $(document).ready(function () {
             function InitializeForm() {
-                $.bindSaveConfirmationModal('Update', '#btnConfirmationModal', '#report-form');
+                $.bindSaveConfirmationModal('Save', '#btnConfirmationModal', '#report-form');
                 $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal', '#report-form', 'Do you want to cancel the changes?');
                 $('.DisableSelectDropdown').on('mousedown', function (e) {
                     e.preventDefault();
@@ -128,7 +128,7 @@
                         autoCloseBrackets: true,
                         autoCloseTags: true
                     });
-                }
+                }           
             }
             InitializeForm();
         });
