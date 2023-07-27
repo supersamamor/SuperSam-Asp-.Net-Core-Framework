@@ -11,6 +11,14 @@
         </a>
         <hr class="sidebar-divider my-0">
         <ul class="navbar-nav text-light" id="accordionSidebar">
+            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Dashboard")">
+                <a href="/DPI/Dashboard" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Dashboard")">
+                    <i class="fas fa-tachometer-alt nav-icon"></i>
+                    <span>
+                        @Localizer["Dashboard"]
+                    </span>
+                </a>
+            </li>
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Admin.View)).Succeeded)
             {
                 <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Admin")">
@@ -110,15 +118,7 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                   
-                    <li class="nav-item">
-                        <a href="/DPI/Dashboard" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Dashboard")">
-                            <i class="fas fa-circle nav-icon"></i>
-                            <span>
-                                @Localizer["Dashboard"]
-                            </span>
-                        </a>
-                    </li>
+
                 </ul>
             </li>
         </ul>
