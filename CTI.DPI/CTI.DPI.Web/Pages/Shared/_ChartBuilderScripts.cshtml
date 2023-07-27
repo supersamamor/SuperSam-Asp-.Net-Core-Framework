@@ -11,41 +11,46 @@
                 case "@CTI.DPI.Core.Constants.ReportChartType.Pie":
                     chartRenderType = 'pie';
                     break;
+                case "@CTI.DPI.Core.Constants.ReportChartType.Table":              
+                    break;
                 default:
                     break;
             }
-            const data = {
-                labels: labels,
-                datasets: [
-                    {
-                        data: results,
-                        backgroundColor: colors,
-                        borderWidth: 1,
-                    }
-                ]
-            };
-            const ctx = document.getElementById(chartContainer).getContext('2d');
-            const graph = new Chart(ctx, {
-                type: chartRenderType,
-                data: data,
-                options: {
-                    scales: {
-                        x: {
-                            beginAtZero: true // To start the X-axis at zero
+            if (chartRenderType!='')
+            {
+                const data = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            data: results,
+                            backgroundColor: colors,
+                            borderWidth: 1,
                         }
-                    },
-                    plugins: {
-                        title: {
-                            display: false,
-                            text: reportName
+                    ]
+                };
+                const ctx = document.getElementById(chartContainer).getContext('2d');
+                const graph = new Chart(ctx, {
+                    type: chartRenderType,
+                    data: data,
+                    options: {
+                        scales: {
+                            x: {
+                                beginAtZero: true // To start the X-axis at zero
+                            }
                         },
-                        legend: {
-                            display: false,
-                            position: 'bottom'
+                        plugins: {
+                            title: {
+                                display: false,
+                                text: reportName
+                            },
+                            legend: {
+                                display: false,
+                                position: 'bottom'
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         };
     });
 </script>
