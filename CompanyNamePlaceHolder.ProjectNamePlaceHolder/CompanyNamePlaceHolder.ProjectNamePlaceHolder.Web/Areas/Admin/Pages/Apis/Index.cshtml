@@ -1,0 +1,90 @@
+@page
+@model IndexModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["ActiveMainPage"] = "APIs";
+    ViewData["Title"] = Localizer["APIs List"];
+    ViewData["Level1"] = "Admin";
+}
+<div class="card">
+    <div class="card-body">
+        <table id="apis" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Scope.Name)
+                    </th>
+                    <th>
+                        @Localizer["Actions"]
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#apis').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 0, 'asc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Apis/Index", new { area = "Admin", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+            columns: [
+                { data: "name", name: "Name", responsivePriority: 1 },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Apis/View", new { area = "Admin" })' + '?name=' + row.name;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Apis/Edit", new { area = "Admin" })' + '?name=' + row.name;     
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                        return button;
+                    },
+                },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Apis/Add", new { area = "Admin" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}
