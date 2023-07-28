@@ -43,7 +43,7 @@
                                                 </select>
                                                 break;
                                             case CTI.DPI.Core.Constants.DataTypes.DropdownFromTable:
-                                                <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetDropdownFromCsv(item.CustomDropdownValues!))">
+                                                <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(await dropdownService.GetDropdownFromTableKeyValue(item.DropdownTableKeyAndValue!,item.DropdownFilter))">
                                                     <option value="">- Select @item.FieldValue -</option>
                                                 </select>
                                                 break;
@@ -63,13 +63,13 @@
                                             default:
                                                 break;
                                         }
-                                    </div>   
+                                    </div>
                                 </div>
                             </div>
                             counter++;
                         }
                         <div class="col">
-                            <div class="mb-3">                               
+                            <div class="mb-3">
                                 <button type="submit" class="btn btn-success text-light" title="@Localizer["Generate"]"><i class="fas fa-file-import"></i></button>
                             </div>
                         </div>

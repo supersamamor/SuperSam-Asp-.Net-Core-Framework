@@ -96,7 +96,7 @@ namespace CTI.DPI.Web.Service
                 return Enumerable.Empty<SelectListItem>();
             }
             return value.Split(',')
-                         .Select(option => new SelectListItem { Text = option, Value = option })
+                         .Select(option => new SelectListItem { Text = option.Trim(), Value = option.Trim() })
                          .ToList();
         }
         public IEnumerable<SelectListItem> GetYearsList(int yearsPrevious, int yearsAdvance)
@@ -131,6 +131,22 @@ namespace CTI.DPI.Web.Service
                 monthsList.Add(listItem);
             }
             return monthsList;
+        }
+        public async Task<IEnumerable<SelectListItem>> GetDropdownFromTableKeyValue(string tableKeyValue, string? filter)
+        {
+            var dropdownValues = await _mediaTr.Send(new GetDropdownValuesQuery(tableKeyValue, filter));
+            List<SelectListItem> selectListItems = new();
+            foreach (var item in dropdownValues)
+            {
+                string? key = item.ContainsKey("Key") ? item["Key"] : "";
+                string? value = item.ContainsKey("Value") ? item["Value"] : "";
+                selectListItems.Add(new SelectListItem
+                {
+                    Text = value,
+                    Value = key
+                });
+            }
+            return selectListItems;
         }
     }
 }

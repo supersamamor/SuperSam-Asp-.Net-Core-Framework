@@ -113,6 +113,31 @@ namespace CTI.DPI.Application.Helpers
             }
 
         }
+        public static async Task<List<Dictionary<string, string?>>> ConvertTableKeyValueToDictionary(string connectionString, string tableKeyValue, string? filter)
+        {
+            string[] queryComponents = tableKeyValue.Split(',');
+            var query = $"select {queryComponents[1]} as [Key],{queryComponents[2]} as [Value] from {queryComponents[0]}";
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query += $" where {filter}";
+            }
+            query += $" order by {queryComponents[2]}";
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+            List<Dictionary<string, string?>> tableData = new();
+            using SqlCommand command = new(query, connection);
+            using SqlDataReader reader = await command.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                Dictionary<string, string?> rowData = new Dictionary<string, string?>();
+                for (int i = 0; i < reader.FieldCount; i++)
+                {                 
+                    rowData[reader.GetName(i)] = reader[i]?.ToString();                    
+                }
+                tableData.Add(rowData);
+            }
+            return tableData;
+        }
         public class LabelResultAndStyle
         {
             public string? Results { get; set; }
