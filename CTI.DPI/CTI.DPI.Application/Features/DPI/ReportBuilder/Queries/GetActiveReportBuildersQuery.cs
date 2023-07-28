@@ -28,7 +28,15 @@ public class GetActiveReportBuildersQueryHandler : IRequestHandler<GetActiveRepo
         IList<ReportResultModel> reportResult = new List<ReportResultModel>();
         foreach (var report in reportList)
         {
-            var resultsAndLabels = await Helpers.ReportDataHelper.ConvertSQLQueryToJsonAsync(_context.Database.GetConnectionString()!, report!);
+            var filters = new List<ReportQueryFilterModel>();
+            if (report?.ReportQueryFilterList?.Count > 0)
+            {
+                foreach (var parameter in report.ReportQueryFilterList)
+                {
+                    filters.Add(new ReportQueryFilterModel() { FieldName = parameter.FieldName! });
+                }
+            }
+            var resultsAndLabels = await Helpers.ReportDataHelper.ConvertSQLQueryToJsonAsync(_context.Database.GetConnectionString()!, report!, filters);
             reportResult.Add(new ReportResultModel()
             {
                 ReportId = report.Id,
