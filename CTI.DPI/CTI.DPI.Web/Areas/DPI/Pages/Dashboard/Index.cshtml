@@ -67,8 +67,8 @@
         @foreach (var item in Model.ReportList)
         {
             <text>
-                        $.BuildChart('@item.DomId', '@item.ReportName', '@item.ReportOrChartType',
-                @Html.Raw(item.Labels), @Html.Raw(item.Results), @Html.Raw(item.Colors));
+                $.BuildChart('@item.DomId', '@item.ReportName', '@item.ReportOrChartType',
+                        @Html.Raw(item.Labels), @Html.Raw(item.Results), @Html.Raw(item.Colors));
             </text>
         }
                             }

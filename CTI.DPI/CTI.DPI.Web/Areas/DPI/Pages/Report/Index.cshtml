@@ -1,8 +1,48 @@
 ﻿@page
-@model CTI.DPI.Web.Areas.DPI.Pages.Report.IndexModel
+@model IndexModel
+
 @{
-    ViewData["Title"] = Localizer["Report Name Here"];
-    ViewData["ActiveMainPage"] = "Report";
+    ViewData["Title"] = Model.Report.ReportName;
+    ViewData["ActiveMainPage"] = CTI.DPI.Application.Helpers.StringHelper.Sanitize(Model?.Report?.ReportName);
     ViewData["Level1"] = "Report";
 }
-<h1>Report</h1>
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @if (Model!.Report.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Table)
+                {
+                    <table id="report" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    </table>
+                }
+                else if (Model.Report.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
+                {
+                    <canvas id="report" class="pie-graph-canvas"></canvas>
+                }
+                else
+                {
+                    <canvas id="report" class="pie-graph-canvas"></canvas>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+@section Scripts {
+    <partial name="_ChartBuilderScripts" />
+    <script asp-add-nonce>
+        $(document).ready(function () {
+            function InitializeForm() {
+                $.BuildChart('report', '@Model!.Report.ReportName', '@Model.Report.ReportOrChartType',
+                    @Html.Raw(Model.Report.Labels), @Html.Raw(Model.Report.Results), @Html.Raw(Model.Report.Colors));
+            }
+            InitializeForm();
+        });
+    </script>
+}

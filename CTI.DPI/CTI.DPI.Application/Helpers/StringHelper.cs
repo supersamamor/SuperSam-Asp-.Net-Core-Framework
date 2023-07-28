@@ -11,12 +11,16 @@ namespace CTI.DPI.Application.Helpers
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
             return textInfo.ToTitleCase(input);
         }
-        public static string Sanitize(string input)
+        public static string Sanitize(string? input)
         {
             return RemoveSpecialCharacters(ToCamelCase(input));
         }
-        private static string ToCamelCase(string input)
+        private static string ToCamelCase(string? input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return "";
+            }
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
             string[] words = input.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -34,8 +38,12 @@ namespace CTI.DPI.Application.Helpers
 
             return string.Join("", words);
         }
-        private static string RemoveSpecialCharacters(string input)
+        private static string RemoveSpecialCharacters(string? input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return "";
+            }
             // Define the regular expression pattern to match special characters.
             string pattern = @"[^a-zA-Z0-9\s]";
 
