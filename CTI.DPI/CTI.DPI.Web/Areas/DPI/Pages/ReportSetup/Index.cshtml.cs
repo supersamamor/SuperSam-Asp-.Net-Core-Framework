@@ -35,6 +35,7 @@ public class IndexModel : BasePageModel<IndexModel>
 				e.QueryType,
                 DisplayOnDashboard = DisplayOnDashboardHelper.GetBadge(e.DisplayOnDashboard),
                 e.ReportOrChartType,
+                e.Sequence,
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
