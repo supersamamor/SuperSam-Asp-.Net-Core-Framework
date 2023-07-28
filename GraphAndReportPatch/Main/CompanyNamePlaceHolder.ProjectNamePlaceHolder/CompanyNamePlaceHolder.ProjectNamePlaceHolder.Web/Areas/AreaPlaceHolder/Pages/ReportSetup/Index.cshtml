@@ -1,0 +1,134 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Report Setup List"];
+    ViewData["ActiveMainPage"] = "ReportSetup";
+    ViewData["Level1"] = "Admin";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="report" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Report Name"]
+							</th>
+							<th>
+								@Localizer["Query Type"]
+							</th>
+							<th>
+								@Localizer["Report / Chart Type"]
+							</th>	
+                            <th>
+                                @Localizer["Display on Dashboard"]
+                            </th>
+                            <th>
+                                @Localizer["Sequence"]
+                            </th>
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#report').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 3, 'desc' ]],
+            ajax:
+            {
+                    url: '@Url.Page("/ReportSetup/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "reportName", name: "ReportName", responsivePriority: 1, title: '@Localizer["Report Name"]', searchable: true },
+				{ data: "queryType", name: "QueryType", responsivePriority: 1, title: '@Localizer["Query Type"]', searchable: false },
+				{ data: "reportOrChartType", name: "ReportOrChartType", responsivePriority: 1, title: '@Localizer["Report / Chart Type"]', searchable: false },
+                { data: "displayOnDashboard", name: "DisplayOnDashboard", responsivePriority: 1, title: '@Localizer["Display on Dashboard"]', searchable: false },
+                { data: "sequence", name: "Sequence", responsivePriority: 1, title: '@Localizer["Sequence"]', searchable: false },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                            var url = '@Url.Page("/ReportSetup/Details", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewReport" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/ReportSetup/Edit", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditReport" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/ReportSetup/Delete", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteReport" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/ReportSetup/Add", new { area = "AreaPlaceHolder" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#report tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddReport",".btnEditReport",".btnViewReport",".btnDeleteReport"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddReport",".btnEditReport",".btnViewReport",".btnDeleteReport"]);
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}
