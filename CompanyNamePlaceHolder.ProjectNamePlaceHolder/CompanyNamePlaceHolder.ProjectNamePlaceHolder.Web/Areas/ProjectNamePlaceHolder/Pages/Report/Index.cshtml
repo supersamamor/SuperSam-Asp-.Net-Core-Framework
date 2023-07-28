@@ -1,0 +1,119 @@
+@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = Model.Report.ReportName;
+    ViewData["ActiveMainPage"] = CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers.StringHelper.Sanitize(Model?.Report?.ReportName);
+    ViewData["Level1"] = "Report";
+}
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <h5 class="card-header text-left"><span class="card-header-custom">@Model!.Report.ReportName</span><br></h5>
+            <div class="card-body">
+                <form id="report-form" method="post">
+                    <input type="hidden" asp-for="@Model.ReportId" />
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3">
+                        @{
+                            var counter = 0;
+                        }
+                        @foreach (var item in Model.Report.Filters)
+                        {
+                            <input type="hidden" asp-for="@item.FieldName" name="Filters[@counter].FieldName" />
+                            <input type="hidden" asp-for="@item.FieldDescription" name="Filters[@counter].FieldDescription" />
+                            <input type="hidden" asp-for="@item.DataType" name="Filters[@counter].DataType" />
+                            <input type="hidden" asp-for="@item.CustomDropdownValues" name="Filters[@counter].CustomDropdownValues" />
+                            <input type="hidden" asp-for="@item.DropdownTableKeyAndValue" name="Filters[@counter].DropdownTableKeyAndValue" />
+                            <input type="hidden" asp-for="@item.DropdownFilter" name="Filters[@counter].DropdownFilter" />
+                            <input type="hidden" asp-for="@item.Sequence" name="Filters[@counter].Sequence" />
+                            <div class="col">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"> @item.FieldLabel </span>
+                                        </div>
+                                        @switch (item.DataType)
+                                        {
+                                            case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.CustomDropdown:
+                                                <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetDropdownFromCsv(item.CustomDropdownValues!))">
+                                                    <option value="">- Select @item.FieldValue -</option>
+                                                </select>
+                                                break;
+                                            case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.DropdownFromTable:
+                                                <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(await dropdownService.GetDropdownFromTableKeyValue(item.DropdownTableKeyAndValue!,item.DropdownFilter))">
+                                                    <option value="">- Select @item.FieldValue -</option>
+                                                </select>
+                                                break;
+                                            case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.Years:
+                                                <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetYearsList(10,0))">
+                                                    <option value="">- Select @item.FieldValue -</option>
+                                                </select>
+                                                break;
+                                            case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.Months:
+                                                <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetMonthsList())">
+                                                    <option value="">- Select @item.FieldValue -</option>
+                                                </select>
+                                                break;
+                                            case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.Date:
+                                                <input class="form-control" type="date" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" />
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            counter++;
+                        }
+                        <div class="col">
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-success text-light" title="@Localizer["Generate"]"><i class="fas fa-file-import"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @if (Model!.Report.ReportOrChartType == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Table)
+                {
+                    <table id="report" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    </table>
+                }
+                else if (Model.Report.ReportOrChartType == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Pie)
+                {
+                    <canvas id="report" class="pie-graph-canvas"></canvas>
+                }
+                else
+                {
+                    <canvas id="report" class="pie-graph-canvas"></canvas>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<br />
+@section Scripts {
+    <partial name="_ChartBuilderScripts" />
+    <script asp-add-nonce>
+        $(document).ready(function () {
+            function InitializeForm() {
+                $.BuildChart('report', '@Model!.Report.ReportName', '@Model.Report.ReportOrChartType',
+        @Html.Raw(Model.Report.Labels), @Html.Raw(Model.Report.Results), @Html.Raw(Model.Report.Colors));
+            }
+            InitializeForm();
+        });
+    </script>
+}

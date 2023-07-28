@@ -1,0 +1,59 @@
+@using Models
+@model ReportViewModel
+<input type="hidden" id="ReportColumnHeaderCount" value="@Model?.ReportColumnHeaderList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Column Header"]</span>
+        <a id="btnAddReportColumnHeader" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveReportColumnHeader" value="RemoveReportColumnHeader"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Alias"]
+							</th>
+							<th>
+								@Localizer["Aggregation Operator"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.ReportColumnHeaderList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.ReportColumnHeaderList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="ReportColumnHeaderList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="ReportColumnHeaderList[@counter].ReportId" value="@item.ReportId" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.Alias" name="ReportColumnHeaderList[@counter].Alias" class="form-control" maxlength="255" />
+										<span data-valmsg-for="ReportColumnHeaderList[@counter].Alias" asp-validation-for="@item.Alias" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.AggregationOperator" name="ReportColumnHeaderList[@counter].AggregationOperator" class="form-control" maxlength="50" />
+										<span data-valmsg-for="ReportColumnHeaderList[@counter].AggregationOperator" asp-validation-for="@item.AggregationOperator" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveReportColumnHeaderButton btnAddRemoveSubDetailList" title="@Localizer["Remove ReportColumnHeader"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

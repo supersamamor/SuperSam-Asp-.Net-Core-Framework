@@ -27,51 +27,58 @@ footer .sticky-footer {
 #navbar_search_container {
     display: none !important;
 }
+
 #toolbar-container {
     float: right;
     margin-top: 10px;
 }
+
 #btnConfirmationModal, #btnAddRecord {
     color: #fff;
 }
+
 .card-header-custom {
     background-color: var(--bs-card-cap-bg);
 }
+
 .btnAddRemoveSubDetailList > i {
     font-size: 18px;
 }
+
 .RadioButtonNo {
     margin-left: 15px;
 }
+
 .btnCloseModalIcon {
     background: transparent;
     border: none;
 }
-.RadionButtonLabel
-{
-	padding-left: 7.5px;
+
+.RadionButtonLabel {
+    padding-left: 7.5px;
 }
-.file-upload-control
-{
-	display:block;
+
+.file-upload-control {
+    display: block;
 }
-.file-upload-filename
-{
-	padding-left:0px;
-	padding-right:0px;
-	margin-top:10px;
+
+.file-upload-filename {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 10px;
 }
-.file-view-button
-{
-	cursor:pointer;
-	color:#fff;
-	background:#28a745;
-	font-weight:700;
+
+.file-view-button {
+    cursor: pointer;
+    color: #fff;
+    background: #28a745;
+    font-weight: 700;
 }
-.overflow-x-scroll
-{
-	overflow-x: scroll;
+
+.overflow-x-scroll {
+    overflow-x: scroll;
 }
+
 .back-to-top {
     bottom: 1.25rem;
     position: fixed;
@@ -116,4 +123,24 @@ input[readonly] {
 
 textarea[readonly] {
     background-color: #eaecf4 !important;
+}
+
+.pie-graph-canvas {
+    width: 50% !important;
+    height: 50% !important;
+    position: relative;
+    left: 25%;
+}
+
+.default-graph-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.custom-graph-body {
+    position: relative;
+}
+
+.CodeMirror {
+    margin-bottom: 10px;
 }

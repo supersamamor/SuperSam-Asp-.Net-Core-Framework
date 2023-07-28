@@ -1,0 +1,88 @@
+<script asp-add-nonce src="~/lib/chartjs/chart.js"></script>
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        $.BuildChart = function (chartContainer, reportName, charType, labels, results, colors) {
+
+            let chartRenderType = '';
+            switch (charType) {
+                case "@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.HorizontalBar":
+                    chartRenderType = 'bar';
+                    break;
+                case "@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Pie":
+                    chartRenderType = 'pie';
+                    break;
+                case "@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Table":
+                    chartRenderType = 'table-custom';
+                    break;
+                default:
+                    break;
+            }
+            if (chartRenderType != '') {
+                if (charType == '@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Table') {
+                    var table = $('#' + chartContainer).DataTable({
+                        data: results,
+                        columns: labels,
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                text: 'Excel',
+                                title: reportName, // Set the custom title for Excel
+                                customize: function (xlsx) {
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    $('row c[r^="A"]', sheet).attr('s', '2');
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                text: 'PDF',
+                                title: reportName, // Set the custom title for PDF
+                                orientation: 'landscape', // Set the orientation to landscape
+                                customize: function (doc) {
+                                    doc.content[0].text = reportName; // Modify the title in the PDF content
+                                }
+                            },
+                            'pageLength'
+                        ]
+                    });
+                }
+                else
+                {
+                    const data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                data: results,
+                                backgroundColor: colors,
+                                borderWidth: 1,
+                            }
+                        ]
+                    };
+                    const ctx = document.getElementById(chartContainer).getContext('2d');
+                    const graph = new Chart(ctx, {
+                        type: chartRenderType,
+                        data: data,
+                        options: {
+                            scales: {
+                                x: {
+                                    beginAtZero: true // To start the X-axis at zero
+                                }
+                            },
+                            plugins: {
+                                title: {
+                                    display: false,
+                                    text: reportName
+                                },
+                                legend: {
+                                    display: false,
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                }
+               
+            }
+        };
+    });
+</script>
