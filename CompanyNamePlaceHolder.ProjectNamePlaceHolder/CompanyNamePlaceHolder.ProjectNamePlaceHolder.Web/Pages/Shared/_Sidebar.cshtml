@@ -11,6 +11,14 @@
         </a>
         <hr class="sidebar-divider my-0">
         <ul class="navbar-nav text-light" id="accordionSidebar">
+            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Dashboard")">
+                <a href="/AreaPlaceHolder/Dashboard" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Dashboard")">
+                    <i class="fas fa-tachometer-alt nav-icon"></i>
+                    <span>
+                        @Localizer["Dashboard"]
+                    </span>
+                </a>
+            </li>
             @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Admin.View)).Succeeded)
             {
                 <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Admin")">
@@ -79,7 +87,7 @@
                         @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.View)).Succeeded)
                         {
                             <li class="nav-item">
-                                <a href="/ProjectNamePlaceHolder/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
+                                <a href="/AreaPlaceHolder/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
                                     <i class="fas fa-circle nav-icon"></i>
                                     <span>
                                         @Localizer["Report Setup"]
@@ -102,7 +110,7 @@
                     @if((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.View)).Succeeded)
 						{
 							<li class="nav-item">
-								<a href = "/ProjectNamePlaceHolder/MainModulePlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModulePlaceHolder")">
+                            <a href="/AreaPlaceHolder/MainModulePlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModulePlaceHolder")">
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
 										@Localizer["SampleModuleDesc"]
@@ -127,7 +135,7 @@
                         @foreach (var item in await dropdownService.GetReportList())
                         {
                             <li class="nav-item">
-                                <a href="/ProjectNamePlaceHolder/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
+                                <a href="/AreaPlaceHolder/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
                                     <i class="fas fa-circle nav-icon"></i>
                                     <span>@item["ReportName"]</span>
                                 </a>

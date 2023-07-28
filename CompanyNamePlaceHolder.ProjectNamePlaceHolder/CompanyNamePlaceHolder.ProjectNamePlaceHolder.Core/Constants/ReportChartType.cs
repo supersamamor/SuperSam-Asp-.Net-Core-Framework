@@ -13,7 +13,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants
             </ul>";
         public static readonly Dictionary<string, string> ChartToolTip = new()
         {
-            { "Table", "" },
+            { "Table", ShortCodeFinePrint },
             { "Horizontal Bar", "Your query should consist of label and data fields (eg. Select 'Record 1' as <b>Label</b>, 10 as  <b>Data</b>)" + ShortCodeFinePrint },
             { "Pie", "Your query should consist of label and data fields (eg. Select 'Record 1' as <b>Label</b>, 10 as  <b>Data</b>)"+ ShortCodeFinePrint},
         };
