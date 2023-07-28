@@ -5,14 +5,17 @@ using CTI.DPI.Application.Helpers;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Data;
+using CTI.Common.Identity.Abstractions;
 
 namespace CTI.DPI.Application.Helpers
 {
     public static class ReportDataHelper
     {
-        public static async Task<LabelResultAndStyle> ConvertSQLQueryToJsonAsync(string connectionString, ReportState report, IList<ReportQueryFilterModel>? filters = null)
+        public static async Task<LabelResultAndStyle> ConvertSQLQueryToJsonAsync(IAuthenticatedUser authenticatedUser, string connectionString, ReportState report, IList<ReportQueryFilterModel>? filters = null)
         {
-            var error = Core.Helpers.SQLValidatorHelper.Validate(report.QueryString);
+            var queryWithShortCode = StringHelper.ReplaceCaseInsensitive(report.QueryString!, ShortCodes.CurrentUserId, $"'{authenticatedUser.UserId}'");
+            queryWithShortCode = StringHelper.ReplaceCaseInsensitive(queryWithShortCode, ShortCodes.CurrentDateTime, $"GetDate()");
+            var error = Core.Helpers.SQLValidatorHelper.Validate(queryWithShortCode);
             if (!string.IsNullOrEmpty(error))
             {
                 throw new Exception(error);
@@ -20,7 +23,7 @@ namespace CTI.DPI.Application.Helpers
             using SqlConnection connection = new(connectionString);
             connection.Open();
             // Step 1: Execute the SELECT query and retrieve the data as a SqlDataReader
-            using SqlCommand command = new(report.QueryString, connection);
+            using SqlCommand command = new(queryWithShortCode, connection);
             if (filters?.Count > 0)
             {
                 foreach (var filter in filters)
@@ -45,9 +48,11 @@ namespace CTI.DPI.Application.Helpers
                         var sanitizedDataName = StringHelper.Sanitize(reader.GetName(i));
                         if (index == 0)
                         {
-                            Dictionary<string, string> columnLabel = new Dictionary<string, string>();
-                            columnLabel["title"] = StringHelper.ToProperCase(reader.GetName(i));
-                            columnLabel["data"] = sanitizedDataName;
+                            Dictionary<string, string> columnLabel = new()
+                            {
+                                ["title"] = StringHelper.ToProperCase(reader.GetName(i)),
+                                ["data"] = sanitizedDataName
+                            };
                             tableColumnLabel.Add(columnLabel);
                         }
                         rowData[sanitizedDataName] = reader[i];

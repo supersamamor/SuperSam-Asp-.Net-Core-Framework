@@ -55,6 +55,7 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportSetupAn
             }
         }
         var resultsAndLabels = await Helpers.ReportDataHelper.ConvertSQLQueryToJsonAsync(
+            _authenticatedUser,
             _configuration.GetConnectionString("ReportContext"),
             report!,
             request.Filters);

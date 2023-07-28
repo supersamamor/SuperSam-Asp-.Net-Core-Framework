@@ -15,6 +15,17 @@ namespace CTI.DPI.Application.Helpers
         {
             return RemoveSpecialCharacters(ToCamelCase(input));
         }
+        public static string ReplaceCaseInsensitive(string input, string pattern, string replacement)
+        {
+            // Escape the pattern for regex and enable case-insensitive matching
+            string escapedPattern = Regex.Escape(pattern);
+            string regexPattern = "(?i)" + escapedPattern;
+
+            // Replace using the regex pattern
+            string result = Regex.Replace(input, regexPattern, replacement);
+
+            return result;
+        }
         private static string ToCamelCase(string? input)
         {
             if (string.IsNullOrEmpty(input))
