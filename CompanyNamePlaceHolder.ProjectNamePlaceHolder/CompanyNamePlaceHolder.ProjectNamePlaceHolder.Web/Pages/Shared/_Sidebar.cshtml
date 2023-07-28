@@ -76,7 +76,17 @@
                                 </a>
                             </li>
                         }
-                        
+                        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.View)).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a href="/ProjectNamePlaceHolder/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>
+                                        @Localizer["Report Setup"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
             }
