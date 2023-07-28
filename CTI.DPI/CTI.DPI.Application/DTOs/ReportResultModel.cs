@@ -14,6 +14,13 @@ namespace CTI.DPI.Application.DTOs
     public class ReportQueryFilterModel
     {
         public string FieldName { get; set; } = "";
+        public string FieldDescription { get; set; } = "";
+        public string DataType { get; set; } = "";
         public string FieldValue { get; set; } = "";
+        public string ReportId { get; init; } = "";
+        public string? CustomDropdownValues { get; init; }
+        public string? DropdownTableKeyAndValue { get; init; }
+        public string? DropdownFilter { get; init; }
+        public int Sequence { get; init; }
     }
 }

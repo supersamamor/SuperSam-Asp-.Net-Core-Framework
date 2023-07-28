@@ -6,6 +6,7 @@ using CTI.DPI.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using CTI.DPI.Web.Areas.Admin.Queries.Roles;
 using CTI.DPI.Application.Features.DPI.Report.Queries;
+using System.Globalization;
 
 namespace CTI.DPI.Web.Service
 {
@@ -35,7 +36,7 @@ namespace CTI.DPI.Web.Service
         }
         public async Task<IList<Dictionary<string, string>>> GetReportList()
         {
-           return await _mediaTr.Send(new GetReportListQuery());
+            return await _mediaTr.Send(new GetReportListQuery());
         }
         public SelectList GetReportFilterGroupingList(string? id)
         {
@@ -87,6 +88,49 @@ namespace CTI.DPI.Web.Service
                 new SelectListItem { Text = Core.Constants.DataTypes.Years, Value = Core.Constants.DataTypes.Years, },
             };
             return items;
+        }
+        public IEnumerable<SelectListItem> GetDropdownFromCsv(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return Enumerable.Empty<SelectListItem>();
+            }
+            return value.Split(',')
+                         .Select(option => new SelectListItem { Text = option, Value = option })
+                         .ToList();
+        }
+        public IEnumerable<SelectListItem> GetYearsList(int yearsPrevious, int yearsAdvance)
+        {
+            List<SelectListItem> yearsList = new();
+            int currentYear = DateTime.Now.Year;
+            int startYear = currentYear - yearsPrevious;
+            int endYear = currentYear + yearsAdvance;
+            for (int year = startYear; year <= endYear; year++)
+            {
+                SelectListItem listItem = new()
+                {
+                    Text = year.ToString(),
+                    Value = year.ToString(),
+                };
+                yearsList.Add(listItem);
+            }
+            return yearsList;
+        }
+        public IEnumerable<SelectListItem> GetMonthsList()
+        {
+            List<SelectListItem> monthsList = new();
+            // Loop through the months and create SelectListItem objects for each month
+            for (int month = 1; month <= 12; month++)
+            {
+                string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+                SelectListItem listItem = new()
+                {
+                    Text = monthName,
+                    Value = month.ToString() // Month number as the 'Value'
+                };
+                monthsList.Add(listItem);
+            }
+            return monthsList;
         }
     }
 }

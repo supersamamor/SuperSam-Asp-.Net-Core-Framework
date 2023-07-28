@@ -1,7 +1,6 @@
 ﻿using CTI.DPI.Application.DTOs;
 using CTI.DPI.Core.Constants;
 using CTI.DPI.Core.DPI;
-using CTI.DPI.Application.Helpers;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Data;
@@ -28,7 +27,28 @@ namespace CTI.DPI.Application.Helpers
             {
                 foreach (var filter in filters)
                 {
-                    command.Parameters.Add($"@{filter.FieldName}", SqlDbType.NVarChar).Value = filter.FieldValue;
+                    var dataType = SqlDbType.NVarChar;
+                    var defaultValue = "";
+                    switch (filter.DataType)
+                    {
+                        case DataTypes.CustomDropdown:
+                        case DataTypes.DropdownFromTable:
+                            dataType = SqlDbType.NVarChar;
+                            break;
+                        case DataTypes.Years:
+                        case DataTypes.Months:
+                            dataType = SqlDbType.Int;
+                            defaultValue = "0";
+                            break;
+                        case DataTypes.Date:
+                            dataType = SqlDbType.DateTime;
+                            defaultValue = "1900/1/1";
+                            break;
+                        default
+                            :
+                            break;
+                    }
+                    command.Parameters.Add($"@{filter.FieldName}", dataType).Value = string.IsNullOrEmpty(filter.FieldValue) ? defaultValue : filter.FieldValue;
                 }
             }
             List<string?> results = new();

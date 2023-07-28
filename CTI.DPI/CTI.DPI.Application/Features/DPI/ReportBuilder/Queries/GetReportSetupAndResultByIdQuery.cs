@@ -50,7 +50,16 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportSetupAn
             {
                 foreach (var parameter in report.ReportQueryFilterList)
                 {
-                    request.Filters.Add(new ReportQueryFilterModel() { FieldName = parameter.FieldName! });
+                    request.Filters.Add(new ReportQueryFilterModel() 
+                    {
+                        FieldName = parameter.FieldName!,
+                        FieldDescription = parameter.FieldDescription!,
+                        DataType = parameter.DataType!,
+                        CustomDropdownValues = parameter.CustomDropdownValues!,
+                        DropdownTableKeyAndValue = parameter.DropdownTableKeyAndValue!,
+                        DropdownFilter = parameter.DropdownFilter!,
+                        Sequence = parameter.Sequence!,
+                    });
                 }
             }
         }
