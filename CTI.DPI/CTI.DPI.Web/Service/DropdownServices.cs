@@ -5,6 +5,7 @@ using CTI.Common.Data;
 using CTI.DPI.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using CTI.DPI.Web.Areas.Admin.Queries.Roles;
+using CTI.DPI.Application.Features.DPI.Report.Queries;
 
 namespace CTI.DPI.Web.Service
 {
@@ -32,12 +33,9 @@ namespace CTI.DPI.Web.Service
                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
             );
         }
-        public SelectList GetReportList(string? id)
+        public async Task<IList<Dictionary<string, string>>> GetReportList()
         {
-            return _context.GetSingle<ReportState>(e => e.Id == id, new()).Result.Match(
-                Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.ReportName } }, "Value", "Text", e.Id),
-                None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-            );
+           return await _mediaTr.Send(new GetReportListQuery());
         }
         public SelectList GetReportFilterGroupingList(string? id)
         {
@@ -57,7 +55,7 @@ namespace CTI.DPI.Web.Service
         }
         public async Task<IEnumerable<SelectListItem>> GetRoleList()
         {
-            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
         }
         public IEnumerable<SelectListItem> QueryTypeList()
         {
@@ -86,7 +84,7 @@ namespace CTI.DPI.Web.Service
                 new SelectListItem { Text = Core.Constants.DataTypes.Date, Value = Core.Constants.DataTypes.Date, },
                 new SelectListItem { Text = Core.Constants.DataTypes.DropdownFromTable, Value = Core.Constants.DataTypes.DropdownFromTable, },
                 new SelectListItem { Text = Core.Constants.DataTypes.Months, Value = Core.Constants.DataTypes.Months, },
-                new SelectListItem { Text = Core.Constants.DataTypes.Years, Value = Core.Constants.DataTypes.Years, },         
+                new SelectListItem { Text = Core.Constants.DataTypes.Years, Value = Core.Constants.DataTypes.Years, },
             };
             return items;
         }

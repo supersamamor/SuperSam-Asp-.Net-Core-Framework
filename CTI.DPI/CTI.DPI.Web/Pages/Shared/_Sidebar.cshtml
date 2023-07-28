@@ -109,18 +109,30 @@
                     </ul>
                 </li>
             }
-            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "DPI")">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-list-alt nav-icon"></i>
-                    <span>
-                        @Localizer["Data Plot Insights"]
-                        <i class="right fas level-one-nav-icon fa-angle-left"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-treeview">
-
-                </ul>
-            </li>
+            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.View)).Succeeded)
+            {
+                <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Report")">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-line nav-icon"></i>
+                        <span>
+                            @Localizer["Report"]
+                            <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach(var item in await dropdownService.GetReportList())
+                        {
+                            <li class="nav-item">
+                                <a href="/DPI/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <span>@item["ReportName"]</span>
+                                </a>
+                            </li>
+                        }
+                       
+                    </ul>
+                </li>
+            }       
         </ul>
         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
     </div>

@@ -10,33 +10,52 @@
 }
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
-    @foreach (var item in Model.ReportList)
+    @if (Model.ReportList.Count > 0)
+    {
+        foreach (var item in Model.ReportList)
+        {
+            <div class="col">
+                <div class="card">
+                    <h5 class="card-header text-center"><span class="card-header-custom">@item.ReportName</span><br></h5>
+                    @if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Table)
+                    {
+                        <div class="card-body custom-graph-body overflow-x-scroll">
+                            <table id="@item.DomId" class="table table-hover table-bordered table-striped" width="100%">
+                            </table>
+                        </div>
+                    }
+                    else if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
+                    {
+                        <div class="card-body custom-graph-body">
+                            <canvas id="@item.DomId" class="pie-graph-canvas"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-body custom-graph-body">
+                            <canvas id="@item.DomId" class="default-graph-canvas"></canvas>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
     {
         <div class="col">
             <div class="card">
-                <h5 class="card-header text-center"><span class="card-header-custom">@item.ReportName</span><br></h5>
-                @if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Table)
-                {
-                    <div class="card-body custom-graph-body overflow-x-scroll">
-                        <table id="@item.DomId" class="table table-hover table-bordered table-striped" width="100%">
-                        </table>
-                    </div>                   
-                }
-                else if (item.ReportOrChartType == CTI.DPI.Core.Constants.ReportChartType.Pie)
-                {
-                    <div class="card-body custom-graph-body">
-                        <canvas id="@item.DomId" class="pie-graph-canvas"></canvas>
-                    </div>                 
-                }
-                else
-                {
-                    <div class="card-body custom-graph-body">
-                        <canvas id="@item.DomId" class="default-graph-canvas"></canvas>
-                    </div>                   
-                }
+                <h5 class="card-header text-center"><span class="card-header-custom">@Localizer["Dashboard"]</span><br></h5>
+                <div class="card-body custom-graph-body text-center">
+                    <br>
+                    <span class="text-center">@Localizer["For your dashboard setup, please contact your System Administrator."]</span>
+                    <br>
+                    <br>
+                    <br>
+                </div>
             </div>
         </div>
     }
+ 
 </div>
 
 

@@ -48,7 +48,7 @@ var app = builder.Build();
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
 bool uploadFilesPathExists = System.IO.Directory.Exists(uploadFilesPath);
 if (!uploadFilesPathExists)
-    System.IO.Directory.CreateDirectory(uploadFilesPath);
+    System.IO.Directory.CreateDirectory(uploadFilesPath!);
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>

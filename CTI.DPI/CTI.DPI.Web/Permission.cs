@@ -11,6 +11,7 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("Apis"))
             .Concat(GeneratePermissionsForModule("Applications"))
             .Concat(GeneratePermissionsForModule("AuditTrail"))
+            .Concat(GeneratePermissionsForModule("Report"))
             .Concat(GeneratePermissionsForModule("ReportSetup"))
 			.Concat(GeneratePermissionsForModule("ReportTable"))
 			.Concat(GeneratePermissionsForModule("ReportTableJoinParameter"))
@@ -95,7 +96,10 @@ public static class Permission
         public const string Edit = "Permission.AuditTrail.Edit";
         public const string Delete = "Permission.AuditTrail.Delete";
     }
-
+    public static class Report
+    {
+        public const string View = "Permission.Report.View";       
+    }
     public static class ReportSetup
     {
 		public const string View = "Permission.ReportSetup.View";

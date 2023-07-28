@@ -1,34 +1,48 @@
+using CTI.Common.Identity.Abstractions;
 using CTI.DPI.Application.DTOs;
 using CTI.DPI.Infrastructure.Data;
 using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Data;
 
 namespace CTI.DPI.Application.Features.DPI.Report.Queries;
 
-public record GetReportBuilderByIdQuery(string Id) : IRequest<Option<ReportResultModel>>
+public record GetReportSetupAndResultByIdQuery(string Id) : IRequest<Option<ReportResultModel>>
 {
     public IList<ReportQueryFilterModel> Filters { get; set; } = new List<ReportQueryFilterModel>();
 }
 
-public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilderByIdQuery, Option<ReportResultModel>>
+public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportSetupAndResultByIdQuery, Option<ReportResultModel>>
 {
     private readonly ApplicationContext _context;
-    public GetReportBuilderByIdQueryHandler(ApplicationContext context)
+    private readonly IConfiguration _configuration;
+    private readonly IdentityContext _identityContext;
+    private readonly IAuthenticatedUser _authenticatedUser;
+    public GetReportBuilderByIdQueryHandler(ApplicationContext context, IConfiguration configuration, IdentityContext identityContext, IAuthenticatedUser authenticatedUser)
     {
         _context = context;
+        _configuration = configuration;
+        _identityContext = identityContext;
+        _authenticatedUser = authenticatedUser;
     }
 
-    public async Task<Option<ReportResultModel>> Handle(GetReportBuilderByIdQuery request, CancellationToken cancellationToken = default)
+    public async Task<Option<ReportResultModel>> Handle(GetReportSetupAndResultByIdQuery request, CancellationToken cancellationToken = default)
     {
+        var roleList = await (from ur in _identityContext.UserRoles
+                              join r in _identityContext.Roles on ur.RoleId equals r.Id
+                              where ur.UserId == _authenticatedUser.UserId
+                              select r.Name).Distinct().ToListAsync(cancellationToken);
         var report = await _context.Report
             .Include(l => l.ReportTableList)
             .Include(l => l.ReportTableJoinParameterList)
             .Include(l => l.ReportColumnHeaderList)
             .Include(l => l.ReportFilterGroupingList)
             .Include(l => l.ReportQueryFilterList)
-            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+            .Where(e => e.Id == request.Id)
+            .Where(l => l.ReportRoleAssignmentList!.Any(ra => roleList.Contains(ra.RoleName)))
+            .AsNoTracking().FirstOrDefaultAsync(cancellationToken);
         if (request.Filters == null || request.Filters.Count == 0)
         {
             request.Filters = new List<ReportQueryFilterModel>();
@@ -41,7 +55,7 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportBuilder
             }
         }
         var resultsAndLabels = await Helpers.ReportDataHelper.ConvertSQLQueryToJsonAsync(
-            _context.Database.GetConnectionString()!,
+            _configuration.GetConnectionString("ReportContext"),
             report!,
             request.Filters);
         return new ReportResultModel()
