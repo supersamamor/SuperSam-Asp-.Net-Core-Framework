@@ -65,7 +65,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.MainModulePlaceHolderState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.MainModulePlaceHolderState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -102,7 +102,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("MainModulePlaceHolder");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnDetailState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnDetailState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -155,7 +155,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportColumnDetail");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnFilterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnFilterState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -205,7 +205,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportColumnFilter");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnHeaderState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -241,7 +241,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportColumnHeader");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportFilterGroupingState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -280,7 +280,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportFilterGrouping");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportQueryFilterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportQueryFilterState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -334,7 +334,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportQueryFilter");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportRoleAssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportRoleAssignmentState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -369,7 +369,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportRoleAssignment");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -418,7 +418,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableJoinParameterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableJoinParameterState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -476,7 +476,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportTableJoinParameter");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -520,13 +520,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportTable");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnDetailState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnDetailState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnHeaderState", "ReportColumnHeader")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", "ReportColumnHeader")
                         .WithMany("ReportColumnDetailList")
                         .HasForeignKey("ReportColumnHeaderId");
 
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableState", "ReportTable")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", "ReportTable")
                         .WithMany("ReportColumnDetailList")
                         .HasForeignKey("ReportTableId");
 
@@ -535,13 +535,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ReportTable");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnFilterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnFilterState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportFilterGroupingState", "ReportFilterGrouping")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", "ReportFilterGrouping")
                         .WithMany("ReportColumnFilterList")
                         .HasForeignKey("ReportFilterGroupingId");
 
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableState", "ReportTable")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", "ReportTable")
                         .WithMany("ReportColumnFilterList")
                         .HasForeignKey("ReportTableId");
 
@@ -550,27 +550,27 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ReportTable");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnHeaderState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
                         .WithMany("ReportColumnHeaderList")
                         .HasForeignKey("ReportId");
 
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportFilterGroupingState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
                         .WithMany("ReportFilterGroupingList")
                         .HasForeignKey("ReportId");
 
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportQueryFilterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportQueryFilterState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
                         .WithMany("ReportQueryFilterList")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -579,9 +579,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportRoleAssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportRoleAssignmentState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
                         .WithMany("ReportRoleAssignmentList")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -590,15 +590,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableJoinParameterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableJoinParameterState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
                         .WithMany("ReportTableJoinParameterList")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableState", "ReportTable")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", "ReportTable")
                         .WithMany("ReportTableJoinParameterList")
                         .HasForeignKey("ReportTableId");
 
@@ -607,9 +607,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ReportTable");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
                         .WithMany("ReportTableList")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -618,17 +618,17 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportColumnHeaderState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", b =>
                 {
                     b.Navigation("ReportColumnDetailList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportFilterGroupingState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", b =>
                 {
                     b.Navigation("ReportColumnFilterList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", b =>
                 {
                     b.Navigation("ReportColumnHeaderList");
 
@@ -643,7 +643,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ReportTableList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportTableState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", b =>
                 {
                     b.Navigation("ReportColumnDetailList");
 

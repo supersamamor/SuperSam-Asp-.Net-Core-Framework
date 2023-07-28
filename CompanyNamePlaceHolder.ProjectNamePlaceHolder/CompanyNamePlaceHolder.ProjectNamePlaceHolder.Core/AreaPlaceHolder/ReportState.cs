@@ -1,5 +1,5 @@
 using CompanyNamePlaceHolder.Common.Core.Base.Models;
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 public record ReportState : BaseEntity
 {
 	public string ReportName { get; init; } = "";

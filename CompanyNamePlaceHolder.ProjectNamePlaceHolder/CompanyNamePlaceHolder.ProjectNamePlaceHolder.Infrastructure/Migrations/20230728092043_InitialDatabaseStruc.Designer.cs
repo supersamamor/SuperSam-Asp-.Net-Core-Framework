@@ -67,7 +67,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.MainModulePlaceHolderState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.MainModulePlaceHolderState", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

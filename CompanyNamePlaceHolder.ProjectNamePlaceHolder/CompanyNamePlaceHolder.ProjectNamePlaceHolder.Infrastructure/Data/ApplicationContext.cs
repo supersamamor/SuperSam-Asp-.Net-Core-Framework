@@ -1,6 +1,6 @@
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Identity.Abstractions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
