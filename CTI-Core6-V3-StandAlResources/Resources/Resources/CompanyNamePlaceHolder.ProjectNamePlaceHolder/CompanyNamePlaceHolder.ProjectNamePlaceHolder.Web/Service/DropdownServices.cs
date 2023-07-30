@@ -5,6 +5,8 @@ using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Report.Queries;
+using System.Globalization;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 {
@@ -18,6 +20,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 			_context = context;
 			_mediaTr = mediaTr;
 		} 
+		public async Task<IEnumerable<SelectListItem>> GetRoleList()
+        {
+            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
+        }
 		public SelectList GetReportTableList(string? id)
         {
             return _context.GetSingle<ReportTableState>(e => e.Id == id, new()).Result.Match(
