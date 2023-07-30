@@ -104,6 +104,7 @@
             })
             $(".dataTables_filter").hide();
             $("#navbar_search_container").show();
+            $('#navbar_search_container').removeClass('hide_navbar_search_container');
             //Retrieve search key from cookies
             var searchKey = $.cookie("searchKey-" + tableId);
             if (searchKey) {
