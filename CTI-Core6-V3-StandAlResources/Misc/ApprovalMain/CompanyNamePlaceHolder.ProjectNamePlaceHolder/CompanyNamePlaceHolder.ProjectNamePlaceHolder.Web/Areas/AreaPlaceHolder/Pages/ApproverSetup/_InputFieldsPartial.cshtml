@@ -2,8 +2,8 @@
 @model ApproverSetupViewModel
 
 <div class="card">
-	<h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Approver Setup Info"]</span><br></h5>
-	<div class="card-body"  style="overflow-x:scroll;">
+	<h5 class="card-header"><span sclass="card-header-custom">@Localizer["Approver Setup Info"]</span><br></h5>
+	<div class="card-body overflow-x-scroll" >
 		<input type="hidden" asp-for="@Model.Id" name="Id" />
 		<input type="hidden" asp-for="@Model.ApprovalSetupType" name="ApprovalSetupType" value="@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalSetupTypes.Modular"/>
 		<div class="row">

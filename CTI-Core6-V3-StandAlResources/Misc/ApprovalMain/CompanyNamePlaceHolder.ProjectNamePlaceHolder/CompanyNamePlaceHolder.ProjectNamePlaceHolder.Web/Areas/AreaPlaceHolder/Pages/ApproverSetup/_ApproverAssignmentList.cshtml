@@ -4,15 +4,15 @@
 
 <div class="card">
     <h5 class="card-header">
-        <span style="background-color: var(--bs-card-cap-bg);">@Localizer["Approver Assignment"]</span>
-        <a id="btnAddApproverAssignment" class="btn btnMaterial btn-flat primary semicircle cancel" title="@Localizer["Add"]"><i class="fas fa-plus" style="font-size:18px;"></i></a>
+        <span class="card-header-custom">@Localizer["Approver Assignment"]</span>
+        <a id="btnAddApproverAssignment" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
         <button class="cancel d-none" type="button" id="btnRemoveApproverAssignment" value="RemoveApproverAssignment"></button>
     </h5>
-    <div class="card-body" style="overflow:auto;">
+    <div class="card-body overflow-x-scroll">
         <table id="approverAssignment" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
             <thead>
                 <tr>
-                    <th style="display:none;"></th>
+                    <th class="d-none"></th>
                     <th>
 						@Localizer["Approver Type"]
 					</th>
@@ -34,7 +34,7 @@
                     foreach (var item in Model.ApproverAssignmentList.OrderBy(l=>l.Sequence))
                     {
                         <tr>
-                            <td style="display:none;">
+                            <td class="d-none">
                                 <input type="hidden" name="ApproverAssignmentList[@counter].Id" value="@item.Id" />
                                 <input type="hidden" name="ApproverAssignmentList[@counter].ApproverSetupId" value="@item.ApproverSetupId" />
                             </td>
