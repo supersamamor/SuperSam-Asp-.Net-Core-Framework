@@ -139,7 +139,7 @@
                                 @foreach (var item in reportList)
                                 {
                                     <li class="nav-item">
-                                        <a href="/MRS/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
+                                        <a href="/AreaPlaceHolder/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
                                             <i class="fas fa-circle nav-icon"></i>
                                             <span>@item["ReportName"]</span>
                                         </a>
