@@ -56,7 +56,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
             List<Dictionary<string, object>> tableData = new();
             List<Dictionary<string, string>> tableColumnLabel = new();
             using SqlDataReader reader = await command.ExecuteReaderAsync();
-            int index = 0;
+            int colorIndex = 0;
             if (report.ReportOrChartType == ReportChartType.Table)
             {
                 while (reader.Read())
@@ -65,7 +65,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
                         var sanitizedDataName = StringHelper.Sanitize(reader.GetName(i));
-                        if (index == 0)
+                        if (colorIndex == 0)
                         {
                             Dictionary<string, string> columnLabel = new()
                             {
@@ -77,7 +77,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                         rowData[sanitizedDataName] = reader[i];
                     }
                     tableData.Add(rowData);
-                    index++;
+                    colorIndex++;
                 }
                 return new LabelResultAndStyle()
                 {
@@ -122,6 +122,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                                                 };
                                                 multipleDataSetList[reader.GetName(i)] = dataSet;
                                                 multipleDatasetColorIndex++;
+                                                if (multipleDatasetColorIndex > Colors.List.Length() - 1)
+                                                {
+                                                    multipleDatasetColorIndex = 0;
+                                                }
                                             }
                                             else
                                             {
@@ -138,7 +142,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                                                 {
                                                     Label = reader.GetName(i),
                                                     Data = { Convert.ToDecimal(reader[i]!.ToString()!) },
-                                                    BackgroundColor = { Colors.List[index] },
+                                                    BackgroundColor = { Colors.List[colorIndex] },
                                                 };
                                                 dataSetList[reader.GetName(i)] = dataSet;
                                             }
@@ -146,7 +150,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                                             {
                                                 var existingDataSet = dataSetList[reader.GetName(i)];
                                                 existingDataSet.Data.Add(Convert.ToDecimal(reader[i]!.ToString()!));
-                                                existingDataSet.BackgroundColor.Add(Colors.List[index]);
+                                                existingDataSet.BackgroundColor.Add(Colors.List[colorIndex]);
                                                 dataSetList[reader.GetName(i)] = existingDataSet;
                                             }
                                             break;
@@ -160,12 +164,16 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                                         singleDataSet.Label = reader.GetName(i);
                                     }
                                     singleDataSet.Data.Add(Convert.ToDecimal(reader[i]!.ToString()!));
-                                    singleDataSet.BackgroundColor.Add(Colors.List[index]);
+                                    singleDataSet.BackgroundColor.Add(Colors.List[colorIndex]);
                                 }
                             }
                         }
                     }
-                    index++;
+                    colorIndex++;
+                    if (colorIndex > Colors.List.Length() - 1)
+                    {
+                        colorIndex = 0;
+                    }
                 }
                 if (isMultipleResultSet)
                 {
