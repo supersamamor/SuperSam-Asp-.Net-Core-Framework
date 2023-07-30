@@ -6,9 +6,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.DTOs
         public string? ReportId { get; set; }
         public string? ReportName { get; set; }
         public string? Results { get; set; }
-        public string? Labels { get; set; }
-        public string? Colors { get; set; }
+        public string? ColumnHeaders { get; set; }
         public string ReportOrChartType { get; set; } = "";
+        public bool DisplayLegend { get; set; }
         public IList<ReportQueryFilterModel> Filters { get; set; } = new List<ReportQueryFilterModel>();
     }
     public class ReportQueryFilterModel

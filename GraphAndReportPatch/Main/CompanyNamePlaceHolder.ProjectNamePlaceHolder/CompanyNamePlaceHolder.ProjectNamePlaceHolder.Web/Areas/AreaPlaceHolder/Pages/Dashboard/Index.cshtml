@@ -4,12 +4,17 @@
     ViewData["Title"] = "Dashboard";
     ViewData["ActiveMainPage"] = "Dashboard";
     ViewData["Level1"] = "Dashboard";
+    var dashboardContainerClass = "row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2";
+    if (Model.ReportList.Count == 1)
+    {
+        dashboardContainerClass = "row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1";
+    }
 }
 @section Styles {
     <partial name="_DataTableStyles" />
 }
 
-<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
+<div class="@dashboardContainerClass">
     @if (Model.ReportList.Count > 0)
     {
         foreach (var item in Model.ReportList)
@@ -68,7 +73,7 @@
         {
             <text>
                 $.BuildChart('@item.DomId', '@item.ReportName', '@item.ReportOrChartType',
-                        @Html.Raw(item.Labels), @Html.Raw(item.Results), @Html.Raw(item.Colors));
+                    @Html.Raw(item.ColumnHeaders), @Html.Raw(item.Results), @Html.Raw(item.DisplayLegend.ToString().ToLower()));
             </text>
         }
                             }

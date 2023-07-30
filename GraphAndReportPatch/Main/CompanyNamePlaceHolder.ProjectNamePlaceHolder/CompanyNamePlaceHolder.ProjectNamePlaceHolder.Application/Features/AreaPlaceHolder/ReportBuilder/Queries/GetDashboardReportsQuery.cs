@@ -53,12 +53,12 @@ public class GetDashboardReportsQueryHandler : IRequestHandler<GetDashboardRepor
             var resultsAndLabels = await Helpers.ReportDataHelper.ConvertSQLQueryToJsonAsync(_authenticatedUser, _configuration.GetConnectionString("ReportContext"), report!, filters);
             reportResult.Add(new ReportResultModel()
             {
-                ReportId = report.Id,
+                ReportId = report?.Id,
                 ReportName = report!.ReportName,
                 Results = resultsAndLabels.Results,
-                Labels = resultsAndLabels.Labels,
-                Colors = resultsAndLabels.Colors,
+                ColumnHeaders = resultsAndLabels.ColumnHeaders,      
                 ReportOrChartType = report!.ReportOrChartType,
+                DisplayLegend = resultsAndLabels.DisplayLegend
             });
         }
         return reportResult;
