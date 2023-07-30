@@ -118,7 +118,7 @@
         $(document).ready(function () {
             function InitializeForm() {
                 $.BuildChart('report', '@Model!.Report.ReportName', '@Model.Report.ReportOrChartType',
-        @Html.Raw(Model.Report.Labels), @Html.Raw(Model.Report.Results), @Html.Raw(Model.Report.Colors));
+                    @Html.Raw(Model.Report.ColumnHeaders), @Html.Raw(Model.Report.Results), @Html.Raw(Model.Report.DisplayLegend.ToString().ToLower()));
             }
             InitializeForm();
         });

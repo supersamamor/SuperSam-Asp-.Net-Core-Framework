@@ -25,7 +25,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
             }
             ReportId = id;
             var reportResult = new ReportResultModel();
-            (await Mediatr.Send(new GetReportSetupAndResultByIdQuery(id))).Select(l => reportResult = l);
+            _ = (await Mediatr.Send(new GetReportSetupAndResultByIdQuery(id))).Select(l => reportResult = l);
             Mapper.Map(reportResult, Report);
             return Page();
         }
@@ -34,7 +34,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolde
             var reportResult = new ReportResultModel();
             var query = new GetReportSetupAndResultByIdQuery(ReportId);
             Mapper.Map(Filters, query.Filters);
-            (await Mediatr.Send(query)).Select(l => reportResult = l);
+            _ = (await Mediatr.Send(query)).Select(l => reportResult = l);
             Mapper.Map(reportResult, Report);
             return Page();
         }

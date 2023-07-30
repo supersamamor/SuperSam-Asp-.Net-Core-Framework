@@ -68,7 +68,7 @@
         {
             <text>
                 $.BuildChart('@item.DomId', '@item.ReportName', '@item.ReportOrChartType',
-                        @Html.Raw(item.Labels), @Html.Raw(item.Results), @Html.Raw(item.Colors));
+                    @Html.Raw(item.ColumnHeaders), @Html.Raw(item.Results), @Html.Raw(item.DisplayLegend.ToString().ToLower()));
             </text>
         }
                             }

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Data;
 using CompanyNamePlaceHolder.Common.Identity.Abstractions;
 
+
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
 {
     public static class ReportDataHelper
@@ -21,7 +22,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
             }
             using SqlConnection connection = new(connectionString);
             connection.Open();
-            // Step 1: Execute the SELECT query and retrieve the data as a SqlDataReader
             using SqlCommand command = new(queryWithShortCode, connection);
             if (filters?.Count > 0)
             {
@@ -51,8 +51,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                     command.Parameters.Add($"@{filter.FieldName}", dataType).Value = string.IsNullOrEmpty(filter.FieldValue) ? defaultValue : filter.FieldValue;
                 }
             }
-            List<string?> results = new();
-            List<string?> labels = new();
+            HashSet<string?> columnHeaders = new();
             List<string?> colors = new();
             List<Dictionary<string, object>> tableData = new();
             List<Dictionary<string, string>> tableColumnLabel = new();
@@ -62,7 +61,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
             {
                 while (reader.Read())
                 {
-                    Dictionary<string, object> rowData = new Dictionary<string, object>();
+                    Dictionary<string, object> rowData = new();
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
                         var sanitizedDataName = StringHelper.Sanitize(reader.GetName(i));
@@ -83,45 +82,140 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                 return new LabelResultAndStyle()
                 {
                     Results = JsonConvert.SerializeObject(tableData, Formatting.Indented),
-                    Labels = JsonConvert.SerializeObject(tableColumnLabel, Formatting.Indented),
+                    ColumnHeaders = JsonConvert.SerializeObject(tableColumnLabel, Formatting.Indented),
                 };
             }
             else
             {
+                bool isMultipleResultSet = reader.FieldCount > 2;
+                Dataset singleDataSet = new() { };
+                HashSet<string?> dataSetTitles = new();
+                Dictionary<string, MultipleDataset> multipleDataSetList = new();
+                Dictionary<string, Dataset> dataSetList = new();
+                int multipleDatasetColorIndex = 0;
                 while (reader.Read())
                 {
+                    Dictionary<string, object> rowData = new();
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
                         if (string.Equals(reader.GetName(i), "Label", StringComparison.OrdinalIgnoreCase))
                         {
-                            labels.Add(reader[i]?.ToString());
+                            columnHeaders.Add(reader[i]?.ToString());
                         }
-                        else if (string.Equals(reader.GetName(i), "Data", StringComparison.OrdinalIgnoreCase))
+                        else
                         {
-                            results.Add(reader[i]?.ToString());
+                            if (IsNumeric(reader[i]!.ToString()!))
+                            {
+                                if (isMultipleResultSet)
+                                {
+                                    switch (report.ReportOrChartType)
+                                    {
+                                        case ReportChartType.HorizontalBar:
+                                            if (!dataSetTitles.Contains(reader.GetName(i)))
+                                            {
+                                                dataSetTitles.Add(reader.GetName(i));
+                                                var dataSet = new MultipleDataset()
+                                                {
+                                                    Label = reader.GetName(i),
+                                                    Data = { Convert.ToDecimal(reader[i]!.ToString()!) },
+                                                    BackgroundColor = Colors.List[multipleDatasetColorIndex],
+                                                };
+                                                multipleDataSetList[reader.GetName(i)] = dataSet;
+                                                multipleDatasetColorIndex++;
+                                            }
+                                            else
+                                            {
+                                                var existingDataSet = multipleDataSetList[reader.GetName(i)];
+                                                existingDataSet.Data.Add(Convert.ToDecimal(reader[i]!.ToString()!));
+                                                multipleDataSetList[reader.GetName(i)] = existingDataSet;
+                                            }
+                                            break;
+                                        case ReportChartType.Pie:
+                                            if (!dataSetTitles.Contains(reader.GetName(i)))
+                                            {
+                                                dataSetTitles.Add(reader.GetName(i));
+                                                var dataSet = new Dataset()
+                                                {
+                                                    Label = reader.GetName(i),
+                                                    Data = { Convert.ToDecimal(reader[i]!.ToString()!) },
+                                                    BackgroundColor = { Colors.List[index] },
+                                                };
+                                                dataSetList[reader.GetName(i)] = dataSet;
+                                            }
+                                            else
+                                            {
+                                                var existingDataSet = dataSetList[reader.GetName(i)];
+                                                existingDataSet.Data.Add(Convert.ToDecimal(reader[i]!.ToString()!));
+                                                existingDataSet.BackgroundColor.Add(Colors.List[index]);
+                                                dataSetList[reader.GetName(i)] = existingDataSet;
+                                            }
+                                            break;
+                                        default: break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(singleDataSet.Label))
+                                    {
+                                        singleDataSet.Label = reader.GetName(i);
+                                    }
+                                    singleDataSet.Data.Add(Convert.ToDecimal(reader[i]!.ToString()!));
+                                    singleDataSet.BackgroundColor.Add(Colors.List[index]);
+                                }
+                            }
                         }
                     }
-                    colors.Add(Colors.List[index]);
                     index++;
                 }
-                return new LabelResultAndStyle()
+                if (isMultipleResultSet)
                 {
-                    Results = JsonConvert.SerializeObject(results, Formatting.Indented),
-                    Labels = JsonConvert.SerializeObject(labels, Formatting.Indented),
-                    Colors = JsonConvert.SerializeObject(colors, Formatting.Indented)
-                };
+                    switch (report.ReportOrChartType)
+                    {
+                        case ReportChartType.HorizontalBar:
+                            return new LabelResultAndStyle()
+                            {
+                                Results = JsonConvert.SerializeObject(new List<MultipleDataset>(multipleDataSetList.Values), Formatting.Indented),
+                                ColumnHeaders = JsonConvert.SerializeObject(columnHeaders, Formatting.Indented),
+                                DisplayLegend = true,
+                            };
+                        case ReportChartType.Pie:
+                            return new LabelResultAndStyle()
+                            {
+                                Results = JsonConvert.SerializeObject(new List<Dataset>(dataSetList.Values), Formatting.Indented),
+                                ColumnHeaders = JsonConvert.SerializeObject(columnHeaders, Formatting.Indented),
+                                DisplayLegend = true,
+                            };
+                        default:
+                            return new LabelResultAndStyle();
+                    }
+                }
+                else
+                {
+                    return new LabelResultAndStyle()
+                    {
+                        Results = JsonConvert.SerializeObject(new List<object> { singleDataSet }, Formatting.Indented),
+                        ColumnHeaders = JsonConvert.SerializeObject(columnHeaders, Formatting.Indented),
+                        Colors = JsonConvert.SerializeObject(colors, Formatting.Indented),
+                        DisplayLegend = false,
+                    };
+                }
             }
 
         }
         public static async Task<List<Dictionary<string, string?>>> ConvertTableKeyValueToDictionary(string connectionString, string tableKeyValue, string? filter)
         {
             string[] queryComponents = tableKeyValue.Split(',');
-            var query = $"select {queryComponents[1]} as [Key],{queryComponents[2]} as [Value] from {queryComponents[0]}";
+            var query = $"select Distinct {queryComponents[1]} as [Key],{queryComponents[2]} as [Value] from {queryComponents[0]}";
             if (!string.IsNullOrEmpty(filter))
             {
                 query += $" where {filter}";
             }
             query += $" order by {queryComponents[2]}";
+            var error = Core.Helpers.SQLValidatorHelper.Validate(query);
+            if (!string.IsNullOrEmpty(error))
+            {
+                throw new Exception(error);
+            }
             using SqlConnection connection = new(connectionString);
             connection.Open();
             List<Dictionary<string, string?>> tableData = new();
@@ -129,10 +223,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
             using SqlDataReader reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
-                Dictionary<string, string?> rowData = new Dictionary<string, string?>();
+                Dictionary<string, string?> rowData = new();
                 for (int i = 0; i < reader.FieldCount; i++)
-                {                 
-                    rowData[reader.GetName(i)] = reader[i]?.ToString();                    
+                {
+                    rowData[reader.GetName(i)] = reader[i]?.ToString();
                 }
                 tableData.Add(rowData);
             }
@@ -141,8 +235,35 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
         public class LabelResultAndStyle
         {
             public string? Results { get; set; }
-            public string? Labels { get; set; }
+            public string? ColumnHeaders { get; set; }
             public string? Colors { get; set; }
+            public bool DisplayLegend { get; set; }
+        }
+        private class Dataset
+        {
+            [JsonProperty("label")]
+            public string? Label { get; set; }
+            [JsonProperty("data")]
+            public List<decimal> Data { get; set; } = new List<decimal>();
+            [JsonProperty("backgroundColor")]
+            public List<string> BackgroundColor { get; set; } = new List<string>();
+            [JsonProperty("borderWidth")]
+            public int BorderWidth { get; set; } = 1;
+        }
+        private class MultipleDataset
+        {
+            [JsonProperty("label")]
+            public string? Label { get; set; }
+            [JsonProperty("data")]
+            public List<decimal> Data { get; set; } = new List<decimal>();
+            [JsonProperty("backgroundColor")]
+            public string BackgroundColor { get; set; } = "";
+            [JsonProperty("borderWidth")]
+            public int BorderWidth { get; set; } = 1;
+        }
+        private static bool IsNumeric(string input)
+        {
+            return decimal.TryParse(input, out _);
         }
     }
 }

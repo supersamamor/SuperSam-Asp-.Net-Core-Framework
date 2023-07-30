@@ -73,10 +73,10 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportSetupAn
             ReportId = request.Id,
             ReportName = report!.ReportName,
             Results = resultsAndLabels.Results,
-            Labels = resultsAndLabels.Labels,
-            Colors = resultsAndLabels.Colors,
+            ColumnHeaders = resultsAndLabels.ColumnHeaders,           
             ReportOrChartType = report!.ReportOrChartType,
             Filters = request.Filters,
+            DisplayLegend = resultsAndLabels.DisplayLegend,
         };
     }
 

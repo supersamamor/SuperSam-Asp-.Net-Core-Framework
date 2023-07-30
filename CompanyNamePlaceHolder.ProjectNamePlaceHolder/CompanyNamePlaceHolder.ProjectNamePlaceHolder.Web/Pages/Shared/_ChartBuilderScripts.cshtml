@@ -2,7 +2,7 @@
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
-        $.BuildChart = function (chartContainer, reportName, charType, labels, results, colors) {
+        $.BuildChart = function (chartContainer, reportName, charType, columnHeaders, dataSetResult, displayLegend) {
 
             let chartRenderType = '';
             switch (charType) {
@@ -21,8 +21,8 @@
             if (chartRenderType != '') {
                 if (charType == '@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Table') {
                     var table = $('#' + chartContainer).DataTable({
-                        data: results,
-                        columns: labels,
+                        data: dataSetResult,
+                        columns: columnHeaders,
                         buttons: [
                             {
                                 extend: 'excel',
@@ -49,14 +49,8 @@
                 else
                 {
                     const data = {
-                        labels: labels,
-                        datasets: [
-                            {
-                                data: results,
-                                backgroundColor: colors,
-                                borderWidth: 1,
-                            }
-                        ]
+                        labels: columnHeaders,
+                        datasets: dataSetResult
                     };
                     const ctx = document.getElementById(chartContainer).getContext('2d');
                     const graph = new Chart(ctx, {
@@ -74,10 +68,11 @@
                                     text: reportName
                                 },
                                 legend: {
-                                    display: false,
+                                    display: displayLegend,
                                     position: 'bottom'
                                 }
-                            }
+                            },
+                            animation: false,
                         }
                     });
                 }
