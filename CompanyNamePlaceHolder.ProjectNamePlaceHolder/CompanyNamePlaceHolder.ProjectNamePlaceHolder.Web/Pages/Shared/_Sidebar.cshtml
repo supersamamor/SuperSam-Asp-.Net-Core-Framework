@@ -1,7 +1,7 @@
 @{
     var user = await UserManager.GetUserAsync(User);
     var appName = Configuration.GetValue<string>("Application");
-	var backgroundClass = Configuration.GetValue<string>("BackgroundClass");
+    var backgroundClass = Configuration.GetValue<string>("BackgroundClass");
 }
 <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion @backgroundClass p-0">
     <div class="container-fluid d-flex flex-column p-0">
@@ -107,43 +107,49 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.View)).Succeeded)
-						{
-							<li class="nav-item">
+                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.View)).Succeeded)
+                    {
+                        <li class="nav-item">
                             <a href="/AreaPlaceHolder/MainModulePlaceHolder" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "MainModulePlaceHolder")">
-									<i class="fas fa-circle nav-icon"></i>
-									<span>
-										@Localizer["SampleModuleDesc"]
-									</span>
-								</a>
-							</li>
-						}
-						
+                                <i class="fas fa-circle nav-icon"></i>
+                                <span>
+                                    @Localizer["SampleModuleDesc"]
+                                </span>
+                            </a>
+                        </li>
+                    }
+
                 </ul>
             </li>
-            @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.View)).Succeeded)
-            {
-                <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Report")">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-chart-line nav-icon"></i>
-                        <span>
-                            @Localizer["Report"]
-                            <i class="right fas level-one-nav-icon fa-angle-left"></i>
-                        </span>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        @foreach (var item in await dropdownService.GetReportList())
-                        {
-                            <li class="nav-item">
-                                <a href="/AreaPlaceHolder/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <span>@item["ReportName"]</span>
-                                </a>
-                            </li>
-                        }
+            @{
+                var reportList = await dropdownService.GetReportList();
+                if (reportList.Count > 0)
+                {
+                    if ((await AuthorizationService.AuthorizeAsync(User, Permission.Report.View)).Succeeded)
+                    {
+                        <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Report")">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <span>
+                                    @Localizer["Report"]
+                                    <i class="right fas level-one-nav-icon fa-angle-left"></i>
+                                </span>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @foreach (var item in reportList)
+                                {
+                                    <li class="nav-item">
+                                        <a href="/MRS/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
+                                            <i class="fas fa-circle nav-icon"></i>
+                                            <span>@item["ReportName"]</span>
+                                        </a>
+                                    </li>
+                                }
 
-                    </ul>
-                </li>
+                            </ul>
+                        </li>
+                    }
+                }
             }
         </ul>
         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
