@@ -24,7 +24,7 @@ footer .sticky-footer {
     background-size: cover;
 }
 
-#navbar_search_container {
+.hide_navbar_search_container {
     display: none !important;
 }
 
