@@ -44,7 +44,14 @@
             <span asp-validation-for="@Model.DisplayOnDashboard" class="text-danger"></span>
         </div>
     </div>
-    @if (Model.DisplayOnDashboard)
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.DisplayOnReportModule" class="form-label "><strong>@Localizer["Display On Report Module"] :</strong></label>
+            <input asp-for="@Model.DisplayOnReportModule" class="custom-checkbox-label" />
+            <span asp-validation-for="@Model.DisplayOnReportModule" class="text-danger"></span>
+        </div>
+    </div>
+    @if (Model.DisplayOnDashboard || Model.DisplayOnReportModule)
     {
         <div class="col">
             <div class="mb-3">
