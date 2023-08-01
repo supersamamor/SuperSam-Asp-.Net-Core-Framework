@@ -17,7 +17,7 @@
     <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Create)).Succeeded)
     {
-        <a asp-page="Add" id="btnAddRecord" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <a asp-page="Add" id="btnAddRecord" class="btn btn-success text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
     }
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Edit)).Succeeded)
     {
