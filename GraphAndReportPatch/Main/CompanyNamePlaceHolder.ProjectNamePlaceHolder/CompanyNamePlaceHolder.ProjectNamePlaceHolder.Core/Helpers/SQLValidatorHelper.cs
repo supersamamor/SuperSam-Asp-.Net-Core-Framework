@@ -23,13 +23,15 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Helpers
                 }
                 if (Regex.IsMatch(sqlScript, @"\bCREATE\b", RegexOptions.IgnoreCase))
                 {
-                    validationResult += "Sql Script has `Create`. ";
+                    validationResult += "Sql Script has `Create`. "; 
                 }
                 if (Regex.IsMatch(sqlScript, @"\bALTER\b", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Alter`. ";
                 }
-                if (Regex.IsMatch(sqlScript, @"\bDROP\b", RegexOptions.IgnoreCase))
+
+                // Add a condition to check for DROP but allow DROP TABLE #TempTable or tables with hash "#"
+                if (Regex.IsMatch(sqlScript, @"\bDROP\b(?!.*TABLE\s+(#TempTable|#\w+))", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Drop`. ";
                 }
