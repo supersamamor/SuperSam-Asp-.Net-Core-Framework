@@ -56,7 +56,15 @@ public abstract class AuditableDbContext<T> : AuditableContext where T : DbConte
         SetBaseFields(AuthenticatedUser);
         return base.SaveChangesAsync(AuthenticatedUser.UserId, AuthenticatedUser.TraceId, cancellationToken);
     }
-
+    /// <summary>
+    /// Saves changes to the database.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<int> UpdateRecordFromJobsAsync(CancellationToken cancellationToken = default)
+    {
+        return base.SaveChangesAsync(cancellationToken);
+    }
     void SetBaseFields(IAuthenticatedUser authenticatedUser)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
