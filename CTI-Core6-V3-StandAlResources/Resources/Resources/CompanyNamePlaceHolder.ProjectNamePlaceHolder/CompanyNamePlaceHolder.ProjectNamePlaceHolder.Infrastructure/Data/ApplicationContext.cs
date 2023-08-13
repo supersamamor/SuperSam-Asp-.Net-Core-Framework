@@ -35,12 +35,16 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         {
             property.SetColumnType("decimal(18,6)");
         }
-		foreach (var property in modelBuilder.Model.GetEntityTypes()
-                                                   .SelectMany(t => t.GetProperties())
-                                                   .Where(p => p.Name.Equals("CreatedBy", StringComparison.OrdinalIgnoreCase)
-                                                    || p.Name.Equals("LastModifiedBy", StringComparison.OrdinalIgnoreCase)))
+		foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            property.SetMaxLength(36);
+            foreach (var property in entityType.GetProperties()
+                                               .Where(p => p.Name.Equals("CreatedBy", StringComparison.OrdinalIgnoreCase)
+                                               || p.Name.Equals("LastModifiedBy", StringComparison.OrdinalIgnoreCase)
+                                               || p.Name.Equals("Entity", StringComparison.OrdinalIgnoreCase)))
+            {
+                property.SetMaxLength(36);
+                entityType.AddIndex(property);
+            }
         }
         #region Disable Cascade Delete
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()
