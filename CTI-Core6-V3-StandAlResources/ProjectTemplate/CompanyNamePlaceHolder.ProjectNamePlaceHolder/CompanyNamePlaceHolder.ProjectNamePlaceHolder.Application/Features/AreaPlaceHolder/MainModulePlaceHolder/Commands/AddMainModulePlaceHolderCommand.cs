@@ -28,7 +28,6 @@ public class AddMainModulePlaceHolderCommandHandler : BaseCommandHandler<Applica
 
     Template:[InsertAddCommandMethod]
 	Template:[InsertAddSubDetailCommandMethod]
-	Template:[ApprovalAddCommandMethod]
 }
 
 public class AddMainModulePlaceHolderCommandValidator : AbstractValidator<AddMainModulePlaceHolderCommand>
