@@ -2,7 +2,7 @@ using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Identity.Abstractions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 
@@ -64,14 +64,11 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
-        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.LastModifiedDate);modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Entity);modelBuilder.Entity<MainModulePlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
-		
-        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Code).IsUnique();
-		
-        modelBuilder.Entity<MainModulePlaceHolderState>().Property(e => e.Code).HasMaxLength(255);
-		
-        
-		
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.LastModifiedDate);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Entity);
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);		
+        modelBuilder.Entity<MainModulePlaceHolderState>().HasIndex(p => p.Code).IsUnique();		
+        modelBuilder.Entity<MainModulePlaceHolderState>().Property(e => e.Code).HasMaxLength(255);	
         base.OnModelCreating(modelBuilder);
     }
 }

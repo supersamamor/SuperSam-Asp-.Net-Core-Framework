@@ -8,6 +8,7 @@ public record ReportState : BaseEntity
 	public bool IsDistinct { get; init; }
 	public string? QueryString { get; init; }
     public bool DisplayOnDashboard { get; init; }
+    public bool DisplayOnReportModule { get; init; }    
     public int Sequence { get; init; }
     public IList<ReportTableState>? ReportTableList { get; set; }
 	public IList<ReportTableJoinParameterState>? ReportTableJoinParameterList { get; set; }

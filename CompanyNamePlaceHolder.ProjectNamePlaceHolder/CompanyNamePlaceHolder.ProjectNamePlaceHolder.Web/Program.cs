@@ -81,7 +81,7 @@ app.UseSecurityHeaders(policies =>
                        .WithNonce()
                        .OverHttps();
                 builder.AddStyleSrc()
-                       .Self()                      
+                       .Self()
                        .OverHttps();
                 builder.AddImgSrc().OverHttps().Data();
                 builder.AddObjectSrc().None();
@@ -119,5 +119,6 @@ await DefaultRole.Seed(scope.ServiceProvider);
 await DefaultUser.Seed(scope.ServiceProvider);
 await DefaultClient.Seed(scope.ServiceProvider);
 await UserRole.Seed(scope.ServiceProvider);
+await DefaultDashboard.Seed(scope.ServiceProvider);
 Log.Information("Finished seeding database");
 app.Run();
