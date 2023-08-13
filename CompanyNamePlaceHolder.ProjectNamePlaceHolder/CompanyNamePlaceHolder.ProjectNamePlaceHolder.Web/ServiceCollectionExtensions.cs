@@ -1,5 +1,4 @@
 using AspNetCoreHero.ToastNotification;
-using CompanyNamePlaceHolder.Common.Services.Shared;
 using CompanyNamePlaceHolder.Common.Web.Utility.Annotations;
 using CompanyNamePlaceHolder.Common.Web.Utility.Authorization;
 using CompanyNamePlaceHolder.Common.Web.Utility.Logging;
@@ -95,18 +94,6 @@ public static class ServiceCollectionExtensions
             options.DataAnnotationLocalizerProvider = (type, factory) =>
             factory.Create(typeof(SharedResource));
         });
-
-    public static IServiceCollection AddQuartz(this IServiceCollection services)
-    {
-        services.AddQuartz(options =>
-        {
-            options.UseMicrosoftDependencyInjectionJobFactory();
-            options.UseSimpleTypeLoader();
-            options.UseInMemoryStore();
-        });
-        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-        return services;
-    }
 
     public static IServiceCollection ConfigureAuthorization(this IServiceCollection services)
     {
