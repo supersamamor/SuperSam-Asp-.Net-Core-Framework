@@ -8,8 +8,6 @@ using LanguageExt.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 using static CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.IdentityExtensions;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
@@ -32,11 +30,7 @@ public class EditModel : BasePageModel<EditModel>
     }
 
     [BindProperty]
-    public UserEditViewModel Input { get; set; } = new();
-
-    [BindProperty]
-    public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();
-
+    public UserViewModel UserModel { get; set; } = new() { IsEdit = true };
     public async Task<IActionResult> OnGet(string id)
     {
         if (id == null)
@@ -46,15 +40,15 @@ public class EditModel : BasePageModel<EditModel>
         return await Mediatr.Send(new GetUserByIdQuery(id))
                             .ToActionResult(async user =>
                             {
-                                Input = await GetViewModel(user);
-                                Roles = await GetRolesForUser(user);
+                                UserModel = await GetViewModel(user);
+                                UserModel.Roles = await GetRolesForUser(user);
                                 return Page();
                             }, none: null);
     }
 
-    async Task<UserEditViewModel> GetViewModel(ApplicationUser user)
+    async Task<UserViewModel> GetViewModel(ApplicationUser user)
     {
-        var userModel = new UserEditViewModel
+        var userModel = new UserViewModel
         {
             Id = user.Id,
             Email = user.Email,
@@ -62,6 +56,7 @@ public class EditModel : BasePageModel<EditModel>
             BirthDate = user.BirthDate,
             EntityId = user.EntityId!,
             IsActive = user.IsActive,
+            IsEdit = true,
         };
         userModel.Entities = await _context.GetEntitiesList(userModel.EntityId);
         return userModel;
@@ -69,12 +64,12 @@ public class EditModel : BasePageModel<EditModel>
 
     public async Task<IActionResult> OnPost()
     {
-        Input.Entities = await _context.GetEntitiesList(Input.EntityId);
+        UserModel.Entities = await _context.GetEntitiesList(UserModel.EntityId);
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        return await Mediatr.Send(new GetUserByIdQuery(Input.Id))
+        return await Mediatr.Send(new GetUserByIdQuery(UserModel.Id))
             .ToActionResult(
             async user =>
             {
@@ -91,12 +86,17 @@ public class EditModel : BasePageModel<EditModel>
                     errors =>
                     {
                         Logger.LogError("Error in OnPost. Error: {Errors}", string.Join(",", errors));
-					    errors.Iter(error => ModelState.AddModelError("", error.ToString()));
+                        errors.Iter(error => ModelState.AddModelError("", error.ToString()));
                         return Page();
                     });
             }, none: null);
     }
+    public IActionResult OnPostChangeFormValue()
+    {
+        ModelState.Clear();
 
+        return Partial("_InputFieldsPartial", UserModel);
+    }
     async Task<IList<UserRoleViewModel>> GetRolesForUser(ApplicationUser user)
     {
         var userRoles = await _userManager.GetRolesAsync(user);
@@ -110,10 +110,10 @@ public class EditModel : BasePageModel<EditModel>
 
     async Task<Validation<Error, ApplicationUser>> UpdateUser(ApplicationUser user)
     {
-        user.Name = Input.Name;
-        user.BirthDate = Input.BirthDate;
-        user.EntityId = Input.EntityId;
-        user.IsActive = Input.IsActive;
+        user.Name = UserModel.Name;
+        user.BirthDate = UserModel.BirthDate;
+        user.EntityId = UserModel.EntityId;
+        user.IsActive = UserModel.IsActive;
         return await ToValidation<ApplicationUser>(_userManager.UpdateAsync)(user);
     }
 
@@ -123,34 +123,34 @@ public class EditModel : BasePageModel<EditModel>
 
     async Task<Validation<Error, ApplicationUser>> AddRolesToUser(ApplicationUser user)
     {
-        var roles = Roles.Where(r => r.Selected).Select(r => r.Name);
+        var roles = UserModel.Roles.Where(r => r.Selected).Select(r => r.Name);
         return await _userManager.AddRoles(user, roles);
     }
 }
 
-public record UserEditViewModel
-{
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string Email { get; set; } = "";
+//public record UserEditViewModel
+//{
+//    public string Id { get; set; } = Guid.NewGuid().ToString();
+//    public string Email { get; set; } = "";
 
-    [Required]
-    [DataType(DataType.Text)]
-    [Display(Name = "Full name")]
-    public string Name { get; set; } = "";
+//    [Required]
+//    [DataType(DataType.Text)]
+//    [Display(Name = "Full name")]
+//    public string Name { get; set; } = "";
 
-    [Required]
-    [Display(Name = "Birth Date")]
-    [DataType(DataType.Date)]
-    public DateTime? BirthDate { get; set; }
+//    [Required]
+//    [Display(Name = "Birth Date")]
+//    [DataType(DataType.Date)]
+//    public DateTime? BirthDate { get; set; }
 
-    [Required]
-    [Display(Name = "Entity")]
-    public string EntityId { get; set; } = "";
+//    [Required]
+//    [Display(Name = "Entity")]
+//    public string EntityId { get; set; } = "";
 
-    [Required]
-    [Display(Name = "Status")]
-    public bool IsActive { get; set; }
+//    [Required]
+//    [Display(Name = "Status")]
+//    public bool IsActive { get; set; }
 
-    public SelectList Entities { get; set; } = new(new List<SelectListItem>());
-    public SelectList Statuses { get; set; } = AdminUtilities.GetUserStatusList();
-}
+//    public SelectList Entities { get; set; } = new(new List<SelectListItem>());
+//    public SelectList Statuses { get; set; } = AdminUtilities.GetUserStatusList();
+//}

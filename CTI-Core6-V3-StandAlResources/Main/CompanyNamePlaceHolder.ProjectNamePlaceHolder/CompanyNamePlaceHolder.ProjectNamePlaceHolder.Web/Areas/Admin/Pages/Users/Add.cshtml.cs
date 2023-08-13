@@ -31,27 +31,28 @@ public class AddModel : BasePageModel<AddModel>
     }
 
     [BindProperty]
-    public AddViewModel Input { get; set; } = new();
-
-    [BindProperty]
-    public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();
-
+    public UserViewModel UserModel { get; set; } = new();
     public async Task<IActionResult> OnGetAsync()
     {
-        Input.Entities = await _context.GetEntitiesList(Input.EntityId);
-        Roles = GetRoles();
+        UserModel.Entities = await _context.GetEntitiesList(UserModel.EntityId);
+        UserModel.Roles = GetRoles();
         return Page();
     }
 
     public async Task<IActionResult> OnPost()
     {
-        Input.Entities = await _context.GetEntitiesList(Input.EntityId);
+        UserModel.Entities = await _context.GetEntitiesList(UserModel.EntityId);
         if (!ModelState.IsValid)
         {
             return Page();
         }
+        if (string.IsNullOrEmpty(UserModel.Password) || string.IsNullOrEmpty(UserModel.ConfirmPassword))
+        {
+            NotyfService.Error(Localizer["Password and Confirm Password are required."]);
+            return Page();
+        }
         using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        return await Optional(await _userManager.FindByEmailAsync(Input.Email))
+        return await Optional(await _userManager.FindByEmailAsync(UserModel.Email))
             .MatchAsync(
                 Some: user => Fail<Error, ApplicationUser>($"User with email {user.Email} already exists"),
                 None: async () => await CreateUserAsync()).BindT(async u => await AddRolesToUser(u))
@@ -70,7 +71,12 @@ public class AddModel : BasePageModel<AddModel>
                 return Page();
             });
     }
+    public IActionResult OnPostChangeFormValue()
+    {
+        ModelState.Clear();
 
+        return Partial("_InputFieldsPartial", UserModel);
+    }
     IList<UserRoleViewModel> GetRoles()
     {
         return _roleManager.Roles.Map(r => new UserRoleViewModel
@@ -86,15 +92,15 @@ public class AddModel : BasePageModel<AddModel>
         {
             var user = new ApplicationUser
             {
-                UserName = Input.Email,
-                Email = Input.Email,
-                Name = Input.Name,
-                BirthDate = Input.BirthDate,
-                EntityId = Input.EntityId,
+                UserName = UserModel.Email,
+                Email = UserModel.Email,
+                Name = UserModel.Name,
+                BirthDate = UserModel.BirthDate,
+                EntityId = UserModel.EntityId,
                 IsActive = true,
                 EmailConfirmed = true,
             };
-            var result = await _userManager.CreateAsync(user, Input.Password);
+            var result = await _userManager.CreateAsync(user, UserModel.Password);
             if (!result.Succeeded)
             {
                 return result.Errors.Select(e => e.Description).Map(e => Error.New(e)).ToSeq();
@@ -109,45 +115,8 @@ public class AddModel : BasePageModel<AddModel>
 
     async Task<Validation<Error, ApplicationUser>> AddRolesToUser(ApplicationUser user)
     {
-        var roles = Roles.Where(r => r.Selected).Select(r => r.Name);
+        var roles = UserModel.Roles.Where(r => r.Selected).Select(r => r.Name);
         return await _userManager.AddRoles(user, roles);
     }
 }
 
-public record AddViewModel
-{
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-
-    [Required]
-    [EmailAddress]
-    [Display(Name = "Email")]
-    public string Email { get; set; } = "";
-
-    [Required]
-    [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-    [DataType(DataType.Password)]
-    [Display(Name = "Password")]
-    public string Password { get; set; } = "";
-
-    [Required]
-    [DataType(DataType.Password)]
-    [Display(Name = "Confirm password")]
-    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-    public string ConfirmPassword { get; set; } = "";
-
-    [Required]
-    [DataType(DataType.Text)]
-    [Display(Name = "Full name")]
-    public string Name { get; set; } = "";
-
-    [Required]
-    [Display(Name = "Birth Date")]
-    [DataType(DataType.Date)]
-    public DateTime? BirthDate { get; set; }
-
-    [Required]
-    [Display(Name = "Entity")]
-    public string EntityId { get; set; } = Guid.NewGuid().ToString();
-
-    public SelectList Entities { get; set; } = new(new List<SelectListItem>());
-}
