@@ -25,10 +25,8 @@ public class ViewModel : BasePageModel<ViewModel>
         _roleManager = roleManager;
         _userManager = userManager;
     }
-
-    public UserDetailsViewModel UserDetails { get; set; } = new();
-    public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();
-
+    [BindProperty]
+    public UserViewModel UserModel { get; set; } = new() { IsView = true };
     public async Task<IActionResult> OnGet(string id)
     {
         if (id == null)
@@ -36,33 +34,35 @@ public class ViewModel : BasePageModel<ViewModel>
             return NotFound();
         }
         return await Mediatr.Send(new GetUserByIdQuery(id))
-                            .ToActionResult(async user =>
-                            {
-                                UserDetails = await GetViewModel(user);
-                                Roles = await GetRolesForUser(user);
-                                return Page();
-                            }, none: null);
+                             .ToActionResult(async user =>
+                             {
+                                 UserModel = await GetViewModel(user);
+                                 UserModel.Roles = await GetRolesForUser(user);
+                                 return Page();
+                             }, none: null);
     }
 
-    async Task<UserDetailsViewModel> GetViewModel(ApplicationUser user) =>
+    async Task<UserViewModel> GetViewModel(ApplicationUser user) =>
         await _context.GetEntityName(user.EntityId!).Match(
-            entity => new UserDetailsViewModel
+            entity => new UserViewModel
             {
                 Id = user.Id,
                 Name = user.Name ?? "",
-                BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
+                BirthDateDisplay = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
                 Email = user.Email,
                 Entity = entity,
                 IsActive = user.IsActive,
+                IsView = true,
             },
-            () => new UserDetailsViewModel
+            () => new UserViewModel
             {
                 Id = user.Id,
                 Name = user.Name ?? "",
-                BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
+                BirthDateDisplay = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
                 Email = user.Email,
-                Entity =  Core.Constants.Entities.Default,
+                Entity = Core.Constants.Entities.Default,
                 IsActive = user.IsActive,
+                IsView = true,
             });
 
     async Task<IList<UserRoleViewModel>> GetRolesForUser(ApplicationUser user)
@@ -75,24 +75,4 @@ public class ViewModel : BasePageModel<ViewModel>
             Selected = userRoles.Any(c => c == r.Name)
         }).ToList();
     }
-}
-
-public record UserDetailsViewModel
-{
-    public string? Id { get; set; }
-
-    [Display(Name = "Email")]
-    public string Email { get; set; } = "";
-
-    [Display(Name = "Full Name")]
-    public string Name { get; set; } = "";
-
-    [Display(Name = "Birth Date")]
-    public string BirthDate { get; set; } = "";
-
-    [Display(Name = "Entity")]
-    public string Entity { get; set; } = "";
-
-    [Display(Name = "Status")]
-    public bool IsActive { get; set; }
 }

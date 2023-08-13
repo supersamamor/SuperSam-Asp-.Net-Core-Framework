@@ -22,13 +22,13 @@
                     <div class="form-check m-1">
                         @if (Model[i].Selected)
                         {
-                            <input type="checkbox" name="[@(i)].Selected" class="form-check-input" value=true checked />
+                            <input type="checkbox" name="Roles[@(i)].Selected" class="form-check-input" value=true checked />
                         }
                         else
                         {
-                            <input type="checkbox" name="[@(i)].Selected" class="form-check-input" value=true />
+                            <input type="checkbox" name="Roles[@(i)].Selected" class="form-check-input" value=true />
                         }
-                        <input type="hidden" asp-for="@Model[i].Name" />
+                        <input type="hidden" asp-for="@Model[i].Name" name="Roles[@(i)].Name" />
                     </div>
                 </td>
             </tr>
