@@ -15,7 +15,7 @@ public static class DefaultDashboard
         {
             context.Report.Add(new ReportState()
             {
-                Id = new Guid().ToString(),
+                Id = Guid.NewGuid().ToString(),
                 ReportName = "Activity Logs - Horizontal Bar Graph",
                 QueryType = Core.Constants.QueryType.TSql,
                 ReportOrChartType = Core.Constants.ReportChartType.HorizontalBar,
@@ -31,14 +31,15 @@ public static class DefaultDashboard
                 ReportRoleAssignmentList = new List<ReportRoleAssignmentState>() {
                     new ReportRoleAssignmentState()
                     {
-                        Id = new Guid().ToString(),
+                        Id =   Guid.NewGuid().ToString(),
                         RoleName = Core.Constants.Roles.Admin
                     }
-                }
+    }
             });
+            await context.SaveChangesAsync();
             context.Report.Add(new ReportState()
             {
-                Id = new Guid().ToString(),
+                Id = Guid.NewGuid().ToString(),
                 ReportName = "Activity Logs - Pie Chart",
                 QueryType = Core.Constants.QueryType.TSql,
                 ReportOrChartType = Core.Constants.ReportChartType.Pie,
@@ -54,14 +55,15 @@ public static class DefaultDashboard
                 ReportRoleAssignmentList = new List<ReportRoleAssignmentState>() {
                     new ReportRoleAssignmentState()
                     {
-                        Id = new Guid().ToString(),
+                        Id =   Guid.NewGuid().ToString(),
                         RoleName = Core.Constants.Roles.Admin
                     }
                 }
             });
+            await context.SaveChangesAsync();
             context.Report.Add(new ReportState()
             {
-                Id = new Guid().ToString(),
+                Id = Guid.NewGuid().ToString(),
                 ReportName = "Activity Logs - Table",
                 QueryType = Core.Constants.QueryType.TSql,
                 ReportOrChartType = Core.Constants.ReportChartType.Table,
@@ -77,7 +79,7 @@ public static class DefaultDashboard
                 ReportRoleAssignmentList = new List<ReportRoleAssignmentState>() {
                     new ReportRoleAssignmentState()
                     {
-                        Id = new Guid().ToString(),
+                        Id =   Guid.NewGuid().ToString(),
                         RoleName = Core.Constants.Roles.Admin
                     }
                 }
