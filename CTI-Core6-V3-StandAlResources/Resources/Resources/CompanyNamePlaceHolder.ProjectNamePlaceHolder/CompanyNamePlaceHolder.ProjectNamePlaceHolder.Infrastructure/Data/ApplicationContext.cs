@@ -40,9 +40,13 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
             foreach (var property in entityType.GetProperties()
                                                .Where(p => p.Name.Equals("CreatedBy", StringComparison.OrdinalIgnoreCase)
                                                || p.Name.Equals("LastModifiedBy", StringComparison.OrdinalIgnoreCase)
-                                               || p.Name.Equals("Entity", StringComparison.OrdinalIgnoreCase)))
+                                               || p.Name.Equals("Entity", StringComparison.OrdinalIgnoreCase)
+                                               || p.Name.Equals("LastModifiedDate", StringComparison.OrdinalIgnoreCase)))
             {
-                property.SetMaxLength(36);
+                if (!property.Name.Equals("LastModifiedDate", StringComparison.OrdinalIgnoreCase))
+                {
+                    property.SetMaxLength(36);
+                }
                 entityType.AddIndex(property);
             }
         }
