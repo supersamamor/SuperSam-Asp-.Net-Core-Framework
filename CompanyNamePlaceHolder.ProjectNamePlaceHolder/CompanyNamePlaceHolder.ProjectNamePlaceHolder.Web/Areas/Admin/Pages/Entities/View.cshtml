@@ -6,16 +6,16 @@
     ViewData["Level1"] = "Admin";
 }
 <div class="card">
-    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Entity Info"]</span><br></h5>
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Entity Info"]</span><br></h5>
     <div class="card-body">
         <partial name="_ViewEntityDetails" model="Model.Entity" />
     </div>
 </div>
-<div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+<div id="toolbar-container" class="btn-group" role="group">
     <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Create)).Succeeded)
     {
-        <a asp-page="Add" class="btn btn-success" title="@Localizer["Add"]" style="color:#fff;"><i class="fas fa-plus"></i></a>
+        <a asp-page="Add" class="btn btn-success  text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
     }
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Entities.Edit)).Succeeded)
     {

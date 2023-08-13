@@ -7,7 +7,7 @@
     ViewData["Level1"] = "Admin";
 }
 <div class="card">
-    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Application Details"]</span><br></h5>
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Application Details"]</span><br></h5>
     <div class="card-body">
         <div class="form-group row">
             <label asp-for="@Model.Application.ClientId" class="col-md-3 col-form-label"></label>
@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+<div id="toolbar-container" class="btn-group" role="group">
     <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
 </div>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
