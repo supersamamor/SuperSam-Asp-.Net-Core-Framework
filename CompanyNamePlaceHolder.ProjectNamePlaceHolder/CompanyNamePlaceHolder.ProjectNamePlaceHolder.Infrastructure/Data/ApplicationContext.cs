@@ -24,8 +24,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     public DbSet<ReportQueryFilterState> ReportQueryFilter { get; set; } = default!;
     public DbSet<ReportRoleAssignmentState> ReportRoleAssignment { get; set; } = default!;
     public DbSet<MainModulePlaceHolderState> MainModulePlaceHolder { get; set; } = default!;
-	
-	
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var property in modelBuilder.Model.GetEntityTypes()
@@ -34,6 +34,13 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
                                                                || p.ClrType == typeof(decimal?)))
         {
             property.SetColumnType("decimal(18,6)");
+        }
+        foreach (var property in modelBuilder.Model.GetEntityTypes()
+                                                   .SelectMany(t => t.GetProperties())
+                                                   .Where(p => p.Name.Equals("CreatedBy", StringComparison.OrdinalIgnoreCase)
+                                                    || p.Name.Equals("LastModifiedBy", StringComparison.OrdinalIgnoreCase)))
+        {
+            property.SetMaxLength(36);
         }
         #region Disable Cascade Delete
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()

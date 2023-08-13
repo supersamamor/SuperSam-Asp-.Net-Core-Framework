@@ -35,6 +35,13 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         {
             property.SetColumnType("decimal(18,6)");
         }
+		foreach (var property in modelBuilder.Model.GetEntityTypes()
+                                                   .SelectMany(t => t.GetProperties())
+                                                   .Where(p => p.Name.Equals("CreatedBy", StringComparison.OrdinalIgnoreCase)
+                                                    || p.Name.Equals("LastModifiedBy", StringComparison.OrdinalIgnoreCase)))
+        {
+            property.SetMaxLength(36);
+        }
         #region Disable Cascade Delete
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()
         .SelectMany(t => t.GetForeignKeys())
