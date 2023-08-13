@@ -76,7 +76,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                     }
                 }
                 _context.Update(item);
-                await _context.SaveChangesAsync();
+                await _context.UpdateRecordFromJobsAsync();
             }
         }
         private async Task SendApprovalNotification(ApprovalRecordState approvalRecord, ApplicationUser user)
