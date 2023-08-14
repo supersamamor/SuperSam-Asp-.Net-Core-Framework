@@ -34,8 +34,6 @@ public class EditModel : BasePageModel<EditModel>
     [BindProperty]
     public UserEditViewModel Input { get; set; } = new();
 
-    [BindProperty]
-    public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();
 
     public async Task<IActionResult> OnGet(string id)
     {
@@ -47,7 +45,7 @@ public class EditModel : BasePageModel<EditModel>
                             .ToActionResult(async user =>
                             {
                                 Input = await GetViewModel(user);
-                                Roles = await GetRolesForUser(user);
+                                Input.Roles = await GetRolesForUser(user);
                                 return Page();
                             }, none: null);
     }
@@ -62,6 +60,8 @@ public class EditModel : BasePageModel<EditModel>
             BirthDate = user.BirthDate,
             EntityId = user.EntityId!,
             IsActive = user.IsActive,
+            CompanyId = user.CompanyId,
+            DepartmentId = user.DepartmentId!,
         };
         userModel.Entities = await _context.GetEntitiesList(userModel.EntityId);
         return userModel;
@@ -114,6 +114,8 @@ public class EditModel : BasePageModel<EditModel>
         user.BirthDate = Input.BirthDate;
         user.EntityId = Input.EntityId;
         user.IsActive = Input.IsActive;
+        user.CompanyId = Input.CompanyId;
+        user.DepartmentId = Input.DepartmentId;
         return await ToValidation<ApplicationUser>(_userManager.UpdateAsync)(user);
     }
 
@@ -123,8 +125,13 @@ public class EditModel : BasePageModel<EditModel>
 
     async Task<Validation<Error, ApplicationUser>> AddRolesToUser(ApplicationUser user)
     {
-        var roles = Roles.Where(r => r.Selected).Select(r => r.Name);
+        var roles = Input.Roles.Where(r => r.Selected).Select(r => r.Name);
         return await _userManager.AddRoles(user, roles);
+    }
+    public IActionResult OnPostChangeFormValue()
+    {
+        ModelState.Clear();
+        return Partial("_InputFieldsPartialEdit", Input);
     }
 }
 
@@ -153,4 +160,15 @@ public record UserEditViewModel
 
     public SelectList Entities { get; set; } = new(new List<SelectListItem>());
     public SelectList Statuses { get; set; } = AdminUtilities.GetUserStatusList();
+
+    [Required]
+    [Display(Name = "Company")]
+    public string CompanyId { get; set; } = "";
+
+    [Required]
+    [Display(Name = "Department")]
+    public string DepartmentId { get; set; } = "";
+
+    public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();
+
 }

@@ -119,6 +119,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverRoleId).HasMaxLength(450);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId, e.ApproverRoleId }).IsUnique();
         modelBuilder.Entity<HolidayState>().Property(e => e.HolidayName).HasMaxLength(255);
+        modelBuilder.Entity<TaskListState>().HasMany(t => t.ChildTaskList).WithOne(l => l.ParentTask).HasForeignKey(t => t.ParentTaskId);
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -55,7 +55,7 @@ public record TaskListViewModel : BaseViewModel
 	public string AlternateApprover { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }
-		
-	public IList<AssignmentViewModel>? AssignmentList { get; set; }
-	
+    public string? ParentTaskId { get; init; }
+    public IList<AssignmentViewModel>? AssignmentList { get; set; }
+    public IList<TaskListViewModel>? ChildTaskList { get; set; }
 }

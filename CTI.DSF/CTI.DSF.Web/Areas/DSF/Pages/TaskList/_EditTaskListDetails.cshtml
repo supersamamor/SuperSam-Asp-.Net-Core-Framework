@@ -136,7 +136,7 @@
     <div class="col">
         <div class="mb-3">
             <label asp-for="@Model.AlternateEndorser" class="form-label "><strong>@Localizer["Alternate Endorser"] :</strong></label>
-            <select asp-for="@Model.PrimaryEndorser" class="form-control" asp-items="@(dropdownService.EndorserList());">
+            <select asp-for="@Model.AlternateEndorser" class="form-control" asp-items="@(dropdownService.EndorserList());">
                 <option value="">- Select Alternate Endorser -</option>
             </select>
             <span asp-validation-for="@Model.AlternateEndorser" class="text-danger"></span>

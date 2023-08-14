@@ -62,7 +62,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("PrimaryKey");
 
-                    b.ToTable("AuditLogs");
+                    b.ToTable("AuditLogs", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApprovalRecordState", b =>
@@ -108,7 +108,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("ApprovalRecord");
+                    b.ToTable("ApprovalRecord", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApprovalState", b =>
@@ -176,7 +176,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Approval");
+                    b.ToTable("Approval", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApproverAssignmentState", b =>
@@ -224,7 +224,7 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[ApproverUserId] IS NOT NULL AND [ApproverRoleId] IS NOT NULL");
 
-                    b.ToTable("ApproverAssignment");
+                    b.ToTable("ApproverAssignment", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApproverSetupState", b =>
@@ -282,7 +282,7 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[WorkflowName] IS NOT NULL AND [TableName] IS NOT NULL AND [Entity] IS NOT NULL");
 
-                    b.ToTable("ApproverSetup");
+                    b.ToTable("ApproverSetup", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.AssignmentState", b =>
@@ -339,7 +339,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("TaskListId");
 
-                    b.ToTable("Assignment");
+                    b.ToTable("Assignment", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.CompanyState", b =>
@@ -382,7 +382,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Company");
+                    b.ToTable("Company", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.DeliveryState", b =>
@@ -442,7 +442,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Delivery");
+                    b.ToTable("Delivery", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.DepartmentState", b =>
@@ -487,7 +487,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Department");
+                    b.ToTable("Department", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.HolidayState", b =>
@@ -523,7 +523,7 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.HasIndex("HolidayName")
                         .IsUnique();
 
-                    b.ToTable("Holiday");
+                    b.ToTable("Holiday", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnDetailState", b =>
@@ -576,7 +576,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportTableId");
 
-                    b.ToTable("ReportColumnDetail");
+                    b.ToTable("ReportColumnDetail", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnFilterState", b =>
@@ -626,7 +626,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportTableId");
 
-                    b.ToTable("ReportColumnFilter");
+                    b.ToTable("ReportColumnFilter", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnHeaderState", b =>
@@ -662,7 +662,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportColumnHeader");
+                    b.ToTable("ReportColumnHeader", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportFilterGroupingState", b =>
@@ -701,7 +701,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportFilterGrouping");
+                    b.ToTable("ReportFilterGrouping", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportQueryFilterState", b =>
@@ -755,7 +755,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportQueryFilter");
+                    b.ToTable("ReportQueryFilter", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportRoleAssignmentState", b =>
@@ -790,7 +790,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportRoleAssignment");
+                    b.ToTable("ReportRoleAssignment", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportState", b =>
@@ -842,7 +842,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Report");
+                    b.ToTable("Report", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportTableJoinParameterState", b =>
@@ -900,7 +900,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportTableId");
 
-                    b.ToTable("ReportTableJoinParameter");
+                    b.ToTable("ReportTableJoinParameter", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportTableState", b =>
@@ -944,7 +944,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportTable");
+                    b.ToTable("ReportTable", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.SectionState", b =>
@@ -989,7 +989,7 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.HasIndex("SectionCode")
                         .IsUnique();
 
-                    b.ToTable("Section");
+                    b.ToTable("Section", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.TaskListState", b =>
@@ -1081,7 +1081,7 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[TaskListCode] IS NOT NULL");
 
-                    b.ToTable("TaskList");
+                    b.ToTable("TaskList", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.TeamState", b =>
@@ -1126,7 +1126,7 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.HasIndex("TeamCode")
                         .IsUnique();
 
-                    b.ToTable("Team");
+                    b.ToTable("Team", (string)null);
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApprovalRecordState", b =>

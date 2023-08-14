@@ -24,6 +24,7 @@ public record TaskListState : BaseEntity
     public string? ParentTaskId { get; init; }
     public IList<AssignmentState>? AssignmentList { get; set; }
     public TaskListState? ParentTask { get; set; }
+    public IList<TaskListState>? ChildTaskList { get; set; }
     public void GenerateTaskListCode()
 	{
 		TaskListCode = Guid.NewGuid().ToString();

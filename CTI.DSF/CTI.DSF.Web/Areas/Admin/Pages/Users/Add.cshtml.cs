@@ -159,11 +159,11 @@ public record AddViewModel
 
     [Required]
     [Display(Name = "Company")]
-    public string CompanyId { get; set; }
+    public string CompanyId { get; set; } = "";
 
     [Required]
     [Display(Name = "Department")]
-    public string DepartmentId { get; set; }
+    public string DepartmentId { get; set; } = "";
 
     [BindProperty]
     public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();

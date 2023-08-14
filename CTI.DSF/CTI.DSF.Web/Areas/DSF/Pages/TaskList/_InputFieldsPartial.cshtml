@@ -5,8 +5,11 @@
     <h5 class="card-header"><span class="card-header-custom">@Localizer["Task List"]</span><br></h5>
     <div class="card-body">
         <input type="hidden" asp-for="@Model.Id" name="Id" />
-        <partial name="_EditTaskListDetails" model="Model" />        
+        <partial name="_EditTaskListDetails" model="Model" />
     </div>
 </div>
 
-<br /><partial name="_AssignmentList" model="Model" />
+<br />
+<partial name="_AssignmentList" model="Model" />
+<br />
+<partial name="_MilestoneList" model="Model" />

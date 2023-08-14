@@ -1,7 +1,7 @@
 @page
 @model EditModel
 @section Styles {
-<partial name="_DataTableStyles" />
+    <partial name="_DataTableStyles" />
 }
 @{
     ViewData["Title"] = Localizer["Edit User"];
@@ -10,62 +10,8 @@
 }
 <form id="user-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-	<input type="hidden" asp-for="@Model.Input!.Id" />
-    <div class="card">
-        <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["User Info"]</span><br></h5>
-        <div class="card-body">
-            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
-                <div class="col">
-                    <div class="mb-3">
-                        <label asp-for="@Model.Input.Email" class="form-label"><strong>Email :</strong></label>
-                        <input asp-for="@Model.Input.Email" class="form-control" readonly />
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
-                        <label asp-for="@Model.Input.Name" class="form-label fieldrequired"><strong>Full Name :</strong></label>
-                        <input asp-for="@Model.Input.Name" class="form-control" />
-                        <span asp-validation-for="@Model.Input.Name" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
-                        <label asp-for="@Model.Input.BirthDate" class="form-label fieldrequired"><strong>Birth Date :</strong></label>
-                        <input asp-for="@Model.Input.BirthDate" class="form-control" />
-                        <span asp-validation-for="@Model.Input.BirthDate" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
-                        <label asp-for="@Model.Input.EntityId" class="form-label fieldrequired"><strong>Entity :</strong></label>
-                        <select id="entity-select" asp-for="@Model.Input.EntityId"
-                                class="select2 form-control"
-                                asp-items="@Model.Input.Entities">
-                            <option></option>
-                        </select>
-                        <span asp-validation-for="@Model.Input.EntityId" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
-                        <label asp-for="@Model.Input.IsActive" class="form-label fieldrequired"><strong>Status :</strong></label>
-                        <select id="entity-select" asp-for="@Model.Input.IsActive"
-                                class="select2 form-control"
-                                asp-items="@Model.Input.Statuses">
-                            <option></option>
-                        </select>
-                        <span asp-validation-for="@Model.Input.IsActive" class="text-danger"></span>
-                    </div>
-                </div>               
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="card">
-        <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Roles"]</span><br></h5>
-        <div class="card-body" style="overflow-x:scroll;">
-            <partial name="_EditRoles" model="Model.Roles" />
-        </div>
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartialEdit" model="Model.Input" />
     </div>
     <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
         <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
@@ -76,24 +22,37 @@
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
-<partial name="_DataTableScripts" />
-<script asp-add-nonce>
-    $(document).ready(function () {
-        var roles = $("#roles").DataTable({
-            select: false,
-            searching: true,
-            paging: true,
-            info: true,
-            buttons: [],
-            columnDefs: [
-                {
-                    targets: [1],
-                    orderDataType: 'dom-checkbox',
-                }
-            ]
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_DataTableScripts" />
+    <script asp-add-nonce>
+        $(document).ready(function () {
+            var roles = $("#roles").DataTable({
+                select: false,
+                searching: true,
+                paging: true,
+                info: true,
+                buttons: [],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        orderDataType: 'dom-checkbox',
+                    }
+                ]
+            });
+            $('#user-form').onSubmitIncludeAllFieldsFromTable(roles);
+
+            function InitializeForm() {
+                $('.DisableSelectDropdown').on('mousedown', function (e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                });
+                $('#CompanyId').on('change', function () {
+                    $('#AsyncAction').val('');
+                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#user-form', InitializeForm);
+                });
+            }
+            InitializeForm();
         });
-        $('#user-form').onSubmitIncludeAllFieldsFromTable(roles);
-    });
-</script>
+    </script>
 }
