@@ -15,5 +15,12 @@ public class GetTaskListQueryHandler : BaseQueryHandler<ApplicationContext, Task
     public GetTaskListQueryHandler(ApplicationContext context) : base(context)
     {
     }
-		
+    public override async Task<PagedListResponse<TaskListState>> Handle(GetTaskListQuery request, CancellationToken cancellationToken = default)
+    {
+        return await Context.TaskList.Where(l=>l.IsMilestone != true).AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
+                                                                 request.SortColumn, request.SortOrder,
+                                                                 request.PageNumber, request.PageSize,
+                                                                 cancellationToken);
+    }
+
 }

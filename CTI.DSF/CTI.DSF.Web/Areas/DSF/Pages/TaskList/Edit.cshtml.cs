@@ -34,10 +34,12 @@ public class EditModel : BasePageModel<EditModel>
         if (TaskList.TaskClassification == Core.Constants.TaskClassifications.Recurring && TaskList.TaskDueDay == null)
         {
             NotyfService.Error(Localizer["Task due day is required."]);
+            return Page();
         }
         if (TaskList.TaskClassification == Core.Constants.TaskClassifications.Adhoc && TaskList.TargetDueDate == null)
         {
             NotyfService.Error(Localizer["Target Due Date is required."]);
+            return Page();
         }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditTaskListCommand>(TaskList)), "Details", true);
     }	
@@ -81,7 +83,7 @@ public class EditModel : BasePageModel<EditModel>
 	{
 		ModelState.Clear();
 		if (TaskList!.ChildTaskList == null) { TaskList!.ChildTaskList = new List<TaskListViewModel>(); }
-		TaskList!.ChildTaskList!.Add(new TaskListViewModel() { ParentTaskId = TaskList.Id });
+		TaskList!.ChildTaskList!.Add(new TaskListViewModel() { ParentTaskId = TaskList.Id, IsMilestone = true });
 		return Partial("_InputFieldsPartial", TaskList);
 	}
 	private IActionResult RemoveChildTask()

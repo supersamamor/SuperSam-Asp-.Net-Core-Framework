@@ -8,8 +8,10 @@
         <partial name="_EditTaskListDetails" model="Model" />
     </div>
 </div>
-<br />
-<partial name="_MilestoneList" model="Model" />
+@if (Model.TaskClassification == CTI.DSF.Core.Constants.TaskClassifications.Adhoc)
+{
+    <br />
+    <partial name="_MilestoneList" model="Model" />}
 <br />
 <partial name="_AssignmentList" model="Model" />
 <br />

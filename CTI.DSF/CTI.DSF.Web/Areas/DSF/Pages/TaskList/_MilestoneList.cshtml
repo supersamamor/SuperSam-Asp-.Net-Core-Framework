@@ -30,12 +30,13 @@
                             <td class="d-none">
                                 <input type="hidden" name="ChildTaskList[@counter].Id" value="@item.Id" />
                                 <input type="hidden" name="ChildTaskList[@counter].ParentTaskId" value="@item.ParentTaskId" />
+                                <input type="hidden" name="ChildTaskList[@counter].IsMilestone" value="true" />
                                 <input type="hidden" name="ChildTaskList[@counter].Company" value="Default" />
                                 <input type="hidden" name="ChildTaskList[@counter].Department" value="Default" />
                                 <input type="hidden" name="ChildTaskList[@counter].TaskFrequency" value="Default" />
                                 <input type="hidden" name="ChildTaskList[@counter].PrimaryApprover" value="Default" />
                                 <input type="hidden" name="ChildTaskList[@counter].AlternateApprover" value="Default" />
-                                <input type="hidden" name="ChildTaskList[@counter].TaskClassification" value="Default" />
+                                <input type="hidden" name="ChildTaskList[@counter].TaskClassification" value="Default" />                 
                             </td>
                             <td>
                                 <input asp-for="@item.TaskDescription" name="ChildTaskList[@counter].TaskDescription" class="form-control" />

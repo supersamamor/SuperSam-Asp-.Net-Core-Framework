@@ -19,7 +19,8 @@ public class GetTaskListByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	{
 		return await Context.TaskList
 			.Include(l=>l.AssignmentList)
-			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+            .Include(l => l.ChildTaskList)
+            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	
 }

@@ -56,6 +56,7 @@ public record TaskListViewModel : BaseViewModel
 	
 	public DateTime LastModifiedDate { get; set; }
     public string? ParentTaskId { get; init; }
+    public bool IsMilestone { get; init; }
     public IList<AssignmentViewModel>? AssignmentList { get; set; }
     public IList<TaskListViewModel>? ChildTaskList { get; set; }
 }
