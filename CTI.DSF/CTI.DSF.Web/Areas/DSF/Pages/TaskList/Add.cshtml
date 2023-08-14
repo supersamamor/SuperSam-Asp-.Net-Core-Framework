@@ -23,7 +23,7 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <partial name="_AssignmentListValidationPartial" model="@Model.TaskList" />
-
+<partial name="_MilestoneListValidationPartial" model="@Model.TaskList" />
 <script asp-add-nonce>
     $(document).ready(function () {
 		function InitializeForm()
@@ -53,11 +53,22 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskList-form', InitializeForm);
 			});
 
-				$('#Company').on( 'change', function () {
+			$('#Company').on( 'change', function () {
 				$('#AsyncAction').val('');
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskList-form', InitializeForm);
 			});
+			//Scripts for Milestone
+			$.InitializeChildTaskListFieldValidations($('#ChildTaskCount').val());
+			$('.RemoveChildTaskButton ').on('click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveChildTask');
+				$.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
+			});
 
+			$('#btnAddChildTask').on('click', function () {
+				$('#AsyncAction').val('AddChildTask');
+				$.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
+			});
 		}	
 		InitializeForm();
     });

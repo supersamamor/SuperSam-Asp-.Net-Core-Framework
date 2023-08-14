@@ -31,7 +31,14 @@ public class EditModel : BasePageModel<EditModel>
         {
             return Page();
         }
-		
+        if (TaskList.TaskClassification == Core.Constants.TaskClassifications.Recurring && TaskList.TaskDueDay == null)
+        {
+            NotyfService.Error(Localizer["Task due day is required."]);
+        }
+        if (TaskList.TaskClassification == Core.Constants.TaskClassifications.Adhoc && TaskList.TargetDueDate == null)
+        {
+            NotyfService.Error(Localizer["Target Due Date is required."]);
+        }
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<EditTaskListCommand>(TaskList)), "Details", true);
     }	
 	public IActionResult OnPostChangeFormValue()
@@ -45,9 +52,16 @@ public class EditModel : BasePageModel<EditModel>
 		{
 			return RemoveAssignment();
 		}
-		
-		
-        return Partial("_InputFieldsPartial", TaskList);
+		if (AsyncAction == "AddChildTask")
+		{
+			return AddChildTask();
+		}
+		if (AsyncAction == "RemoveChildTask")
+		{
+			return RemoveChildTask();
+		}
+
+		return Partial("_InputFieldsPartial", TaskList);
     }
 	
 	private IActionResult AddAssignment()
@@ -63,5 +77,17 @@ public class EditModel : BasePageModel<EditModel>
 		TaskList.AssignmentList = TaskList!.AssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", TaskList);
 	}
-	
+	private IActionResult AddChildTask()
+	{
+		ModelState.Clear();
+		if (TaskList!.ChildTaskList == null) { TaskList!.ChildTaskList = new List<TaskListViewModel>(); }
+		TaskList!.ChildTaskList!.Add(new TaskListViewModel() { ParentTaskId = TaskList.Id });
+		return Partial("_InputFieldsPartial", TaskList);
+	}
+	private IActionResult RemoveChildTask()
+	{
+		ModelState.Clear();
+		TaskList.ChildTaskList = TaskList!.ChildTaskList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", TaskList);
+	}
 }

@@ -2,7 +2,7 @@
 @model TaskListViewModel
 <script asp-add-nonce>
     $(document).ready(function () { 
-		$.InitializeAssignmentFieldValidations = function(count)
+		$.InitializeChildTaskListFieldValidations = function(count)
         {
 			let reqs = [];			
 			for (let idx = 0; idx < count; idx++) {

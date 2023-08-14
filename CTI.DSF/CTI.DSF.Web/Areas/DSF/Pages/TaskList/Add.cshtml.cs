@@ -50,9 +50,16 @@ public class AddModel : BasePageModel<AddModel>
         {
             return RemoveAssignment();
         }
+		if (AsyncAction == "AddChildTask")
+		{
+			return AddChildTask();
+		}
+		if (AsyncAction == "RemoveChildTask")
+		{
+			return RemoveChildTask();
+		}
 
-
-        return Partial("_InputFieldsPartial", TaskList);
+		return Partial("_InputFieldsPartial", TaskList);
     }
 
     private IActionResult AddAssignment()
@@ -68,5 +75,17 @@ public class AddModel : BasePageModel<AddModel>
         TaskList.AssignmentList = TaskList!.AssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
         return Partial("_InputFieldsPartial", TaskList);
     }
-
+	private IActionResult AddChildTask()
+	{
+		ModelState.Clear();
+		if (TaskList!.ChildTaskList == null) { TaskList!.ChildTaskList = new List<TaskListViewModel>(); }
+		TaskList!.ChildTaskList!.Add(new TaskListViewModel() { ParentTaskId = TaskList.Id });
+		return Partial("_InputFieldsPartial", TaskList);
+	}
+	private IActionResult RemoveChildTask()
+	{
+		ModelState.Clear();
+		TaskList.ChildTaskList = TaskList!.ChildTaskList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", TaskList);
+	}
 }

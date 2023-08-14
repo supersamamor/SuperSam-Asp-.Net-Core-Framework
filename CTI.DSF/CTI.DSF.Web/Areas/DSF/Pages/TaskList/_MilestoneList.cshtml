@@ -30,14 +30,20 @@
                             <td class="d-none">
                                 <input type="hidden" name="ChildTaskList[@counter].Id" value="@item.Id" />
                                 <input type="hidden" name="ChildTaskList[@counter].ParentTaskId" value="@item.ParentTaskId" />
+                                <input type="hidden" name="ChildTaskList[@counter].Company" value="Default" />
+                                <input type="hidden" name="ChildTaskList[@counter].Department" value="Default" />
+                                <input type="hidden" name="ChildTaskList[@counter].TaskFrequency" value="Default" />
+                                <input type="hidden" name="ChildTaskList[@counter].PrimaryApprover" value="Default" />
+                                <input type="hidden" name="ChildTaskList[@counter].AlternateApprover" value="Default" />
+                                <input type="hidden" name="ChildTaskList[@counter].TaskClassification" value="Default" />
                             </td>
                             <td>
-                                <input asp-for="@item.TaskDescription" name="ChildTaskList[@counter].TaskDescription" class="form-control" readonly />
+                                <input asp-for="@item.TaskDescription" name="ChildTaskList[@counter].TaskDescription" class="form-control" />
                                 <span data-valmsg-for="ChildTaskList[@counter].TaskDescription" asp-validation-for="@item.TaskDescription" class="text-danger"></span>
                                 <input type="hidden" asp-for="@item.TaskDescription" name="ChildTaskList[@counter].TaskDescription" />
                             </td>
                             <td>
-                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveChildTaskButton btnAddRemoveSubDetailList" title="@Localizer["Remove Child Task"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveChildTaskButton btnAddRemoveSubDetailList" title="@Localizer["Remove Milestone"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         counter++;
