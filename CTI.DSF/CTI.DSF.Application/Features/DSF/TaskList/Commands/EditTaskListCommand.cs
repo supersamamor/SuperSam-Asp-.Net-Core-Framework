@@ -33,6 +33,7 @@ public class EditTaskListCommandHandler : BaseCommandHandler<ApplicationContext,
         var entity = await Context.TaskList.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
         Mapper.Map(request, entity);
         await UpdateAssignmentList(entity, request, cancellationToken);
+        await UpdateChildTaskList(entity, request, cancellationToken);
         Context.Update(entity);
         _ = await Context.SaveChangesAsync(cancellationToken);
         return Success<Error, TaskListState>(entity);
@@ -57,29 +58,19 @@ public class EditTaskListCommandHandler : BaseCommandHandler<ApplicationContext,
             {
                 if (await Context.NotExists<AssignmentState>(x => x.Id == assignment.Id, cancellationToken: cancellationToken))
                 {
-                    UpdateAssignmentList(entity);
+                    UpdateDeliverables(assignment, entity.TaskDescription, entity.TaskFrequency);
                     assignment.GenerateAssignmentCode();
                     Context.Entry(assignment).State = EntityState.Added;
                 }
                 else
                 {
+                    assignment.Entity = entity.Entity;
                     Context.Entry(assignment).State = EntityState.Modified;
                 }
             }
         }
     }
-    private void UpdateAssignmentList(TaskListState entity)
-    {
-        if (entity.AssignmentList?.Count > 0)
-        {
-            foreach (var assignment in entity.AssignmentList!)
-            {
-                UpdateDeliverables(assignment, entity.TaskDescription, entity.TaskFrequency);
-                assignment.GenerateAssignmentCode();
-                Context.Entry(assignment).State = EntityState.Added;
-            }
-        }
-    }
+    
     private void UpdateDeliverables(AssignmentState assignment, string taskDescription, string frequency)
     {
        
@@ -97,6 +88,36 @@ public class EditTaskListCommandHandler : BaseCommandHandler<ApplicationContext,
                 Context.Entry(delivery).State = EntityState.Added;
             }
         
+    }
+    private async Task UpdateChildTaskList(TaskListState entity, EditTaskListCommand request, CancellationToken cancellationToken)
+    {
+        IList<TaskListState> assignmentListForDeletion = new List<TaskListState>();
+        var queryChildTaskForDeletion = Context.TaskList.Where(l => l.ParentTaskId == request.Id).AsNoTracking();
+        if (entity.ChildTaskList?.Count > 0)
+        {
+            queryChildTaskForDeletion = queryChildTaskForDeletion.Where(l => !(entity.ChildTaskList.Select(l => l.Id).ToList().Contains(l.Id)));
+        }
+        assignmentListForDeletion = await queryChildTaskForDeletion.ToListAsync(cancellationToken: cancellationToken);
+        foreach (var assignment in assignmentListForDeletion!)
+        {
+            Context.Entry(assignment).State = EntityState.Deleted;
+        }
+        if (entity.ChildTaskList?.Count > 0)
+        {
+            foreach (var assignment in entity.ChildTaskList.Where(l => !assignmentListForDeletion.Select(l => l.Id).Contains(l.Id)))
+            {
+                if (await Context.NotExists<TaskListState>(x => x.Id == assignment.Id, cancellationToken: cancellationToken))
+                {
+                    assignment.SetInformationFromParent(entity);
+                    Context.Entry(assignment).State = EntityState.Added;
+                }
+                else
+                {
+                    assignment.SetInformationFromParent(entity);
+                    Context.Entry(assignment).State = EntityState.Modified;
+                }
+            }
+        }
     }
 }
 

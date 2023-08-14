@@ -37,6 +37,7 @@ public class AddTaskListCommandHandler : BaseCommandHandler<ApplicationContext, 
         TaskListState entity = Mapper.Map<TaskListState>(request);
         entity.GenerateTaskListCode();
         UpdateAssignmentList(entity);
+        UpdateChildTaskList(entity);
         _ = await Context.AddAsync(entity, cancellationToken);
         await AddApprovers(entity.Id, cancellationToken);
         _ = await Context.SaveChangesAsync(cancellationToken);
@@ -73,7 +74,17 @@ public class AddTaskListCommandHandler : BaseCommandHandler<ApplicationContext, 
             }
         
     }
-
+    private void UpdateChildTaskList(TaskListState entity)
+    {
+        if (entity.ChildTaskList?.Count > 0)
+        {
+            foreach (var assignment in entity.ChildTaskList!)
+            {
+                assignment.SetInformationFromParent(entity);
+                Context.Entry(assignment).State = EntityState.Added;
+            }
+        }
+    }
     private async Task AddApprovers(string taskListId, CancellationToken cancellationToken)
     {
         var approverList = await Context.ApproverAssignment.Include(l => l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.TaskList).AsNoTracking().ToListAsync(cancellationToken);
