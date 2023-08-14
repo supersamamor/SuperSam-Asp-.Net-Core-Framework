@@ -1,0 +1,50 @@
+@page
+@model DetailsModel
+@{
+    ViewData["Title"] = Localizer["View Report Setup"];
+    ViewData["ActiveMainPage"] = "ReportSetup";
+    ViewData["Level1"] = "Admin";
+}
+<partial name="_CodeMirrorStyles" />
+<div class="container-fluid" id="report-container">
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Report" />
+    </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Create)).Succeeded)
+    {
+        <a asp-page="Add" id="btnAddRecord" class="btn btn-success text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-id="@Model.Report.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.Delete)).Succeeded)
+    {
+        <a asp-page="Delete" asp-route-id="@Model.Report.Id" class="btn btn-danger" title="@Localizer["Delete"]"><i class="fas fa-trash"></i></a>
+    }
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+    <partial name="_DisableFieldsPartial" model="@("report-container")" />
+    <partial name="_CodeMirrorScripts" />
+    <script asp-add-nonce>
+        const textAreaQueryString = document.getElementById('QueryString');
+        if (textAreaQueryString) {
+            var editor = CodeMirror.fromTextArea(
+                textAreaQueryString, {
+                mode: 'sql',
+                theme: '3024-night',
+                lineNumbers: true,
+                autoCloseBrackets: true,
+                autoCloseTags: true
+            });
+        }
+    </script>
+}

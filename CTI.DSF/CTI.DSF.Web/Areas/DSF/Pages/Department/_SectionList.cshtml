@@ -1,0 +1,59 @@
+@using Models
+@model DepartmentViewModel
+<input type="hidden" id="SectionCount" value="@Model?.SectionList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Section"]</span>
+        <a id="btnAddSection" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveSection" value="RemoveSection"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Section Code"]
+							</th>
+							<th>
+								@Localizer["Section Name"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.SectionList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.SectionList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="SectionList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="SectionList[@counter].DepartmentCode" value="@item.DepartmentCode" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.SectionCode" name="SectionList[@counter].SectionCode" class="form-control"  />
+										<span data-valmsg-for="SectionList[@counter].SectionCode" asp-validation-for="@item.SectionCode" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.SectionName" name="SectionList[@counter].SectionName" class="form-control"  />
+										<span data-valmsg-for="SectionList[@counter].SectionName" asp-validation-for="@item.SectionName" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveSectionButton btnAddRemoveSubDetailList" title="@Localizer["Remove Section"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

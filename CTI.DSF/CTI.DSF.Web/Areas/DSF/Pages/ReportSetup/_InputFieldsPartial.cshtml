@@ -1,0 +1,45 @@
+@using Models
+@model ReportViewModel
+
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Report"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditReportDetails" model="Model" />
+    </div>
+</div>
+@if (Model.QueryType == CTI.DSF.Core.Constants.QueryType.QueryBuilder)
+{
+    <br />
+    <partial name="_ReportTableList" model="Model" />
+    <br />
+    <partial name="_ReportTableJoinParameterList" model="Model" />
+    <br />
+    <partial name="_ReportColumnHeaderList" model="Model" />
+    <br />
+    <partial name="_ReportFilterGroupingList" model="Model" />
+}
+else if (Model.QueryType == CTI.DSF.Core.Constants.QueryType.TSql)
+{
+    <br />
+    <div class="card">
+        <h5 class="card-header"><span class="card-header-custom">@Localizer["T-Sql"]</span><br></h5>
+        <div class="card-body">
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="@Model.QueryString" class="form-label "><strong>@Localizer["Query String"] :</strong></label>
+                    <textarea asp-for="@Model.QueryString" class="form-control" maxlength="8000" rows=8></textarea>
+                    <span asp-validation-for="@Model.QueryString" class="text-danger"></span>
+                    @if (!string.IsNullOrEmpty(Model.ReportOrChartType) && !string.IsNullOrEmpty(CTI.DSF.Core.Constants.ReportChartType.ChartToolTip[Model.ReportOrChartType]))
+                    {
+
+                        <span class="form-label margin-top-10"><i>@Html.Raw(CTI.DSF.Core.Constants.ReportChartType.ChartToolTip[Model.ReportOrChartType])</i></span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <partial name="_ReportQueryFilterList" model="Model" />
+}
+

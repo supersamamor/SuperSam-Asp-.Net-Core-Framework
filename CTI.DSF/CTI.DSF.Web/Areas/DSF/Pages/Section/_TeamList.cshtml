@@ -1,0 +1,59 @@
+@using Models
+@model SectionViewModel
+<input type="hidden" id="TeamCount" value="@Model?.TeamList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Team"]</span>
+        <a id="btnAddTeam" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveTeam" value="RemoveTeam"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Team Code"]
+							</th>
+							<th>
+								@Localizer["Team Name"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.TeamList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.TeamList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="TeamList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="TeamList[@counter].SectionCode" value="@item.SectionCode" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.TeamCode" name="TeamList[@counter].TeamCode" class="form-control"  />
+										<span data-valmsg-for="TeamList[@counter].TeamCode" asp-validation-for="@item.TeamCode" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.TeamName" name="TeamList[@counter].TeamName" class="form-control"  />
+										<span data-valmsg-for="TeamList[@counter].TeamName" asp-validation-for="@item.TeamName" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveTeamButton btnAddRemoveSubDetailList" title="@Localizer["Remove Team"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

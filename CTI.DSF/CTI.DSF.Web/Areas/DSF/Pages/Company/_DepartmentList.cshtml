@@ -1,0 +1,59 @@
+@using Models
+@model CompanyViewModel
+<input type="hidden" id="DepartmentCount" value="@Model?.DepartmentList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Department"]</span>
+        <a id="btnAddDepartment" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveDepartment" value="RemoveDepartment"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Department Code"]
+							</th>
+							<th>
+								@Localizer["Department Name"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.DepartmentList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.DepartmentList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="DepartmentList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="DepartmentList[@counter].CompanyCode" value="@item.CompanyCode" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.DepartmentCode" name="DepartmentList[@counter].DepartmentCode" class="form-control"  />
+										<span data-valmsg-for="DepartmentList[@counter].DepartmentCode" asp-validation-for="@item.DepartmentCode" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.DepartmentName" name="DepartmentList[@counter].DepartmentName" class="form-control"  />
+										<span data-valmsg-for="DepartmentList[@counter].DepartmentName" asp-validation-for="@item.DepartmentName" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveDepartmentButton btnAddRemoveSubDetailList" title="@Localizer["Remove Department"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

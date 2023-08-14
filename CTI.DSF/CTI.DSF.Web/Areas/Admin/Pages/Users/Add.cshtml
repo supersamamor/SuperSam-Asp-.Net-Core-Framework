@@ -1,0 +1,65 @@
+@page
+@model AddModel
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Add User"];
+    ViewData["ActiveMainPage"] = "Users";
+    ViewData["Level1"] = "Admin";
+}
+<form id="user-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Input" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_DataTableScripts" />
+    <script asp-add-nonce>
+        $(document).ready(function () 
+        {
+            var roles = $("#roles").DataTable({
+                select: false,
+                searching: true,
+                paging: true,
+                info: true,
+                buttons: [],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        orderDataType: 'dom-checkbox',
+                    }
+                ]
+            });
+            $('#user-form').onSubmitIncludeAllFieldsFromTable(roles);
+
+            function InitializeForm() {
+
+                $('.DisableSelectDropdown').on('mousedown', function (e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                });
+                $('#CompanyId').on('change', function () {
+                    $('#AsyncAction').val('');
+                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#user-form', InitializeForm);
+                });
+
+
+            }
+            InitializeForm();
+        });
+
+
+    </script>
+}

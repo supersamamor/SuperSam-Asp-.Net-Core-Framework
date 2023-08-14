@@ -1,0 +1,67 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Department"];
+    ViewData["ActiveMainPage"] = "Department";
+    ViewData["Level1"] = "DSF";
+}
+<form id="department-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Department" />
+    </div> 
+	<div id="toolbar-container" class="btn-group" role="group">
+        <a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+        <button type="button" id="btnConfirmationModal" class="btn btn-success" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>   
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_SectionListValidationPartial" model="@Model.Department" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{			
+			$.bindSaveConfirmationModal('Save', '#btnConfirmationModal','#department-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#department-form', 'Do you want to cancel the changes?');
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeSectionFieldValidations($('#SectionCount').val());
+			$('.RemoveSectionButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveSection');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#department-form', InitializeForm);
+			});
+
+			$('#btnAddSection').on( 'click', function () {
+				$('#AsyncAction').val('AddSection');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#department-form', InitializeForm);
+			});
+
+			$.fn.companySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#CompanyCode").companySelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

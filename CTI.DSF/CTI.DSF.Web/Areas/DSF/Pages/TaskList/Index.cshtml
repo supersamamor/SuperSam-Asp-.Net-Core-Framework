@@ -1,0 +1,171 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Task List List"];
+    ViewData["ActiveMainPage"] = "TaskList";
+    ViewData["Level1"] = "DSF";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="taskList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Task List Code"]
+							</th>
+							<th>
+								@Localizer["Task Description"]
+							</th>
+                            <th>
+								@Localizer["Sub Task"]
+							</th>
+							<th>
+								@Localizer["Task Type"]
+							</th>
+							<th>
+								@Localizer["Task Frequency"]
+							</th>
+							<th>
+								@Localizer["Task Due Day"]
+							</th>
+							<th>
+								@Localizer["Target Due Date"]
+							</th>
+							<th>
+								@Localizer["Primary Endorser"]
+							</th>
+							<th>
+								@Localizer["Primary Approver"]
+							</th>
+							<th>
+								@Localizer["Alternate Endorser"]
+							</th>
+							<th>
+								@Localizer["Alternate Approver"]
+							</th>
+							  
+							<th>
+								@Localizer["Status"]
+							</th> 							
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#taskList').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 11, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/TaskList/Index", new { area = "DSF", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "taskListCode", name: "TaskListCode", responsivePriority: 1, title: '@Localizer["Task List Code"]', searchable: true },
+				{ data: "taskDescription", name: "TaskDescription", responsivePriority: 1, title: '@Localizer["Task Description"]', searchable: false },
+                { data: "subTask", name: "SubTask", responsivePriority: 1, title: '@Localizer["Sub Task"]', searchable: true },
+				{ data: "taskClassification", name: "TaskClassification", responsivePriority: 1, title: '@Localizer["Task Classification"]', searchable: true },
+				{ data: "taskFrequency", name: "TaskFrequency", responsivePriority: 1, title: '@Localizer["Task Frequency"]', searchable: true },
+				{ data: "taskDueDay", name: "TaskDueDay", responsivePriority: 1, title: '@Localizer["Task Due Day"]', searchable: false },
+				{ data: "targetDueDate", name: "TargetDueDate", responsivePriority: 1, title: '@Localizer["Target Due Date"]', searchable: false },
+				{ data: "primaryEndorser", name: "PrimaryEndorser", responsivePriority: 1, title: '@Localizer["Primary Endorser"]', searchable: true },
+				{ data: "primaryApprover", name: "PrimaryApprover", responsivePriority: 1, title: '@Localizer["Primary Approver"]', searchable: true },
+				{ data: "alternateEndorser", name: "AlternateEndorser", responsivePriority: 1, title: '@Localizer["Alternate Endorser"]', searchable: true },
+				{ data: "alternateApprover", name: "AlternateApprover", responsivePriority: 1, title: '@Localizer["Alternate Approver"]', searchable: true },
+				   
+				//{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: , searchable: false, orderable: false },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/TaskList/Details", new { area = "DSF" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewTaskList" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/TaskList/Edit", new { area = "DSF" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditTaskList" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/TaskList/Delete", new { area = "DSF" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteTaskList" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.Approve)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/TaskList/Approve", new { area = "DSF" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
+					</text>
+				}  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/TaskList/Add", new { area = "DSF" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#taskList tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddTaskList",".btnEditTaskList",".btnViewTaskList",".btnDeleteTaskList"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddTaskList",".btnEditTaskList",".btnViewTaskList",".btnDeleteTaskList"]);
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}

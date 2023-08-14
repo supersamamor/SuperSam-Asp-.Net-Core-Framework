@@ -1,0 +1,30 @@
+@using Models
+@model DepartmentViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.CompanyCode" class="form-label "><strong>@Localizer["Company Code"] :</strong></label>
+			<input asp-for="ForeignKeyCompany" class="form-control"   readonly />
+			<span asp-validation-for="@Model.CompanyCode" class="text-danger"></span>
+			<input type="hidden" asp-for="@Model.CompanyCode"/>
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DepartmentCode" class="form-label fieldrequired"><strong>@Localizer["Department Code"] :</strong></label>
+			<input asp-for="@Model.DepartmentCode" class="form-control"  />
+			<span asp-validation-for="@Model.DepartmentCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DepartmentName" class="form-label fieldrequired"><strong>@Localizer["Department Name"] :</strong></label>
+			<input asp-for="@Model.DepartmentName" class="form-control"  />
+			<span asp-validation-for="@Model.DepartmentName" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>
