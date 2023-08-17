@@ -1,4 +1,6 @@
+using CTI.DSF.Application.Features.DSF.Holiday.Queries;
 using CTI.DSF.Application.Features.DSF.TaskList.Commands;
+using CTI.DSF.Application.Features.DSF.TaskList.Queries;
 using CTI.DSF.Web.Areas.DSF.Models;
 using CTI.DSF.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -60,8 +62,11 @@ public class AddModel : BasePageModel<AddModel>
 		{
 			return RemoveChildTask();
 		}
-
-		return Partial("_InputFieldsPartial", TaskList);
+        if (AsyncAction == "ChangeTargetDueDate")
+        {
+          
+        }
+        return Partial("_InputFieldsPartial", TaskList);
     }
 
     private IActionResult AddAssignment()
@@ -90,4 +95,13 @@ public class AddModel : BasePageModel<AddModel>
 		TaskList.ChildTaskList = TaskList!.ChildTaskList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", TaskList);
 	}
+    private async Task<IActionResult> ChangeTargetDueDate()
+    {
+        ModelState.Clear();
+        if (TaskList.TargetDueDate != null)
+        {
+          
+        }
+        return Partial("_InputFieldsPartial", TaskList);
+    }
 }

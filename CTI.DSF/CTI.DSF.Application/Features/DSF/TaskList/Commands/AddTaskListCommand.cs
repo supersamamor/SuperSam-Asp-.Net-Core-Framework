@@ -39,7 +39,7 @@ public class AddTaskListCommandHandler : BaseCommandHandler<ApplicationContext, 
         UpdateAssignmentList(entity);
         UpdateChildTaskList(entity);
         _ = await Context.AddAsync(entity, cancellationToken);
-        await AddApprovers(entity.Id, cancellationToken);
+        await Helpers.ApprovalHelper.AddApprovers(Context, _identityContext, ApprovalModule.TaskList, entity.Id, cancellationToken);
         _ = await Context.SaveChangesAsync(cancellationToken);
         return Success<Error, TaskListState>(entity);
     }
@@ -85,57 +85,57 @@ public class AddTaskListCommandHandler : BaseCommandHandler<ApplicationContext, 
             }
         }
     }
-    private async Task AddApprovers(string taskListId, CancellationToken cancellationToken)
-    {
-        var approverList = await Context.ApproverAssignment.Include(l => l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.TaskList).AsNoTracking().ToListAsync(cancellationToken);
-        if (approverList.Count > 0)
-        {
-            var approvalRecord = new ApprovalRecordState()
-            {
-                ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
-                DataId = taskListId,
-                ApprovalList = new List<ApprovalState>()
-            };
-            foreach (var approverItem in approverList)
-            {
-                if (approverItem.ApproverType == ApproverTypes.User)
-                {
-                    var approval = new ApprovalState()
-                    {
-                        Sequence = approverItem.Sequence,
-                        ApproverUserId = approverItem.ApproverUserId!,
-                    };
-                    if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
-                    {
-                        approval.EmailSendingStatus = SendingStatus.Pending;
-                    }
-                    approvalRecord.ApprovalList.Add(approval);
-                }
-                else if (approverItem.ApproverType == ApproverTypes.Role)
-                {
-                    var userListWithRole = await (from a in _identityContext.Users
-                                                  join b in _identityContext.UserRoles on a.Id equals b.UserId
-                                                  join c in _identityContext.Roles on b.RoleId equals c.Id
-                                                  where c.Id == approverItem.ApproverRoleId
-                                                  select a.Id).AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
-                    foreach (var userId in userListWithRole)
-                    {
-                        var approval = new ApprovalState()
-                        {
-                            Sequence = approverItem.Sequence,
-                            ApproverUserId = userId,
-                        };
-                        if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
-                        {
-                            approval.EmailSendingStatus = SendingStatus.Pending;
-                        }
-                        approvalRecord.ApprovalList.Add(approval);
-                    }
-                }
-            }
-            await Context.AddAsync(approvalRecord, cancellationToken);
-        }
-    }
+    //private async Task AddApprovers(string taskListId, CancellationToken cancellationToken)
+    //{
+    //    var approverList = await Context.ApproverAssignment.Include(l => l.ApproverSetup).Where(l => l.ApproverSetup.TableName == ApprovalModule.TaskList).AsNoTracking().ToListAsync(cancellationToken);
+    //    if (approverList.Count > 0)
+    //    {
+    //        var approvalRecord = new ApprovalRecordState()
+    //        {
+    //            ApproverSetupId = approverList.FirstOrDefault()!.ApproverSetupId,
+    //            DataId = taskListId,
+    //            ApprovalList = new List<ApprovalState>()
+    //        };
+    //        foreach (var approverItem in approverList)
+    //        {
+    //            if (approverItem.ApproverType == ApproverTypes.User)
+    //            {
+    //                var approval = new ApprovalState()
+    //                {
+    //                    Sequence = approverItem.Sequence,
+    //                    ApproverUserId = approverItem.ApproverUserId!,
+    //                };
+    //                if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
+    //                {
+    //                    approval.EmailSendingStatus = SendingStatus.Pending;
+    //                }
+    //                approvalRecord.ApprovalList.Add(approval);
+    //            }
+    //            else if (approverItem.ApproverType == ApproverTypes.Role)
+    //            {
+    //                var userListWithRole = await (from a in _identityContext.Users
+    //                                              join b in _identityContext.UserRoles on a.Id equals b.UserId
+    //                                              join c in _identityContext.Roles on b.RoleId equals c.Id
+    //                                              where c.Id == approverItem.ApproverRoleId
+    //                                              select a.Id).AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
+    //                foreach (var userId in userListWithRole)
+    //                {
+    //                    var approval = new ApprovalState()
+    //                    {
+    //                        Sequence = approverItem.Sequence,
+    //                        ApproverUserId = userId,
+    //                    };
+    //                    if (approverList.FirstOrDefault()!.ApproverSetup.ApprovalType != ApprovalTypes.InSequence)
+    //                    {
+    //                        approval.EmailSendingStatus = SendingStatus.Pending;
+    //                    }
+    //                    approvalRecord.ApprovalList.Add(approval);
+    //                }
+    //            }
+    //        }
+    //        await Context.AddAsync(approvalRecord, cancellationToken);
+    //    }
+    //}
 }
 
 public class AddTaskListCommandValidator : AbstractValidator<AddTaskListCommand>

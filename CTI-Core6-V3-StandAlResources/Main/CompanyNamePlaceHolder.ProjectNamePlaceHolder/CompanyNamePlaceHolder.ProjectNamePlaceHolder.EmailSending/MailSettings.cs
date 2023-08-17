@@ -11,5 +11,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending
         public string? SMTPHost { get; set; }
         public int SMTPPort { get; set; }
         public string? SendingType { get; set; }
+		public string? TestEmailRecipient { get; set; }
     }
 }

@@ -51,6 +51,10 @@
                     $('#AsyncAction').val('');
                     $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
                 });
+                $('#TargetDueDate').on('change', function () {
+                    $('#AsyncAction').val('ChangeTargetDueDate');
+                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
+                });
                 //Scripts for Milestone
                 $.InitializeChildTaskListFieldValidations($('#ChildTaskCount').val());
                 $('.RemoveChildTaskButton ').on('click', function () {
