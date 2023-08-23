@@ -20,8 +20,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants
                                 Count(Distinct UserId) <b>[Number of Users]</b> From AuditLogs Group by [Type])</quote><br>" + ShortCodeFinePrint + "</small>" },
             { "Pie", @"<small>Your query should consist of one field with `label` field name and other fields should be a numeric value
                             <br><quote>(eg. Select [Type] <b>Label</b>,
-                                Count(*) <b>L[Transaction Count]</b>,
-                                Count(Distinct UserId) <b>L[Number of Users]</b> From AuditLogs Group by [Type])</quote><br>" + ShortCodeFinePrint + "</small>" },
+                                Count(*) <b>[Transaction Count]</b>,
+                                Count(Distinct UserId) <b>[Number of Users]</b> From AuditLogs Group by [Type])</quote><br>" + ShortCodeFinePrint + "</small>" },
         };
 
 
