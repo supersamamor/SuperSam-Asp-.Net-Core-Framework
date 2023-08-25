@@ -36,7 +36,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models
         public SelectList Entities { get; set; } = new(new List<SelectListItem>());
         public IList<UserRoleViewModel> Roles { get; set; } = new List<UserRoleViewModel>();
         public SelectList Statuses { get; set; } = AdminUtilities.GetUserStatusList();
-        public string? BirthDateDisplay { get; set; }
         public string? Entity { get; set; }
         public bool IsView { get; set; } 
         public bool IsEdit { get; set; }
