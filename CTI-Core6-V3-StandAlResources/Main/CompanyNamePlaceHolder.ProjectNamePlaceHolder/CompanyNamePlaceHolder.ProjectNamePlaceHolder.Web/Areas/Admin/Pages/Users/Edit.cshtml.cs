@@ -52,8 +52,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             Id = user.Id,
             Email = user.Email,
-            Name = user.Name!,
-            BirthDate = user.BirthDate,
+            Name = user.Name!,         
             EntityId = user.EntityId!,
             IsActive = user.IsActive,
             IsEdit = true,
@@ -110,8 +109,7 @@ public class EditModel : BasePageModel<EditModel>
 
     async Task<Validation<Error, ApplicationUser>> UpdateUser(ApplicationUser user)
     {
-        user.Name = UserModel.Name;
-        user.BirthDate = UserModel.BirthDate;
+        user.Name = UserModel.Name;    
         user.EntityId = UserModel.EntityId;
         user.IsActive = UserModel.IsActive;
         return await ToValidation<ApplicationUser>(_userManager.UpdateAsync)(user);
@@ -128,29 +126,3 @@ public class EditModel : BasePageModel<EditModel>
     }
 }
 
-//public record UserEditViewModel
-//{
-//    public string Id { get; set; } = Guid.NewGuid().ToString();
-//    public string Email { get; set; } = "";
-
-//    [Required]
-//    [DataType(DataType.Text)]
-//    [Display(Name = "Full name")]
-//    public string Name { get; set; } = "";
-
-//    [Required]
-//    [Display(Name = "Birth Date")]
-//    [DataType(DataType.Date)]
-//    public DateTime? BirthDate { get; set; }
-
-//    [Required]
-//    [Display(Name = "Entity")]
-//    public string EntityId { get; set; } = "";
-
-//    [Required]
-//    [Display(Name = "Status")]
-//    public bool IsActive { get; set; }
-
-//    public SelectList Entities { get; set; } = new(new List<SelectListItem>());
-//    public SelectList Statuses { get; set; } = AdminUtilities.GetUserStatusList();
-//}

@@ -28,12 +28,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Models
         [DataType(DataType.Text)]
         [Display(Name = "Full name")]
         public string Name { get; set; } = "";
-
-        [Required]
-        [Display(Name = "Birth Date")]
-        [DataType(DataType.Date)]
-        public DateTime? BirthDate { get; set; }
-
         [Required]
         [Display(Name = "Entity")]
         public string EntityId { get; set; } = Guid.NewGuid().ToString();

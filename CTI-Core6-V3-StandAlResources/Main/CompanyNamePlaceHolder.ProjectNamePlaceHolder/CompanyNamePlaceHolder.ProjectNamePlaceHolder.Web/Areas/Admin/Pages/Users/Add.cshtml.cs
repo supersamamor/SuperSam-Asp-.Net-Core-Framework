@@ -94,8 +94,7 @@ public class AddModel : BasePageModel<AddModel>
             {
                 UserName = UserModel.Email,
                 Email = UserModel.Email,
-                Name = UserModel.Name,
-                BirthDate = UserModel.BirthDate,
+                Name = UserModel.Name,              
                 EntityId = UserModel.EntityId,
                 IsActive = true,
                 EmailConfirmed = true,

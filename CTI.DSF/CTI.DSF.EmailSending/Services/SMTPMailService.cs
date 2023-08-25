@@ -21,9 +21,7 @@ namespace CTI.DSF.EmailSending.Services
             if (!string.IsNullOrEmpty(_settings.TestEmailRecipient))
             {
                 string[] testEmails = _settings.TestEmailRecipient.Split(',');
-                request.To = testEmails[0];
-                request.Ccs = testEmails.ToList();
-                request.Bcc = testEmails.ToList();
+                request.To = testEmails[0];              
                 request.Subject = request.Subject + " - Test";
             }
             var decryptedPassword = DecryptPassword(_settings.SMTPEmailPassword, _settings.SMTPEmail!);
