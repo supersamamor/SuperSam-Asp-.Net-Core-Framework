@@ -64,7 +64,7 @@ public class RegisterModel : PageModel
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Full name")]
-        public string? Name { get; set; }
+        public string? Name { get; set; }       
 
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please agree to the terms")]
         public bool TermsAccepted { get; set; }
@@ -87,7 +87,7 @@ public class RegisterModel : PageModel
             {
                 UserName = Input?.Email,
                 Email = Input?.Email,
-                Name = Input?.Name, 
+                Name = Input?.Name,               
                 EntityId = defaultEntity!.Id
             };
             var result = await _userManager.CreateAsync(user, Input?.Password);          

@@ -1,0 +1,139 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Task Approver List"];
+    ViewData["ActiveMainPage"] = "TaskApprover";
+    ViewData["Level1"] = "DSF";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="taskApprover" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Approver"]
+							</th>
+							<th>
+								@Localizer["Task List"]
+							</th>
+							<th>
+								@Localizer["Approver Type"]
+							</th>
+							<th>
+								@Localizer["Is Primary"]
+							</th>
+							<th>
+								@Localizer["Sequence"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#taskApprover').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 5, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/TaskApprover/Index", new { area = "DSF", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "approverUserId", name: "ApproverUserId", responsivePriority: 1, title: '@Localizer["Approver"]', searchable: false },
+				{ data: "taskListId", name: "TaskListId", responsivePriority: 1, title: '@Localizer["Task List"]', searchable: true },
+				{ data: "approverType", name: "ApproverType", responsivePriority: 1, title: '@Localizer["Approver Type"]', searchable: false },
+				{ data: "isPrimary", name: "IsPrimary", responsivePriority: 1, title: '@Localizer["Is Primary"]', searchable: false },
+				{ data: "sequence", name: "Sequence", responsivePriority: 1, title: '@Localizer["Sequence"]', searchable: false },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/TaskApprover/Details", new { area = "DSF" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewTaskApprover" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskApprover.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/TaskApprover/Edit", new { area = "DSF" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditTaskApprover" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskApprover.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/TaskApprover/Delete", new { area = "DSF" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteTaskApprover" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }
+				  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskApprover.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/TaskApprover/Add", new { area = "DSF" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#taskApprover tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddTaskApprover",".btnEditTaskApprover",".btnViewTaskApprover",".btnDeleteTaskApprover"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddTaskApprover",".btnEditTaskApprover",".btnViewTaskApprover",".btnDeleteTaskApprover"]);
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}

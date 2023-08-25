@@ -31,7 +31,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                DepartmentCode = e.Department?.DepartmentCode,
+                DepartmentCode = e.Department?.Id,
 				e.SectionCode,
 				e.SectionName,
 						
@@ -43,7 +43,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetSectionQuery>(nameof(SectionState.SectionCode)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.SectionCode }));
+        var result = await Mediatr.Send(request.ToQuery<GetSectionQuery>(nameof(SectionState.Id)));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
     }
 }

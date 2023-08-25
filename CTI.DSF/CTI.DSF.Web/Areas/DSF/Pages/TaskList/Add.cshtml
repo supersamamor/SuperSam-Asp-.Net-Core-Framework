@@ -1,74 +1,131 @@
 @page
 @model AddModel
 @{
-    ViewData["Title"] = Localizer["Add Task List"];
+    ViewData["Title"] = Localizer["Add Task"];
     ViewData["ActiveMainPage"] = "TaskList";
     ViewData["Level1"] = "DSF";
 }
 <form id="taskList-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
     <input type="hidden" asp-for="@Model.AsyncAction" />
-    <div id="PartialLoaderContainer">
+	<div id="PartialLoaderContainer">
         <partial name="_InputFieldsPartial" model="Model.TaskList" />
-    </div>
-    <div id="toolbar-container" class="btn-group" role="group">
+    </div> 
+	<div id="toolbar-container" class="btn-group" role="group">
         <a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
         <button type="button" id="btnConfirmationModal" class="btn btn-success" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
-    </div>
+    </div>   
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <partial name="_AssignmentListValidationPartial" model="@Model.TaskList" />
-    <partial name="_MilestoneListValidationPartial" model="@Model.TaskList" />
-    <script asp-add-nonce>
-        $(document).ready(function () {
-            function InitializeForm() {
-                $.bindSaveConfirmationModal('Save', '#btnConfirmationModal', '#taskList-form');
-                $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal', '#taskList-form', 'Do you want to cancel the changes?');
-                $('.DisableSelectDropdown').on('mousedown', function (e) {
-                    e.preventDefault();
-                    this.blur();
-                    window.focus();
-                });
+<partial name="_ValidationScriptsPartial" />
+<partial name="_TaskApproverListValidationPartial" model="@Model.TaskList" />
+<partial name="_TaskTagListValidationPartial" model="@Model.TaskList" />
 
-                $.InitializeAssignmentFieldValidations($('#AssignmentCount').val());
-                $('.RemoveAssignmentButton ').on('click', function () {
-                    $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                    $('#AsyncAction').val('RemoveAssignment');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
-                });
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{			
+			$.bindSaveConfirmationModal('Save', '#btnConfirmationModal','#taskList-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#taskList-form', 'Do you want to cancel the changes?');
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeTaskApproverFieldValidations($('#TaskApproverCount').val());
+			$('.RemoveTaskApproverButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTaskApprover');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskList-form', InitializeForm);
+			});
 
-                $('#btnAddAssignment').on('click', function () {
-                    $('#AsyncAction').val('AddAssignment');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
-                });
+			$('#btnAddTaskApprover').on( 'click', function () {
+				$('#AsyncAction').val('AddTaskApprover');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskList-form', InitializeForm);
+			});
 
-                $('#TaskClassification, #Company').on('change', function () {
-                    $('#AsyncAction').val('');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
-                });
-                $('#TargetDueDate').on('change', function () {
-                    $('#AsyncAction').val('ChangeTargetDueDate');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
-                });
-                //Scripts for Milestone
-                $.InitializeChildTaskListFieldValidations($('#ChildTaskCount').val());
-                $('.RemoveChildTaskButton ').on('click', function () {
-                    $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                    $('#AsyncAction').val('RemoveChildTask');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
-                });
+			$.InitializeTaskTagFieldValidations($('#TaskTagCount').val());
+			$('.RemoveTaskTagButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTaskTag');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskList-form', InitializeForm);
+			});
 
-                $('#btnAddChildTask').on('click', function () {
-                    $('#AsyncAction').val('AddChildTask');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#taskList-form', InitializeForm);
-                });
-            }
-            InitializeForm();
-        });
-    </script>
+			$('#btnAddTaskTag').on( 'click', function () {
+				$('#AsyncAction').val('AddTaskTag');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskList-form', InitializeForm);
+			});
+
+			$.fn.tagsSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Tags/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var tagslistdropdowns = document.getElementsByClassName('SelectTags');
+			for ( var i=0; i< tagslistdropdowns.length; i++) {
+				$("#TaskTagList_"+i+"_TagId").tagsSelect();
+			}
+
+			$.fn.departmentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Department/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#DepartmentId").departmentSelect();
+
+			$.fn.teamSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#TeamId").teamSelect();
+
+			$.fn.sectionSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Section/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#SectionId").sectionSelect();
+
+			$.fn.companySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#CompanyId").companySelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
 }

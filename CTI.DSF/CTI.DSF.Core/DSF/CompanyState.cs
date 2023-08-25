@@ -5,10 +5,11 @@ namespace CTI.DSF.Core.DSF;
 
 public record CompanyState : BaseEntity
 {
-	public string CompanyCode { get; init; } = "";
-	public string CompanyName { get; init; } = "";
+	public string? CompanyCode { get; init; }
+	public string? CompanyName { get; init; }
 	
 	
 	public IList<DepartmentState>? DepartmentList { get; set; }
+	public IList<TaskListState>? TaskListList { get; set; }
 	
 }

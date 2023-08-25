@@ -5,7 +5,7 @@ using CTI.DSF.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CTI.DSF.Web.Helper;
+
 
 
 namespace CTI.DSF.Web.Areas.DSF.Pages.TaskList;
@@ -25,25 +25,20 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		var approvalHelper = new ApprovalHelper(Mediatr);
+		
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetTaskListQuery>());
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
-                e.TaskListCode,
+                TaskListNo = e.TaskListNo?.ToString("##,##"),
 				e.TaskDescription,
-                e.SubTask,
 				e.TaskClassification,
 				e.TaskFrequency,
-				TaskDueDay = e.TaskDueDay.ToString("##,##"),
-				TargetDueDate = e.TargetDueDate.ToString("MMM dd, yyyy HH:mm"),
-				e.PrimaryEndorser,
-				e.PrimaryApprover,
-				e.AlternateEndorser,
-				e.AlternateApprover,
+				TaskDueDay = e.TaskDueDay?.ToString("##,##"),
+				TargetDueDate = e.TargetDueDate?.ToString("MMM dd, yyyy HH:mm"),
 						
-				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
+				
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
@@ -51,7 +46,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetTaskListQuery>(nameof(TaskListState.TaskListCode)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.TaskListCode! }));
+        var result = await Mediatr.Send(request.ToQuery<GetTaskListQuery>(nameof(TaskListState.Id)));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
     }
 }

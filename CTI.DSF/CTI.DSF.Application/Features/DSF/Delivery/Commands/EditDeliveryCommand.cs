@@ -40,7 +40,6 @@ public class EditDeliveryCommandValidator : AbstractValidator<EditDeliveryComman
         _context = context;
 		RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<DeliveryState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Delivery with id {PropertyValue} does not exists");
-        RuleFor(x => x.DeliveryCode).MustAsync(async (request, deliveryCode, cancellation) => await _context.NotExists<DeliveryState>(x => x.DeliveryCode == deliveryCode && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("Delivery with deliveryCode {PropertyValue} already exists");
-	
+        
     }
 }

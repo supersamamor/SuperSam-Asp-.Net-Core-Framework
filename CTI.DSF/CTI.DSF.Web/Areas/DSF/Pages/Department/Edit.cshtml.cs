@@ -37,31 +37,8 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddSection")
-		{
-			return AddSection();
-		}
-		if (AsyncAction == "RemoveSection")
-		{
-			return RemoveSection();
-		}
-		
 		
         return Partial("_InputFieldsPartial", Department);
     }
-	
-	private IActionResult AddSection()
-	{
-		ModelState.Clear();
-		if (Department!.SectionList == null) { Department!.SectionList = new List<SectionViewModel>(); }
-		Department!.SectionList!.Add(new SectionViewModel() { DepartmentCode = Department.Id });
-		return Partial("_InputFieldsPartial", Department);
-	}
-	private IActionResult RemoveSection()
-	{
-		ModelState.Clear();
-		Department.SectionList = Department!.SectionList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Department);
-	}
 	
 }

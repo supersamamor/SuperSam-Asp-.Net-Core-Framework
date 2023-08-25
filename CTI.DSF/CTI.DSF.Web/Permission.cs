@@ -13,15 +13,19 @@ public static class Permission
             .Concat(GeneratePermissionsForModule("AuditTrail"))
 			.Concat(GeneratePermissionsForModule("Report"))
             .Concat(GeneratePermissionsForModule("ReportSetup"))
-            .Concat(GeneratePermissionsForModule("TaskList"))
-			.Concat(GeneratePermissionsForModule("Assignment"))
-            .Concat(GeneratePermissionsForModule("Delivery"))
             .Concat(GeneratePermissionsForModule("Company"))
-            .Concat(GeneratePermissionsForModule("Department"))
-            .Concat(GeneratePermissionsForModule("Section"))
-            .Concat(GeneratePermissionsForModule("Team"))
-            .Concat(GeneratePermissionsForModule("Holiday"))
-            .Concat(GeneratePermissionsForModule("ApproverSetup"));
+			.Concat(GeneratePermissionsForModule("Department"))
+			.Concat(GeneratePermissionsForModule("Section"))
+			.Concat(GeneratePermissionsForModule("Team"))
+			.Concat(GeneratePermissionsForModule("Holiday"))
+			.Concat(GeneratePermissionsForModule("Tags"))
+			.Concat(GeneratePermissionsForModule("TaskList"))
+			.Concat(GeneratePermissionsForModule("TaskApprover"))
+			.Concat(GeneratePermissionsForModule("TaskTag"))
+			.Concat(GeneratePermissionsForModule("Assignment"))
+			.Concat(GeneratePermissionsForModule("Delivery"))
+			
+			.Concat(GeneratePermissionsForModule("ApproverSetup"));
     }
 
     public static IEnumerable<string> GeneratePermissionsForModule(string module)
@@ -108,13 +112,68 @@ public static class Permission
         public const string Delete = "Permission.ReportSetup.Delete";
         public const string Approve = "Permission.ReportSetup.Approve";
     }
-    public static class TaskList
+    public static class Company
+	{
+		public const string View = "Permission.Company.View";
+		public const string Create = "Permission.Company.Create";
+		public const string Edit = "Permission.Company.Edit";
+		public const string Delete = "Permission.Company.Delete";
+	}
+	public static class Department
+	{
+		public const string View = "Permission.Department.View";
+		public const string Create = "Permission.Department.Create";
+		public const string Edit = "Permission.Department.Edit";
+		public const string Delete = "Permission.Department.Delete";
+	}
+	public static class Section
+	{
+		public const string View = "Permission.Section.View";
+		public const string Create = "Permission.Section.Create";
+		public const string Edit = "Permission.Section.Edit";
+		public const string Delete = "Permission.Section.Delete";
+	}
+	public static class Team
+	{
+		public const string View = "Permission.Team.View";
+		public const string Create = "Permission.Team.Create";
+		public const string Edit = "Permission.Team.Edit";
+		public const string Delete = "Permission.Team.Delete";
+	}
+	public static class Holiday
+	{
+		public const string View = "Permission.Holiday.View";
+		public const string Create = "Permission.Holiday.Create";
+		public const string Edit = "Permission.Holiday.Edit";
+		public const string Delete = "Permission.Holiday.Delete";
+	}
+	public static class Tags
+	{
+		public const string View = "Permission.Tags.View";
+		public const string Create = "Permission.Tags.Create";
+		public const string Edit = "Permission.Tags.Edit";
+		public const string Delete = "Permission.Tags.Delete";
+	}
+	public static class TaskList
 	{
 		public const string View = "Permission.TaskList.View";
 		public const string Create = "Permission.TaskList.Create";
 		public const string Edit = "Permission.TaskList.Edit";
 		public const string Delete = "Permission.TaskList.Delete";
-		public const string Approve = "Permission.TaskList.Approve";
+	}
+	public static class TaskApprover
+	{
+		public const string View = "Permission.TaskApprover.View";
+		public const string Create = "Permission.TaskApprover.Create";
+		public const string Edit = "Permission.TaskApprover.Edit";
+		public const string Delete = "Permission.TaskApprover.Delete";
+	}
+	public static class TaskTag
+	{
+		public const string View = "Permission.TaskTag.View";
+		public const string Create = "Permission.TaskTag.Create";
+		public const string Edit = "Permission.TaskTag.Edit";
+		public const string Delete = "Permission.TaskTag.Delete";
 	}
 	public static class Assignment
 	{
@@ -123,57 +182,20 @@ public static class Permission
 		public const string Edit = "Permission.Assignment.Edit";
 		public const string Delete = "Permission.Assignment.Delete";
 	}
-
-    public static class Delivery
-    {
-        public const string View = "Permission.Delivery.View";
-        public const string Create = "Permission.Delivery.Create";
-        public const string Edit = "Permission.Delivery.Edit";
-        public const string Delete = "Permission.Delivery.Delete";
-        public const string Approve = "Permission.Delivery.Approve";
-    }
-
-    public static class Company
-    {
-        public const string View = "Permission.Company.View";
-        public const string Create = "Permission.Company.Create";
-        public const string Edit = "Permission.Company.Edit";
-        public const string Delete = "Permission.Company.Delete";
-    }
-    public static class Department
-    {
-        public const string View = "Permission.Department.View";
-        public const string Create = "Permission.Department.Create";
-        public const string Edit = "Permission.Department.Edit";
-        public const string Delete = "Permission.Department.Delete";
-    }
-    public static class Section
-    {
-        public const string View = "Permission.Section.View";
-        public const string Create = "Permission.Section.Create";
-        public const string Edit = "Permission.Section.Edit";
-        public const string Delete = "Permission.Section.Delete";
-    }
-    public static class Team
-    {
-        public const string View = "Permission.Team.View";
-        public const string Create = "Permission.Team.Create";
-        public const string Edit = "Permission.Team.Edit";
-        public const string Delete = "Permission.Team.Delete";
-    }
-
-    public static class ApproverSetup
+	public static class Delivery
+	{
+		public const string View = "Permission.Delivery.View";
+		public const string Create = "Permission.Delivery.Create";
+		public const string Edit = "Permission.Delivery.Edit";
+		public const string Delete = "Permission.Delivery.Delete";
+		public const string Approve = "Permission.Delivery.Approve";
+	}
+	
+	public static class ApproverSetup
 	{
 		public const string Create = "Permission.ApproverSetup.Create";
 		public const string View = "Permission.ApproverSetup.View";
 		public const string Edit = "Permission.ApproverSetup.Edit";
 		public const string PendingApprovals = "Permission.ApproverSetup.PendingApprovals";
 	}
-    public static class Holiday
-    {
-        public const string View = "Permission.Holiday.View";
-        public const string Create = "Permission.Holiday.Create";
-        public const string Edit = "Permission.Holiday.Edit";
-        public const string Delete = "Permission.Holiday.Delete";
-    }
 }

@@ -35,12 +35,7 @@ public partial class IndexModel : PageModel
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Full name")]
-        public string? Name { get; set; }
-
-        [Required]
-        [Display(Name = "Birth Date")]
-        [DataType(DataType.Date)]
-        public DateTime? BirthDate { get; set; }
+        public string? Name { get; set; }      
     }
 
     private async Task LoadAsync(ApplicationUser user)
@@ -53,7 +48,7 @@ public partial class IndexModel : PageModel
         Input = new InputModel
         {
             PhoneNumber = phoneNumber,
-            Name = user.Name,    
+            Name = user.Name,          
         };
     }
 
@@ -98,7 +93,7 @@ public partial class IndexModel : PageModel
         {
             user.Name = Input?.Name ?? user.Name;
         }
-
+   
         await _userManager.UpdateAsync(user);
         await _signInManager.RefreshSignInAsync(user);
         StatusMessage = "Your profile has been updated";

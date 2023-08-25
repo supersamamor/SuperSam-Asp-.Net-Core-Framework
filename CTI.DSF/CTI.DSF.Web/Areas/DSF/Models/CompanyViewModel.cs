@@ -8,16 +8,15 @@ namespace CTI.DSF.Web.Areas.DSF.Models;
 public record CompanyViewModel : BaseViewModel
 {	
 	[Display(Name = "Company Code")]
-	[Required]
-	
-	public string CompanyCode { get; init; } = "";
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? CompanyCode { get; init; }
 	[Display(Name = "Company Name")]
-	[Required]
-	
-	public string CompanyName { get; init; } = "";
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? CompanyName { get; init; }
 	
 	public DateTime LastModifiedDate { get; set; }
 		
 	public IList<DepartmentViewModel>? DepartmentList { get; set; }
+	public IList<TaskListViewModel>? TaskListList { get; set; }
 	
 }

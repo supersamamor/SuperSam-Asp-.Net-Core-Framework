@@ -1,0 +1,71 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Tags"];
+    ViewData["ActiveMainPage"] = "Tags";
+    ViewData["Level1"] = "DSF";
+}
+<form id="tags-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Tags" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">  
+		<a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>                
+        <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_TaskTagListValidationPartial" model="@Model.Tags" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+			$.bindSaveConfirmationModal('Update', '#btnConfirmationModal','#tags-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#tags-form', 'Do you want to cancel the changes?');
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeTaskTagFieldValidations($('#TaskTagCount').val());
+			$('.RemoveTaskTagButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTaskTag');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tags-form', InitializeForm);
+			});
+
+			$('#btnAddTaskTag').on( 'click', function () {
+				$('#AsyncAction').val('AddTaskTag');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#tags-form', InitializeForm);
+			});
+
+			$.fn.tasklistSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/TaskList/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var tasklistlistdropdowns = document.getElementsByClassName('SelectTaskList');
+			for ( var i=0; i< tasklistlistdropdowns.length; i++) {
+				$("#TaskTagList_"+i+"_TaskListId").tasklistSelect();
+			}
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

@@ -8,20 +8,20 @@ namespace CTI.DSF.Web.Areas.DSF.Models;
 public record TeamViewModel : BaseViewModel
 {	
 	[Display(Name = "Section Code")]
-	
-	public string? SectionCode { get; init; }
-	public string?  ForeignKeySection { get; set; }
+	[Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string SectionCode { get; init; } = "";
+	public string?  ReferenceFieldSectionCode { get; set; }
 	[Display(Name = "Team Code")]
-	[Required]
-	
-	public string TeamCode { get; init; } = "";
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? TeamCode { get; init; }
 	[Display(Name = "Team Name")]
-	[Required]
 	
-	public string TeamName { get; init; } = "";
+	public string? TeamName { get; init; }
 	
 	public DateTime LastModifiedDate { get; set; }
 	public SectionViewModel? Section { get; init; }
 		
+	public IList<TaskListViewModel>? TaskListList { get; set; }
 	
 }

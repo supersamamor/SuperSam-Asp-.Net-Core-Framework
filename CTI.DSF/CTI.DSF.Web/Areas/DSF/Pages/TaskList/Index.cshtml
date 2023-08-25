@@ -5,7 +5,7 @@
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Task List List"];
+    ViewData["Title"] = Localizer["Task List"];
     ViewData["ActiveMainPage"] = "TaskList";
     ViewData["Level1"] = "DSF";
 }
@@ -17,16 +17,13 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Task List Code"]
+								@Localizer["Task No"]
 							</th>
 							<th>
 								@Localizer["Task Description"]
 							</th>
-                            <th>
-								@Localizer["Sub Task"]
-							</th>
 							<th>
-								@Localizer["Task Type"]
+								@Localizer["Task Classification"]
 							</th>
 							<th>
 								@Localizer["Task Frequency"]
@@ -37,22 +34,8 @@
 							<th>
 								@Localizer["Target Due Date"]
 							</th>
-							<th>
-								@Localizer["Primary Endorser"]
-							</th>
-							<th>
-								@Localizer["Primary Approver"]
-							</th>
-							<th>
-								@Localizer["Alternate Endorser"]
-							</th>
-							<th>
-								@Localizer["Alternate Approver"]
-							</th>
 							  
-							<th>
-								@Localizer["Status"]
-							</th> 							
+														
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -73,7 +56,7 @@
         var table = $('#taskList').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 11, 'desc' ]],
+            order: [[ 6, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/TaskList/Index", new { area = "DSF", handler = "ListAll" })',
@@ -87,19 +70,14 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "taskListCode", name: "TaskListCode", responsivePriority: 1, title: '@Localizer["Task List Code"]', searchable: true },
-				{ data: "taskDescription", name: "TaskDescription", responsivePriority: 1, title: '@Localizer["Task Description"]', searchable: false },
-                { data: "subTask", name: "SubTask", responsivePriority: 1, title: '@Localizer["Sub Task"]', searchable: true },
-				{ data: "taskClassification", name: "TaskClassification", responsivePriority: 1, title: '@Localizer["Task Classification"]', searchable: true },
-				{ data: "taskFrequency", name: "TaskFrequency", responsivePriority: 1, title: '@Localizer["Task Frequency"]', searchable: true },
+                { data: "taskListNo", name: "TaskListNo", responsivePriority: 1, title: '@Localizer["Task No"]', searchable: false },
+				{ data: "taskDescription", name: "TaskDescription", responsivePriority: 1, title: '@Localizer["Task Description"]', searchable: true },
+				{ data: "taskClassification", name: "TaskClassification", responsivePriority: 1, title: '@Localizer["Task Classification"]', searchable: false },
+				{ data: "taskFrequency", name: "TaskFrequency", responsivePriority: 1, title: '@Localizer["Task Frequency"]', searchable: false },
 				{ data: "taskDueDay", name: "TaskDueDay", responsivePriority: 1, title: '@Localizer["Task Due Day"]', searchable: false },
 				{ data: "targetDueDate", name: "TargetDueDate", responsivePriority: 1, title: '@Localizer["Target Due Date"]', searchable: false },
-				{ data: "primaryEndorser", name: "PrimaryEndorser", responsivePriority: 1, title: '@Localizer["Primary Endorser"]', searchable: true },
-				{ data: "primaryApprover", name: "PrimaryApprover", responsivePriority: 1, title: '@Localizer["Primary Approver"]', searchable: true },
-				{ data: "alternateEndorser", name: "AlternateEndorser", responsivePriority: 1, title: '@Localizer["Alternate Endorser"]', searchable: true },
-				{ data: "alternateApprover", name: "AlternateApprover", responsivePriority: 1, title: '@Localizer["Alternate Approver"]', searchable: true },
 				   
-				//{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: , searchable: false, orderable: false },
+				
                 {
                     data: null,
                     searchable: false,
@@ -123,13 +101,7 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteTaskList" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
                     </text>
                 }
-				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.Approve)).Succeeded)
-				{
-					<text>
-						url = '@Url.Page("/TaskList/Approve", new { area = "DSF" })' + '?id=' + row.id;
-						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
-					</text>
-				}  
+				  
                         return button;
                     },
                 },

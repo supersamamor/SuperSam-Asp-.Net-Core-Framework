@@ -7,19 +7,10 @@ public class ApplicationUser : IdentityUser
 {
     [PersonalData]
     public string? Name { get; set; }
-
     [PersonalData]
     public Entity? Entity { get; set; }
     public string? EntityId { get; set; }
 
-    [PersonalData]
-    public string? EmployeeCode { get; set; }
-    public string? Role { get; set; }
-    public string? EmployeeGradeSet { get; set; }
-
-    public string? CompanyId { get; set; }
-    public string? DepartmentId { get; set; }
-    
     public bool IsActive { get; set; } = false;
     public DateTime RegisteredDate { get; set; } = DateTime.UtcNow;
     public DateTime? LastUnsucccessfulLogin { get; set; }

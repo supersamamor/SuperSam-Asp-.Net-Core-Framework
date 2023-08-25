@@ -43,13 +43,12 @@ public class TeamController : BaseApiController<TeamController>
 
 public record TeamViewModel
 {
-    
-	public string? SectionCode { get;set; }
-	[Required]
+    [Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string SectionCode { get;set; } = "";
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? TeamCode { get;set; }
 	
-	public string TeamCode { get;set; } = "";
-	[Required]
-	
-	public string TeamName { get;set; } = "";
+	public string? TeamName { get;set; }
 	   
 }

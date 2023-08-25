@@ -43,18 +43,18 @@ public class AssignmentController : BaseApiController<AssignmentController>
 
 public record AssignmentViewModel
 {
-    
-	public string? AssignmentCode { get;set; }
-	
-	public string? TaskListCode { get;set; }
+    [Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string AssignmentCode { get;set; } = "";
 	[Required]
-	
-	public string PrimaryAsignee { get;set; } = "";
-	
-	public string? AlternateAsignee { get;set; }
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string TaskListId { get;set; } = "";
+	[StringLength(36, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? PrimaryAssignee { get;set; }
 	[Required]
-	public DateTime StartDate { get;set; } = DateTime.Now.Date;
-	[Required]
-	public DateTime EndDate { get;set; } = DateTime.Now.Date;
+	[StringLength(36, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string AlternateAssignee { get;set; } = "";
+	public DateTime? StartDate { get;set; } = DateTime.Now.Date;
+	public DateTime? EndDate { get;set; } = DateTime.Now.Date;
 	   
 }

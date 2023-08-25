@@ -32,7 +32,6 @@ public async Task<Validation<Error, TeamState>> Handle(AddTeamCommand request, C
 			async request => await Add(request, cancellationToken));
 	
 	
-	
 }
 
 public class AddTeamCommandValidator : AbstractValidator<AddTeamCommand>
@@ -45,8 +44,6 @@ public class AddTeamCommandValidator : AbstractValidator<AddTeamCommand>
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<TeamState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Team with id {PropertyValue} already exists");
-        RuleFor(x => x.TeamCode).MustAsync(async (teamCode, cancellation) => await _context.NotExists<TeamState>(x => x.TeamCode == teamCode, cancellationToken: cancellation)).WithMessage("Team with teamCode {PropertyValue} already exists");
-	RuleFor(x => x.TeamName).MustAsync(async (teamName, cancellation) => await _context.NotExists<TeamState>(x => x.TeamName == teamName, cancellationToken: cancellation)).WithMessage("Team with teamName {PropertyValue} already exists");
-	
+        
     }
 }

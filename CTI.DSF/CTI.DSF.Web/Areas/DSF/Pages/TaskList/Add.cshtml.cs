@@ -1,11 +1,8 @@
-using CTI.DSF.Application.Features.DSF.Holiday.Queries;
 using CTI.DSF.Application.Features.DSF.TaskList.Commands;
-using CTI.DSF.Application.Features.DSF.TaskList.Queries;
 using CTI.DSF.Web.Areas.DSF.Models;
 using CTI.DSF.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace CTI.DSF.Web.Areas.DSF.Pages.TaskList;
 
@@ -20,88 +17,70 @@ public class AddModel : BasePageModel<AddModel>
     public string? AsyncAction { get; set; }
     public IActionResult OnGet()
     {
-
+		
         return Page();
     }
 
     public async Task<IActionResult> OnPost()
     {
-
+		
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        if (TaskList.TaskClassification == Core.Constants.TaskClassifications.Recurring && TaskList.TaskDueDay == null)
-        {
-            NotyfService.Error(Localizer["Task due day is required."]);
-            return Page();
-        }
-        if (TaskList.TaskClassification == Core.Constants.TaskClassifications.Adhoc && TaskList.TargetDueDate == null)
-        {
-            NotyfService.Error(Localizer["Target Due Date is required."]);
-            return Page();
-        }
+		
         return await TryThenRedirectToPage(async () => await Mediatr.Send(Mapper.Map<AddTaskListCommand>(TaskList)), "Details", true);
-    }
-    public IActionResult OnPostChangeFormValue()
+    }	
+	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-        if (AsyncAction == "AddAssignment")
-        {
-            return AddAssignment();
-        }
-        if (AsyncAction == "RemoveAssignment")
-        {
-            return RemoveAssignment();
-        }
-		if (AsyncAction == "AddChildTask")
+		if (AsyncAction == "AddTaskApprover")
 		{
-			return AddChildTask();
+			return AddTaskApprover();
 		}
-		if (AsyncAction == "RemoveChildTask")
+		if (AsyncAction == "RemoveTaskApprover")
 		{
-			return RemoveChildTask();
+			return RemoveTaskApprover();
 		}
-        if (AsyncAction == "ChangeTargetDueDate")
-        {
-          
-        }
+		if (AsyncAction == "AddTaskTag")
+		{
+			return AddTaskTag();
+		}
+		if (AsyncAction == "RemoveTaskTag")
+		{
+			return RemoveTaskTag();
+		}
+		
+		
         return Partial("_InputFieldsPartial", TaskList);
     }
+	
+	private IActionResult AddTaskApprover()
+	{
+		ModelState.Clear();
+		if (TaskList!.TaskApproverList == null) { TaskList!.TaskApproverList = new List<TaskApproverViewModel>(); }
+		TaskList!.TaskApproverList!.Add(new TaskApproverViewModel() { TaskListId = TaskList.Id });
+		return Partial("_InputFieldsPartial", TaskList);
+	}
+	private IActionResult RemoveTaskApprover()
+	{
+		ModelState.Clear();
+		TaskList.TaskApproverList = TaskList!.TaskApproverList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		return Partial("_InputFieldsPartial", TaskList);
+	}
 
-    private IActionResult AddAssignment()
-    {
-        ModelState.Clear();
-        if (TaskList!.AssignmentList == null) { TaskList!.AssignmentList = new List<AssignmentViewModel>(); }
-        TaskList!.AssignmentList!.Add(new AssignmentViewModel() { TaskListCode = TaskList.Id });
-        return Partial("_InputFieldsPartial", TaskList);
-    }
-    private IActionResult RemoveAssignment()
-    {
-        ModelState.Clear();
-        TaskList.AssignmentList = TaskList!.AssignmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-        return Partial("_InputFieldsPartial", TaskList);
-    }
-	private IActionResult AddChildTask()
+	private IActionResult AddTaskTag()
 	{
 		ModelState.Clear();
-		if (TaskList!.ChildTaskList == null) { TaskList!.ChildTaskList = new List<TaskListViewModel>(); }
-		TaskList!.ChildTaskList!.Add(new TaskListViewModel() { ParentTaskId = TaskList.Id, IsMilestone = true });
+		if (TaskList!.TaskTagList == null) { TaskList!.TaskTagList = new List<TaskTagViewModel>(); }
+		TaskList!.TaskTagList!.Add(new TaskTagViewModel() { TaskListId = TaskList.Id });
 		return Partial("_InputFieldsPartial", TaskList);
 	}
-	private IActionResult RemoveChildTask()
+	private IActionResult RemoveTaskTag()
 	{
 		ModelState.Clear();
-		TaskList.ChildTaskList = TaskList!.ChildTaskList!.Where(l => l.Id != RemoveSubDetailId).ToList();
+		TaskList.TaskTagList = TaskList!.TaskTagList!.Where(l => l.Id != RemoveSubDetailId).ToList();
 		return Partial("_InputFieldsPartial", TaskList);
 	}
-    private async Task<IActionResult> ChangeTargetDueDate()
-    {
-        ModelState.Clear();
-        if (TaskList.TargetDueDate != null)
-        {
-          
-        }
-        return Partial("_InputFieldsPartial", TaskList);
-    }
+	
 }

@@ -8,21 +8,20 @@ namespace CTI.DSF.Web.Areas.DSF.Models;
 public record DeliveryViewModel : BaseViewModel
 {	
 	[Display(Name = "Delivery Code")]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? DeliveryCode { get; init; }
+	[Display(Name = "Assignment Id")]
 	[Required]
-	public string DeliveryCode { get; init; } = "";
-
-	public string? ForeignKeyAssignment { get; set; }
-
-    [Display(Name = "Assignment Code")]
-    [Required]
-    public string AssignmentCode { get; init; } = "";
-
-    [Display(Name = "Task Description")]
-    [Required]
-    public string? TaskDescription { get; init; }
-
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string AssignmentId { get; init; } = "";
+	public string?  ReferenceFieldAssignmentId { get; set; }
 	[Display(Name = "Due Date")]
-	public DateTime? DueDate { get; init; } = DateTime.Now.Date;
+	[Required]
+	public DateTime DueDate { get; init; } = DateTime.Now.Date;
+	[Display(Name = "Status")]
+	[Required]
+	
+	public string Status { get; init; } = "";
 	[Display(Name = "Delivery Attachment")]
 	[Required]
 	
@@ -34,16 +33,14 @@ public record DeliveryViewModel : BaseViewModel
 			return this.DeliveryAttachmentForm?.FileName == null ? this.DeliveryAttachment : "\\" + WebConstants.Delivery + "\\" + this.Id + "\\" + nameof(this.DeliveryAttachment) + "\\" + this.DeliveryAttachmentForm!.FileName;
 		}
 	}
-	[Display(Name = "Status")]
+	[Display(Name = "Remarks")]
+	[Required]
 	
-	public string? Status { get; init; }
-
-    [Display(Name = "Remarks")]
-
-    public string? Remarks { get; init; }
-
-	[Display(Name = "Sub Tak")]
-	public string? SubTask { get; init; }
+	public string Remarks { get; init; } = "";
+	[Display(Name = "Holiday Tag")]
+	[Required]
+	
+	public string HolidayTag { get; init; } = "";
 	
 	public DateTime LastModifiedDate { get; set; }
 	public AssignmentViewModel? Assignment { get; init; }

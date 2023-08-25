@@ -2,36 +2,35 @@
 @model DeliveryViewModel
 
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
-@*
-<div class="col">
+    <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.DeliveryCode" class="form-label fieldrequired"><strong>@Localizer["Delivery Code"] :</strong></label>
-			<input asp-for="@Model.DeliveryCode" class="form-control"   readonly/>
+		<label asp-for="@Model.DeliveryCode" class="form-label "><strong>@Localizer["Delivery Code"] :</strong></label>
+			<input asp-for="@Model.DeliveryCode" class="form-control" maxlength="450" />
 			<span asp-validation-for="@Model.DeliveryCode" class="text-danger"></span>
 			
 	</div>
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.AssignmentCode" class="form-label fieldrequired"><strong>@Localizer["Assignment Code"] :</strong></label>
-			<input asp-for="@Model.AssignmentCode" class="form-control"   readonly/>
-			<span asp-validation-for="@Model.AssignmentCode" class="text-danger"></span>
+		<label asp-for="@Model.AssignmentId" class="form-label fieldrequired"><strong>@Localizer["Assignment Id"] :</strong></label>
+			<select asp-for="@Model.AssignmentId" class="form-control" asp-items="@(dropdownService.GetAssignmentList(Model.AssignmentId))"><option value="">- Select Assignment Id -</option></select>
+			<span asp-validation-for="@Model.AssignmentId" class="text-danger"></span>
 			
 	</div>
-</div>*@
-	<div class="col">
-		<div class="mb-3">
-			<label asp-for="@Model.TaskDescription" class="form-label "><strong>@Localizer["Task Description"] :</strong></label>
-			<input asp-for="@Model.TaskDescription" class="form-control" readonly />
-			<span asp-validation-for="@Model.TaskDescription" class="text-danger"></span>
-
-		</div>
-	</div>
+</div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.DueDate" class="form-label "><strong>@Localizer["Due Date"] :</strong></label>
-			<input asp-for="@Model.DueDate" class="form-control"   readonly/>
+		<label asp-for="@Model.DueDate" class="form-label fieldrequired"><strong>@Localizer["Due Date"] :</strong></label>
+			<input asp-for="@Model.DueDate" class="form-control"  />
 			<span asp-validation-for="@Model.DueDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Status" class="form-label fieldrequired"><strong>@Localizer["Status"] :</strong></label>
+			<input asp-for="@Model.Status" class="form-control"  />
+			<span asp-validation-for="@Model.Status" class="text-danger"></span>
 			
 	</div>
 </div>
@@ -45,19 +44,19 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.Status" class="form-label "><strong>@Localizer["Status"] :</strong></label>
-			<input asp-for="@Model.Status" class="form-control" readonly />
-			<span asp-validation-for="@Model.Status" class="text-danger"></span>
+		<label asp-for="@Model.Remarks" class="form-label fieldrequired"><strong>@Localizer["Remarks"] :</strong></label>
+			<input asp-for="@Model.Remarks" class="form-control"  />
+			<span asp-validation-for="@Model.Remarks" class="text-danger"></span>
 			
 	</div>
 </div>
-	<div class="col">
-		<div class="mb-3">
-			<label asp-for="@Model.Remarks" class="form-label "><strong>@Localizer["Remarks"] :</strong></label>
-			<input asp-for="@Model.Remarks" class="form-control" readonly />
-			<span asp-validation-for="@Model.Remarks" class="text-danger"></span>
-
-		</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.HolidayTag" class="form-label fieldrequired"><strong>@Localizer["Holiday Tag"] :</strong></label>
+			<input asp-for="@Model.HolidayTag" class="form-control"  />
+			<span asp-validation-for="@Model.HolidayTag" class="text-danger"></span>
+			
 	</div>
+</div>
 
 </div>

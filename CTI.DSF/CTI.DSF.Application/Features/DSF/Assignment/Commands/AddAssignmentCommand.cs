@@ -32,7 +32,6 @@ public async Task<Validation<Error, AssignmentState>> Handle(AddAssignmentComman
 			async request => await Add(request, cancellationToken));
 	
 	
-	
 }
 
 public class AddAssignmentCommandValidator : AbstractValidator<AddAssignmentCommand>
@@ -45,7 +44,6 @@ public class AddAssignmentCommandValidator : AbstractValidator<AddAssignmentComm
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<AssignmentState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Assignment with id {PropertyValue} already exists");
-        RuleFor(x => x.AssignmentCode).MustAsync(async (assignmentCode, cancellation) => await _context.NotExists<AssignmentState>(x => x.AssignmentCode == assignmentCode, cancellationToken: cancellation)).WithMessage("Assignment with assignmentCode {PropertyValue} already exists");
-	
+        
     }
 }

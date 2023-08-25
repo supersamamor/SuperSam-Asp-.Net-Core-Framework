@@ -1,9 +1,9 @@
+using CTI.DSF.Web.Areas.Admin.Models;
 using CTI.DSF.Web.Areas.Admin.Queries.Users;
 using CTI.DSF.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace CTI.DSF.Web.Areas.Admin.Pages.Users;
 
@@ -33,15 +33,4 @@ public class IndexModel : BasePageModel<IndexModel>
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     }
-}
-
-public record UserViewModel
-{
-    public string? Id { get; set; } = Guid.NewGuid().ToString();
-    [Display(Name = "Name")]
-    public string? Name { get; set; }
-    [Display(Name = "Email")]
-    public string? Email { get; set; }
-    [Display(Name = "Status")]
-    public bool IsActive { get; set; } = false;
 }

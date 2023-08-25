@@ -43,13 +43,12 @@ public class SectionController : BaseApiController<SectionController>
 
 public record SectionViewModel
 {
-    
-	public string? DepartmentCode { get;set; }
-	[Required]
+    [Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string DepartmentCode { get;set; } = "";
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? SectionCode { get;set; }
 	
-	public string SectionCode { get;set; } = "";
-	[Required]
-	
-	public string SectionName { get;set; } = "";
+	public string? SectionName { get;set; }
 	   
 }

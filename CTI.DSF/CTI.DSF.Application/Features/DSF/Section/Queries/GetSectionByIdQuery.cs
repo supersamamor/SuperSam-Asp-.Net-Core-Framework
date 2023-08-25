@@ -18,7 +18,6 @@ public class GetSectionByIdQueryHandler : BaseQueryByIdHandler<ApplicationContex
 	public override async Task<Option<SectionState>> Handle(GetSectionByIdQuery request, CancellationToken cancellationToken = default)
 	{
 		return await Context.Section.Include(l=>l.Department)
-			.Include(l=>l.TeamList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

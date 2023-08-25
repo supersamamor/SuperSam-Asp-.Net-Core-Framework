@@ -43,11 +43,9 @@ public class CompanyController : BaseApiController<CompanyController>
 
 public record CompanyViewModel
 {
-    [Required]
-	
-	public string CompanyCode { get;set; } = "";
-	[Required]
-	
-	public string CompanyName { get;set; } = "";
+    [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? CompanyCode { get;set; }
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? CompanyName { get;set; }
 	   
 }

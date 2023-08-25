@@ -26,30 +26,10 @@ public class AddCompanyCommandHandler : BaseCommandHandler<ApplicationContext, C
 		_identityContext = identityContext;
     }
 
-    public async Task<Validation<Error, CompanyState>> Handle(AddCompanyCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, CompanyState>> Handle(AddCompanyCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await AddCompany(request, cancellationToken));
-
-
-	public async Task<Validation<Error, CompanyState>> AddCompany(AddCompanyCommand request, CancellationToken cancellationToken)
-	{
-		CompanyState entity = Mapper.Map<CompanyState>(request);
-		UpdateDepartmentList(entity);
-		_ = await Context.AddAsync(entity, cancellationToken);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, CompanyState>(entity);
-	}
-	
-	private void UpdateDepartmentList(CompanyState entity)
-	{
-		if (entity.DepartmentList?.Count > 0)
-		{
-			foreach (var department in entity.DepartmentList!)
-			{
-				Context.Entry(department).State = EntityState.Added;
-			}
-		}
-	}
+			async request => await Add(request, cancellationToken));
 	
 	
 }

@@ -17,7 +17,7 @@ public static class DefaultUser
         {
             UserName = "system@admin",
             Email = "system@admin",
-            Name = "System Admin",
+            Name = "System Admin",         
             EntityId = entity.Id,
             IsActive = true,
             EmailConfirmed = true,

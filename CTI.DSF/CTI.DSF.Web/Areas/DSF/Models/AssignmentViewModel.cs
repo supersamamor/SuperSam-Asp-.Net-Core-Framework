@@ -8,28 +8,29 @@ namespace CTI.DSF.Web.Areas.DSF.Models;
 public record AssignmentViewModel : BaseViewModel
 {	
 	[Display(Name = "Assignment Code")]
-	
-	public string? AssignmentCode { get; init; }
-	[Display(Name = "Task List Code")]
-	
-	public string? TaskListCode { get; init; }
-	public string?  ForeignKeyTaskList { get; set; }
+	[Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string AssignmentCode { get; init; } = "";
+	[Display(Name = "Task List Id")]
+	[Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string TaskListId { get; init; } = "";
+	public string?  ReferenceFieldTaskListId { get; set; }
 	[Display(Name = "Primary Assignee")]
-	[Required]
-	
-	public string PrimaryAsignee { get; init; } = "";
+	[StringLength(36, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? PrimaryAssignee { get; init; }
 	[Display(Name = "Alternate Assignee")]
-	
-	public string? AlternateAsignee { get; init; }
+	[Required]
+	[StringLength(36, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string AlternateAssignee { get; init; } = "";
 	[Display(Name = "Start Date")]
-	[Required]
-	public DateTime StartDate { get; init; } = DateTime.Now.Date;
+	public DateTime? StartDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "End Date")]
-	[Required]
-	public DateTime EndDate { get; init; } = DateTime.Now.Date;
+	public DateTime? EndDate { get; init; } = DateTime.Now.Date;
 	
 	public DateTime LastModifiedDate { get; set; }
 	public TaskListViewModel? TaskList { get; init; }
 		
+	public IList<DeliveryViewModel>? DeliveryList { get; set; }
 	
 }

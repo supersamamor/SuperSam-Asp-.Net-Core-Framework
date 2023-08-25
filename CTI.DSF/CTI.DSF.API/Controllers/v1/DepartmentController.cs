@@ -43,13 +43,12 @@ public class DepartmentController : BaseApiController<DepartmentController>
 
 public record DepartmentViewModel
 {
-    
-	public string? CompanyCode { get;set; }
-	[Required]
+    [Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string CompanyCode { get;set; } = "";
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? DepartmentCode { get;set; }
 	
-	public string DepartmentCode { get;set; } = "";
-	[Required]
-	
-	public string DepartmentName { get;set; } = "";
+	public string? DepartmentName { get;set; }
 	   
 }

@@ -43,18 +43,23 @@ public class DeliveryController : BaseApiController<DeliveryController>
 
 public record DeliveryViewModel
 {
-    [Required]
-	
-	public string DeliveryCode { get;set; } = "";
-	
-	public string? AssignmentId { get;set; }
+    [StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? DeliveryCode { get;set; }
+	[Required]
+	[StringLength(450, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string AssignmentId { get;set; } = "";
+	[Required]
+	public DateTime DueDate { get;set; } = DateTime.Now.Date;
 	[Required]
 	
-	public string AssignmentCode { get;set; } = "";
-	public DateTime? DueDate { get;set; } = DateTime.Now.Date;
+	public string Status { get;set; } = "";
 	[Required]
 	public string? DeliveryAttachment { get;set; } = "";
+	[Required]
 	
-	public string? Status { get;set; }
+	public string Remarks { get;set; } = "";
+	[Required]
+	
+	public string HolidayTag { get;set; } = "";
 	   
 }

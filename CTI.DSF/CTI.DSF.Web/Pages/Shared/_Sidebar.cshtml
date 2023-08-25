@@ -111,74 +111,6 @@
             }
             <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "DSF")">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-cogs nav-icon"></i>
-                    <span>
-                            @Localizer["Company Setup"]
-                        <i class="right fas level-one-nav-icon fa-angle-left"></i>
-                    </span>
-                </a>
-                <ul class="nav nav-treeview">
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Company.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/DSF/Company" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Company")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Company"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Department.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/DSF/Department" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Department")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Department"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Holiday.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/DSF/Holiday" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Holiday")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Holiday"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-                  @*  @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Section.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/DSF/Section" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Section")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Section"]
-                                </span>
-                            </a>
-                        </li>
-                    }
-
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Team.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/DSF/Team" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Team")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Team"]
-                                </span>
-                            </a>
-                        </li>
-                    }*@
-                </ul>
-            </li>
-            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "DSF")">
-                <a href="#" class="nav-link">
                     <i class="fas fa-list-alt nav-icon"></i>
                     <span>
                         @Localizer["Delivery Submission Facility"]
@@ -186,41 +118,105 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.View)).Succeeded)
+                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.Company.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Company" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Company")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Company"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Department.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Department" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Department")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Department"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Section.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Section" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Section")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Section"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Team.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Team" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Team")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Team"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Holiday.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Holiday" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Holiday")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Holiday"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Tags.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Tags" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Tags")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Tags"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.View)).Succeeded)
 						{
 							<li class="nav-item">
 								<a href = "/DSF/TaskList" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "TaskList")">
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
-										@Localizer["Task List"]
+										@Localizer["Task"]
 									</span>
 								</a>
 							</li>
 						}
-
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.View)).Succeeded)
-                        {
-                            <li class="nav-item">
-                                <a href="/DSF/Assignment" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Assignment")">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <span>
-                                        @Localizer["Assignment List"]
-                                    </span>
-                                </a>
-                            </li>
-                        }
-
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.View)).Succeeded)
-                        {
-                            <li class="nav-item">
-                                <a href="/DSF/Delivery" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Delivery")">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <span>
-                                        @Localizer["Submission List"]
-                                    </span>
-                                </a>
-                            </li>
-                        }
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Assignment" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Assignment")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Assignment"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/DSF/Delivery" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Delivery")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Submission"]
+									</span>
+								</a>
+							</li>
+						}
 						
                 </ul>
             </li>

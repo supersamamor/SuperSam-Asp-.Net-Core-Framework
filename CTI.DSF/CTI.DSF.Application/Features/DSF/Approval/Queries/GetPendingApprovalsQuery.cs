@@ -46,9 +46,9 @@ public class GetPendingApprovalsQueryHandler : IRequestHandler<GetPendingApprova
     private static string? GetRecordName(ApplicationContext context, string? tableName, string? dataId)
     {
         string? recordName = "";
-		if(tableName == ApprovalModule.TaskList)
+		if(tableName == ApprovalModule.Delivery)
 		{
-			recordName = context.TaskList.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.TaskListCode;
+			recordName = context.Delivery.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.Id;
 		}
 		        
         return recordName;

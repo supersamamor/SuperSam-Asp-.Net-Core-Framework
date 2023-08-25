@@ -96,18 +96,6 @@ public static class ServiceCollectionExtensions
             factory.Create(typeof(SharedResource));
         });
 
-    public static IServiceCollection AddQuartz(this IServiceCollection services)
-    {
-        services.AddQuartz(options =>
-        {
-            options.UseMicrosoftDependencyInjectionJobFactory();
-            options.UseSimpleTypeLoader();
-            options.UseInMemoryStore();
-        });
-        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-        return services;
-    }
-
     public static IServiceCollection ConfigureAuthorization(this IServiceCollection services)
     {
         services.AddAuthorization(options =>

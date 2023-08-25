@@ -32,11 +32,11 @@ public class IndexModel : BasePageModel<IndexModel>
             {
                 e.Id,
                 e.AssignmentCode,
-				TaskListCode = e.TaskList?.TaskListCode,
-				e.PrimaryAsignee,
-				e.AlternateAsignee,
-				StartDate = e.StartDate.ToString("MMM dd, yyyy HH:mm"),
-				EndDate = e.EndDate.ToString("MMM dd, yyyy HH:mm"),
+				TaskListId = e.TaskList?.Id,
+				e.PrimaryAssignee,
+				e.AlternateAssignee,
+				StartDate = e.StartDate?.ToString("MMM dd, yyyy HH:mm"),
+				EndDate = e.EndDate?.ToString("MMM dd, yyyy HH:mm"),
 						
 				
                 e.LastModifiedDate
@@ -46,7 +46,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetAssignmentQuery>(nameof(AssignmentState.AssignmentCode)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.AssignmentCode }));
+        var result = await Mediatr.Send(request.ToQuery<GetAssignmentQuery>(nameof(AssignmentState.Id)));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
     }
 }

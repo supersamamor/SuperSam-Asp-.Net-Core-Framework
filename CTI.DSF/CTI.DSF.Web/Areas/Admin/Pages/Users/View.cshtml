@@ -1,95 +1,52 @@
 @page
 @model ViewModel
 @section Styles {
-<partial name="_DataTableStyles" />
+    <partial name="_DataTableStyles" />
 }
 @{
     ViewData["Title"] = Localizer["View User"];
     ViewData["ActiveMainPage"] = "Users";
     ViewData["Level1"] = "Admin";
 }
-<div class="card">
-    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["User Info"]</span><br></h5>
-    <div class="card-body">
-        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="@Model.UserDetails.Id" class="form-label"><strong>Id :</strong></label>
-                    <input asp-for="@Model.UserDetails.Id" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="@Model.UserDetails.Email" class="form-label"><strong>Email :</strong></label>
-                    <input asp-for="@Model.UserDetails.Email" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="@Model.UserDetails.Name" class="form-label"><strong>Full Name :</strong></label>
-                    <input asp-for="@Model.UserDetails.Name" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="@Model.UserDetails.Entity" class="form-label"><strong>Entity :</strong></label>
-                    <input asp-for="@Model.UserDetails.Entity" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="@Model.UserDetails.IsActive" class="form-label" style="margin-right:10px;"><strong>Status :</strong></label>
-                    @if (Model.UserDetails.IsActive)
-                    {
-                        <span class="badge bg-success text-light">@Localizer["Active"]</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-danger text-light">@Localizer["Deactivated"]</span>
-                    }
-                </div>
-            </div>
-        </div>
+<div class="container-fluid" id="user-container">
+    <input type="hidden" asp-for="@Model.UserModel!.Id" name="Id" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.UserModel" />
     </div>
 </div>
-<br />
-<div class="card">
-    <h5 class="card-header"><span style="background-color: var(--bs-card-cap-bg);">@Localizer["Roles"]</span><br></h5>
-    <div class="card-body" style="overflow-x:scroll;">
-        <partial name="_ViewRoles" model="Model.Roles" />
-    </div>
-</div>
-<div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
+
+<div id="toolbar-container" class="btn-group" role="group">
     <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.Create)).Succeeded)
     {
-        <a asp-page="Add" class="btn btn-success" title="@Localizer["Add"]" style="color:#fff;"><i class="fas fa-plus"></i></a>
+        <a asp-page="Add" class="btn btn-success text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
     }
     @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.Edit)).Succeeded)
     {
-        <a asp-page="Edit" asp-route-id="@Model.UserDetails.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+        <a asp-page="Edit" asp-route-id="@Model.UserModel.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
     }
 </div>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-<partial name="_DataTableScripts" />
-<script asp-add-nonce>
-    $(document).ready(function () {
-        var roles = $("#roles").DataTable({
-            select: false,
-            searching: true,
-            paging: true,
-            info: true,
-            buttons: [],
-            columnDefs: [
-                {
-                    targets: [1],
-                    orderDataType: 'dom-checkbox',
-                }
-            ]
+    <partial name="_DataTableScripts" />
+    <partial name="_DisableFieldsPartial" model="@("user-container")" />
+    <script asp-add-nonce>
+        $(document).ready(function () {
+            var roles = $("#roles").DataTable({
+                select: false,
+                searching: true,
+                paging: true,
+                info: true,
+                buttons: [],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        orderDataType: 'dom-checkbox',
+                    }
+                ]
+            });
         });
-    });
-</script>
+    </script>
 }

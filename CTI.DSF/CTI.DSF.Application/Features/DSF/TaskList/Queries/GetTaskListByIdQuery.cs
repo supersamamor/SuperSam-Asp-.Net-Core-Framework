@@ -17,10 +17,10 @@ public class GetTaskListByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	
 	public override async Task<Option<TaskListState>> Handle(GetTaskListByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.TaskList
-			.Include(l=>l.AssignmentList)
-            .Include(l => l.ChildTaskList)
-            .Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+		return await Context.TaskList.Include(l=>l.Department).Include(l=>l.Team).Include(l=>l.Section).Include(l=>l.Company)
+			.Include(l=>l.TaskApproverList)
+			.Include(l=>l.TaskTagList)
+			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	
 }

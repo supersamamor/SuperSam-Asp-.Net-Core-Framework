@@ -76,7 +76,7 @@ namespace CTI.DSF.Scheduler.Jobs
                     }
                 }
                 _context.Update(item);
-                await _context.SaveChangesAsync();
+                await _context.UpdateRecordFromJobsAsync();
             }
         }
         private async Task SendApprovalNotification(ApprovalRecordState approvalRecord, ApplicationUser user)
@@ -98,7 +98,7 @@ namespace CTI.DSF.Scheduler.Jobs
         {
             if (message.Contains(EmailContentPlaceHolder.ApprovalUrl))
             {
-                message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/DSF/{approvalRecord!.ApproverSetup!.TableName}/Approve?Id={approvalRecord.DataId}");
+				message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/DSF/{Core.Helpers.ConstantHelper.GetPropertyNameByValue(typeof(ApprovalModule), approvalRecord!.ApproverSetup!.TableName)}/Approve?Id={approvalRecord.DataId}");
             }
             return message;
         }

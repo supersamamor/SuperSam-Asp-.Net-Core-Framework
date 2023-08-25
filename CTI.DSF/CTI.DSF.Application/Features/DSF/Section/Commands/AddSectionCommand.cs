@@ -26,30 +26,10 @@ public class AddSectionCommandHandler : BaseCommandHandler<ApplicationContext, S
 		_identityContext = identityContext;
     }
 
-    public async Task<Validation<Error, SectionState>> Handle(AddSectionCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, SectionState>> Handle(AddSectionCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await AddSection(request, cancellationToken));
-
-
-	public async Task<Validation<Error, SectionState>> AddSection(AddSectionCommand request, CancellationToken cancellationToken)
-	{
-		SectionState entity = Mapper.Map<SectionState>(request);
-		UpdateTeamList(entity);
-		_ = await Context.AddAsync(entity, cancellationToken);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, SectionState>(entity);
-	}
-	
-	private void UpdateTeamList(SectionState entity)
-	{
-		if (entity.TeamList?.Count > 0)
-		{
-			foreach (var team in entity.TeamList!)
-			{
-				Context.Entry(team).State = EntityState.Added;
-			}
-		}
-	}
+			async request => await Add(request, cancellationToken));
 	
 	
 }
@@ -64,7 +44,6 @@ public class AddSectionCommandValidator : AbstractValidator<AddSectionCommand>
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<SectionState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Section with id {PropertyValue} already exists");
-        RuleFor(x => x.SectionCode).MustAsync(async (sectionCode, cancellation) => await _context.NotExists<SectionState>(x => x.SectionCode == sectionCode, cancellationToken: cancellation)).WithMessage("Section with sectionCode {PropertyValue} already exists");
-	
+        
     }
 }

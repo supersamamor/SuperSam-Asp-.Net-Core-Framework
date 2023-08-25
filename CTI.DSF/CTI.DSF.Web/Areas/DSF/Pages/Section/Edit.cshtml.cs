@@ -37,31 +37,8 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddTeam")
-		{
-			return AddTeam();
-		}
-		if (AsyncAction == "RemoveTeam")
-		{
-			return RemoveTeam();
-		}
-		
 		
         return Partial("_InputFieldsPartial", Section);
     }
-	
-	private IActionResult AddTeam()
-	{
-		ModelState.Clear();
-		if (Section!.TeamList == null) { Section!.TeamList = new List<TeamViewModel>(); }
-		Section!.TeamList!.Add(new TeamViewModel() { SectionCode = Section.Id });
-		return Partial("_InputFieldsPartial", Section);
-	}
-	private IActionResult RemoveTeam()
-	{
-		ModelState.Clear();
-		Section.TeamList = Section!.TeamList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Section);
-	}
 	
 }

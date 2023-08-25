@@ -34,31 +34,8 @@ public class AddModel : BasePageModel<AddModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddDepartment")
-		{
-			return AddDepartment();
-		}
-		if (AsyncAction == "RemoveDepartment")
-		{
-			return RemoveDepartment();
-		}
-		
 		
         return Partial("_InputFieldsPartial", Company);
     }
-	
-	private IActionResult AddDepartment()
-	{
-		ModelState.Clear();
-		if (Company!.DepartmentList == null) { Company!.DepartmentList = new List<DepartmentViewModel>(); }
-		Company!.DepartmentList!.Add(new DepartmentViewModel() { CompanyCode = Company.Id });
-		return Partial("_InputFieldsPartial", Company);
-	}
-	private IActionResult RemoveDepartment()
-	{
-		ModelState.Clear();
-		Company.DepartmentList = Company!.DepartmentList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Company);
-	}
 	
 }

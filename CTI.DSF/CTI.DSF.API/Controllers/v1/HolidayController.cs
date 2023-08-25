@@ -43,10 +43,8 @@ public class HolidayController : BaseApiController<HolidayController>
 
 public record HolidayViewModel
 {
-    [Required]
+    public DateTime? HolidayDate { get;set; } = DateTime.Now.Date;
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string HolidayName { get;set; } = "";
-	[Required]
-	public DateTime HolidayDate { get;set; } = DateTime.Now.Date;
+	public string? HolidayName { get;set; }
 	   
 }

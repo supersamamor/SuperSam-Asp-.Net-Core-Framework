@@ -1,7 +1,7 @@
 @page
 @model AddModel
 @{
-    ViewData["Title"] = Localizer["Add Delivery Submission"];
+    ViewData["Title"] = Localizer["Add Submission"];
     ViewData["ActiveMainPage"] = "Delivery";
     ViewData["Level1"] = "DSF";
 }
@@ -35,6 +35,18 @@
 				window.focus();
 			});
 			
+			$.fn.assignmentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Assignment/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#AssignmentId").assignmentSelect();
+
 		}	
 		InitializeForm();
     });

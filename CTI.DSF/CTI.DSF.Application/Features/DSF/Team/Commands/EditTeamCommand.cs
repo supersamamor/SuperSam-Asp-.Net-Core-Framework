@@ -40,8 +40,6 @@ public class EditTeamCommandValidator : AbstractValidator<EditTeamCommand>
         _context = context;
 		RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<TeamState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Team with id {PropertyValue} does not exists");
-        RuleFor(x => x.TeamCode).MustAsync(async (request, teamCode, cancellation) => await _context.NotExists<TeamState>(x => x.TeamCode == teamCode && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("Team with teamCode {PropertyValue} already exists");
-	RuleFor(x => x.TeamName).MustAsync(async (request, teamName, cancellation) => await _context.NotExists<TeamState>(x => x.TeamName == teamName && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("Team with teamName {PropertyValue} already exists");
-	
+        
     }
 }

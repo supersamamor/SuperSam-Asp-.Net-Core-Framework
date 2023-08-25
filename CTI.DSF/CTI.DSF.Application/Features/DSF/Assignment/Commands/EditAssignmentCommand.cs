@@ -40,7 +40,6 @@ public class EditAssignmentCommandValidator : AbstractValidator<EditAssignmentCo
         _context = context;
 		RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<AssignmentState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Assignment with id {PropertyValue} does not exists");
-        RuleFor(x => x.AssignmentCode).MustAsync(async (request, assignmentCode, cancellation) => await _context.NotExists<AssignmentState>(x => x.AssignmentCode == assignmentCode && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("Assignment with assignmentCode {PropertyValue} already exists");
-	
+        
     }
 }

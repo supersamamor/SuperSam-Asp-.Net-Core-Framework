@@ -7,13 +7,11 @@ namespace CTI.DSF.Web.Areas.DSF.Models;
 
 public record HolidayViewModel : BaseViewModel
 {	
-	[Display(Name = "Holiday")]
-	[Required]
+	[Display(Name = "Holiday Date")]
+	public DateTime? HolidayDate { get; init; } = DateTime.Now.Date;
+	[Display(Name = "Holiday Name")]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string HolidayName { get; init; } = "";
-	[Display(Name = "Date")]
-	[Required]
-	public DateTime HolidayDate { get; init; } = DateTime.Now.Date;
+	public string? HolidayName { get; init; }
 	
 	public DateTime LastModifiedDate { get; set; }
 		

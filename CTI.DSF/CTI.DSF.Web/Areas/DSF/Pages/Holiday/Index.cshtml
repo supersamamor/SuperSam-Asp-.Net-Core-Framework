@@ -17,10 +17,10 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["Holiday"]
+								@Localizer["Holiday Date"]
 							</th>
 							<th>
-								@Localizer["Date"]
+								@Localizer["Holiday Name"]
 							</th>
 							  
 														
@@ -58,8 +58,8 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "holidayName", name: "HolidayName", responsivePriority: 1, title: '@Localizer["Holiday"]', searchable: true },
-				{ data: "holidayDate", name: "HolidayDate", responsivePriority: 1, title: '@Localizer["Date"]', searchable: false },
+                { data: "holidayDate", name: "HolidayDate", responsivePriority: 1, title: '@Localizer["Holiday Date"]', searchable: false },
+				{ data: "holidayName", name: "HolidayName", responsivePriority: 1, title: '@Localizer["Holiday Name"]', searchable: true },
 				   
 				
                 {

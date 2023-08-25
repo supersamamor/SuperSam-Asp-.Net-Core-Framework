@@ -40,6 +40,7 @@ public class EditHolidayCommandValidator : AbstractValidator<EditHolidayCommand>
         _context = context;
 		RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.Exists<HolidayState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Holiday with id {PropertyValue} does not exists");
-        
+        RuleFor(x => x.HolidayName).MustAsync(async (request, holidayName, cancellation) => await _context.NotExists<HolidayState>(x => x.HolidayName == holidayName && x.Id != request.Id, cancellationToken: cancellation)).WithMessage("Holiday with holidayName {PropertyValue} already exists");
+	
     }
 }

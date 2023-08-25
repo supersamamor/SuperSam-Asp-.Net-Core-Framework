@@ -62,7 +62,7 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("PrimaryKey");
 
-                    b.ToTable("AuditLogs", (string)null);
+                    b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApprovalRecordState", b =>
@@ -76,7 +76,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -87,10 +88,12 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -104,11 +107,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ApproverSetupId");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("DataId");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
 
                     b.HasIndex("Status");
 
-                    b.ToTable("ApprovalRecord", (string)null);
+                    b.ToTable("ApprovalRecord");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApprovalState", b =>
@@ -129,7 +140,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -147,10 +159,12 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -172,11 +186,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("ApproverUserId");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("EmailSendingStatus");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Approval", (string)null);
+                    b.ToTable("Approval");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApproverAssignmentState", b =>
@@ -201,16 +223,19 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -220,11 +245,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ApproverSetupId", "ApproverUserId", "ApproverRoleId")
                         .IsUnique()
                         .HasFilter("[ApproverUserId] IS NOT NULL AND [ApproverRoleId] IS NOT NULL");
 
-                    b.ToTable("ApproverAssignment", (string)null);
+                    b.ToTable("ApproverAssignment");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApproverSetupState", b =>
@@ -242,7 +275,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -257,10 +291,12 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -278,11 +314,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("WorkflowName", "ApprovalSetupType", "TableName", "Entity")
                         .IsUnique()
                         .HasFilter("[WorkflowName] IS NOT NULL AND [TableName] IS NOT NULL AND [Entity] IS NOT NULL");
 
-                    b.ToTable("ApproverSetup", (string)null);
+                    b.ToTable("ApproverSetup");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.AssignmentState", b =>
@@ -290,56 +334,61 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AlternateAsignee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("AlternateAssignee")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("AssignmentCode")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PrimaryAsignee")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("PrimaryAssignee")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TaskListCode")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TaskListId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignmentCode")
-                        .IsUnique()
-                        .HasFilter("[AssignmentCode] IS NOT NULL");
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
 
                     b.HasIndex("LastModifiedDate");
 
                     b.HasIndex("TaskListId");
 
-                    b.ToTable("Assignment", (string)null);
+                    b.ToTable("Assignment");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.CompanyState", b =>
@@ -348,24 +397,27 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyCode")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyName")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -373,16 +425,22 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyCode")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CompanyCode] IS NOT NULL");
 
                     b.HasIndex("CompanyName")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CompanyName] IS NOT NULL");
+
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("Entity");
 
+                    b.HasIndex("LastModifiedBy");
+
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.DeliveryState", b =>
@@ -390,15 +448,13 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AssignmentCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AssignmentId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -407,42 +463,48 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeliveryCode")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("DueDate")
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("HolidayTag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Remarks")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaskDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssignmentId");
 
-                    b.HasIndex("DeliveryCode")
-                        .IsUnique();
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("Entity");
 
+                    b.HasIndex("LastModifiedBy");
+
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Delivery", (string)null);
+                    b.ToTable("Delivery");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.DepartmentState", b =>
@@ -451,27 +513,30 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DepartmentCode")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DepartmentName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -480,14 +545,15 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasIndex("CompanyCode");
 
-                    b.HasIndex("DepartmentCode")
-                        .IsUnique();
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("Entity");
 
+                    b.HasIndex("LastModifiedBy");
+
                     b.HasIndex("LastModifiedDate");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.HolidayState", b =>
@@ -496,34 +562,45 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
-                    b.Property<DateTime>("HolidayDate")
+                    b.Property<DateTime?>("HolidayDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("HolidayName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HolidayName")
-                        .IsUnique();
+                    b.HasIndex("CreatedBy");
 
-                    b.ToTable("Holiday", (string)null);
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("HolidayName")
+                        .IsUnique()
+                        .HasFilter("[HolidayName] IS NOT NULL");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.ToTable("Holiday");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnDetailState", b =>
@@ -535,13 +612,15 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("FieldName")
                         .HasColumnType("nvarchar(max)");
@@ -550,7 +629,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -572,11 +652,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportColumnHeaderId");
 
                     b.HasIndex("ReportTableId");
 
-                    b.ToTable("ReportColumnDetail", (string)null);
+                    b.ToTable("ReportColumnDetail");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnFilterState", b =>
@@ -588,13 +676,15 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("FieldName")
                         .HasColumnType("nvarchar(max)");
@@ -603,7 +693,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -622,11 +713,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportFilterGroupingId");
 
                     b.HasIndex("ReportTableId");
 
-                    b.ToTable("ReportColumnFilter", (string)null);
+                    b.ToTable("ReportColumnFilter");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnHeaderState", b =>
@@ -641,16 +740,19 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -660,9 +762,17 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportColumnHeader", (string)null);
+                    b.ToTable("ReportColumnHeader");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportFilterGroupingState", b =>
@@ -671,19 +781,22 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<int?>("GroupLevel")
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -699,9 +812,17 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportFilterGrouping", (string)null);
+                    b.ToTable("ReportFilterGrouping");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportQueryFilterState", b =>
@@ -710,7 +831,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -729,7 +851,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("FieldDescription")
                         .HasColumnType("nvarchar(max)");
@@ -739,7 +862,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -753,9 +877,17 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportQueryFilter", (string)null);
+                    b.ToTable("ReportQueryFilter");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportRoleAssignmentState", b =>
@@ -764,16 +896,19 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -788,9 +923,17 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportRoleAssignment", (string)null);
+                    b.ToTable("ReportRoleAssignment");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportState", b =>
@@ -799,7 +942,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -811,13 +955,15 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<bool>("IsDistinct")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -842,7 +988,15 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Report", (string)null);
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.ToTable("Report");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportTableJoinParameterState", b =>
@@ -851,13 +1005,15 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("FieldName")
                         .IsRequired()
@@ -872,7 +1028,8 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -896,11 +1053,19 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportId");
 
                     b.HasIndex("ReportTableId");
 
-                    b.ToTable("ReportTableJoinParameter", (string)null);
+                    b.ToTable("ReportTableJoinParameter");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportTableState", b =>
@@ -912,19 +1077,22 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("JoinType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -942,9 +1110,17 @@ namespace CTI.DSF.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportTable", (string)null);
+                    b.ToTable("ReportTable");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.SectionState", b =>
@@ -953,43 +1129,148 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DepartmentCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SectionCode")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SectionName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("DepartmentCode");
 
                     b.HasIndex("Entity");
 
+                    b.HasIndex("LastModifiedBy");
+
                     b.HasIndex("LastModifiedDate");
 
-                    b.HasIndex("SectionCode")
+                    b.ToTable("Section");
+                });
+
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TagsState", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Entity")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Section", (string)null);
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TaskApproverState", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApproverType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApproverUserId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Entity")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TaskListId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.HasIndex("TaskListId");
+
+                    b.ToTable("TaskApprover");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.TaskListState", b =>
@@ -997,91 +1278,127 @@ namespace CTI.DSF.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AlternateApprover")
+                    b.Property<string>("CompanyId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AlternateEndorser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Company")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Entity")
+                    b.Property<string>("DepartmentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool?>("IsMilestone")
-                        .HasColumnType("bit");
+                    b.Property<string>("Entity")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("HolidayTag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ParentTaskId")
+                    b.Property<string>("SectionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PrimaryApprover")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrimaryEndorser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Section")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubTask")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TargetDueDate")
+                    b.Property<DateTime?>("TargetDueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TaskClassification")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskDescription")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("TaskDueDay")
+                    b.Property<int?>("TaskDueDay")
                         .HasColumnType("int");
 
                     b.Property<string>("TaskFrequency")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TaskListCode")
+                    b.Property<int?>("TaskListNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TeamId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Team")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DepartmentId");
+
                     b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
 
                     b.HasIndex("LastModifiedDate");
 
-                    b.HasIndex("ParentTaskId");
+                    b.HasIndex("SectionId");
 
-                    b.HasIndex("TaskListCode")
-                        .IsUnique()
-                        .HasFilter("[TaskListCode] IS NOT NULL");
+                    b.HasIndex("TeamId");
 
-                    b.ToTable("TaskList", (string)null);
+                    b.ToTable("TaskList");
+                });
+
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TaskTagState", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Entity")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TagId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TaskListId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.HasIndex("TagId");
+
+                    b.HasIndex("TaskListId");
+
+                    b.ToTable("TaskTag");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.TeamState", b =>
@@ -1090,43 +1407,47 @@ namespace CTI.DSF.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entity")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SectionCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TeamCode")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TeamName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("Entity");
+
+                    b.HasIndex("LastModifiedBy");
 
                     b.HasIndex("LastModifiedDate");
 
                     b.HasIndex("SectionCode");
 
-                    b.HasIndex("TeamCode")
-                        .IsUnique();
-
-                    b.ToTable("Team", (string)null);
+                    b.ToTable("Team");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ApprovalRecordState", b =>
@@ -1166,7 +1487,9 @@ namespace CTI.DSF.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.DSF.Core.DSF.TaskListState", "TaskList")
                         .WithMany("AssignmentList")
-                        .HasForeignKey("TaskListId");
+                        .HasForeignKey("TaskListId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TaskList");
                 });
@@ -1175,7 +1498,9 @@ namespace CTI.DSF.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.DSF.Core.DSF.AssignmentState", "Assignment")
                         .WithMany("DeliveryList")
-                        .HasForeignKey("AssignmentId");
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Assignment");
                 });
@@ -1184,7 +1509,9 @@ namespace CTI.DSF.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.DSF.Core.DSF.CompanyState", "Company")
                         .WithMany("DepartmentList")
-                        .HasForeignKey("CompanyCode");
+                        .HasForeignKey("CompanyCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Company");
                 });
@@ -1291,25 +1618,79 @@ namespace CTI.DSF.Infrastructure.Migrations
                 {
                     b.HasOne("CTI.DSF.Core.DSF.DepartmentState", "Department")
                         .WithMany("SectionList")
-                        .HasForeignKey("DepartmentCode");
+                        .HasForeignKey("DepartmentCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TaskApproverState", b =>
+                {
+                    b.HasOne("CTI.DSF.Core.DSF.TaskListState", "TaskList")
+                        .WithMany("TaskApproverList")
+                        .HasForeignKey("TaskListId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TaskList");
+                });
+
             modelBuilder.Entity("CTI.DSF.Core.DSF.TaskListState", b =>
                 {
-                    b.HasOne("CTI.DSF.Core.DSF.TaskListState", "ParentTask")
-                        .WithMany()
-                        .HasForeignKey("ParentTaskId");
+                    b.HasOne("CTI.DSF.Core.DSF.CompanyState", "Company")
+                        .WithMany("TaskListList")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("ParentTask");
+                    b.HasOne("CTI.DSF.Core.DSF.DepartmentState", "Department")
+                        .WithMany("TaskListList")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("CTI.DSF.Core.DSF.SectionState", "Section")
+                        .WithMany("TaskListList")
+                        .HasForeignKey("SectionId");
+
+                    b.HasOne("CTI.DSF.Core.DSF.TeamState", "Team")
+                        .WithMany("TaskListList")
+                        .HasForeignKey("TeamId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Section");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TaskTagState", b =>
+                {
+                    b.HasOne("CTI.DSF.Core.DSF.TagsState", "Tags")
+                        .WithMany("TaskTagList")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CTI.DSF.Core.DSF.TaskListState", "TaskList")
+                        .WithMany("TaskTagList")
+                        .HasForeignKey("TaskListId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tags");
+
+                    b.Navigation("TaskList");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.TeamState", b =>
                 {
                     b.HasOne("CTI.DSF.Core.DSF.SectionState", "Section")
                         .WithMany("TeamList")
-                        .HasForeignKey("SectionCode");
+                        .HasForeignKey("SectionCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Section");
                 });
@@ -1332,11 +1713,15 @@ namespace CTI.DSF.Infrastructure.Migrations
             modelBuilder.Entity("CTI.DSF.Core.DSF.CompanyState", b =>
                 {
                     b.Navigation("DepartmentList");
+
+                    b.Navigation("TaskListList");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.DepartmentState", b =>
                 {
                     b.Navigation("SectionList");
+
+                    b.Navigation("TaskListList");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.ReportColumnHeaderState", b =>
@@ -1375,12 +1760,28 @@ namespace CTI.DSF.Infrastructure.Migrations
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.SectionState", b =>
                 {
+                    b.Navigation("TaskListList");
+
                     b.Navigation("TeamList");
+                });
+
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TagsState", b =>
+                {
+                    b.Navigation("TaskTagList");
                 });
 
             modelBuilder.Entity("CTI.DSF.Core.DSF.TaskListState", b =>
                 {
                     b.Navigation("AssignmentList");
+
+                    b.Navigation("TaskApproverList");
+
+                    b.Navigation("TaskTagList");
+                });
+
+            modelBuilder.Entity("CTI.DSF.Core.DSF.TeamState", b =>
+                {
+                    b.Navigation("TaskListList");
                 });
 #pragma warning restore 612, 618
         }

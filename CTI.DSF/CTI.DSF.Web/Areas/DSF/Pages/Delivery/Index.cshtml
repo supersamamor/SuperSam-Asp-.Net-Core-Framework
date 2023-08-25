@@ -5,7 +5,7 @@
 <partial name="_DataTableStyles" />
 }
 @{
-    ViewData["Title"] = Localizer["Delivery Submission List"];
+    ViewData["Title"] = Localizer["Submission List"];
     ViewData["ActiveMainPage"] = "Delivery";
     ViewData["Level1"] = "DSF";
 }
@@ -16,29 +16,22 @@
                 <table id="delivery" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
                     <thead>
                         <tr>
-@*                          <th>
-								@Localizer["Delivery Code"]
-							</th>
-							<th>
-								@Localizer["Assignment Code"]
-							</th>*@
-                            	<th>
-								@Localizer["Task Description"]
+                            <th>
+								@Localizer["Assignment Id"]
 							</th>
 							<th>
 								@Localizer["Due Date"]
 							</th>
 							<th>
-								@Localizer["Delivery Attachment"]
-							</th>
-							<th>
 								@Localizer["Status"]
 							</th>
-                            <th>
-								@Localizer["Remarks"]
+							<th>
+								@Localizer["Delivery Attachment"]
 							</th>
 							  
-														
+							<th>
+								@Localizer["Status"]
+							</th> 							
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -59,7 +52,7 @@
         var table = $('#delivery').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 6, 'desc' ]],
+            order: [[ 5, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Delivery/Index", new { area = "DSF", handler = "ListAll" })',
@@ -73,15 +66,12 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-    //            { data: "deliveryCode", name: "DeliveryCode", responsivePriority: 1, title: '@Localizer["Delivery Code"]', searchable: true },
-				//{ data: "assignmentCode", name: "AssignmentCode", responsivePriority: 1, title: '@Localizer["Assignment Code"]', searchable: true },
-                { data: "taskDescription", name: "TaskDescription", responsivePriority: 1, title: '@Localizer["Task Description"]', searchable: true },
-                { data: "dueDate", name: "DueDate", responsivePriority: 1, title: '@Localizer["Due Date"]', searchable: false },
+                { data: "assignmentId", name: "AssignmentId", responsivePriority: 1, title: '@Localizer["Assignment Id"]', searchable: false },
+				{ data: "dueDate", name: "DueDate", responsivePriority: 1, title: '@Localizer["Due Date"]', searchable: false },
+				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: false },
 				{ data: "deliveryAttachment", name: "DeliveryAttachment", responsivePriority: 1, title: '@Localizer["Delivery Attachment"]', searchable: false },
-				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: true },
-                { data: "remarks", name: "Remarks", responsivePriority: 1, title: '@Localizer["Remarks"]', searchable: true },
-
-
+				   
+				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {
                     data: null,
                     searchable: false,
@@ -98,14 +88,20 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditDelivery" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
-                @*if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Delete)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Delete)).Succeeded)
                 {
                     <text>
                         url = '@Url.Page("/Delivery/Delete", new { area = "DSF" })' + '?id=' + row.id;
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteDelivery" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
                     </text>
-                }*@
-				  
+                }
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Approve)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Delivery/Approve", new { area = "DSF" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
+					</text>
+				}  
                         return button;
                     },
                 },
@@ -113,7 +109,7 @@
                 { data: "id", name: "Id", visible: false },
             ],
             buttons: [
-        @*if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Create)).Succeeded)
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Create)).Succeeded)
         {
             <text>
                 {
@@ -125,7 +121,7 @@
                     className: 'btn btn-success text-light',
                 },
             </text>
-        }*@
+        }
                 'excel', 'pdf', 'pageLength',
             ],
         });

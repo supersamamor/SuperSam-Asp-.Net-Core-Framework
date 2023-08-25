@@ -1,0 +1,75 @@
+@using Models
+@model TaskListViewModel
+<input type="hidden" id="TaskApproverCount" value="@Model?.TaskApproverList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Task Approver"]</span>
+        <a id="btnAddTaskApprover" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveTaskApprover" value="RemoveTaskApprover"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Approver"]
+							</th>
+							<th>
+								@Localizer["Approver Type"]
+							</th>
+							<th>
+								@Localizer["Is Primary"]
+							</th>
+							<th>
+								@Localizer["Sequence"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.TaskApproverList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.TaskApproverList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="TaskApproverList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="TaskApproverList[@counter].TaskListId" value="@item.TaskListId" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.ApproverUserId" name="TaskApproverList[@counter].ApproverUserId" class="form-control" maxlength="36" />
+										<span data-valmsg-for="TaskApproverList[@counter].ApproverUserId" asp-validation-for="@item.ApproverUserId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.ApproverType" name="TaskApproverList[@counter].ApproverType" class="form-control"  />
+										<span data-valmsg-for="TaskApproverList[@counter].ApproverType" asp-validation-for="@item.ApproverType" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input asp-for="@item.IsPrimary" name="TaskApproverList[@counter].IsPrimary" class="custom-checkbox-label" />
+										<span data-valmsg-for="TaskApproverList[@counter].IsPrimary" asp-validation-for="@item.IsPrimary" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Sequence" name="TaskApproverList[@counter].Sequence" class="form-control"  />
+										<span data-valmsg-for="TaskApproverList[@counter].Sequence" asp-validation-for="@item.Sequence" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveTaskApproverButton btnAddRemoveSubDetailList" title="@Localizer["Remove TaskApprover"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

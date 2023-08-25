@@ -147,11 +147,11 @@ namespace CTI.DSF.Core.DSF
     }
 	public static class ApprovalModule
 	{
-		public const string TaskList = "Task List";
+		public const string Delivery = "Submission";
 		public static readonly List<string> ApprovalTableList =
 		new()
 		{
-			TaskList,
+			Delivery,
 		};
 	}
 }

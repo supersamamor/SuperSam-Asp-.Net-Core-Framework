@@ -10,13 +10,12 @@
 }
 <form id="user-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="@Model.AsyncAction" />
     <div id="PartialLoaderContainer">
-        <partial name="_InputFieldsPartial" model="Model.Input" />
+        <partial name="_InputFieldsPartial" model="Model.UserModel" />
     </div>
-    <div id="toolbar-container" class="btn-group" role="group" style="float:right;margin-top:10px;">
-        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
-        <button type="submit" class="btn btn-success" title="@Localizer["Save changes"]" style="color:#fff;"><i class="fas fa-save"></i></button>
+    <div id="toolbar-container" class="btn-group" role="group">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]" id="btnCancelConfirmationModal"><i class="fas fa-ban"></i></a>
+        <button type="button" class="btn btn-success text-light" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
@@ -26,40 +25,34 @@
     <partial name="_ValidationScriptsPartial" />
     <partial name="_DataTableScripts" />
     <script asp-add-nonce>
-        $(document).ready(function () 
-        {
-            var roles = $("#roles").DataTable({
-                select: false,
-                searching: true,
-                paging: true,
-                info: true,
-                buttons: [],
-                columnDefs: [
-                    {
-                        targets: [1],
-                        orderDataType: 'dom-checkbox',
-                    }
-                ]
-            });
-            $('#user-form').onSubmitIncludeAllFieldsFromTable(roles);
-
+        $(document).ready(function () {
             function InitializeForm() {
+                var roles = $("#roles").DataTable({
+                    select: false,
+                    searching: true,
+                    paging: true,
+                    info: true,
+                    buttons: [],
+                    columnDefs: [
+                        {
+                            targets: [1],
+                            orderDataType: 'dom-checkbox',
+                        }
+                    ]
+                });
+                $('#user-form').onSubmitIncludeAllFieldsFromTable(roles);
 
+                $.bindSaveConfirmationModal('Save', '#btnConfirmationModal', '#user-form');
+                $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal', '#user-form', 'Do you want to cancel the changes?');
                 $('.DisableSelectDropdown').on('mousedown', function (e) {
                     e.preventDefault();
                     this.blur();
                     window.focus();
                 });
-                $('#CompanyId').on('change', function () {
-                    $('#AsyncAction').val('');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#user-form', InitializeForm);
-                });
-
 
             }
             InitializeForm();
         });
-
 
     </script>
 }

@@ -5,8 +5,8 @@ namespace CTI.DSF.Core.DSF;
 
 public record HolidayState : BaseEntity
 {
-	public string HolidayName { get; init; } = "";
-	public DateTime HolidayDate { get; init; }
+	public DateTime? HolidayDate { get; init; }
+	public string? HolidayName { get; init; }
 	
 	
 	

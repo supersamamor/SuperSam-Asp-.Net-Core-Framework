@@ -1,4 +1,4 @@
-﻿using CTI.DSF.Core.DSF;
+using CTI.DSF.Core.DSF;
 using CTI.DSF.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

@@ -31,8 +31,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                e.HolidayName,
-				HolidayDate = e.HolidayDate.ToString("MMM dd, yyyy"),
+                HolidayDate = e.HolidayDate?.ToString("MMM dd, yyyy HH:mm"),
+				e.HolidayName,
 						
 				
                 e.LastModifiedDate
@@ -42,7 +42,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetHolidayQuery>(nameof(HolidayState.Id)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
+        var result = await Mediatr.Send(request.ToQuery<GetHolidayQuery>(nameof(HolidayState.HolidayName)));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.HolidayName }));
     }
 }

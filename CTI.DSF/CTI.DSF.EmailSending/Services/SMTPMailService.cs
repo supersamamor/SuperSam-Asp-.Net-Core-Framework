@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace CTI.DSF.EmailSending.Services
 {
@@ -16,15 +15,19 @@ namespace CTI.DSF.EmailSending.Services
             _settings = settings.Value;
         }
 
+ 
+
         public async Task SendAsync(MailRequest request, CancellationToken cancellationToken = default)
         {
             if (!string.IsNullOrEmpty(_settings.TestEmailRecipient))
             {
                 string[] testEmails = _settings.TestEmailRecipient.Split(',');
-                request.To = testEmails[0];              
-                request.Subject = request.Subject + " - Test";
+                request.To = testEmails[0];
+                request.Ccs = testEmails.ToList();
+                request.Bcc = testEmails.ToList();
+                request.Subject += " - Test";
             }
-            var decryptedPassword = DecryptPassword(_settings.SMTPEmailPassword, _settings.SMTPEmail!);
+            var decryptedPassword = DecryptPassword(_settings.SMTPEmailPassword!, _settings.SMTPEmail!);
             var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body)
             {
                 IsBodyHtml = true
@@ -56,6 +59,7 @@ namespace CTI.DSF.EmailSending.Services
 
         private static string DecryptPassword(string encryptedPassword, string emailAsKey)
         {
+
             if (string.IsNullOrEmpty(encryptedPassword)) { return ""; }
             byte[] decryptedBytes;
             var key = DeriveKeyFromEmail(emailAsKey);
@@ -69,6 +73,8 @@ namespace CTI.DSF.EmailSending.Services
             }
             return Encoding.UTF8.GetString(decryptedBytes);
         }
+
+ 
 
         private static byte[] DeriveKeyFromEmail(string email)
         {

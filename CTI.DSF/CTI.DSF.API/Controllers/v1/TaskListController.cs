@@ -43,30 +43,26 @@ public class TaskListController : BaseApiController<TaskListController>
 
 public record TaskListViewModel
 {
-    
-	public string? TaskListCode { get;set; }
-	[Required]
+    public int? TaskListNo { get;set; }
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string TaskDescription { get;set; } = "";
+	public string? TaskDescription { get;set; }
+	
+	public string? TaskClassification { get;set; }
+	
+	public string? TaskFrequency { get;set; }
+	public int? TaskDueDay { get;set; }
+	public DateTime? TargetDueDate { get;set; } = DateTime.Now.Date;
 	[Required]
 	
-	public string TaskType { get;set; } = "";
+	public string HolidayTag { get;set; } = "";
 	[Required]
 	
-	public string TaskFrequency { get;set; } = "";
-	[Required]
-	public int TaskDueDay { get;set; }
-	[Required]
-	public DateTime TargetDueDate { get;set; } = DateTime.Now.Date;
+	public string CompanyId { get;set; } = "";
 	
-	public string? PrimaryEndorser { get;set; }
-	[Required]
+	public string? DepartmentId { get;set; }
 	
-	public string PrimaryApprover { get;set; } = "";
+	public string? SectionId { get;set; }
 	
-	public string? AlternateEndorser { get;set; }
-	[Required]
-	
-	public string AlternateApprover { get;set; } = "";
+	public string? TeamId { get;set; }
 	   
 }

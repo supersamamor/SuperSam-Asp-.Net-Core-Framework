@@ -23,49 +23,11 @@ public class EditCompanyCommandHandler : BaseCommandHandler<ApplicationContext, 
     {
     }
 
-    public async Task<Validation<Error, CompanyState>> Handle(EditCompanyCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, CompanyState>> Handle(EditCompanyCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await EditCompany(request, cancellationToken));
-
-
-	public async Task<Validation<Error, CompanyState>> EditCompany(EditCompanyCommand request, CancellationToken cancellationToken)
-	{
-		var entity = await Context.Company.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
-		Mapper.Map(request, entity);
-		await UpdateDepartmentList(entity, request, cancellationToken);
-		Context.Update(entity);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, CompanyState>(entity);
-	}
+			async request => await Edit(request, cancellationToken));
 	
-	private async Task UpdateDepartmentList(CompanyState entity, EditCompanyCommand request, CancellationToken cancellationToken)
-	{
-		IList<DepartmentState> departmentListForDeletion = new List<DepartmentState>();
-		var queryDepartmentForDeletion = Context.Department.Where(l => l.CompanyCode == request.Id).AsNoTracking();
-		if (entity.DepartmentList?.Count > 0)
-		{
-			queryDepartmentForDeletion = queryDepartmentForDeletion.Where(l => !(entity.DepartmentList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		departmentListForDeletion = await queryDepartmentForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var department in departmentListForDeletion!)
-		{
-			Context.Entry(department).State = EntityState.Deleted;
-		}
-		if (entity.DepartmentList?.Count > 0)
-		{
-			foreach (var department in entity.DepartmentList.Where(l => !departmentListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<DepartmentState>(x => x.Id == department.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(department).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(department).State = EntityState.Modified;
-				}
-			}
-		}
-	}
 	
 }
 
