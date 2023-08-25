@@ -53,8 +53,7 @@ public partial class IndexModel : PageModel
         Input = new InputModel
         {
             PhoneNumber = phoneNumber,
-            Name = user.Name,
-            BirthDate = user.BirthDate,
+            Name = user.Name,    
         };
     }
 
@@ -98,11 +97,6 @@ public partial class IndexModel : PageModel
         if (Input?.Name != user.Name)
         {
             user.Name = Input?.Name ?? user.Name;
-        }
-
-        if (Input?.BirthDate != user.BirthDate)
-        {
-            user.BirthDate = Input?.BirthDate ?? user.BirthDate;
         }
 
         await _userManager.UpdateAsync(user);

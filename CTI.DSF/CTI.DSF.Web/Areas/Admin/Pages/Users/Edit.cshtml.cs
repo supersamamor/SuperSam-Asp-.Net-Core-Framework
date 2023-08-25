@@ -56,8 +56,7 @@ public class EditModel : BasePageModel<EditModel>
         {
             Id = user.Id,
             Email = user.Email,
-            Name = user.Name!,
-            BirthDate = user.BirthDate,
+            Name = user.Name!,        
             EntityId = user.EntityId!,
             IsActive = user.IsActive,
             CompanyId = user.CompanyId,
@@ -110,8 +109,7 @@ public class EditModel : BasePageModel<EditModel>
 
     async Task<Validation<Error, ApplicationUser>> UpdateUser(ApplicationUser user)
     {
-        user.Name = Input.Name;
-        user.BirthDate = Input.BirthDate;
+        user.Name = Input.Name;    
         user.EntityId = Input.EntityId;
         user.IsActive = Input.IsActive;
         user.CompanyId = Input.CompanyId;
@@ -143,12 +141,7 @@ public record UserEditViewModel
     [Required]
     [DataType(DataType.Text)]
     [Display(Name = "Full name")]
-    public string Name { get; set; } = "";
-
-    [Required]
-    [Display(Name = "Birth Date")]
-    [DataType(DataType.Date)]
-    public DateTime? BirthDate { get; set; }
+    public string Name { get; set; } = "";   
 
     [Required]
     [Display(Name = "Entity")]

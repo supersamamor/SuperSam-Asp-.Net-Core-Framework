@@ -49,8 +49,7 @@ public class ViewModel : BasePageModel<ViewModel>
             entity => new UserDetailsViewModel
             {
                 Id = user.Id,
-                Name = user.Name ?? "",
-                BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
+                Name = user.Name ?? "",             
                 Email = user.Email,
                 Entity = entity,
                 IsActive = user.IsActive,
@@ -58,8 +57,7 @@ public class ViewModel : BasePageModel<ViewModel>
             () => new UserDetailsViewModel
             {
                 Id = user.Id,
-                Name = user.Name ?? "",
-                BirthDate = user.BirthDate!.Value.ToString("MMMM d, yyyy"),
+                Name = user.Name ?? "",         
                 Email = user.Email,
                 Entity =  Core.Constants.Entities.Default,
                 IsActive = user.IsActive,
@@ -86,9 +84,6 @@ public record UserDetailsViewModel
 
     [Display(Name = "Full Name")]
     public string Name { get; set; } = "";
-
-    [Display(Name = "Birth Date")]
-    public string BirthDate { get; set; } = "";
 
     [Display(Name = "Entity")]
     public string Entity { get; set; } = "";

@@ -86,8 +86,7 @@ public class AddModel : BasePageModel<AddModel>
             {
                 UserName = Input.Email,
                 Email = Input.Email,
-                Name = Input.Name,
-                BirthDate = Input.BirthDate,
+                Name = Input.Name,         
                 EntityId = Input.EntityId,
                 IsActive = true,
                 EmailConfirmed = true,
@@ -145,12 +144,6 @@ public record AddViewModel
     [DataType(DataType.Text)]
     [Display(Name = "Full name")]
     public string Name { get; set; } = "";
-
-    [Required]
-    [Display(Name = "Birth Date")]
-    [DataType(DataType.Date)]
-    public DateTime? BirthDate { get; set; }
-
     [Required]
     [Display(Name = "Entity")]
     public string EntityId { get; set; } = Guid.NewGuid().ToString();
