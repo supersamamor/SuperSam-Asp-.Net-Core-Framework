@@ -48,7 +48,7 @@
             order: [[ 2, 'desc' ]],
             ajax:
             {
-                url: '@Url.Page("/ApproverSetup/Index", new { area = "ProjectNamePlaceHolder", handler = "ListAll" })',
+                url: '@Url.Page("/ApproverSetup/Index", new { area = "AreaPlaceHolder", handler = "ListAll" })',
                 type: "POST",
                 headers: {
                     RequestVerificationToken:
@@ -69,19 +69,19 @@
                     responsivePriority: 2,
                     width: "10%",
                     render: function (data, type, row, meta) {
-                        var url = '@Url.Page("/ApproverSetup/Details", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;                      
+                        var url = '@Url.Page("/ApproverSetup/Details", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;                      
 						var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewApproverSetup" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.Edit)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/ApproverSetup/Edit", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;                 
+                        url = '@Url.Page("/ApproverSetup/Edit", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;                 
 						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditApproverSetup" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
                     </text>
                 }
                 @if ((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.PendingApprovals)).Succeeded)
                 {
                     <text>
-                        url = '@Url.Page("/ApproverSetup/PendingApprovals", new { area = "ProjectNamePlaceHolder" })' + '?tableName=' + row.tableName;                    
+                        url = '@Url.Page("/ApproverSetup/PendingApprovals", new { area = "AreaPlaceHolder" })' + '?tableName=' + row.tableName;                    
 						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnPendingApprovals" title="@Localizer["Pending Approvals"]"><i class="fas fa-tasks"></i></a>';
                     </text>
                 }
@@ -98,7 +98,7 @@
                 {
                     text: '@Localizer["Add"]',
                     action: function (e, dt, button, config) {
-                        var url = '@Url.Page("/ApproverSetup/Add", new { area = "ProjectNamePlaceHolder" })';
+                        var url = '@Url.Page("/ApproverSetup/Add", new { area = "AreaPlaceHolder" })';
                         window.location.href = url;
                     },
                     className: 'btn btn-success text-light',
