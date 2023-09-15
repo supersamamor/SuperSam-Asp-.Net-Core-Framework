@@ -41,7 +41,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
                                                .Where(p => p.Name.Equals("CreatedBy", StringComparison.OrdinalIgnoreCase)
                                                || p.Name.Equals("LastModifiedBy", StringComparison.OrdinalIgnoreCase)
                                                || p.Name.Equals("Entity", StringComparison.OrdinalIgnoreCase)
-                                               || p.Name.Equals("LastModifiedDate", StringComparison.OrdinalIgnoreCase)))
+                                               || p.Name.Equals("LastModifiedDate", StringComparison.OrdinalIgnoreCase)
+                                               || p.Name.Equals("Id", StringComparison.OrdinalIgnoreCase)))
             {
                 if (!property.Name.Equals("LastModifiedDate", StringComparison.OrdinalIgnoreCase))
                 {
