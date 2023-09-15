@@ -1,0 +1,45 @@
+@using Models
+@model ReportViewModel
+<script asp-add-nonce>
+    $(document).ready(function () { 
+		$.InitializeReportQueryFilterFieldValidations = function(count)
+        {
+			let reqs = [];			
+			for (let idx = 0; idx < count; idx++) {
+				reqs.push({name: "ReportQueryFilterList[" + idx + "].ReportId", el: "Input", minlength:0, maxlength:0, isrequired: false, description: "Report"});
+				reqs.push({name: "ReportQueryFilterList[" + idx + "].FieldName", el: "Input", minlength:0, maxlength:255, isrequired: true, description: "Field Name"});
+				reqs.push({ name: "ReportQueryFilterList[" + idx + "].DataType", el: "Input", minlength: 0, maxlength: 0, isrequired: true, description: "Data Type" });
+				if ($('#ReportQueryFilterList_' + idx + '_DataType').val() == '@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.CustomDropdown')
+				{
+					reqs.push({ name: "ReportQueryFilterList[" + idx + "].CustomDropdownValues", el: "Input", minlength: 0, maxlength: 1000, isrequired: true, description: "Custom Dropdown Values" });
+				}
+				else if ($('#ReportQueryFilterList_' + idx + '_DataType').val() == '@CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.DropdownFromTable') {
+					reqs.push({ name: "ReportQueryFilterList[" + idx + "].DropdownTableKeyAndValue", el: "Input", minlength: 0, maxlength: 255, isrequired: true, description: "Dropdown (Table Key And Value)" });
+				}
+			}
+			let validator = $("#report-form").validate();
+			for (let j in reqs)
+			{
+				let e = reqs[j];
+				let el = $(`*[name="${e.name}"]`);
+				el.rules("add", {
+					required: {                
+						depends: function(element) {
+							return e.isrequired;
+						}
+					},
+					messages: {
+						required: (e.description === '') ? 'this field is required' : `'${e.description}' is required`,
+					},
+				});
+				if(e.isrequired == true)
+				{
+					let labelElement = $(`label[name="Label.${e.name}"]`);
+					$(labelElement).addClass("fieldrequired");
+				}
+				if(e.maxlength > 0) {el.attr('maxlength', e.maxlength);}
+				if(e.minlength > 0) {el.attr('minlength', e.minlength);}   
+			} 
+		}       
+    });
+</script>
