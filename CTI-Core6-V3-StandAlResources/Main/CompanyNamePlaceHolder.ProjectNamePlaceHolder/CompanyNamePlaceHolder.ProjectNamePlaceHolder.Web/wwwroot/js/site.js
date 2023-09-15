@@ -221,7 +221,8 @@ $(document).ready(function () {
             $.triggerPageForm(handler, elementContainer, form, initializeFormFunction);
         });
     }
-    $.triggerPageForm = function (handler, elementContainer, form, initializeFormFunction) {
+  
+	$.triggerPageForm = function (handler, elementContainer, form, initializeFormFunction, skipValidation) {
         $('body').removeClass('loaded');
         var url = '?handler=' + handler;
         $.post(url, $(form).serialize(),
@@ -229,10 +230,13 @@ $(document).ready(function () {
                 $(elementContainer).html(data);
                 initializeFormFunction();
                 $('body').addClass('loaded');
-                if ($(form).valid() == false) { }
+                if (!skipValidation) {     
+                    if ($(form).valid() == false) { }
+                }              
             })
             .fail(function () { });
     }
+	
 	$.showAjaxLoaderOnClick = function (triggerElements)
     {      
         var triggerElementString = "";

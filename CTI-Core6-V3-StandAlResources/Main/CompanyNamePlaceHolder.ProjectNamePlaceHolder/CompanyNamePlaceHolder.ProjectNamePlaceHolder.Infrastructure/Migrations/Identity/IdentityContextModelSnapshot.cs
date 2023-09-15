@@ -25,7 +25,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -52,10 +53,14 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -334,7 +339,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(36)");
 
                     b.HasKey("Id");
 
@@ -359,7 +364,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(36)");
 
                     b.HasKey("Id");
 
@@ -381,7 +386,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(36)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -393,10 +398,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(36)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -408,7 +413,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
