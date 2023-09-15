@@ -56,8 +56,8 @@ public abstract class AuditableDbContext<T> : AuditableContext where T : DbConte
         SetBaseFields(AuthenticatedUser);
         return base.SaveChangesAsync(AuthenticatedUser.UserId, AuthenticatedUser.TraceId, cancellationToken);
     }
-    /// <summary>
-    /// Saves changes to the database.
+	/// <summary>
+    /// Saves changes to the database, disregarding the audit information.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>

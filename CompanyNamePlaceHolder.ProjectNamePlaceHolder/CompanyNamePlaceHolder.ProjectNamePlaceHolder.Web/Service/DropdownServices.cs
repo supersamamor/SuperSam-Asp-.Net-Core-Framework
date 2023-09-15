@@ -19,18 +19,17 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 		{            
 			_context = context;
 			_mediaTr = mediaTr;
-		}
-
-        public SelectList GetReportTableList(string? id)
+		} 
+		public async Task<IEnumerable<SelectListItem>> GetRoleList()
+        {
+            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
+        }
+		public SelectList GetReportTableList(string? id)
         {
             return _context.GetSingle<ReportTableState>(e => e.Id == id, new()).Result.Match(
                 Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
                 None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
             );
-        }
-        public async Task<IEnumerable<SelectListItem>> GetRoleList()
-        {
-            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
         }
         public IEnumerable<SelectListItem> QueryTypeList()
         {
@@ -125,6 +124,29 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
         public async Task<IList<Dictionary<string, string>>> GetReportList()
         {
             return await _mediaTr.Send(new GetReportListQuery());
-        }
+        }		
+		public SelectList GetTaskListList(string? id)
+		{
+			return _context.GetSingle<TaskListState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.TaskListCode } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetAssignmentList(string? id)
+		{
+			return _context.GetSingle<AssignmentState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.AssignmentCode } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		
+		public async Task<IEnumerable<SelectListItem>> GetUserList(string currentSelectedApprover, IList<string> allSelectedApprovers)
+		{
+			return (await _mediaTr.Send(new GetApproversQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+		}
+public async Task<IEnumerable<SelectListItem>> GetRoleApproverList(string currentSelectedApprover, IList<string> allSelectedApprovers)
+		{
+			return (await _mediaTr.Send(new GetApproverRolesQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+		}
     }
 }

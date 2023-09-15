@@ -1,0 +1,131 @@
+@using Models
+@model AssignmentViewModel
+<input type="hidden" id="DeliveryCount" value="@Model?.DeliveryList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Delivery Submission"]</span>
+        <a id="btnAddDelivery" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveDelivery" value="RemoveDelivery"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["ApproverRemarks"]
+							</th>
+							<th>
+								@Localizer["Status"]
+							</th>
+							<th>
+								@Localizer["EndorserRemarks"]
+							</th>
+							<th>
+								@Localizer["Endorsed Date"]
+							</th>
+							<th>
+								@Localizer["Approved Tag"]
+							</th>
+							<th>
+								@Localizer["Endorsed Tag"]
+							</th>
+							<th>
+								@Localizer["Delivery Code"]
+							</th>
+							<th>
+								@Localizer["Actual Delivery Date"]
+							</th>
+							<th>
+								@Localizer["Delivery Attachment"]
+							</th>
+							<th>
+								@Localizer["Actual Delivery Remarks"]
+							</th>
+							<th>
+								@Localizer["Due Date"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.DeliveryList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.DeliveryList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="DeliveryList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="DeliveryList[@counter].AssignmentCode" value="@item.AssignmentCode" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.ApproverRemarks" name="DeliveryList[@counter].ApproverRemarks" class="form-control"  />
+										<span data-valmsg-for="DeliveryList[@counter].ApproverRemarks" asp-validation-for="@item.ApproverRemarks" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Status" name="DeliveryList[@counter].Status" class="form-control"  />
+										<span data-valmsg-for="DeliveryList[@counter].Status" asp-validation-for="@item.Status" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.EndorserRemarks" name="DeliveryList[@counter].EndorserRemarks" class="form-control" maxlength="255" />
+										<span data-valmsg-for="DeliveryList[@counter].EndorserRemarks" asp-validation-for="@item.EndorserRemarks" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.EndorsedDate" name="DeliveryList[@counter].EndorsedDate" class="form-control"  />
+										<span data-valmsg-for="DeliveryList[@counter].EndorsedDate" asp-validation-for="@item.EndorsedDate" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.ApprovedTag" name="DeliveryList[@counter].ApprovedTag" class="form-control"  />
+										<span data-valmsg-for="DeliveryList[@counter].ApprovedTag" asp-validation-for="@item.ApprovedTag" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.EndorsedTag" name="DeliveryList[@counter].EndorsedTag" class="form-control"  />
+										<span data-valmsg-for="DeliveryList[@counter].EndorsedTag" asp-validation-for="@item.EndorsedTag" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.DeliveryCode" name="DeliveryList[@counter].DeliveryCode" class="form-control"  readonly/>
+										<span data-valmsg-for="DeliveryList[@counter].DeliveryCode" asp-validation-for="@item.DeliveryCode" class="text-danger"></span>
+										<input type="hidden" asp-for="@item.DeliveryCode"  name="DeliveryList[@counter].DeliveryCode"/>
+									</td>
+									<td>
+										<input  asp-for="@item.ActualDeliveryDate" name="DeliveryList[@counter].ActualDeliveryDate" class="form-control"  />
+										<span data-valmsg-for="DeliveryList[@counter].ActualDeliveryDate" asp-validation-for="@item.ActualDeliveryDate" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input asp-for="@item.DeliveryAttachmentForm" name="DeliveryList[@counter].DeliveryAttachment" class="file-upload-control" /> @if (!string.IsNullOrEmpty(item.DeliveryAttachment)) { <div class="input-group col-md-12 file-upload-filename"><input asp-for="@item.DeliveryAttachment" class="form-control" readonly /><a href="/@WebConstants.UploadFilesPath/@item.DeliveryAttachment" class="input-group-text file-view-button" target="_blank">@Localizer["View"]</a></div> }
+										<span data-valmsg-for="DeliveryList[@counter].DeliveryAttachmentForm" asp-validation-for="@item.DeliveryAttachmentForm" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.ActualDeliveryRemarks" name="DeliveryList[@counter].ActualDeliveryRemarks" class="form-control" maxlength="255" />
+										<span data-valmsg-for="DeliveryList[@counter].ActualDeliveryRemarks" asp-validation-for="@item.ActualDeliveryRemarks" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.DueDate" name="DeliveryList[@counter].DueDate" class="form-control"  readonly/>
+										<span data-valmsg-for="DeliveryList[@counter].DueDate" asp-validation-for="@item.DueDate" class="text-danger"></span>
+										<input type="hidden" asp-for="@item.DueDate"  name="DeliveryList[@counter].DueDate"/>
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveDeliveryButton btnAddRemoveSubDetailList" title="@Localizer["Remove Delivery"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

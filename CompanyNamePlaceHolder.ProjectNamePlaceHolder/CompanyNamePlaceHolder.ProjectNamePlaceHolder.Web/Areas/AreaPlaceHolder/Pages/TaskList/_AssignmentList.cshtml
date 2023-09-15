@@ -1,0 +1,83 @@
+@using Models
+@model TaskListViewModel
+<input type="hidden" id="AssignmentCount" value="@Model?.AssignmentList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Assigment"]</span>
+        <a id="btnAddAssignment" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveAssignment" value="RemoveAssignment"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Assignment Code"]
+							</th>
+							<th>
+								@Localizer["Primary Assignee"]
+							</th>
+							<th>
+								@Localizer["Alternate Assignee"]
+							</th>
+							<th>
+								@Localizer["Start Date"]
+							</th>
+							<th>
+								@Localizer["End Date"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.AssignmentList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.AssignmentList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="AssignmentList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="AssignmentList[@counter].TaskListCode" value="@item.TaskListCode" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.AssignmentCode" name="AssignmentList[@counter].AssignmentCode" class="form-control"  readonly/>
+										<span data-valmsg-for="AssignmentList[@counter].AssignmentCode" asp-validation-for="@item.AssignmentCode" class="text-danger"></span>
+										<input type="hidden" asp-for="@item.AssignmentCode"  name="AssignmentList[@counter].AssignmentCode"/>
+									</td>
+									<td>
+										<input  asp-for="@item.PrimaryAsignee" name="AssignmentList[@counter].PrimaryAsignee" class="form-control"  />
+										<span data-valmsg-for="AssignmentList[@counter].PrimaryAsignee" asp-validation-for="@item.PrimaryAsignee" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.AlternateAsignee" name="AssignmentList[@counter].AlternateAsignee" class="form-control"  />
+										<span data-valmsg-for="AssignmentList[@counter].AlternateAsignee" asp-validation-for="@item.AlternateAsignee" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.StartDate" name="AssignmentList[@counter].StartDate" class="form-control"  />
+										<span data-valmsg-for="AssignmentList[@counter].StartDate" asp-validation-for="@item.StartDate" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.EndDate" name="AssignmentList[@counter].EndDate" class="form-control"  />
+										<span data-valmsg-for="AssignmentList[@counter].EndDate" asp-validation-for="@item.EndDate" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveAssignmentButton btnAddRemoveSubDetailList" title="@Localizer["Remove Assignment"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

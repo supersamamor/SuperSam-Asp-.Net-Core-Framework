@@ -40,7 +40,7 @@
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.3" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
 	<ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending\CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.csproj" />
-	
+	<ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.csproj" />
   </ItemGroup>
 
   <ItemGroup>

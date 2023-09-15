@@ -1,0 +1,86 @@
+@using Models
+@model TaskListViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TaskListCode" class="form-label fieldrequired"><strong>@Localizer["Task List Code"] :</strong></label>
+			<input asp-for="@Model.TaskListCode" class="form-control"   readonly/>
+			<span asp-validation-for="@Model.TaskListCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TaskDescription" class="form-label fieldrequired"><strong>@Localizer["Task Description"] :</strong></label>
+			<input asp-for="@Model.TaskDescription" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.TaskDescription" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TaskType" class="form-label fieldrequired"><strong>@Localizer["Task Type"] :</strong></label>
+			<input asp-for="@Model.TaskType" class="form-control"  />
+			<span asp-validation-for="@Model.TaskType" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TaskFrequency" class="form-label fieldrequired"><strong>@Localizer["Task Frequency"] :</strong></label>
+			<input asp-for="@Model.TaskFrequency" class="form-control"  />
+			<span asp-validation-for="@Model.TaskFrequency" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TaskDueDay" class="form-label fieldrequired"><strong>@Localizer["Task Due Day"] :</strong></label>
+			<input asp-for="@Model.TaskDueDay" class="form-control"  />
+			<span asp-validation-for="@Model.TaskDueDay" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TargetDueDate" class="form-label fieldrequired"><strong>@Localizer["Target Due Date"] :</strong></label>
+			<input asp-for="@Model.TargetDueDate" class="form-control"  />
+			<span asp-validation-for="@Model.TargetDueDate" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PrimaryEndorser" class="form-label "><strong>@Localizer["Primary Endorser"] :</strong></label>
+			<input asp-for="@Model.PrimaryEndorser" class="form-control"  />
+			<span asp-validation-for="@Model.PrimaryEndorser" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.PrimaryApprover" class="form-label fieldrequired"><strong>@Localizer["Primary Approver"] :</strong></label>
+			<input asp-for="@Model.PrimaryApprover" class="form-control"  />
+			<span asp-validation-for="@Model.PrimaryApprover" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.AlternateEndorser" class="form-label "><strong>@Localizer["Alternate Endorser"] :</strong></label>
+			<input asp-for="@Model.AlternateEndorser" class="form-control"  />
+			<span asp-validation-for="@Model.AlternateEndorser" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.AlternateApprover" class="form-label fieldrequired"><strong>@Localizer["Alternate Approver"] :</strong></label>
+			<input asp-for="@Model.AlternateApprover" class="form-control"  />
+			<span asp-validation-for="@Model.AlternateApprover" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

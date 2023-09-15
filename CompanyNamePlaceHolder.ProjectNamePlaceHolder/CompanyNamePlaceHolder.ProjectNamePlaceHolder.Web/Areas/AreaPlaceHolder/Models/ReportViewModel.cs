@@ -26,6 +26,8 @@ public record ReportViewModel : BaseViewModel
     [Display(Name = "Sequence")]
     [Required]
     public int Sequence { get; init; }
+    [Display(Name = "Display on Report Module")]
+    public bool DisplayOnReportModule { get; set; } = false;
     public DateTime LastModifiedDate { get; set; }
     public IList<ReportTableViewModel>? ReportTableList { get; set; }
     public IList<ReportTableJoinParameterViewModel>? ReportTableJoinParameterList { get; set; }

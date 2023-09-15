@@ -30,7 +30,7 @@ public class GetReportListQueryHandler : IRequestHandler<GetReportListQuery, ILi
                               select r.Name).Distinct().ToListAsync(cancellationToken);
         var reportList = await _context.Report
             .Include(l => l.ReportRoleAssignmentList).AsNoTracking()
-            .Where(l => l.ReportRoleAssignmentList!.Any(ra => roleList.Contains(ra.RoleName)))
+			.Where(l => l.ReportRoleAssignmentList!.Any(ra => roleList.Contains(ra.RoleName)) && l.DisplayOnReportModule == true)
             .OrderBy(l => l.Sequence).ToListAsync(cancellationToken: cancellationToken);
         return reportList.Select(report => new Dictionary<string, string>
         {

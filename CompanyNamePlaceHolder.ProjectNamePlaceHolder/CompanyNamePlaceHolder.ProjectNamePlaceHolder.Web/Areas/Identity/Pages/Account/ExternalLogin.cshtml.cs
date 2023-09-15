@@ -62,12 +62,7 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
         [DataType(DataType.Text)]
         [Display(Name = "Full name")]
         public string? Name { get; set; }
-
-        [Required]
-        [Display(Name = "Birth Date")]
-        [DataType(DataType.Date)]
-        public DateTime? BirthDate { get; set; }
-
+		
         [Range(typeof(bool), "true", "true", ErrorMessage = "Please agree to the terms")]
         public bool TermsAccepted { get; set; }
     }
@@ -160,8 +155,7 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
             {
                 UserName = Input?.Email,
                 Email = Input?.Email,
-                Name = Input?.Name,
-                BirthDate = Input?.BirthDate,
+                Name = Input?.Name,               
                 EntityId = defaultEntity!.Id
             };
 

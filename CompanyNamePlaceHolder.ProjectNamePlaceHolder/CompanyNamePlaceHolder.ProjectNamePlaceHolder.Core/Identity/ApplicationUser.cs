@@ -8,9 +8,6 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     public string? Name { get; set; }
     [PersonalData]
-    public DateTime? BirthDate { get; set; }
-
-    [PersonalData]
     public Entity? Entity { get; set; }
     public string? EntityId { get; set; }
 

@@ -9,7 +9,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Helpers
             var validationResult = "";
             if (sqlScript != null)
             {
-                if (Regex.IsMatch(sqlScript, @"\bINSERT\b", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(sqlScript, @"\bINSERT\b(?!.*INTO\s+(#TempTable|#\w+))", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Insert`. ";
                 }
@@ -17,19 +17,21 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Helpers
                 {
                     validationResult += "Sql Script has `Delete`. ";
                 }
-                if (Regex.IsMatch(sqlScript, @"\bUPDATE\b", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(sqlScript, @"\bUPDATE\b(?!.*#TempTable\b)(?!.*#)", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Update`. ";
                 }
-                if (Regex.IsMatch(sqlScript, @"\bCREATE\b", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(sqlScript, @"\bCREATE\b(?!.*TABLE\s+(#TempTable|#\w+))", RegexOptions.IgnoreCase))
                 {
-                    validationResult += "Sql Script has `Create`. ";
+                    validationResult += "Sql Script has `Create`. "; 
                 }
                 if (Regex.IsMatch(sqlScript, @"\bALTER\b", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Alter`. ";
                 }
-                if (Regex.IsMatch(sqlScript, @"\bDROP\b", RegexOptions.IgnoreCase))
+
+                // Add a condition to check for DROP but allow DROP TABLE #TempTable or tables with hash "#"
+                if (Regex.IsMatch(sqlScript, @"\bDROP\b(?!.*TABLE\s+(#TempTable|#\w+))", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Drop`. ";
                 }

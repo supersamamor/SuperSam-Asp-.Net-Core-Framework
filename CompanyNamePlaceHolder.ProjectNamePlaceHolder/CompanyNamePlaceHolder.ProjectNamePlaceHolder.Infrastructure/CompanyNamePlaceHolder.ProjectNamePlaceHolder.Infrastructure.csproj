@@ -17,8 +17,4 @@
     <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Utility\CompanyNamePlaceHolder.Common.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\Identity\" />
-  </ItemGroup>
-
 </Project>

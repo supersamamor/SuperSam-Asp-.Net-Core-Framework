@@ -1,0 +1,12 @@
+@using Models
+@model AssignmentViewModel
+
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Assigment"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditAssignmentDetails" model="Model" />        
+    </div>
+</div>
+
+<br /><partial name="_DeliveryList" model="Model" />

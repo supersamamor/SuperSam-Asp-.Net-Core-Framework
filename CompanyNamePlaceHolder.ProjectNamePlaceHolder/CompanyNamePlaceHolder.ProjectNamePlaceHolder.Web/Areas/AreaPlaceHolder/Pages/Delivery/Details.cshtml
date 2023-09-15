@@ -1,0 +1,35 @@
+@page
+@model DetailsModel
+@{
+    ViewData["Title"] = Localizer["View Delivery Submission"];
+    ViewData["ActiveMainPage"] = "Delivery";
+    ViewData["Level1"] = "AreaPlaceHolder";
+}
+<div class="container-fluid" id="delivery-container">
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Delivery" />
+    </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group">
+	<a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Create)).Succeeded)
+    {
+        <a asp-page="Add"  id="btnAddRecord" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-id="@Model.Delivery.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Delete)).Succeeded)
+    {
+        <a asp-page="Delete" asp-route-id="@Model.Delivery.Id" class="btn btn-danger" title="@Localizer["Delete"]"><i class="fas fa-trash"></i></a>
+    }
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DisableFieldsPartial" model="@("delivery-container")" />
+}

@@ -1,0 +1,62 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Approval Setup"];
+    ViewData["ActiveMainPage"] = "Approval";
+    ViewData["Level1"] = "Admin";
+}
+<form id="approverSetup-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.MoveUpDownId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <input type="hidden" asp-for="@Model.ApproverSetup.SelectedApprovers" name="SelectedApprovers" id="SelectedApprovers" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.ApproverSetup" />
+    </div>    
+    <div id="toolbar-container" class="btn-group" role="group">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success text-light" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>   
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ApproverAssignmentListValidationPartial" model="@Model.ApproverSetup" />
+<script asp-add-nonce>
+	$(document).ready(function () {
+		function InitializeForm()
+		{
+			$.InitializeApproverAssignmentFieldValidations($('#ApproverAssignmentCount').val());
+			$('.RemoveApproverAssignmentButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveApproverAssignment');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
+			});
+
+			$('#btnAddApproverAssignment').on( 'click', function () {
+				$('#AsyncAction').val('AddApproverAssignment');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
+			});
+			$('.MoveUpApproverAssignmentButton ').on( 'click', function () {
+                $('#MoveUpDownId').val($(this).attr('moveUpId'));
+                $('#AsyncAction').val('MoveUpApproverAssignment');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
+            });
+            $('.MoveDownApproverAssignmentButton ').on( 'click', function () {
+                $('#MoveUpDownId').val($(this).attr('moveDownId'));
+                $('#AsyncAction').val('MoveDownApproverAssignment');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
+            });
+            $('.SelectApproverDropdown, .SelectApproverTypeDropdown').on( 'change', function () {       
+                $('#AsyncAction').val('');
+                $.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#approverSetup-form', InitializeForm);
+            });
+		}
+		InitializeForm();
+	});
+</script>
+
+}

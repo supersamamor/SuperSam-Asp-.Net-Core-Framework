@@ -18,7 +18,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Entity>().HasIndex(e => e.Name).IsUnique();
-            builder.Entity<ApplicationUser>().Property(e => e.Id).HasMaxLength(36);
+		    builder.Entity<ApplicationUser>().Property(e => e.Id).HasMaxLength(36);
             builder.Entity<ApplicationRole>().Property(e => e.Id).HasMaxLength(36);
             base.OnModelCreating(builder);
         }

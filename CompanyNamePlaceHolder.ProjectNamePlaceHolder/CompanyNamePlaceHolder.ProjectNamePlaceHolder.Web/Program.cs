@@ -10,6 +10,7 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.FileProviders;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
 using Serilog;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
 services.AddEmailSendingAService(configuration);
-
+services.AddScheduler(configuration);
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
@@ -81,7 +82,7 @@ app.UseSecurityHeaders(policies =>
                        .WithNonce()
                        .OverHttps();
                 builder.AddStyleSrc()
-                       .Self()
+                       .Self()                      
                        .OverHttps();
                 builder.AddImgSrc().OverHttps().Data();
                 builder.AddObjectSrc().None();
