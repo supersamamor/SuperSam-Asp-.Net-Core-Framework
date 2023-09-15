@@ -27,8 +27,8 @@ public static class QueryableExtensions
                                                                       string? sortColumn, string? sortOrder,
                                                                       int pageNumber, int pageSize,
                                                                       CancellationToken cancellationToken = default)
-    {
-        if (!string.IsNullOrWhiteSpace(searchValue) && searchColumns != null)
+    {        
+	    if (!string.IsNullOrWhiteSpace(searchValue) && searchColumns != null)
         {
             var filter = string.Join(" OR ", searchColumns.Select(x => $"{x}.StartsWith(\"{searchValue}\")"));
             if (!string.IsNullOrWhiteSpace(filter))
@@ -40,7 +40,12 @@ public static class QueryableExtensions
         {
             query = query.OrderBy($"{sortColumn} {sortOrder}");
         }
+        var totalCount = query.Count();
+        if (pageSize == -1)
+        {
+            pageSize = totalCount;
+        }
         var data = await query.ToPagedListAsync(pageNumber, pageSize, null, cancellationToken);
-        return new PagedListResponse<T>(data, query.Count());
+        return new PagedListResponse<T>(data, totalCount);
     }
 }
