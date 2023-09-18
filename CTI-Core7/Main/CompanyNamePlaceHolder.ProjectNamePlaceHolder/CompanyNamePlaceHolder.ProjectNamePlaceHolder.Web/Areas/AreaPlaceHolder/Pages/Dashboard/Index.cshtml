@@ -3,81 +3,34 @@
 @{
     ViewData["Title"] = "Dashboard";
     ViewData["ActiveMainPage"] = "Dashboard";
-    ViewData["Level1"] = "Dashboard";
-    var dashboardContainerClass = "row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2";
-    if (Model.ReportList.Count == 1)
-    {
-        dashboardContainerClass = "row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1";
-    }
+    ViewData["Level1"] = "Dashboard";   
 }
 @section Styles {
     <partial name="_DataTableStyles" />
 }
 
-<div class="@dashboardContainerClass">
-    @if (Model.ReportList.Count > 0)
-    {
-        foreach (var item in Model.ReportList)
-        {
-            <div class="col">
-                <div class="card">
-                    <h5 class="card-header text-center"><span class="card-header-custom">@item.ReportName</span><br></h5>
-                    @if (item.ReportOrChartType == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Table)
-                    {
-                        <div class="card-body custom-graph-body overflow-x-scroll">
-                            <table id="@item.DomId" class="table table-hover table-bordered table-striped" width="100%">
-                            </table>
-                        </div>
-                    }
-                    else if (item.ReportOrChartType == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.ReportChartType.Pie)
-                    {
-                        <div class="card-body custom-graph-body">
-                            <canvas id="@item.DomId" class="pie-graph-canvas"></canvas>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="card-body custom-graph-body">
-                            <canvas id="@item.DomId" class="default-graph-canvas"></canvas>
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <div class="col">
-            <div class="card">
-                <h5 class="card-header text-center"><span class="card-header-custom">@Localizer["Dashboard"]</span><br></h5>
-                <div class="card-body custom-graph-body text-center">
-                    <br>
-                    <span class="text-center">@Localizer["For your dashboard setup, please contact your System Administrator."]</span>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-            </div>
-        </div>
-    }
- 
+<div id="PartialLoaderContainer">
+    <partial name="_Chart" model="@Model.ReportList" />
 </div>
-
-
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <partial name="_ChartBuilderScripts" />
     <script asp-add-nonce>
         $(document).ready(function () {
-            function InitializeForm() {
-        @foreach (var item in Model.ReportList)
-        {
-            <text>
-                $.BuildChart('@item.DomId', '@item.ReportName', '@item.ReportOrChartType',
-                    @Html.Raw(item.ColumnHeaders), @Html.Raw(item.Results), @Html.Raw(item.DisplayLegend.ToString().ToLower()));
-            </text>
-        }
-                            }
-            InitializeForm();
+            function RefreshChart() {
+                var reportCount = $('#ReportListCount').val();
+                for (let idx = 0; idx < reportCount; idx++) {
+                    var domId = $('#ReportList_' + idx + '_DomId').val();
+                    var reportName = $('#ReportList_' + idx + '_ReportName').val();
+                    var reportOrChartType = $('#ReportList_' + idx + '_ReportOrChartType').val();
+                    var columnHeaders = $('#ReportList_' + idx + '_ColumnHeaders').val();
+                    var results = $('#ReportList_' + idx + '_Results').val();
+                    var displayLegend = $('#ReportList_' + idx + '_DisplayLegend').val();
+                    var isPercentage = $('#ReportList_' + idx + '_IsPercentage').val();
+                    $.BuildChart(domId, reportName, reportOrChartType, JSON.parse(columnHeaders), JSON.parse(results), displayLegend, isPercentage);
+                }
+            }       
+            RefreshChart();
         });
     </script>
 }

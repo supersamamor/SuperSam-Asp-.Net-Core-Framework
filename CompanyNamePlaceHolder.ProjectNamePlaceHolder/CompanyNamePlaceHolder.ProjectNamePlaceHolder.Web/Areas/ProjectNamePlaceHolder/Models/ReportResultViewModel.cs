@@ -10,6 +10,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePla
         public string? ColumnHeaders { get; set; }
         public string ReportOrChartType { get; set; } = "";
         public bool DisplayLegend { get; set; }
+        public bool IsPercentage => ReportName != null && ReportName.Contains('%');
         public IList<ReportQueryFilterViewModel> Filters { get; set; } = new List<ReportQueryFilterViewModel>();
         public string? DomId
         {

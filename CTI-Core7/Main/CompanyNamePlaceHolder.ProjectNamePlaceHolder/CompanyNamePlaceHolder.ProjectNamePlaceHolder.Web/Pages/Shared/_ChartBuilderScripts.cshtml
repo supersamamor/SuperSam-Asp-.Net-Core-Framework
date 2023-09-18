@@ -2,7 +2,7 @@
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
     $(document).ready(function () {
-        $.BuildChart = function (chartContainer, reportName, charType, columnHeaders, dataSetResult, displayLegend) {
+        $.BuildChart = function (chartContainer, reportName, charType, columnHeaders, dataSetResult, displayLegend, isPercentage) {
 
             let chartRenderType = '';
             switch (charType) {
@@ -46,8 +46,7 @@
                         ]
                     });
                 }
-                else
-                {
+                else {
                     const data = {
                         labels: columnHeaders,
                         datasets: dataSetResult
@@ -57,26 +56,40 @@
                         type: chartRenderType,
                         data: data,
                         options: {
-                            scales: {
-                                x: {
-                                    beginAtZero: true // To start the X-axis at zero
-                                }
-                            },
+                            responsive: true,
                             plugins: {
-                                title: {
-                                    display: false,
-                                    text: reportName
-                                },
                                 legend: {
-                                    display: displayLegend,
-                                    position: 'bottom'
+                                    display: displayLegend, // Set to true to display the legend
+                                    position: 'bottom', // Position of the legend: 'top', 'bottom', 'left', 'right'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (context) {
+                                            var label = context.label || '';
+                                            var value = context.raw || 0;
+                                            return label + ': ' + value + (isPercentage == 'true' ? '%' : ""); // Append '%' to the value
+                                        }
+                                    }
+                                },
+                            },
+                            elements: {
+                                arc: {
+                                    borderWidth: 0
                                 }
                             },
-                            animation: false,
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        var label = context.label || '';
+                                        var value = context.raw || 0;
+                                        return label + ': ' + value + (isPercentage == 'true' ? '%' : ""); // Append '%' to the value
+                                    }
+                                }
+                            }
                         }
                     });
                 }
-               
+
             }
         };
     });
