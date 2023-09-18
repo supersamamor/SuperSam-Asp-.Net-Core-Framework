@@ -1,0 +1,167 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Delivery Submission List"];
+    ViewData["ActiveMainPage"] = "Delivery";
+    ViewData["Level1"] = "ProjectNamePlaceHolder";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="delivery" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["ApproverRemarks"]
+							</th>
+							<th>
+								@Localizer["Status"]
+							</th>
+							<th>
+								@Localizer["EndorserRemarks"]
+							</th>
+							<th>
+								@Localizer["Endorsed Date"]
+							</th>
+							<th>
+								@Localizer["Approved Tag"]
+							</th>
+							<th>
+								@Localizer["Endorsed Tag"]
+							</th>
+							<th>
+								@Localizer["Delivery Code"]
+							</th>
+							<th>
+								@Localizer["Actual Delivery Date"]
+							</th>
+							<th>
+								@Localizer["Delivery Attachment"]
+							</th>
+							<th>
+								@Localizer["Actual Delivery Remarks"]
+							</th>
+							<th>
+								@Localizer["Assignment Code"]
+							</th>
+							<th>
+								@Localizer["Due Date"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#delivery').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 13, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Delivery/Index", new { area = "ProjectNamePlaceHolder", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "approverRemarks", name: "ApproverRemarks", responsivePriority: 1, title: '@Localizer["ApproverRemarks"]', searchable: false },
+				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: true },
+				{ data: "endorserRemarks", name: "EndorserRemarks", responsivePriority: 1, title: '@Localizer["EndorserRemarks"]', searchable: false },
+				{ data: "endorsedDate", name: "EndorsedDate", responsivePriority: 1, title: '@Localizer["Endorsed Date"]', searchable: false },
+				{ data: "approvedTag", name: "ApprovedTag", responsivePriority: 1, title: '@Localizer["Approved Tag"]', searchable: true },
+				{ data: "endorsedTag", name: "EndorsedTag", responsivePriority: 1, title: '@Localizer["Endorsed Tag"]', searchable: false },
+				{ data: "deliveryCode", name: "DeliveryCode", responsivePriority: 1, title: '@Localizer["Delivery Code"]', searchable: true },
+				{ data: "actualDeliveryDate", name: "ActualDeliveryDate", responsivePriority: 1, title: '@Localizer["Actual Delivery Date"]', searchable: false },
+				{ data: "deliveryAttachment", name: "DeliveryAttachment", responsivePriority: 1, title: '@Localizer["Delivery Attachment"]', searchable: false },
+				{ data: "actualDeliveryRemarks", name: "ActualDeliveryRemarks", responsivePriority: 1, title: '@Localizer["Actual Delivery Remarks"]', searchable: false },
+				{ data: "assignmentCode", name: "AssignmentCode", responsivePriority: 1, title: '@Localizer["Assignment Code"]', searchable: true },
+				{ data: "dueDate", name: "DueDate", responsivePriority: 1, title: '@Localizer["Due Date"]', searchable: false },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Delivery/Details", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewDelivery" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Delivery/Edit", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditDelivery" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Delivery/Delete", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteDelivery" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }
+				  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Delivery/Add", new { area = "ProjectNamePlaceHolder" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#delivery tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddDelivery",".btnEditDelivery",".btnViewDelivery",".btnDeleteDelivery"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddDelivery",".btnEditDelivery",".btnViewDelivery",".btnDeleteDelivery"]);
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}

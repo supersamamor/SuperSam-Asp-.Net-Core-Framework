@@ -12,7 +12,7 @@
         <hr class="sidebar-divider my-0">
         <ul class="navbar-nav text-light" id="accordionSidebar">
 			<li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "Dashboard")">
-                <a href="/AreaPlaceHolder/Dashboard" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Dashboard")">
+                <a href="/ProjectNamePlaceHolder/Dashboard" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Dashboard")">
                     <i class="fas fa-tachometer-alt nav-icon"></i>
                     <span>
                         @Localizer["Dashboard"]
@@ -87,7 +87,7 @@
                         @if((await AuthorizationService.AuthorizeAsync(User, Permission.ApproverSetup.View)).Succeeded)
 							{
 								<li class="nav-item">
-									<a href = "/AreaPlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
+									<a href = "/ProjectNamePlaceHolder/ApproverSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Approval")">
 										<i class="fas fa-circle nav-icon"></i>
 										<span>
 											@Localizer["Approval"]
@@ -98,7 +98,7 @@
 						@if ((await AuthorizationService.AuthorizeAsync(User, Permission.ReportSetup.View)).Succeeded)
                         {
                             <li class="nav-item">
-                                <a href="/AreaPlaceHolder/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
+                                <a href="/ProjectNamePlaceHolder/ReportSetup" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "ReportSetup")">
                                     <i class="fas fa-circle nav-icon"></i>
                                     <span>
                                         @Localizer["Report Setup"]
@@ -109,11 +109,11 @@
                     </ul>
                 </li>
             }
-            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "AreaPlaceHolder")">
+            <li class="nav-item level-one-nav @ManageNavPages.Level1Class(ViewContext, "ProjectNamePlaceHolder")">
                 <a href="#" class="nav-link">
                     <i class="fas fa-list-alt nav-icon"></i>
                     <span>
-                        @Localizer["AreaDescriptionPlaceHolder"]
+                        @Localizer["Project Name Place Holder"]
                         <i class="right fas level-one-nav-icon fa-angle-left"></i>
                     </span>
                 </a>
@@ -121,7 +121,7 @@
                     @if((await AuthorizationService.AuthorizeAsync(User, Permission.TaskList.View)).Succeeded)
 						{
 							<li class="nav-item">
-								<a href = "/AreaPlaceHolder/TaskList" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "TaskList")">
+								<a href = "/ProjectNamePlaceHolder/TaskList" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "TaskList")">
 									<i class="fas fa-circle nav-icon"></i>
 									<span>
 										@Localizer["Task List"]
@@ -150,7 +150,7 @@
                                 @foreach (var item in reportList)
                                 {
                                     <li class="nav-item">
-                                        <a href="/AreaPlaceHolder/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
+                                        <a href="/ProjectNamePlaceHolder/Report?Id=@item["ReportId"]" class="nav-link @ManageNavPages.PageNavClass(ViewContext, item["ReportClass"])">
                                             <i class="fas fa-circle nav-icon"></i>
                                             <span>@item["ReportName"]</span>
                                         </a>

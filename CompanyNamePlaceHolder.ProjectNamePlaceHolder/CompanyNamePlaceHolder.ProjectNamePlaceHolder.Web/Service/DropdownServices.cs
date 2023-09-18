@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Users;
 using MediatR;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.Roles;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Report.Queries;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.Report.Queries;
 using System.Globalization;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
@@ -23,14 +23,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 		public async Task<IEnumerable<SelectListItem>> GetRoleList()
         {
             return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
-        }
-		public SelectList GetReportTableList(string? id)
-        {
-            return _context.GetSingle<ReportTableState>(e => e.Id == id, new()).Result.Match(
-                Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-                None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-            );
-        }
+        }	
         public IEnumerable<SelectListItem> QueryTypeList()
         {
             IList<SelectListItem> items = new List<SelectListItem>

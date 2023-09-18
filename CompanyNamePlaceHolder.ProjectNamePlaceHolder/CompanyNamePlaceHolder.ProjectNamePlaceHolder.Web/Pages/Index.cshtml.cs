@@ -14,6 +14,6 @@ public class IndexModel : PageModel
 
     public IActionResult OnGet()
     {
-        return Redirect("AreaPlaceHolder/Dashboard/Index");
+        return Redirect("ProjectNamePlaceHolder/Dashboard/Index");
     }
 }

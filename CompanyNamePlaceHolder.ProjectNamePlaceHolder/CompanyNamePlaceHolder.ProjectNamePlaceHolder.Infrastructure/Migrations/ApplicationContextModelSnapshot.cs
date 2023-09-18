@@ -20,7 +20,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CompanyNamePlaceHolder.Common.Data.Audit", b =>
                 {
@@ -29,7 +29,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .HasMaxLength(36)
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AffectedColumns")
                         .HasColumnType("nvarchar(max)");
@@ -68,7 +68,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalRecordState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalRecordState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -128,7 +128,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ApprovalRecord");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -210,7 +210,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("Approval");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverAssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverAssignmentState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -272,7 +272,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ApproverAssignment");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverSetupState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverSetupState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -344,7 +344,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ApproverSetup");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.AssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.AssignmentState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -409,7 +409,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("Assignment");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.DeliveryState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.DeliveryState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -493,241 +493,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("Delivery");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnDetailState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("ArithmeticOperator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Entity")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("FieldName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Function")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReportColumnHeaderId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("ReportColumnId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReportTableId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<int?>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TableId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LastModifiedBy");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.HasIndex("ReportColumnHeaderId");
-
-                    b.HasIndex("ReportTableId");
-
-                    b.ToTable("ReportColumnDetail");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnFilterState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("ComparisonOperator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Entity")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("FieldName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsString")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LogicalOperator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReportFilterGroupingId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("ReportTableId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("TableId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LastModifiedBy");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.HasIndex("ReportFilterGroupingId");
-
-                    b.HasIndex("ReportTableId");
-
-                    b.ToTable("ReportColumnFilter");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("AggregationOperator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Alias")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Entity")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReportId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LastModifiedBy");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("ReportColumnHeader");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Entity")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<int?>("GroupLevel")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LogicalOperator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReportId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<int?>("Sequence")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LastModifiedBy");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("ReportFilterGrouping");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportQueryFilterState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportQueryFilterState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -795,7 +561,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportQueryFilter");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportRoleAssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportRoleAssignmentState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -844,7 +610,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("ReportRoleAssignment");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -910,137 +676,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableJoinParameterState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Entity")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("FieldName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JoinFromFieldName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JoinFromTableId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LogicalOperator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReportId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("ReportTableId")
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TableId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LastModifiedBy");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.HasIndex("ReportId");
-
-                    b.HasIndex("ReportTableId");
-
-                    b.ToTable("ReportTableJoinParameter");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("Alias")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Entity")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("JoinType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReportId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TableName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("Entity");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("LastModifiedBy");
-
-                    b.HasIndex("LastModifiedDate");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("ReportTable");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.TaskListState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.TaskListState", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -1119,9 +755,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.ToTable("TaskList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalRecordState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalRecordState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverSetupState", "ApproverSetup")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverSetupState", "ApproverSetup")
                         .WithMany()
                         .HasForeignKey("ApproverSetupId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1130,9 +766,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ApproverSetup");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalRecordState", "ApprovalRecord")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalRecordState", "ApprovalRecord")
                         .WithMany("ApprovalList")
                         .HasForeignKey("ApprovalRecordId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1141,9 +777,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ApprovalRecord");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverAssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverAssignmentState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverSetupState", "ApproverSetup")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverSetupState", "ApproverSetup")
                         .WithMany("ApproverAssignmentList")
                         .HasForeignKey("ApproverSetupId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1152,9 +788,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("ApproverSetup");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.AssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.AssignmentState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.TaskListState", "TaskList")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.TaskListState", "TaskList")
                         .WithMany("AssignmentList")
                         .HasForeignKey("TaskListCode")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1163,9 +799,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("TaskList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.DeliveryState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.DeliveryState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.AssignmentState", "Assignment")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.AssignmentState", "Assignment")
                         .WithMany("DeliveryList")
                         .HasForeignKey("AssignmentCode")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1174,57 +810,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("Assignment");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnDetailState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportQueryFilterState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", "ReportColumnHeader")
-                        .WithMany("ReportColumnDetailList")
-                        .HasForeignKey("ReportColumnHeaderId");
-
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", "ReportTable")
-                        .WithMany("ReportColumnDetailList")
-                        .HasForeignKey("ReportTableId");
-
-                    b.Navigation("ReportColumnHeader");
-
-                    b.Navigation("ReportTable");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnFilterState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", "ReportFilterGrouping")
-                        .WithMany("ReportColumnFilterList")
-                        .HasForeignKey("ReportFilterGroupingId");
-
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", "ReportTable")
-                        .WithMany("ReportColumnFilterList")
-                        .HasForeignKey("ReportTableId");
-
-                    b.Navigation("ReportFilterGrouping");
-
-                    b.Navigation("ReportTable");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
-                        .WithMany("ReportColumnHeaderList")
-                        .HasForeignKey("ReportId");
-
-                    b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
-                        .WithMany("ReportFilterGroupingList")
-                        .HasForeignKey("ReportId");
-
-                    b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportQueryFilterState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
                         .WithMany("ReportQueryFilterList")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1233,9 +821,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportRoleAssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportRoleAssignmentState", b =>
                 {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
+                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
                         .WithMany("ReportRoleAssignmentList")
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1244,84 +832,29 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableJoinParameterState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
-                        .WithMany("ReportTableJoinParameterList")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", "ReportTable")
-                        .WithMany("ReportTableJoinParameterList")
-                        .HasForeignKey("ReportTableId");
-
-                    b.Navigation("Report");
-
-                    b.Navigation("ReportTable");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", "Report")
-                        .WithMany("ReportTableList")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApprovalRecordState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApprovalRecordState", b =>
                 {
                     b.Navigation("ApprovalList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ApproverSetupState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverSetupState", b =>
                 {
                     b.Navigation("ApproverAssignmentList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.AssignmentState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.AssignmentState", b =>
                 {
                     b.Navigation("DeliveryList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportColumnHeaderState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", b =>
                 {
-                    b.Navigation("ReportColumnDetailList");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportFilterGroupingState", b =>
-                {
-                    b.Navigation("ReportColumnFilterList");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportState", b =>
-                {
-                    b.Navigation("ReportColumnHeaderList");
-
-                    b.Navigation("ReportFilterGroupingList");
-
                     b.Navigation("ReportQueryFilterList");
 
                     b.Navigation("ReportRoleAssignmentList");
-
-                    b.Navigation("ReportTableJoinParameterList");
-
-                    b.Navigation("ReportTableList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.ReportTableState", b =>
-                {
-                    b.Navigation("ReportColumnDetailList");
-
-                    b.Navigation("ReportColumnFilterList");
-
-                    b.Navigation("ReportTableJoinParameterList");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder.TaskListState", b =>
+            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.TaskListState", b =>
                 {
                     b.Navigation("AssignmentList");
                 });

@@ -1,5 +1,5 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -98,7 +98,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
         {
             if (message.Contains(EmailContentPlaceHolder.ApprovalUrl))
             {
-				message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/AreaPlaceHolder/{Core.Helpers.ConstantHelper.GetPropertyNameByValue(typeof(ApprovalModule), approvalRecord!.ApproverSetup!.TableName)}/Approve?Id={approvalRecord.DataId}");
+				message = message.Replace(EmailContentPlaceHolder.ApprovalUrl, $"{_baseUrl}/ProjectNamePlaceHolder/{Core.Helpers.ConstantHelper.GetPropertyNameByValue(typeof(ApprovalModule), approvalRecord!.ApproverSetup!.TableName)}/Approve?Id={approvalRecord.DataId}");
             }
             return message;
         }

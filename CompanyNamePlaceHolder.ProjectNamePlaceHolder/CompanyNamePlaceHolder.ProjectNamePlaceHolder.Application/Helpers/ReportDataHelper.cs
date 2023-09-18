@@ -1,6 +1,6 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.DTOs;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Data;
