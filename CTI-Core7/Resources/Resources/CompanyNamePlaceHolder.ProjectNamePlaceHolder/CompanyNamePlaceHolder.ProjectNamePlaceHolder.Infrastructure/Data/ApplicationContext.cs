@@ -14,13 +14,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     {
         _authenticatedUser = authenticatedUser;
     }
-    public DbSet<ReportState> Report { get; set; } = default!;
-    public DbSet<ReportTableState> ReportTable { get; set; } = default!;
-    public DbSet<ReportTableJoinParameterState> ReportTableJoinParameter { get; set; } = default!;
-    public DbSet<ReportColumnHeaderState> ReportColumnHeader { get; set; } = default!;
-    public DbSet<ReportColumnDetailState> ReportColumnDetail { get; set; } = default!;
-    public DbSet<ReportFilterGroupingState> ReportFilterGrouping { get; set; } = default!;
-    public DbSet<ReportColumnFilterState> ReportColumnFilter { get; set; } = default!;
+    public DbSet<ReportState> Report { get; set; } = default!;  
     public DbSet<ReportQueryFilterState> ReportQueryFilter { get; set; } = default!;
     public DbSet<ReportRoleAssignmentState> ReportRoleAssignment { get; set; } = default!;
 	

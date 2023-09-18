@@ -33,39 +33,7 @@ public class AddModel : BasePageModel<AddModel>
     }	
 	public IActionResult OnPostChangeFormValue()
     {
-        ModelState.Clear();
-		if (AsyncAction == "AddReportTable")
-		{
-			return AddReportTable();
-		}
-		if (AsyncAction == "RemoveReportTable")
-		{
-			return RemoveReportTable();
-		}
-		if (AsyncAction == "AddReportTableJoinParameter")
-		{
-			return AddReportTableJoinParameter();
-		}
-		if (AsyncAction == "RemoveReportTableJoinParameter")
-		{
-			return RemoveReportTableJoinParameter();
-		}
-		if (AsyncAction == "AddReportColumnHeader")
-		{
-			return AddReportColumnHeader();
-		}
-		if (AsyncAction == "RemoveReportColumnHeader")
-		{
-			return RemoveReportColumnHeader();
-		}
-		if (AsyncAction == "AddReportFilterGrouping")
-		{
-			return AddReportFilterGrouping();
-		}
-		if (AsyncAction == "RemoveReportFilterGrouping")
-		{
-			return RemoveReportFilterGrouping();
-		}
+        ModelState.Clear();		
 		if (AsyncAction == "AddReportQueryFilter")
 		{
 			return AddReportQueryFilter();
@@ -78,62 +46,6 @@ public class AddModel : BasePageModel<AddModel>
 		
         return Partial("_InputFieldsPartial", Report);
     }
-	
-	private IActionResult AddReportTable()
-	{
-		ModelState.Clear();
-		if (Report!.ReportTableList == null) { Report!.ReportTableList = new List<ReportTableViewModel>(); }
-		Report!.ReportTableList!.Add(new ReportTableViewModel() { ReportId = Report.Id });
-		return Partial("_InputFieldsPartial", Report);
-	}
-	private IActionResult RemoveReportTable()
-	{
-		ModelState.Clear();
-		Report.ReportTableList = Report!.ReportTableList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Report);
-	}
-
-	private IActionResult AddReportTableJoinParameter()
-	{
-		ModelState.Clear();
-		if (Report!.ReportTableJoinParameterList == null) { Report!.ReportTableJoinParameterList = new List<ReportTableJoinParameterViewModel>(); }
-		Report!.ReportTableJoinParameterList!.Add(new ReportTableJoinParameterViewModel() { ReportId = Report.Id });
-		return Partial("_InputFieldsPartial", Report);
-	}
-	private IActionResult RemoveReportTableJoinParameter()
-	{
-		ModelState.Clear();
-		Report.ReportTableJoinParameterList = Report!.ReportTableJoinParameterList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Report);
-	}
-
-	private IActionResult AddReportColumnHeader()
-	{
-		ModelState.Clear();
-		if (Report!.ReportColumnHeaderList == null) { Report!.ReportColumnHeaderList = new List<ReportColumnHeaderViewModel>(); }
-		Report!.ReportColumnHeaderList!.Add(new ReportColumnHeaderViewModel() { ReportId = Report.Id });
-		return Partial("_InputFieldsPartial", Report);
-	}
-	private IActionResult RemoveReportColumnHeader()
-	{
-		ModelState.Clear();
-		Report.ReportColumnHeaderList = Report!.ReportColumnHeaderList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Report);
-	}
-
-	private IActionResult AddReportFilterGrouping()
-	{
-		ModelState.Clear();
-		if (Report!.ReportFilterGroupingList == null) { Report!.ReportFilterGroupingList = new List<ReportFilterGroupingViewModel>(); }
-		Report!.ReportFilterGroupingList!.Add(new ReportFilterGroupingViewModel() { ReportId = Report.Id });
-		return Partial("_InputFieldsPartial", Report);
-	}
-	private IActionResult RemoveReportFilterGrouping()
-	{
-		ModelState.Clear();
-		Report.ReportFilterGroupingList = Report!.ReportFilterGroupingList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Report);
-	}
 
 	private IActionResult AddReportQueryFilter()
 	{

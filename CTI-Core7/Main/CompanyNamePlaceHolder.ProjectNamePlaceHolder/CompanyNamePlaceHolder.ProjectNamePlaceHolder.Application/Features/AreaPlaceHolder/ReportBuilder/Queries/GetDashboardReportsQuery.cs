@@ -30,11 +30,7 @@ public class GetDashboardReportsQueryHandler : IRequestHandler<GetDashboardRepor
                               join r in _identityContext.Roles on ur.RoleId equals r.Id
                               where ur.UserId == _authenticatedUser.UserId
                               select r.Name).Distinct().ToListAsync(cancellationToken);
-        var reportList = await _context.Report
-            .Include(l => l.ReportTableList)
-            .Include(l => l.ReportTableJoinParameterList)
-            .Include(l => l.ReportColumnHeaderList)
-            .Include(l => l.ReportFilterGroupingList)
+        var reportList = await _context.Report         
             .Include(l => l.ReportQueryFilterList)
             .Where(e => e.DisplayOnDashboard == true).AsNoTracking()
             .Where(l => l.ReportRoleAssignmentList!.Any(ra => roleList.Contains(ra.RoleName)))
