@@ -10,14 +10,7 @@
 </div>
 @if (Model.QueryType == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.QueryType.QueryBuilder)
 {
-    <br />
-    <partial name="_ReportTableList" model="Model" />
-    <br />
-    <partial name="_ReportTableJoinParameterList" model="Model" />
-    <br />
-    <partial name="_ReportColumnHeaderList" model="Model" />
-    <br />
-    <partial name="_ReportFilterGroupingList" model="Model" />
+   
 }
 else if (Model.QueryType == CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.QueryType.TSql)
 {

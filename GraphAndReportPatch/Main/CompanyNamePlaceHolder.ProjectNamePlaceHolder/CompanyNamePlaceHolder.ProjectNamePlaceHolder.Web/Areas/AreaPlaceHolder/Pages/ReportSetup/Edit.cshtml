@@ -22,11 +22,7 @@
     <i class="fas fa-chevron-up"></i>
 </a>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <partial name="_ReportTableListValidationPartial" model="@Model.Report" />
-    <partial name="_ReportTableJoinParameterListValidationPartial" model="@Model.Report" />
-    <partial name="_ReportColumnHeaderListValidationPartial" model="@Model.Report" />
-    <partial name="_ReportFilterGroupingListValidationPartial" model="@Model.Report" />
+    <partial name="_ValidationScriptsPartial" />   
     <partial name="_ReportQueryFilterListValidationPartial" model="@Model.Report" />
     <partial name="_CodeMirrorScripts" />
     <script asp-add-nonce>
@@ -39,70 +35,6 @@
                     this.blur();
                     window.focus();
                 });
-
-                $.InitializeReportTableFieldValidations($('#ReportTableCount').val());
-                $('.RemoveReportTableButton ').on('click', function () {
-                    $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                    $('#AsyncAction').val('RemoveReportTable');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $('#btnAddReportTable').on('click', function () {
-                    $('#AsyncAction').val('AddReportTable');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $.InitializeReportTableJoinParameterFieldValidations($('#ReportTableJoinParameterCount').val());
-                $('.RemoveReportTableJoinParameterButton ').on('click', function () {
-                    $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                    $('#AsyncAction').val('RemoveReportTableJoinParameter');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $('#btnAddReportTableJoinParameter').on('click', function () {
-                    $('#AsyncAction').val('AddReportTableJoinParameter');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $.fn.reporttableSelect = function () {
-                    this.filter("select").each(function () {
-                        $(this).ajaxSelect({
-                            ajax: {
-                                url: '@Url.Page("/ReportTable/Index", new { area = "AreaPlaceHolder", handler = "Select2Data" })',
-                            }
-                        });
-                    });
-                    return this;
-                };
-                var reporttablelistdropdowns = document.getElementsByClassName('SelectReportTable');
-                for (var i = 0; i < reporttablelistdropdowns.length; i++) {
-                    $("#ReportTableJoinParameterList_" + i + "_TableId").reporttableSelect();
-                }
-
-                $.InitializeReportColumnHeaderFieldValidations($('#ReportColumnHeaderCount').val());
-                $('.RemoveReportColumnHeaderButton ').on('click', function () {
-                    $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                    $('#AsyncAction').val('RemoveReportColumnHeader');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $('#btnAddReportColumnHeader').on('click', function () {
-                    $('#AsyncAction').val('AddReportColumnHeader');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $.InitializeReportFilterGroupingFieldValidations($('#ReportFilterGroupingCount').val());
-                $('.RemoveReportFilterGroupingButton ').on('click', function () {
-                    $('#RemoveSubDetailId').val($(this).attr('removeid'));
-                    $('#AsyncAction').val('RemoveReportFilterGrouping');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
-                $('#btnAddReportFilterGrouping').on('click', function () {
-                    $('#AsyncAction').val('AddReportFilterGrouping');
-                    $.triggerPageForm('ChangeFormValue', '#PartialLoaderContainer', '#report-form', InitializeForm);
-                });
-
                 $.InitializeReportQueryFilterFieldValidations($('#ReportQueryFilterCount').val());
                 $('.RemoveReportQueryFilterButton ').on('click', function () {
                     $('#RemoveSubDetailId').val($(this).attr('removeid'));
