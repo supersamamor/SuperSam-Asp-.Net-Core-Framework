@@ -37,58 +37,14 @@ public class AddReportCommandHandler : BaseCommandHandler<ApplicationContext, Re
         {
             return Error.New(error);
         }
-        ReportState entity = Mapper.Map<ReportState>(request);
-		UpdateReportTableList(entity);
-		UpdateReportTableJoinParameterList(entity);
-		UpdateReportColumnHeaderList(entity);
-		UpdateReportFilterGroupingList(entity);
+        ReportState entity = Mapper.Map<ReportState>(request);		
 		UpdateReportQueryFilterList(entity);
 		UpdateReportRoleAssignmentList(entity);
         _ = await Context.AddAsync(entity, cancellationToken);	
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, ReportState>(entity);
-	}
-	
-	private void UpdateReportTableList(ReportState entity)
-	{
-		if (entity.ReportTableList?.Count > 0)
-		{
-			foreach (var reportTable in entity.ReportTableList!)
-			{
-				Context.Entry(reportTable).State = EntityState.Added;
-			}
-		}
-	}
-	private void UpdateReportTableJoinParameterList(ReportState entity)
-	{
-		if (entity.ReportTableJoinParameterList?.Count > 0)
-		{
-			foreach (var reportTableJoinParameter in entity.ReportTableJoinParameterList!)
-			{
-				Context.Entry(reportTableJoinParameter).State = EntityState.Added;
-			}
-		}
-	}
-	private void UpdateReportColumnHeaderList(ReportState entity)
-	{
-		if (entity.ReportColumnHeaderList?.Count > 0)
-		{
-			foreach (var reportColumnHeader in entity.ReportColumnHeaderList!)
-			{
-				Context.Entry(reportColumnHeader).State = EntityState.Added;
-			}
-		}
-	}
-	private void UpdateReportFilterGroupingList(ReportState entity)
-	{
-		if (entity.ReportFilterGroupingList?.Count > 0)
-		{
-			foreach (var reportFilterGrouping in entity.ReportFilterGroupingList!)
-			{
-				Context.Entry(reportFilterGrouping).State = EntityState.Added;
-			}
-		}
-	}
+	}	
+
 	private void UpdateReportQueryFilterList(ReportState entity)
 	{
 		if (entity.ReportQueryFilterList?.Count > 0)
