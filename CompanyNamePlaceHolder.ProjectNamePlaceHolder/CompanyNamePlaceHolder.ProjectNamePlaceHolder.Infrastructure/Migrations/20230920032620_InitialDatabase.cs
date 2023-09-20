@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class InitialDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,6 +53,34 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AuditLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Delivery",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    DeliveryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApprovedTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssignmentCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeliveryAttachment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EndorsedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ActualDeliveryRemarks = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ApproverRemarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EndorsedTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActualDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndorserRemarks = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Delivery", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,40 +298,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Delivery",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    ApproverRemarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EndorserRemarks = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    EndorsedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ApprovedTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EndorsedTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeliveryCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ActualDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeliveryAttachment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ActualDeliveryRemarks = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    AssignmentCode = table.Column<string>(type: "nvarchar(36)", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Delivery", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Delivery_Assignment_AssignmentCode",
-                        column: x => x.AssignmentCode,
-                        principalTable: "Assignment",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Approval_ApprovalRecordId",
                 table: "Approval",
@@ -500,20 +494,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 column: "PrimaryKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Delivery_AssignmentCode",
-                table: "Delivery",
-                column: "AssignmentCode");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Delivery_CreatedBy",
                 table: "Delivery",
                 column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Delivery_DeliveryCode",
-                table: "Delivery",
-                column: "DeliveryCode",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Delivery_Entity",
@@ -662,6 +645,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 name: "ApproverAssignment");
 
             migrationBuilder.DropTable(
+                name: "Assignment");
+
+            migrationBuilder.DropTable(
                 name: "AuditLogs");
 
             migrationBuilder.DropTable(
@@ -677,16 +663,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 name: "ApprovalRecord");
 
             migrationBuilder.DropTable(
-                name: "Assignment");
+                name: "TaskList");
 
             migrationBuilder.DropTable(
                 name: "Report");
 
             migrationBuilder.DropTable(
                 name: "ApproverSetup");
-
-            migrationBuilder.DropTable(
-                name: "TaskList");
         }
     }
 }

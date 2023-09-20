@@ -37,31 +37,8 @@ public class EditModel : BasePageModel<EditModel>
 	public IActionResult OnPostChangeFormValue()
     {
         ModelState.Clear();
-		if (AsyncAction == "AddDelivery")
-		{
-			return AddDelivery();
-		}
-		if (AsyncAction == "RemoveDelivery")
-		{
-			return RemoveDelivery();
-		}
-		
 		
         return Partial("_InputFieldsPartial", Assignment);
     }
-	
-	private IActionResult AddDelivery()
-	{
-		ModelState.Clear();
-		if (Assignment!.DeliveryList == null) { Assignment!.DeliveryList = new List<DeliveryViewModel>(); }
-		Assignment!.DeliveryList!.Add(new DeliveryViewModel() { AssignmentCode = Assignment.Id });
-		return Partial("_InputFieldsPartial", Assignment);
-	}
-	private IActionResult RemoveDelivery()
-	{
-		ModelState.Clear();
-		Assignment.DeliveryList = Assignment!.DeliveryList!.Where(l => l.Id != RemoveSubDetailId).ToList();
-		return Partial("_InputFieldsPartial", Assignment);
-	}
 	
 }

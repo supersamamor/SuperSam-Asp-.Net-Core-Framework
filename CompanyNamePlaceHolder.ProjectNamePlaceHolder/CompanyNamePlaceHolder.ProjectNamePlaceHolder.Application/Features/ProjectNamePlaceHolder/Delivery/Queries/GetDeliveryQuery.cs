@@ -15,10 +15,5 @@ public class GetDeliveryQueryHandler : BaseQueryHandler<ApplicationContext, Deli
     public GetDeliveryQueryHandler(ApplicationContext context) : base(context)
     {
     }
-	public override async Task<PagedListResponse<DeliveryState>> Handle(GetDeliveryQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<DeliveryState>()
-		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
-			request.SortColumn, request.SortOrder,
-			request.PageNumber, request.PageSize,
-			cancellationToken);	
+		
 }

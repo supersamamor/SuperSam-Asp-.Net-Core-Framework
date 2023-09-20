@@ -43,29 +43,29 @@ public class DeliveryController : BaseApiController<DeliveryController>
 
 public record DeliveryViewModel
 {
-    
-	public string? ApproverRemarks { get;set; }
-	
-	public string? Status { get;set; }
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? EndorserRemarks { get;set; }
-	public DateTime? EndorsedDate { get;set; } = DateTime.Now.Date;
-	
-	public string? ApprovedTag { get;set; }
-	
-	public string? EndorsedTag { get;set; }
-	[Required]
+    [Required]
 	
 	public string DeliveryCode { get;set; } = "";
-	[Required]
-	public DateTime ActualDeliveryDate { get;set; } = DateTime.Now.Date;
-	[Required]
-	public string? DeliveryAttachment { get;set; } = "";
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string? ActualDeliveryRemarks { get;set; }
+	
+	public string? ApprovedTag { get;set; }
 	[Required]
 	
 	public string AssignmentCode { get;set; } = "";
+	[Required]
+	public string? DeliveryAttachment { get;set; } = "";
+	public DateTime? EndorsedDate { get;set; } = DateTime.Now.Date;
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? ActualDeliveryRemarks { get;set; }
+	
+	public string? ApproverRemarks { get;set; }
+	
+	public string? EndorsedTag { get;set; }
+	[Required]
+	public DateTime ActualDeliveryDate { get;set; } = DateTime.Now.Date;
+	
+	public string? Status { get;set; }
 	public DateTime? DueDate { get;set; } = DateTime.Now.Date;
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string? EndorserRemarks { get;set; }
 	   
 }

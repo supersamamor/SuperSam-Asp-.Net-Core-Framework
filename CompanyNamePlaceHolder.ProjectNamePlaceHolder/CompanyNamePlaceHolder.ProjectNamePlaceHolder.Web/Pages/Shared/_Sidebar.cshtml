@@ -129,17 +129,18 @@
 								</a>
 							</li>
 						}
-                    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.View)).Succeeded)
-                    {
-                        <li class="nav-item">
-                            <a href="/ProjectNamePlaceHolder/Delivery" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Delivery")">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <span>
-                                    @Localizer["Delivery"]
-                                </span>
-                            </a>
-                        </li>
-                    }
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/ProjectNamePlaceHolder/Delivery" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Delivery")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["Delivery Submission"]
+									</span>
+								</a>
+							</li>
+						}
+						
                 </ul>
             </li>
 			@{

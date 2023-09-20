@@ -70,14 +70,12 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		
         modelBuilder.Entity<TaskListState>().HasIndex(p => p.TaskListCode).IsUnique();
 		modelBuilder.Entity<AssignmentState>().HasIndex(p => p.AssignmentCode).IsUnique();
-		modelBuilder.Entity<DeliveryState>().HasIndex(p => p.DeliveryCode).IsUnique();
 		
         modelBuilder.Entity<TaskListState>().Property(e => e.TaskDescription).HasMaxLength(255);
-		modelBuilder.Entity<DeliveryState>().Property(e => e.EndorserRemarks).HasMaxLength(255);
 		modelBuilder.Entity<DeliveryState>().Property(e => e.ActualDeliveryRemarks).HasMaxLength(255);
+		modelBuilder.Entity<DeliveryState>().Property(e => e.EndorserRemarks).HasMaxLength(255);
 		
         modelBuilder.Entity<TaskListState>().HasMany(t => t.AssignmentList).WithOne(l => l.TaskList).HasForeignKey(t => t.TaskListCode);
-	
 		
 		modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);

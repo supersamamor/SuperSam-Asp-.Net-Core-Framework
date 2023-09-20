@@ -5,7 +5,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Helper;
 
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.Delivery;
@@ -25,26 +25,26 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
+		var approvalHelper = new ApprovalHelper(Mediatr);
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetDeliveryQuery>());
         return new JsonResult(result.Data
             .Select(e => new
             {
                 e.Id,
-                e.ApproverRemarks,
-				e.Status,
-				e.EndorserRemarks,
-				EndorsedDate = e.EndorsedDate?.ToString("MMM dd, yyyy HH:mm"),
+                e.DeliveryCode,
 				e.ApprovedTag,
-				e.EndorsedTag,
-				e.DeliveryCode,
-				ActualDeliveryDate = e.ActualDeliveryDate.ToString("MMM dd, yyyy HH:mm"),
+				e.AssignmentCode,
 				e.DeliveryAttachment,
+				EndorsedDate = e.EndorsedDate?.ToString("MMM dd, yyyy HH:mm"),
 				e.ActualDeliveryRemarks,
-				AssignmentCode = e.AssignmentCode,
+				e.ApproverRemarks,
+				e.EndorsedTag,
+				ActualDeliveryDate = e.ActualDeliveryDate.ToString("MMM dd, yyyy HH:mm"),
+				e.Status,
 				DueDate = e.DueDate?.ToString("MMM dd, yyyy HH:mm"),
+				e.EndorserRemarks,
 						
-				
+				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
                 e.LastModifiedDate
             })
             .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
@@ -52,7 +52,7 @@ public class IndexModel : BasePageModel<IndexModel>
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetDeliveryQuery>(nameof(DeliveryState.DeliveryCode)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.DeliveryCode }));
+        var result = await Mediatr.Send(request.ToQuery<GetDeliveryQuery>(nameof(DeliveryState.Id)));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Id }));
     }
 }

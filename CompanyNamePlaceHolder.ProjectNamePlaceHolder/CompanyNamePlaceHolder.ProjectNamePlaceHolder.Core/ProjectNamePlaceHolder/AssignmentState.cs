@@ -14,6 +14,5 @@ public record AssignmentState : BaseEntity
 	
 	public TaskListState? TaskList { get; init; }
 	
-	public IList<DeliveryState>? DeliveryList { get; set; }
 	
 }

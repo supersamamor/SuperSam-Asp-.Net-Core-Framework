@@ -18,7 +18,6 @@ public class GetAssignmentByIdQueryHandler : BaseQueryByIdHandler<ApplicationCon
 	public override async Task<Option<AssignmentState>> Handle(GetAssignmentByIdQuery request, CancellationToken cancellationToken = default)
 	{
 		return await Context.Assignment.Include(l=>l.TaskList)
-			.Include(l=>l.DeliveryList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

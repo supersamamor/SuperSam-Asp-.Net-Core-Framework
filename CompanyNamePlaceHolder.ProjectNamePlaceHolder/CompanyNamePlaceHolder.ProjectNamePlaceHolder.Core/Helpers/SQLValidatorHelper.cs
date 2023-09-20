@@ -25,7 +25,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Helpers
                 {
                     validationResult += "Sql Script has `Create`. "; 
                 }
-                if (Regex.IsMatch(sqlScript, @"\bALTER\b", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(sqlScript, @"\bALTER\b(?!.*TABLE\s+(#TempTable|#\w+))", RegexOptions.IgnoreCase))
                 {
                     validationResult += "Sql Script has `Alter`. ";
                 }

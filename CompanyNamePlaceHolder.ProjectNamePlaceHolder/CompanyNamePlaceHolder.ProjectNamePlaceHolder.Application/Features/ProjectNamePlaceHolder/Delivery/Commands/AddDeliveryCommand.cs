@@ -35,6 +35,7 @@ public class AddDeliveryCommandHandler : BaseCommandHandler<ApplicationContext, 
 	{
 		DeliveryState entity = Mapper.Map<DeliveryState>(request);
 		_ = await Context.AddAsync(entity, cancellationToken);
+		await Helpers.ApprovalHelper.AddApprovers(Context, _identityContext, ApprovalModule.Delivery, entity.Id, cancellationToken);
 		_ = await Context.SaveChangesAsync(cancellationToken);
 		return Success<Error, DeliveryState>(entity);
 	}
@@ -52,7 +53,6 @@ public class AddDeliveryCommandValidator : AbstractValidator<AddDeliveryCommand>
 
         RuleFor(x => x.Id).MustAsync(async (id, cancellation) => await _context.NotExists<DeliveryState>(x => x.Id == id, cancellationToken: cancellation))
                           .WithMessage("Delivery with id {PropertyValue} already exists");
-        RuleFor(x => x.DeliveryCode).MustAsync(async (deliveryCode, cancellation) => await _context.NotExists<DeliveryState>(x => x.DeliveryCode == deliveryCode, cancellationToken: cancellation)).WithMessage("Delivery with deliveryCode {PropertyValue} already exists");
-	
+        
     }
 }

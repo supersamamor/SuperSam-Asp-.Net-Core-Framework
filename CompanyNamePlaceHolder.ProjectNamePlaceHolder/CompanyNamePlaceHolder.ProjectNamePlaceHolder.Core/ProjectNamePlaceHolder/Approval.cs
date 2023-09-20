@@ -148,10 +148,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHol
 	public static class ApprovalModule
 	{
 		public const string TaskList = "Task List";
+		public const string Delivery = "Delivery Submission";
 		public static readonly List<string> ApprovalTableList =
 		new()
 		{
 			TaskList,
+			Delivery,
 		};
 	}
 }

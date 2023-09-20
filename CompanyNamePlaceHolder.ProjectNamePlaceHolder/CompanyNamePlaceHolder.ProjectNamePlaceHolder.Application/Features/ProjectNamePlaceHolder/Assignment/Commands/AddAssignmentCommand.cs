@@ -26,30 +26,11 @@ public class AddAssignmentCommandHandler : BaseCommandHandler<ApplicationContext
 		_identityContext = identityContext;
     }
 
-    public async Task<Validation<Error, AssignmentState>> Handle(AddAssignmentCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, AssignmentState>> Handle(AddAssignmentCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await AddAssignment(request, cancellationToken));
-
-
-	public async Task<Validation<Error, AssignmentState>> AddAssignment(AddAssignmentCommand request, CancellationToken cancellationToken)
-	{
-		AssignmentState entity = Mapper.Map<AssignmentState>(request);
-		UpdateDeliveryList(entity);
-		_ = await Context.AddAsync(entity, cancellationToken);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, AssignmentState>(entity);
-	}
+			async request => await Add(request, cancellationToken));
 	
-	private void UpdateDeliveryList(AssignmentState entity)
-	{
-		if (entity.DeliveryList?.Count > 0)
-		{
-			foreach (var delivery in entity.DeliveryList!)
-			{
-				Context.Entry(delivery).State = EntityState.Added;
-			}
-		}
-	}
 	
 }
 

@@ -17,43 +17,45 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["ApproverRemarks"]
-							</th>
-							<th>
-								@Localizer["Status"]
-							</th>
-							<th>
-								@Localizer["EndorserRemarks"]
-							</th>
-							<th>
-								@Localizer["Endorsed Date"]
+								@Localizer["Delivery Code"]
 							</th>
 							<th>
 								@Localizer["Approved Tag"]
 							</th>
 							<th>
-								@Localizer["Endorsed Tag"]
-							</th>
-							<th>
-								@Localizer["Delivery Code"]
-							</th>
-							<th>
-								@Localizer["Actual Delivery Date"]
+								@Localizer["Assignment Code"]
 							</th>
 							<th>
 								@Localizer["Delivery Attachment"]
 							</th>
 							<th>
+								@Localizer["Endorsed Date"]
+							</th>
+							<th>
 								@Localizer["Actual Delivery Remarks"]
 							</th>
 							<th>
-								@Localizer["Assignment Code"]
+								@Localizer["ApproverRemarks"]
+							</th>
+							<th>
+								@Localizer["Endorsed Tag"]
+							</th>
+							<th>
+								@Localizer["Actual Delivery Date"]
+							</th>
+							<th>
+								@Localizer["Status"]
 							</th>
 							<th>
 								@Localizer["Due Date"]
 							</th>
+							<th>
+								@Localizer["EndorserRemarks"]
+							</th>
 							  
-														
+							<th>
+								@Localizer["Status"]
+							</th> 							
                             <th>
                                 @Localizer["Actions"]
                             </th>
@@ -88,20 +90,20 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "approverRemarks", name: "ApproverRemarks", responsivePriority: 1, title: '@Localizer["ApproverRemarks"]', searchable: false },
-				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: true },
-				{ data: "endorserRemarks", name: "EndorserRemarks", responsivePriority: 1, title: '@Localizer["EndorserRemarks"]', searchable: false },
-				{ data: "endorsedDate", name: "EndorsedDate", responsivePriority: 1, title: '@Localizer["Endorsed Date"]', searchable: false },
+                { data: "deliveryCode", name: "DeliveryCode", responsivePriority: 1, title: '@Localizer["Delivery Code"]', searchable: true },
 				{ data: "approvedTag", name: "ApprovedTag", responsivePriority: 1, title: '@Localizer["Approved Tag"]', searchable: true },
-				{ data: "endorsedTag", name: "EndorsedTag", responsivePriority: 1, title: '@Localizer["Endorsed Tag"]', searchable: false },
-				{ data: "deliveryCode", name: "DeliveryCode", responsivePriority: 1, title: '@Localizer["Delivery Code"]', searchable: true },
-				{ data: "actualDeliveryDate", name: "ActualDeliveryDate", responsivePriority: 1, title: '@Localizer["Actual Delivery Date"]', searchable: false },
-				{ data: "deliveryAttachment", name: "DeliveryAttachment", responsivePriority: 1, title: '@Localizer["Delivery Attachment"]', searchable: false },
-				{ data: "actualDeliveryRemarks", name: "ActualDeliveryRemarks", responsivePriority: 1, title: '@Localizer["Actual Delivery Remarks"]', searchable: false },
 				{ data: "assignmentCode", name: "AssignmentCode", responsivePriority: 1, title: '@Localizer["Assignment Code"]', searchable: true },
+				{ data: "deliveryAttachment", name: "DeliveryAttachment", responsivePriority: 1, title: '@Localizer["Delivery Attachment"]', searchable: false },
+				{ data: "endorsedDate", name: "EndorsedDate", responsivePriority: 1, title: '@Localizer["Endorsed Date"]', searchable: false },
+				{ data: "actualDeliveryRemarks", name: "ActualDeliveryRemarks", responsivePriority: 1, title: '@Localizer["Actual Delivery Remarks"]', searchable: false },
+				{ data: "approverRemarks", name: "ApproverRemarks", responsivePriority: 1, title: '@Localizer["ApproverRemarks"]', searchable: false },
+				{ data: "endorsedTag", name: "EndorsedTag", responsivePriority: 1, title: '@Localizer["Endorsed Tag"]', searchable: false },
+				{ data: "actualDeliveryDate", name: "ActualDeliveryDate", responsivePriority: 1, title: '@Localizer["Actual Delivery Date"]', searchable: false },
+				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: true },
 				{ data: "dueDate", name: "DueDate", responsivePriority: 1, title: '@Localizer["Due Date"]', searchable: false },
+				{ data: "endorserRemarks", name: "EndorserRemarks", responsivePriority: 1, title: '@Localizer["EndorserRemarks"]', searchable: false },
 				   
-				
+				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {
                     data: null,
                     searchable: false,
@@ -125,7 +127,13 @@
                         button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteDelivery" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
                     </text>
                 }
-				  
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Delivery.Approve)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Delivery/Approve", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
+					</text>
+				}  
                         return button;
                     },
                 },

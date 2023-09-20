@@ -50,6 +50,10 @@ public class GetPendingApprovalsQueryHandler : IRequestHandler<GetPendingApprova
 		{
 			recordName = context.TaskList.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.TaskListCode;
 		}
+		if(tableName == ApprovalModule.Delivery)
+		{
+			recordName = context.Delivery.Where(l => l.Id == dataId).AsNoTracking().FirstOrDefault()?.Id;
+		}
 		        
         return recordName;
     }

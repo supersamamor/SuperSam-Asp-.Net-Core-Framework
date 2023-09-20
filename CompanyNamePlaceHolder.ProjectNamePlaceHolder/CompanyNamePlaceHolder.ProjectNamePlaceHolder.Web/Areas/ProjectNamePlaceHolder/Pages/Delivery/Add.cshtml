@@ -35,18 +35,6 @@
 				window.focus();
 			});
 			
-			$.fn.assignmentSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Assignment/Index", new { area = "ProjectNamePlaceHolder", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#AssignmentCode").assignmentSelect();
-
 		}	
 		InitializeForm();
     });

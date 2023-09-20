@@ -23,49 +23,11 @@ public class EditAssignmentCommandHandler : BaseCommandHandler<ApplicationContex
     {
     }
 
-    public async Task<Validation<Error, AssignmentState>> Handle(EditAssignmentCommand request, CancellationToken cancellationToken) =>
+    
+public async Task<Validation<Error, AssignmentState>> Handle(EditAssignmentCommand request, CancellationToken cancellationToken) =>
 		await Validators.ValidateTAsync(request, cancellationToken).BindT(
-			async request => await EditAssignment(request, cancellationToken));
-
-
-	public async Task<Validation<Error, AssignmentState>> EditAssignment(EditAssignmentCommand request, CancellationToken cancellationToken)
-	{
-		var entity = await Context.Assignment.Where(l => l.Id == request.Id).SingleAsync(cancellationToken: cancellationToken);
-		Mapper.Map(request, entity);
-		await UpdateDeliveryList(entity, request, cancellationToken);
-		Context.Update(entity);
-		_ = await Context.SaveChangesAsync(cancellationToken);
-		return Success<Error, AssignmentState>(entity);
-	}
+			async request => await Edit(request, cancellationToken));
 	
-	private async Task UpdateDeliveryList(AssignmentState entity, EditAssignmentCommand request, CancellationToken cancellationToken)
-	{
-		IList<DeliveryState> deliveryListForDeletion = new List<DeliveryState>();
-		var queryDeliveryForDeletion = Context.Delivery.Where(l => l.AssignmentCode == request.Id).AsNoTracking();
-		if (entity.DeliveryList?.Count > 0)
-		{
-			queryDeliveryForDeletion = queryDeliveryForDeletion.Where(l => !(entity.DeliveryList.Select(l => l.Id).ToList().Contains(l.Id)));
-		}
-		deliveryListForDeletion = await queryDeliveryForDeletion.ToListAsync(cancellationToken: cancellationToken);
-		foreach (var delivery in deliveryListForDeletion!)
-		{
-			Context.Entry(delivery).State = EntityState.Deleted;
-		}
-		if (entity.DeliveryList?.Count > 0)
-		{
-			foreach (var delivery in entity.DeliveryList.Where(l => !deliveryListForDeletion.Select(l => l.Id).Contains(l.Id)))
-			{
-				if (await Context.NotExists<DeliveryState>(x => x.Id == delivery.Id, cancellationToken: cancellationToken))
-				{
-					Context.Entry(delivery).State = EntityState.Added;
-				}
-				else
-				{
-					Context.Entry(delivery).State = EntityState.Modified;
-				}
-			}
-		}
-	}
 	
 }
 

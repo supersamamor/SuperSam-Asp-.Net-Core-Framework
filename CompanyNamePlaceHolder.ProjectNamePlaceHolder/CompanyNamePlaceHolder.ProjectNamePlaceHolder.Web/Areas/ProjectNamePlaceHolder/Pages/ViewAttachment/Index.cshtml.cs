@@ -2,7 +2,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.ViewAttachment
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.ViewAttachment
 {
     [Authorize]
     public class IndexModel : BasePageModel<IndexModel>

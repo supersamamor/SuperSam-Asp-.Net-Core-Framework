@@ -33,6 +33,5 @@ public record AssignmentViewModel : BaseViewModel
 	public DateTime LastModifiedDate { get; set; }
 	public TaskListViewModel? TaskList { get; init; }
 		
-	public IList<DeliveryViewModel>? DeliveryList { get; set; }
 	
 }

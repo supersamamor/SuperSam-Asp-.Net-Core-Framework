@@ -432,9 +432,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AssignmentStateId")
-                        .HasColumnType("nvarchar(36)");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
@@ -447,7 +444,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.Property<string>("DeliveryCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
@@ -478,12 +475,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignmentStateId");
-
                     b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeliveryCode")
-                        .IsUnique();
 
                     b.HasIndex("Entity");
 
@@ -802,13 +794,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Navigation("TaskList");
                 });
 
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.DeliveryState", b =>
-                {
-                    b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.AssignmentState", null)
-                        .WithMany("DeliveryList")
-                        .HasForeignKey("AssignmentStateId");
-                });
-
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportQueryFilterState", b =>
                 {
                     b.HasOne("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", "Report")
@@ -839,11 +824,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ApproverSetupState", b =>
                 {
                     b.Navigation("ApproverAssignmentList");
-                });
-
-            modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.AssignmentState", b =>
-                {
-                    b.Navigation("DeliveryList");
                 });
 
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder.ReportState", b =>
