@@ -36,7 +36,7 @@ public class ProjectNamePlaceHolderProfile : Profile
 		CreateMap<AssignmentViewModel, AssignmentState>();
 		CreateMap<DeliveryViewModel, AddDeliveryCommand>().ForPath(e => e.DeliveryAttachment, o => o.MapFrom(s => s.GeneratedDeliveryAttachmentPath));
 		CreateMap<DeliveryViewModel, EditDeliveryCommand>().ForPath(e => e.DeliveryAttachment, o => o.MapFrom(s => s.GeneratedDeliveryAttachmentPath));
-		CreateMap<DeliveryState, DeliveryViewModel>().ForPath(e => e.ReferenceFieldAssignmentCode, o => o.MapFrom(s => s.Assignment!.AssignmentCode));
+		CreateMap<DeliveryState, DeliveryViewModel>();
 		CreateMap<DeliveryViewModel, DeliveryState>();
 		
 		CreateMap<ApproverAssignmentState, ApproverAssignmentViewModel>().ReverseMap();

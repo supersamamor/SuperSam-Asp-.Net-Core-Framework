@@ -17,7 +17,7 @@ public class GetDeliveryByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	
 	public override async Task<Option<DeliveryState>> Handle(GetDeliveryByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.Delivery.Include(l=>l.Assignment)
+		return await Context.Delivery
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}
 	

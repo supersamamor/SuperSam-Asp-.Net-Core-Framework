@@ -77,7 +77,7 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<DeliveryState>().Property(e => e.ActualDeliveryRemarks).HasMaxLength(255);
 		
         modelBuilder.Entity<TaskListState>().HasMany(t => t.AssignmentList).WithOne(l => l.TaskList).HasForeignKey(t => t.TaskListCode);
-		modelBuilder.Entity<AssignmentState>().HasMany(t => t.DeliveryList).WithOne(l => l.Assignment).HasForeignKey(t => t.AssignmentCode);
+	
 		
 		modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);

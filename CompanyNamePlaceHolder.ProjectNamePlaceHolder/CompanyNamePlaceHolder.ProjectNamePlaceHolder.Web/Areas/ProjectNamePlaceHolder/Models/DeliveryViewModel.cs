@@ -27,14 +27,16 @@ public record DeliveryViewModel : BaseViewModel
 	[Display(Name = "Delivery Code")]
 	[Required]
 	
-	public string DeliveryCode { get; init; } = "";
+	public string DeliveryCode { get; init; } = "DeliveryCode";
 	[Display(Name = "Actual Delivery Date")]
 	[Required]
 	public DateTime ActualDeliveryDate { get; init; } = DateTime.Now.Date;
 	[Display(Name = "Delivery Attachment")]
 	[Required]
 	
-	public IFormFile? DeliveryAttachmentForm { get; set; }public string? DeliveryAttachment { get; init; } = "";
+	public IFormFile? DeliveryAttachmentForm { get; set; }
+
+	public string? DeliveryAttachment { get; init; } = "";
 	public string? GeneratedDeliveryAttachmentPath
 	{
 		get
@@ -48,7 +50,7 @@ public record DeliveryViewModel : BaseViewModel
 	[Display(Name = "Assignment Code")]
 	[Required]
 	
-	public string AssignmentCode { get; init; } = "";
+	public string AssignmentCode { get; init; } = "AssignmentCode";
 	public string?  ReferenceFieldAssignmentCode { get; set; }
 	[Display(Name = "Due Date")]
 	public DateTime? DueDate { get; init; } = DateTime.Now.Date;

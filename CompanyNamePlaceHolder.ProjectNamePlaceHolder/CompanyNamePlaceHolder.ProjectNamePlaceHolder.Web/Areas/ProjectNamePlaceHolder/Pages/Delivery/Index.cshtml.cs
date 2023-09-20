@@ -41,7 +41,7 @@ public class IndexModel : BasePageModel<IndexModel>
 				ActualDeliveryDate = e.ActualDeliveryDate.ToString("MMM dd, yyyy HH:mm"),
 				e.DeliveryAttachment,
 				e.ActualDeliveryRemarks,
-				AssignmentCode = e.Assignment?.AssignmentCode,
+				AssignmentCode = e.AssignmentCode,
 				DueDate = e.DueDate?.ToString("MMM dd, yyyy HH:mm"),
 						
 				

@@ -18,7 +18,7 @@ public record DeliveryState : BaseEntity
 	public string AssignmentCode { get; init; } = "";
 	public DateTime? DueDate { get; init; }
 	
-	public AssignmentState? Assignment { get; init; }
+
 	
 	
 }
