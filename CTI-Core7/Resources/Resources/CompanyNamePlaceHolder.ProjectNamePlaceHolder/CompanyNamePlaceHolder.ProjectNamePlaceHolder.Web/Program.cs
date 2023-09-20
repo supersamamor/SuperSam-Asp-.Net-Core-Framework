@@ -45,20 +45,12 @@ Template:[ApprovalProgramAddService]
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
-bool uploadFilesPathExists = System.IO.Directory.Exists(uploadFilesPath);
-if (!uploadFilesPathExists)
-    System.IO.Directory.CreateDirectory(uploadFilesPath);
-app.UseStaticFiles(new StaticFileOptions
+if (uploadFilesPath != null)
 {
-    OnPrepareResponse = ctx =>
-    {
-        const int durationInSeconds = 60 * 60 * 24 * 365;
-        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
-            "public,max-age=" + durationInSeconds;
-    },
-    FileProvider = new PhysicalFileProvider(uploadFilesPath),
-    RequestPath = "/" + WebConstants.UploadFilesPath
-});
+    bool uploadFilesPathExists = System.IO.Directory.Exists(uploadFilesPath);
+    if (!uploadFilesPathExists)
+        System.IO.Directory.CreateDirectory(uploadFilesPath);
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
