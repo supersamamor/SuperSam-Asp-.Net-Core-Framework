@@ -4,6 +4,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web
     {
         public const string UploadFilesPath = "UploadFilesPath";
 		public const string Delivery = "Delivery";
-		
+        public const string ViewAttachmentPath = "ViewAttachment";
     }
 }
