@@ -30,6 +30,7 @@ public static class QueryableExtensions
     {        
 	    if (!string.IsNullOrWhiteSpace(searchValue) && searchColumns != null)
         {
+			searchValue = searchValue.Replace("\\", "");
             var filter = string.Join(" OR ", searchColumns.Select(x => $"{x}.StartsWith(\"{searchValue}\")"));
             if (!string.IsNullOrWhiteSpace(filter))
             {
@@ -40,12 +41,16 @@ public static class QueryableExtensions
         {
             query = query.OrderBy($"{sortColumn} {sortOrder}");
         }
-        var totalCount = query.Count();
-        if (pageSize == -1)
-        {
-            pageSize = totalCount;
-        }
-        var data = await query.ToPagedListAsync(pageNumber, pageSize, null, cancellationToken);
-        return new PagedListResponse<T>(data, totalCount);
+		var totalCount = query.Count();
+		if (pageSize == -1)
+		{
+			pageSize = totalCount;
+			if (pageSize == 0)
+			{
+				pageSize = 1;
+			}        
+		}
+		var data = await query.ToPagedListAsync(pageNumber, pageSize, null, cancellationToken);
+		return new PagedListResponse<T>(data, totalCount);
     }
 }
