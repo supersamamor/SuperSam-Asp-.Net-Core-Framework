@@ -29,16 +29,17 @@ public abstract class AuditableContext : DbContext
     /// <returns></returns>
     public virtual async Task<int> SaveChangesAsync(string? userId = null, string? traceId = null, CancellationToken cancellationToken = default)
     {
-        var auditEntries = OnBeforeSaveChanges(userId, traceId);
+        var auditEntries = await OnBeforeSaveChanges(userId, traceId);
         var result = await base.SaveChangesAsync(cancellationToken);
         await OnAfterSaveChanges(auditEntries);
         return result;
     }
 
-    private List<AuditEntry> OnBeforeSaveChanges(string? userId, string? traceId)
+    private async Task<List<AuditEntry>> OnBeforeSaveChanges(string? userId, string? traceId)
     {
         ChangeTracker.DetectChanges();
         var auditEntries = new List<AuditEntry>();
+
         foreach (var entry in ChangeTracker.Entries())
         {
             if (entry.Entity is Audit || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
@@ -51,6 +52,7 @@ public abstract class AuditableContext : DbContext
                 TraceId = traceId
             };
             auditEntries.Add(auditEntry);
+
             foreach (var property in entry.Properties)
             {
                 if (property.IsTemporary)
@@ -90,12 +92,11 @@ public abstract class AuditableContext : DbContext
                 }
             }
         }
-        foreach (var auditEntry in auditEntries.Where(_ => !_.HasTemporaryProperties))
-        {
-            AuditLogs.Add(auditEntry.ToAudit());
-        }
+        // Use asynchronous AddRange to add audit entries to the context
+        await AuditLogs.AddRangeAsync(auditEntries.Where(_ => !_.HasTemporaryProperties).Select(auditEntry => auditEntry.ToAudit()));
         return auditEntries.Where(_ => _.HasTemporaryProperties).ToList();
     }
+
 
     private Task OnAfterSaveChanges(List<AuditEntry> auditEntries)
     {
