@@ -1,0 +1,135 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Upload Staging List"];
+    ViewData["ActiveMainPage"] = "UploadStaging";
+    ViewData["Level1"] = "ProjectNamePlaceHolder";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="uploadStaging" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["File Type"]
+							</th>
+							<th>
+								@Localizer["Path"]
+							</th>
+							<th>
+								@Localizer["Status"]
+							</th>
+							<th>
+								@Localizer["Start Date/Time"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#uploadStaging').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 4, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/UploadStaging/Index", new { area = "ProjectNamePlaceHolder", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "uploadProcessorId", name: "UploadProcessorId", responsivePriority: 1, title: '@Localizer["File Type"]', searchable: false },
+				{ data: "data", name: "Data", responsivePriority: 1, title: '@Localizer["Path"]', searchable: false },
+				{ data: "status", name: "Status", responsivePriority: 1, title: '@Localizer["Status"]', searchable: true },
+				{ data: "processedDateTime", name: "ProcessedDateTime", responsivePriority: 1, title: '@Localizer["Start Date/Time"]', searchable: false },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/UploadStaging/Details", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewUploadStaging" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.UploadStaging.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/UploadStaging/Edit", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditUploadStaging" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.UploadStaging.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/UploadStaging/Delete", new { area = "ProjectNamePlaceHolder" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteUploadStaging" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }
+				  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.UploadStaging.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/UploadStaging/Add", new { area = "ProjectNamePlaceHolder" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#uploadStaging tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddUploadStaging",".btnEditUploadStaging",".btnViewUploadStaging",".btnDeleteUploadStaging"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddUploadStaging",".btnEditUploadStaging",".btnViewUploadStaging",".btnDeleteUploadStaging"]);
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}

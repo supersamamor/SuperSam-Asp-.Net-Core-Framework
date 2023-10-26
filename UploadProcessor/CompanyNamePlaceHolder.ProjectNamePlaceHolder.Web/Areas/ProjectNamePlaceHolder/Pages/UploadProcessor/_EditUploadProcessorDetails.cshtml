@@ -1,0 +1,62 @@
+@using Models
+@model UploadProcessorViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.FileType" class="form-label fieldrequired"><strong>@Localizer["File Type"] :</strong></label>
+			<input asp-for="@Model.FileType" class="form-control" maxlength="20" />
+			<span asp-validation-for="@Model.FileType" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Path" class="form-label fieldrequired"><strong>@Localizer["Path"] :</strong></label>
+			<input asp-for="@Model.Path" class="form-control" maxlength="450" />
+			<span asp-validation-for="@Model.Path" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Status" class="form-label fieldrequired"><strong>@Localizer["Status"] :</strong></label>
+			<input asp-for="@Model.Status" class="form-control" maxlength="20" />
+			<span asp-validation-for="@Model.Status" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.StartDateTime" class="form-label "><strong>@Localizer["Start Date/Time"] :</strong></label>
+			<input asp-for="@Model.StartDateTime" class="form-control"  />
+			<span asp-validation-for="@Model.StartDateTime" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.EndDateTime" class="form-label "><strong>@Localizer["End Date/Time"] :</strong></label>
+			<input asp-for="@Model.EndDateTime" class="form-control"  />
+			<span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Module" class="form-label fieldrequired"><strong>@Localizer["Module"] :</strong></label>
+			<input asp-for="@Model.Module" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.Module" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.UploadType" class="form-label fieldrequired"><strong>@Localizer["Upload Type"] :</strong></label>
+			<input asp-for="@Model.UploadType" class="form-control" maxlength="50" />
+			<span asp-validation-for="@Model.UploadType" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>
