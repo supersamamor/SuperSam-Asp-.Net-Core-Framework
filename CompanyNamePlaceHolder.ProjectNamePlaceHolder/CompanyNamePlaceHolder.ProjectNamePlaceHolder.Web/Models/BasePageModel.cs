@@ -5,6 +5,8 @@ using CompanyNamePlaceHolder.Common.Data;
 using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.ProjectNamePlaceHolder.UploadProcessor.Commands;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
@@ -27,14 +29,14 @@ public class BasePageModel<T> : PageModel where T : class
     private IMapper? _mapper;
     private string? _traceId;
     private IConfiguration? _configuration;
-	
+
     protected ILogger<T> Logger => _logger ??= HttpContext.RequestServices.GetService<ILogger<T>>()!;
     protected IStringLocalizer<SharedResource> Localizer => _localizer ??= HttpContext.RequestServices.GetService<IStringLocalizer<SharedResource>>()!;
     protected INotyfService NotyfService => _notyfService ??= HttpContext.RequestServices.GetService<INotyfService>()!;
     protected IMediator Mediatr => _mediatr ??= HttpContext.RequestServices.GetService<IMediator>()!;
     protected IMapper Mapper => _mapper ??= HttpContext.RequestServices.GetService<IMapper>()!;
     protected string TraceId => _traceId ??= Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-	protected IConfiguration Configuration => _configuration ??= HttpContext.RequestServices.GetService<IConfiguration>()!;
+    protected IConfiguration Configuration => _configuration ??= HttpContext.RequestServices.GetService<IConfiguration>()!;
     /// <summary>
     /// Maps <typeparamref name="TEntity"/> to <typeparamref name="TModel"/> and returns the page.
     /// </summary>
@@ -129,18 +131,24 @@ public class BasePageModel<T> : PageModel where T : class
                 return Page();
             });
     #endregion
-	protected async Task<string> UploadFile<TUploadModel>(string moduleName, string fieldName, string id, IFormFile? formFile)
+    protected async Task<string> UploadFile<TUploadModel>(string moduleName, string fieldName, string id, IFormFile? formFile, string? fileName = null)
     {
         string filePath = "";
         if (formFile != null)
         {
-            var permittedExtensions = Configuration.GetValue<string>("UsersUpload:DocumentPermitedExtensions").Split(',').ToArray();
+            var permittedExtensions = Configuration.GetValue<string>("UsersUpload:DocumentPermitedExtensions")?.Split(',').ToArray();
             var fileSizeLimit = Configuration.GetValue<long>("UsersUpload:FileSizeLimit");
-            var targetFilePath = Configuration.GetValue<string>("UsersUpload:UploadFilesPath") + "\\" + moduleName + "\\" + id + "\\" + fieldName;
-            filePath = Path.Combine(targetFilePath, formFile.FileName);
-            bool exists = System.IO.Directory.Exists(targetFilePath);
+            var targetFilePath = Configuration.GetValue<string>("UsersUpload:UploadFilesPath") + "\\" + moduleName
+                + (string.IsNullOrEmpty(id) ? "" : "\\" + id)
+                + (string.IsNullOrEmpty(fieldName) ? "" : "\\" + fieldName);
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = formFile.FileName;
+            }
+            filePath = Path.Combine(targetFilePath, fileName);
+            bool exists = Directory.Exists(targetFilePath);
             if (!exists)
-                System.IO.Directory.CreateDirectory(targetFilePath);
+                Directory.CreateDirectory(targetFilePath);
             (await FileHelper.ProcessFormFile<TUploadModel, string>(formFile!,
                 permittedExtensions,
                 fileSizeLimit,
@@ -152,7 +160,7 @@ public class BasePageModel<T> : PageModel where T : class
                         fileStream.Write(bytes);
                     return filePath;
                 })).Match(Succ: succ =>
-                    {                      
+                    {
                         Logger.LogInformation("Successfully uploaded the file: {File}}", succ);
                         filePath = succ;
                     },
@@ -166,6 +174,37 @@ public class BasePageModel<T> : PageModel where T : class
 
         }
         return filePath;
+    }
+    protected async Task<IActionResult> BatchUploadAsync<PageModel, EntityState>(IFormFile? batchUploadForm, string subFolder)
+    {
+        if (batchUploadForm == null)
+        {
+            NotyfService.Error(Localizer["Please select a file to be uploaded."]);
+            return Page();
+        }
+        try
+        {
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(batchUploadForm.FileName);
+            var filePath = await UploadFile<PageModel>(WebConstants.BatchUpload, subFolder, "", batchUploadForm, fileName);
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                _ = await Mediatr.Send(new UploadProcessorCommand { FilePath = filePath, FileType = Core.Constants.FileType.Excel, Module = typeof(EntityState).Name, UploadType = Core.Constants.UploadProcessingType.PerFile });
+                NotyfService.Success(Localizer["Successfully uploaded. Please wait for the file to be processed."]);
+            }         
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Exception encountered");
+            NotyfService.Error(Localizer["Something went wrong. Please contact the system administrator."]);
+        }
+        return Page();
+    }
+    protected string GetTemplatePath<EntityState>(string? uploadPath)
+    {
+        return ExcelHelper.ExportTemplate<EntityState>
+         (
+             uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder
+         );
     }
 }
 

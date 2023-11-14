@@ -29,6 +29,7 @@ public static class Permission
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
 			$"Permission.{module}.Approve",
+            $"Permission.{module}.Upload",
         };
 		if (module == "ApproverSetup")
 		{
@@ -126,7 +127,8 @@ public static class Permission
 		public const string Edit = "Permission.Delivery.Edit";
 		public const string Delete = "Permission.Delivery.Delete";
 		public const string Approve = "Permission.Delivery.Approve";
-	}
+        public const string Upload = "Permission.Delivery.Upload";
+    }
 	
 	public static class ApproverSetup
 	{

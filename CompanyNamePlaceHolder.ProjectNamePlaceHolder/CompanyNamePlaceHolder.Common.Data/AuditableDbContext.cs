@@ -65,6 +65,11 @@ public abstract class AuditableDbContext<T> : AuditableContext where T : DbConte
     {
         return base.SaveChangesAsync(cancellationToken);
     }
+    public Task<int> UpdateBatchRecordAsync(BaseEntity entity, CancellationToken cancellationToken = default)
+    {
+        SetBaseFieldsFromBatchUpload(entity);
+        return base.SaveChangesAsync(cancellationToken);
+    }
     void SetBaseFields(IAuthenticatedUser authenticatedUser)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
@@ -81,6 +86,26 @@ public abstract class AuditableDbContext<T> : AuditableContext where T : DbConte
                 case EntityState.Modified:
                     entry.Entity.LastModifiedDate = DateTime.UtcNow;
                     entry.Entity.LastModifiedBy = authenticatedUser.UserId;
+                    break;
+            }
+        }
+    }
+    void SetBaseFieldsFromBatchUpload(BaseEntity entity)
+    {
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.Entity = entity.Entity;
+                    entry.Entity.CreatedDate = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = entity.CreatedBy;
+                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                    entry.Entity.LastModifiedBy = entity.CreatedBy;
+                    break;
+                case EntityState.Modified:
+                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                    entry.Entity.LastModifiedBy = entity.CreatedBy;
                     break;
             }
         }

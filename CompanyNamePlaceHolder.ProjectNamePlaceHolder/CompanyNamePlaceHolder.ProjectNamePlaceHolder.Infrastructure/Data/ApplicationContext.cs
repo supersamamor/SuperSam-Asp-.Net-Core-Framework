@@ -21,8 +21,9 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     public DbSet<TaskListState> TaskList { get; set; } = default!;
 	public DbSet<AssignmentState> Assignment { get; set; } = default!;
 	public DbSet<DeliveryState> Delivery { get; set; } = default!;
-	
-	public DbSet<ApprovalState> Approval { get; set; } = default!;
+    public DbSet<UploadProcessorState> UploadProcessor { get; set; } = default!;
+    public DbSet<UploadStagingState> UploadStaging { get; set; } = default!;
+    public DbSet<ApprovalState> Approval { get; set; } = default!;
 	public DbSet<ApproverSetupState> ApproverSetup { get; set; } = default!;
 	public DbSet<ApproverAssignmentState> ApproverAssignment { get; set; } = default!;
 	public DbSet<ApprovalRecordState> ApprovalRecord { get; set; } = default!;
@@ -81,7 +82,10 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApprovalState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ApproverSetupState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ApproverAssignmentState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
-		modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.DataId);
+        modelBuilder.Entity<UploadProcessorState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<UploadStagingState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+
+        modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.DataId);
 		modelBuilder.Entity<ApprovalRecordState>().Property(e => e.DataId).HasMaxLength(36);
 		modelBuilder.Entity<ApprovalRecordState>().Property(e => e.ApproverSetupId).HasMaxLength(36);
 		modelBuilder.Entity<ApprovalRecordState>().HasIndex(l => l.ApproverSetupId);
@@ -101,6 +105,14 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverUserId).HasMaxLength(36);
 		modelBuilder.Entity<ApproverAssignmentState>().Property(e => e.ApproverRoleId).HasMaxLength(36);
 		modelBuilder.Entity<ApproverAssignmentState>().HasIndex(e => new { e.ApproverSetupId, e.ApproverUserId, e.ApproverRoleId }).IsUnique();
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.FileType).HasMaxLength(20);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.Path).HasMaxLength(450);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.Status).HasMaxLength(20);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.Module).HasMaxLength(50);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.UploadType).HasMaxLength(50);
+        modelBuilder.Entity<UploadStagingState>().Property(e => e.Status).HasMaxLength(50);
+
+        modelBuilder.Entity<UploadProcessorState>().HasMany(t => t.UploadStagingList).WithOne(l => l.UploadProcessor).HasForeignKey(t => t.UploadProcessorId);
         base.OnModelCreating(modelBuilder);
     }
 }

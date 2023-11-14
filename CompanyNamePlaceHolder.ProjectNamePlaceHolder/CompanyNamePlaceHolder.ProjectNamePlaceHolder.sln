@@ -47,6 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor", "CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor\CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.csproj", "{1E667022-AE3F-4C27-8468-2AC5A45F7FA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{D7E66AFB-562C-423A-BF36-232F7B8C2523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7E66AFB-562C-423A-BF36-232F7B8C2523}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7E66AFB-562C-423A-BF36-232F7B8C2523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E667022-AE3F-4C27-8468-2AC5A45F7FA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E667022-AE3F-4C27-8468-2AC5A45F7FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E667022-AE3F-4C27-8468-2AC5A45F7FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E667022-AE3F-4C27-8468-2AC5A45F7FA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +139,7 @@ Global
 		{A4E44861-E1D8-4111-B34E-797DB321F693} = {8DC593DB-6517-42F2-BDC2-5549ED67364F}
 		{B50CFBDB-36A4-4170-8261-EC0D79E7A6E9} = {ADA1F852-2869-4489-A9B5-F7DB02C35533}
 		{D7E66AFB-562C-423A-BF36-232F7B8C2523} = {ADA1F852-2869-4489-A9B5-F7DB02C35533}
+		{1E667022-AE3F-4C27-8468-2AC5A45F7FA1} = {ADA1F852-2869-4489-A9B5-F7DB02C35533}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1C54C96-6B92-4691-ABC9-019644F5A481}

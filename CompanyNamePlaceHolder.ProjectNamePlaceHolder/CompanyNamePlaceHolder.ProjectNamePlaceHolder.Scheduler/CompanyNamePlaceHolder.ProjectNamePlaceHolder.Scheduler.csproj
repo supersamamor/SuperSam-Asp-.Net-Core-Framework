@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CompanyNamePlaceHolder.Common.Services.Shared\CompanyNamePlaceHolder.Common.Services.Shared.csproj" />
+    <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor\CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.csproj" />
     <ProjectReference Include="..\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure\CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.csproj" />
   </ItemGroup>
 
