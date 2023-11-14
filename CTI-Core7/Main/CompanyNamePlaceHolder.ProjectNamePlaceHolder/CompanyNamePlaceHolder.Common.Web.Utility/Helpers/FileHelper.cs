@@ -24,7 +24,7 @@ public class FileHelper
     // and the official specifications for the file types you wish to add.
     private static readonly Dictionary<string, List<byte[]>> _fileSignature = new()
     {
-        { ".gif", new List<byte[]> { new byte[] { 0x47, 0x49, 0x46, 0x38 } } },
+        { ".gif", new List<byte[]> { "GIF8"u8.ToArray() } },
         { ".png", new List<byte[]> { new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A } } },
         {
             ".jpeg",
@@ -49,14 +49,15 @@ public class FileHelper
             new List<byte[]>
         {
             new byte[] { 0x50, 0x4B, 0x03, 0x04 },
-            new byte[] { 0x50, 0x4B, 0x4C, 0x49, 0x54, 0x45 },
-            new byte[] { 0x50, 0x4B, 0x53, 0x70, 0x58 },
+            "PKLITE"u8.ToArray(),
+            "PKSpX"u8.ToArray(),
             new byte[] { 0x50, 0x4B, 0x05, 0x06 },
             new byte[] { 0x50, 0x4B, 0x07, 0x08 },
-            new byte[] { 0x57, 0x69, 0x6E, 0x5A, 0x69, 0x70 },
+            "WinZip"u8.ToArray(),
         }
         },
-        { ".xlsx", new List<byte[]> { new byte[] { 0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x06, 0x00 } } },
+        { ".xlsx", new List<byte[]> { new byte[] { 0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x06, 0x00 }, 
+                                      new byte[] { 0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x08, 0x08 } } },
     };
 
     // **WARNING!**
@@ -106,7 +107,7 @@ public class FileHelper
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<Validation<Error, TRet>> ProcessFormFile<T, TRet>(IFormFile formFile,
-        string[] permittedExtensions, long sizeLimit, Func<MemoryStream, TRet> f, CancellationToken cancellationToken = default)
+        string[]? permittedExtensions, long sizeLimit, Func<MemoryStream, TRet> f, CancellationToken cancellationToken = default)
     {
         var fieldDisplayName = string.Empty;
 
@@ -197,7 +198,7 @@ public class FileHelper
         return memoryStream;
     }
 
-    private static bool IsValidFileExtensionAndSignature(string? fileName, Stream? data, string[] permittedExtensions)
+    private static bool IsValidFileExtensionAndSignature(string? fileName, Stream? data, string[]? permittedExtensions)
     {
         if (string.IsNullOrEmpty(fileName) || data == null || data.Length == 0)
         {
@@ -206,7 +207,7 @@ public class FileHelper
 
         var ext = Path.GetExtension(fileName).ToLowerInvariant();
 
-        if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+        if (string.IsNullOrEmpty(ext) || (permittedExtensions != null && !permittedExtensions.Contains(ext)))
         {
             return false;
         }

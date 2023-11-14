@@ -28,18 +28,42 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
                 request.Subject += " - Test";
             }
             var decryptedPassword = DecryptPassword(_settings.SMTPEmailPassword!, _settings.SMTPEmail!);
-            var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body)
+            using(var mailMessage = new MailMessage(_settings.SMTPEmail!, request.To, request.Subject, request.Body))
             {
-                IsBodyHtml = true
-            };
-            using var client = new SmtpClient();
-            client.Host = _settings.SMTPHost!;
-            client.Port = _settings.SMTPPort;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential(_settings.SMTPEmail!, decryptedPassword);
-            await client.SendMailAsync(mailMessage, cancellationToken);
+                mailMessage.IsBodyHtml = true;
+                if (request.Attachments != null && request.Attachments.Count > 0)
+                {
+                    foreach (var item in request.Attachments)
+                    {
+                        if (File.Exists(item))
+                        {
+                            mailMessage.Attachments.Add(new Attachment(item));
+                        }
+                    }
+                }
+                if (request.Ccs != null && request.Ccs.Count > 0)
+                {
+                    foreach (var item in request.Ccs)
+                    {
+                        mailMessage.CC.Add(new MailAddress(item));
+                    }
+                }
+                if (request.Bcc != null && request.Bcc.Count > 0)
+                {
+                    foreach (var item in request.Bcc)
+                    {
+                        mailMessage.Bcc.Add(new MailAddress(item));
+                    }
+                }
+                using var client = new SmtpClient();
+                client.Host = _settings.SMTPHost!;
+                client.Port = _settings.SMTPPort;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+                client.Credentials = new System.Net.NetworkCredential(_settings.SMTPEmail!, decryptedPassword);
+                await client.SendMailAsync(mailMessage, cancellationToken);
+            }      
         }  
         private static string EncryptPassword(string password, string emailAsKey)
         {
@@ -78,11 +102,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending.Services
 
         private static byte[] DeriveKeyFromEmail(string email)
         {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] emailBytes = Encoding.UTF8.GetBytes(email);
-                return sha256.ComputeHash(emailBytes);
-            }
+            byte[] emailBytes = Encoding.UTF8.GetBytes(email);
+            return SHA256.HashData(emailBytes);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler
 				});
 				services.AddTransient<FileScanJob>();
 				services.AddTransient<ApprovalNotificationJob>();
+				services.AddTransient<BatchUploadJob>();
             }            
         }
     }
