@@ -31,6 +31,9 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
+<div id="BatchUploadPartialContainer">
+    <partial name="_BatchUpload" model="Model.BatchUpload" />
+</div>
 @section Scripts {
 <partial name="_DataTableScripts" />
 <script asp-add-nonce>
@@ -98,6 +101,32 @@
                 },
             </text>
         }
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Upload)).Succeeded)
+        {
+            <text>
+                {
+                    text: 'Download Template',
+                    action: function () {
+                        // Trigger the hidden file input
+                        $('#download-template-form').submit();   
+                    },
+                    className: 'btn btn-secondary text-light',
+                },
+            </text>
+        }
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.Upload)).Succeeded)
+        {
+            <text>
+                {
+                    text: 'Upload',
+                    action: function () {
+                        // Trigger the hidden file input
+                        $('#btnBatchUpload').click();
+                    },
+                    className: 'btn btn-info text-light',
+                },
+            </text>
+        }
                 'excel', 'pdf', 'pageLength',
             ],
         });
@@ -114,6 +143,15 @@
         }
         $.showAjaxLoaderOnClick([".btnAddMainModulePlaceHolder",".btnEditMainModulePlaceHolder",".btnViewMainModulePlaceHolder",".btnDeleteMainModulePlaceHolder"]);
         $.EnableNavbarSearch(table);
+		$('#btnBatchUpload').on('change', function (e) {
+            $('#batch-upload-form').submit();          
+        });
+        @if (!string.IsNullOrEmpty(Model.BatchUpload.BatchUploadFileName))
+        {
+            <text>
+                $('#btnDownloadBatchUploadTemplateLink')[0].click();             
+            </text>
+        }
     });
 </script>
 }
