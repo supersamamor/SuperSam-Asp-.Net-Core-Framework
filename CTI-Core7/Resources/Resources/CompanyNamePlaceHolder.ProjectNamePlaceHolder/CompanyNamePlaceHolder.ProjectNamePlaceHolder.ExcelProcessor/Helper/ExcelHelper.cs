@@ -1,4 +1,4 @@
-﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Models;
 using LanguageExt;
 using OfficeOpenXml;
@@ -362,8 +362,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
             //Implement Custom Validation Here Depending on Model/Table Name
             switch (module)
             {
-                case nameof(DeliveryState):
-                    return rowValue;
+                Template:[ExcelUploaderValidationSwitchStatement]
                 default: break;
             }
             return rowValue;
