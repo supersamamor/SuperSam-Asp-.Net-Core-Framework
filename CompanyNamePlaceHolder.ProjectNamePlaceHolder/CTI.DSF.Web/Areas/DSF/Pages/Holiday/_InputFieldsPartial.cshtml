@@ -1,0 +1,10 @@
+@using Models
+@model HolidayViewModel
+
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Holiday"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditHolidayDetails" model="Model" />        
+    </div>
+</div>

@@ -1,0 +1,46 @@
+@using Models
+@model TaskCompanyAssignmentViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TaskMasterId" class="form-label fieldrequired"><strong>@Localizer["Task Master"] :</strong></label>
+			<select asp-for="@Model.TaskMasterId" class="form-control" asp-items="@(dropdownService.GetTaskMasterList(Model.TaskMasterId))"><option value="">- Select Task Master -</option></select>
+			<span asp-validation-for="@Model.TaskMasterId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.CompanyId" class="form-label fieldrequired"><strong>@Localizer["Company"] :</strong></label>
+			<select asp-for="@Model.CompanyId" class="form-control" asp-items="@(dropdownService.GetCompanyList(Model.CompanyId))"><option value="">- Select Company -</option></select>
+			<span asp-validation-for="@Model.CompanyId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DepartmentId" class="form-label "><strong>@Localizer["Department"] :</strong></label>
+			<select asp-for="@Model.DepartmentId" class="form-control" asp-items="@(dropdownService.GetDepartmentList(Model.DepartmentId))"><option value="">- Select Department -</option></select>
+			<span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.SectionId" class="form-label "><strong>@Localizer["Section"] :</strong></label>
+			<select asp-for="@Model.SectionId" class="form-control" asp-items="@(dropdownService.GetSectionList(Model.SectionId))"><option value="">- Select Section -</option></select>
+			<span asp-validation-for="@Model.SectionId" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.TeamId" class="form-label "><strong>@Localizer["Team"] :</strong></label>
+			<select asp-for="@Model.TeamId" class="form-control" asp-items="@(dropdownService.GetTeamList(Model.TeamId))"><option value="">- Select Team -</option></select>
+			<span asp-validation-for="@Model.TeamId" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

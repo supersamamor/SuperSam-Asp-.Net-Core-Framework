@@ -1,0 +1,38 @@
+@using Models
+@model DepartmentViewModel
+
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.CompanyCode" class="form-label fieldrequired"><strong>@Localizer["Company Code"] :</strong></label>
+			<select asp-for="@Model.CompanyCode" class="form-control" asp-items="@(dropdownService.GetCompanyList(Model.CompanyCode))"><option value="">- Select Company Code -</option></select>
+			<span asp-validation-for="@Model.CompanyCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DepartmentCode" class="form-label fieldrequired"><strong>@Localizer["Department Code"] :</strong></label>
+			<input asp-for="@Model.DepartmentCode" class="form-control" maxlength="450" />
+			<span asp-validation-for="@Model.DepartmentCode" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DepartmentName" class="form-label fieldrequired"><strong>@Localizer["Department Name"] :</strong></label>
+			<input asp-for="@Model.DepartmentName" class="form-control"  />
+			<span asp-validation-for="@Model.DepartmentName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.Active" class="form-label "><strong>@Localizer["Active"] :</strong></label>
+			<input asp-for="@Model.Active" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.Active" class="text-danger"></span>
+			
+	</div>
+</div>
+
+</div>

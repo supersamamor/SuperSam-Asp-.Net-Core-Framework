@@ -16,7 +16,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: '**/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.csproj'
+    projects: '**/CTI.DSF.Web.csproj'
     feedsToUse: 'config'
     nugetConfigPath: 'nuget.config'
     externalFeedCredentials: 'CTI.Alabang.Nuget Service Connection'
@@ -25,7 +25,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    projects: '**/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.csproj'
+    projects: '**/CTI.DSF.Web.csproj'
     arguments: '-c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 - task: DotNetCoreCLI@2
@@ -35,11 +35,11 @@ steps:
     arguments: 'install --configfile nuget-org.config --global dotnet-ef'
 - task: efcore-migration-script-generator-task@1
   inputs:
-    projectpath: '$(Build.SourcesDirectory)/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.csproj'
+    projectpath: '$(Build.SourcesDirectory)/CTI.DSF.Infrastructure/CTI.DSF.Infrastructure.csproj'
     databasecontexts: |
       IdentityContext
       ApplicationContext
-    startupprojectpath: '$(Build.SourcesDirectory)/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web/CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.csproj'
+    startupprojectpath: '$(Build.SourcesDirectory)/CTI.DSF.Web/CTI.DSF.Web.csproj'
     targetfolder: '$(build.artifactstagingdirectory)/migrations'
     installdependencies: true
 - task: PublishBuildArtifacts@1

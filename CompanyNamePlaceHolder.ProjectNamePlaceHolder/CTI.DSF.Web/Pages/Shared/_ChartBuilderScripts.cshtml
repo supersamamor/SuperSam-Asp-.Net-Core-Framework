@@ -1,0 +1,96 @@
+<script asp-add-nonce src="~/lib/chartjs/chart.js"></script>
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        $.BuildChart = function (chartContainer, reportName, charType, columnHeaders, dataSetResult, displayLegend, isPercentage) {
+
+            let chartRenderType = '';
+            switch (charType) {
+                case "@CTI.DSF.Core.Constants.ReportChartType.HorizontalBar":
+                    chartRenderType = 'bar';
+                    break;
+                case "@CTI.DSF.Core.Constants.ReportChartType.Pie":
+                    chartRenderType = 'pie';
+                    break;
+                case "@CTI.DSF.Core.Constants.ReportChartType.Table":
+                    chartRenderType = 'table-custom';
+                    break;
+                default:
+                    break;
+            }
+            if (chartRenderType != '') {
+                if (charType == '@CTI.DSF.Core.Constants.ReportChartType.Table') {
+                    var table = $('#' + chartContainer).DataTable({
+                        data: dataSetResult,
+                        columns: columnHeaders,
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                text: 'Excel',
+                                title: reportName, // Set the custom title for Excel
+                                customize: function (xlsx) {
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    $('row c[r^="A"]', sheet).attr('s', '2');
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                text: 'PDF',
+                                title: reportName, // Set the custom title for PDF
+                                orientation: 'landscape', // Set the orientation to landscape
+                                customize: function (doc) {
+                                    doc.content[0].text = reportName; // Modify the title in the PDF content
+                                }
+                            },
+                            'pageLength'
+                        ]
+                    });
+                }
+                else {
+                    const data = {
+                        labels: columnHeaders,
+                        datasets: dataSetResult
+                    };
+                    const ctx = document.getElementById(chartContainer).getContext('2d');
+                    const graph = new Chart(ctx, {
+                        type: chartRenderType,
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: displayLegend, // Set to true to display the legend
+                                    position: 'bottom', // Position of the legend: 'top', 'bottom', 'left', 'right'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (context) {
+                                            var label = context.label || '';
+                                            var value = context.raw || 0;
+                                            return label + ': ' + value + (isPercentage == 'true' ? '%' : ""); // Append '%' to the value
+                                        }
+                                    }
+                                },
+                            },
+                            elements: {
+                                arc: {
+                                    borderWidth: 0
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        var label = context.label || '';
+                                        var value = context.raw || 0;
+                                        return label + ': ' + value + (isPercentage == 'true' ? '%' : ""); // Append '%' to the value
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+            }
+        };
+    });
+</script>
