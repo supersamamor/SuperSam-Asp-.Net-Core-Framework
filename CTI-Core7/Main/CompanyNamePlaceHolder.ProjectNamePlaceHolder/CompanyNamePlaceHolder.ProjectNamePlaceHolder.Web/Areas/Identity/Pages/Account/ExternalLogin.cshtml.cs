@@ -131,7 +131,7 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
                 EmailConfirmed = true,
             };
             var createUserResult = await _userManager.CreateAsync(user);
-            _ = await _userManager.AddToRoleAsync(user, Common.Core.Constants.Roles.User);
+            _ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
             var addLoginResult = await _userManager.AddLoginAsync(user, info);
             result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             return await SuccessRedirect(email, user!, info, returnUrl);
