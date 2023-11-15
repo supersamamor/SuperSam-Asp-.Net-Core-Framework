@@ -339,23 +339,28 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
             return completeFilePath;
         }
         private static IList<string> GetRestrictedFieldNames()
-        {
-            List<string> restrictedFieldNames = new();
-            Type baseEntityType = typeof(Common.Core.Base.Models.BaseEntity);
-            // Get all the fields of the BaseEntity class          
-            PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
-            // Extract and store the field names
-            foreach (PropertyInfo field in baseEntityFields)
-            {
-                restrictedFieldNames.Add(field.Name);
-            }
-            return restrictedFieldNames;
-        }
-        private static PropertyInfo[] GetTableObjectFields<TableObject>()
-        {
-            Type tableObjectType = typeof(TableObject);
-            return tableObjectType.GetProperties();
-        }
+		{
+			List<string> restrictedFieldNames = new();
+			Type baseEntityType = typeof(Common.Core.Base.Models.BaseEntity);
+			// Get all the fields of the BaseEntity class          
+			PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
+			// Extract and store the field names
+			foreach (PropertyInfo field in baseEntityFields)
+			{
+				restrictedFieldNames.Add(field.Name);
+			}
+			return restrictedFieldNames;
+		}
+		private static PropertyInfo[] GetTableObjectFields<TableObject>()
+		{
+			Type tableObjectType = typeof(TableObject);
+			PropertyInfo[] properties = tableObjectType.GetProperties();
+
+			// Include only properties with primitive data types
+			properties = properties.Where(prop => prop.PropertyType.IsPrimitive || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(DateTime)).ToArray();
+
+			return properties;
+		}
 
         private static async Task<Dictionary<string, object?>> CustomValidationHandler(string module, Dictionary<string, object?> rowValue)
         {

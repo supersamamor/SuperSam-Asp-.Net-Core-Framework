@@ -354,7 +354,12 @@ namespace CTI.DSF.ExcelProcessor.Helper
         private static PropertyInfo[] GetTableObjectFields<TableObject>()
         {
             Type tableObjectType = typeof(TableObject);
-            return tableObjectType.GetProperties();
+            PropertyInfo[] properties = tableObjectType.GetProperties();
+
+            // Include only properties with primitive data types
+            properties = properties.Where(prop => prop.PropertyType.IsPrimitive || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(DateTime)).ToArray();
+
+            return properties;
         }
 
         private static async Task<Dictionary<string, object?>> CustomValidationHandler(string module, Dictionary<string, object?> rowValue)
