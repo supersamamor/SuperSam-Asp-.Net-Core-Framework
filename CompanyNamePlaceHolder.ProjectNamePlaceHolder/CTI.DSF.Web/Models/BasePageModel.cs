@@ -188,7 +188,7 @@ public class BasePageModel<T> : PageModel where T : class
             if (!string.IsNullOrEmpty(filePath))
             {
                 _ = await Mediatr.Send(new UploadProcessorCommand { FilePath = filePath, FileType = Core.Constants.FileType.Excel, Module = typeof(EntityState).Name, UploadType = Core.Constants.UploadProcessingType.PerFile });
-                NotyfService.Success(Localizer["Successfully uploaded. Please wait for the file to be processed."]);
+                NotyfService.Information(Localizer["Successfully uploaded. Please wait for the file to be processed."]);
             }         
         }
         catch (Exception ex)
