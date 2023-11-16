@@ -1,7 +1,7 @@
-﻿using CTI.DSF.Infrastructure.Data;
+﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CTI.DSF.ExcelProcessor.CustomValidation
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.CustomValidation
 {
     public static class MainModulePlaceHolderValidator
     {
