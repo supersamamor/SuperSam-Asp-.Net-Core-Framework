@@ -1,5 +1,6 @@
 using CTI.DSF.Application.Features.DSF.Company.Queries;
 using CTI.DSF.Core.DSF;
+using CTI.DSF.ExcelProcessor.Services;
 using CTI.DSF.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
@@ -57,7 +58,7 @@ public class IndexModel : BasePageModel<IndexModel>
     public IActionResult OnPostDownloadTemplate()
     {
         ModelState.Clear();
-        BatchUpload.BatchUploadFileName = GetTemplatePath<CompanyState>(_uploadPath);
+        BatchUpload.BatchUploadFileName = ExcelService.ExportTemplate<CompanyState>(_uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder);
         NotyfService.Success(Localizer["Successfully downloaded upload template."]);
         return Page();
     }

@@ -57,7 +57,6 @@ public class IndexModel : BasePageModel<IndexModel>
     public IActionResult OnPostDownloadTemplate()
     {
         ModelState.Clear();
-        BatchUpload.BatchUploadFileName = GetTemplatePath<DeliveryApprovalHistoryState>(_uploadPath);
         NotyfService.Success(Localizer["Successfully downloaded upload template."]);
         return Page();
     }
