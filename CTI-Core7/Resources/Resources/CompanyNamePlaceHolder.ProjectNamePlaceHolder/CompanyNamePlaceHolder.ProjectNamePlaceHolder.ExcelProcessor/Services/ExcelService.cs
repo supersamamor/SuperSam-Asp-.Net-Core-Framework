@@ -1,16 +1,21 @@
 ﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Models;
-using LanguageExt;
-using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using System.Drawing;
-using System.IO;
 using System.Reflection;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
 {
-    public static class ExcelHelper
+    public class ExcelService
     {
+        public readonly ApplicationContext _context;
+        public ExcelService(ApplicationContext context)
+        {
+            _context = context;
+        }
         public static string ExportTemplate<TableObject>(string fullFilePath)
         {
             if (!Directory.Exists(fullFilePath))
@@ -113,7 +118,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
             }
             return fileName;
         }
-        public static async Task<dynamic> ImportAsync<TableObject>(string fullFilePath, CancellationToken token = new CancellationToken()) where TableObject : new()
+        public async Task<dynamic> ImportAsync<TableObject>(string fullFilePath, CancellationToken token = new CancellationToken()) where TableObject : new()
         {
             IList<TableObject> successfulRecords = new List<TableObject>();
             IList<FailedRecordModel> failedRecords = new List<FailedRecordModel>();
@@ -236,7 +241,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
                 return successfulRecords;
             }
         }
-        public static string ExportExcelValidationResult<TableObject>(IList<FailedRecordModel> list, string fullFilePath)
+        public string ExportExcelValidationResult<TableObject>(IList<FailedRecordModel> list, string fullFilePath)
         {
             if (!Directory.Exists(fullFilePath))
                 Directory.CreateDirectory(fullFilePath);
@@ -303,7 +308,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
                 workSheet.Cells[1, columnIndex].Value = "Error Remarks";
                 workSheet.Column(columnIndex).Style.Font.Color.SetColor(Color.Red);
                 int row = 2;
-                foreach (var record in list.OrderBy(l=>l.RowNumber))
+                foreach (var record in list.OrderBy(l => l.RowNumber))
                 {
                     columnIndex = 1;
                     foreach (var item in tableObjectFields)
@@ -339,30 +344,30 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
             return completeFilePath;
         }
         private static IList<string> GetRestrictedFieldNames()
-		{
-			List<string> restrictedFieldNames = new();
-			Type baseEntityType = typeof(Common.Core.Base.Models.BaseEntity);
-			// Get all the fields of the BaseEntity class          
-			PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
-			// Extract and store the field names
-			foreach (PropertyInfo field in baseEntityFields)
-			{
-				restrictedFieldNames.Add(field.Name);
-			}
-			return restrictedFieldNames;
-		}
-		private static PropertyInfo[] GetTableObjectFields<TableObject>()
-		{
-			Type tableObjectType = typeof(TableObject);
-			PropertyInfo[] properties = tableObjectType.GetProperties();
+        {
+            List<string> restrictedFieldNames = new();
+            Type baseEntityType = typeof(Common.Core.Base.Models.BaseEntity);
+            // Get all the fields of the BaseEntity class          
+            PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
+            // Extract and store the field names
+            foreach (PropertyInfo field in baseEntityFields)
+            {
+                restrictedFieldNames.Add(field.Name);
+            }
+            return restrictedFieldNames;
+        }
+        private static PropertyInfo[] GetTableObjectFields<TableObject>()
+        {
+            Type tableObjectType = typeof(TableObject);
+            PropertyInfo[] properties = tableObjectType.GetProperties();
 
-			// Include only properties with primitive data types
-			properties = properties.Where(prop => prop.PropertyType.IsPrimitive || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(DateTime)).ToArray();
+            // Include only properties with primitive data types
+            properties = properties.Where(prop => prop.PropertyType.IsPrimitive || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(DateTime)).ToArray();
 
-			return properties;
-		}
+            return properties;
+        }
 
-        private static async Task<Dictionary<string, object?>> CustomValidationHandler(string module, Dictionary<string, object?> rowValue)
+        private async Task<Dictionary<string, object?>> CustomValidationHandler(string module, Dictionary<string, object?> rowValue)
         {
             //Implement Custom Validation Here Depending on Model/Table Name
             switch (module)

@@ -1,6 +1,7 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +55,7 @@ public class IndexModel : BasePageModel<IndexModel>
     public IActionResult OnPostDownloadTemplate()
     {
         ModelState.Clear();
-        BatchUpload.BatchUploadFileName = GetTemplatePath<MainModulePlaceHolderState>(_uploadPath);
+		BatchUpload.BatchUploadFileName = ExcelService.ExportTemplate<MainModulePlaceHolderState>(_uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder);
         NotyfService.Success(Localizer["Successfully downloaded upload template."]);
         return Page();
     }

@@ -7,8 +7,8 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Microsoft.Extensions.FileProviders;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor;
 using Serilog;Template:[ApprovalProgramImport]
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +41,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
 services.AddEmailSendingAService(configuration);
+services.AddExcelProcessor();
 Template:[ApprovalProgramAddService]
 var app = builder.Build();
 // Static Files

@@ -6,7 +6,6 @@ using CompanyNamePlaceHolder.Common.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Web.Utility.Extensions;
 using CompanyNamePlaceHolder.Common.Web.Utility.Helpers;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.UploadProcessor.Commands;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
@@ -198,13 +197,6 @@ public class BasePageModel<T> : PageModel where T : class
             NotyfService.Error(Localizer["Something went wrong. Please contact the system administrator."]);
         }
         return Page();
-    }
-    protected string GetTemplatePath<EntityState>(string? uploadPath)
-    {
-        return ExcelHelper.ExportTemplate<EntityState>
-         (
-             uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder
-         );
     }
 }
 

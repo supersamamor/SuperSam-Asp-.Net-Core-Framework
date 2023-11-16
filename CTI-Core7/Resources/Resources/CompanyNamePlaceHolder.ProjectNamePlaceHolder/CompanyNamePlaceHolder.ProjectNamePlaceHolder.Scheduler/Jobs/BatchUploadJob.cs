@@ -3,6 +3,7 @@ using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.DSF.ExcelProcessor.Services;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,16 +17,18 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
     public class BatchUploadJob : IJob
     {
         private readonly ApplicationContext _context;
-        private readonly ILogger<BatchUploadJob> _logger;
-        private readonly string? _uploadPath;
-        private readonly IMailService _emailSender;
-        public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender)
-        {
-            _context = context;
-            _logger = logger;
-            _uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
-            _emailSender = emailSender;
-        }
+		private readonly ILogger<BatchUploadJob> _logger;
+		private readonly string? _uploadPath;
+		private readonly IMailService _emailSender;
+		private readonly ExcelService _excelService;
+		public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender, ExcelService excelService)
+		{
+			_context = context;
+			_logger = logger;
+			_uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+			_emailSender = emailSender;
+			_excelService = excelService;
+		}
         public async Task Execute(IJobExecutionContext context)
         {
             await ProcessBatchUploadAsync();

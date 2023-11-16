@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CTI.DSF.Infrastructure\CTI.DSF.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CustomValidation\" />
+  </ItemGroup>
+
 </Project>
