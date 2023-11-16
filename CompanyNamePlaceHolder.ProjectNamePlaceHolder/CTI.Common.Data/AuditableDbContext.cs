@@ -1,5 +1,6 @@
 using CTI.Common.Core.Base.Models;
 using CTI.Common.Identity.Abstractions;
+using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 
 namespace CTI.Common.Data;
@@ -70,6 +71,13 @@ public abstract class AuditableDbContext<T> : AuditableContext where T : DbConte
         SetBaseFieldsFromBatchUpload(entity);
         return base.SaveChangesAsync(cancellationToken);
     }
+    public void DetachAllTrackedEntities()
+    {
+        foreach (var entry in ChangeTracker.Entries().ToList())
+        {
+            entry.State = EntityState.Detached;
+        }
+    }
     void SetBaseFields(IAuthenticatedUser authenticatedUser)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
@@ -110,4 +118,5 @@ public abstract class AuditableDbContext<T> : AuditableContext where T : DbConte
             }
         }
     }
+   
 }
