@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using System.Drawing;
 using System.Reflection;
 using CTI.DSF.Infrastructure.Data;
+using CTI.DSF.ExcelProcessor.CustomValidation;
 
 namespace CTI.DSF.ExcelProcessor.Services
 {
@@ -202,16 +203,27 @@ namespace CTI.DSF.ExcelProcessor.Services
                                     }
                                 }
                             }
+                            if (tableObjectFields.Length == columnIndex)
+                            {
+                                rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
+                            }
                         }
                         catch (Exception ex)
                         {
                             rowValue.Add(item.Name, workSheet?.Cells[row, columnIndex].Value);
                             isSuccess = false;
-                            errorRemarks += $"Field `{item.Name}` - " + ex.Message + ";";
+                            if (tableObjectFields.Length == columnIndex)
+                            {
+                                errorRemarks += ex.Message + ";";
+                            }
+                            else
+                            {
+                                errorRemarks += $"Field `{item.Name}` - " + ex.Message + ";";
+                            }
                         }
                         columnIndex++;
                     }
-                    rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
+                 
                     if (isSuccess)
                     {
                         var columnIndexForSuccessRecord = 1;
@@ -375,7 +387,7 @@ namespace CTI.DSF.ExcelProcessor.Services
                 case nameof(CompanyState):
                     return rowValue;
                 case nameof(DepartmentState):
-                    return rowValue;
+                    return await DepartmentValidator.ValidateAsync(_context, rowValue);
                 case nameof(SectionState):
                     return rowValue;
                 case nameof(TeamState):
