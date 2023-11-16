@@ -1,6 +1,5 @@
 using CTI.Common.Core.Base.Models;
 using CTI.Common.Identity.Abstractions;
-using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 
 namespace CTI.Common.Data;

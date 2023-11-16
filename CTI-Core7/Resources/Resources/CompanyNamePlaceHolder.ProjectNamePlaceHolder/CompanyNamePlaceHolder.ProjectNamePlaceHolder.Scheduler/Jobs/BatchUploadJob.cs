@@ -57,6 +57,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                 }
                 catch (Exception ex)
                 {
+					_context.DetachAllTrackedEntities();
                     _logger.LogError(ex, @"ProcessBatchUploadAsync Error Message : {Message} / StackTrace : {StackTrace}", ex.Message, ex.StackTrace);
                     item.SetFailed("", ex.Message);
                     _context.Update(item);
