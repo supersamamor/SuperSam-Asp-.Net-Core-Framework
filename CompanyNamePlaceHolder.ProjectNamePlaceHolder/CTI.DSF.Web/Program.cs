@@ -7,10 +7,10 @@ using CTI.DSF.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Microsoft.Extensions.FileProviders;
 using CTI.DSF.EmailSending;
 using Serilog;
 using CTI.DSF.Scheduler;
+using CTI.DSF.ExcelProcessor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +43,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddEmailSendingAService(configuration);
 services.AddScheduler(configuration);
+services.AddExcelProcessor();
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");

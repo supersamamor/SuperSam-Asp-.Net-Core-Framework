@@ -2,6 +2,7 @@ using CTI.Common.Services.Shared.Interfaces;
 using CTI.Common.Services.Shared.Models.Mail;
 using CTI.DSF.Core.DSF;
 using CTI.DSF.ExcelProcessor.Models;
+using CTI.DSF.ExcelProcessor.Services;
 using CTI.DSF.Infrastructure.Data;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,14 @@ namespace CTI.DSF.Scheduler.Jobs
         private readonly ILogger<BatchUploadJob> _logger;
         private readonly string? _uploadPath;
         private readonly IMailService _emailSender;
-        public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender)
+        private readonly ExcelService _excelService;
+        public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender, ExcelService excelService)
         {
             _context = context;
             _logger = logger;
             _uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
             _emailSender = emailSender;
+			_excelService = excelService;
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -73,7 +76,7 @@ namespace CTI.DSF.Scheduler.Jobs
             switch (module)
             {
                 case nameof(CompanyState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<CompanyState>(path);
+					importResult = await _excelService.ImportAsync<CompanyState>(path);
 					if (importResult is IList<CompanyState> companylist)
 					{
 						await _context.AddRangeAsync(companylist);
@@ -81,11 +84,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<CompanyState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<CompanyState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(DepartmentState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<DepartmentState>(path);
+					importResult = await _excelService.ImportAsync<DepartmentState>(path);
 					if (importResult is IList<DepartmentState> departmentlist)
 					{
 						await _context.AddRangeAsync(departmentlist);
@@ -93,11 +96,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<DepartmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<DepartmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(SectionState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<SectionState>(path);
+					importResult = await _excelService.ImportAsync<SectionState>(path);
 					if (importResult is IList<SectionState> sectionlist)
 					{
 						await _context.AddRangeAsync(sectionlist);
@@ -105,11 +108,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<SectionState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<SectionState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(TeamState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<TeamState>(path);
+					importResult = await _excelService.ImportAsync<TeamState>(path);
 					if (importResult is IList<TeamState> teamlist)
 					{
 						await _context.AddRangeAsync(teamlist);
@@ -117,11 +120,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<TeamState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<TeamState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(HolidayState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<HolidayState>(path);
+					importResult = await _excelService.ImportAsync<HolidayState>(path);
 					if (importResult is IList<HolidayState> holidaylist)
 					{
 						await _context.AddRangeAsync(holidaylist);
@@ -129,11 +132,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<HolidayState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<HolidayState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(TagsState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<TagsState>(path);
+					importResult = await _excelService.ImportAsync<TagsState>(path);
 					if (importResult is IList<TagsState> tagslist)
 					{
 						await _context.AddRangeAsync(tagslist);
@@ -141,11 +144,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<TagsState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<TagsState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(TaskMasterState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<TaskMasterState>(path);
+					importResult = await _excelService.ImportAsync<TaskMasterState>(path);
 					if (importResult is IList<TaskMasterState> taskMasterlist)
 					{
 						await _context.AddRangeAsync(taskMasterlist);
@@ -153,11 +156,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<TaskMasterState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskMasterState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(TaskCompanyAssignmentState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<TaskCompanyAssignmentState>(path);
+					importResult = await _excelService.ImportAsync<TaskCompanyAssignmentState>(path);
 					if (importResult is IList<TaskCompanyAssignmentState> taskCompanyAssignmentlist)
 					{
 						await _context.AddRangeAsync(taskCompanyAssignmentlist);
@@ -165,11 +168,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<TaskCompanyAssignmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskCompanyAssignmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(TaskApproverState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<TaskApproverState>(path);
+					importResult = await _excelService.ImportAsync<TaskApproverState>(path);
 					if (importResult is IList<TaskApproverState> taskApproverlist)
 					{
 						await _context.AddRangeAsync(taskApproverlist);
@@ -177,11 +180,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<TaskApproverState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskApproverState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(TaskTagState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<TaskTagState>(path);
+					importResult = await _excelService.ImportAsync<TaskTagState>(path);
 					if (importResult is IList<TaskTagState> taskTaglist)
 					{
 						await _context.AddRangeAsync(taskTaglist);
@@ -189,11 +192,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<TaskTagState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskTagState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(AssignmentState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<AssignmentState>(path);
+					importResult = await _excelService.ImportAsync<AssignmentState>(path);
 					if (importResult is IList<AssignmentState> assignmentlist)
 					{
 						await _context.AddRangeAsync(assignmentlist);
@@ -201,11 +204,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<AssignmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<AssignmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(DeliveryState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<DeliveryState>(path);
+					importResult = await _excelService.ImportAsync<DeliveryState>(path);
 					if (importResult is IList<DeliveryState> deliverylist)
 					{
 						await _context.AddRangeAsync(deliverylist);
@@ -213,11 +216,11 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<DeliveryState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<DeliveryState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				case nameof(DeliveryApprovalHistoryState):
-					importResult = await ExcelProcessor.Helper.ExcelHelper.ImportAsync<DeliveryApprovalHistoryState>(path);
+					importResult = await _excelService.ImportAsync<DeliveryApprovalHistoryState>(path);
 					if (importResult is IList<DeliveryApprovalHistoryState> deliveryApprovalHistorylist)
 					{
 						await _context.AddRangeAsync(deliveryApprovalHistorylist);
@@ -225,7 +228,7 @@ namespace CTI.DSF.Scheduler.Jobs
 					else if (importResult is List<FailedRecordModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = ExcelProcessor.Helper.ExcelHelper.ExportExcelValidationResult<DeliveryApprovalHistoryState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = _excelService.ExportExcelValidationResult<DeliveryApprovalHistoryState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
 					break;
 				

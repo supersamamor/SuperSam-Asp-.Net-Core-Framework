@@ -6,7 +6,6 @@ using CTI.Common.Utility.Extensions;
 using CTI.Common.Web.Utility.Extensions;
 using CTI.Common.Web.Utility.Helpers;
 using CTI.DSF.Application.Features.DSF.UploadProcessor.Commands;
-using CTI.DSF.ExcelProcessor.Helper;
 using LanguageExt;
 using LanguageExt.Common;
 using MediatR;
@@ -198,14 +197,7 @@ public class BasePageModel<T> : PageModel where T : class
             NotyfService.Error(Localizer["Something went wrong. Please contact the system administrator."]);
         }
         return Page();
-    }
-    protected string GetTemplatePath<EntityState>(string? uploadPath)
-    {
-        return ExcelHelper.ExportTemplate<EntityState>
-         (
-             uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder
-         );
-    }
+    }   
 }
 
 public class BasePageModel<TContext, TPageModel> : BasePageModel<TPageModel>

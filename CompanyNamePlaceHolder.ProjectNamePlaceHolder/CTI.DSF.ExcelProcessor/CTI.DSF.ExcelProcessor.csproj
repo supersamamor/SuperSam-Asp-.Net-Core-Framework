@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CTI.Common.Core.Base\CTI.Common.Core.Base.csproj" />
     <ProjectReference Include="..\CTI.DSF.Core\CTI.DSF.Core.csproj" />
+    <ProjectReference Include="..\CTI.DSF.Infrastructure\CTI.DSF.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
