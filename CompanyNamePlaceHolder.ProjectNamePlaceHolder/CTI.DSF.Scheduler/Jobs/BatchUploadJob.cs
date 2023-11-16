@@ -72,166 +72,21 @@ namespace CTI.DSF.Scheduler.Jobs
         {
             dynamic? importResult = default;
             string? exceptionFilePath = null;
-            List<FailedRecordModel> errorList = new();
+            List<ExcelImportResultModel> errorList = new();
             switch (module)
-            {
-                case nameof(CompanyState):
-					importResult = await _excelService.ImportAsync<CompanyState>(path);
-					if (importResult is IList<CompanyState> companylist)
-					{
-						await _context.AddRangeAsync(companylist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<CompanyState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
+            {              
 				case nameof(DepartmentState):
 					importResult = await _excelService.ImportAsync<DepartmentState>(path);
 					if (importResult is IList<DepartmentState> departmentlist)
 					{
 						await _context.AddRangeAsync(departmentlist);
 					}
-					else if (importResult is List<FailedRecordModel>)
+					else if (importResult is List<ExcelImportResultModel>)
 					{
 						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<DepartmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
+						exceptionFilePath = ExcelService.ExportExcelValidationResult<DepartmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
 					}
-					break;
-				case nameof(SectionState):
-					importResult = await _excelService.ImportAsync<SectionState>(path);
-					if (importResult is IList<SectionState> sectionlist)
-					{
-						await _context.AddRangeAsync(sectionlist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<SectionState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(TeamState):
-					importResult = await _excelService.ImportAsync<TeamState>(path);
-					if (importResult is IList<TeamState> teamlist)
-					{
-						await _context.AddRangeAsync(teamlist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<TeamState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(HolidayState):
-					importResult = await _excelService.ImportAsync<HolidayState>(path);
-					if (importResult is IList<HolidayState> holidaylist)
-					{
-						await _context.AddRangeAsync(holidaylist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<HolidayState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(TagsState):
-					importResult = await _excelService.ImportAsync<TagsState>(path);
-					if (importResult is IList<TagsState> tagslist)
-					{
-						await _context.AddRangeAsync(tagslist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<TagsState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(TaskMasterState):
-					importResult = await _excelService.ImportAsync<TaskMasterState>(path);
-					if (importResult is IList<TaskMasterState> taskMasterlist)
-					{
-						await _context.AddRangeAsync(taskMasterlist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskMasterState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(TaskCompanyAssignmentState):
-					importResult = await _excelService.ImportAsync<TaskCompanyAssignmentState>(path);
-					if (importResult is IList<TaskCompanyAssignmentState> taskCompanyAssignmentlist)
-					{
-						await _context.AddRangeAsync(taskCompanyAssignmentlist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskCompanyAssignmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(TaskApproverState):
-					importResult = await _excelService.ImportAsync<TaskApproverState>(path);
-					if (importResult is IList<TaskApproverState> taskApproverlist)
-					{
-						await _context.AddRangeAsync(taskApproverlist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskApproverState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(TaskTagState):
-					importResult = await _excelService.ImportAsync<TaskTagState>(path);
-					if (importResult is IList<TaskTagState> taskTaglist)
-					{
-						await _context.AddRangeAsync(taskTaglist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<TaskTagState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(AssignmentState):
-					importResult = await _excelService.ImportAsync<AssignmentState>(path);
-					if (importResult is IList<AssignmentState> assignmentlist)
-					{
-						await _context.AddRangeAsync(assignmentlist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<AssignmentState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(DeliveryState):
-					importResult = await _excelService.ImportAsync<DeliveryState>(path);
-					if (importResult is IList<DeliveryState> deliverylist)
-					{
-						await _context.AddRangeAsync(deliverylist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<DeliveryState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				case nameof(DeliveryApprovalHistoryState):
-					importResult = await _excelService.ImportAsync<DeliveryApprovalHistoryState>(path);
-					if (importResult is IList<DeliveryApprovalHistoryState> deliveryApprovalHistorylist)
-					{
-						await _context.AddRangeAsync(deliveryApprovalHistorylist);
-					}
-					else if (importResult is List<FailedRecordModel>)
-					{
-						errorList = importResult;
-						exceptionFilePath = _excelService.ExportExcelValidationResult<DeliveryApprovalHistoryState>(errorList, _uploadPath + "\\BatchUploadErrors");
-					}
-					break;
-				
+					break;				
                 default: break;
             }
             if (!string.IsNullOrEmpty(exceptionFilePath))
