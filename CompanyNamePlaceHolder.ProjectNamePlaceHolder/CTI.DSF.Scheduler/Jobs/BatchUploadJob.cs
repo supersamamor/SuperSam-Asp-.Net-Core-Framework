@@ -2,8 +2,8 @@ using CTI.Common.Services.Shared.Interfaces;
 using CTI.Common.Services.Shared.Models.Mail;
 using CTI.DSF.Core.DSF;
 using CTI.DSF.ExcelProcessor.Models;
-using CTI.DSF.ExcelProcessor.Services;
 using CTI.DSF.Infrastructure.Data;
+using CTI.DSF.ExcelProcessor.Services;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,18 +17,18 @@ namespace CTI.DSF.Scheduler.Jobs
     public class BatchUploadJob : IJob
     {
         private readonly ApplicationContext _context;
-        private readonly ILogger<BatchUploadJob> _logger;
-        private readonly string? _uploadPath;
-        private readonly IMailService _emailSender;
-        private readonly ExcelService _excelService;
-        public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender, ExcelService excelService)
-        {
-            _context = context;
-            _logger = logger;
-            _uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
-            _emailSender = emailSender;
+		private readonly ILogger<BatchUploadJob> _logger;
+		private readonly string? _uploadPath;
+		private readonly IMailService _emailSender;
+		private readonly ExcelService _excelService;
+		public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender, ExcelService excelService)
+		{
+			_context = context;
+			_logger = logger;
+			_uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+			_emailSender = emailSender;
 			_excelService = excelService;
-        }
+		}
         public async Task Execute(IJobExecutionContext context)
         {
             await ProcessBatchUploadAsync();

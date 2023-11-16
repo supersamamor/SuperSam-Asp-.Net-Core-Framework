@@ -1,4 +1,4 @@
-﻿using CTI.DSF.Core.DSF;
+using CTI.DSF.Core.DSF;
 using CTI.DSF.ExcelProcessor.Helper;
 using CTI.DSF.ExcelProcessor.Models;
 using OfficeOpenXml.Style;
@@ -203,27 +203,26 @@ namespace CTI.DSF.ExcelProcessor.Services
                                     }
                                 }
                             }
-                            if (tableObjectFields.Length == columnIndex)
-                            {
-                                rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
-                            }
+							if (tableObjectFields.Length == columnIndex)
+							{
+								rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
+							}
                         }
                         catch (Exception ex)
                         {
                             rowValue.Add(item.Name, workSheet?.Cells[row, columnIndex].Value);
-                            isSuccess = false;
-                            if (tableObjectFields.Length == columnIndex)
-                            {
-                                errorRemarks += ex.Message + ";";
-                            }
-                            else
-                            {
-                                errorRemarks += $"Field `{item.Name}` - " + ex.Message + ";";
-                            }
+							isSuccess = false;
+							if (tableObjectFields.Length == columnIndex)
+							{
+								errorRemarks += ex.Message + ";";
+							}
+							else
+							{
+								errorRemarks += $"Field `{item.Name}` - " + ex.Message + ";";
+							}
                         }
                         columnIndex++;
-                    }
-                 
+                    }                    
                     if (isSuccess)
                     {
                         var columnIndexForSuccessRecord = 1;
@@ -385,32 +384,32 @@ namespace CTI.DSF.ExcelProcessor.Services
             switch (module)
             {
                 case nameof(CompanyState):
-                    return rowValue;
-                case nameof(DepartmentState):
-                    return await DepartmentValidator.ValidateAsync(_context, rowValue);
-                case nameof(SectionState):
-                    return rowValue;
-                case nameof(TeamState):
-                    return rowValue;
-                case nameof(HolidayState):
-                    return rowValue;
-                case nameof(TagsState):
-                    return rowValue;
-                case nameof(TaskMasterState):
-                    return rowValue;
-                case nameof(TaskCompanyAssignmentState):
-                    return rowValue;
-                case nameof(TaskApproverState):
-                    return rowValue;
-                case nameof(TaskTagState):
-                    return rowValue;
-                case nameof(AssignmentState):
-                    return rowValue;
-                case nameof(DeliveryState):
-                    return rowValue;
-                case nameof(DeliveryApprovalHistoryState):
-                    return rowValue;
-
+					return rowValue;
+				case nameof(DepartmentState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(SectionState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(TeamState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(HolidayState):
+					return rowValue;
+				case nameof(TagsState):
+					return rowValue;
+				case nameof(TaskMasterState):
+					return rowValue;
+				case nameof(TaskCompanyAssignmentState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(TaskApproverState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(TaskTagState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(AssignmentState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(DeliveryState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				case nameof(DeliveryApprovalHistoryState):
+					return await DepartmentValidator.ValidateAsync(_context, rowValue);
+				
                 default: break;
             }
             return rowValue;

@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using CTI.DSF.EmailSending;
+using CTI.DSF.ExcelProcessor;
 using Serilog;
 using CTI.DSF.Scheduler;
-using CTI.DSF.ExcelProcessor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +42,8 @@ services.AddHealthChecks()
         .AddDbContextCheck<ApplicationContext>()
         .AddDbContextCheck<IdentityContext>();
 services.AddEmailSendingAService(configuration);
-services.AddScheduler(configuration);
 services.AddExcelProcessor();
+services.AddScheduler(configuration);
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
