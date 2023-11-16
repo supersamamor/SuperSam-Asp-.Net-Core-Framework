@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using System.Drawing;
 using System.Reflection;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.CustomValidation;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
 {
@@ -202,16 +203,26 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                                     }
                                 }
                             }
+							if (tableObjectFields.Length == columnIndex)
+							{
+								rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
+							}
                         }
                         catch (Exception ex)
                         {
                             rowValue.Add(item.Name, workSheet?.Cells[row, columnIndex].Value);
-                            isSuccess = false;
-                            errorRemarks += $"Field `{item.Name}` - " + ex.Message + ";";
+							isSuccess = false;
+							if (tableObjectFields.Length == columnIndex)
+							{
+								errorRemarks += ex.Message + ";";
+							}
+							else
+							{
+								errorRemarks += $"Field `{item.Name}` - " + ex.Message + ";";
+							}
                         }
                         columnIndex++;
-                    }
-                    rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
+                    }                    
                     if (isSuccess)
                     {
                         var columnIndexForSuccessRecord = 1;
