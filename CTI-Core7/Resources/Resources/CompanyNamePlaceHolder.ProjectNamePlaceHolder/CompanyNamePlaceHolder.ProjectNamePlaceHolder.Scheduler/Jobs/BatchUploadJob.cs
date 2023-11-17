@@ -1,9 +1,8 @@
 using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
 using CompanyNamePlaceHolder.Common.Services.Shared.Models.Mail;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Models;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
-using CompanyNamePlaceHolder.DSF.ExcelProcessor.Services;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,14 +20,17 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
 		private readonly string? _uploadPath;
 		private readonly IMailService _emailSender;
 		private readonly ExcelService _excelService;
-		public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender, ExcelService excelService)
+        private readonly IdentityContext _identityContext;
+        public BatchUploadJob(ApplicationContext context, ILogger<BatchUploadJob> logger, IConfiguration configuration, IMailService emailSender, ExcelService excelService, IdentityContext identityContext)
 		{
 			_context = context;
 			_logger = logger;
 			_uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
 			_emailSender = emailSender;
 			_excelService = excelService;
-		}
+            _identityContext = identityContext;
+
+        }
         public async Task Execute(IJobExecutionContext context)
         {
             await ProcessBatchUploadAsync();
@@ -37,6 +39,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
         {
             var uploadProcessorList = await _context.UploadProcessor.Where(l => l.Status == Core.Constants.FileUploadStatus.Pending).IgnoreQueryFilters().AsNoTracking()
                 .OrderBy(l => l.CreatedDate).ToListAsync();
+            var exceptionFilePath = "";
             foreach (var item in uploadProcessorList)
             {
                 try
@@ -46,7 +49,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                     _context.Update(item);
                     await _context.UpdateBatchRecordAsync(item);
                     //Start Processing
-                    var exceptionFilePath = await ValidateBatchUpload(item.Module, item.Path, item.CreatedBy!);
+                    exceptionFilePath = await ValidateBatchUpload(item.Module, item.Path, item.CreatedBy!);
                     if (string.IsNullOrEmpty(exceptionFilePath))
                     {
                         item.SetDone();
@@ -66,25 +69,32 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                     _context.Update(item);
                     await _context.UpdateBatchRecordAsync(item);
                 }
+                try
+                {
+                    if (!string.IsNullOrEmpty(exceptionFilePath))
+                    {
+                        var email = (await _identityContext.Users.Where(l => l.Id == item.CreatedBy).AsNoTracking().FirstOrDefaultAsync())!.Email!;
+                        await SendValidatedBatchUploadFile(email, item.Module, exceptionFilePath);
+                    }
+                }
+                catch (Exception ex)
+                {               
+                    _logger.LogError(ex, @"ProcessBatchUploadAsync Error Message : {Message} / StackTrace : {StackTrace}", ex.Message, ex.StackTrace);
+                }              
             }
         }
-        private async Task<string?> ValidateBatchUpload(string module, string path, string processedByUserId)
+		private async Task<string?> ValidateBatchUpload(string module, string path, string processedByUserId)
         {
-            dynamic? importResult = default;
-            string? exceptionFilePath = null;
-            List<FailedRecordModel> errorList = new();
+            string? exceptionFilePath = null;   
             switch (module)
             {
                 Template:[ExcelValidateImplementationSwitchStatement]
                 default: break;
-            }
-            if (!string.IsNullOrEmpty(exceptionFilePath))
-            {
-                await SendValidatedBatchUploadFile("", module, exceptionFilePath);
-            }
+            }           
             return exceptionFilePath;
         }
-        private async Task SendValidatedBatchUploadFile(string email, string module, string exceptionFilePath)
+        
+        public async Task SendValidatedBatchUploadFile(string email, string module, string exceptionFilePath)
         {
             string wordToRemove = "State";
             if (module.EndsWith(wordToRemove))

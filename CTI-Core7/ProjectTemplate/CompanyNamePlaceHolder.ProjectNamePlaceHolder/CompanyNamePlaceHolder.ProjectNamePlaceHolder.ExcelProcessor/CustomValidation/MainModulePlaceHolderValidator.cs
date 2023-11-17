@@ -6,7 +6,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.CustomVal
 {
     public static class MainModulePlaceHolderValidator
     {
-        public static async Task<Dictionary<string, object?>>  ValidateAsync(ApplicationContext context, Dictionary<string, object?> rowValue)
+        public static async Task<Dictionary<string, object?>>  ValidatePerRecordAsync(ApplicationContext context, Dictionary<string, object?> rowValue)
         {
             Template:[ExcelValidationPerField]
             return rowValue;
