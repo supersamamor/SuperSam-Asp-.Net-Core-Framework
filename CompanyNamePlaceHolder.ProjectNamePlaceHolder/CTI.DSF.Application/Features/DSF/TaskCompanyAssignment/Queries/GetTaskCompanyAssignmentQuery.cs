@@ -16,7 +16,7 @@ public class GetTaskCompanyAssignmentQueryHandler : BaseQueryHandler<Application
     {
     }
 	public override async Task<PagedListResponse<TaskCompanyAssignmentState>> Handle(GetTaskCompanyAssignmentQuery request, CancellationToken cancellationToken = default) =>
-		await Context.Set<TaskCompanyAssignmentState>().Include(l=>l.Team).Include(l=>l.Company).Include(l=>l.Department).Include(l=>l.Section).Include(l=>l.TaskMaster)
+		await Context.Set<TaskCompanyAssignmentState>().Include(l=>l.Department).Include(l=>l.TaskMaster).Include(l=>l.Company).Include(l=>l.Section).Include(l=>l.Team)
 		.AsNoTracking().ToPagedResponse(request.SearchColumns, request.SearchValue,
 			request.SortColumn, request.SortOrder,
 			request.PageNumber, request.PageSize,

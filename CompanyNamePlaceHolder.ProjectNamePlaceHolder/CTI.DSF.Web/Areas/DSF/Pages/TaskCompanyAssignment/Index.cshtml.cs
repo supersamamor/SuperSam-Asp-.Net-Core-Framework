@@ -36,7 +36,7 @@ public class IndexModel : BasePageModel<IndexModel>
             {
                 e.Id,
                 TaskMasterId = e.TaskMaster?.Id,
-				CompanyId = e.Company?.CompanyCode,
+				CompanyId = e.Company?.CompanyName,
 				DepartmentId = e.Department?.Id,
 				SectionId = e.Section?.Id,
 				TeamId = e.Team?.Id,

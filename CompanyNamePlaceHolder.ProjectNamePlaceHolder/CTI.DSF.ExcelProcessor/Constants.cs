@@ -1,4 +1,4 @@
-﻿namespace CTI.DSF.ExcelProcessor
+namespace CTI.DSF.ExcelProcessor
 {
     public static class Constants
     {

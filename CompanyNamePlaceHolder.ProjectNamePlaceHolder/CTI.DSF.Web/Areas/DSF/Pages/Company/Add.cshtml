@@ -48,21 +48,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#company-form', InitializeForm, true);
 			});
 
-			$.fn.teamSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var teamlistdropdowns = document.getElementsByClassName('SelectTeam');
-			for ( var i=0; i< teamlistdropdowns.length; i++) {
-				$("#TaskCompanyAssignmentList_"+i+"_TeamId").teamSelect();
-			}
-
 			$.fn.departmentSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -76,6 +61,21 @@
 			var departmentlistdropdowns = document.getElementsByClassName('SelectDepartment');
 			for ( var i=0; i< departmentlistdropdowns.length; i++) {
 				$("#TaskCompanyAssignmentList_"+i+"_DepartmentId").departmentSelect();
+			}
+
+			$.fn.taskmasterSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/TaskMaster/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var taskmasterlistdropdowns = document.getElementsByClassName('SelectTaskMaster');
+			for ( var i=0; i< taskmasterlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_TaskMasterId").taskmasterSelect();
 			}
 
 			$.fn.sectionSelect = function() {
@@ -93,19 +93,19 @@
 				$("#TaskCompanyAssignmentList_"+i+"_SectionId").sectionSelect();
 			}
 
-			$.fn.taskmasterSelect = function() {
+			$.fn.teamSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/TaskMaster/Index", new { area = "DSF", handler = "Select2Data" })',
+							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			var taskmasterlistdropdowns = document.getElementsByClassName('SelectTaskMaster');
-			for ( var i=0; i< taskmasterlistdropdowns.length; i++) {
-				$("#TaskCompanyAssignmentList_"+i+"_TaskMasterId").taskmasterSelect();
+			var teamlistdropdowns = document.getElementsByClassName('SelectTeam');
+			for ( var i=0; i< teamlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_TeamId").teamSelect();
 			}
 
 		}	

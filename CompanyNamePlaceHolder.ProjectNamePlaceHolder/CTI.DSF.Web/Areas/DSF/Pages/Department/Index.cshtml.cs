@@ -35,7 +35,7 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                CompanyCode = e.Company?.CompanyCode,
+                CompanyCode = e.Company?.CompanyName,
 				e.DepartmentCode,
 				e.DepartmentName,
 				Active =  e.Active == true ? "Yes" : "No",

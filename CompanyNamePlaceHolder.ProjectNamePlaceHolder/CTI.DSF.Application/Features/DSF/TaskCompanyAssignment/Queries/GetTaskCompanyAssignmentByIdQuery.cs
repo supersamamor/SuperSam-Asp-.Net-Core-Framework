@@ -17,7 +17,7 @@ public class GetTaskCompanyAssignmentByIdQueryHandler : BaseQueryByIdHandler<App
 	
 	public override async Task<Option<TaskCompanyAssignmentState>> Handle(GetTaskCompanyAssignmentByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.TaskCompanyAssignment.Include(l=>l.Team).Include(l=>l.Company).Include(l=>l.Department).Include(l=>l.Section).Include(l=>l.TaskMaster)
+		return await Context.TaskCompanyAssignment.Include(l=>l.Department).Include(l=>l.TaskMaster).Include(l=>l.Company).Include(l=>l.Section).Include(l=>l.Team)
 			.Include(l=>l.TaskApproverList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 	}

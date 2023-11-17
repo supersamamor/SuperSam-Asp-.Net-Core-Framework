@@ -48,17 +48,29 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#taskCompanyAssignment-form', InitializeForm, true);
 			});
 
-			$.fn.teamSelect = function() {
+			$.fn.departmentSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
+							url: '@Url.Page("/Department/Index", new { area = "DSF", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#TeamId").teamSelect();
+			$("#DepartmentId").departmentSelect();
+
+			$.fn.taskmasterSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/TaskMaster/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#TaskMasterId").taskmasterSelect();
 
 			$.fn.companySelect = function() {
 				this.filter("select").each(function() {
@@ -72,18 +84,6 @@
 			};
 			$("#CompanyId").companySelect();
 
-			$.fn.departmentSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Department/Index", new { area = "DSF", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			$("#DepartmentId").departmentSelect();
-
 			$.fn.sectionSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -96,17 +96,17 @@
 			};
 			$("#SectionId").sectionSelect();
 
-			$.fn.taskmasterSelect = function() {
+			$.fn.teamSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
 						ajax: {
-							url: '@Url.Page("/TaskMaster/Index", new { area = "DSF", handler = "Select2Data" })',
+							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
 						}
 					});
 				});
 				return this;
 			};
-			$("#TaskMasterId").taskmasterSelect();
+			$("#TeamId").teamSelect();
 
 		}	
 		InitializeForm();

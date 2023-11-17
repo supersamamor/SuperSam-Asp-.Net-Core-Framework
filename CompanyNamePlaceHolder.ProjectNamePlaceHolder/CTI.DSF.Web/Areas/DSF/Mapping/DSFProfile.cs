@@ -42,7 +42,7 @@ public class DSFProfile : Profile
 		CreateMap<CompanyState, CompanyViewModel>().ReverseMap();
 		CreateMap<DepartmentViewModel, AddDepartmentCommand>();
 		CreateMap<DepartmentViewModel, EditDepartmentCommand>();
-		CreateMap<DepartmentState, DepartmentViewModel>().ForPath(e => e.ReferenceFieldCompanyCode, o => o.MapFrom(s => s.Company!.CompanyCode));
+		CreateMap<DepartmentState, DepartmentViewModel>().ForPath(e => e.ReferenceFieldCompanyCode, o => o.MapFrom(s => s.Company!.CompanyName));
 		CreateMap<DepartmentViewModel, DepartmentState>();
 		CreateMap<SectionViewModel, AddSectionCommand>();
 		CreateMap<SectionViewModel, EditSectionCommand>();
@@ -63,7 +63,7 @@ public class DSFProfile : Profile
 		CreateMap<TaskMasterState, TaskMasterViewModel>().ReverseMap();
 		CreateMap<TaskCompanyAssignmentViewModel, AddTaskCompanyAssignmentCommand>();
 		CreateMap<TaskCompanyAssignmentViewModel, EditTaskCompanyAssignmentCommand>();
-		CreateMap<TaskCompanyAssignmentState, TaskCompanyAssignmentViewModel>().ForPath(e => e.ReferenceFieldTeamId, o => o.MapFrom(s => s.Team!.Id)).ForPath(e => e.ReferenceFieldCompanyId, o => o.MapFrom(s => s.Company!.CompanyCode)).ForPath(e => e.ReferenceFieldDepartmentId, o => o.MapFrom(s => s.Department!.Id)).ForPath(e => e.ReferenceFieldSectionId, o => o.MapFrom(s => s.Section!.Id)).ForPath(e => e.ReferenceFieldTaskMasterId, o => o.MapFrom(s => s.TaskMaster!.Id));
+		CreateMap<TaskCompanyAssignmentState, TaskCompanyAssignmentViewModel>().ForPath(e => e.ReferenceFieldDepartmentId, o => o.MapFrom(s => s.Department!.Id)).ForPath(e => e.ReferenceFieldTaskMasterId, o => o.MapFrom(s => s.TaskMaster!.Id)).ForPath(e => e.ReferenceFieldCompanyId, o => o.MapFrom(s => s.Company!.CompanyName)).ForPath(e => e.ReferenceFieldSectionId, o => o.MapFrom(s => s.Section!.Id)).ForPath(e => e.ReferenceFieldTeamId, o => o.MapFrom(s => s.Team!.Id));
 		CreateMap<TaskCompanyAssignmentViewModel, TaskCompanyAssignmentState>();
 		CreateMap<TaskApproverViewModel, AddTaskApproverCommand>();
 		CreateMap<TaskApproverViewModel, EditTaskApproverCommand>();

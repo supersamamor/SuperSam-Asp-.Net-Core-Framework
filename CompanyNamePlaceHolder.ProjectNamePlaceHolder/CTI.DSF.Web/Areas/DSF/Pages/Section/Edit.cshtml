@@ -48,36 +48,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#section-form', InitializeForm, true);
 			});
 
-			$.fn.teamSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var teamlistdropdowns = document.getElementsByClassName('SelectTeam');
-			for ( var i=0; i< teamlistdropdowns.length; i++) {
-				$("#TaskCompanyAssignmentList_"+i+"_TeamId").teamSelect();
-			}
-
-			$.fn.companySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var companylistdropdowns = document.getElementsByClassName('SelectCompany');
-			for ( var i=0; i< companylistdropdowns.length; i++) {
-				$("#TaskCompanyAssignmentList_"+i+"_CompanyId").companySelect();
-			}
-
 			$.fn.departmentSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -106,6 +76,36 @@
 			var taskmasterlistdropdowns = document.getElementsByClassName('SelectTaskMaster');
 			for ( var i=0; i< taskmasterlistdropdowns.length; i++) {
 				$("#TaskCompanyAssignmentList_"+i+"_TaskMasterId").taskmasterSelect();
+			}
+
+			$.fn.companySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var companylistdropdowns = document.getElementsByClassName('SelectCompany');
+			for ( var i=0; i< companylistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_CompanyId").companySelect();
+			}
+
+			$.fn.teamSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var teamlistdropdowns = document.getElementsByClassName('SelectTeam');
+			for ( var i=0; i< teamlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_TeamId").teamSelect();
 			}
 
 			$.fn.departmentSelect = function() {

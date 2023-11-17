@@ -118,17 +118,10 @@ namespace CTI.DSF.Web.Service
         {
             return await _mediaTr.Send(new GetReportListQuery());
         }		
-		public SelectList GetTeamList(string? id)
+		public SelectList GetTaskCompanyAssignmentList(string? id)
 		{
-			return _context.GetSingle<TeamState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<TaskCompanyAssignmentState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetCompanyList(string? id)
-		{
-			return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.CompanyCode } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
@@ -139,6 +132,20 @@ namespace CTI.DSF.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
+		public SelectList GetTaskMasterList(string? id)
+		{
+			return _context.GetSingle<TaskMasterState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
+		public SelectList GetCompanyList(string? id)
+		{
+			return _context.GetSingle<CompanyState>(e => e.Id == id, new()).Result.Match(
+				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.CompanyName } }, "Value", "Text", e.Id),
+				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
+			);
+		}
 		public SelectList GetSectionList(string? id)
 		{
 			return _context.GetSingle<SectionState>(e => e.Id == id, new()).Result.Match(
@@ -146,9 +153,9 @@ namespace CTI.DSF.Web.Service
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
 		}
-		public SelectList GetTaskMasterList(string? id)
+		public SelectList GetTeamList(string? id)
 		{
-			return _context.GetSingle<TaskMasterState>(e => e.Id == id, new()).Result.Match(
+			return _context.GetSingle<TeamState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);
@@ -163,13 +170,6 @@ namespace CTI.DSF.Web.Service
 		public SelectList GetDeliveryList(string? id)
 		{
 			return _context.GetSingle<DeliveryState>(e => e.Id == id, new()).Result.Match(
-				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
-				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
-			);
-		}
-		public SelectList GetTaskCompanyAssignmentList(string? id)
-		{
-			return _context.GetSingle<TaskCompanyAssignmentState>(e => e.Id == id, new()).Result.Match(
 				Some: e => new SelectList(new List<SelectListItem> { new() { Value = e.Id, Text = e.Id } }, "Value", "Text", e.Id),
 				None: () => new SelectList(new List<SelectListItem>(), "Value", "Text")
 			);

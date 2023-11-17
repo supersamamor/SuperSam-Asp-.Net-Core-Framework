@@ -48,21 +48,6 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#team-form', InitializeForm, true);
 			});
 
-			$.fn.companySelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var companylistdropdowns = document.getElementsByClassName('SelectCompany');
-			for ( var i=0; i< companylistdropdowns.length; i++) {
-				$("#TaskCompanyAssignmentList_"+i+"_CompanyId").companySelect();
-			}
-
 			$.fn.departmentSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -78,21 +63,6 @@
 				$("#TaskCompanyAssignmentList_"+i+"_DepartmentId").departmentSelect();
 			}
 
-			$.fn.sectionSelect = function() {
-				this.filter("select").each(function() {
-					$(this).ajaxSelect({
-						ajax: {
-							url: '@Url.Page("/Section/Index", new { area = "DSF", handler = "Select2Data" })',
-						}
-					});
-				});
-				return this;
-			};
-			var sectionlistdropdowns = document.getElementsByClassName('SelectSection');
-			for ( var i=0; i< sectionlistdropdowns.length; i++) {
-				$("#TaskCompanyAssignmentList_"+i+"_SectionId").sectionSelect();
-			}
-
 			$.fn.taskmasterSelect = function() {
 				this.filter("select").each(function() {
 					$(this).ajaxSelect({
@@ -106,6 +76,36 @@
 			var taskmasterlistdropdowns = document.getElementsByClassName('SelectTaskMaster');
 			for ( var i=0; i< taskmasterlistdropdowns.length; i++) {
 				$("#TaskCompanyAssignmentList_"+i+"_TaskMasterId").taskmasterSelect();
+			}
+
+			$.fn.companySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var companylistdropdowns = document.getElementsByClassName('SelectCompany');
+			for ( var i=0; i< companylistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_CompanyId").companySelect();
+			}
+
+			$.fn.sectionSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Section/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var sectionlistdropdowns = document.getElementsByClassName('SelectSection');
+			for ( var i=0; i< sectionlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_SectionId").sectionSelect();
 			}
 
 			$.fn.sectionSelect = function() {

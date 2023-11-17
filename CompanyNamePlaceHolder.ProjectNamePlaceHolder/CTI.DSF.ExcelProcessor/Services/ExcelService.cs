@@ -304,9 +304,32 @@ namespace CTI.DSF.ExcelProcessor.Services
             switch (module)
             {
                 case nameof(CompanyState):
-                    return rowValue;
-                case nameof(DepartmentState):
-                    return await DepartmentValidator.ValidatePerRecordAsync(_context, rowValue);
+					return rowValue;
+				case nameof(DepartmentState):
+					return await DepartmentValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(SectionState):
+					return await SectionValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(TeamState):
+					return await TeamValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(HolidayState):
+					return rowValue;
+				case nameof(TagsState):
+					return rowValue;
+				case nameof(TaskMasterState):
+					return rowValue;
+				case nameof(TaskCompanyAssignmentState):
+					return await TaskCompanyAssignmentValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(TaskApproverState):
+					return await TaskApproverValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(TaskTagState):
+					return await TaskTagValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(AssignmentState):
+					return await AssignmentValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(DeliveryState):
+					return await DeliveryValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(DeliveryApprovalHistoryState):
+					return await DeliveryApprovalHistoryValidator.ValidatePerRecordAsync(_context, rowValue);
+				
                 default: break;
             }
             return rowValue;
@@ -316,8 +339,9 @@ namespace CTI.DSF.ExcelProcessor.Services
             //Implement Custom Validation Here Depending on Model/Table Name
             switch (module)
             {
-                case nameof(DepartmentState):
-                    return DepartmentValidator.DuplicateValidation(records);
+                case nameof(CompanyState):
+					return CompanyValidator.DuplicateValidation(records);
+				
                 default: break;
             }
             return null;
