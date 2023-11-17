@@ -6,7 +6,7 @@ namespace CTI.DSF.ExcelProcessor.CustomValidation
 {
     public static class DepartmentValidator
     {
-        public static async Task<Dictionary<string, object?>>  ValidateAsync(ApplicationContext context, Dictionary<string, object?> rowValue)
+        public static async Task<Dictionary<string, object?>>  ValidatePerRecordAsync(ApplicationContext context, Dictionary<string, object?> rowValue)
         {
             var companyCode = rowValue[nameof(DepartmentState.CompanyCode)]?.ToString();
 			var company = await context.Company.Where(l => l.CompanyCode == companyCode).AsNoTracking().IgnoreQueryFilters().FirstOrDefaultAsync();

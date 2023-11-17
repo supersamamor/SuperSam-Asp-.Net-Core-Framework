@@ -53,7 +53,7 @@ public class IndexModel : BasePageModel<IndexModel>
     }
 	public async Task<IActionResult> OnPostBatchUploadAsync()
     {        
-        return await BatchUploadAsync<IndexModel, DepartmentState>(BatchUpload.BatchUploadForm, nameof(DepartmentState));
+        return await BatchUploadAsync<IndexModel, DepartmentState>(BatchUpload.BatchUploadForm, nameof(DepartmentState), "Index");
     }
 
     public IActionResult OnPostDownloadTemplate()
