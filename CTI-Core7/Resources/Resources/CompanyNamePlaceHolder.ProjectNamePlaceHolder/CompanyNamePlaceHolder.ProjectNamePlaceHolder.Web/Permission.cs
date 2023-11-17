@@ -16,7 +16,7 @@ public static class Permission
             Template:[InsertNewPermissionGenerator]Template:[ApprovalPermissionOne];
     }
 
-    public static IEnumerable<string> GeneratePermissionsForModule(string module)
+	public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
         var permissions = new List<string>()
         {
@@ -24,10 +24,33 @@ public static class Permission
             $"Permission.{module}.View",
             $"Permission.{module}.Edit",
             $"Permission.{module}.Delete",
-			$"Permission.{module}.Upload",Template:[ApprovalPermissionFour]
         };
-		Template:[ApprovalPermissionTwo]
-		return permissions;
+		Template:[ApprovalPermissionFour]
+        return permissions;
+    }
+    public static IEnumerable<string> GenerateApprovalPermissionsForModule(string module)
+    {
+        return new List<string>()
+        {
+            $"Permission.{module}.Approve",
+        };
+    }
+    public static IEnumerable<string> GeneratepPendingApprovalPermissionsForModule(string module)
+    {
+        return new List<string>()
+        {
+            $"Permission.{module}.Create",
+            $"Permission.{module}.View",
+            $"Permission.{module}.Edit",
+            $"Permission.{module}.Delete",
+            $"Permission.{module}.PendingApprovals"
+        };
+    }
+
+    public static IEnumerable<string> GeneratePermissionsWithUploadForModule(string module)
+    {
+        var permissions = GeneratePermissionsForModule(module);
+        return permissions.Concat(new List<string>() { $"Permission.{module}.Upload" });        
     }
 
     public static class Admin
