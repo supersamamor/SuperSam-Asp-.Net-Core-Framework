@@ -64,7 +64,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                 package.Save();
             }
             return fileName;
-        }   
+        }
         public async Task<ExcelImportResultModel<TableObject>> ImportAsync<TableObject>(string fullFilePath, CancellationToken token = default) where TableObject : new()
         {
             List<ExcelRecord> recordsForUpload = new();
@@ -96,14 +96,14 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                             }
                             if (columnIndex == tableObjectFields.Length)
                             {
-                                rowValue = await CustomValidationHandler(typeof(TableObject).Name, rowValue);
+                                rowValue = await CustomValidationPerRecordHandler(typeof(TableObject).Name, rowValue);
                             }
                         }
                         catch (Exception ex)
                         {
                             isSuccess = false;
                             rowValue[item.Name] = workSheet?.Cells[row, columnIndex].Value;
-                           
+
                             if (columnIndex == tableObjectFields.Length)
                             {
                                 errorRemarks += $"{ex.Message};";
@@ -121,17 +121,41 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                     recordsForUpload.Add(new ExcelRecord { Data = rowValue, RowNumber = row });
                 }
             }
+            var listOfErrorsPerColumn = CustomBulkValidationHandler(typeof(TableObject).Name, recordsForUpload);
+            if (listOfErrorsPerColumn != null)
+            {
+                foreach (var kvp in listOfErrorsPerColumn)
+                {              
+                    HashSet<int> values = kvp.Value;
+                    foreach (var value in values)
+                    {
+                        isSuccess = false;
+                        var recordToUpdate = recordsForUpload.FirstOrDefault(record => record.RowNumber == value);
+                        if (recordToUpdate != null)
+                        {
+                            if (recordToUpdate.Data.ContainsKey(Constants.ExcelUploadErrorRemarks))
+                            {
+                                recordToUpdate.Data[Constants.ExcelUploadErrorRemarks] = recordToUpdate.Data[Constants.ExcelUploadErrorRemarks] + $";The field `{kvp.Key}` is duplicate from the excel file, please check other rows for duplicate.";
+                            }
+                            else
+                            {
+                                recordToUpdate.Data.Add(Constants.ExcelUploadErrorRemarks, $"The field `{kvp.Key}` is duplicate from the excel file, please check other rows for duplicate.");
+                            }
+                        }
+                    }
+                }
+            }
             if (isSuccess)
             {
                 var successfulRecords = recordsForUpload.Select(record => CreateObjectFromRow<TableObject>(record.Data, tableObjectFields)).ToList();
                 return new ExcelImportResultModel<TableObject> { SuccessRecords = successfulRecords, IsSuccess = true };
-                
+
             }
             else
             {
                 return new ExcelImportResultModel<TableObject> { FailedRecords = recordsForUpload, IsSuccess = false };
             }
-        }   
+        }
 
         public static string ExportExcelValidationResult<TableObject>(List<ExcelRecord> list, string fullFilePath)
         {
@@ -156,7 +180,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                     if (typeDefaults.TryGetValue(propertyType, out var defaultValue))
                     {
                         workSheet.Column(columnIndex).Style.Numberformat.Format = defaultValue.Format;
-                    }                   
+                    }
                     columnIndex++;
                 }
                 workSheet.Cells[1, columnIndex].Value = "Error Remarks";
@@ -195,12 +219,12 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             {
                 var workSheet = package.Workbook.Worksheets.FirstOrDefault() ?? package.Workbook.Worksheets.Add("Sheet1");
                 PropertyInfo[] tableObjectFields = GetTableObjectFields<TableObject>();
-                var columnIndex = tableObjectFields.Length + 1;           
+                var columnIndex = tableObjectFields.Length + 1;
                 workSheet.Cells[1, columnIndex].Value = "Error Remarks";
                 workSheet.Column(columnIndex).Style.Font.Color.SetColor(Color.Red);
                 int row = 2;
                 foreach (var record in list.OrderBy(l => l.RowNumber))
-                {    
+                {
                     if (record.Data.TryGetValue(Constants.ExcelUploadErrorRemarks, out var errorRemark))
                     {
                         workSheet.Cells[row, columnIndex].Value = errorRemark;
@@ -234,7 +258,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             { typeof(char), ('A', null) },
             { typeof(bool), ("false", null) },
         };
-      
+
         private static PropertyInfo[] GetTableObjectFields<TableObject>()
         {
             Type tableObjectType = typeof(TableObject);
@@ -264,7 +288,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
             range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
         }
-      
+
         private static TableObject CreateObjectFromRow<TableObject>(Dictionary<string, object?> rowValue, PropertyInfo[] tableObjectFields) where TableObject : new()
         {
             var successRecord = new TableObject();
@@ -274,18 +298,25 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             }
             return successRecord;
         }
-        private async Task<Dictionary<string, object?>> CustomValidationHandler(string module, Dictionary<string, object?> rowValue)
+        private async Task<Dictionary<string, object?>> CustomValidationPerRecordHandler(string module, Dictionary<string, object?> rowValue)
         {
             //Implement Custom Validation Here Depending on Model/Table Name
             switch (module)
             {
-                case nameof(CompanyState):
-                    return rowValue;
-                case nameof(DepartmentState):
-                    return await DepartmentValidator.ValidatePerRecordAsync(_context, rowValue);
+                Template:[ExcelUploaderValidationSwitchStatement]
                 default: break;
             }
             return rowValue;
+        }
+        private Dictionary<string, HashSet<int>>? CustomBulkValidationHandler(string module, List<ExcelRecord> records)
+        {
+            //Implement Custom Validation Here Depending on Model/Table Name
+            switch (module)
+            {
+                Template:[ExcelUploaderBulkValidationSwitchStatement]
+                default: break;
+            }
+            return null;
         }
     }
 }

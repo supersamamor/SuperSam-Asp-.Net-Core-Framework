@@ -7,9 +7,6 @@ using System.Drawing;
 using System.Reflection;
 using CTI.DSF.Infrastructure.Data;
 using CTI.DSF.ExcelProcessor.CustomValidation;
-using CTI.DSF.ExcelProcessor.Resources;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Collections.Generic;
 
 namespace CTI.DSF.ExcelProcessor.Services
 {
