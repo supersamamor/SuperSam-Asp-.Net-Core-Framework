@@ -174,7 +174,7 @@ public class BasePageModel<T> : PageModel where T : class
         }
         return filePath;
     }
-    protected async Task<IActionResult> BatchUploadAsync<PageModel, EntityState>(IFormFile? batchUploadForm, string subFolder)
+    protected async Task<IActionResult> BatchUploadAsync<PageModel, EntityState>(IFormFile? batchUploadForm, string subFolder, string pageName)
     {
         if (batchUploadForm == null)
         {
@@ -188,15 +188,16 @@ public class BasePageModel<T> : PageModel where T : class
             if (!string.IsNullOrEmpty(filePath))
             {
                 _ = await Mediatr.Send(new UploadProcessorCommand { FilePath = filePath, FileType = Core.Constants.FileType.Excel, Module = typeof(EntityState).Name, UploadType = Core.Constants.UploadProcessingType.PerFile });
-                NotyfService.Information(Localizer["Successfully uploaded. Please wait for the file to be processed."]);
+                NotyfService.Success(Localizer["Successfully uploaded. Please wait for the file to be processed."]);
             }         
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Exception encountered");
             NotyfService.Error(Localizer["Something went wrong. Please contact the system administrator."]);
+            return Page();
         }
-        return Page();
+        return RedirectToPage(pageName);
     }
 }
 
