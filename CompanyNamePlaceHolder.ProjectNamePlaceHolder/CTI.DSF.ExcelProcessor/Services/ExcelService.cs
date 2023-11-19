@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Reflection;
 using CTI.DSF.Infrastructure.Data;
 using CTI.DSF.ExcelProcessor.CustomValidation;
+using System.Xml;
 
 namespace CTI.DSF.ExcelProcessor.Services
 {
@@ -86,13 +87,14 @@ namespace CTI.DSF.ExcelProcessor.Services
                         {
                             Type propertyType = Nullable.GetUnderlyingType(item.PropertyType) ?? item.PropertyType;
                             var cellValue = workSheet?.Cells[row, columnIndex]?.Value?.ToString() ?? "";
+
                             if (string.IsNullOrEmpty(cellValue))
                             {
                                 rowValue.Add(item.Name, cellValue);
                             }
                             else
                             {
-                                rowValue.Add(item.Name, Convert.ChangeType(cellValue, propertyType));
+                                rowValue.Add(item.Name, Convert.ChangeType(Format(propertyType, cellValue), propertyType));
                             }
                             if (columnIndex == tableObjectFields.Length)
                             {
@@ -125,7 +127,7 @@ namespace CTI.DSF.ExcelProcessor.Services
             if (listOfErrorsPerColumn != null)
             {
                 foreach (var kvp in listOfErrorsPerColumn)
-                {              
+                {
                     HashSet<int> values = kvp.Value;
                     foreach (var value in values)
                     {
@@ -215,6 +217,8 @@ namespace CTI.DSF.ExcelProcessor.Services
             {
                 throw new FileNotFoundException("The specified existing Excel file does not exist.", existingExcelFilePath);
             }
+            if (!Directory.Exists(fullFilePath))
+                Directory.CreateDirectory(fullFilePath);
             using (var package = new ExcelPackage(new FileInfo(existingExcelFilePath)))
             {
                 var workSheet = package.Workbook.Worksheets.FirstOrDefault() ?? package.Workbook.Worksheets.Add("Sheet1");
@@ -248,7 +252,7 @@ namespace CTI.DSF.ExcelProcessor.Services
 
         private static readonly Dictionary<Type, (object? Value, string? Format)> typeDefaults = new()
         {
-            { typeof(DateTime), (DateTime.Now, "mm/dd/yyyy") },
+            { typeof(DateTime), (DateTime.Now, "MM/dd/yyyy") },
             { typeof(int), (0, "#,##0") },
             { typeof(decimal), (0, "#,##0.00") },
             { typeof(double), (0.0, "#,##0.00") },
@@ -258,7 +262,41 @@ namespace CTI.DSF.ExcelProcessor.Services
             { typeof(char), ('A', null) },
             { typeof(bool), ("false", null) },
         };
-
+        private static string? Format(Type dataType, object value)
+        {
+            if (typeDefaults.TryGetValue(dataType, out var formatInfo))
+            {
+                string? formatString = formatInfo.Format;
+                if (dataType == typeof(DateTime))
+                {
+                    if (double.TryParse(value.ToString(), out double oleAutomationDate))
+                    {
+                        DateTime convertedDateTime = DateTime.FromOADate(oleAutomationDate);
+                        return string.Format("{0:" + formatString + "}", convertedDateTime);
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+                else
+                {
+                    if (value == null)
+                    {
+                        return string.Empty;
+                    }
+                    if (string.IsNullOrEmpty(formatString))
+                    {
+                        return value.ToString();
+                    }
+                    return string.Format("{0:" + formatString + "}", value);
+                }
+            }
+            else
+            {
+                return value?.ToString() ?? string.Empty;
+            }
+        }
         private static PropertyInfo[] GetTableObjectFields<TableObject>()
         {
             Type tableObjectType = typeof(TableObject);
@@ -268,7 +306,9 @@ namespace CTI.DSF.ExcelProcessor.Services
             // Get all the fields of the BaseEntity class          
             PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
             // Include only properties with primitive data types
-            properties = properties.Where(prop => prop.PropertyType.IsPrimitive || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(DateTime)).ToArray();
+            properties = properties.Where(prop => prop.PropertyType.IsPrimitive 
+            || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) 
+            || prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)).ToArray();
             properties = properties.Where(prop => !baseEntityFields.Any(baseProp => baseProp.Name == prop.Name)).ToArray();
             return properties;
         }
@@ -304,32 +344,32 @@ namespace CTI.DSF.ExcelProcessor.Services
             switch (module)
             {
                 case nameof(CompanyState):
-					return rowValue;
-				case nameof(DepartmentState):
-					return await DepartmentValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(SectionState):
-					return await SectionValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(TeamState):
-					return await TeamValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(HolidayState):
-					return rowValue;
-				case nameof(TagsState):
-					return rowValue;
-				case nameof(TaskMasterState):
-					return rowValue;
-				case nameof(TaskCompanyAssignmentState):
-					return await TaskCompanyAssignmentValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(TaskApproverState):
-					return await TaskApproverValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(TaskTagState):
-					return await TaskTagValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(AssignmentState):
-					return await AssignmentValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(DeliveryState):
-					return await DeliveryValidator.ValidatePerRecordAsync(_context, rowValue);
-				case nameof(DeliveryApprovalHistoryState):
-					return await DeliveryApprovalHistoryValidator.ValidatePerRecordAsync(_context, rowValue);
-				
+                    return rowValue;
+                case nameof(DepartmentState):
+                    return await DepartmentValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(SectionState):
+                    return await SectionValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(TeamState):
+                    return await TeamValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(HolidayState):
+                    return rowValue;
+                case nameof(TagsState):
+                    return rowValue;
+                case nameof(TaskMasterState):
+                    return rowValue;
+                case nameof(TaskCompanyAssignmentState):
+                    return await TaskCompanyAssignmentValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(TaskApproverState):
+                    return await TaskApproverValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(TaskTagState):
+                    return await TaskTagValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(AssignmentState):
+                    return await AssignmentValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(DeliveryState):
+                    return await DeliveryValidator.ValidatePerRecordAsync(_context, rowValue);
+                case nameof(DeliveryApprovalHistoryState):
+                    return await DeliveryApprovalHistoryValidator.ValidatePerRecordAsync(_context, rowValue);
+
                 default: break;
             }
             return rowValue;
@@ -340,8 +380,8 @@ namespace CTI.DSF.ExcelProcessor.Services
             switch (module)
             {
                 case nameof(CompanyState):
-					return CompanyValidator.DuplicateValidation(records);
-				
+                    return CompanyValidator.DuplicateValidation(records);
+
                 default: break;
             }
             return null;
