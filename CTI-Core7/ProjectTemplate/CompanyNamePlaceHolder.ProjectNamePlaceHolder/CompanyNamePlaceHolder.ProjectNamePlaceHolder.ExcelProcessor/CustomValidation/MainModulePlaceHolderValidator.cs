@@ -26,7 +26,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.CustomVal
 			{
 				Template:[ExcelBatchValidationDuplicate]				
 			};
-			return DictionaryHelper.FindDuplicateRowNumbersPerKey(records, listOfKeys);
+			return listOfKeys.Count > 0 ? DictionaryHelper.FindDuplicateRowNumbersPerKey(records, listOfKeys) : new Dictionary<string, HashSet<int>>();
 		}
     }
 }

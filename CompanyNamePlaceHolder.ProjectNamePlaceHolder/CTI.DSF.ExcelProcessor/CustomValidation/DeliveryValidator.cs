@@ -134,7 +134,7 @@ namespace CTI.DSF.ExcelProcessor.CustomValidation
 				
 								
 			};
-			return DictionaryHelper.FindDuplicateRowNumbersPerKey(records, listOfKeys);
+			return listOfKeys.Count > 0 ? DictionaryHelper.FindDuplicateRowNumbersPerKey(records, listOfKeys) : new Dictionary<string, HashSet<int>>();
 		}
     }
 }

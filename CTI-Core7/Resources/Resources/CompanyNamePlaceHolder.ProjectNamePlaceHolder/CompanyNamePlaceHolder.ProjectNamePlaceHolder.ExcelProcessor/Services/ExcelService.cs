@@ -92,7 +92,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                             }
                             else
                             {
-                                rowValue.Add(item.Name, Convert.ChangeType(cellValue, propertyType));
+                                rowValue.Add(item.Name, Convert.ChangeType(Format(propertyType, cellValue), propertyType));
                             }
                             if (columnIndex == tableObjectFields.Length)
                             {
@@ -215,6 +215,8 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             {
                 throw new FileNotFoundException("The specified existing Excel file does not exist.", existingExcelFilePath);
             }
+			if (!Directory.Exists(fullFilePath))
+                Directory.CreateDirectory(fullFilePath);
             using (var package = new ExcelPackage(new FileInfo(existingExcelFilePath)))
             {
                 var workSheet = package.Workbook.Worksheets.FirstOrDefault() ?? package.Workbook.Worksheets.Add("Sheet1");
@@ -248,7 +250,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
 
         private static readonly Dictionary<Type, (object? Value, string? Format)> typeDefaults = new()
         {
-            { typeof(DateTime), (DateTime.Now, "mm/dd/yyyy") },
+            { typeof(DateTime), (DateTime.Now, "MM/dd/yyyy") },
             { typeof(int), (0, "#,##0") },
             { typeof(decimal), (0, "#,##0.00") },
             { typeof(double), (0.0, "#,##0.00") },
@@ -258,7 +260,41 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             { typeof(char), ('A', null) },
             { typeof(bool), ("false", null) },
         };
-
+		private static string? Format(Type dataType, object value)
+        {
+            if (typeDefaults.TryGetValue(dataType, out var formatInfo))
+            {
+                string? formatString = formatInfo.Format;
+                if (dataType == typeof(DateTime))
+                {
+                    if (double.TryParse(value.ToString(), out double oleAutomationDate))
+                    {
+                        DateTime convertedDateTime = DateTime.FromOADate(oleAutomationDate);
+                        return string.Format("{0:" + formatString + "}", convertedDateTime);
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+                else
+                {
+                    if (value == null)
+                    {
+                        return string.Empty;
+                    }
+                    if (string.IsNullOrEmpty(formatString))
+                    {
+                        return value.ToString();
+                    }
+                    return string.Format("{0:" + formatString + "}", value);
+                }
+            }
+            else
+            {
+                return value?.ToString() ?? string.Empty;
+            }
+        }
         private static PropertyInfo[] GetTableObjectFields<TableObject>()
         {
             Type tableObjectType = typeof(TableObject);
@@ -268,7 +304,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             // Get all the fields of the BaseEntity class          
             PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
             // Include only properties with primitive data types
-            properties = properties.Where(prop => prop.PropertyType.IsPrimitive || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(DateTime)).ToArray();
+            properties = properties.Where(prop => prop.PropertyType.IsPrimitive 
+            || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) 
+            || prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)).ToArray();
             properties = properties.Where(prop => !baseEntityFields.Any(baseProp => baseProp.Name == prop.Name)).ToArray();
             return properties;
         }
