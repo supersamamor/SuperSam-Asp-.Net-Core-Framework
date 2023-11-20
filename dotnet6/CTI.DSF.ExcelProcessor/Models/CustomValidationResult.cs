@@ -9,7 +9,7 @@ namespace CTI.DSF.ExcelProcessor.Models
     public class CustomValidationResult
     {
         public int RowNumber { get; set; }
-        public required Dictionary<string, object?> Data { get; set; }
+        public Dictionary<string, object?> Data { get; set; } = new();
         public string Remarks { get; set; } = "";
     }
 }
