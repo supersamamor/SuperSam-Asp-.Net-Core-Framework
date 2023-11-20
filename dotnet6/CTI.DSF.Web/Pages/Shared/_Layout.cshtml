@@ -1,0 +1,59 @@
+@{
+    var release = Configuration.GetValue<string>("Version:ReleaseName");
+    var build = Configuration.GetValue<string>("Version:BuildNumber");
+    var appName = Configuration.GetValue<string>("Application");
+    var customerSupportEmail = Configuration.GetValue<string>("CustomerSupportEmail");
+    var companyName = Configuration.GetValue<string>("CompanyName");
+    var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
+    var user = await UserManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - @appName</title>
+    <partial name="_Styles" />
+    @RenderSection("Styles", required: false)
+    <script asp-add-nonce>
+        @Html.Raw(JavaScriptSnippet.ScriptBody)
+    </script>
+</head>
+<body id="page-top">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section"></div>
+    </div>
+    <div id="wrapper">
+        <partial name="_Sidebar" />
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <partial name="_Navbar" />
+                <div class="container-fluid">
+                    <partial name="_CookieConsentPartial" />
+                    @RenderBody()
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div id="themeSwitchContainer" class="float-right custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="themeSwitch">
+                    <label class="custom-control-label" for="themeSwitch">Dark mode</label>
+                </div>
+                <div id="languangeSwitchContainer" class="float-right p-1 d-none d-sm-block">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </div>
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright">
+                        <strong>Copyright &copy; @System.DateTime.Now.Year - @companyName - <a href="mailto:@customerSupportEmail">@customerSupportEmail</a></strong> All rights reserved.
+                        Release @release Build @build
+                        <a href="@privacyPolicyUrl" target="_blank">Privacy</a>
+                    </div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <partial name="_Scripts" />
+    @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("NotyfSafe")
+</body>
+</html>

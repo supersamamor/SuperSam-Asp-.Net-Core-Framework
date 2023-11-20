@@ -1,0 +1,80 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Submission"];
+    ViewData["ActiveMainPage"] = "Delivery";
+    ViewData["Level1"] = "DSF";
+}
+<form enctype="multipart/form-data" id="delivery-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Delivery" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">  
+		<a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>                
+        <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_DeliveryApprovalHistoryListValidationPartial" model="@Model.Delivery" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+			$.bindSaveConfirmationModal('Update', '#btnConfirmationModal','#delivery-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#delivery-form', 'Do you want to cancel the changes?');
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeDeliveryApprovalHistoryFieldValidations($('#DeliveryApprovalHistoryCount').val());
+			$('.RemoveDeliveryApprovalHistoryButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveDeliveryApprovalHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#delivery-form', InitializeForm, true);
+			});
+
+			$('#btnAddDeliveryApprovalHistory').on( 'click', function () {
+				$('#AsyncAction').val('AddDeliveryApprovalHistory');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#delivery-form', InitializeForm, true);
+			});
+
+			$.fn.taskcompanyassignmentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/TaskCompanyAssignment/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#TaskCompanyAssignmentId").taskcompanyassignmentSelect();
+
+			$.fn.assignmentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Assignment/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#AssignmentId").assignmentSelect();
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

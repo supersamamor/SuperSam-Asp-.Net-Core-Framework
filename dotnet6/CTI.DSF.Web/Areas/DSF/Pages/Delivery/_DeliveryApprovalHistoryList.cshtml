@@ -1,0 +1,75 @@
+@using Models
+@model DeliveryViewModel
+<input type="hidden" id="DeliveryApprovalHistoryCount" value="@Model?.DeliveryApprovalHistoryList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["History"]</span>
+        <a id="btnAddDeliveryApprovalHistory" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveDeliveryApprovalHistory" value="RemoveDeliveryApprovalHistory"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Transaction Date/Time"]
+							</th>
+							<th>
+								@Localizer["Status"]
+							</th>
+							<th>
+								@Localizer["Transacted By"]
+							</th>
+							<th>
+								@Localizer["Remarks"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.DeliveryApprovalHistoryList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.DeliveryApprovalHistoryList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="DeliveryApprovalHistoryList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="DeliveryApprovalHistoryList[@counter].DeliveryId" value="@item.DeliveryId" />
+                            </td>
+                            <td>
+										<input  asp-for="@item.TransactionDateTime" name="DeliveryApprovalHistoryList[@counter].TransactionDateTime" class="form-control"  />
+										<span data-valmsg-for="DeliveryApprovalHistoryList[@counter].TransactionDateTime" asp-validation-for="@item.TransactionDateTime" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Status" name="DeliveryApprovalHistoryList[@counter].Status" class="form-control" maxlength="50" />
+										<span data-valmsg-for="DeliveryApprovalHistoryList[@counter].Status" asp-validation-for="@item.Status" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.TransactedBy" name="DeliveryApprovalHistoryList[@counter].TransactedBy" class="form-control" maxlength="450" />
+										<span data-valmsg-for="DeliveryApprovalHistoryList[@counter].TransactedBy" asp-validation-for="@item.TransactedBy" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<input  asp-for="@item.Remarks" name="DeliveryApprovalHistoryList[@counter].Remarks" class="form-control"  />
+										<span data-valmsg-for="DeliveryApprovalHistoryList[@counter].Remarks" asp-validation-for="@item.Remarks" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveDeliveryApprovalHistoryButton btnAddRemoveSubDetailList" title="@Localizer["Remove DeliveryApprovalHistory"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

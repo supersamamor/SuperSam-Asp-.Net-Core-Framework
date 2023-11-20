@@ -1,0 +1,83 @@
+@using Models
+@model TeamViewModel
+<input type="hidden" id="TaskCompanyAssignmentCount" value="@Model?.TaskCompanyAssignmentList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span  class="card-header-custom">@Localizer["Task / Company"]</span>
+        <a id="btnAddTaskCompanyAssignment" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveTaskCompanyAssignment" value="RemoveTaskCompanyAssignment"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+								@Localizer["Task Master"]
+							</th>
+							<th>
+								@Localizer["Company"]
+							</th>
+							<th>
+								@Localizer["Department"]
+							</th>
+							<th>
+								@Localizer["Section"]
+							</th>
+							
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.TaskCompanyAssignmentList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.TaskCompanyAssignmentList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="TaskCompanyAssignmentList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="TaskCompanyAssignmentList[@counter].TeamId" value="@item.TeamId" />
+                            </td>
+                            <td>
+										<select asp-for="@item.TaskMasterId" id="TaskCompanyAssignmentList_@(counter)_TaskMasterId" name="TaskCompanyAssignmentList[@counter].TaskMasterId" class="form-control SelectTaskMaster" asp-items="@(dropdownService.GetTaskMasterList(item.TaskMasterId))" >
+											<option value="">- Select Task Master -</option>
+										</select>
+										<span data-valmsg-for="TaskCompanyAssignmentList[@counter].TaskMasterId" asp-validation-for="@item.TaskMasterId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<select asp-for="@item.CompanyId" id="TaskCompanyAssignmentList_@(counter)_CompanyId" name="TaskCompanyAssignmentList[@counter].CompanyId" class="form-control SelectCompany" asp-items="@(dropdownService.GetCompanyList(item.CompanyId))" >
+											<option value="">- Select Company -</option>
+										</select>
+										<span data-valmsg-for="TaskCompanyAssignmentList[@counter].CompanyId" asp-validation-for="@item.CompanyId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<select asp-for="@item.DepartmentId" id="TaskCompanyAssignmentList_@(counter)_DepartmentId" name="TaskCompanyAssignmentList[@counter].DepartmentId" class="form-control SelectDepartment" asp-items="@(dropdownService.GetDepartmentList(item.DepartmentId))" >
+											<option value="">- Select Department -</option>
+										</select>
+										<span data-valmsg-for="TaskCompanyAssignmentList[@counter].DepartmentId" asp-validation-for="@item.DepartmentId" class="text-danger"></span>
+										
+									</td>
+									<td>
+										<select asp-for="@item.SectionId" id="TaskCompanyAssignmentList_@(counter)_SectionId" name="TaskCompanyAssignmentList[@counter].SectionId" class="form-control SelectSection" asp-items="@(dropdownService.GetSectionList(item.SectionId))" >
+											<option value="">- Select Section -</option>
+										</select>
+										<span data-valmsg-for="TaskCompanyAssignmentList[@counter].SectionId" asp-validation-for="@item.SectionId" class="text-danger"></span>
+										
+									</td>
+									
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveTaskCompanyAssignmentButton btnAddRemoveSubDetailList" title="@Localizer["Remove TaskCompanyAssignment"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+@page
+@model ViewModel
+@section Styles {
+    <partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["View User"];
+    ViewData["ActiveMainPage"] = "Users";
+    ViewData["Level1"] = "Admin";
+}
+<div class="container-fluid" id="user-container">
+    <input type="hidden" asp-for="@Model.UserModel!.Id" name="Id" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.UserModel" />
+    </div>
+</div>
+
+<div id="toolbar-container" class="btn-group" role="group">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.Create)).Succeeded)
+    {
+        <a asp-page="Add" class="btn btn-success text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Users.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-id="@Model.UserModel.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+    <partial name="_DataTableScripts" />
+    <partial name="_DisableFieldsPartial" model="@("user-container")" />
+    <script asp-add-nonce>
+        $(document).ready(function () {
+            var roles = $("#roles").DataTable({
+                select: false,
+                searching: true,
+                paging: true,
+                info: true,
+                buttons: [],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        orderDataType: 'dom-checkbox',
+                    }
+                ]
+            });
+        });
+    </script>
+}

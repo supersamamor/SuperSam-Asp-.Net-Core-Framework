@@ -1,0 +1,116 @@
+<script asp-add-nonce src="~/lib/jszip/dist/jszip.min.js"></script>
+<script asp-add-nonce src="~/lib/pdfmake/build/pdfmake.min.js"></script>
+<script asp-add-nonce src="~/lib/pdfmake/build/vfs_fonts.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-buttons/js/buttons.html5.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-buttons/js/buttons.print.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-select/js/dataTables.select.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-select/js/select.bootstrap4.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script asp-add-nonce src="~/lib/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script asp-add-nonce>
+    $(document).ready(function () {
+        /* Create an array with the values of all the checkboxes in a column */
+        $.fn.dataTable.ext.order['dom-checkbox'] = function ( settings, col )
+        {
+            return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+                return $('input', td).prop('checked') ? '1' : '0';
+            });
+        }
+
+        $.extend(true, $.fn.dataTable.defaults, {
+            processing: true,
+            responsive: true,
+            pagingType: "full_numbers",
+            lengthChange: false,
+            select: true,
+            pageLength: 5,
+            dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            lengthMenu: [
+                [ 5, 10, 25, 50 ],
+                [ '5', '10', '25', '50' ]
+            ],
+            buttons: [
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+
+        $.fn.basicDataTable = function() {
+            this.filter("table").each(function() {
+                return $(this).DataTable({
+                    select: false,
+                    searching: true,
+                    paging: true,
+                    info: true,
+                    ordering: true,
+                    buttons: [],
+                });
+            });
+            return this;
+        };
+
+        $.fn.dataTable.Debounce = function ( table, options ) {
+            var tableId = table.settings()[0].sTableId;
+            $('.dataTables_filter input[aria-controls="' + tableId + '"]') // select the correct input field
+                .unbind() // Unbind previous default bindings
+                .bind('input', (delay(function (e) { // Bind our desired behavior
+                    table.search($(this).val()).draw();
+                    return;
+                }, 250))); // Set delay in milliseconds
+        };
+
+        function delay(callback, ms) {
+            var timer = 0;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    callback.apply(context, args);
+                }, ms || 0);
+            };
+        };
+
+		$.fn.onSubmitIncludeAllFieldsFromTable = function(table) {
+			$(this).on('submit', function (e) {
+				var form = this;
+				// Encode a set of form elements from all pages as an array of names and values
+				var params = table.$('input,select,textarea').serializeArray();
+				// Iterate over all form elements
+				$.each(params, function () {
+					// If element doesn't exist in DOM
+					if (!$.contains(document, form[this.name])) {
+						// Create a hidden element
+						$(form).append(
+							$('<input>')
+								.attr('type', 'hidden')
+								.attr('name', this.name)
+								.val(this.value)
+						);
+					}
+				});
+			});
+		};
+		$.EnableNavbarSearch = function(table) {
+            var tableId = table.settings()[0].sTableId;
+            $('#navbar_search').keyup(function () {
+                var searchKey = $(this).val();
+                $.cookie("searchKey-" + tableId, searchKey, { expires: 1 / 288 }); // Cookie expires after 5 minutes
+                table.search(searchKey).draw();
+            })
+            $(".dataTables_filter").hide();
+            $("#navbar_search_container").show();
+            $('#navbar_search_container').removeClass('hide_navbar_search_container');
+            //Retrieve search key from cookies
+            var searchKey = $.cookie("searchKey-" + tableId);
+            if (searchKey) {
+                $("#navbar_search").val(searchKey);
+                table.search(searchKey).draw();
+            }
+        };
+    });
+</script>

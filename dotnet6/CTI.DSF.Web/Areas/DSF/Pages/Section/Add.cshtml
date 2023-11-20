@@ -1,0 +1,127 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = Localizer["Add Section"];
+    ViewData["ActiveMainPage"] = "Section";
+    ViewData["Level1"] = "DSF";
+}
+<form id="section-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+	<div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Section" />
+    </div> 
+	<div id="toolbar-container" class="btn-group" role="group">
+        <a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+        <button type="button" id="btnConfirmationModal" class="btn btn-success" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>   
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_TaskCompanyAssignmentListValidationPartial" model="@Model.Section" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+		function InitializeForm()
+		{			
+			$.bindSaveConfirmationModal('Save', '#btnConfirmationModal','#section-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#section-form', 'Do you want to cancel the changes?');
+			$('.DisableSelectDropdown').on('mousedown', function(e) {
+				e.preventDefault();
+				this.blur();
+				window.focus();
+			});
+			
+			$.InitializeTaskCompanyAssignmentFieldValidations($('#TaskCompanyAssignmentCount').val());
+			$('.RemoveTaskCompanyAssignmentButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveTaskCompanyAssignment');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#section-form', InitializeForm, true);
+			});
+
+			$('#btnAddTaskCompanyAssignment').on( 'click', function () {
+				$('#AsyncAction').val('AddTaskCompanyAssignment');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#section-form', InitializeForm, true);
+			});
+
+			$.fn.departmentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Department/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var departmentlistdropdowns = document.getElementsByClassName('SelectDepartment');
+			for ( var i=0; i< departmentlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_DepartmentId").departmentSelect();
+			}
+
+			$.fn.taskmasterSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/TaskMaster/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var taskmasterlistdropdowns = document.getElementsByClassName('SelectTaskMaster');
+			for ( var i=0; i< taskmasterlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_TaskMasterId").taskmasterSelect();
+			}
+
+			$.fn.companySelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Company/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var companylistdropdowns = document.getElementsByClassName('SelectCompany');
+			for ( var i=0; i< companylistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_CompanyId").companySelect();
+			}
+
+			$.fn.teamSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Team/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			var teamlistdropdowns = document.getElementsByClassName('SelectTeam');
+			for ( var i=0; i< teamlistdropdowns.length; i++) {
+				$("#TaskCompanyAssignmentList_"+i+"_TeamId").teamSelect();
+			}
+
+			$.fn.departmentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/Department/Index", new { area = "DSF", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#DepartmentCode").departmentSelect();
+
+		}	
+		InitializeForm();
+    });
+</script>
+}

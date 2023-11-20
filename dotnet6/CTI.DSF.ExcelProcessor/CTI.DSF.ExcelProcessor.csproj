@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CTI.Common.Core.Base\CTI.Common.Core.Base.csproj" />
+    <ProjectReference Include="..\CTI.DSF.Core\CTI.DSF.Core.csproj" />
+	<ProjectReference Include="..\CTI.DSF.Infrastructure\CTI.DSF.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

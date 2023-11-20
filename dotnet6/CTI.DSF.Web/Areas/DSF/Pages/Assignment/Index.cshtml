@@ -1,0 +1,181 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Assignment List"];
+    ViewData["ActiveMainPage"] = "Assignment";
+    ViewData["Level1"] = "DSF";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="assignment" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+								@Localizer["Assignment Code"]
+							</th>
+							<th>
+								@Localizer["Task / Company Assignment"]
+							</th>
+							<th>
+								@Localizer["Primary Assignee"]
+							</th>
+							<th>
+								@Localizer["Alternate Assignee"]
+							</th>
+							<th>
+								@Localizer["Start Date"]
+							</th>
+							<th>
+								@Localizer["End Date"]
+							</th>
+							  
+														
+                            <th>
+                                @Localizer["Actions"]
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<div id="BatchUploadPartialContainer">
+    <partial name="_BatchUpload" model="Model.BatchUpload" />
+</div>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#assignment').DataTable({
+            select: false,
+            serverSide: true,
+            order: [[ 6, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/Assignment/Index", new { area = "DSF", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+			initComplete: function( settings, json ) {
+                BindTableRowCollapseEvent();
+            },
+			columns: [
+                { data: "assignmentCode", name: "AssignmentCode", responsivePriority: 1, title: '@Localizer["Assignment Code"]', searchable: true },
+				{ data: "taskCompanyAssignmentId", name: "TaskCompanyAssignmentId", responsivePriority: 1, title: '@Localizer["Task / Company Assignment"]', searchable: false },
+				{ data: "primaryAssignee", name: "PrimaryAssignee", responsivePriority: 1, title: '@Localizer["Primary Assignee"]', searchable: false },
+				{ data: "alternateAssignee", name: "AlternateAssignee", responsivePriority: 1, title: '@Localizer["Alternate Assignee"]', searchable: false },
+				{ data: "startDate", name: "StartDate", responsivePriority: 1, title: '@Localizer["Start Date"]', searchable: false },
+				{ data: "endDate", name: "EndDate", responsivePriority: 1, title: '@Localizer["End Date"]', searchable: false },
+				   
+				
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/Assignment/Details", new { area = "DSF" })' + '?id=' + row.id;
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle btnViewAssignment" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.Edit)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Assignment/Edit", new { area = "DSF" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat success semicircle btnEditAssignment" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>';
+                    </text>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.Delete)).Succeeded)
+                {
+                    <text>
+                        url = '@Url.Page("/Assignment/Delete", new { area = "DSF" })' + '?id=' + row.id;
+                        button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat accent semicircle btnDeleteAssignment" title="@Localizer["Delete"]"><i class="fas fa-trash btnNoBorders"></i></a>';
+                    </text>
+                }
+				  
+                        return button;
+                    },
+                },
+                { data: "lastModifiedDate", name: "LastModifiedDate", title: '@Localizer["Last Modified Date"]', visible: false, searchable: false },
+                { data: "id", name: "Id", visible: false },
+            ],
+            buttons: [
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.Create)).Succeeded)
+        {
+            <text>
+                {
+                    text: '@Localizer["Add"]',
+                    action: function (e, dt, button, config) {
+                        var url = '@Url.Page("/Assignment/Add", new { area = "DSF" })';
+                        window.location.href = url;
+                    },
+                    className: 'btn btn-success text-light',
+                },
+            </text>
+        }
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.Upload)).Succeeded)
+        {
+            <text>
+                {
+                    text: 'Download Template',
+                    action: function () {
+                        // Trigger the hidden file input
+                        $('#download-template-form').submit();   
+                    },
+                    className: 'btn btn-secondary text-light',
+                },
+            </text>
+        }
+        @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Assignment.Upload)).Succeeded)
+        {
+            <text>
+                {
+                    text: 'Upload',
+                    action: function () {
+                        // Trigger the hidden file input
+                        $('#btnBatchUpload').click();
+                    },
+                    className: 'btn btn-info text-light',
+                },
+            </text>
+        }
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+
+        $('.btn-table_filter').on('click', function(e) {
+            table.ajax.reload(null, false);
+        });
+		function BindTableRowCollapseEvent()
+        {
+            $('#assignment tbody').on('click', 'td.dtr-control', function () {
+                $.showAjaxLoaderOnClick([".btnAddAssignment",".btnEditAssignment",".btnViewAssignment",".btnDeleteAssignment"]);
+            });
+        }
+        $.showAjaxLoaderOnClick([".btnAddAssignment",".btnEditAssignment",".btnViewAssignment",".btnDeleteAssignment"]);
+        $.EnableNavbarSearch(table);
+		$('#btnBatchUpload').on('change', function (e) {
+            $('#batch-upload-form').submit();          
+        });
+        @if (!string.IsNullOrEmpty(Model.BatchUpload.BatchUploadFileName))
+        {
+            <text>
+                $('#btnDownloadBatchUploadTemplateLink')[0].click();             
+            </text>
+        }
+    });
+</script>
+}

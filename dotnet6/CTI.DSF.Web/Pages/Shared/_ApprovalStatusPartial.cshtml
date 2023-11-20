@@ -1,0 +1,19 @@
+@model string
+
+
+@if (Model == CTI.DSF.Core.DSF.ApprovalStatus.ForApproval)
+{
+    <h4><span class="badge badge-info">@Model</span></h4>
+}
+else if (Model == CTI.DSF.Core.DSF.ApprovalStatus.PartiallyApproved)
+{
+    <h4><span class="badge badge-primary">@Model</span></h4>
+}
+else if (Model == CTI.DSF.Core.DSF.ApprovalStatus.Approved)
+{
+    <h4><span class="badge badge-success">@Model</span></h4>
+}
+else if (Model == CTI.DSF.Core.DSF.ApprovalStatus.Rejected)
+{
+    <h4><span class="badge badge-danger">@Model</span></h4>
+}
