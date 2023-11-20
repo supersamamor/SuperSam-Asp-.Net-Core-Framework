@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Helpers
 {
     public static class ConstantHelper

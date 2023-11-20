@@ -1,23 +1,27 @@
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.MainModulePlaceHolder.Queries;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 Template:[ApprovalStatusBadgeImport]
 
 
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.ProjectNamePlaceHolder.Pages.MainModulePlaceHolder;
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder;
 
 [Authorize(Policy = Permission.MainModulePlaceHolder.View)]
 public class IndexModel : BasePageModel<IndexModel>
-{
-    public MainModulePlaceHolderViewModel MainModulePlaceHolder { get; set; } = new();
-
+{   
+	private readonly string? _uploadPath;
+    public IndexModel(IConfiguration configuration)
+    {
+        _uploadPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");
+    }
     [DataTablesRequest]
     public DataTablesRequest? DataRequest { get; set; }
-
+	[BindProperty]
+    public BatchUploadModel BatchUpload { get; set; } = new();
     public IActionResult OnGet()
     {
         return Page();
@@ -42,5 +46,17 @@ public class IndexModel : BasePageModel<IndexModel>
     {
         var result = await Mediatr.Send(request.ToQuery<GetMainModulePlaceHolderQuery>(nameof(MainModulePlaceHolderState.Template:[InsertNewUniqueField])));
         return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Template:[InsertNewUniqueField] }));
+    }
+	public async Task<IActionResult> OnPostBatchUploadAsync()
+    {        
+        return await BatchUploadAsync<IndexModel, MainModulePlaceHolderState>(BatchUpload.BatchUploadForm, nameof(MainModulePlaceHolderState), "Index");
+    }
+
+    public IActionResult OnPostDownloadTemplate()
+    {
+        ModelState.Clear();
+		BatchUpload.BatchUploadFileName = ExcelService.ExportTemplate<MainModulePlaceHolderState>(_uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder);
+        NotyfService.Success(Localizer["Successfully downloaded upload template."]);
+        return Page();
     }
 }

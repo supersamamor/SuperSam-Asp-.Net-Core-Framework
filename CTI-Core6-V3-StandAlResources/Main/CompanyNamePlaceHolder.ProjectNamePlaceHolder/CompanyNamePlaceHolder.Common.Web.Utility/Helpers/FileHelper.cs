@@ -106,7 +106,7 @@ public class FileHelper
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<Validation<Error, TRet>> ProcessFormFile<T, TRet>(IFormFile formFile,
-        string[] permittedExtensions, long sizeLimit, Func<MemoryStream, TRet> f, CancellationToken cancellationToken = default)
+        string[]? permittedExtensions, long sizeLimit, Func<MemoryStream, TRet> f, CancellationToken cancellationToken = default)
     {
         var fieldDisplayName = string.Empty;
 
@@ -197,7 +197,7 @@ public class FileHelper
         return memoryStream;
     }
 
-    private static bool IsValidFileExtensionAndSignature(string? fileName, Stream? data, string[] permittedExtensions)
+    private static bool IsValidFileExtensionAndSignature(string? fileName, Stream? data, string[]? permittedExtensions)
     {
         if (string.IsNullOrEmpty(fileName) || data == null || data.Length == 0)
         {
@@ -206,7 +206,7 @@ public class FileHelper
 
         var ext = Path.GetExtension(fileName).ToLowerInvariant();
 
-        if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+        if (string.IsNullOrEmpty(ext) || (permittedExtensions != null && !permittedExtensions.Contains(ext)))
         {
             return false;
         }

@@ -1,0 +1,11 @@
+@model CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models.BatchUploadModel
+@{
+    var url = @Url.Page($"/{WebConstants.ViewFilePath}/Index", new { area = "AreaPlaceHolder" }) + "?subFolder=" + WebConstants.ExcelTemplateSubFolder + "&fileName=" + Model.BatchUploadFileName;
+}
+<a class="d-none" id="btnDownloadBatchUploadTemplateLink" href="@url" target="_blank" download="@Model.BatchUploadFileName">@Localizer["Download Template"]</a>
+<form enctype="multipart/form-data" id="batch-upload-form" method="post" asp-page-handler="BatchUpload">
+    <input asp-for="@Model.BatchUploadForm" id="btnBatchUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="d-none" />
+</form>
+<form  id="download-template-form" method="post" asp-page-handler="DownloadTemplate">
+  
+</form>

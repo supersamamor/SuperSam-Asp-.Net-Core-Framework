@@ -28,7 +28,6 @@ public static class QueryableExtensions
                                                                       int pageNumber, int pageSize,
                                                                       CancellationToken cancellationToken = default)
     {        
-	
 	    if (!string.IsNullOrWhiteSpace(searchValue) && searchColumns != null)
         {
 			searchValue = searchValue.Replace("\\", "");
@@ -42,7 +41,7 @@ public static class QueryableExtensions
         {
             query = query.OrderBy($"{sortColumn} {sortOrder}");
         }
-        var totalCount = query.Count();
+		var totalCount = query.Count();
 		if (pageSize == -1)
 		{
 			pageSize = totalCount;

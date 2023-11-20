@@ -34,11 +34,7 @@ public class GetReportBuilderByIdQueryHandler : IRequestHandler<GetReportSetupAn
                               join r in _identityContext.Roles on ur.RoleId equals r.Id
                               where ur.UserId == _authenticatedUser.UserId
                               select r.Name).Distinct().ToListAsync(cancellationToken);
-        var report = await _context.Report
-            .Include(l => l.ReportTableList)
-            .Include(l => l.ReportTableJoinParameterList)
-            .Include(l => l.ReportColumnHeaderList)
-            .Include(l => l.ReportFilterGroupingList)
+        var report = await _context.Report            
             .Include(l => l.ReportQueryFilterList)
             .Where(e => e.Id == request.Id)
             .Where(l => l.ReportRoleAssignmentList!.Any(ra => roleList.Contains(ra.RoleName)))

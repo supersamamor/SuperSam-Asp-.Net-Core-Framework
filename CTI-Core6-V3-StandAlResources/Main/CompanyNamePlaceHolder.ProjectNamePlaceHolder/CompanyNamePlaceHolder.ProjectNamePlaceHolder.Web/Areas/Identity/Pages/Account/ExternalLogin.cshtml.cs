@@ -97,6 +97,7 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
             return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
         }
         var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        var fullName = info.Principal.FindFirstValue(ClaimTypes.Name);
         var user = await _userManager.FindByNameAsync(email);
         if (user != null && !user.IsActive)
         {
@@ -109,10 +110,7 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
         var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
         if (result.Succeeded)
         {
-            await _mediator.Send(new AddAuditLogCommand() { UserId = user!.Id, Type = "User logged in", TraceId = TraceId });
-            _logger.LogInformation("User logged in, Email = {Email}, Provider = {LoginProvider}", email, info?.LoginProvider);
-            NotyfService.Success($"Logged in as {email}");
-            return LocalRedirect(returnUrl);
+            return await SuccessRedirect(email, user!, info, returnUrl);
         }
         if (result.IsLockedOut)
         {
@@ -122,21 +120,30 @@ public class ExternalLoginModel : BasePageModel<ExternalLoginModel>
         }
         else
         {
-            // If the user does not have an account, then ask the user to create an account.
-            ReturnUrl = returnUrl;
-            ProviderDisplayName = info.ProviderDisplayName;
-            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+            var defaultEntity = _context.Entities.Where(l => l.Name == Core.Constants.Entities.Default).AsNoTracking().FirstOrDefault();
+            user = new ApplicationUser
             {
-                Input = new InputModel
-                {
-                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                    Name = info.Principal.FindFirstValue(ClaimTypes.Name)
-                };
-            }
-            return Page();
+                UserName = email,
+                Email = email,
+                Name = fullName,
+                EntityId = defaultEntity!.Id,
+                IsActive = true,
+                EmailConfirmed = true,
+            };
+            var createUserResult = await _userManager.CreateAsync(user);
+            _ = await _userManager.AddToRoleAsync(user, Core.Constants.Roles.User);
+            var addLoginResult = await _userManager.AddLoginAsync(user, info);
+            result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            return await SuccessRedirect(email, user!, info, returnUrl);
         }
     }
-
+	private async Task<IActionResult> SuccessRedirect(string email, ApplicationUser user, ExternalLoginInfo? info, string? returnUrl = null)
+    {
+        await _mediator.Send(new AddAuditLogCommand() { UserId = user!.Id, Type = "User logged in", TraceId = TraceId });
+        _logger.LogInformation("User logged in, Email = {Email}, Provider = {LoginProvider}", email, info?.LoginProvider);
+        NotyfService.Success($"Logged in as {email}");
+        return LocalRedirect(returnUrl);
+    }
     public async Task<IActionResult> OnPostConfirmationAsync(string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");

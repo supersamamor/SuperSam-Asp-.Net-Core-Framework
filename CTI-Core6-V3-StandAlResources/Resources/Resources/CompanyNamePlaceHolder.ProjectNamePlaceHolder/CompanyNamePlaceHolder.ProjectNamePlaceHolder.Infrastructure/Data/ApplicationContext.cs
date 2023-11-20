@@ -14,15 +14,11 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
     {
         _authenticatedUser = authenticatedUser;
     }
-    public DbSet<ReportState> Report { get; set; } = default!;
-    public DbSet<ReportTableState> ReportTable { get; set; } = default!;
-    public DbSet<ReportTableJoinParameterState> ReportTableJoinParameter { get; set; } = default!;
-    public DbSet<ReportColumnHeaderState> ReportColumnHeader { get; set; } = default!;
-    public DbSet<ReportColumnDetailState> ReportColumnDetail { get; set; } = default!;
-    public DbSet<ReportFilterGroupingState> ReportFilterGrouping { get; set; } = default!;
-    public DbSet<ReportColumnFilterState> ReportColumnFilter { get; set; } = default!;
+    public DbSet<ReportState> Report { get; set; } = default!;  
     public DbSet<ReportQueryFilterState> ReportQueryFilter { get; set; } = default!;
     public DbSet<ReportRoleAssignmentState> ReportRoleAssignment { get; set; } = default!;
+	public DbSet<UploadProcessorState> UploadProcessor { get; set; } = default!;
+    public DbSet<UploadStagingState> UploadStaging { get; set; } = default!;
 	
     Template:[InsertNewDataModelContextPropertyTextHere]
 	Template:[ApprovalContext]
@@ -62,6 +58,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         #endregion
         modelBuilder.Entity<Audit>().Property(e => e.PrimaryKey).HasMaxLength(120);
         modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
+		modelBuilder.Entity<UploadProcessorState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<UploadStagingState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
         Template:[InsertNewEFFluentAttributesTextHere]
@@ -69,6 +67,14 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         Template:[InsertNewEFFluentAttributesStringLengthTextHere]
         Template:[InsertNewSubCollectionFluentApiTextHere]
 		Template:[ApprovalFluentEF]
+		modelBuilder.Entity<UploadProcessorState>().Property(e => e.FileType).HasMaxLength(20);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.Path).HasMaxLength(450);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.Status).HasMaxLength(20);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.Module).HasMaxLength(50);
+        modelBuilder.Entity<UploadProcessorState>().Property(e => e.UploadType).HasMaxLength(50);
+        modelBuilder.Entity<UploadStagingState>().Property(e => e.Status).HasMaxLength(50);
+
+        modelBuilder.Entity<UploadProcessorState>().HasMany(t => t.UploadStagingList).WithOne(l => l.UploadProcessor).HasForeignKey(t => t.UploadProcessorId);
         base.OnModelCreating(modelBuilder);
     }
 }

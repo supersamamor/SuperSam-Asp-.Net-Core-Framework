@@ -16,7 +16,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
     {
         private readonly ApplicationContext _context;
         private readonly ILogger<ApprovalNotificationJob> _logger;
-        private readonly string _baseUrl;
+        private readonly string? _baseUrl;
         private readonly IMailService _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
         public ApprovalNotificationJob(ApplicationContext context, ILogger<ApprovalNotificationJob> logger, IConfiguration configuration, IMailService emailSender,
@@ -49,7 +49,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
                                 || (item.ApproverSetup!.ApprovalType == ApprovalTypes.InSequence && approvalItem.Sequence == 1 && approvalItem.Status == ApprovalStatus.New))
                             {
                                 approvalItem.SendingDone();
-                                await SendApprovalNotification(item, user);
+                                await SendApprovalNotification(item, user!);
                             }
                         }
                         catch (Exception ex)
@@ -84,7 +84,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Scheduler.Jobs
             string subject = approvalRecord!.ApproverSetup!.EmailSubject;
             string message = SetApproverName(approvalRecord!.ApproverSetup!.EmailBody, user);
             message = SetApprovalUrl(message, approvalRecord);
-            await _emailSender.SendAsync(new MailRequest() { To = user.Email, Subject = subject, Body = message });
+            await _emailSender.SendAsync(new MailRequest() { To = user.Email!, Subject = subject, Body = message });
         }
         private static string SetApproverName(string message, ApplicationUser user)
         {
