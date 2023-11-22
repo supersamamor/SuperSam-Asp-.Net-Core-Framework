@@ -315,9 +315,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             // Get all the fields of the BaseEntity class          
             PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
             // Include only properties with primitive data types
-            properties = properties.Where(prop => prop.PropertyType.IsPrimitive 
-            || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?)
-            || prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)).ToArray();
+             properties = properties.Where(prop => prop.PropertyType.IsPrimitive
+				 || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) 
+				 || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?) || prop.PropertyType == typeof(int?)
+				 || prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)).ToArray();
             properties = properties.Where(prop => !baseEntityFields.Any(baseProp => baseProp.Name == prop.Name)).ToArray();
             return properties;
         }
