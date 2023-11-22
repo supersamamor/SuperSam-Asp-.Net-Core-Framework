@@ -100,23 +100,26 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                             }
                         }
                         catch (Exception ex)
-                        {
-                            isSuccess = false;
-                            rowValue[item.Name] = workSheet?.Cells[row, columnIndex].Value;
-
-                            if (columnIndex == tableObjectFields.Length)
-                            {
-                                errorRemarks += $"{ex.Message};";
-                                if (!string.IsNullOrEmpty(errorRemarks))
-                                {
-                                    rowValue.Add(Constants.ExcelUploadErrorRemarks, errorRemarks[0..^2]);
-                                }
-                            }
-                            else
-                            {
-                                errorRemarks += $"Field `{item.Name}` - {ex.Message};";
-                            }
-                        }
+						{
+							isSuccess = false;
+							rowValue[item.Name] = workSheet?.Cells[row, columnIndex].Value;
+							if (columnIndex == tableObjectFields.Length)
+							{
+								errorRemarks += $"{ex.Message};";
+							   
+							}
+							else
+							{
+								errorRemarks += $"Field `{item.Name}` - {ex.Message};";
+							}
+						}
+						if (columnIndex == tableObjectFields.Length)
+						{                           
+							if (!string.IsNullOrEmpty(errorRemarks))
+							{
+								rowValue.Add(Constants.ExcelUploadErrorRemarks, errorRemarks[0..^2]);
+							}
+						}
                     }
                     recordsForUpload.Add(new ExcelRecord { Data = rowValue, RowNumber = row });
                 }
@@ -260,7 +263,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             { typeof(char), ('A', null) },
             { typeof(bool), ("false", null) },
         };
-		private static string? Format(Type dataType, object value)
+        private static string? Format(Type dataType, object value)
         {
             if (typeDefaults.TryGetValue(dataType, out var formatInfo))
             {
@@ -274,19 +277,27 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
                     }
                     else
                     {
-                        return string.Empty;
+                        string format = "MM/dd/yyyy hh:mm:ss tt";
+                        if (DateTime.TryParseExact(value.ToString(), format, null, System.Globalization.DateTimeStyles.None, out DateTime dateTime))
+                        {
+                            return string.Format("{0:" + formatString + "}", dateTime);
+                        }
+                        else
+                        {
+                            if (value == null)
+                            {
+                                return string.Empty;
+                            }
+                            if (string.IsNullOrEmpty(formatString))
+                            {
+                                return value.ToString();
+                            }
+                            return string.Format("{0:" + formatString + "}", value);
+                        }
                     }
                 }
                 else
                 {
-                    if (value == null)
-                    {
-                        return string.Empty;
-                    }
-                    if (string.IsNullOrEmpty(formatString))
-                    {
-                        return value.ToString();
-                    }
                     return string.Format("{0:" + formatString + "}", value);
                 }
             }
