@@ -340,14 +340,21 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
         }
 
         private static TableObject CreateObjectFromRow<TableObject>(Dictionary<string, object?> rowValue, PropertyInfo[] tableObjectFields) where TableObject : new()
-        {
-            var successRecord = new TableObject();
-            foreach (var propertyName in tableObjectFields)
-            {
-                propertyName.SetValue(successRecord, rowValue[propertyName.Name]);
-            }
-            return successRecord;
-        }
+		{
+			var successRecord = new TableObject();
+			foreach (var propertyName in tableObjectFields)
+			{
+				if (Nullable.GetUnderlyingType(propertyName.PropertyType) != null && string.IsNullOrEmpty(rowValue[propertyName.Name]?.ToString()))
+				{
+					propertyName.SetValue(successRecord, null);
+				}
+				else
+				{
+					propertyName.SetValue(successRecord, rowValue[propertyName.Name]);
+				}
+			}
+			return successRecord;
+		}
         private async Task<Dictionary<string, object?>> CustomValidationPerRecordHandler(string module, Dictionary<string, object?> rowValue)
         {
             //Implement Custom Validation Here Depending on Model/Table Name
