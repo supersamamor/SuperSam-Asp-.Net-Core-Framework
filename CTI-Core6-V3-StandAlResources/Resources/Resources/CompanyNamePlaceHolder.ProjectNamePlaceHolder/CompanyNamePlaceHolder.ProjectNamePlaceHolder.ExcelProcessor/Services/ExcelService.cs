@@ -263,37 +263,26 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             { typeof(char), ('A', null) },
             { typeof(bool), ("false", null) },
         };
-        private static string? Format(Type dataType, object value)
+        private static string? Format(Type dataType, object value, string? dateFormat = null)
         {
             if (typeDefaults.TryGetValue(dataType, out var formatInfo))
             {
                 string? formatString = formatInfo.Format;
-                if (dataType == typeof(DateTime))
+
+                if (dataType == typeof(DateTime) || dataType == typeof(DateTime?))
                 {
                     if (double.TryParse(value.ToString(), out double oleAutomationDate))
                     {
                         DateTime convertedDateTime = DateTime.FromOADate(oleAutomationDate);
-                        return string.Format("{0:" + formatString + "}", convertedDateTime);
+                        return string.Format("{0:" + (dateFormat ?? formatString) + "}", convertedDateTime);
+                    }
+                    else if (DateTime.TryParse(value.ToString(), out DateTime dateTime))
+                    {
+                        return string.Format("{0:" + (dateFormat ?? formatString) + "}", dateTime);
                     }
                     else
                     {
-                        string format = "MM/dd/yyyy hh:mm:ss tt";
-                        if (DateTime.TryParseExact(value.ToString(), format, null, System.Globalization.DateTimeStyles.None, out DateTime dateTime))
-                        {
-                            return string.Format("{0:" + formatString + "}", dateTime);
-                        }
-                        else
-                        {
-                            if (value == null)
-                            {
-                                return string.Empty;
-                            }
-                            if (string.IsNullOrEmpty(formatString))
-                            {
-                                return value.ToString();
-                            }
-                            return string.Format("{0:" + formatString + "}", value);
-                        }
+                        return value == null ? string.Empty : string.Format("{0:" + formatString + "}", value);
                     }
                 }
                 else
