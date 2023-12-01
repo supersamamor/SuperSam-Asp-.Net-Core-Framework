@@ -213,42 +213,43 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             return completeFilePath;
         }
         public static string UpdateExistingExcelValidationResult<TableObject>(List<ExcelRecord> list, string fullFilePath, string existingExcelFilePath)
-        {
-            if (!File.Exists(existingExcelFilePath))
-            {
-                throw new FileNotFoundException("The specified existing Excel file does not exist.", existingExcelFilePath);
-            }
+		{
+			if (!File.Exists(existingExcelFilePath))
+			{
+				throw new FileNotFoundException("The specified existing Excel file does not exist.", existingExcelFilePath);
+			}
 			if (!Directory.Exists(fullFilePath))
-                Directory.CreateDirectory(fullFilePath);
-            using (var package = new ExcelPackage(new FileInfo(existingExcelFilePath)))
-            {
-                var workSheet = package.Workbook.Worksheets.FirstOrDefault() ?? package.Workbook.Worksheets.Add("Sheet1");
-                PropertyInfo[] tableObjectFields = GetTableObjectFields<TableObject>();
-                var columnIndex = tableObjectFields.Length + 1;
-                workSheet.Cells[1, columnIndex].Value = "Error Remarks";
-                workSheet.Column(columnIndex).Style.Font.Color.SetColor(Color.Red);
-                int row = 2;
-                foreach (var record in list.OrderBy(l => l.RowNumber))
-                {
-                    if (record.Data.TryGetValue(Constants.ExcelUploadErrorRemarks, out var errorRemark))
-                    {
-                        workSheet.Cells[row, columnIndex].Value = errorRemark;
-                    }
-                    row++;
-                }
-                string headerRange = "A1:" + NumberHelper.NumberToExcelColumn(columnIndex) + "1";
-                ApplyHeaderStyles(workSheet.Cells[headerRange]);
-                string sheet1modelRange = "A1:" + NumberHelper.NumberToExcelColumn(columnIndex) + (row - 1);
-                ApplyBorderStyles(workSheet.Cells[sheet1modelRange]);
-                workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
-                string input = typeof(TableObject).Name;
-                string wordToRemove = "State";
-                var fileName = $"{(input.EndsWith(wordToRemove) ? input[..^wordToRemove.Length] : input)}-ValidationResult-{DateTime.Now:yyyyMMdd-HHmmss}.xlsx";
-                var completeFilePath = Path.Combine(fullFilePath, fileName);
-                package.SaveAs(new FileInfo(completeFilePath));
-            }
-            return existingExcelFilePath;
-        }
+				Directory.CreateDirectory(fullFilePath);
+
+			string input = typeof(TableObject).Name;
+			string wordToRemove = "State";
+			var fileName = $"{(input.EndsWith(wordToRemove) ? input[..^wordToRemove.Length] : input)}-ValidationResult-{DateTime.Now:yyyyMMdd-HHmmss}.xlsx";
+			var completeFilePath = Path.Combine(fullFilePath, fileName);
+			using (var package = new ExcelPackage(new FileInfo(existingExcelFilePath)))
+			{
+				var workSheet = package.Workbook.Worksheets.FirstOrDefault() ?? package.Workbook.Worksheets.Add("Sheet1");
+				PropertyInfo[] tableObjectFields = GetTableObjectFields<TableObject>();
+				var columnIndex = tableObjectFields.Length + 1;
+				workSheet.Cells[1, columnIndex].Value = "Error Remarks";
+				workSheet.Column(columnIndex).Style.Font.Color.SetColor(Color.Red);
+				int row = 2;
+				foreach (var record in list.OrderBy(l => l.RowNumber))
+				{
+					if (record.Data.TryGetValue(Constants.ExcelUploadErrorRemarks, out var errorRemark))
+					{
+						workSheet.Cells[row, columnIndex].Value = errorRemark;
+					}
+					row++;
+				}
+				string headerRange = "A1:" + NumberHelper.NumberToExcelColumn(columnIndex) + "1";
+				ApplyHeaderStyles(workSheet.Cells[headerRange]);
+				string sheet1modelRange = "A1:" + NumberHelper.NumberToExcelColumn(columnIndex) + (row - 1);
+				ApplyBorderStyles(workSheet.Cells[sheet1modelRange]);
+				workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();                
+				package.SaveAs(new FileInfo(completeFilePath));
+			}
+			return completeFilePath;
+		}
 
 
         private static readonly Dictionary<Type, (object? Value, string? Format)> typeDefaults = new()
