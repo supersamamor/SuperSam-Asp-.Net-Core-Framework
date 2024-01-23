@@ -1,0 +1,10 @@
+@using Models
+@model ContactInformationViewModel
+
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Contact Information"]</span><br></h5>
+    <div class="card-body">
+        <input type="hidden" asp-for="@Model.Id" name="Id" />
+        <partial name="_EditContactInformationDetails" model="Model" />        
+    </div>
+</div>

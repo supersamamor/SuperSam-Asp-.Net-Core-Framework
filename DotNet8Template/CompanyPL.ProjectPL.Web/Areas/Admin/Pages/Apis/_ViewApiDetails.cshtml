@@ -1,0 +1,23 @@
+@using Models
+@model ScopeViewModel
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Name" class="form-label fieldrequired"><strong>Name :</strong></label>
+            <input asp-for="@Model.Name" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.DisplayName" class="form-label fieldrequired"><strong>Description :</strong></label>
+            <input asp-for="@Model.DisplayName" class="form-control" readonly />
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label asp-for="@Model.Resources" class="form-label fieldrequired"><strong>API URL :</strong></label>
+            <input asp-for="@Model.Resources" class="form-control" readonly />
+        </div>
+    </div>
+</div>

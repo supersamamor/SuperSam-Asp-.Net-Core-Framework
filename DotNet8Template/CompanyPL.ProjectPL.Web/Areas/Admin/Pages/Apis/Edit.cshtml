@@ -1,0 +1,27 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit API"];
+    ViewData["ActiveMainPage"] = "APIs";
+    ViewData["Level1"] = "Admin";
+}
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card">
+        <h5 class="card-header"><span class="card-header-custom">@Localizer["API Info"]</span><br></h5>
+        <div class="card-body">
+            <partial name="_EditApiDetails" model="Model.Scope" />
+        </div>
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">
+        </a>
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success text-light" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
