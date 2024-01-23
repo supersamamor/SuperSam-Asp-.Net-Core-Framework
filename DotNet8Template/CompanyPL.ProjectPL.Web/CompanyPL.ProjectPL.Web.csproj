@@ -18,27 +18,27 @@
   <ItemGroup>
 	<PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />  
     <PackageReference Include="DataTables.AspNetCore.Mvc" Version="1.4.2" />
-    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.391" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11">
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.396" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.11" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
-    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.20.0" />
-    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.20.0" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="4.8.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="4.8.0" />
-    <PackageReference Include="OpenIddict.Quartz" Version="4.8.0" />
-    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.7.0" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.21.0" />
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.21.0" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="5.1.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="5.1.0" />
+    <PackageReference Include="OpenIddict.Quartz" Version="5.1.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0" />
 	<ProjectReference Include="..\CompanyPL.ProjectPL.EmailSending\CompanyPL.ProjectPL.EmailSending.csproj" />
 	<ProjectReference Include="..\CompanyPL.ProjectPL.ExcelProcessor\CompanyPL.ProjectPL.ExcelProcessor.csproj" />
 	
