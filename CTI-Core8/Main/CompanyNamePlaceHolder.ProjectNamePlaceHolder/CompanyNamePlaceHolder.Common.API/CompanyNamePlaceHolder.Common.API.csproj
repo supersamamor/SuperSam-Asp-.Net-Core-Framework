@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Authors>Fred Songco</Authors>
@@ -16,15 +16,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="AutoMapper" Version="12.0.1" />	
-	  <PackageReference Include="LanguageExt.Core" Version="4.4.4" />
-	  <PackageReference Include="MediatR" Version="12.1.1" />
-	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.11" />
-	  <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="4.8.0" />
-	  <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="4.8.0" />
-	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="AutoMapper" Version="12.0.1" />	
+		<PackageReference Include="LanguageExt.Core" Version="4.4.7" />
+		<PackageReference Include="MediatR" Version="11.1.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+		<PackageReference Include="OpenIddict.Validation.AspNetCore" Version="5.1.0" />
+		<PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="5.1.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CompanyNamePlaceHolder.Common.Web.Utility\CompanyNamePlaceHolder.Common.Web.Utility.csproj" />

@@ -480,9 +480,9 @@ public class AuthorizationController : Controller
                 Claims.Name, Claims.Role);
             
             // Use the client_id as the subject identifier.
-            identity.AddClaim(new Claim(Claims.Subject, application.ClientId!, Destinations.AccessToken, Destinations.IdentityToken));
-            identity.AddClaim(new Claim(Claims.Name, application.DisplayName!, Destinations.AccessToken, Destinations.IdentityToken));
-            identity.AddClaim(new Claim(CustomClaimTypes.Entity, application.Entity, Destinations.AccessToken, Destinations.IdentityToken));
+            identity.AddClaim(Claims.Subject, application.ClientId!);
+			identity.AddClaim(Claims.Name, application.DisplayName!);
+			identity.AddClaim(CustomClaimTypes.Entity, application.Entity);
 
             var principal = new ClaimsPrincipal(identity);
 
