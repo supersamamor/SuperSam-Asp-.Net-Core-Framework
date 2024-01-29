@@ -1,0 +1,27 @@
+@page
+@model ViewModel
+@{
+    ViewData["Title"] = Localizer["View API"];
+    ViewData["ActiveMainPage"] = "APIs";
+    ViewData["Level1"] = "Admin";
+}
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["API Info"]</span><br></h5>
+    <div class="card-body">
+        <partial name="_ViewApiDetails" model="Model.Scope" />
+    </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.Create)).Succeeded)
+    {
+        <a asp-page="Add" class="btn btn-success text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Apis.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-name="@Model.Scope.Name" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>

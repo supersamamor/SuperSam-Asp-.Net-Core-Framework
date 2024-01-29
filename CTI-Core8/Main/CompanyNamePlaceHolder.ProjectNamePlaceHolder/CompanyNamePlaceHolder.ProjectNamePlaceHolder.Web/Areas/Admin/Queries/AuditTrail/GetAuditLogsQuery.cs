@@ -1,0 +1,14 @@
+using CompanyNamePlaceHolder.Common.Utility.Models;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Data;
+using MediatR;
+using CompanyNamePlaceHolder.Common.Core.Queries;
+using CompanyNamePlaceHolder.Common.Data;
+
+namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Queries.AuditTrail;
+
+public record GetAuditLogsQuery : BaseQuery, IRequest<PagedListResponse<Audit>>;
+
+public class GetAuditLogsQueryHandler : BaseQueryHandler<ApplicationContext, Audit, GetAuditLogsQuery>, IRequestHandler<GetAuditLogsQuery, PagedListResponse<Audit>>
+{
+    public GetAuditLogsQueryHandler(ApplicationContext context) : base(context) { }
+}

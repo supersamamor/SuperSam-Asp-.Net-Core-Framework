@@ -1,0 +1,8 @@
+/**
+ * Minified by jsDelivr using clean-css v4.2.1.
+ * Original file: /npm/@lgaitan/pace-progress@1.0.7/dist/themes/black/pace-theme-big-counter.css
+ * 
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace.pace-inactive .pace-progress{display:none}.pace .pace-progress{position:fixed;z-index:2000;top:0;right:0;height:5rem;width:5rem;-webkit-transform:translate3d(0,0,0)!important;-ms-transform:translate3d(0,0,0)!important;transform:translate3d(0,0,0)!important}.pace .pace-progress:after{display:block;position:absolute;top:0;right:.5rem;content:attr(data-progress-text);font-family:"Helvetica Neue",sans-serif;font-weight:100;font-size:5rem;line-height:1;text-align:right;color:rgba(0,0,0,.19999999999999996)}
+/*# sourceMappingURL=/sm/846d9e32b7f31653cf82ccf64bc9d0976c84077e7135100b3e3a950f42b76dc5.map */

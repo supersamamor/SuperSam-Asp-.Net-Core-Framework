@@ -1,0 +1,47 @@
+@page
+@model DeleteModel
+@{
+    ViewData["Title"] = Localizer["Delete Report Setup"];
+    ViewData["ActiveMainPage"] = "ReportSetup";
+    ViewData["Level1"] = "Admin";
+}
+<partial name="_CodeMirrorStyles" />
+<div class=row>
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            @Localizer["Are you sure you want to delete this report?"]
+        </div>
+    </div>
+</div>
+<form id="report-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Report" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-danger" title="@Localizer["Delete"]"><i class="fas fa-trash"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+    <partial name="_DisableFieldsPartial" model="@("report-form")" />
+    <partial name="_CodeMirrorScripts" />
+    <script asp-add-nonce>
+        const textAreaQueryString = document.getElementById('QueryString');
+        if (textAreaQueryString) {
+            var editor = CodeMirror.fromTextArea(
+                textAreaQueryString, {
+                mode: 'sql',
+                theme: '3024-night',
+                lineNumbers: true,
+                autoCloseBrackets: true,
+                autoCloseTags: true
+            });
+        }
+    </script>
+}
