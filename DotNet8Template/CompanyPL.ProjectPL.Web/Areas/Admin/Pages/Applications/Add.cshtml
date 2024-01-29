@@ -1,0 +1,55 @@
+@page
+@model AddModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Add Application"];
+    ViewData["ActiveMainPage"] = "Applications";
+    ViewData["Level1"] = "Admin";
+}
+<form id="application-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="card">
+        <h5 class="card-header"><span class="card-header-custom">@Localizer["Application Info"]</span><br></h5>
+        <div class="card-body">
+            <partial name="_EditApplicationDetails" model="Model.Application" />
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <h5 class="card-header"><span class="card-header-custom">@Localizer["Permissions"]</span><br></h5>
+        <div class="card-body" style="overflow-x:scroll;">
+            <partial name="_EditPermissions" model="Model.ApplicationPermissions" />
+        </div>
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">
+        <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Cancel"]"><i class="fas fa-ban"></i></a>
+        <button type="submit" class="btn btn-success text-light" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var permissions = $("#permissions").DataTable({
+            select: false,
+            searching: true,
+            paging: true,
+            info: true,
+            buttons: [],
+            columnDefs: [
+                {
+                    targets: [1],
+                    orderDataType: 'dom-checkbox',
+                }
+            ]
+        });
+        $('#application-form').onSubmitIncludeAllFieldsFromTable(permissions);
+    });
+</script>
+}

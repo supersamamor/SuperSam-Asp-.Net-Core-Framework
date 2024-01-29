@@ -1,0 +1,122 @@
+@using Models
+@model ReportViewModel
+<input type="hidden" id="ReportQueryFilterCount" value="@Model?.ReportQueryFilterList?.Count" />
+<div class="card">
+    <h5 class="card-header">
+        <span class="card-header-custom">@Localizer["Query Filter"]</span>
+        <a id="btnAddReportQueryFilter" class="btn btnMaterial btn-flat primary semicircle cancel btnAddRemoveSubDetailList" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+        <button class="cancel d-none" type="button" id="btnRemoveReportQueryFilter" value="RemoveReportQueryFilter"></button>
+    </h5>
+    <div class="card-body overflow-auto">
+        <table id="subDetailList" class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th class="d-none"></th>
+                    <th>
+                        @Localizer["Field Name"]
+                    </th>
+                    <th>
+                        @Localizer["Field Description"]
+                    </th>
+                    <th>
+                        @Localizer["Data Type"]
+                    </th>
+
+                    @**@
+                    <th>
+                        @Localizer["Custom Dropdown Values"]
+                    </th>
+                    <th>
+                        @Localizer["Dropdown (Table, Key, Value)"]
+                    </th>
+                    <th>
+                        @Localizer["Dropdown Filter"]
+                    </th>
+                    @**@
+
+                    <th>
+                        @Localizer["Action"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.ReportQueryFilterList != null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.ReportQueryFilterList)
+                    {
+                        <tr>
+                            <td class="d-none">
+                                <input type="hidden" name="ReportQueryFilterList[@counter].Id" value="@item.Id" />
+                                <input type="hidden" name="ReportQueryFilterList[@counter].ReportId" value="@item.ReportId" />
+                                <input type="hidden" name="ReportQueryFilterList[@counter].Sequence" value="@counter" />
+                            </td>
+
+                            <td>
+                                <input asp-for="@item.FieldName" name="ReportQueryFilterList[@counter].FieldName" class="form-control" maxlength="255" />
+                                <span data-valmsg-for="ReportQueryFilterList[@counter].FieldName" asp-validation-for="@item.FieldName" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <input asp-for="@item.FieldDescription" name="ReportQueryFilterList[@counter].FieldDescription" class="form-control" maxlength="255" />
+                                <span data-valmsg-for="ReportQueryFilterList[@counter].FieldDescription" asp-validation-for="@item.FieldDescription" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <select asp-for="@item.DataType" name="ReportQueryFilterList[@counter].DataType" asp-items="@(dropdownService.DataTypeList())"
+                                        id="ReportQueryFilterList_@(counter)_DataType" class="form-control DataType">
+                                    <option selected="selected" value="">- Select Data Type -</option>
+                                </select>
+                                <span data-valmsg-for="ReportQueryFilterList[@counter].DataType" asp-validation-for="@item.DataType" class="text-danger"></span>
+                            </td>
+                            @if (item.DataType == CompanyPL.ProjectPL.Core.Constants.DataTypes.CustomDropdown)
+                            {
+                                <td>
+                                    <input asp-for="@item.CustomDropdownValues" name="ReportQueryFilterList[@counter].CustomDropdownValues" class="form-control" maxlength="1000" />
+                                    <span data-valmsg-for="ReportQueryFilterList[@counter].CustomDropdownValues" asp-validation-for="@item.CustomDropdownValues" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@item.DropdownTableKeyAndValue" name="ReportQueryFilterList[@counter].DropdownTableKeyAndValue" class="form-control" readonly />
+                                </td>
+                                <td>
+                                    <input asp-for="@item.DropdownFilter" name="ReportQueryFilterList[@counter].DropdownFilter" class="form-control" readonly />
+                                </td>
+                            }
+                            else if (item.DataType == CompanyPL.ProjectPL.Core.Constants.DataTypes.DropdownFromTable)
+                            {
+                                <td>
+                                    <input asp-for="@item.CustomDropdownValues" name="ReportQueryFilterList[@counter].CustomDropdownValues" class="form-control" readonly />
+                                </td>
+                                <td>
+                                    <input asp-for="@item.DropdownTableKeyAndValue" name="ReportQueryFilterList[@counter].DropdownTableKeyAndValue" class="form-control" maxlength="255" />
+                                    <span data-valmsg-for="ReportQueryFilterList[@counter].DropdownTableKeyAndValue" asp-validation-for="@item.DropdownTableKeyAndValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@item.DropdownFilter" name="ReportQueryFilterList[@counter].DropdownFilter" class="form-control" maxlength="255" />
+                                    <span data-valmsg-for="ReportQueryFilterList[@counter].DropdownFilter" asp-validation-for="@item.DropdownFilter" class="text-danger"></span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <input asp-for="@item.CustomDropdownValues" name="ReportQueryFilterList[@counter].CustomDropdownValues" class="form-control" readonly />
+                                    <span data-valmsg-for="ReportQueryFilterList[@counter].CustomDropdownValues" asp-validation-for="@item.CustomDropdownValues" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@item.DropdownTableKeyAndValue" name="ReportQueryFilterList[@counter].DropdownTableKeyAndValue" class="form-control" readonly />
+                                    <span data-valmsg-for="ReportQueryFilterList[@counter].DropdownTableKeyAndValue" asp-validation-for="@item.DropdownTableKeyAndValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@item.DropdownFilter" name="ReportQueryFilterList[@counter].DropdownFilter" class="form-control" readonly />
+                                    <span data-valmsg-for="ReportQueryFilterList[@counter].DropdownFilter" asp-validation-for="@item.DropdownFilter" class="text-danger"></span>
+                                </td>
+                            }
+                            <td>
+                                <a class="btn btnMaterial btn-flat accent semicircle cancel RemoveReportQueryFilterButton btnAddRemoveSubDetailList" title="@Localizer["Remove Report Query Filter"]" removeId="@(item.Id)"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

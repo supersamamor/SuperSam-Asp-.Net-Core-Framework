@@ -1,0 +1,69 @@
+@page
+@model EditModel
+@{
+    ViewData["Title"] = Localizer["Edit Employee"];
+    ViewData["ActiveMainPage"] = "Employee";
+    ViewData["Level1"] = "ProjectPL";
+}
+<form id="employee-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.RemoveSubDetailId" />
+    <input type="hidden" asp-for="@Model.AsyncAction" />
+    <div id="PartialLoaderContainer">
+        <partial name="_InputFieldsPartial" model="Model.Employee" />
+    </div>
+    <div id="toolbar-container" class="btn-group" role="group">  
+		<a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>                
+        <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+    </div>
+</form>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<partial name="_ContactInformationListValidationPartial" model="@Model.Employee" />
+<partial name="_HealthDeclarationListValidationPartial" model="@Model.Employee" />
+
+<script asp-add-nonce>
+    $(document).ready(function () {
+        function InitializeForm()
+        {
+			$.bindSaveConfirmationModal('Update', '#btnConfirmationModal','#employee-form');
+            $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#employee-form', 'Do you want to cancel the changes?');
+            $('.DisableSelectDropdown').on('mousedown', function(e) {
+                e.preventDefault();
+                this.blur();
+                window.focus();
+            });
+            
+			$.InitializeContactInformationFieldValidations($('#ContactInformationCount').val());
+			$('.RemoveContactInformationButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveContactInformation');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#employee-form', InitializeForm, true);
+			});
+
+			$('#btnAddContactInformation').on( 'click', function () {
+				$('#AsyncAction').val('AddContactInformation');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#employee-form', InitializeForm, true);
+			});
+
+			$.InitializeHealthDeclarationFieldValidations($('#HealthDeclarationCount').val());
+			$('.RemoveHealthDeclarationButton ').on( 'click', function () {
+				$('#RemoveSubDetailId').val($(this).attr('removeid'));
+				$('#AsyncAction').val('RemoveHealthDeclaration');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#employee-form', InitializeForm, true);
+			});
+
+			$('#btnAddHealthDeclaration').on( 'click', function () {
+				$('#AsyncAction').val('AddHealthDeclaration');
+				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#employee-form', InitializeForm, true);
+			});
+
+
+        }
+        InitializeForm();
+    });
+</script>
+}

@@ -1,0 +1,56 @@
+@model AspNetCoreHero.ToastNotification.Toastify.ToastifyViewModel
+@using AspNetCoreHero.ToastNotification.Enums
+@using AspNetCoreHero.ToastNotification.Helpers
+<link rel="stylesheet" href="~/css/toastify.css" asp-append-version="true" />
+<script asp-add-nonce src="~/js/toastify.js" asp-append-version="true"></script>
+@{
+    @if (Model.Notifications != null)
+    {
+        foreach (var notification in Model.Notifications)
+        {
+            var toastify = Model.Configuration;
+            toastify.text = notification.Message;
+            toastify.duration = notification.Duration ?? toastify.duration;
+            switch (notification.Type)
+            {
+                case ToastNotificationType.Success:
+
+                    toastify.backgroundColor = "#388e3c";
+                    <script asp-add-nonce>
+                            $(document).ready(function () { Toastify(@Html.Raw(toastify.ToJson())).showToast(); });
+                    </script>
+                    break;
+                case ToastNotificationType.Error:
+
+                    toastify.backgroundColor = "#d32f2f";
+                    <script asp-add-nonce>
+                            $(document).ready(function () { Toastify(@Html.Raw(toastify.ToJson())).showToast(); });
+                    </script>
+                    break;
+                case ToastNotificationType.Warning:
+
+                    toastify.backgroundColor = "#f57c00";
+                    <script asp-add-nonce>
+                            $(document).ready(function () { Toastify(@Html.Raw(toastify.ToJson())).showToast(); });
+                    </script>
+                    break;
+                case ToastNotificationType.Information:
+
+                    toastify.backgroundColor = "#651fff";
+                    <script asp-add-nonce>
+                            $(document).ready(function () { Toastify(@Html.Raw(toastify.ToJson())).showToast(); });
+                    </script>
+                    break;
+                case ToastNotificationType.Custom:
+
+                    toastify.backgroundColor = notification.BackgroundColor;
+                    <script asp-add-nonce>
+                            $(document).ready(function () { Toastify(@Html.Raw(toastify.ToJson())).showToast(); });
+                    </script>
+                    break;
+            }
+        }
+
+    }
+
+}

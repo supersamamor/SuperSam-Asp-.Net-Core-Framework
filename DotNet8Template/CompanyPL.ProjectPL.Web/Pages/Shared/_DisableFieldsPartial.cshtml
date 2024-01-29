@@ -1,0 +1,17 @@
+@model string
+
+<script asp-add-nonce>
+    $("#@Model select").prop("disabled", true);
+    $('#@Model input').attr('readonly', true);
+	$('#@Model textarea').attr('readonly', true);
+    $("#@Model input[type='checkbox']").prop("disabled", "disabled");
+	$("#@Model input[type='file']").prop("disabled", "disabled");
+	$("#@Model input[type='file']").prop("disabled", true);
+    $('#@Model .btn-field').attr('class', "btn-field btn btn-secondary");
+    $('#@Model select').on('mousedown', function(e) {
+       e.preventDefault();
+       this.blur();
+       window.focus();
+    });
+	$("#@Model .file-upload-control").attr("style", "display:none;");
+</script>

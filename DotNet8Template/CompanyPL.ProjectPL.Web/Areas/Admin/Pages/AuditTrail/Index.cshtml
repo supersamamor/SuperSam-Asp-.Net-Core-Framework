@@ -1,0 +1,93 @@
+@page
+@model IndexModel
+
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["Audit Logs"];
+    ViewData["ActiveMainPage"] = "AuditTrail";
+    ViewData["Level1"] = "Admin";
+}
+<div class="card">
+    <div class="card-body overflow-x-scroll">
+        <table id="auditLogs" class="table table-hover table-bordered table-striped table-responsive nowrap" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuditLog.DateTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuditLog.PrimaryKey)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuditLog.TableName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuditLog.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuditLog.UserId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuditLog.TraceId)
+                    </th>
+                    <th>
+                        @Localizer["Actions"]
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var table = $('#auditLogs').DataTable({
+            select: false,
+            serverSide: true,
+            responsive: false,
+            order: [[ 0, 'desc' ]],
+            ajax:
+            {
+                url: '@Url.Page("/AuditTrail/Index", new { area = "Admin", handler = "ListAll" })',
+                type: "POST",
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+            },
+            columns: [              
+                { data: "dateTime", name: "DateTime", visible: true, width: "100%", },
+                { data: "primaryKey", name: "PrimaryKey", visible: true, width: "100%", },
+                { data: "tableName", name: "TableName" },
+                { data: "type", name: "Type" },
+                { data: "userId", name: "UserId", visible: true, },
+                { data: "traceId", name: "TraceId", visible: true, },
+                {
+                    data: null,
+                    searchable: false,
+                    orderable: false,
+                    responsivePriority: 2,
+                    orderable: false,
+                    width: "10%",
+                    render: function (data, type, row, meta) {
+                        var url = '@Url.Page("/AuditTrail/Details", new { area = "Admin" })' + '?id=' + row.id;                       
+                        var button = '<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["View"]"><i class="far fa-eye"></i></a>';
+                        return button;
+                    },
+                },
+            ],
+            buttons: [
+                'excel', 'pdf', 'pageLength',
+            ],
+        });
+        var debounce = new $.fn.dataTable.Debounce(table); // Add delay to search
+        $.EnableNavbarSearch(table);
+    });
+</script>
+}

@@ -1,0 +1,19 @@
+@model string
+
+
+@if (Model == CompanyPL.ProjectPL.Core.ProjectPL.ApprovalStatus.ForApproval)
+{
+    <h4><span class="badge bg-info">@Model</span></h4>
+}
+else if (Model == CompanyPL.ProjectPL.Core.ProjectPL.ApprovalStatus.PartiallyApproved)
+{
+    <h4><span class="badge bg-primary">@Model</span></h4>
+}
+else if (Model == CompanyPL.ProjectPL.Core.ProjectPL.ApprovalStatus.Approved)
+{
+    <h4><span class="badge bg-success">@Model</span></h4>
+}
+else if (Model == CompanyPL.ProjectPL.Core.ProjectPL.ApprovalStatus.Rejected)
+{
+    <h4><span class="badge bg-danger">@Model</span></h4>
+}
