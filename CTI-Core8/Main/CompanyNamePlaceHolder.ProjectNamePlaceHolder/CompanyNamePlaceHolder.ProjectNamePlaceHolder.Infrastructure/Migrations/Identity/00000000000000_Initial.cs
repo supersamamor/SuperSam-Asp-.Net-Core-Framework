@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migrations.Identity
 {
+    /// <inheritdoc />
     public partial class Initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -41,18 +43,21 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApplicationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientSecret = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConsentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DisplayNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JsonWebKeySet = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Permissions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostLogoutRedirectUris = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Properties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RedirectUris = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Requirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Settings = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,7 +110,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EntityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RegisteredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -343,6 +347,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                 column: "AuthorizationId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -381,5 +386,5 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
             migrationBuilder.DropTable(
                 name: "OpenIddictApplications");
         }
-    }        
+    }
 }

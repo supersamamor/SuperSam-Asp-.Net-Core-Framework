@@ -17,10 +17,10 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Identity.ApplicationRole", b =>
                 {
@@ -58,9 +58,6 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -158,10 +155,16 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApplicationType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClientSecret")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyToken")
@@ -180,6 +183,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JsonWebKeySet")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Permissions")
                         .HasColumnType("nvarchar(max)");
 
@@ -195,7 +201,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                     b.Property<string>("Requirements")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Settings")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -329,7 +335,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -354,7 +360,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Infrastructure.Migration
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
