@@ -7,10 +7,11 @@ using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static LanguageExt.Prelude;
+using CompanyPL.ProjectPL.Core.ProjectPL;
 
 namespace CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
 
-public record RejectCommand(string DataId, string RejectRemarks) : IRequest<Validation<Error, RejectResult>>;
+public record RejectCommand(string DataId, string RejectRemarks, string Module) : IRequest<Validation<Error, RejectResult>>;
 
 public class RejectCommandHandler : IRequestHandler<RejectCommand, Validation<Error, RejectResult>>
 {
@@ -30,6 +31,7 @@ public class RejectCommandHandler : IRequestHandler<RejectCommand, Validation<Er
         var entity = await (from a in _context.Approval
                             join b in _context.ApprovalRecord on a.ApprovalRecordId equals b.Id
                             where b.DataId == request.DataId && a.ApproverUserId == _authenticatedUser.UserId
+                               && b.ApproverSetup!.TableName == request.Module && !ApprovalStatus.ExcludeFromForApproval.Contains(a.Status)
                             select a).SingleAsync(cancellationToken);
         using (var transaction = _context.Database.BeginTransaction())
         {

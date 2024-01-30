@@ -131,6 +131,13 @@ namespace CompanyPL.ProjectPL.Core.ProjectPL
                   Approved,
                   Rejected,
               };
+        public static readonly List<string> ExcludeFromForApproval =
+              new()
+              {
+                  Approved,
+                  Rejected,
+                  Skipped,
+              };
     }
     public static class ApprovalTypes
     {

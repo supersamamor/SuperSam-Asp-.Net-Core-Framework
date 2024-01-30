@@ -1,6 +1,7 @@
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Queries;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Employee.Queries;
+using CompanyPL.ProjectPL.Core.ProjectPL;
 using CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models;
 using CompanyPL.ProjectPL.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -39,10 +40,10 @@ public class ApproveModel : BasePageModel<ApproveModel>
     }
     private async Task<IActionResult> Approve()
     {
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(new ApproveCommand(Employee.Id, "")), "Approve", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(new ApproveCommand(Employee.Id, "", ApprovalModule.Employee)), "Approve", true);
     }
     private async Task<IActionResult> Reject()
     {
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(new RejectCommand(Employee.Id, "")), "Approve", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(new RejectCommand(Employee.Id, "", ApprovalModule.Employee)), "Approve", true);
     }
 }
