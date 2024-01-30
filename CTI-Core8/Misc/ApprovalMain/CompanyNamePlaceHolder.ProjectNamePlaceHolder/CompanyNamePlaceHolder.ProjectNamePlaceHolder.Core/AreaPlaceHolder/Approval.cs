@@ -131,6 +131,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder
                   Approved,
                   Rejected,
               };
+		public static readonly List<string> ExcludeFromForApproval =
+			  new()
+			  {
+				  Approved,
+				  Rejected,
+				  Skipped,
+			  };
     }
     public static class ApprovalTypes
     {
