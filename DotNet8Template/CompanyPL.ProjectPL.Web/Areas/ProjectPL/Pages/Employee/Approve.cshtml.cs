@@ -22,7 +22,7 @@ public class ApproveModel : BasePageModel<ApproveModel>
         {
             return NotFound();
         }
-        _ = (await Mediatr.Send(new GetApprovalStatusPerApproverByIdQuery(id))).Select(l => ApprovalStatus = l);
+        _ = (await Mediatr.Send(new GetApprovalStatusPerApproverByIdQuery(id, ApprovalModule.Employee))).Select(l => ApprovalStatus = l);
         return await PageFrom(async () => await Mediatr.Send(new GetEmployeeByIdQuery(id)), Employee);
     }
 
