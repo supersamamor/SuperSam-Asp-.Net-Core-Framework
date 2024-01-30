@@ -144,3 +144,7 @@ textarea[readonly] {
 .CodeMirror {
     margin-bottom: 10px;
 }
+
+.padding-top-10 {
+    margin-right: 10px;
+}
