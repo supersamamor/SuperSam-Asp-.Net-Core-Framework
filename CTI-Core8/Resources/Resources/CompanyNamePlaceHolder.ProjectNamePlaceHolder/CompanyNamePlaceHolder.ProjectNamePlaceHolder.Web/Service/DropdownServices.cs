@@ -21,9 +21,13 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Service
 			_mediaTr = mediaTr;
 		} 
 		public async Task<IEnumerable<SelectListItem>> GetRoleList()
-        {
-            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
-        }	
+		{
+			var query = new GetRolesQuery()
+			{
+				PageSize = -1
+			};
+			return (await _mediaTr.Send(query)).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
+		}		
         public IEnumerable<SelectListItem> QueryTypeList()
         {
             IList<SelectListItem> items = new List<SelectListItem>
