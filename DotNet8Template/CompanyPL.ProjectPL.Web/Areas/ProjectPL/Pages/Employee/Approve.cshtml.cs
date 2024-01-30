@@ -16,6 +16,8 @@ public class ApproveModel : BasePageModel<ApproveModel>
     public EmployeeViewModel Employee { get; set; } = new();
     [BindProperty]
     public string? ApprovalStatus { get; set; }
+    [BindProperty]
+    public string? ApprovalRemarks { get; set; }
     public async Task<IActionResult> OnGet(string? id)
     {
         if (id == null)
@@ -40,10 +42,10 @@ public class ApproveModel : BasePageModel<ApproveModel>
     }
     private async Task<IActionResult> Approve()
     {
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(new ApproveCommand(Employee.Id, "", ApprovalModule.Employee)), "Approve", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(new ApproveCommand(Employee.Id, ApprovalRemarks, ApprovalModule.Employee)), "Approve", true);
     }
     private async Task<IActionResult> Reject()
     {
-        return await TryThenRedirectToPage(async () => await Mediatr.Send(new RejectCommand(Employee.Id, "", ApprovalModule.Employee)), "Approve", true);
+        return await TryThenRedirectToPage(async () => await Mediatr.Send(new RejectCommand(Employee.Id, ApprovalRemarks, ApprovalModule.Employee)), "Approve", true);
     }
 }

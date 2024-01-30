@@ -11,7 +11,7 @@ using static LanguageExt.Prelude;
 
 namespace CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
 
-public record ApproveCommand(string DataId, string ApprovalRemarks, string Module) : IRequest<Validation<Error, ApprovalResult>>;
+public record ApproveCommand(string DataId, string? ApprovalRemarks, string Module) : IRequest<Validation<Error, ApprovalResult>>;
 
 public class ApproveCommandHandler : IRequestHandler<ApproveCommand, Validation<Error, ApprovalResult>>
 {

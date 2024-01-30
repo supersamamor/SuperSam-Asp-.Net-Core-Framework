@@ -36,13 +36,13 @@ namespace CompanyPL.ProjectPL.Core.ProjectPL
             this.EmailSendingStatus = SendingStatus.Failed;
             this.EmailSendingRemarks = error;
         }
-        public void Approve(string remarks)
+        public void Approve(string? remarks)
         {
             this.StatusUpdateDateTime = DateTime.UtcNow;
             this.Status = ApprovalStatus.Approved;
             this.ApprovalRemarks = remarks;
         }
-        public void Reject(string remarks)
+        public void Reject(string? remarks)
         {
             this.StatusUpdateDateTime = DateTime.UtcNow;
             this.Status = ApprovalStatus.Rejected;

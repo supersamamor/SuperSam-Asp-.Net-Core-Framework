@@ -365,4 +365,66 @@ $(document).ready(function () {
             }
         });        
     }
+    function confirmWithRemarksSubmit(transactionName, formElement, buttonElement, remarksNameAttribute, promptMessage) {
+        // Create the modal
+        const name = $(buttonElement).attr("name");
+        const value = $(buttonElement).attr("value");
+        const href = $(buttonElement).attr("href");
+        var modal = $('<div id="modal-' + transactionName + '-placeholder">' +
+            '<div class="modal" tabindex="-1" role="dialog">' +
+            '<div class="modal-dialog" role="document">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h5 class="modal-title">Confirmation</h5>' +
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background:transparent;border:none;" id="btnCloseIcon' + transactionName + '">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button>' +
+            '</div>' +
+            '<div class="modal-body">' +
+            '<p>' + (promptMessage != null ? promptMessage : 'Are you sure you want to ' + transactionName + ' the record?') + '</p>' +
+            '<div class="col">' +
+            '<div class="mb-3">' +
+            '<label class="form-label">Remarks :</strong></label>' +
+            '<textarea name="' + remarksNameAttribute + '" class="form-control"></textarea>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="modal-footer">' +
+            (href != null ? '<a href="' + href + '" class="btn btn-primary" title="Yes">Yes</a>' : '<button type="submit" class="btn btn-primary" name="' + name + '" value="' + value + '">Yes</button>') +
+            '<button type="button" class="btn btn-secondary" id="btnCloseButton' + transactionName + '">No</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+
+        // Attach the modal to the body and display it
+        modal.appendTo($(formElement)).modal();
+
+        // When the modal is hidden, remove it from the DOM
+        modal.on('hidden.bs.modal', function () {
+            modal.remove();
+        });
+
+        $('#btnCloseButton' + transactionName + ', #btnCloseIcon' + transactionName).on('click', function () {
+            var placeholderElement = $('#modal-' + transactionName + '-placeholder');
+            placeholderElement.find('.modal').modal('hide');
+        });
+
+        // Return false to prevent the form from submitting automatically
+        return false;
+    }
+    $.bindSaveWithRemarksConfirmationModal = function (transactionName, buttonElement, formElement, remarksNameAttribute, promptMessage = null) {
+        $(buttonElement).on('click', function () {
+            var elements = document.querySelectorAll('[data-attribute-datatype="amount"]');
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].value = elements[i].value.replace(/,/g, '');
+            }
+            if ($(formElement).valid()) {
+                confirmWithRemarksSubmit(transactionName, formElement, buttonElement, remarksNameAttribute, promptMessage);
+                var placeholderElement = $('#modal-' + transactionName + '-placeholder');
+                placeholderElement.find('.modal').modal('show');
+            }
+        });
+    }
 });

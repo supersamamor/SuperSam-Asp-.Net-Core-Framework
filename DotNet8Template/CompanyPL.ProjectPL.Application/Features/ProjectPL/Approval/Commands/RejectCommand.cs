@@ -11,7 +11,7 @@ using CompanyPL.ProjectPL.Core.ProjectPL;
 
 namespace CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
 
-public record RejectCommand(string DataId, string RejectRemarks, string Module) : IRequest<Validation<Error, RejectResult>>;
+public record RejectCommand(string DataId, string? RejectRemarks, string Module) : IRequest<Validation<Error, RejectResult>>;
 
 public class RejectCommandHandler : IRequestHandler<RejectCommand, Validation<Error, RejectResult>>
 {
