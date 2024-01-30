@@ -1,63 +1,41 @@
+using static OpenIddict.Abstractions.OpenIddictConstants;
+using System.Reflection;
+
 namespace CompanyPL.ProjectPL.Web;
 
 public static class Permission
 {
     public static IEnumerable<string> GenerateAllPermissions()
     {
-        return GeneratePermissionsForModule("Admin")
-            .Concat(GeneratePermissionsForModule("Entities"))
-            .Concat(GeneratePermissionsForModule("Roles"))
-            .Concat(GeneratePermissionsForModule("Users"))
-            .Concat(GeneratePermissionsForModule("Apis"))
-            .Concat(GeneratePermissionsForModule("Applications"))
-            .Concat(GeneratePermissionsForModule("AuditTrail"))
-			.Concat(GeneratePermissionsForModule("Report"))
-            .Concat(GeneratePermissionsForModule("ReportSetup"))
-            .Concat(GeneratePermissionsWithUploadForModule("Employee"))
-			.Concat(GeneratePermissionsWithUploadForModule("ContactInformation"))
-			.Concat(GeneratePermissionsWithUploadForModule("HealthDeclaration"))
-			
-			.Concat(GeneratepPendingApprovalPermissionsForModule("ApproverSetup"));
-    }
-
-	public static IEnumerable<string> GeneratePermissionsForModule(string module)
-    {
-        var permissions = new List<string>()
+        var permissions = new List<string>();
+        // Get all nested classes in the Permissions class
+        var nestedClasses = typeof(Permission).GetNestedTypes();
+        foreach (var nestedClass in nestedClasses)
         {
-            $"Permission.{module}.Create",
-            $"Permission.{module}.View",
-            $"Permission.{module}.Edit",
-            $"Permission.{module}.Delete",
-        };
-		
-		permissions.Add($"Permission.{module}.Approve");
-        return permissions;
-    }
-    public static IEnumerable<string> GenerateApprovalPermissionsForModule(string module)
-    {
-        return new List<string>()
-        {
-            $"Permission.{module}.Approve",
-        };
-    }
-    public static IEnumerable<string> GeneratepPendingApprovalPermissionsForModule(string module)
-    {
-        return new List<string>()
-        {
-            $"Permission.{module}.Create",
-            $"Permission.{module}.View",
-            $"Permission.{module}.Edit",
-            $"Permission.{module}.Delete",
-            $"Permission.{module}.PendingApprovals"
-        };
-    }
+            // Get all public static string fields in the nested class
+            var permissionsInClass = nestedClass.GetFields(BindingFlags.Public | BindingFlags.Static)
+                .Where(f => f.FieldType == typeof(string))
+                .Select(f => f.GetValue(null)!.ToString());
 
-    public static IEnumerable<string> GeneratePermissionsWithUploadForModule(string module)
-    {
-        var permissions = GeneratePermissionsForModule(module);
-        return permissions.Concat(new List<string>() { $"Permission.{module}.Upload" });        
+            permissions.AddRange(permissionsInClass!);
+        }
+        return permissions.OrderBy(l=>l);
     }
-
+    public static IEnumerable<string> GeneratePermissionsForModule(string module)
+    {
+        var permissions = new List<string>();
+        // Get the nested class for the specified module
+        var moduleType = typeof(Permission).GetNestedType(module);
+        if (moduleType != null)
+        {
+            // Get all public static string fields in the module class
+            var modulePermissions = moduleType.GetFields(BindingFlags.Public | BindingFlags.Static)
+                .Where(f => f.FieldType == typeof(string))
+                .Select(f => f.GetValue(null)!.ToString());
+            permissions.AddRange(modulePermissions!);
+        }     
+        return permissions.OrderBy(l => l);
+    }
     public static class Admin
     {
         public const string View = "Permission.Admin.View";
