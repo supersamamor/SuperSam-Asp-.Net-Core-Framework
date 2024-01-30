@@ -19,7 +19,7 @@
         }
         else
         {
-            <button type="button" id="btnApproveConfirmationModal" class="btn btn-primary cancel" name="Handler" value="Approve" title="@Localizer["Approve"]"><i class="fas fa-check"></i></button>
+            <button type="button" class="btn btn-secondary" title="@Localizer["Approve"]" disabled><i class="fas fa-check"></i></button>
         }
         @if (Model.ApprovalStatus == CompanyPL.ProjectPL.Core.ProjectPL.ApprovalStatus.ForApproval)
         {

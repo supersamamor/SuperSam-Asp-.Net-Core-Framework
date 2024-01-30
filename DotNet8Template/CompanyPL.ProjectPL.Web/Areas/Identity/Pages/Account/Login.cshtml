@@ -4,7 +4,7 @@
     ViewData["Title"] = "Log in";
     Layout = "_Layout";
     var appName = Configuration.GetValue<string>("Application");
-    var localLogin = Configuration.GetValue<bool>("LocalLogin");
+	var localLogin = Configuration.GetValue<bool>("LocalLogin");
 }
 <div class="card shadow-lg o-hidden border-0 my-5">
     <div class="card-body p-0">
@@ -18,29 +18,29 @@
                         <h4 class="text-dark mb-4">@appName</h4>
                     </div>
                     @if (localLogin)
-                    {
-                        <form id="account" method="post" class="user">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="mb-3">
-                                <input asp-for="Input!.Email" class="form-control form-control-user" placeholder="Enter Email Address...">
-                                <small><span asp-validation-for="Input!.Email" class="text-danger"></span></small>
-                            </div>
-                            <div class="mb-3">
-                                <input asp-for="Input!.Password" class="form-control form-control-user" placeholder="Password">
-                                <small><span asp-validation-for="Input!.Password" class="text-danger"></span></small>
-                            </div>
-                            <div class="mb-3">
-                                <div class="custom-control custom-checkbox small">
-                                    <div class="form-check">
-                                        <input asp-for="Input!.RememberMe" class="form-check-input custom-control-input">
-                                        <label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary d-block btn-user w-100">Login</button>
-                        </form>
-                        <hr>
-                    }
+					{
+						<form id="account" method="post" class="user">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="mb-3">
+								<input asp-for="Input!.Email" class="form-control form-control-user" placeholder="Enter Email Address...">
+								<small><span asp-validation-for="Input!.Email" class="text-danger"></span></small>
+							</div>
+							<div class="mb-3">
+								<input asp-for="Input!.Password" class="form-control form-control-user" placeholder="Password">
+								<small><span asp-validation-for="Input!.Password" class="text-danger"></span></small>
+							</div>
+							<div class="mb-3">
+								<div class="custom-control custom-checkbox small">
+									<div class="form-check">
+										<input asp-for="Input!.RememberMe" class="form-check-input custom-control-input">
+										<label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label>
+									</div>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary d-block btn-user w-100">Login</button>
+						</form>
+						<hr>
+					}
                     @if (!string.IsNullOrEmpty(Configuration["Authentication:Microsoft:ClientId"]))
                     {
                         <form id="microsoft-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
@@ -56,15 +56,15 @@
                         </form>
                     }
                     @if (localLogin)
-                    {
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" asp-page="./ForgotPassword">Forgot Password?</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="small" asp-page="./Register">Create an Account!</a>
-                        </div>
-                    }
+					{
+						<hr>
+						<div class="text-center">
+							<a class="small" asp-page="./ForgotPassword">Forgot Password?</a>
+						</div>
+						<div class="text-center">
+							<a class="small" asp-page="./Register">Create an Account!</a>
+						</div>
+					}
                 </div>
             </div>
         </div>

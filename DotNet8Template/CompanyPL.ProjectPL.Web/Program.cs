@@ -70,16 +70,16 @@ app.UseSecurityHeaders(policies =>
                 builder.AddBlockAllMixedContent();
                 builder.AddDefaultSrc().Self().OverHttps();
                 builder.AddScriptSrc()
-                       .Self()
-                       .StrictDynamic()
-                       .WithNonce()
-                       .OverHttps();
+						.Self()
+						.StrictDynamic()
+						.WithNonce()
+						.OverHttps();
                 builder.AddStyleSrc()
-                       .Self()
-                       .UnsafeEval()
-                       .StrictDynamic()
-                       .WithNonce()
-                       .OverHttps();
+						.Self()
+						.UnsafeEval()
+						.StrictDynamic()
+						.WithNonce()
+						.OverHttps();
                 builder.AddImgSrc().OverHttps().Data();
                 builder.AddObjectSrc().None();
                 builder.AddBaseUri().None();

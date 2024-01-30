@@ -20,12 +20,12 @@ public class GetApprovalStatusPerApproverByIdQueryHandler : IRequestHandler<GetA
     }
 
     public async Task<Option<string>> Handle(GetApprovalStatusPerApproverByIdQuery request, CancellationToken cancellationToken = default)
-    {   
-       return await (from a in _context.ApprovalRecord
-                            join b in _context.Approval on a.Id equals b.ApprovalRecordId
-                            join c in _context.ApproverSetup on a.ApproverSetupId equals c.Id
-                            where b.ApproverUserId == _authenticatedUser.UserId && a.DataId == request.DataId
-                            && c.TableName == request.Module
-                            select a.Status).FirstOrDefaultAsync(cancellationToken);
+    {
+        return await (from a in _context.ApprovalRecord
+                     join b in _context.Approval on a.Id equals b.ApprovalRecordId
+                     join c in _context.ApproverSetup on a.ApproverSetupId equals c.Id
+                     where b.ApproverUserId == _authenticatedUser.UserId && a.DataId == request.DataId
+                     && c.TableName == request.Module
+                     select a.Status).FirstOrDefaultAsync(cancellationToken);
     }
 }

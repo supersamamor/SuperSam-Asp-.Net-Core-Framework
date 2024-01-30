@@ -73,28 +73,28 @@ namespace CompanyPL.ProjectPL.Core.ProjectPL
         {
             this.Status = ApprovalStatus.Rejected;
         }
-        public void UpdateApprovalStatus()
-        {
-            if (this?.ApproverSetup?.ApprovalType == ApprovalTypes.Any
-                  && this.ApprovalList != null
-                  && this.ApprovalList!.Where(l => l.Status == ApprovalStatus.Approved).Any())
-            {
-                this.Approve();
-            }
-            else if (this.ApprovalList?.Where(l => l.Status == ApprovalStatus.Approved
-                || l.Status == ApprovalStatus.Skipped).Count() == this.ApprovalList?.Count)
-            {
-                this.Approve();
-            }
-            else if (this.ApprovalList != null && this.ApprovalList.Where(l => l.Status == ApprovalStatus.Rejected).Any())
-            {
-                this.Reject();
-            }
-            else if (this.ApprovalList != null && this.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Any())
-            {
-                this.PartiallyApprove();
-            }
-        }
+		public void UpdateApprovalStatus()
+		{
+			if (this?.ApproverSetup?.ApprovalType == ApprovalTypes.Any
+				  && this.ApprovalList != null
+				  && this.ApprovalList!.Where(l => l.Status == ApprovalStatus.Approved).Any())
+			{
+				this.Approve();
+			}
+			else if (this.ApprovalList?.Where(l => l.Status == ApprovalStatus.Approved
+				|| l.Status == ApprovalStatus.Skipped).Count() == this.ApprovalList?.Count)
+			{
+				this.Approve();
+			}
+			else if (this.ApprovalList != null && this.ApprovalList.Where(l => l.Status == ApprovalStatus.Rejected).Any())
+			{
+				this.Reject();
+			}
+			else if (this.ApprovalList != null && this.ApprovalList.Where(l => l.Status == ApprovalStatus.Approved).Any())
+			{
+				this.PartiallyApprove();
+			}
+		}
     }
     public record ApproverSetupState : BaseEntity
     {
@@ -131,13 +131,13 @@ namespace CompanyPL.ProjectPL.Core.ProjectPL
                   Approved,
                   Rejected,
               };
-        public static readonly List<string> ExcludeFromForApproval =
-              new()
-              {
-                  Approved,
-                  Rejected,
-                  Skipped,
-              };
+		public static readonly List<string> ExcludeFromForApproval =
+			  new()
+			  {
+				  Approved,
+				  Rejected,
+				  Skipped,
+			  };
     }
     public static class ApprovalTypes
     {

@@ -7,6 +7,7 @@ using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static LanguageExt.Prelude;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Approval.Commands;
 

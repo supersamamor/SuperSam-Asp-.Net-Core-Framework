@@ -1,4 +1,3 @@
-using static OpenIddict.Abstractions.OpenIddictConstants;
 using System.Reflection;
 
 namespace CompanyPL.ProjectPL.Web;
@@ -6,36 +5,37 @@ namespace CompanyPL.ProjectPL.Web;
 public static class Permission
 {
     public static IEnumerable<string> GenerateAllPermissions()
-    {
-        var permissions = new List<string>();
-        // Get all nested classes in the Permissions class
-        var nestedClasses = typeof(Permission).GetNestedTypes();
-        foreach (var nestedClass in nestedClasses)
-        {
-            // Get all public static string fields in the nested class
-            var permissionsInClass = nestedClass.GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(string))
-                .Select(f => f.GetValue(null)!.ToString());
+	{
+		var permissions = new List<string>();
+		// Get all nested classes in the Permissions class
+		var nestedClasses = typeof(Permission).GetNestedTypes();
+		foreach (var nestedClass in nestedClasses)
+		{
+			// Get all public static string fields in the nested class
+			var permissionsInClass = nestedClass.GetFields(BindingFlags.Public | BindingFlags.Static)
+				.Where(f => f.FieldType == typeof(string))
+				.Select(f => f.GetValue(null)!.ToString());
 
-            permissions.AddRange(permissionsInClass!);
-        }
-        return permissions.OrderBy(l=>l);
-    }
-    public static IEnumerable<string> GeneratePermissionsForModule(string module)
-    {
-        var permissions = new List<string>();
-        // Get the nested class for the specified module
-        var moduleType = typeof(Permission).GetNestedType(module);
-        if (moduleType != null)
-        {
-            // Get all public static string fields in the module class
-            var modulePermissions = moduleType.GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof(string))
-                .Select(f => f.GetValue(null)!.ToString());
-            permissions.AddRange(modulePermissions!);
-        }     
-        return permissions.OrderBy(l => l);
-    }
+			permissions.AddRange(permissionsInClass!);
+		}
+		return permissions.OrderBy(l=>l);
+	}
+	public static IEnumerable<string> GeneratePermissionsForModule(string module)
+	{
+		var permissions = new List<string>();
+		// Get the nested class for the specified module
+		var moduleType = typeof(Permission).GetNestedType(module);
+		if (moduleType != null)
+		{
+			// Get all public static string fields in the module class
+			var modulePermissions = moduleType.GetFields(BindingFlags.Public | BindingFlags.Static)
+				.Where(f => f.FieldType == typeof(string))
+				.Select(f => f.GetValue(null)!.ToString());
+			permissions.AddRange(modulePermissions!);
+		}     
+		return permissions.OrderBy(l => l);
+	}
+
     public static class Admin
     {
         public const string View = "Permission.Admin.View";

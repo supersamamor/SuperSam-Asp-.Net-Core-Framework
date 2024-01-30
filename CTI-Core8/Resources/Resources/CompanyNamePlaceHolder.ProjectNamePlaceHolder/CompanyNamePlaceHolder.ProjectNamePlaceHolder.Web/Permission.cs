@@ -1,3 +1,4 @@
+using System.Reflection;
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web;
 
 public static class Permission

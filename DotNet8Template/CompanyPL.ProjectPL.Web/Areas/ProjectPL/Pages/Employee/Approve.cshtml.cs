@@ -1,9 +1,9 @@
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Queries;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Employee.Queries;
-using CompanyPL.ProjectPL.Core.ProjectPL;
 using CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models;
 using CompanyPL.ProjectPL.Web.Models;
+using CompanyPL.ProjectPL.Core.ProjectPL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,8 +16,8 @@ public class ApproveModel : BasePageModel<ApproveModel>
     public EmployeeViewModel Employee { get; set; } = new();
     [BindProperty]
     public string? ApprovalStatus { get; set; }
-    [BindProperty]
-    public string? ApprovalRemarks { get; set; }
+	[BindProperty]
+	public string? ApprovalRemarks { get; set; }
     public async Task<IActionResult> OnGet(string? id)
     {
         if (id == null)

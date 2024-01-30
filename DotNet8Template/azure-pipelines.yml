@@ -32,7 +32,7 @@ steps:
   inputs:
     command: 'custom'
     custom: 'tool'
-    arguments: 'install --configfile nuget-org.config --global dotnet-ef'
+    arguments: 'install --configfile nuget-org.config --global dotnet-ef --version 8.0'
 - task: efcore-migration-script-generator-task@1
   inputs:
     projectpath: '$(Build.SourcesDirectory)/CompanyPL.ProjectPL.Infrastructure/CompanyPL.ProjectPL.Infrastructure.csproj'

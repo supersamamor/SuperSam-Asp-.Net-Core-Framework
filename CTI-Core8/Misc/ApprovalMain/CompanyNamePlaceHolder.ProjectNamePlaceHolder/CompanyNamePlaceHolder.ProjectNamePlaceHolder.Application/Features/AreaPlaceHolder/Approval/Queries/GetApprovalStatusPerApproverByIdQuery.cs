@@ -3,7 +3,7 @@ using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CompanyNamePlaceHolder.Common.Identity.Abstractions;
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Approval.Queries;
 
