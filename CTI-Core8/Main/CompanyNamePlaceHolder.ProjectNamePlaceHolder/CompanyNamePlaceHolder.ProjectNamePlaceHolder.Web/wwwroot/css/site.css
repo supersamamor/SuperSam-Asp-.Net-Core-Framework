@@ -146,5 +146,9 @@ textarea[readonly] {
 }
 
 .padding-top-10 {
-    margin-right: 10px;
+    padding-top: 10px;
+}
+.margin-right-10
+{
+	margin-right: 10px;
 }
