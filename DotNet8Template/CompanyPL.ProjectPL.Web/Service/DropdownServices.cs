@@ -7,6 +7,7 @@ using MediatR;
 using CompanyPL.ProjectPL.Web.Areas.Admin.Queries.Roles;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Report.Queries;
 using System.Globalization;
+using System.Drawing.Printing;
 
 namespace CompanyPL.ProjectPL.Web.Service
 {
@@ -22,7 +23,11 @@ namespace CompanyPL.ProjectPL.Web.Service
 		} 
 		public async Task<IEnumerable<SelectListItem>> GetRoleList()
         {
-            return (await _mediaTr.Send(new GetRolesQuery())).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
+            var query = new GetRolesQuery()
+            {
+                PageSize = -1
+            };
+            return (await _mediaTr.Send(query)).Data.Select(l => new SelectListItem { Value = l.Name, Text = l.Name });
         }	
         public IEnumerable<SelectListItem> QueryTypeList()
         {
@@ -128,11 +133,19 @@ namespace CompanyPL.ProjectPL.Web.Service
 		
 		public async Task<IEnumerable<SelectListItem>> GetUserList(string currentSelectedApprover, IList<string> allSelectedApprovers)
 		{
-			return (await _mediaTr.Send(new GetApproversQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+            var query = new GetApproversQuery(currentSelectedApprover, allSelectedApprovers)
+            {
+                PageSize = -1
+            };
+            return (await _mediaTr.Send(query)).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
 		}
 public async Task<IEnumerable<SelectListItem>> GetRoleApproverList(string currentSelectedApprover, IList<string> allSelectedApprovers)
 		{
-			return (await _mediaTr.Send(new GetApproverRolesQuery(currentSelectedApprover, allSelectedApprovers))).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
-		}
+            var query = new GetApproverRolesQuery(currentSelectedApprover, allSelectedApprovers)
+            {
+                PageSize = -1
+            };
+            return (await _mediaTr.Send(query)).Data.Select(l => new SelectListItem { Value = l.Id, Text = l.Name });
+        }
     }
 }
