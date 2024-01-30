@@ -3,10 +3,11 @@ using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CompanyNamePlaceHolder.Common.Identity.Abstractions;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.ProjectNamePlaceHolder;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.AreaPlaceHolder.Approval.Queries;
 
-public record GetApprovalStatusPerApproverByIdQuery(string DataId) : IRequest<Option<string>>;
+public record GetApprovalStatusPerApproverByIdQuery(string DataId, string Module) : IRequest<Option<string>>;
 
 public class GetApprovalStatusPerApproverByIdQueryHandler : IRequestHandler<GetApprovalStatusPerApproverByIdQuery, Option<string>>
 {
@@ -21,8 +22,10 @@ public class GetApprovalStatusPerApproverByIdQueryHandler : IRequestHandler<GetA
     public async Task<Option<string>> Handle(GetApprovalStatusPerApproverByIdQuery request, CancellationToken cancellationToken = default)
     {
         return await (from a in _context.ApprovalRecord
-                      join b in _context.Approval on a.Id equals b.ApprovalRecordId
-                      where b.ApproverUserId == _authenticatedUser.UserId && a.DataId == request.DataId
-                      select b.Status).FirstOrDefaultAsync(cancellationToken);
+                     join b in _context.Approval on a.Id equals b.ApprovalRecordId
+                     join c in _context.ApproverSetup on a.ApproverSetupId equals c.Id
+                     where b.ApproverUserId == _authenticatedUser.UserId && a.DataId == request.DataId
+                     && c.TableName == request.Module
+                     select a.Status).FirstOrDefaultAsync(cancellationToken);
     }
 }
