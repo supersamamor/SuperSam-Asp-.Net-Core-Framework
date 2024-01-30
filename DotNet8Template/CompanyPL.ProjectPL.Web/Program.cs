@@ -75,7 +75,10 @@ app.UseSecurityHeaders(policies =>
                        .WithNonce()
                        .OverHttps();
                 builder.AddStyleSrc()
-                       .Self()                      
+                       .Self()
+                       .UnsafeEval()
+                       .StrictDynamic()
+                       .WithNonce()
                        .OverHttps();
                 builder.AddImgSrc().OverHttps().Data();
                 builder.AddObjectSrc().None();
