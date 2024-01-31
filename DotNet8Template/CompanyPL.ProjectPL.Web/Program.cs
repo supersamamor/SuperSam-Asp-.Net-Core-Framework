@@ -60,7 +60,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+var baseUrl = configuration.GetValue<string>("BaseUrl");
 app.UseHttpsRedirection();
 app.UseSecurityHeaders(policies =>
     policies.AddDefaultSecurityHeaders()
@@ -68,23 +68,26 @@ app.UseSecurityHeaders(policies =>
             {
                 builder.AddUpgradeInsecureRequests();
                 builder.AddBlockAllMixedContent();
-                builder.AddDefaultSrc().Self().OverHttps();
+                builder.AddDefaultSrc().None().OverHttps();
                 builder.AddScriptSrc()
-						.Self()
-						.StrictDynamic()
-						.WithNonce()
-						.OverHttps();
+                        .Self()
+                        .StrictDynamic()
+                        .WithNonce()
+                        .OverHttps();
                 builder.AddStyleSrc()
-						.Self()
-						.UnsafeEval()
-						.StrictDynamic()
-						.WithNonce()
-						.OverHttps();
+                        .Self()
+                        .UnsafeEval()
+                        .StrictDynamic()
+                        .WithNonce()
+                        .OverHttps();
                 builder.AddImgSrc().OverHttps().Data();
                 builder.AddObjectSrc().None();
                 builder.AddBaseUri().None();
                 builder.AddFrameAncestors().Self();
-                builder.AddFormAction().OverHttps();
+                builder.AddFormAction().Self().OverHttps();
+                builder.AddConnectSrc().From(baseUrl!);
+                builder.AddFontSrc().From(new string[] { "https://fonts.gstatic.com",
+                    baseUrl!,"https://stackpath.bootstrapcdn.com" });
             }));
 app.UseWebOptimizer();
 app.UseStaticFiles(new StaticFileOptions
