@@ -85,9 +85,9 @@ app.UseSecurityHeaders(policies =>
                 builder.AddBaseUri().None();
                 builder.AddFrameAncestors().Self();
                 builder.AddFormAction().Self().OverHttps();
-                builder.AddConnectSrc().From(baseUrl!);
+                builder.AddConnectSrc().From(baseUrl!).OverHttps();
                 builder.AddFontSrc().From(new string[] { "https://fonts.gstatic.com",
-                    baseUrl!,"https://stackpath.bootstrapcdn.com" });
+                    baseUrl!,"https://stackpath.bootstrapcdn.com" }).OverHttps();
             }));
 app.UseWebOptimizer();
 app.UseStaticFiles(new StaticFileOptions
