@@ -83,7 +83,7 @@ app.UseSecurityHeaders(policies =>
 				builder.AddObjectSrc().None();
 				builder.AddBaseUri().None();
 				builder.AddFrameAncestors().Self();
-				builder.AddFormAction().Self().OverHttps();
+				builder.AddFormAction().From(baseUrl!).Self().OverHttps();
 				builder.AddConnectSrc().From(baseUrl!).OverHttps();
 				builder.AddFontSrc().From(new string[] { "https://fonts.gstatic.com",
 					baseUrl!,"https://stackpath.bootstrapcdn.com" }).OverHttps();
