@@ -1,0 +1,57 @@
+@page
+@model ViewModel
+@section Styles {
+<partial name="_DataTableStyles" />
+}
+@{
+    ViewData["Title"] = Localizer["View Role"];
+    ViewData["ActiveMainPage"] = "Roles";
+    ViewData["Level1"] = "Admin";
+}
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Role Info"]</span><br></h5>
+    <div class="card-body">
+        <partial name="_ViewRoleDetails" model="Model.Role" />
+    </div>
+</div>
+<br />
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Permissions"]</span><br></h5>
+    <div class="card-body overflow-x-scroll">
+        <partial name="_ViewPermissions" model="Model.Permissions" />
+    </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.Create)).Succeeded)
+    {
+        <a asp-page="Add" class="btn btn-success text-light" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Roles.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-id="@Model.Role.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+<partial name="_DataTableScripts" />
+<script asp-add-nonce>
+    $(document).ready(function () {
+        var permissions = $("#permissions").DataTable({
+            select: false,
+            searching: true,
+            paging: true,
+            info: true,
+            buttons: [],
+            columnDefs: [
+                {
+                    targets: [1],
+                    orderDataType: 'dom-checkbox',
+                }
+            ]
+        });
+    });
+</script>
+}

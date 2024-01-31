@@ -1,0 +1,20 @@
+@page
+@model DetailsModel
+
+@{
+    ViewData["Title"] = Localizer["View Audit Log"];
+    ViewData["ActiveMainPage"] = "AuditTrail";
+    ViewData["Level1"] = "Admin";
+}
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Audit Log Details"]</span><br></h5>
+    <div class="card-body">
+        <partial name="_ViewAuditLogDetails" model="Model.AuditLog" />
+    </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Close"]"><i class="fas fa-ban"></i></a>
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>

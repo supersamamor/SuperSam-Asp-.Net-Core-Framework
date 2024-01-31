@@ -1,0 +1,37 @@
+@using Models
+@model EmployeeViewModel
+<input type="hidden" id="HealthDeclarationCount" value="@Model?.HealthDeclarationList?.Count" />
+<div class="card">
+    <h5 class="card-header"><span  class="card-header-custom">@Localizer["Health Declaration"]</span><br></h5>
+    <div class="card-body overflow-auto">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+            @if (Model?.HealthDeclarationList != null)
+            {
+                int counter = 0;
+                foreach (var item in Model.HealthDeclarationList)
+                {
+                    <input type="hidden" name="HealthDeclarationList[@counter].Id" value="@item.Id" />
+                    <input type="hidden" name="HealthDeclarationList[@counter].EmployeeId" value="@item.EmployeeId" />
+                    <div class="col">
+							<div class="mb-3">
+								<label asp-for="@item.IsVaccinated" class="form-label "><strong>@Localizer["Vaccinated"] :</strong></label>
+									<input type="radio" asp-for="@item.IsVaccinated" name="HealthDeclarationList[@counter].IsVaccinated" value="true"/><span>Yes</span>
+
+									<input type="radio" asp-for="@item.IsVaccinated" name="HealthDeclarationList[@counter].IsVaccinated" value="false" class="RadioButtonNo" /><span>No</span>
+									<span data-valmsg-for="HealthDeclarationList[@counter].IsVaccinated" asp-validation-for="@item.IsVaccinated" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="@item.Vaccine" class="form-label "><strong>@Localizer["Vaccine"] :</strong></label>
+									<input asp-for="@item.Vaccine"  name="HealthDeclarationList[@counter].Vaccine" class="form-control" maxlength="255"/>
+									<span data-valmsg-for="HealthDeclarationList[@counter].Vaccine" asp-validation-for="@item.Vaccine" class="text-danger"></span>
+							</div>
+						</div>
+						
+                    counter++;
+                }
+            }
+        </div>
+    </div>
+</div>

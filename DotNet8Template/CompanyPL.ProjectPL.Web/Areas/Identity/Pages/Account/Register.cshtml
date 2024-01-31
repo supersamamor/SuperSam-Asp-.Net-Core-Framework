@@ -1,0 +1,86 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+    var privacyPolicyUrl = Configuration.GetValue<string>("PrivacyPolicyUrl");
+}
+<div class="card shadow-lg o-hidden border-0 my-5">
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-lg-5 d-none d-lg-flex">
+                <div class="flex-grow-1 bg-login-image"></div>
+            </div>
+            <div class="col-lg-7">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h4 class="text-dark mb-4">Create an Account!</h4>
+                    </div>
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="user">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row row-cols-1">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Full Name :</strong></label>
+                                    <input asp-for="Input!.Name" class="form-control" placeholder="Full Name">
+                                    <small><span asp-validation-for="Input!.Name" class="text-danger"></span></small>
+                                </div>
+                            </div>                           
+                        </div>
+                        <div class="row row-cols-1">
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Email :</strong></label>
+                                <input asp-for="Input!.Email" class="form-control" placeholder="Email">
+                                <small><span asp-validation-for="Input!.Email" class="text-danger"></span></small>
+                            </div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Password :</strong></label>
+                                    <input asp-for="Input!.Password" class="form-control" placeholder="Password">
+                                    <small><span asp-validation-for="Input!.Password" class="text-danger"></span></small>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Confirm Password :</strong></label>
+                                    <input asp-for="Input!.ConfirmPassword" class="form-control" placeholder="Confirm Password">
+                                    <small><span asp-validation-for="Input!.ConfirmPassword" class="text-danger"></span></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-cols-1">
+                            <div class="mb-3">
+                                <input asp-for="Input!.TermsAccepted" class="form-check-input">
+                                <label class="form-check-label" for="formCheck-1">I agree to the <a href="@privacyPolicyUrl">terms </a></label>
+                                <small><span asp-validation-for="Input!.TermsAccepted" class="text-danger"></span></small>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary d-block btn-user w-100" type="submit">Register Account</button>
+                    </form>
+                    <hr>
+                    <form id="microsoft-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
+                        <input type="hidden" name="provider" value="Microsoft">
+                        <input class="mb-2" type="image" id="BtnLoginMicrosoft" src="~/img/ms_signin_dark.png" alt="Sign in using Microsoft">
+                    </form>
+                    <form id="google-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal text-center">
+                        <input type="hidden" name="provider" value="Google">
+                        <input class="mb-2" type="image" id="BtnLoginGoogle" src="~/img/google_signin_dark.png" alt="Sign in using Google">
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" asp-page="./ForgotPassword">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="./Login">Already have an account? Login!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

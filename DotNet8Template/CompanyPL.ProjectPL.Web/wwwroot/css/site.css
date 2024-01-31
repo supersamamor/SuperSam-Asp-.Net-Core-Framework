@@ -1,0 +1,154 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+/* Write your CSS code.*/
+footer .sticky-footer {
+    margin-top: 14px;
+}
+
+#themeSwitchContainer {
+    display: none;
+}
+
+#languangeSwitchContainer {
+    display: none !important;
+}
+
+.sidebar-brand-text {
+    max-width: 100px;
+}
+
+.bg-login-image {
+    background-image: url('/img/login-screen-banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hide_navbar_search_container {
+    display: none !important;
+}
+
+#toolbar-container {
+    float: right;
+    margin-top: 10px;
+}
+
+#btnConfirmationModal, #btnAddRecord {
+    color: #fff;
+}
+
+.card-header-custom {
+    background-color: var(--bs-card-cap-bg);
+}
+
+.btnAddRemoveSubDetailList > i {
+    font-size: 18px;
+}
+
+.RadioButtonNo {
+    margin-left: 15px;
+}
+
+.btnCloseModalIcon {
+    background: transparent;
+    border: none;
+}
+
+.RadionButtonLabel {
+    padding-left: 7.5px;
+}
+
+.file-upload-control {
+    display: block;
+}
+
+.file-upload-filename {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 10px;
+}
+
+.file-view-button {
+    cursor: pointer;
+    color: #fff;
+    background: #28a745;
+    font-weight: 700;
+}
+
+.overflow-x-scroll {
+    overflow-x: scroll;
+}
+
+.back-to-top {
+    bottom: 1.25rem;
+    position: fixed;
+    right: 1.25rem;
+    z-index: 1032;
+}
+
+.paginate_button {
+    margin-left: 2px;
+}
+
+.nav-treeview {
+    display: none;
+}
+
+.menu-open .nav-treeview {
+    display: block;
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.fieldrequired::after {
+    content: " *";
+    font-weight: bold;
+    color: red;
+}
+
+.select2-selection {
+    height: 40px !important;
+}
+
+.select2-selection__rendered {
+    padding-top: 5px;
+}
+
+input[readonly] {
+    background-color: #eaecf4 !important;
+}
+
+textarea[readonly] {
+    background-color: #eaecf4 !important;
+}
+
+.pie-graph-canvas {
+    width: 50% !important;
+    height: 50% !important;
+    position: relative;
+    left: 25%;
+}
+
+.default-graph-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.custom-graph-body {
+    position: relative;
+}
+
+.CodeMirror {
+    margin-bottom: 10px;
+}
+
+.padding-top-10 {
+    padding-top: 10px;
+}
+.margin-right-10
+{
+	margin-right: 10px;
+}

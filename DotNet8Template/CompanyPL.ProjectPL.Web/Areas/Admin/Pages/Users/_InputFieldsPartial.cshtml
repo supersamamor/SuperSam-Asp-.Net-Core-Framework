@@ -1,0 +1,118 @@
+@using Models
+@model UserViewModel
+
+<div class="card">
+    <input type="hidden" asp-for="@Model.IsEdit" value="@Model.IsEdit"/>
+    <input type="hidden" asp-for="@Model.IsView" value="@Model.IsView" />
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["User Info"]</span><br></h5>
+    <div class="card-body">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
+            @if (@Model.IsEdit || @Model.IsView)
+            {
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Email" class="form-label fieldrequired"><strong>Email :</strong></label>
+                        <input asp-for="@Model.Email" class="form-control" readonly/>
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="@Model.Password" value="@Model.Password" />
+                <input type="hidden" asp-for="@Model.ConfirmPassword" value="@Model.ConfirmPassword" />
+            }
+            else
+            {
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Email" class="form-label fieldrequired"><strong>Email :</strong></label>
+                        <input asp-for="@Model.Email" class="form-control" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Password" class="form-label fieldrequired"><strong>Password :</strong></label>
+                        <input asp-for="@Model.Password" class="form-control" />
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.ConfirmPassword" class="form-label fieldrequired"><strong>Confirm Password :</strong></label>
+                        <input asp-for="@Model.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+            }
+            @if (@Model.IsView)
+            {
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Name" class="form-label fieldrequired"><strong>Full Name :</strong></label>
+                        <input asp-for="@Model.Name" class="form-control"  readonly/>
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div>
+                </div>               
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Entity" class="form-label fieldrequired"><strong>Entity :</strong></label>
+                        <input asp-for="@Model.Entity" class="form-control" readonly />
+                        <span asp-validation-for="@Model.Entity" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.IsActive" class="form-label margin-right-10"><strong>Status :</strong></label>
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge bg-success text-light">@Localizer["Active"]</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger text-light">@Localizer["Deactivated"]</span>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.Name" class="form-label fieldrequired"><strong>Full Name :</strong></label>
+                        <input asp-for="@Model.Name" class="form-control" />
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div>
+                </div>               
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.EntityId" class="form-label fieldrequired"><strong>Entity :</strong></label>
+                        <select id="entity-select" asp-for="@Model.EntityId"
+                                class="select2 form-control"
+                                asp-items="@Model.Entities">
+                            <option></option>
+                        </select>
+                        <span asp-validation-for="@Model.EntityId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="@Model.IsActive" class="form-label fieldrequired"><strong>Status :</strong></label>
+                        <select id="entity-select" asp-for="@Model.IsActive"
+                                class="select2 form-control"
+                                asp-items="@Model.Statuses">
+                            <option></option>
+                        </select>
+                        <span asp-validation-for="@Model.IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<br />
+<div class="card">
+    <h5 class="card-header"><span class="card-header-custom">@Localizer["Roles"]</span><br></h5>
+    <div class="card-body overflow-x-scroll">
+        <partial name="_EditRoles" model="Model.Roles" />
+    </div>
+</div>
