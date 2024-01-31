@@ -16,14 +16,16 @@ public class LoginModel : BasePageModel<LoginModel>
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IMediator _mediator;
-
+    private readonly bool _siteIsAvailable;
     public LoginModel(SignInManager<ApplicationUser> signInManager,
                       UserManager<ApplicationUser> userManager,
-                      IMediator mediator)
+                      IMediator mediator,
+                      IConfiguration configuration)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _mediator = mediator;
+        _siteIsAvailable = configuration.GetValue<bool>("SiteIsAvailable")!;
     }
 
     [BindProperty]
@@ -50,8 +52,12 @@ public class LoginModel : BasePageModel<LoginModel>
         public bool RememberMe { get; set; }
     }
 
-    public async Task OnGetAsync(string? returnUrl = null)
+    public async Task<IActionResult> OnGetAsync(string? returnUrl = null)
     {
+        if(!_siteIsAvailable)
+        {
+            return RedirectToPage("./SiteNotAvailable");
+        }       
         if (!string.IsNullOrEmpty(ErrorMessage))
         {
             ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -63,8 +69,8 @@ public class LoginModel : BasePageModel<LoginModel>
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
         ReturnUrl = returnUrl;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
