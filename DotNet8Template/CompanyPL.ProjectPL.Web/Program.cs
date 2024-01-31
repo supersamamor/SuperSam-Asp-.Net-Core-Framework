@@ -67,27 +67,27 @@ app.UseSecurityHeaders(policies =>
             .AddContentSecurityPolicy(builder =>
             {
                 builder.AddUpgradeInsecureRequests();
-                builder.AddBlockAllMixedContent();
-                builder.AddDefaultSrc().None().OverHttps();
-                builder.AddScriptSrc()
-                        .Self()
-                        .StrictDynamic()
-                        .WithNonce()
-                        .OverHttps();
-                builder.AddStyleSrc()
-                        .Self()
-                        .UnsafeEval()
-                        .StrictDynamic()
-                        .WithNonce()
-                        .OverHttps();
-                builder.AddImgSrc().OverHttps().Data();
-                builder.AddObjectSrc().None();
-                builder.AddBaseUri().None();
-                builder.AddFrameAncestors().Self();
-                builder.AddFormAction().From(baseUrl!).Self().OverHttps();
-                builder.AddConnectSrc().From(baseUrl!).OverHttps();
-                builder.AddFontSrc().From(new string[] { "https://fonts.gstatic.com",
-                    baseUrl!,"https://stackpath.bootstrapcdn.com" }).OverHttps();
+				builder.AddBlockAllMixedContent();
+				builder.AddDefaultSrc().None().OverHttps();
+				builder.AddScriptSrc()
+						.Self()
+						.StrictDynamic()
+						.WithNonce()
+						.OverHttps();
+				builder.AddStyleSrc()
+						.Self()
+						.UnsafeEval()
+						.StrictDynamic()
+						.WithNonce()
+						.OverHttps();
+				builder.AddImgSrc().OverHttps().Data();
+				builder.AddObjectSrc().None();
+				builder.AddBaseUri().None();
+				builder.AddFrameAncestors().Self();
+				builder.AddFormAction().From(baseUrl!).Self().OverHttps();
+				builder.AddConnectSrc().From(baseUrl!).OverHttps();
+				builder.AddFontSrc().From(new string[] { "https://fonts.gstatic.com",
+					baseUrl!,"https://stackpath.bootstrapcdn.com" }).OverHttps();
             }));
 app.UseWebOptimizer();
 app.UseStaticFiles(new StaticFileOptions
