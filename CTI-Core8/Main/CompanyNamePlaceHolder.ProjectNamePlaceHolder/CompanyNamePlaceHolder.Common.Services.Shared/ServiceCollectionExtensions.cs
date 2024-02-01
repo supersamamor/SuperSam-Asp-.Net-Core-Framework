@@ -1,5 +1,6 @@
 using CompanyNamePlaceHolder.Common.Services.Shared.Interfaces;
 using CompanyNamePlaceHolder.Common.Services.Shared.Services.SmtpMail;
+using CompanyNamePlaceHolder.Common.Services.Shared.Services.InMemoryStorage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,5 +20,6 @@ public static class ServiceCollectionExtensions
     {
         services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
         services.AddTransient<IMailService, SmtpMailService>();
+	    services.AddSingleton<InMemoryStorageService>();
     }
 }
