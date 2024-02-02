@@ -5,8 +5,6 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-Template:[ApprovalStatusBadgeImport]
-
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Pages.MainModulePlaceHolder;
 
@@ -29,17 +27,8 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		Template:[ApprovalStatusBadgeHelper]
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderQuery>());
-        return new JsonResult(result.Data
-            .Select(e => new
-            {
-                e.Id,
-                Template:[InsertNewJSONParameterForListingQueryTextHere]		
-				Template:[ApprovalStatusBadge]
-                e.LastModifiedDate
-            })
-            .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
+		var result = await Mediatr.Send(DataRequest!.ToQuery<GetMainModulePlaceHolderQuery>());
+		return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));	
     } 
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)

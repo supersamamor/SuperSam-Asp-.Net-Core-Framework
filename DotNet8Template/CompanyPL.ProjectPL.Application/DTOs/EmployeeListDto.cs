@@ -1,5 +1,4 @@
-﻿using CompanyPL.Common.Core.Base.Models;
-namespace CompanyPL.ProjectPL.Application.DTOs
+﻿namespace CompanyPL.ProjectPL.Application.DTOs
 {
     public record EmployeeListDto : BaseDto
     {
