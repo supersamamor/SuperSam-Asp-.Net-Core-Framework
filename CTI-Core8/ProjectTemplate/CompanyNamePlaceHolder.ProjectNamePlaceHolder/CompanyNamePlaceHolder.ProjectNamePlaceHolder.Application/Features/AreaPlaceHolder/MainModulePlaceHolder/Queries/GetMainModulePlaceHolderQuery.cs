@@ -12,7 +12,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Features.Are
 
 public record GetMainModulePlaceHolderQuery : BaseQuery, IRequest<PagedListResponse<MainModulePlaceHolderListDto>>;
 
-public class GetMainModulePlaceHolderQueryHandler(ApplicationContext context) : BaseQueryHandler<ApplicationContext, MainModulePlaceHolderListDto, GetMainModulePlaceHolderQuery>, IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<MainModulePlaceHolderListDto>>
+public class GetMainModulePlaceHolderQueryHandler(ApplicationContext context) : BaseQueryHandler<ApplicationContext, MainModulePlaceHolderListDto, GetMainModulePlaceHolderQuery>(context), IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<MainModulePlaceHolderListDto>>
 {
 	public override async Task<PagedListResponse<MainModulePlaceHolderListDto>> Handle(GetMainModulePlaceHolderQuery request, CancellationToken cancellationToken = default)
 	{
