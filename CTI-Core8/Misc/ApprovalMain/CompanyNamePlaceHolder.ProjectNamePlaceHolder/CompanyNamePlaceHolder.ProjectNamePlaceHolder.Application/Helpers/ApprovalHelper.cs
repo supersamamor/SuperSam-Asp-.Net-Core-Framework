@@ -59,5 +59,27 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers
                 await context.AddAsync(approvalRecord, cancellationToken);
             }
         }
+		public static async Task<string> GetApprovalStatus(ApplicationContext context, string dataId, CancellationToken cancellationToken)
+		{
+			string? approvalStatus = await (from a in context.ApprovalRecord
+											where a.DataId == dataId
+											select a.Status).FirstOrDefaultAsync(cancellationToken);
+			switch (approvalStatus)
+			{
+				case ApprovalStatus.New:
+					return @"<span class=""badge bg-secondary"">" + approvalStatus + "</span>";
+				case ApprovalStatus.ForApproval:
+					return @"<span class=""badge bg-info"">" + approvalStatus + "</span>";
+				case ApprovalStatus.PartiallyApproved:
+					return @"<span class=""badge bg-primary"">" + approvalStatus + "</span>";
+				case ApprovalStatus.Approved:
+					return @"<span class=""badge bg-success"">" + approvalStatus + "</span>";
+				case ApprovalStatus.Rejected:
+					return @"<span class=""badge bg-danger"">" + approvalStatus + "</span>";
+				default:
+					break;
+			}
+			return approvalStatus ?? "";
+		}
     }
 }
