@@ -6,5 +6,5 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.DTOs;
 public record MainModulePlaceHolderListDto : BaseDto
 {
 	Template:[InsertNewDtoModelColumnTextHere]
-	Template:[InsertNewDtoHasStatusBadgeColumnTextHere]
+	Template:[ApprovalStatusBadgeHelper]
 }

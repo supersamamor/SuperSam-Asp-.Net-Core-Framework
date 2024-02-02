@@ -14,5 +14,8 @@ public record GetMainModulePlaceHolderQuery : BaseQuery, IRequest<PagedListRespo
 
 public class GetMainModulePlaceHolderQueryHandler(ApplicationContext context) : BaseQueryHandler<ApplicationContext, MainModulePlaceHolderListDto, GetMainModulePlaceHolderQuery>, IRequestHandler<GetMainModulePlaceHolderQuery, PagedListResponse<MainModulePlaceHolderListDto>>
 {
-	Template:[ListingQueryIncludeParent]
+	public override async Task<PagedListResponse<MainModulePlaceHolderListDto>> Handle(GetMainModulePlaceHolderQuery request, CancellationToken cancellationToken = default)
+	{
+		Template:[ListingQueryIncludeParent]
+	}
 }
