@@ -4,9 +4,43 @@
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1">
     <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.FirstName" class="form-label fieldrequired"><strong>@Localizer["First Name"] :</strong></label>
-			<input asp-for="@Model.FirstName" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+		<label asp-for="@Model.DateSample" class="form-label "><strong>@Localizer["DateSample"] :</strong></label>
+			<input type="date" asp-for="@Model.DateSample" class="form-control" />
+			<span asp-validation-for="@Model.DateSample" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.RadioButtonSample" class="form-label RadionButtonLabel "><strong>@Localizer["RadioButtonSample"] :</strong></label>
+			<input type="radio" asp-for="@Model.RadioButtonSample" value="true" /><span>Yes</span>
+
+			<input type="radio" asp-for="@Model.RadioButtonSample" value="false" class="RadioButtonNo" /><span>No</span>
+			<span asp-validation-for="@Model.RadioButtonSample" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.DecimalSample" class="form-label "><strong>@Localizer["DecimalSample"] :</strong></label>
+			<input asp-for="@Model.DecimalSample" class="form-control"  />
+			<span asp-validation-for="@Model.DecimalSample" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.IntegerSample" class="form-label "><strong>@Localizer["IntegerSample"] :</strong></label>
+			<input asp-for="@Model.IntegerSample" class="form-control"  />
+			<span asp-validation-for="@Model.IntegerSample" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.SampleParentId" class="form-label fieldrequired"><strong>@Localizer["SampleParent"] :</strong></label>
+			<select asp-for="@Model.SampleParentId" class="form-control" asp-items="@(dropdownService.GetSampleParentList(Model.SampleParentId))"><option value="">- Select SampleParent -</option></select>
+			<span asp-validation-for="@Model.SampleParentId" class="text-danger"></span>
 			
 	</div>
 </div>
@@ -20,6 +54,22 @@
 </div>
 <div class="col">
 	<div class="mb-3">
+		<label asp-for="@Model.MiddleName" class="form-label fieldrequired"><strong>@Localizer["Middle Name"] :</strong></label>
+			<input asp-for="@Model.MiddleName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.FirstName" class="form-label fieldrequired"><strong>@Localizer["First Name"] :</strong></label>
+			<input asp-for="@Model.FirstName" class="form-control" maxlength="255" />
+			<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
 		<label asp-for="@Model.LastName" class="form-label fieldrequired"><strong>@Localizer["Last Name"] :</strong></label>
 			<input asp-for="@Model.LastName" class="form-control" maxlength="255" />
 			<span asp-validation-for="@Model.LastName" class="text-danger"></span>
@@ -28,9 +78,17 @@
 </div>
 <div class="col">
 	<div class="mb-3">
-		<label asp-for="@Model.MiddleName" class="form-label fieldrequired"><strong>@Localizer["Middle Name"] :</strong></label>
-			<input asp-for="@Model.MiddleName" class="form-control" maxlength="255" />
-			<span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+		<label asp-for="@Model.DateTimeSample" class="form-label "><strong>@Localizer["DateTimeSample"] :</strong></label>
+			<input asp-for="@Model.DateTimeSample" class="form-control"  />
+			<span asp-validation-for="@Model.DateTimeSample" class="text-danger"></span>
+			
+	</div>
+</div>
+<div class="col">
+	<div class="mb-3">
+		<label asp-for="@Model.BooleanSample" class="form-label "><strong>@Localizer["BooleanSample"] :</strong></label>
+			<input asp-for="@Model.BooleanSample" class="custom-checkbox-label"/>
+			<span asp-validation-for="@Model.BooleanSample" class="text-danger"></span>
 			
 	</div>
 </div>

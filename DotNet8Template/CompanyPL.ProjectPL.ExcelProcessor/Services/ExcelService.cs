@@ -350,7 +350,9 @@ namespace CompanyPL.ProjectPL.ExcelProcessor.Services
             //Implement Custom Validation Here Depending on Model/Table Name
             switch (module)
             {
-                case nameof(EmployeeState):
+                case nameof(SampleParentState):
+					return await SampleParentValidator.ValidatePerRecordAsync(_context, rowValue);
+				case nameof(EmployeeState):
 					return await EmployeeValidator.ValidatePerRecordAsync(_context, rowValue);
 				case nameof(ContactInformationState):
 					return await ContactInformationValidator.ValidatePerRecordAsync(_context, rowValue);
@@ -366,7 +368,9 @@ namespace CompanyPL.ProjectPL.ExcelProcessor.Services
             //Implement Custom Validation Here Depending on Model/Table Name
             switch (module)
             {
-                case nameof(EmployeeState):
+                case nameof(SampleParentState):
+					return SampleParentValidator.DuplicateValidation(records);
+				case nameof(EmployeeState):
 					return EmployeeValidator.DuplicateValidation(records);
 												
                 default: break;

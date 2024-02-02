@@ -43,17 +43,29 @@ public class EmployeeController : BaseApiController<EmployeeController>
 
 public record EmployeeViewModel
 {
-    [Required]
-	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string FirstName { get;set; } = "";
+    public DateTime? DateSample { get;set; } = DateTime.Now.Date;
+	[Required]
+	public bool? RadioButtonSample { get;set; }
+	
+	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+	public decimal? DecimalSample { get;set; }
+	public int? IntegerSample { get;set; }
+	[Required]
+	
+	public string SampleParentId { get;set; } = "";
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
 	public string EmployeeCode { get;set; } = "";
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string LastName { get;set; } = "";
+	public string MiddleName { get;set; } = "";
 	[Required]
 	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
-	public string MiddleName { get;set; } = "";
+	public string FirstName { get;set; } = "";
+	[Required]
+	[StringLength(255, ErrorMessage = "{0} length can't be more than {1}.")]
+	public string LastName { get;set; } = "";
+	public DateTime? DateTimeSample { get;set; } = DateTime.Now.Date;
+	public bool BooleanSample { get;set; }
 	   
 }

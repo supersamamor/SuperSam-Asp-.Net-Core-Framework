@@ -88,7 +88,18 @@ namespace CompanyPL.ProjectPL.Scheduler.Jobs
             string? exceptionFilePath = null;   
             switch (module)
             {
-                case nameof(EmployeeState):
+                case nameof(SampleParentState):
+					var sampleParentImportResult = await _excelService.ImportAsync<SampleParentState>(path);
+					if (sampleParentImportResult.IsSuccess)
+					{
+						await _context.AddRangeAsync(sampleParentImportResult.SuccessRecords);
+					}
+					else
+					{
+						exceptionFilePath = ExcelService.UpdateExistingExcelValidationResult<SampleParentState>(sampleParentImportResult.FailedRecords, _uploadPath + "\\BatchUploadErrors", path);
+					}
+					break;
+				case nameof(EmployeeState):
 					var employeeImportResult = await _excelService.ImportAsync<EmployeeState>(path);
 					if (employeeImportResult.IsSuccess)
 					{

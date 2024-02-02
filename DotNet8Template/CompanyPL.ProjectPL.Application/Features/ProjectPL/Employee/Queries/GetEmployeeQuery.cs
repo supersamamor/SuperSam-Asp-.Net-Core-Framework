@@ -16,15 +16,24 @@ public class GetEmployeeQueryHandler(ApplicationContext context) : BaseQueryHand
 {
     public override async Task<PagedListResponse<EmployeeListDto>> Handle(GetEmployeeQuery request, CancellationToken cancellationToken = default)
     {
-        var pagedList = await Context.Set<EmployeeState>()
+
+        var pagedList = await Context.Set<EmployeeState>().Include(l => l.SampleParent)
             .AsNoTracking().Select(e => new EmployeeListDto()
             {
                 Id = e.Id,
-                LastModifiedDate = e.LastModifiedDate,
-                FirstName = e.FirstName,
+                LastModifiedDate = e.LastModifiedDate,               
+                RadioButtonSample = e.RadioButtonSample == true ? "Yes" : "No",               
+                SampleParentId = e.SampleParent == null ? "" : e.SampleParent!.Name,
                 EmployeeCode = e.EmployeeCode,
-                LastName = e.LastName,
                 MiddleName = e.MiddleName,
+                FirstName = e.FirstName,
+                LastName = e.LastName,             
+                BooleanSample = e.BooleanSample == true ? "Yes" : "No",
+
+                DateSample = e.DateSample,
+                DecimalSample = e.DecimalSample,
+                IntegerSample = e.IntegerSample == null ? "" : e.IntegerSample!.Value.ToString("##,##"),
+                DateTimeSample = e.DateTimeSample!.Value.ToString("MMM dd, yyyy HH:mm"),
             })
             .ToPagedResponse(request.SearchColumns, request.SearchValue,
                 request.SortColumn, request.SortOrder,
@@ -36,5 +45,4 @@ public class GetEmployeeQueryHandler(ApplicationContext context) : BaseQueryHand
         }
         return pagedList;
     }
-
 }

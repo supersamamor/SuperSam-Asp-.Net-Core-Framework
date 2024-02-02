@@ -17,7 +17,7 @@ public class GetEmployeeByIdQueryHandler : BaseQueryByIdHandler<ApplicationConte
 	
 	public override async Task<Option<EmployeeState>> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken = default)
 	{
-		return await Context.Employee
+		return await Context.Employee.Include(l=>l.SampleParent)
 			.Include(l=>l.ContactInformationList)
 			.Include(l=>l.HealthDeclarationList)
 			.Where(e => e.Id == request.Id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);

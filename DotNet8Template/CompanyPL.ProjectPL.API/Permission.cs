@@ -2,7 +2,15 @@ namespace CompanyPL.ProjectPL.API;
 
 public static class Permission
 {
-    public static class Employee
+    public static class SampleParent
+	{
+		public const string View = "Permission.SampleParent.View";
+		public const string Create = "Permission.SampleParent.Create";
+		public const string Edit = "Permission.SampleParent.Edit";
+		public const string Delete = "Permission.SampleParent.Delete";
+		public const string Upload = "Permission.SampleParent.Upload";
+	}
+	public static class Employee
 	{
 		public const string View = "Permission.Employee.View";
 		public const string Create = "Permission.Employee.Create";

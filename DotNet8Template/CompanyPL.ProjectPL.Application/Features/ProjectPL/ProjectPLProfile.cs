@@ -3,6 +3,7 @@ using CompanyPL.Common.Core.Mapping;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
 using CompanyPL.ProjectPL.Core.ProjectPL;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Report.Commands;
+using CompanyPL.ProjectPL.Application.Features.ProjectPL.SampleParent.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Employee.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.ContactInformation.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.HealthDeclaration.Commands;
@@ -18,7 +19,9 @@ public class ProjectPLProfile : Profile
 		CreateMap<AddReportCommand, ReportState>();
         CreateMap<EditReportCommand, ReportState>().IgnoreBaseEntityProperties();
 		
-        CreateMap<AddEmployeeCommand, EmployeeState>();
+        CreateMap<AddSampleParentCommand, SampleParentState>();
+		CreateMap <EditSampleParentCommand, SampleParentState>().IgnoreBaseEntityProperties();
+		CreateMap<AddEmployeeCommand, EmployeeState>();
 		CreateMap <EditEmployeeCommand, EmployeeState>().IgnoreBaseEntityProperties();
 		CreateMap<AddContactInformationCommand, ContactInformationState>();
 		CreateMap <EditContactInformationCommand, ContactInformationState>().IgnoreBaseEntityProperties();

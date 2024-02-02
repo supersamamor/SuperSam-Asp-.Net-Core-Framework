@@ -20,7 +20,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
 	public DbSet<UploadProcessorState> UploadProcessor { get; set; } = default!;
     public DbSet<UploadStagingState> UploadStaging { get; set; } = default!;
 	
-    public DbSet<EmployeeState> Employee { get; set; } = default!;
+    public DbSet<SampleParentState> SampleParent { get; set; } = default!;
+	public DbSet<EmployeeState> Employee { get; set; } = default!;
 	public DbSet<ContactInformationState> ContactInformation { get; set; } = default!;
 	public DbSet<HealthDeclarationState> HealthDeclaration { get; set; } = default!;
 	
@@ -68,20 +69,24 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         modelBuilder.Entity<UploadStagingState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
-        modelBuilder.Entity<EmployeeState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<SampleParentState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+		modelBuilder.Entity<EmployeeState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<ContactInformationState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		modelBuilder.Entity<HealthDeclarationState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
 		
-        modelBuilder.Entity<EmployeeState>().HasIndex(p => p.EmployeeCode).IsUnique();
+        modelBuilder.Entity<SampleParentState>().HasIndex(p => p.Name).IsUnique();
+		modelBuilder.Entity<EmployeeState>().HasIndex(p => p.EmployeeCode).IsUnique();
 		
-        modelBuilder.Entity<EmployeeState>().Property(e => e.FirstName).HasMaxLength(255);
+        modelBuilder.Entity<SampleParentState>().Property(e => e.Name).HasMaxLength(255);
 		modelBuilder.Entity<EmployeeState>().Property(e => e.EmployeeCode).HasMaxLength(255);
-		modelBuilder.Entity<EmployeeState>().Property(e => e.LastName).HasMaxLength(255);
 		modelBuilder.Entity<EmployeeState>().Property(e => e.MiddleName).HasMaxLength(255);
+		modelBuilder.Entity<EmployeeState>().Property(e => e.FirstName).HasMaxLength(255);
+		modelBuilder.Entity<EmployeeState>().Property(e => e.LastName).HasMaxLength(255);
 		modelBuilder.Entity<ContactInformationState>().Property(e => e.ContactDetails).HasMaxLength(255);
 		modelBuilder.Entity<HealthDeclarationState>().Property(e => e.Vaccine).HasMaxLength(255);
 		
-        modelBuilder.Entity<EmployeeState>().HasMany(t => t.ContactInformationList).WithOne(l => l.Employee).HasForeignKey(t => t.EmployeeId);
+        modelBuilder.Entity<SampleParentState>().HasMany(t => t.EmployeeList).WithOne(l => l.SampleParent).HasForeignKey(t => t.SampleParentId);
+		modelBuilder.Entity<EmployeeState>().HasMany(t => t.ContactInformationList).WithOne(l => l.Employee).HasForeignKey(t => t.EmployeeId);
 		modelBuilder.Entity<EmployeeState>().HasMany(t => t.HealthDeclarationList).WithOne(l => l.Employee).HasForeignKey(t => t.EmployeeId);
 		
 		modelBuilder.Entity<ApprovalRecordState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);

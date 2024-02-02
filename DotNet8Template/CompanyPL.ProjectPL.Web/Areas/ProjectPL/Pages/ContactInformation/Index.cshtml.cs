@@ -6,8 +6,6 @@ using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
-
 namespace CompanyPL.ProjectPL.Web.Areas.ProjectPL.Pages.ContactInformation;
 
 [Authorize(Policy = Permission.ContactInformation.View)]
@@ -29,19 +27,8 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		
-        var result = await Mediatr.Send(DataRequest!.ToQuery<GetContactInformationQuery>());
-        return new JsonResult(result.Data
-            .Select(e => new
-            {
-                e.Id,
-                EmployeeId = e.Employee?.EmployeeCode,
-				e.ContactDetails,
-						
-				
-                e.LastModifiedDate
-            })
-            .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
+		var result = await Mediatr.Send(DataRequest!.ToQuery<GetContactInformationQuery>());
+		return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));	
     } 
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)

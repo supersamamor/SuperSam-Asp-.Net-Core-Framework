@@ -56,26 +56,6 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    EmployeeCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employee", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Report",
                 columns: table => new
                 {
@@ -97,6 +77,23 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Report", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SampleParent",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SampleParent", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,55 +174,6 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContactInformation",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(36)", nullable: false),
-                    ContactDetails = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ContactInformation", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ContactInformation_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HealthDeclaration",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(36)", nullable: false),
-                    IsVaccinated = table.Column<bool>(type: "bit", nullable: true),
-                    Vaccine = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HealthDeclaration", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_HealthDeclaration_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ReportQueryFilter",
                 columns: table => new
                 {
@@ -275,6 +223,39 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                         name: "FK_ReportRoleAssignment_Report_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Report",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employee",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    DateSample = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RadioButtonSample = table.Column<bool>(type: "bit", nullable: true),
+                    DecimalSample = table.Column<decimal>(type: "decimal(18,6)", nullable: true),
+                    IntegerSample = table.Column<int>(type: "int", nullable: true),
+                    SampleParentId = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    EmployeeCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    DateTimeSample = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    BooleanSample = table.Column<bool>(type: "bit", nullable: false),
+                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employee", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employee_SampleParent_SampleParentId",
+                        column: x => x.SampleParentId,
+                        principalTable: "SampleParent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -333,6 +314,55 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                         name: "FK_Approval_ApprovalRecord_ApprovalRecordId",
                         column: x => x.ApprovalRecordId,
                         principalTable: "ApprovalRecord",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContactInformation",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    ContactDetails = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactInformation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContactInformation_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HealthDeclaration",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    IsVaccinated = table.Column<bool>(type: "bit", nullable: true),
+                    Vaccine = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Entity = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HealthDeclaration", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HealthDeclaration_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -558,6 +588,11 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                 column: "LastModifiedDate");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employee_SampleParentId",
+                table: "Employee",
+                column: "SampleParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_HealthDeclaration_CreatedBy",
                 table: "HealthDeclaration",
                 column: "CreatedBy");
@@ -673,6 +708,37 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                 column: "ReportId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SampleParent_CreatedBy",
+                table: "SampleParent",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SampleParent_Entity",
+                table: "SampleParent",
+                column: "Entity");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SampleParent_Id",
+                table: "SampleParent",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SampleParent_LastModifiedBy",
+                table: "SampleParent",
+                column: "LastModifiedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SampleParent_LastModifiedDate",
+                table: "SampleParent",
+                column: "LastModifiedDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SampleParent_Name",
+                table: "SampleParent",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UploadProcessor_CreatedBy",
                 table: "UploadProcessor",
                 column: "CreatedBy");
@@ -769,6 +835,9 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ApproverSetup");
+
+            migrationBuilder.DropTable(
+                name: "SampleParent");
         }
     }
 }

@@ -4,6 +4,7 @@ using CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Report.Commands;
 using CompanyPL.ProjectPL.Application.DTOs;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Approval.Commands;
+using CompanyPL.ProjectPL.Application.Features.ProjectPL.SampleParent.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.Employee.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.ContactInformation.Commands;
 using CompanyPL.ProjectPL.Application.Features.ProjectPL.HealthDeclaration.Commands;
@@ -27,9 +28,13 @@ public class ProjectPLProfile : Profile
         CreateMap<ReportResultModel, ReportResultViewModel>().ReverseMap();
         CreateMap<ReportQueryFilterModel, ReportQueryFilterViewModel>().ReverseMap();
 		
-        CreateMap<EmployeeViewModel, AddEmployeeCommand>();
+        CreateMap<SampleParentViewModel, AddSampleParentCommand>();
+		CreateMap<SampleParentViewModel, EditSampleParentCommand>();
+		CreateMap<SampleParentState, SampleParentViewModel>().ReverseMap();
+		CreateMap<EmployeeViewModel, AddEmployeeCommand>();
 		CreateMap<EmployeeViewModel, EditEmployeeCommand>();
-		CreateMap<EmployeeState, EmployeeViewModel>().ReverseMap();
+		CreateMap<EmployeeState, EmployeeViewModel>().ForPath(e => e.ReferenceFieldSampleParentId, o => o.MapFrom(s => s.SampleParent!.Name));
+		CreateMap<EmployeeViewModel, EmployeeState>();
 		CreateMap<ContactInformationViewModel, AddContactInformationCommand>();
 		CreateMap<ContactInformationViewModel, EditContactInformationCommand>();
 		CreateMap<ContactInformationState, ContactInformationViewModel>().ForPath(e => e.ReferenceFieldEmployeeId, o => o.MapFrom(s => s.Employee!.EmployeeCode));

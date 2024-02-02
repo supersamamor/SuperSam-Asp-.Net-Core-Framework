@@ -1,4 +1,4 @@
-﻿namespace CompanyPL.ProjectPL.Application.DTOs
+namespace CompanyPL.ProjectPL.Application.DTOs
 {
     public record class BaseDto
     {

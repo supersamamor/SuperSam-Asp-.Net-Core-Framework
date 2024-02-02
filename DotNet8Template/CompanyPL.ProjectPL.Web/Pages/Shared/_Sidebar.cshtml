@@ -119,7 +119,18 @@
                     </span>
                 </a>
                 <ul class="nav nav-treeview">
-                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.Employee.View)).Succeeded)
+                    @if((await AuthorizationService.AuthorizeAsync(User, Permission.SampleParent.View)).Succeeded)
+						{
+							<li class="nav-item">
+								<a href = "/ProjectPL/SampleParent" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "SampleParent")">
+									<i class="fas fa-circle nav-icon"></i>
+									<span>
+										@Localizer["SampleParent"]
+									</span>
+								</a>
+							</li>
+						}
+						@if((await AuthorizationService.AuthorizeAsync(User, Permission.Employee.View)).Succeeded)
 						{
 							<li class="nav-item">
 								<a href = "/ProjectPL/Employee" class="nav-link @ManageNavPages.PageNavClass(ViewContext, "Employee")">

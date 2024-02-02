@@ -17,16 +17,37 @@
                     <thead>
                         <tr>
                             <th>
-								@Localizer["First Name"]
+								@Localizer["DateSample"]
+							</th>
+							<th>
+								@Localizer["RadioButtonSample"]
+							</th>
+							<th>
+								@Localizer["DecimalSample"]
+							</th>
+							<th>
+								@Localizer["IntegerSample"]
+							</th>
+							<th>
+								@Localizer["SampleParent"]
 							</th>
 							<th>
 								@Localizer["Employee Code"]
 							</th>
 							<th>
+								@Localizer["Middle Name"]
+							</th>
+							<th>
+								@Localizer["First Name"]
+							</th>
+							<th>
 								@Localizer["Last Name"]
 							</th>
 							<th>
-								@Localizer["Middle Name"]
+								@Localizer["DateTimeSample"]
+							</th>
+							<th>
+								@Localizer["BooleanSample"]
 							</th>
 							  
 							<th>
@@ -55,7 +76,7 @@
         var table = $('#employee').DataTable({
             select: false,
             serverSide: true,
-            order: [[ 5, 'desc' ]],
+            order: [[ 12, 'desc' ]],
             ajax:
             {
                 url: '@Url.Page("/Employee/Index", new { area = "ProjectPL", handler = "ListAll" })',
@@ -69,10 +90,17 @@
                 BindTableRowCollapseEvent();
             },
 			columns: [
-                { data: "firstName", name: "FirstName", responsivePriority: 1, title: '@Localizer["First Name"]', searchable: true },
+                { data: "dateSample", type: "date", name: "DateSample", responsivePriority: 1, title: '@Localizer["DateSample"]', searchable: false },
+				{ data: "radioButtonSample", name: "RadioButtonSample", responsivePriority: 1, title: '@Localizer["RadioButtonSample"]', searchable: false },
+				{ data: "decimalSample",  type: "num-fmt", name: "DecimalSample", responsivePriority: 1, title: '@Localizer["DecimalSample"]', searchable: false },
+				{ data: "integerSample",  type: "num", name: "IntegerSample", responsivePriority: 1, title: '@Localizer["IntegerSample"]', searchable: false },
+				{ data: "sampleParentId", name: "SampleParentId", responsivePriority: 1, title: '@Localizer["SampleParent"]', searchable: true },
 				{ data: "employeeCode", name: "EmployeeCode", responsivePriority: 1, title: '@Localizer["Employee Code"]', searchable: true },
-				{ data: "lastName", name: "LastName", responsivePriority: 1, title: '@Localizer["Last Name"]', searchable: true },
 				{ data: "middleName", name: "MiddleName", responsivePriority: 1, title: '@Localizer["Middle Name"]', searchable: true },
+				{ data: "firstName", name: "FirstName", responsivePriority: 1, title: '@Localizer["First Name"]', searchable: true },
+				{ data: "lastName", name: "LastName", responsivePriority: 1, title: '@Localizer["Last Name"]', searchable: true },
+				{ data: "dateTimeSample",  type: "date", name: "DateTimeSample", responsivePriority: 1, title: '@Localizer["DateTimeSample"]', searchable: false },
+				{ data: "booleanSample", name: "BooleanSample", responsivePriority: 1, title: '@Localizer["BooleanSample"]', searchable: false },
 				   
 				{ data: "statusBadge", name: "StatusBadge", responsivePriority: 1, title: '@Localizer["Approval Status"]', searchable: false, orderable: false },
                 {

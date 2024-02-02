@@ -1,4 +1,4 @@
-using CompanyPL.ProjectPL.Application.Features.ProjectPL.Employee.Queries;
+using CompanyPL.ProjectPL.Application.Features.ProjectPL.SampleParent.Queries;
 using CompanyPL.ProjectPL.Core.ProjectPL;
 using CompanyPL.ProjectPL.Web.Models;
 using CompanyPL.ProjectPL.ExcelProcessor.Services;
@@ -6,9 +6,9 @@ using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CompanyPL.ProjectPL.Web.Areas.ProjectPL.Pages.Employee;
+namespace CompanyPL.ProjectPL.Web.Areas.ProjectPL.Pages.SampleParent;
 
-[Authorize(Policy = Permission.Employee.View)]
+[Authorize(Policy = Permission.SampleParent.View)]
 public class IndexModel : BasePageModel<IndexModel>
 {   
 	private readonly string? _uploadPath;
@@ -27,32 +27,24 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-        try
-        {
-            var result = await Mediatr.Send(DataRequest!.ToQuery<GetEmployeeQuery>());
-            return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-        }
-        catch(Exception ex)
-        {
-            var test = 1;
-        }
-        return null;
+		var result = await Mediatr.Send(DataRequest!.ToQuery<GetSampleParentQuery>());
+		return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));	
     } 
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
     {
-        var result = await Mediatr.Send(request.ToQuery<GetEmployeeQuery>(nameof(EmployeeState.EmployeeCode)));
-        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.EmployeeCode }));
+        var result = await Mediatr.Send(request.ToQuery<GetSampleParentQuery>(nameof(SampleParentState.Name)));
+        return new JsonResult(result.ToSelect2Response(e => new Select2Result { Id = e.Id, Text = e.Name }));
     }
 	public async Task<IActionResult> OnPostBatchUploadAsync()
     {        
-        return await BatchUploadAsync<IndexModel, EmployeeState>(BatchUpload.BatchUploadForm, nameof(EmployeeState), "Index");
+        return await BatchUploadAsync<IndexModel, SampleParentState>(BatchUpload.BatchUploadForm, nameof(SampleParentState), "Index");
     }
 
     public IActionResult OnPostDownloadTemplate()
     {
         ModelState.Clear();
-		BatchUpload.BatchUploadFileName = ExcelService.ExportTemplate<EmployeeState>(_uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder);
+		BatchUpload.BatchUploadFileName = ExcelService.ExportTemplate<SampleParentState>(_uploadPath + "\\" + WebConstants.ExcelTemplateSubFolder);
         NotyfService.Success(Localizer["Successfully downloaded upload template."]);
         return Page();
     }

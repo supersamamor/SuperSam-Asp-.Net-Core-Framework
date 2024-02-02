@@ -61,6 +61,18 @@
 				$.triggerPageForm('ChangeFormValue','#PartialLoaderContainer', '#employee-form', InitializeForm, true);
 			});
 
+			$.fn.sampleparentSelect = function() {
+				this.filter("select").each(function() {
+					$(this).ajaxSelect({
+						ajax: {
+							url: '@Url.Page("/SampleParent/Index", new { area = "ProjectPL", handler = "Select2Data" })',
+						}
+					});
+				});
+				return this;
+			};
+			$("#SampleParentId").sampleparentSelect();
+
 
         }
         InitializeForm();

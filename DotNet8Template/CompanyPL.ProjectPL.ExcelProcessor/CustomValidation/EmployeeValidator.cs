@@ -12,14 +12,18 @@ namespace CompanyPL.ProjectPL.ExcelProcessor.CustomValidation
         public static async Task<Dictionary<string, object?>>  ValidatePerRecordAsync(ApplicationContext context, Dictionary<string, object?> rowValue)
         {
 			string errorValidation = "";
-            var firstName = rowValue[nameof(EmployeeState.FirstName)]?.ToString();
-			if (!string.IsNullOrEmpty(firstName))
+            
+			
+			
+			
+			var sampleParentId = rowValue[nameof(EmployeeState.SampleParentId)]?.ToString();
+			var sampleParent = await context.SampleParent.Where(l => l.Name == sampleParentId).AsNoTracking().IgnoreQueryFilters().FirstOrDefaultAsync();
+			if(sampleParent == null) {
+				errorValidation += $"SampleParent is not valid.; ";
+			}
+			else
 			{
-				var firstNameMaxLength = 255;
-				if (firstName.Length > firstNameMaxLength)
-				{
-					errorValidation += $"First Name should be less than {firstNameMaxLength} characters.;";
-				}
+				rowValue[nameof(EmployeeState.SampleParentId)] = sampleParent?.Id;
 			}
 			var employeeCode = rowValue[nameof(EmployeeState.EmployeeCode)]?.ToString();
 			if (!string.IsNullOrEmpty(employeeCode))
@@ -34,15 +38,6 @@ namespace CompanyPL.ProjectPL.ExcelProcessor.CustomValidation
 					errorValidation += $"Employee Code already exist from the database.";
 				}
 			}
-			var lastName = rowValue[nameof(EmployeeState.LastName)]?.ToString();
-			if (!string.IsNullOrEmpty(lastName))
-			{
-				var lastNameMaxLength = 255;
-				if (lastName.Length > lastNameMaxLength)
-				{
-					errorValidation += $"Last Name should be less than {lastNameMaxLength} characters.;";
-				}
-			}
 			var middleName = rowValue[nameof(EmployeeState.MiddleName)]?.ToString();
 			if (!string.IsNullOrEmpty(middleName))
 			{
@@ -52,6 +47,26 @@ namespace CompanyPL.ProjectPL.ExcelProcessor.CustomValidation
 					errorValidation += $"Middle Name should be less than {middleNameMaxLength} characters.;";
 				}
 			}
+			var firstName = rowValue[nameof(EmployeeState.FirstName)]?.ToString();
+			if (!string.IsNullOrEmpty(firstName))
+			{
+				var firstNameMaxLength = 255;
+				if (firstName.Length > firstNameMaxLength)
+				{
+					errorValidation += $"First Name should be less than {firstNameMaxLength} characters.;";
+				}
+			}
+			var lastName = rowValue[nameof(EmployeeState.LastName)]?.ToString();
+			if (!string.IsNullOrEmpty(lastName))
+			{
+				var lastNameMaxLength = 255;
+				if (lastName.Length > lastNameMaxLength)
+				{
+					errorValidation += $"Last Name should be less than {lastNameMaxLength} characters.;";
+				}
+			}
+			
+			
 			
 			if (!string.IsNullOrEmpty(errorValidation))
 			{
@@ -64,8 +79,8 @@ namespace CompanyPL.ProjectPL.ExcelProcessor.CustomValidation
 		{
 			List<string> listOfKeys = new()
 			{
-								nameof(EmployeeState.EmployeeCode),
-																
+																								nameof(EmployeeState.EmployeeCode),
+																												
 			};
 			return listOfKeys.Count > 0 ? DictionaryHelper.FindDuplicateRowNumbersPerKey(records, listOfKeys) : new Dictionary<string, HashSet<int>>();
 		}

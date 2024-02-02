@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyPL.ProjectPL.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240202061744_InitialDatabase")]
+    [Migration("20240202092536_InitialDatabase")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -403,12 +403,24 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
+                    b.Property<bool>("BooleanSample")
+                        .HasColumnType("bit");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateSample")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateTimeSample")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("DecimalSample")
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("EmployeeCode")
                         .IsRequired()
@@ -423,6 +435,9 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("IntegerSample")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(36)
@@ -441,6 +456,13 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<bool?>("RadioButtonSample")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SampleParentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(36)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
@@ -455,6 +477,8 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                     b.HasIndex("LastModifiedBy");
 
                     b.HasIndex("LastModifiedDate");
+
+                    b.HasIndex("SampleParentId");
 
                     b.ToTable("Employee");
                 });
@@ -694,6 +718,53 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                     b.ToTable("Report");
                 });
 
+            modelBuilder.Entity("CompanyPL.ProjectPL.Core.ProjectPL.SampleParentState", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Entity")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("Entity");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("LastModifiedBy");
+
+                    b.HasIndex("LastModifiedDate");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SampleParent");
+                });
+
             modelBuilder.Entity("CompanyPL.ProjectPL.Core.ProjectPL.UploadProcessorState", b =>
                 {
                     b.Property<string>("Id")
@@ -877,6 +948,17 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("CompanyPL.ProjectPL.Core.ProjectPL.EmployeeState", b =>
+                {
+                    b.HasOne("CompanyPL.ProjectPL.Core.ProjectPL.SampleParentState", "SampleParent")
+                        .WithMany("EmployeeList")
+                        .HasForeignKey("SampleParentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SampleParent");
+                });
+
             modelBuilder.Entity("CompanyPL.ProjectPL.Core.ProjectPL.HealthDeclarationState", b =>
                 {
                     b.HasOne("CompanyPL.ProjectPL.Core.ProjectPL.EmployeeState", "Employee")
@@ -943,6 +1025,11 @@ namespace CompanyPL.ProjectPL.Infrastructure.Migrations
                     b.Navigation("ReportQueryFilterList");
 
                     b.Navigation("ReportRoleAssignmentList");
+                });
+
+            modelBuilder.Entity("CompanyPL.ProjectPL.Core.ProjectPL.SampleParentState", b =>
+                {
+                    b.Navigation("EmployeeList");
                 });
 
             modelBuilder.Entity("CompanyPL.ProjectPL.Core.ProjectPL.UploadProcessorState", b =>
