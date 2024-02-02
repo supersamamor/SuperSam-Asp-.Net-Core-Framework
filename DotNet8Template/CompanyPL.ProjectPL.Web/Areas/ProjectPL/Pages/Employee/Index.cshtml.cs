@@ -29,21 +29,8 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-		var approvalHelper = new ApprovalHelper(Mediatr);
         var result = await Mediatr.Send(DataRequest!.ToQuery<GetEmployeeQuery>());
-        return new JsonResult(result.Data
-            .Select(e => new
-            {
-                e.Id,
-                e.FirstName,
-				e.EmployeeCode,
-				e.LastName,
-				e.MiddleName,
-						
-				StatusBadge = approvalHelper.GetApprovalStatus(e.Id),
-                e.LastModifiedDate
-            })
-            .ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
+        return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
     } 
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)
