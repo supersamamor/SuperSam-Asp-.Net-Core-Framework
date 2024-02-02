@@ -1,5 +1,6 @@
 using CompanyPL.Common.Services.Shared.Interfaces;
 using CompanyPL.Common.Services.Shared.Services.SmtpMail;
+using CompanyPL.Common.Services.Shared.Services.InMemoryStorage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration"></param>
     public static void AddSharedServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
+        services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));      
+	    services.AddSingleton<InMemoryStorageService>();
     }
 }
