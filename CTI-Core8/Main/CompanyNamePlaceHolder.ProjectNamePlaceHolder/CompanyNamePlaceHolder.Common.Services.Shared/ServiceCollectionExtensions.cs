@@ -18,8 +18,7 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration"></param>
     public static void AddSharedServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
-        services.AddTransient<IMailService, SmtpMailService>();
+        services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));      
 	    services.AddSingleton<InMemoryStorageService>();
     }
 }

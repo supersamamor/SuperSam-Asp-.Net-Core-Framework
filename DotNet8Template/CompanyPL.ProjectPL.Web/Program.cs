@@ -11,7 +11,7 @@ using CompanyPL.ProjectPL.EmailSending;
 using CompanyPL.ProjectPL.ExcelProcessor;
 using Serilog;
 using CompanyPL.ProjectPL.Scheduler;
-
+using CompanyPL.Common.Services.Shared;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
@@ -44,6 +44,7 @@ services.AddHealthChecks()
 services.AddEmailSendingAService(configuration);
 services.AddExcelProcessor();
 services.AddScheduler(configuration);
+services.AddSharedServices(configuration);
 var app = builder.Build();
 // Static Files
 var uploadFilesPath = configuration.GetValue<string>("UsersUpload:UploadFilesPath");

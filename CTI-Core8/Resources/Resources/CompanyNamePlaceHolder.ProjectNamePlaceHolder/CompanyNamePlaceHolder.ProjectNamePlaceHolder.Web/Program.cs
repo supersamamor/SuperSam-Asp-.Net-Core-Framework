@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.EmailSending;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor;
+using CompanyNamePlaceHolder.Common.Services.Shared;
 using Serilog;Template:[ApprovalProgramImport]
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,7 @@ services.AddHealthChecks()
         .AddDbContextCheck<IdentityContext>();
 services.AddEmailSendingAService(configuration);
 services.AddExcelProcessor();
+services.AddSharedServices(configuration);
 Template:[ApprovalProgramAddService]
 var app = builder.Build();
 // Static Files

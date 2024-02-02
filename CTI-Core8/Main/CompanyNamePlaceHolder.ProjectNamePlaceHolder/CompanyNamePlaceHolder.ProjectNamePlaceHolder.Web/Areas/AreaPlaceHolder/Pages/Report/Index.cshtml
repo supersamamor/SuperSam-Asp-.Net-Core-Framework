@@ -41,22 +41,22 @@
                                             {
                                                 case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.CustomDropdown:
                                                     <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetDropdownFromCsv(item.CustomDropdownValues!))">
-                                                        <option value="">- Select @item.FieldValue -</option>
+                                                        <option value="">- Select @item.FieldDescription -</option>
                                                     </select>
                                                     break;
                                                 case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.DropdownFromTable:
                                                     <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(await dropdownService.GetDropdownFromTableKeyValue(item.DropdownTableKeyAndValue!,item.DropdownFilter))">
-                                                        <option value="">- Select @item.FieldValue -</option>
+                                                        <option value="">- Select @item.FieldDescription -</option>
                                                     </select>
                                                     break;
                                                 case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.Years:
                                                     <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetYearsList(10,0))">
-                                                        <option value="">- Select @item.FieldValue -</option>
+                                                        <option value="">- Select Year -</option>
                                                     </select>
                                                     break;
                                                 case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.Months:
                                                     <select class="form-control" asp-for="@item.FieldValue" name="Filters[@counter].FieldValue" asp-items="@(dropdownService.GetMonthsList())">
-                                                        <option value="">- Select @item.FieldValue -</option>
+                                                        <option value="">- Select Month -</option>
                                                     </select>
                                                     break;
                                                 case CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.Constants.DataTypes.Date:
