@@ -15,9 +15,11 @@ public static class DataTablesRequestExtensions
     /// <returns></returns>
     public static T ToQuery<T>(this DataTablesRequest dataTablesRequest) where T : BaseQuery, new()
     {
-        var columns = dataTablesRequest.Columns;
+        var columns = dataTablesRequest.Columns ?? Enumerable.Empty<DataTableColumn>();
         var search = dataTablesRequest.Search;
-        var sort = dataTablesRequest.Orders.ElementAt(0);
+        var orders = dataTablesRequest.Orders ?? Enumerable.Empty<Order>();
+
+        var sort = orders.FirstOrDefault();
 
         T query = new()
         {
@@ -25,8 +27,8 @@ public static class DataTablesRequestExtensions
             PageSize = dataTablesRequest.Length,
             SearchColumns = columns.Where(c => c.Searchable).Select(c => c.Name).ToArray(),
             SearchValue = search?.Value,
-            SortColumn = columns.ElementAt(sort.Column).Name,
-            SortOrder = sort.Dir
+            SortColumn = sort != null && sort.Column < columns.Count() ? columns.ElementAt(sort.Column).Name : null,
+            SortOrder = sort != null ? sort.Dir : null
         };
         return query;
     }
