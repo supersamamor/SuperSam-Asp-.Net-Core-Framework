@@ -14,21 +14,21 @@ public record GetHealthDeclarationQuery : BaseQuery, IRequest<PagedListResponse<
 
 public class GetHealthDeclarationQueryHandler(ApplicationContext context) : BaseQueryHandler<ApplicationContext, HealthDeclarationListDto, GetHealthDeclarationQuery>(context), IRequestHandler<GetHealthDeclarationQuery, PagedListResponse<HealthDeclarationListDto>>
 {
-    public override async Task<PagedListResponse<HealthDeclarationListDto>> Handle(GetHealthDeclarationQuery request, CancellationToken cancellationToken = default)
-    {
-
-        return await Context.Set<HealthDeclarationState>().Include(l => l.Employee)
-            .AsNoTracking().Select(e => new HealthDeclarationListDto()
-            {
-                Id = e.Id,
-                LastModifiedDate = e.LastModifiedDate,
-                EmployeeId = e.Employee == null ? "" : e.Employee!.EmployeeCode,
-                IsVaccinated = e.IsVaccinated == true ? "Yes" : "No",
-                Vaccine = e.Vaccine,
-            })
-            .ToPagedResponse(request.SearchColumns, request.SearchValue,
-                request.SortColumn, request.SortOrder,
-                request.PageNumber, request.PageSize,
-                cancellationToken);
-    }
+	public override async Task<PagedListResponse<HealthDeclarationListDto>> Handle(GetHealthDeclarationQuery request, CancellationToken cancellationToken = default)
+	{
+		
+		return await Context.Set<HealthDeclarationState>().Include(l=>l.Employee)
+			.AsNoTracking().Select(e => new HealthDeclarationListDto()
+			{
+				Id = e.Id,
+				LastModifiedDate = e.LastModifiedDate,
+				EmployeeId = e.Employee == null ? "" : e.Employee!.EmployeeCode,
+				IsVaccinated = e.IsVaccinated,
+				Vaccine = e.Vaccine,
+			})
+			.ToPagedResponse(request.SearchColumns, request.SearchValue,
+				request.SortColumn, request.SortOrder,
+				request.PageNumber, request.PageSize,
+				cancellationToken);	
+	}
 }

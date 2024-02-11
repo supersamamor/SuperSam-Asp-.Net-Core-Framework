@@ -14,35 +14,34 @@ public record GetEmployeeQuery : BaseQuery, IRequest<PagedListResponse<EmployeeL
 
 public class GetEmployeeQueryHandler(ApplicationContext context) : BaseQueryHandler<ApplicationContext, EmployeeListDto, GetEmployeeQuery>(context), IRequestHandler<GetEmployeeQuery, PagedListResponse<EmployeeListDto>>
 {
-    public override async Task<PagedListResponse<EmployeeListDto>> Handle(GetEmployeeQuery request, CancellationToken cancellationToken = default)
-    {
-
-        var pagedList = await Context.Set<EmployeeState>().Include(l => l.SampleParent)
-            .AsNoTracking().Select(e => new EmployeeListDto()
-            {
-                Id = e.Id,
-                LastModifiedDate = e.LastModifiedDate,               
-                RadioButtonSample = e.RadioButtonSample == true ? "Yes" : "No",               
-                SampleParentId = e.SampleParent == null ? "" : e.SampleParent!.Name,
-                EmployeeCode = e.EmployeeCode,
-                MiddleName = e.MiddleName,
-                FirstName = e.FirstName,
-                LastName = e.LastName,             
-                BooleanSample = e.BooleanSample == true ? "Yes" : "No",
-
-                DateSample = e.DateSample,
-                DecimalSample = e.DecimalSample,
-                IntegerSample = e.IntegerSample == null ? "" : e.IntegerSample!.Value.ToString("##,##"),
-                DateTimeSample = e.DateTimeSample!.Value.ToString("MMM dd, yyyy HH:mm"),
-            })
-            .ToPagedResponse(request.SearchColumns, request.SearchValue,
-                request.SortColumn, request.SortOrder,
-                request.PageNumber, request.PageSize,
-                cancellationToken);
-        foreach (var item in pagedList.Data)
-        {
-            item.StatusBadge = await Helpers.ApprovalHelper.GetApprovalStatus(Context, item.Id, cancellationToken);
-        }
-        return pagedList;
-    }
+	public override async Task<PagedListResponse<EmployeeListDto>> Handle(GetEmployeeQuery request, CancellationToken cancellationToken = default)
+	{
+		
+		var pagedList = await Context.Set<EmployeeState>().Include(l=>l.SampleParent)
+			.AsNoTracking().Select(e => new EmployeeListDto()
+			{
+				Id = e.Id,
+				LastModifiedDate = e.LastModifiedDate,
+				DateSample = e.DateSample,
+				RadioButtonSample = e.RadioButtonSample,
+				DecimalSample = e.DecimalSample,
+				IntegerSample = e.IntegerSample,
+                SampleParentTestF = e.SampleParent == null ? "" : e.SampleParent!.Name,
+				EmployeeCode = e.EmployeeCode,
+				MiddleName = e.MiddleName,
+				FirstName = e.FirstName,
+				LastName = e.LastName,
+				DateTimeSample = e.DateTimeSample,
+				BooleanSample = e.BooleanSample,
+			})
+			.ToPagedResponse(request.SearchColumns, request.SearchValue,
+				request.SortColumn, request.SortOrder,
+				request.PageNumber, request.PageSize,
+				cancellationToken);
+		foreach (var item in pagedList.Data)
+		{
+			item.StatusBadge = await Helpers.ApprovalHelper.GetApprovalStatus(Context, item.Id, cancellationToken);
+		}
+		return pagedList;	
+	}
 }

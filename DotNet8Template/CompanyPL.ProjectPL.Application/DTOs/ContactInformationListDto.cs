@@ -6,7 +6,7 @@ namespace CompanyPL.ProjectPL.Application.DTOs;
 public record ContactInformationListDto : BaseDto
 {
 	public string EmployeeId { get; init; } = "";
-	public string ContactDetails { get; init; } = "";
+	public string ContactDetails { get; init; } = ""; 
 	
 	
 }

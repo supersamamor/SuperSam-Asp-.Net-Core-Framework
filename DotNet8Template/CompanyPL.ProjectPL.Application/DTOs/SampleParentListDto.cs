@@ -5,7 +5,7 @@ namespace CompanyPL.ProjectPL.Application.DTOs;
 
 public record SampleParentListDto : BaseDto
 {
-	public string Name { get; init; } = "";
+	public string Name { get; init; } = ""; 
 	
 	
 }

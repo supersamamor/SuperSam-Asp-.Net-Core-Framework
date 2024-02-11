@@ -27,16 +27,8 @@ public class IndexModel : BasePageModel<IndexModel>
 
     public async Task<IActionResult> OnPostListAllAsync()
     {
-        try
-        {
-            var result = await Mediatr.Send(DataRequest!.ToQuery<GetEmployeeQuery>());
-            return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));
-        }
-        catch(Exception ex)
-        {
-            var test = 1;
-        }
-        return null;
+		var result = await Mediatr.Send(DataRequest!.ToQuery<GetEmployeeQuery>());
+		return new JsonResult(result.Data.ToDataTablesResponse(DataRequest, result.TotalCount, result.MetaData.TotalItemCount));	
     } 
 	
 	public async Task<IActionResult> OnGetSelect2Data([FromQuery] Select2Request request)

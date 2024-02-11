@@ -6,8 +6,9 @@ namespace CompanyPL.ProjectPL.Application.DTOs;
 public record HealthDeclarationListDto : BaseDto
 {
 	public string EmployeeId { get; init; } = "";
-	public string IsVaccinated { get; init; } = "";
-	public string Vaccine { get; init; } = "";
+	public bool? IsVaccinated { get; init; }
+	public string IsVaccinatedFormatted { get { return this.IsVaccinated == true ? "Yes" : "No"; } }
+	public string? Vaccine { get; init; } 
 	
 	
 }
