@@ -160,7 +160,7 @@ public class BasePageModel<T> : PageModel where T : class
                     return filePath;
                 })).Match(Succ: succ =>
                     {
-                        Logger.LogInformation("Successfully uploaded the file: {File}}", succ);
+                        Logger.LogInformation("Successfully uploaded the file: {File}", succ);
                         filePath = succ;
                     },
                     Fail: errors =>
