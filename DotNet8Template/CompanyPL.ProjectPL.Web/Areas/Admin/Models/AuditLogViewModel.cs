@@ -8,13 +8,13 @@ public record AuditLogViewModel
     public int Id { get; set; }
 
     [Display(Name = "User")]
-    public string UserId { get; set; } = "";
+    public string? UserId { get; set; } = "";
 
     [Display(Name = "Type")]
-    public string Type { get; set; } = "";
+    public string? Type { get; set; } = "";
 
     [Display(Name = "Table")]
-    public string TableName { get; set; } = "";
+    public string? TableName { get; set; } = "";
 
     [Display(Name = "Timestamp")]
     public DateTime DateTime { get; set; }
@@ -29,7 +29,7 @@ public record AuditLogViewModel
     public string AffectedColumns { get; set; } = "";
 
     [Display(Name = "Primary Key")]
-    public string PrimaryKey { get; set; } = "";
+    public string? PrimaryKey { get; set; } = "";
 
     [Display(Name = "Timestamp")]
     public string Timestamp => DateTime.ToString("R");
