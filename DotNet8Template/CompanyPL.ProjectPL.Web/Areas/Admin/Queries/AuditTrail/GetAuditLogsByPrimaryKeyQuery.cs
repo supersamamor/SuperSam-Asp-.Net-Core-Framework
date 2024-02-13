@@ -6,13 +6,13 @@ using LanguageExt;
 using CompanyPL.Common.Data;
 using CompanyPL.ProjectPL.Web.Areas.Admin.Models;
 namespace CompanyPL.ProjectPL.Web.Areas.Admin.Queries.AuditTrail;
-public record GetAuditLogByPrimaryKeyQuery : IRequest<IList<AuditLogViewModel>>;
-public class GetAuditLogByPrimaryKeyQueryHandler(ApplicationContext context) : IRequestHandler<GetAuditLogByPrimaryKeyQuery, IList<AuditLogViewModel>>
+public record GetAuditLogsByPrimaryKeyQuery(string Id) : IRequest<IList<AuditLogViewModel>>;
+public class GetAuditLogsByPrimaryKeyQueryHandler(ApplicationContext context) : IRequestHandler<GetAuditLogsByPrimaryKeyQuery, IList<AuditLogViewModel>>
 {
-    public async Task<IList<AuditLogViewModel>> Handle(GetAuditLogByPrimaryKeyQuery request, CancellationToken cancellationToken = default)
+    public async Task<IList<AuditLogViewModel>> Handle(GetAuditLogsByPrimaryKeyQuery request, CancellationToken cancellationToken = default)
     {
         return await context.Set<Audit>()
-            .AsNoTracking().Select(e => new AuditLogViewModel()
+            .AsNoTracking().Where(l => l.PrimaryKey == request.Id).Select(e => new AuditLogViewModel()
             {
                 Id = e.Id,
                 UserId = e.UserId,
