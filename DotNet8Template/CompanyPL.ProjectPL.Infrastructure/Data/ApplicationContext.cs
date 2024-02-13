@@ -65,7 +65,8 @@ public class ApplicationContext : AuditableDbContext<ApplicationContext>
         #endregion
         modelBuilder.Entity<Audit>().Property(e => e.PrimaryKey).HasMaxLength(120);
         modelBuilder.Entity<Audit>().HasIndex(p => p.PrimaryKey);
-		modelBuilder.Entity<UploadProcessorState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
+        modelBuilder.Entity<Audit>().HasIndex(p => p.TraceId);
+        modelBuilder.Entity<UploadProcessorState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
         modelBuilder.Entity<UploadStagingState>().HasQueryFilter(e => _authenticatedUser.Entity == Core.Constants.Entities.Default.ToUpper() || e.Entity == _authenticatedUser.Entity);
         // NOTE: DO NOT CREATE EXTENSION METHOD FOR QUERY FILTER!!!
         // It causes filter to be evaluated before user has signed in
