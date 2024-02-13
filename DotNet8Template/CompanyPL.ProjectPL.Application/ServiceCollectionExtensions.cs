@@ -1,6 +1,8 @@
 using CompanyPL.Common.Utility.Validators;
+using CompanyPL.ProjectPL.Application.Helpers;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -13,7 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddTransient(typeof(CompositeValidator<>));
+        services.AddTransient(typeof(CompositeValidator<>));  
         return services;
     }
 }

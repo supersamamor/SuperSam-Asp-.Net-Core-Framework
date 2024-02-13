@@ -15,6 +15,7 @@ using Quartz;
 using System.Globalization;
 using System.Reflection;
 using CompanyPL.ProjectPL.Web.Service;
+using CompanyPL.ProjectPL.Application.Helpers;
 
 namespace CompanyPL.ProjectPL.Web;
 
@@ -43,6 +44,7 @@ public static class ServiceCollectionExtensions
         services.AddLogEnricherServices();
         services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
 		services.AddTransient<DropdownServices>();
+        DateHelper.TimeOffset = Configuration.GetValue<int>("TimeOffset");
     }
 
     public static IServiceCollection ConfigureSecurity(this IServiceCollection services, IConfiguration configuration)
