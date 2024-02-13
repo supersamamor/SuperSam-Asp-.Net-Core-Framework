@@ -87,7 +87,7 @@ public class AuditEntry
             Type = AuditType?.ToString(),
             TableName = TableName,
             DateTime = DateTime.UtcNow,
-            PrimaryKey = JsonSerializer.Serialize(KeyValues),
+            PrimaryKey = KeyValues.Count == 1 ? KeyValues.First().Value!.ToString() : JsonSerializer.Serialize(KeyValues),
             OldValues = OldValues.Count == 0 ? null : JsonSerializer.Serialize(OldValues),
             NewValues = NewValues.Count == 0 ? null : JsonSerializer.Serialize(NewValues),
             AffectedColumns = ChangedColumns.Count == 0 ? null : JsonSerializer.Serialize(ChangedColumns)
