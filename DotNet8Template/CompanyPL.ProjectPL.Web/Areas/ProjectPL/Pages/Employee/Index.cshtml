@@ -133,6 +133,13 @@
 						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["Approve"]"><i class="fas fa-check"></i></a>';
 					</text>
 				}  
+                @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Employee.History)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/Employee/History", new { area = "ProjectPL" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["History"]"><i class="fas fa-history"></i></a>';
+					</text>
+				}  
                         return button;
                     },
                 },

@@ -1,0 +1,58 @@
+@page
+@model HistoryModel
+@{
+    ViewData["Title"] = Localizer["View Employee"];
+    ViewData["ActiveMainPage"] = "Employee";
+    ViewData["Level1"] = "ProjectPL";
+}
+<link rel="stylesheet" href="~/css/timeline.css" asp-append-version="true" />
+<div class="container-fluid" id="employee-container">
+    <div class="card">
+        <h5 class="card-header"><span class="card-header-custom">Changes History : @Model.Employee.EmployeeCode / Record ID : @Model.Employee.Id</span><br></h5>
+        <div class="card-body">
+            <ul class="timeline">
+                @{
+                    string invertedClass = "";
+                    var userHelper = new CompanyPL.ProjectPL.Web.Helper.UserHelper(Mediator);
+                }
+                @foreach (var item in Model.AuditLogList)
+                {
+                    <li class="@invertedClass">
+                        @Html.Raw(item.TypeFormatted)
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h6 class="timeline-title"><a class="timeline-link" href="#"><i class="fas fa-calendar-alt"></i>@item.DateTimeFormatted</a></h6>
+                                <p class="timeline-history"><small class="text-muted"><i class="fas fa-history"></i>@(string.IsNullOrEmpty(item.DateTimeDuration) ? "Just now" : item.DateTimeDuration + " ago") by @Html.Raw(await userHelper.GetUserName(item.UserId!))</small></p>
+                            </div>
+                        </div>
+                    </li>
+                    if (invertedClass == "")
+                    {
+                        invertedClass = "timeline-inverted";
+                    }
+                    else
+                    {
+                        invertedClass = "";
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="toolbar-container" class="btn-group" role="group">
+    <a asp-page="Index" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Employee.Create)).Succeeded)
+    {
+        <a asp-page="Add" id="btnAddRecord" class="btn btn-success" title="@Localizer["Add"]"><i class="fas fa-plus"></i></a>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permission.Employee.Edit)).Succeeded)
+    {
+        <a asp-page="Edit" asp-route-id="@Model.Employee.Id" class="btn btn-primary" title="@Localizer["Edit"]"><i class="fas fa-pen"></i></a>
+    }
+</div>
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
+@section Scripts {
+    <partial name="_DisableFieldsPartial" model="@("employee-container")" />
+}
