@@ -1,7 +1,15 @@
 @using Models
-@model IList<CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models.ChangeHistoryModel>
-
-@foreach (var item in Model.OrderBy(l => l.Sequence))
+@model CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models.ChangeHistoryMainModel
+@{   
+    var userHelper = new CompanyPL.ProjectPL.Web.Helper.UserHelper(Mediator);
+}
+<div class="timeline-panel">
+    <div class="timeline-heading">
+        <h6 class="timeline-title"><i class="fas fa-calendar-alt"></i>@Model.DateTimeFormatted</h6>
+        <p class="timeline-history"><small class="text-muted"><i class="fas fa-history"></i>@(string.IsNullOrEmpty(Model.DateTimeDuration) ? "Just now" : Model.DateTimeDuration + " ago") by @Html.Raw(await userHelper.GetUserName(Model.UserId!))</small></p>
+    </div>
+</div>
+@foreach (var item in Model.ChangeHistoryList.OrderBy(l => l.Sequence))
 {
     <div class="card">
         <h5 class="card-header"><span class="card-header-custom">@Html.Raw(item.AuditTypeBadge) @item.TableName</span><br></h5>

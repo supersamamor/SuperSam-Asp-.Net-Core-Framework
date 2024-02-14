@@ -21,10 +21,10 @@ public record AuditLogViewModel
     public DateTime DateTime { get; set; }
 
     [Display(Name = "Old Values")]
-    public string OldValues { get; set; } = "";
+    public string? OldValues { get; set; } = "";
 
     [Display(Name = "New Values")]
-    public string NewValues { get; set; } = "";
+    public string? NewValues { get; set; } = "";
 
     [Display(Name = "Affected Columns")]
     public string AffectedColumns { get; set; } = "";
