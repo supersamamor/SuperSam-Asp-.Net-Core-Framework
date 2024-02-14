@@ -118,7 +118,8 @@ public static class Permission
 		public const string Delete = "Permission.Employee.Delete";
 		public const string Upload = "Permission.Employee.Upload";
 		public const string Approve = "Permission.Employee.Approve";
-	}
+        public const string History = "Permission.Employee.History";
+    }
 	public static class ContactInformation
 	{
 		public const string View = "Permission.ContactInformation.View";
