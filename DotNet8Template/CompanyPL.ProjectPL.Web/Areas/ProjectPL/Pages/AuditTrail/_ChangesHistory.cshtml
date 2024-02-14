@@ -1,0 +1,23 @@
+@using Models
+@model IList<CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models.ChangeHistoryModel>
+
+@foreach (var item in Model.OrderBy(l => l.Sequence))
+{
+    <div class="card history-details">
+        <h5 class="card-header"><span class="card-header-custom">@Localizer["Employee"]</span><br></h5>
+        <div class="card-body">
+            <table class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                <tbody>
+                    @foreach (var property in item.MergedChanges.Properties())
+                    {
+                        <tr class="">
+                            <td>@property.Name</td>                         
+                            <td class="padding-left-10">@Html.Raw(property.Value)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}

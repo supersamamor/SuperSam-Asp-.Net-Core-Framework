@@ -160,8 +160,29 @@
         margin-top: 5px;
     }
 
+.oldvalue {
+    background: #e74a3b;
+    border-radius: 5px;
+    margin: 5px;
+    color: #fff;
+    padding: 5px;
+    text-decoration: line-through;
+}
+
+.newvalue {
+    background: #1cc88a;
+    border-radius: 5px;
+    margin: 5px;
+    color: #fff;
+    padding: 5px;
+}
+
+.history-details * {
+    font-size: 12px;
+}
+
 @media (max-width: 767px) {
-    ul.timeline:before {
+    ul .timeline:before {
         left: 40px;
     }
 

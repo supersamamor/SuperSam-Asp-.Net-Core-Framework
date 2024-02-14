@@ -199,7 +199,7 @@ $(document).ready(function () {
     openModal = (modalId, url, title, callback) => {
         var placeholderElement = $('#' + modalId);
         $.get(url).done(function (data) {
-            placeholderElement.find('#table-container').html(data);
+            placeholderElement.find('.modal-body').html(data);
             placeholderElement.find('.modal-title').html(title);
             placeholderElement.find('.modal').modal('show');
             // Event handler for the close button
