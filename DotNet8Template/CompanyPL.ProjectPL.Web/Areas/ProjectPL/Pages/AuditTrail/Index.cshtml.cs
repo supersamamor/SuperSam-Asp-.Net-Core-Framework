@@ -18,48 +18,78 @@ public class IndexModel : BasePageModel<IndexModel>
         return await Mediatr.Send(new GetAuditLogByIdQuery(Convert.ToInt32(auditlogsid))).ToActionResult(
           some: e =>
           {
-              AuditLogViewModel auditLog = new();
-              Mapper.Map(e, auditLog);
-              var mergedChanges = MergeChanges(auditLog.OldValues, auditLog.NewValues);
-              ChangeHistoryList.Add(
-                  new ChangeHistoryModel()
-                  {
-                      Sequence = 1,
-                      Id = auditLog.Id,
-                      Type = auditLog.Type,
-                      TableName = auditLog.TableName,
-                      PrimaryKey = auditLog.PrimaryKey,
-                      MergedChanges = mergedChanges,
-                  });
+              try
+              {
+                  AuditLogViewModel auditLog = new();
+                  Mapper.Map(e, auditLog);
+                  var mergedChanges = MergeChanges(auditLog.Type, auditLog.OldValues, auditLog.NewValues);
+                  ChangeHistoryList.Add(
+                      new ChangeHistoryModel()
+                      {
+                          Sequence = 1,
+                          Id = auditLog.Id,
+                          Type = auditLog.Type,
+                          TableName = auditLog.TableName,
+                          PrimaryKey = auditLog.PrimaryKey,
+                          MergedChanges = mergedChanges,
+                      });
+              }
+              catch (Exception ex)
+              {
+                  var test = 1;
+              }
               return Partial("_ChangesHistory", ChangeHistoryList);
           },
           none: null);
     }
-    private JObject MergeChanges(string oldData, string newData)
+    private JObject MergeChanges(string? type, string oldData, string newData)
     {
-        JObject oldJson = JObject.Parse(oldData);
-        JObject newJson = JObject.Parse(newData);
-        JObject mergedJson = new();
-        foreach (var property in oldJson.Properties())
+        JObject? oldJson = null;
+        JObject? newJson = null;
+        if (!string.IsNullOrEmpty(oldData))
         {
-            JToken oldValue = property.Value;
-            JToken? newValue;
-            if (newJson.TryGetValue(property.Name, out newValue))
+            oldJson = JObject.Parse(oldData);
+        }
+        if (!string.IsNullOrEmpty(newData))
+        {
+            newJson = JObject.Parse(newData);
+        }
+        JObject mergedJson = [];
+        if (Enum.TryParse(type, out Common.Data.AuditType auditType))
+        {
+            if (auditType == Common.Data.AuditType.Delete)
             {
-                if (!JToken.DeepEquals(oldValue, newValue))
+                foreach (var property in oldJson!.Properties())
                 {
-                    mergedJson.Add(property.Name, new JValue($"<span class=\"oldvalue\">{oldValue}</span><span class=\"newvalue\">{newValue}</span>"));
-                }
-                else
-                {
-                    mergedJson.Add(property.Name, oldValue);
+                    mergedJson.Add(property.Name, property.Value);
                 }
             }
             else
             {
-                mergedJson.Add(property.Name, oldValue);
+                foreach (var property in newJson!.Properties())
+                {
+                    JToken newValue = property.Value;
+                    JToken? oldValue;
+
+                    if (oldJson != null && oldJson.TryGetValue(property.Name, out oldValue))
+                    {
+                        if (!JToken.DeepEquals(oldValue, newValue))
+                        {
+                            mergedJson.Add(property.Name, new JValue($"<span class=\"oldvalue\">{oldValue}</span><span class=\"newvalue\">{newValue}</span>"));
+                        }
+                        else
+                        {
+                            mergedJson.Add(property.Name, newValue);
+                        }
+                    }
+                    else
+                    {
+                        mergedJson.Add(property.Name, newValue);
+                    }
+                }
             }
         }
+
         return mergedJson;
     }
 }
