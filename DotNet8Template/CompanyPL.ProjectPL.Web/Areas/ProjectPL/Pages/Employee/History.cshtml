@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="~/css/timeline.css" asp-append-version="true" />
 <div class="container-fluid" id="employee-container">
     <div class="card">
-        <h5 class="card-header"><span class="card-header-custom">Changes History : @Model.Employee.EmployeeCode / Record ID : @Model.Employee.Id</span><br></h5>
+        <h5 class="card-header"><span class="card-header-custom">Change History : @Model.Employee.EmployeeCode / Record ID : @Model.Employee.Id</span><br></h5>
         <div class="card-body">
             <ul class="timeline">
                 @{
@@ -21,7 +21,7 @@
                         @Html.Raw(item.TypeFormatted)
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h6 class="timeline-title"><a class="timeline-link" href="#"><i class="fas fa-calendar-alt"></i>@item.DateTimeFormatted</a></h6>
+                                <h6 class="timeline-title"><a class="timeline-link btnShowAuditTrailModal" href="#" data-auditlogsid="@item.Id"><i class="fas fa-calendar-alt"></i>@item.DateTimeFormatted</a></h6>
                                 <p class="timeline-history"><small class="text-muted"><i class="fas fa-history"></i>@(string.IsNullOrEmpty(item.DateTimeDuration) ? "Just now" : item.DateTimeDuration + " ago") by @Html.Raw(await userHelper.GetUserName(item.UserId!))</small></p>
                             </div>
                         </div>
@@ -53,6 +53,29 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
+@{
+    var historyModalId = "changes-history-modal";
+}
+<partial name="_ModalPartial" model="@historyModalId" />
 @section Scripts {
     <partial name="_DisableFieldsPartial" model="@("employee-container")" />
+
+    <script asp-add-nonce>
+        $(document).ready(function () {
+            function InitializeForm() {
+                //Pop-up Audit Trail
+                function auditTrailModalPopup(reff) {
+                    var auditlogsid = $(reff)[0].dataset.auditlogsid;
+                    var url = '@Url.Page("/AuditTrail/Index", new { area = "ProjectPL" })' + '?handler=ChangesHistory&auditlogsid=' + auditlogsid;
+                    var title = "Change History";
+                    openModal("@historyModalId", url, title, null);
+                }
+                $(".btnShowAuditTrailModal").on('click', function (e) {
+                    auditTrailModalPopup(this);
+                });
+            }
+            InitializeForm();
+        });
+    </script>
 }
+
