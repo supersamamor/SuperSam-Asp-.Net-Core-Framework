@@ -148,7 +148,13 @@ textarea[readonly] {
 .padding-top-10 {
     padding-top: 10px;
 }
-.margin-right-10
-{
-	margin-right: 10px;
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.modal-header .close {
+    border: none;
+    background: transparent;
+    font-size: 20px;
 }
