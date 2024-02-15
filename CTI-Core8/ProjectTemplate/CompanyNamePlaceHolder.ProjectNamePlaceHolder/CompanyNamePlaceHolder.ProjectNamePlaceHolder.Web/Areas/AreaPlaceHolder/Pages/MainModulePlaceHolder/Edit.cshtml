@@ -15,6 +15,10 @@
     <div id="toolbar-container" class="btn-group" role="group">  
 		<a asp-page="Index" id="btnCancelConfirmationModal" class="btn btn-secondary" title="@Localizer["Back"]"><i class="fas fa-arrow-left"></i></a>                
         <button type="button" class="btn btn-success" id="btnConfirmationModal" title="@Localizer["Save changes"]"><i class="fas fa-save"></i></button>
+		@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.History)).Succeeded)
+		{
+			<a asp-page="History" id="btnHistoryConfirmationModal" asp-route-id="@Model.MainModulePlaceHolder.Id" class="btn btn-primary" title="@Localizer["History"]"><i class="fas fa-history"></i></a>
+		}
     </div>
 </form>
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
@@ -29,6 +33,7 @@ Template:[NewSubDetailFieldValidationPartialJavascript]
         {
 			$.bindSaveConfirmationModal('Update', '#btnConfirmationModal','#mainModulePlaceHolder-form');
             $.bindCancelConfirmationModal('Cancel', '#btnCancelConfirmationModal','#mainModulePlaceHolder-form', 'Do you want to cancel the changes?');
+			$.bindCancelConfirmationModal('History', '#btnHistoryConfirmationModal', '#mainModulePlaceHolder-form', 'Do you want to cancel the changes?');
             $('.DisableSelectDropdown').on('mousedown', function(e) {
                 e.preventDefault();
                 this.blur();

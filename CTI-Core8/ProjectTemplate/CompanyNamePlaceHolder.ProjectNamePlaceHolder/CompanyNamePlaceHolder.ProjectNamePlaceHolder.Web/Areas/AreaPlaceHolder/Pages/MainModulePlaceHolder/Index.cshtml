@@ -81,6 +81,13 @@
                     </text>
                 }
 				Template:[ApprovalActionButton]  
+				@if ((await AuthorizationService.AuthorizeAsync(User, Permission.MainModulePlaceHolder.History)).Succeeded)
+				{
+					<text>
+						url = '@Url.Page("/MainModulePlaceHolder/History", new { area = "AreaPlaceHolder" })' + '?id=' + row.id;
+						button =  button + '&nbsp;<a href="' + url + '" class="btn btnMaterial btn-flat primary semicircle" title="@Localizer["History"]"><i class="fas fa-history"></i></a>';
+					</text>
+				} 
                         return button;
                     },
                 },
