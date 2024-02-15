@@ -1,4 +1,4 @@
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor
+﻿namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor
 {
     public static class Constants
     {

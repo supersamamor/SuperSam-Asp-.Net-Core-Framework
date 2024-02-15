@@ -1,4 +1,4 @@
-namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
+﻿namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper
 {
     public static class NumberHelper
     {

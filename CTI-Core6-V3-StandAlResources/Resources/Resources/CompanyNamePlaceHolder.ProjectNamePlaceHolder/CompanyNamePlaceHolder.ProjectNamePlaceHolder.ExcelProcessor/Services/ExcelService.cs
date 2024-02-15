@@ -1,4 +1,4 @@
-using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
+﻿using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Core.AreaPlaceHolder;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Helper;
 using CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Models;
 using OfficeOpenXml.Style;
@@ -251,6 +251,7 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
 			return completeFilePath;
 		}
 
+
         private static readonly Dictionary<Type, (object? Value, string? Format)> typeDefaults = new()
         {
             { typeof(DateTime), (DateTime.Now, "MM/dd/yyyy") },
@@ -305,9 +306,9 @@ namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.ExcelProcessor.Services
             PropertyInfo[] baseEntityFields = baseEntityType.GetProperties();
             // Include only properties with primitive data types
              properties = properties.Where(prop => prop.PropertyType.IsPrimitive
-					 || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) 
-					 || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?) || prop.PropertyType == typeof(int?)
-					 || prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)).ToArray();
+				 || prop.PropertyType.IsEnum || prop.PropertyType == typeof(string) 
+				 || prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?) || prop.PropertyType == typeof(int?)
+				 || prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?)).ToArray();
             properties = properties.Where(prop => !baseEntityFields.Any(baseProp => baseProp.Name == prop.Name)).ToArray();
             return properties;
         }
