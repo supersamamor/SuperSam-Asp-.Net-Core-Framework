@@ -1,0 +1,31 @@
+@using Models
+@model CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.AreaPlaceHolder.Models.ChangeHistoryMainModel
+@{   
+    var userHelper = new CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Helper.UserHelper(Mediator);
+}
+<div class="timeline-panel">
+    <div class="timeline-heading">
+        <h6 class="timeline-title"><i class="fas fa-calendar-alt"></i>@Model.DateTimeFormatted</h6>
+        <p class="timeline-history"><small class="text-muted"><i class="fas fa-history"></i>@(string.IsNullOrEmpty(Model.DateTimeDuration) ? "Just now" : Model.DateTimeDuration + " ago") by @Html.Raw(await userHelper.GetUserName(Model.UserId!))</small></p>
+    </div>
+</div>
+@foreach (var item in Model.ChangeHistoryList.OrderBy(l => l.Sequence))
+{
+    <div class="card">
+        <h5 class="card-header"><span class="card-header-custom">@Html.Raw(item.AuditTypeBadge) @item.TableName</span><br></h5>
+        <div class="card-body history-details">
+            <table class="table table-hover table-bordered table-striped responsive nowrap" width="100%">
+                <tbody>
+                    @foreach (var property in item.MergedChanges.Properties())
+                    {
+                        <tr class="">
+                            <td>@property.Name</td>                         
+                            <td class="padding-left-10">@Html.Raw(property.Value)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}

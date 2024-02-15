@@ -79,6 +79,10 @@ footer .sticky-footer {
     overflow-x: scroll;
 }
 
+.overflow-y-scroll {
+    overflow-y: scroll;
+}
+
 .back-to-top {
     bottom: 1.25rem;
     position: fixed;
@@ -148,7 +152,23 @@ textarea[readonly] {
 .padding-top-10 {
     padding-top: 10px;
 }
-.margin-right-10
-{
-	margin-right: 10px;
+
+.padding-left-10 {
+    padding-left: 10px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.modal-header .close {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+}
+
+#changes-history-modal .modal-body {
+    overflow-y: scroll;
+    max-height: 600px;
+    min-height: 300px;
 }
