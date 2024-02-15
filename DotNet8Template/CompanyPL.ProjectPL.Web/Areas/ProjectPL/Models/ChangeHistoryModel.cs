@@ -17,11 +17,15 @@ namespace CompanyPL.ProjectPL.Web.Areas.ProjectPL.Models
         public string? TableName { get; set; } = "";
         public string? PrimaryKey { get; set; } = "";
         public JObject MergedChanges { get; set; } = [];
+        public bool HasChanges { get; set; } = false;
         public string? AuditTypeBadge
         {
             get
             {
-
+                if (!HasChanges)
+                {
+                    return @"<span class=""badge bg-secondary"">No Changes</span>";
+                }
                 if (Enum.TryParse(this.Type, out Common.Data.AuditType auditType))
                 {
                     switch (auditType)

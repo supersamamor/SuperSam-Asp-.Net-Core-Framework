@@ -161,7 +161,7 @@
     }
 
 .oldvalue {
-    background: #e74a3b;
+    background: #ff6262;
     border-radius: 5px;
     margin: 5px;
     color: #fff;
@@ -170,7 +170,7 @@
 }
 
 .newvalue {
-    background: #1cc88a;
+    background: #4ebc94;
     border-radius: 5px;
     margin: 5px;
     color: #fff;

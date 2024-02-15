@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace CompanyPL.ProjectPL.Web.Areas.ProjectPL.Pages.AuditTrail;
 [Authorize]
@@ -23,40 +24,24 @@ public class IndexModel : BasePageModel<IndexModel>
                 Mapper.Map(e, auditLog);
                 ChangeHistory.DateTimeDuration = auditLog.DateTimeDuration;
                 ChangeHistory.DateTimeFormatted = auditLog.DateTimeFormatted;
-                ChangeHistory.UserId = auditLog.UserId;
-                var mergedChanges = MergeChanges(auditLog.Type, auditLog.OldValues, auditLog.NewValues, moduleName);
-                ChangeHistory.ChangeHistoryList.Add(
-                    new ChangeHistoryModel()
-                    {
-                        Sequence = 1,
-                        Id = auditLog.Id,
-                        Type = auditLog.Type,
-                        TableName = auditLog.TableName,
-                        PrimaryKey = auditLog.PrimaryKey,
-                        MergedChanges = mergedChanges,
-                    });
+                ChangeHistory.UserId = auditLog.UserId;             
+                ChangeHistory.ChangeHistoryList.Add(MergeChanges(auditLog, auditLog.OldValues, moduleName, 1));
                 var auditLogsList = await Mediatr.Send(new GetAuditLogsByTraceIdQuery(auditLog.TraceId!, auditLog.PrimaryKey!));
+                //Temporay Solution because old values was not logged properly on sub collections
+                var previousAuditLogsList = await Mediatr.Send(new GetPreviousAuditLogsByTraceIdQuery(auditLog.TraceId!, auditLog.PrimaryKey!, auditLog.DateTime));
                 int counter = 2;
                 foreach (var auditLogsItem in auditLogsList)
                 {
-                    mergedChanges = MergeChanges(auditLogsItem.Type, auditLogsItem.OldValues, auditLogsItem.NewValues, moduleName);
-                    ChangeHistory.ChangeHistoryList.Add(
-                       new ChangeHistoryModel()
-                       {
-                           Sequence = counter,
-                           Id = auditLogsItem.Id,
-                           Type = auditLogsItem.Type,
-                           TableName = auditLogsItem.TableName,
-                           PrimaryKey = auditLogsItem.PrimaryKey,
-                           MergedChanges = mergedChanges,
-                       });
+                    var previousAuditLogs = previousAuditLogsList.Where(l => l.PrimaryKey == auditLogsItem.PrimaryKey).FirstOrDefault();
+                    var oldValues = string.IsNullOrEmpty(previousAuditLogs?.NewValues) ? previousAuditLogs?.OldValues : previousAuditLogs.NewValues;
+                    ChangeHistory.ChangeHistoryList.Add(MergeChanges(auditLogsItem, oldValues, moduleName, counter));                   
                     counter++;
                 }
                 return Partial("_ChangesHistory", ChangeHistory);
             },
           none: null);
     }
-    private JObject MergeChanges(string? type, string? oldData, string? newData, string moduleName)
+    private ChangeHistoryModel MergeChanges(AuditLogViewModel? auditLog, string? oldData, string moduleName, int sequence)
     {
         moduleName += "Id";
         Type baseEntityType = typeof(Common.Core.Base.Models.BaseEntity);
@@ -68,12 +53,13 @@ public class IndexModel : BasePageModel<IndexModel>
         {
             oldJson = JObject.Parse(oldData);
         }
-        if (!string.IsNullOrEmpty(newData))
+        if (!string.IsNullOrEmpty(auditLog?.NewValues))
         {
-            newJson = JObject.Parse(newData);
+            newJson = JObject.Parse(auditLog?.NewValues!);
         }
         JObject mergedJson = [];
-        if (Enum.TryParse(type, out Common.Data.AuditType auditType))
+        bool hasChanges = false;
+        if (Enum.TryParse(auditLog?.Type, out Common.Data.AuditType auditType))
         {
             if (auditType == Common.Data.AuditType.Delete)
             {
@@ -82,6 +68,7 @@ public class IndexModel : BasePageModel<IndexModel>
                     if (!excludedProperties.Contains(property.Name, StringComparer.OrdinalIgnoreCase)
                         && !string.Equals(moduleName, property.Name, StringComparison.OrdinalIgnoreCase))
                     {
+                        hasChanges = true;
                         mergedJson.Add(property.Name, property.Value);
                     }
                 }
@@ -98,21 +85,51 @@ public class IndexModel : BasePageModel<IndexModel>
                         {
                             if (!JToken.DeepEquals(oldValue, newValue))
                             {
+                                hasChanges = true;
                                 mergedJson.Add(property.Name, new JValue($"<span class=\"oldvalue\">{oldValue}</span><span class=\"newvalue\">{newValue}</span>"));
                             }
                             else
-                            {
+                            {                                
                                 mergedJson.Add(property.Name, newValue);
                             }
                         }
                         else
                         {
+                            hasChanges = true;
                             mergedJson.Add(property.Name, newValue);
                         }
                     }
                 }
             }
         }
-        return mergedJson;
+        return new ChangeHistoryModel()
+        {
+            Sequence = sequence,
+            Id = auditLog!.Id,
+            Type = auditLog.Type,
+            TableName = SplitPascalCaseAndRemoveState(auditLog.TableName!),
+            PrimaryKey = auditLog.PrimaryKey,
+            MergedChanges = mergedJson,
+            HasChanges = hasChanges,
+        };      
+    }
+    private static string SplitPascalCaseAndRemoveState(string input)
+    {
+        // Split PascalCase into separate words
+        var words = Regex.Matches(input, @"([A-Z][a-z]*)")
+                         .OfType<Match>()
+                         .Select(m => m.Value)
+                         .ToList();
+
+        // Remove 'State' if it's the last word
+        if (words.Count > 0 && words[words.Count - 1].ToLower() == "state")
+        {
+            words.RemoveAt(words.Count - 1);
+        }
+
+        // Join the words with space
+        var result = string.Join(" ", words);
+
+        return result;
     }
 }

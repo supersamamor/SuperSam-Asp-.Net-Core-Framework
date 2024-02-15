@@ -14,7 +14,7 @@ public record EmployeeViewModel : BaseViewModel
 	public bool? RadioButtonSample { get; init; }
 	[Display(Name = "DecimalSample")]
 	
-	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+	[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
 	public decimal? DecimalSample { get; init; }
 	[Display(Name = "IntegerSample")]
 	public int? IntegerSample { get; init; }
