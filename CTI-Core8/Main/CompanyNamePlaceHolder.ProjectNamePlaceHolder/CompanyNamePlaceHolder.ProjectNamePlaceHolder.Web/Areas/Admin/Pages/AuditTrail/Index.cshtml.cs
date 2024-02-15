@@ -4,6 +4,7 @@ using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Models;
 using DataTables.AspNetCore.Mvc.Binder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using CompanyNamePlaceHolder.ProjectNamePlaceHolder.Application.Helpers;
 
 namespace CompanyNamePlaceHolder.ProjectNamePlaceHolder.Web.Areas.Admin.Pages.AuditTrail;
 
@@ -27,8 +28,8 @@ public class IndexModel : BasePageModel<IndexModel>
             .Select(e => new
             {
                 e.Id,
-                DateTime = e.DateTime.ToString("MM/dd/yyyy hh:mm:ss tt"),
-                TimeStamp = e.DateTime.ToLocalTime(),
+                DateTime = e.DateTime.ApplyTimeOffset().ToString("MM/dd/yyyy hh:mm:ss tt"),
+				TimeStamp = e.DateTime.ApplyTimeOffset(),
                 e.PrimaryKey,
                 e.TableName,
                 e.Type,
