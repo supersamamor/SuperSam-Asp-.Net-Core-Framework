@@ -90,8 +90,13 @@ public class IndexModel : BasePageModel<IndexModel>
 								if (!string.IsNullOrEmpty(oldValue.ToString()))
 								{
 									oldValueString = $"<span class=\"oldvalue\">{oldValue}</span>";
-								}                          
-								mergedJson.Add(property.Name, new JValue($"{oldValueString}<span class=\"newvalue\">{newValue}</span>"));
+								}
+								string newValueString = "";
+								if (!string.IsNullOrEmpty(newValue.ToString()))
+								{
+									newValueString = $"<span class=\"newvalue\">{newValue}</span>";
+								}
+								mergedJson.Add(property.Name, new JValue($"{oldValueString}{newValueString}"));
                             }
                             else
                             {                                
