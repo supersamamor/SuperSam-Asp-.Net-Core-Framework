@@ -21,7 +21,7 @@
                         @Html.Raw(item.TypeFormatted)
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h6 class="timeline-title"><a class="timeline-link btnShowAuditTrailModal" href="#" data-auditlogsid="@item.Id"><i class="fas fa-calendar-alt"></i>@item.DateTimeFormatted</a></h6>
+                                <h6 class="timeline-title"><button class="timeline-link btnShowAuditTrailModal" data-auditlogsid="@item.Id"><i class="fas fa-calendar-alt"></i>@item.DateTimeFormatted</button></h6>
                                 <p class="timeline-history"><small class="text-muted"><i class="fas fa-history"></i>@(string.IsNullOrEmpty(item.DateTimeDuration) ? "Just now" : item.DateTimeDuration + " ago") by @Html.Raw(await userHelper.GetUserName(item.UserId!))</small></p>
                             </div>
                         </div>

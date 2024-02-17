@@ -149,6 +149,8 @@
 .timeline-link {
     text-decoration: none;
     color: #000;
+	border: none;
+    background: transparent;
 }
 
 .timeline-body > p,
