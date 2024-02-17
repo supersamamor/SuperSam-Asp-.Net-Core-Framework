@@ -19,8 +19,8 @@
                     @foreach (var property in item.MergedChanges.Properties())
                     {
                         <tr class="">
-                            <td>@property.Name</td>                         
-                            <td class="padding-left-10">@Html.Raw(property.Value)</td>
+                            <td class="timeline-changes-propertyname">@property.Name</td>                      
+                            <td class="padding-left-10 timeline-changes-details">@Html.Raw(property.Value)</td>
                         </tr>
                     }
                 </tbody>

@@ -85,8 +85,13 @@ public class IndexModel : BasePageModel<IndexModel>
                         {
                             if (!JToken.DeepEquals(oldValue, newValue))
                             {
-                                hasChanges = true;
-                                mergedJson.Add(property.Name, new JValue($"<span class=\"oldvalue\">{oldValue}</span><span class=\"newvalue\">{newValue}</span>"));
+								hasChanges = true;
+								string oldValueString = "";
+								if (!string.IsNullOrEmpty(oldValue.ToString()))
+								{
+									oldValueString = $"<span class=\"oldvalue\">{oldValue}</span>";
+								}                          
+								mergedJson.Add(property.Name, new JValue($"{oldValueString}<span class=\"newvalue\">{newValue}</span>"));
                             }
                             else
                             {                                
