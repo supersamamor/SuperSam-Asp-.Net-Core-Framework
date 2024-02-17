@@ -1,0 +1,7 @@
+2024-02-17 07:13:21.712 +08:00 [INF] Seeded Administrator Role.
+2024-02-17 07:13:22.111 +08:00 [INF] Seeded Default SuperAdmin User.
+2024-02-17 07:13:22.718 +08:00 [INF] Seeded Basic Role.
+2024-02-17 07:13:22.748 +08:00 [INF] Seeded User with Basic Role.
+2024-02-17 07:13:22.847 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-17 07:13:22.850 +08:00 [INF] Hosting environment: Development
+2024-02-17 07:13:22.877 +08:00 [INF] Content root path: C:\Repositories\ProjectNamePlaceHolder\src\Server
