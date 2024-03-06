@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using TesseractOcrMaui;
 using TesseractOcrMaui.Results;
@@ -23,7 +24,42 @@ public partial class MainPage : ContentPage
     ITesseract Tesseract { get; }
 
     // This class includes examples of using the TesseractOcrMaui library.
+    private async void DEMO_Recognize_AsImage_FromCamera(object sender, EventArgs e)
+    {
+        try
+        {
+            // Check if camera is available
+            if (MediaPicker.IsCaptureSupported)
+            {
+                // Capture a photo
+                var photo = await MediaPicker.CapturePhotoAsync();
+                if (photo != null)
+                {
+                    // Get the local app data directory
+                    string localPath = Path.Combine(FileSystem.AppDataDirectory, $"{DateTime.Now:yyyyMMdd_hhmmss}.jpg");
 
+                    // Save the photo to the local file system
+                    using (var stream = await photo.OpenReadAsync())
+                    using (var newStream = File.OpenWrite(localPath))
+                    {
+                        await stream.CopyToAsync(newStream);
+                    }
+
+                    // Now localPath has the path to the captured and saved image
+                    // You can now use Tesseract to recognize text from this image
+                    var result = await Tesseract.RecognizeTextAsync(localPath);
+
+                    // Show output
+                    ShowOutput("FromCamera", result);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle or log the error
+            Debug.WriteLine($"Error capturing photo: {ex.Message}");
+        }
+    }
     private async void DEMO_Recognize_AsImage(object sender, EventArgs e)
     {
         // Select image (Not important)

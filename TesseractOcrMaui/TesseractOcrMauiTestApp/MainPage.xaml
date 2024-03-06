@@ -53,6 +53,9 @@
 
                         <ScrollView Orientation="{OnPlatform Android=Horizontal, Default=Neither}">
                             <HorizontalStackLayout HorizontalOptions="Center">
+                                <Button Text="Recognize as image from Camera"
+                                         HorizontalOptions="Center"
+                                         Clicked="DEMO_Recognize_AsImage_FromCamera" />
                                 <Button Text="Recognize as image"
                                         HorizontalOptions="Center"
                                         Clicked="DEMO_Recognize_AsImage" />
