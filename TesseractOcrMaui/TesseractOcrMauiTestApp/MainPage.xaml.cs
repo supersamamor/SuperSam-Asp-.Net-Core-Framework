@@ -239,24 +239,44 @@ public partial class MainPage : ContentPage
             var paint = new SKPaint { ImageFilter = contrastFilter };
             canvas.DrawBitmap(grayscaleBitmap, 0, 0, paint);
         }
-        return contrastBitmap;
+        //return contrastBitmap;
         // Binarization using a simple threshold (example: threshold = 128)
-        //SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
-        //for (int y = 0; y < contrastBitmap.Height; y++)
-        //{
-        //    for (int x = 0; x < contrastBitmap.Width; x++)
-        //    {
-        //        var color = contrastBitmap.GetPixel(x, y);
-        //        var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
-        //        binarizedBitmap.SetPixel(x, y, brightness < 128 ? SKColors.Black : SKColors.White);
-        //    }
-        //}
+        SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
+        // Assuming contrastBitmap is an SKBitmap you've previously created
+        int width = contrastBitmap.Width;
+        int height = contrastBitmap.Height;
+        // Lock the bits of the bitmap for direct memory access
+        using (var pixmap = binarizedBitmap.PeekPixels())
+        {
+            IntPtr addr = pixmap.GetPixels();
+
+            // Calculate the number of bytes used to store a single row of pixels in the bitmap
+            // This accounts for any padding bytes that are added to each row in some bitmap formats
+            int bytesPerRow = pixmap.RowBytes;
+            int bytesPerPixel = pixmap.BytesPerPixel;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Calculate the address of the pixel to read in the source bitmap
+                    var color = contrastBitmap.GetPixel(x, y);
+                    var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
+
+                    // Calculate the address of the pixel to write in the destination bitmap
+                    byte[] pixelData = brightness < 128 ? new byte[] { 0, 0, 0, 255 } : new byte[] { 255, 255, 255, 255 };
+
+                    // Write the pixel data to the destination bitmap
+                    System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
+                }
+            }
+        }
 
         // Note: Denoising can be quite complex and might require specific algorithms or libraries,
         // which are not straightforward to implement with SkiaSharp directly.
         // It often involves filtering techniques or more advanced processing.
 
-        //return binarizedBitmap;
+        return binarizedBitmap;
     }
     public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
     {
