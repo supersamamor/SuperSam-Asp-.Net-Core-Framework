@@ -192,23 +192,52 @@ namespace CTI.Metron.ImagePreProcessor
             }
             return binarizedBitmap;
         }
-        public void PreprocessImageViaOpenCV(string imagePath)
+        public void PreprocessImageViaOpenCV(string imagePath, bool removeAllContours = false)
         {
-            Mat src = Cv2.ImRead(imagePath, ImreadModes.Color);
-            // Convert to grayscale
-            Mat gray = new Mat();
-            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
-            // Apply thresholding
-            Mat thresholded = new Mat();
-            Cv2.Threshold(gray, thresholded, 150, 255, ThresholdTypes.Binary);
-            // Find contours
-            Point[][] contours;
-            HierarchyIndex[] hierarchy;
-            Cv2.FindContours(thresholded, out contours, out hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
-            // Assuming the largest contour is the border, and you want to remove it
-            // First, find the largest contour
+            // Ensure configuration is accessible or passed as a parameter
+            int thresholdValue = configuration.Threshold; // Example: Set appropriately
+            string destinationDirectory = configuration.DestinationDirectory; // Example: Set appropriately
+
+            using (Mat src = Cv2.ImRead(imagePath, ImreadModes.Color))
+            using (Mat gray = new Mat())
+            using (Mat thresholded = new Mat())
+            {
+                // Convert to grayscale and apply thresholding
+                Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+                Cv2.Threshold(gray, thresholded, thresholdValue, 255, ThresholdTypes.Binary);
+
+                // Find contours
+                Cv2.FindContours(thresholded, out Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
+
+                if (!removeAllContours)
+                {
+                    // Find and draw the largest contour
+                    int largestContourIndex = FindLargestContourIndex(contours);
+                    if (largestContourIndex >= 0)
+                    {
+                        Cv2.DrawContours(src, contours, largestContourIndex, new Scalar(255, 255, 255), Cv2.FILLED);
+                    }
+                }
+                else
+                {
+                    // Remove all detected contours
+                    foreach (var contour in contours)
+                    {
+                        Cv2.DrawContours(src, new Point[][] { contour }, -1, new Scalar(0, 0, 0), Cv2.FILLED);
+                    }
+                }
+
+                // Save the modified image
+                var fileName = Path.GetFileNameWithoutExtension(imagePath) + "_modified.png"; // Adding "_modified" to differentiate from original
+                var outputPath = Path.Combine(destinationDirectory, fileName);
+                Cv2.ImWrite(outputPath, src);
+            }
+        }
+
+        private int FindLargestContourIndex(Point[][] contours)
+        {
             double largestArea = 0;
-            int largestContourIndex = 0;
+            int largestContourIndex = -1; // Default to -1, indicating no contour found
             for (int i = 0; i < contours.Length; i++)
             {
                 double area = Cv2.ContourArea(contours[i]);
@@ -218,23 +247,102 @@ namespace CTI.Metron.ImagePreProcessor
                     largestContourIndex = i;
                 }
             }
-            // Draw the largest contour with the same color as the background or another specific color if needed
-            // Assuming the background is white for simplicity; adjust the color as needed
-            Cv2.DrawContours(src, contours, largestContourIndex, new Scalar(255, 255, 255), Cv2.FILLED);
-            // Optionally, if you want to remove all contours, you could loop through them and draw each one
-            // For example, to remove all detected contours:
-            foreach (var contour in contours)
-            {
-                Cv2.DrawContours(src, new Point[][] { contour }, -1, new Scalar(255, 255, 255), Cv2.FILLED);
-            }
-            // Save or display the modified image            
-            var fileName = Path.GetFileNameWithoutExtension(imagePath) + ".png"; // Change file extension to .png
-            var outputPath = Path.Combine(configuration.DestinationDirectory, fileName);
-            Cv2.ImWrite(outputPath, src);
-            // Clean up resources
-            src.Dispose();
-            gray.Dispose();
-            thresholded.Dispose();
+            return largestContourIndex;
         }
+
+        public void ContourDetection(string imagePath, bool removeAllContours = false)
+        {
+            using (Mat src = Cv2.ImRead(imagePath, ImreadModes.Color))
+            {
+                // Convert to grayscale and apply threshold
+                using (Mat gray = new Mat())
+                using (Mat thresholded = new Mat())
+                {
+                    Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+                    Cv2.Threshold(gray, thresholded, 128, 255, ThresholdTypes.Binary);
+
+                    // Find contours
+                    Cv2.FindContours(thresholded, out Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
+
+                    if (!removeAllContours)
+                    {
+                        // Find the largest contour if not removing all
+                        double largestArea = 0;
+                        int largestContourIndex = -1;
+                        for (int i = 0; i < contours.Length; i++)
+                        {
+                            double area = Cv2.ContourArea(contours[i]);
+                            if (area > largestArea)
+                            {
+                                largestArea = area;
+                                largestContourIndex = i;
+                            }
+                        }
+
+                        // Remove the largest contour by drawing it with the background color
+                        if (largestContourIndex != -1)
+                        {
+                            Cv2.DrawContours(src, contours, largestContourIndex, new Scalar(255, 255, 255), Cv2.FILLED);
+                        }
+                    }
+                    else
+                    {
+                        // Remove all detected contours
+                        foreach (var contour in contours)
+                        {
+                            Cv2.DrawContours(src, new Point[][] { contour }, -1, new Scalar(255, 255, 255), Cv2.FILLED);
+                        }
+                    }
+
+                    // Save or display the modified image             
+                    var fileName = Path.GetFileNameWithoutExtension(imagePath) + "_modified.png";
+                    var outputPath = Path.Combine(configuration.DestinationDirectory, fileName);
+                    Cv2.ImWrite(outputPath, src);
+                }
+            }
+        }
+        public void RemoveBorder(string imagePath)
+        {
+            using (Mat src = Cv2.ImRead(imagePath, ImreadModes.Grayscale))
+            using (Mat thresholded = new Mat())
+            {
+                // Apply binary thresholding
+                Cv2.Threshold(src, thresholded, 128, 255, ThresholdTypes.Binary);
+
+                // Find contours
+                Cv2.FindContours(thresholded, out Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
+
+                double largestArea = 0;
+                int largestContourIndex = -1;
+
+                // Assume the largest contour is the border
+                for (int i = 0; i < contours.Length; i++)
+                {
+                    double area = Cv2.ContourArea(contours[i]);
+                    if (area > largestArea)
+                    {
+                        largestArea = area;
+                        largestContourIndex = i;
+                    }
+                }
+
+                // Mask the border by drawing over it
+                if (largestContourIndex >= 0)
+                {
+                    Cv2.DrawContours(src, contours, largestContourIndex, new Scalar(255, 255, 255), thickness: Cv2.FILLED);
+                }
+
+                // Optionally, crop the image if the border has a regular shape and is at the edges
+                // This would require calculating the bounding box for the contour and using it to define the crop region
+                // Rect boundingBox = Cv2.BoundingRect(contours[largestContourIndex]);
+                // Mat cropped = new Mat(src, boundingBox);
+
+                // Save the result
+                var fileName = Path.GetFileNameWithoutExtension(imagePath) + "_modified.png";
+                var outputPath = Path.Combine(configuration.DestinationDirectory, fileName);
+                Cv2.ImWrite(outputPath, src);
+            }
+        }
+
     }
 }

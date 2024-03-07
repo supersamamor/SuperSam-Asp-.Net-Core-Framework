@@ -1,0 +1,4 @@
+﻿
+Notes:
+
+Power/Electricity Threshold - 80
