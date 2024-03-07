@@ -91,10 +91,20 @@ public partial class MainPage : ContentPage
         {
             return;
         }
-
+        using var originalBitmap = SKBitmap.Decode(path);
+        var preprocessedBitmap = PreprocessImage(originalBitmap);
+        // Save the preprocessed image as a PNG
+        using (var image = SKImage.FromBitmap(preprocessedBitmap))
+        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+        using (var fileStream = File.OpenWrite(path))
+        {
+            // Write the PNG data to the file
+            data.SaveTo(fileStream);
+        }
         // Recognize image 
         var result = await Tesseract.RecognizeTextAsync(path);
-        
+        DisplayPreprocessedImage(path);
+
         // Show output (Not important)
         ShowOutput("FromPath", result);
     }
@@ -209,7 +219,7 @@ public partial class MainPage : ContentPage
     public static SKBitmap PreprocessImage(SKBitmap bitmap)
     {
         // Rescale the image (example: half the size)
-        SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
+        SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 1, bitmap.Height / 1), SKFilterQuality.High);
 
         // Convert to grayscale
         SKBitmap grayscaleBitmap = new(rescaledBitmap.Width, rescaledBitmap.Height);
@@ -264,8 +274,10 @@ public partial class MainPage : ContentPage
                     var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
 
                     // Calculate the address of the pixel to write in the destination bitmap
+                    //threshold - 120 for picture on laptop screen
+                    //threshold 75 - for actual pic on electric meter
                     byte[] pixelData = brightness < 75 ? new byte[] { 0, 0, 0, 255 } : new byte[] { 255, 255, 255, 255 };
-
+                    
                     // Write the pixel data to the destination bitmap
                     System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
                 }

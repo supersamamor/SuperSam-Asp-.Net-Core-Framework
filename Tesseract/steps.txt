@@ -51,7 +51,7 @@ tesseract Test2.png stdout -l train
 
 3. unicharset_extractor metron.analogwater.exp0.box
 
-4. echo "arial 0 0 1 0 0" > font_properties
+4. echo "digifacewide 0 0 1 0 0" > font_properties
 
 5. mftraining -F font_properties -U unicharset -O metron.unicharset metron.analogwater.exp0.tr
 
