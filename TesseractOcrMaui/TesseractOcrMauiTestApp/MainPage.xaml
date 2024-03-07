@@ -67,6 +67,7 @@
                                         Clicked="DEMO_Recognize_AsConfigured" />
                             </HorizontalStackLayout>
                         </ScrollView>
+                        <Image x:Name="PreprocessedImageView" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

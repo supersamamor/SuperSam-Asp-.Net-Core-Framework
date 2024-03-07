@@ -24,9 +24,10 @@ public static class MauiProgram
 #endif
         builder.Services.AddTesseractOcr(
             files =>
-            {       
-                files.AddFile("eng.traineddata");
+            {    
                 files.AddFile("metron.traineddata");
+                files.AddFile("letsgodigital.traineddata");
+                files.AddFile("eng2.traineddata");
             });
 
         builder.Services.AddSingleton<MainPage>();

@@ -58,6 +58,9 @@ public partial class MainPage : ContentPage
                     }
 
                     // Now localPath has the path to the preprocessed and saved image in PNG format
+                    // Display the preprocessed image in the UI
+                    DisplayPreprocessedImage(localPath);
+
                     // You can now use Tesseract or another OCR tool to recognize text from this image
                     var result = await Tesseract.RecognizeTextAsync(localPath);
 
@@ -71,6 +74,13 @@ public partial class MainPage : ContentPage
             // Handle or log the error
             Debug.WriteLine($"Error capturing photo: {ex.Message}");
         }
+    }
+
+    private void DisplayPreprocessedImage(string imagePath)
+    {
+        // Assuming you have an Image control named PreprocessedImageView in your XAML
+        // Set the source of the Image control to the preprocessed image file path
+        PreprocessedImageView.Source = ImageSource.FromFile(imagePath);
     }
 
     private async void DEMO_Recognize_AsImage(object sender, EventArgs e)
@@ -220,32 +230,33 @@ public partial class MainPage : ContentPage
 
         // Adjust contrast (example: increase contrast by 50%)
         //var contrastFilter = SKImageFilter.CreateColorFilter(SKColorFilter.CreateContrastFilter(1.5f));
-        var skHighContrastConfig = new SKHighContrastConfig(grayscale: true, SKHighContrastConfigInvertStyle.NoInvert, 1.5f);
-        var contrastFilter = SKImageFilter.CreateColorFilter(SKColorFilter.CreateHighContrast(skHighContrastConfig));
+        var skHighContrastConfig = new SKHighContrastConfig(grayscale: false, SKHighContrastConfigInvertStyle.NoInvert,0f);
+        var skColorFilter = SKColorFilter.CreateHighContrast(skHighContrastConfig);
+        var contrastFilter = SKImageFilter.CreateColorFilter(cf : skColorFilter);
         SKBitmap contrastBitmap = new(grayscaleBitmap.Width, grayscaleBitmap.Height);
         using (var canvas = new SKCanvas(contrastBitmap))
         {
             var paint = new SKPaint { ImageFilter = contrastFilter };
             canvas.DrawBitmap(grayscaleBitmap, 0, 0, paint);
         }
-
+        return contrastBitmap;
         // Binarization using a simple threshold (example: threshold = 128)
-        SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
-        for (int y = 0; y < contrastBitmap.Height; y++)
-        {
-            for (int x = 0; x < contrastBitmap.Width; x++)
-            {
-                var color = contrastBitmap.GetPixel(x, y);
-                var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
-                binarizedBitmap.SetPixel(x, y, brightness < 128 ? SKColors.Black : SKColors.White);
-            }
-        }
+        //SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
+        //for (int y = 0; y < contrastBitmap.Height; y++)
+        //{
+        //    for (int x = 0; x < contrastBitmap.Width; x++)
+        //    {
+        //        var color = contrastBitmap.GetPixel(x, y);
+        //        var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
+        //        binarizedBitmap.SetPixel(x, y, brightness < 128 ? SKColors.Black : SKColors.White);
+        //    }
+        //}
 
         // Note: Denoising can be quite complex and might require specific algorithms or libraries,
         // which are not straightforward to implement with SkiaSharp directly.
         // It often involves filtering techniques or more advanced processing.
 
-        return binarizedBitmap;
+        //return binarizedBitmap;
     }
     public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
     {
