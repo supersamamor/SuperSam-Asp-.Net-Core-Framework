@@ -240,7 +240,7 @@ public partial class MainPage : ContentPage
             canvas.DrawBitmap(grayscaleBitmap, 0, 0, paint);
         }
         //return contrastBitmap;
-        // Binarization using a simple threshold (example: threshold = 128)
+        // Binarization using a simple threshold (example: threshold = 75)
         SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
         // Assuming contrastBitmap is an SKBitmap you've previously created
         int width = contrastBitmap.Width;
@@ -264,7 +264,7 @@ public partial class MainPage : ContentPage
                     var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
 
                     // Calculate the address of the pixel to write in the destination bitmap
-                    byte[] pixelData = brightness < 128 ? new byte[] { 0, 0, 0, 255 } : new byte[] { 255, 255, 255, 255 };
+                    byte[] pixelData = brightness < 75 ? new byte[] { 0, 0, 0, 255 } : new byte[] { 255, 255, 255, 255 };
 
                     // Write the pixel data to the destination bitmap
                     System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
