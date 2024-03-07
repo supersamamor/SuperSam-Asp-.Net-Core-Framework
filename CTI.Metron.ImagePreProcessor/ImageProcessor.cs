@@ -12,11 +12,11 @@ namespace CTI.Metron.ImagePreProcessor
         public static SKBitmap PreprocessImage(SKBitmap bitmap)
         {
             // Rescale the image (example: half the size)
-            //bitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
+            SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
 
             // Convert to grayscale
-            bitmap = new(bitmap.Width, bitmap.Height);
-            using (var canvas = new SKCanvas(bitmap))
+            SKBitmap grayscaleBitmap = new(rescaledBitmap.Width, rescaledBitmap.Height);
+            using (var canvas = new SKCanvas(grayscaleBitmap))
             {
                 var paint = new SKPaint
                 {
@@ -28,7 +28,7 @@ namespace CTI.Metron.ImagePreProcessor
                 0, 0, 0, 1, 0
                     })
                 };
-                canvas.DrawBitmap(bitmap, 0, 0, paint);
+                canvas.DrawBitmap(rescaledBitmap, 0, 0, paint);
             }
 
             // Adjust contrast (example: increase contrast by 50%)
@@ -36,20 +36,20 @@ namespace CTI.Metron.ImagePreProcessor
             var skHighContrastConfig = new SKHighContrastConfig(grayscale: false, SKHighContrastConfigInvertStyle.NoInvert, 0f);
             var skColorFilter = SKColorFilter.CreateHighContrast(skHighContrastConfig);
             var contrastFilter = SKImageFilter.CreateColorFilter(cf: skColorFilter);
-            bitmap = new(bitmap.Width, bitmap.Height);
-            using (var canvas = new SKCanvas(bitmap))
+            SKBitmap contrastBitmap = new(grayscaleBitmap.Width, grayscaleBitmap.Height);
+            using (var canvas = new SKCanvas(contrastBitmap))
             {
                 var paint = new SKPaint { ImageFilter = contrastFilter };
-                canvas.DrawBitmap(bitmap, 0, 0, paint);
+                canvas.DrawBitmap(grayscaleBitmap, 0, 0, paint);
             }
             //return contrastBitmap;
             // Binarization using a simple threshold (example: threshold = 128)
-            bitmap = new(bitmap.Width, bitmap.Height);
+            SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
             // Assuming contrastBitmap is an SKBitmap you've previously created
-            int width = bitmap.Width;
-            int height = bitmap.Height;
+            int width = contrastBitmap.Width;
+            int height = contrastBitmap.Height;
             // Lock the bits of the bitmap for direct memory access
-            using (var pixmap = bitmap.PeekPixels())
+            using (var pixmap = binarizedBitmap.PeekPixels())
             {
                 IntPtr addr = pixmap.GetPixels();
 
@@ -63,7 +63,7 @@ namespace CTI.Metron.ImagePreProcessor
                     for (int x = 0; x < width; x++)
                     {
                         // Calculate the address of the pixel to read in the source bitmap
-                        var color = bitmap.GetPixel(x, y);
+                        var color = contrastBitmap.GetPixel(x, y);
                         var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
 
                         // Calculate the address of the pixel to write in the destination bitmap
@@ -78,8 +78,8 @@ namespace CTI.Metron.ImagePreProcessor
             // Note: Denoising can be quite complex and might require specific algorithms or libraries,
             // which are not straightforward to implement with SkiaSharp directly.
             // It often involves filtering techniques or more advanced processing.
-            //bitmap = ApplyMedianFilter(bitmap);
-            return bitmap;
+            binarizedBitmap = ApplyMedianFilter(binarizedBitmap);
+            return binarizedBitmap;
         }
         public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
         {
