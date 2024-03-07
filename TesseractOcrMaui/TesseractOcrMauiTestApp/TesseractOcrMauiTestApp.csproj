@@ -55,6 +55,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\appicon_round.svg" />
+	  <None Remove="Resources\Raw\metron.traineddata" />
 	</ItemGroup>
 	
 	<ItemGroup>
