@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using OpenCvSharp;
+using SkiaSharp;
 
 namespace CTI.Metron.ImagePreProcessor
 {
@@ -119,6 +120,121 @@ namespace CTI.Metron.ImagePreProcessor
                 }
             }
             return resultBitmap;
+        }
+        public static SKBitmap ConvertToGrayscale(SKBitmap originalBitmap)
+        {
+            SKBitmap grayscaleBitmap = new(originalBitmap.Width, originalBitmap.Height, SKColorType.Gray8, SKAlphaType.Premul);
+            using (var canvas = new SKCanvas(grayscaleBitmap))
+            {
+                canvas.Clear(SKColors.White);
+                var paint = new SKPaint
+                {
+                    ColorFilter = SKColorFilter.CreateColorMatrix(
+                    [
+                        0.2126f,
+                        0.7152f,
+                        0.0722f,
+                        0,
+                        0,
+                        0.2126f,
+                        0.7152f,
+                        0.0722f,
+                        0,
+                        0,
+                        0.2126f,
+                        0.7152f,
+                        0.0722f,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0
+                    ])
+                };
+                canvas.DrawBitmap(originalBitmap, 0, 0, paint);
+            }
+            return grayscaleBitmap;
+        }
+        public static SKBitmap BinarizeImage(SKBitmap contrastBitmap, int threshold)
+        {
+            // Initialize a new bitmap for the binarized image
+            SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
+
+            int width = contrastBitmap.Width;
+            int height = contrastBitmap.Height;
+
+            // Lock the bits of the bitmap for direct memory access
+            using (var pixmap = binarizedBitmap.PeekPixels())
+            {
+                IntPtr addr = pixmap.GetPixels();
+                int bytesPerRow = pixmap.RowBytes; // Calculate the number of bytes used to store a single row of pixels
+                int bytesPerPixel = pixmap.BytesPerPixel;
+
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        // Get the pixel color from the contrastBitmap
+                        var color = contrastBitmap.GetPixel(x, y);
+
+                        // Calculate the brightness using the luminosity method
+                        var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
+
+                        // Decide the color (black or white) based on the threshold
+                        byte[] pixelData = brightness < threshold ? [0, 0, 0, 255] : [255, 255, 255, 255];
+
+                        // Write the new pixel data to the binarized bitmap
+                        System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
+                    }
+                }
+            }
+            return binarizedBitmap;
+        }
+        public void PreprocessImageViaOpenCV(string imagePath)
+        {
+            Mat src = Cv2.ImRead(imagePath, ImreadModes.Color);
+            // Convert to grayscale
+            Mat gray = new Mat();
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+            // Apply thresholding
+            Mat thresholded = new Mat();
+            Cv2.Threshold(gray, thresholded, 150, 255, ThresholdTypes.Binary);
+            // Find contours
+            Point[][] contours;
+            HierarchyIndex[] hierarchy;
+            Cv2.FindContours(thresholded, out contours, out hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
+            // Assuming the largest contour is the border, and you want to remove it
+            // First, find the largest contour
+            double largestArea = 0;
+            int largestContourIndex = 0;
+            for (int i = 0; i < contours.Length; i++)
+            {
+                double area = Cv2.ContourArea(contours[i]);
+                if (area > largestArea)
+                {
+                    largestArea = area;
+                    largestContourIndex = i;
+                }
+            }
+            // Draw the largest contour with the same color as the background or another specific color if needed
+            // Assuming the background is white for simplicity; adjust the color as needed
+            Cv2.DrawContours(src, contours, largestContourIndex, new Scalar(255, 255, 255), Cv2.FILLED);
+            // Optionally, if you want to remove all contours, you could loop through them and draw each one
+            // For example, to remove all detected contours:
+            foreach (var contour in contours)
+            {
+                Cv2.DrawContours(src, new Point[][] { contour }, -1, new Scalar(255, 255, 255), Cv2.FILLED);
+            }
+            // Save or display the modified image            
+            var fileName = Path.GetFileNameWithoutExtension(imagePath) + ".png"; // Change file extension to .png
+            var outputPath = Path.Combine(configuration.DestinationDirectory, fileName);
+            Cv2.ImWrite(outputPath, src);
+            // Clean up resources
+            src.Dispose();
+            gray.Dispose();
+            thresholded.Dispose();
         }
     }
 }

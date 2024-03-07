@@ -11,6 +11,7 @@ try
     Directory.CreateDirectory(configManager.DestinationDirectory);
     foreach (var imagePath in imageFiles)
     {
+        #region Using SkiaSharp
         using var inputStream = File.OpenRead(imagePath);
         using var originalBitmap = SKBitmap.Decode(inputStream);
         var processedBitmap = imageProcessor.PreprocessImage(originalBitmap); // Assuming this method returns a SKBitmap
@@ -21,8 +22,13 @@ try
         using var outputStream = File.OpenWrite(outputPath);
         using var image = SKImage.FromBitmap(processedBitmap);
         image.Encode(SKEncodedImageFormat.Png, 100).SaveTo(outputStream); // Encode as PNG
+        #endregion
 
-        Console.WriteLine($"Processed and saved as PNG: {outputPath}");
+        #region Using OpenCV
+        //imageProcessor.PreprocessImageViaOpenCV(imagePath);      
+        #endregion
+        //Console.WriteLine($"Processed and saved as PNG: {outputPath}");
+
     }
     Console.WriteLine("Image processing complete. Check the destination directory for results.");
 }
