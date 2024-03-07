@@ -12,7 +12,7 @@ namespace CTI.Metron.ImagePreProcessor
         public static SKBitmap PreprocessImage(SKBitmap bitmap)
         {
             // Rescale the image (example: half the size)
-            bitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
+            //bitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
 
             // Convert to grayscale
             bitmap = new(bitmap.Width, bitmap.Height);
@@ -78,7 +78,7 @@ namespace CTI.Metron.ImagePreProcessor
             // Note: Denoising can be quite complex and might require specific algorithms or libraries,
             // which are not straightforward to implement with SkiaSharp directly.
             // It often involves filtering techniques or more advanced processing.
-            bitmap = ApplyMedianFilter(bitmap);
+            //bitmap = ApplyMedianFilter(bitmap);
             return bitmap;
         }
         public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
