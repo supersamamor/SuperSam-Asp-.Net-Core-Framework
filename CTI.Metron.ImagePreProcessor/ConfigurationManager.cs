@@ -7,8 +7,8 @@ namespace CTI.Metron.ImagePreProcessor
         public string SourceDirectory { get; private set; } = "";
         public string DestinationDirectory { get; private set; } = "";
         public int ScaleWidth { get; private set; } 
-        public int ScaleHeight { get; private set; } 
-
+        public int ScaleHeight { get; private set; }
+        public int Threshold { get; private set; }
         public ConfigurationManager(string configFilePath = "AppSettings.json")
         {
             LoadConfiguration(configFilePath);
@@ -27,6 +27,7 @@ namespace CTI.Metron.ImagePreProcessor
                     DestinationDirectory = config.DestinationDirectory;
                     ScaleHeight = config.ImageScale.Height;
                     ScaleWidth = config.ImageScale.Width;
+                    Threshold = config.Threshold;
                 }
             }
             catch (Exception ex)
@@ -40,7 +41,8 @@ namespace CTI.Metron.ImagePreProcessor
         {
             public string SourceDirectory { get; set; } = "";
             public string DestinationDirectory { get; set; } = "";
-            public Scale ImageScale { get; set; } = new Scale();          
+            public Scale ImageScale { get; set; } = new Scale();
+            public int Threshold { get; set; }             
         }
         private class Scale
         {

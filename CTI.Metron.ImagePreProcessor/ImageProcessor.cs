@@ -78,7 +78,7 @@ namespace CTI.Metron.ImagePreProcessor
                         var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
 
                         // Calculate the address of the pixel to write in the destination bitmap
-                        byte[] pixelData = brightness < 128 ? [0, 0, 0, 255] : [255, 255, 255, 255];
+                        byte[] pixelData = brightness < configuration.Threshold ? [0, 0, 0, 255] : [255, 255, 255, 255];
 
                         // Write the pixel data to the destination bitmap
                         System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
