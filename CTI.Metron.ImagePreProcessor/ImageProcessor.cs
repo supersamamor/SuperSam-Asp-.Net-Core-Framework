@@ -54,7 +54,7 @@ namespace CTI.Metron.ImagePreProcessor
                 canvas.DrawBitmap(grayscaleBitmap, 0, 0, paint);
             }
             //return contrastBitmap;
-            // Binarization using a simple threshold (example: threshold = 128)
+            // Binarization using a threshold 
             SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
             // Assuming contrastBitmap is an SKBitmap you've previously created
             int width = contrastBitmap.Width;
