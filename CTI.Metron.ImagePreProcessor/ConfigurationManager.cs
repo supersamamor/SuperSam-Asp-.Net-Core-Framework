@@ -6,6 +6,8 @@ namespace CTI.Metron.ImagePreProcessor
     {
         public string SourceDirectory { get; private set; } = "";
         public string DestinationDirectory { get; private set; } = "";
+        public int ScaleWidth { get; private set; } 
+        public int ScaleHeight { get; private set; } 
 
         public ConfigurationManager(string configFilePath = "AppSettings.json")
         {
@@ -23,6 +25,8 @@ namespace CTI.Metron.ImagePreProcessor
                 {
                     SourceDirectory = config.SourceDirectory;
                     DestinationDirectory = config.DestinationDirectory;
+                    ScaleHeight = config.ImageScale.Height;
+                    ScaleWidth = config.ImageScale.Width;
                 }
             }
             catch (Exception ex)
@@ -36,6 +40,12 @@ namespace CTI.Metron.ImagePreProcessor
         {
             public string SourceDirectory { get; set; } = "";
             public string DestinationDirectory { get; set; } = "";
+            public Scale ImageScale { get; set; } = new Scale();          
+        }
+        private class Scale
+        {
+            public int Width { get; set; } = 1;
+            public int Height { get; set; } = 1;
         }
     }
 }

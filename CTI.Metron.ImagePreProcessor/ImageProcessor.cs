@@ -2,17 +2,12 @@
 
 namespace CTI.Metron.ImagePreProcessor
 {
-    public class ImageProcessor
+    public class ImageProcessor(ConfigurationManager configuration)
     {
-        public ImageProcessor()
-        {
-            // Ensure the destination directory exists
-        }
-
-        public static SKBitmap PreprocessImage(SKBitmap bitmap)
+        public SKBitmap PreprocessImage(SKBitmap bitmap)
         {
             // Rescale the image (example: half the size)
-            SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
+            SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / configuration.ScaleWidth, bitmap.Height / configuration.ScaleHeight), SKFilterQuality.High);
 
             // Convert to grayscale
             SKBitmap grayscaleBitmap = new(rescaledBitmap.Width, rescaledBitmap.Height);
@@ -20,13 +15,29 @@ namespace CTI.Metron.ImagePreProcessor
             {
                 var paint = new SKPaint
                 {
-                    ColorFilter = SKColorFilter.CreateColorMatrix(new float[]
-                    {
-                0.2126f, 0.7152f, 0.0722f, 0, 0,
-                0.2126f, 0.7152f, 0.0722f, 0, 0,
-                0.2126f, 0.7152f, 0.0722f, 0, 0,
-                0, 0, 0, 1, 0
-                    })
+                    ColorFilter = SKColorFilter.CreateColorMatrix(
+                    [
+                        0.2126f,
+                        0.7152f,
+                        0.0722f,
+                        0,
+                        0,
+                        0.2126f,
+                        0.7152f,
+                        0.0722f,
+                        0,
+                        0,
+                        0.2126f,
+                        0.7152f,
+                        0.0722f,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0
+                    ])
                 };
                 canvas.DrawBitmap(rescaledBitmap, 0, 0, paint);
             }
@@ -67,19 +78,20 @@ namespace CTI.Metron.ImagePreProcessor
                         var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
 
                         // Calculate the address of the pixel to write in the destination bitmap
-                        byte[] pixelData = brightness < 128 ? new byte[] { 0, 0, 0, 255 } : new byte[] { 255, 255, 255, 255 };
+                        byte[] pixelData = brightness < 128 ? [0, 0, 0, 255] : [255, 255, 255, 255];
 
                         // Write the pixel data to the destination bitmap
                         System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
                     }
                 }
             }
-
-            // Note: Denoising can be quite complex and might require specific algorithms or libraries,
-            // which are not straightforward to implement with SkiaSharp directly.
-            // It often involves filtering techniques or more advanced processing.
-            binarizedBitmap = ApplyMedianFilter(binarizedBitmap);
             return binarizedBitmap;
+            //// Note: Denoising can be quite complex and might require specific algorithms or libraries,
+            //// which are not straightforward to implement with SkiaSharp directly.
+            //// It often involves filtering techniques or more advanced processing.
+            //SKBitmap denoisedBitMap = new(binarizedBitmap.Width, binarizedBitmap.Height);
+            //denoisedBitMap = ApplyMedianFilter(binarizedBitmap);
+            //return denoisedBitMap;
         }
         public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
         {

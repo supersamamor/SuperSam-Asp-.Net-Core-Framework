@@ -7,12 +7,13 @@ try
     var configManager = new ConfigurationManager();   
     var imageFiles = Directory.GetFiles(configManager.SourceDirectory, "*.*", SearchOption.TopDirectoryOnly)
                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".jpeg"));
+    ImageProcessor imageProcessor = new ImageProcessor(configManager);
     Directory.CreateDirectory(configManager.DestinationDirectory);
     foreach (var imagePath in imageFiles)
     {
         using var inputStream = File.OpenRead(imagePath);
         using var originalBitmap = SKBitmap.Decode(inputStream);
-        var processedBitmap = ImageProcessor.PreprocessImage(originalBitmap); // Assuming this method returns a SKBitmap
+        var processedBitmap = imageProcessor.PreprocessImage(originalBitmap); // Assuming this method returns a SKBitmap
 
         // Save the processed image to the destination directory as PNG
         var fileName = Path.GetFileNameWithoutExtension(imagePath) + ".png"; // Change file extension to .png
