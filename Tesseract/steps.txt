@@ -1,6 +1,8 @@
 https://groups.google.com/g/tesseract-ocr/c/GZ81YhjpaI4 - google group
 https://groups.google.com/g/tesseract-ocr/c/dq9D6JpvPSs/m/8O_K84IAAwAJ
 https://groups.google.com/g/tesseract-ocr/c/uXzGSRgmdxU/m/lOexedpZuFoJ
+https://github.com/dlemstra/Magick.NET/blob/main/docs/Readme.md
+
 
 Step 1: Make box files for images that we want to train
 Syntax: tesseract [langname].[fontname].[expN].[file-extension] [langname].[fontname].[expN] batch.nochop makebox
