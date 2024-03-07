@@ -1,0 +1,112 @@
+﻿using SkiaSharp;
+
+namespace CTI.Metron.ImagePreProcessor
+{
+    public class ImageProcessor
+    {
+        public ImageProcessor()
+        {
+            // Ensure the destination directory exists
+        }
+
+        public static SKBitmap PreprocessImage(SKBitmap bitmap)
+        {
+            // Rescale the image (example: half the size)
+            bitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
+
+            // Convert to grayscale
+            bitmap = new(bitmap.Width, bitmap.Height);
+            using (var canvas = new SKCanvas(bitmap))
+            {
+                var paint = new SKPaint
+                {
+                    ColorFilter = SKColorFilter.CreateColorMatrix(new float[]
+                    {
+                0.2126f, 0.7152f, 0.0722f, 0, 0,
+                0.2126f, 0.7152f, 0.0722f, 0, 0,
+                0.2126f, 0.7152f, 0.0722f, 0, 0,
+                0, 0, 0, 1, 0
+                    })
+                };
+                canvas.DrawBitmap(bitmap, 0, 0, paint);
+            }
+
+            // Adjust contrast (example: increase contrast by 50%)
+            //var contrastFilter = SKImageFilter.CreateColorFilter(SKColorFilter.CreateContrastFilter(1.5f));
+            var skHighContrastConfig = new SKHighContrastConfig(grayscale: false, SKHighContrastConfigInvertStyle.NoInvert, 0f);
+            var skColorFilter = SKColorFilter.CreateHighContrast(skHighContrastConfig);
+            var contrastFilter = SKImageFilter.CreateColorFilter(cf: skColorFilter);
+            bitmap = new(bitmap.Width, bitmap.Height);
+            using (var canvas = new SKCanvas(bitmap))
+            {
+                var paint = new SKPaint { ImageFilter = contrastFilter };
+                canvas.DrawBitmap(bitmap, 0, 0, paint);
+            }
+            //return contrastBitmap;
+            // Binarization using a simple threshold (example: threshold = 128)
+            bitmap = new(bitmap.Width, bitmap.Height);
+            // Assuming contrastBitmap is an SKBitmap you've previously created
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+            // Lock the bits of the bitmap for direct memory access
+            using (var pixmap = bitmap.PeekPixels())
+            {
+                IntPtr addr = pixmap.GetPixels();
+
+                // Calculate the number of bytes used to store a single row of pixels in the bitmap
+                // This accounts for any padding bytes that are added to each row in some bitmap formats
+                int bytesPerRow = pixmap.RowBytes;
+                int bytesPerPixel = pixmap.BytesPerPixel;
+
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        // Calculate the address of the pixel to read in the source bitmap
+                        var color = bitmap.GetPixel(x, y);
+                        var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
+
+                        // Calculate the address of the pixel to write in the destination bitmap
+                        byte[] pixelData = brightness < 128 ? new byte[] { 0, 0, 0, 255 } : new byte[] { 255, 255, 255, 255 };
+
+                        // Write the pixel data to the destination bitmap
+                        System.Runtime.InteropServices.Marshal.Copy(pixelData, 0, addr + y * bytesPerRow + x * bytesPerPixel, bytesPerPixel);
+                    }
+                }
+            }
+
+            // Note: Denoising can be quite complex and might require specific algorithms or libraries,
+            // which are not straightforward to implement with SkiaSharp directly.
+            // It often involves filtering techniques or more advanced processing.
+            bitmap = ApplyMedianFilter(bitmap);
+            return bitmap;
+        }
+        public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
+        {
+            SKBitmap resultBitmap = new(sourceBitmap.Width, sourceBitmap.Height);
+            int[] dx = { -1, 0, 1, -1, 0, 1, -1, 0, 1 };
+            int[] dy = { -1, -1, -1, 0, 0, 0, 1, 1, 1 };
+            for (int y = 0; y < sourceBitmap.Height; y++)
+            {
+                for (int x = 0; x < sourceBitmap.Width; x++)
+                {
+                    List<byte> neighborPixels = new();
+                    for (int i = 0; i < kernelSize * kernelSize; i++)
+                    {
+                        int nx = x + dx[i];
+                        int ny = y + dy[i];
+                        if (nx >= 0 && ny >= 0 && nx < sourceBitmap.Width && ny < sourceBitmap.Height)
+                        {
+                            var color = sourceBitmap.GetPixel(nx, ny);
+                            neighborPixels.Add((byte)((color.Red + color.Green + color.Blue) / 3));
+                        }
+                    }
+                    neighborPixels.Sort();
+                    byte medianValue = neighborPixels[neighborPixels.Count / 2];
+                    resultBitmap.SetPixel(x, y, new SKColor(medianValue, medianValue, medianValue));
+                }
+            }
+            return resultBitmap;
+        }
+    }
+}
