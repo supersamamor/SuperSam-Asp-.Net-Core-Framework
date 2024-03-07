@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SkiaSharp;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using TesseractOcrMaui;
@@ -36,17 +37,28 @@ public partial class MainPage : ContentPage
                 if (photo != null)
                 {
                     // Get the local app data directory
-                    string localPath = Path.Combine(FileSystem.AppDataDirectory, $"{DateTime.Now:yyyyMMdd_hhmmss}.jpg");
+                    string localPath = Path.Combine(FileSystem.AppDataDirectory, $"{DateTime.Now:yyyyMMdd_hhmmss}.png");
 
-                    // Save the photo to the local file system
+                    // Open the photo stream
                     using (var stream = await photo.OpenReadAsync())
-                    using (var newStream = File.OpenWrite(localPath))
                     {
-                        await stream.CopyToAsync(newStream);
+                        var originalBitmap = SKBitmap.Decode(stream);
+
+                        // Preprocess the image
+                        var preprocessedBitmap = PreprocessImage(originalBitmap);
+
+                        // Save the preprocessed image as a PNG
+                        using (var image = SKImage.FromBitmap(preprocessedBitmap))
+                        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                        using (var fileStream = File.OpenWrite(localPath))
+                        {
+                            // Write the PNG data to the file
+                            data.SaveTo(fileStream);
+                        }
                     }
 
-                    // Now localPath has the path to the captured and saved image
-                    // You can now use Tesseract to recognize text from this image
+                    // Now localPath has the path to the preprocessed and saved image in PNG format
+                    // You can now use Tesseract or another OCR tool to recognize text from this image
                     var result = await Tesseract.RecognizeTextAsync(localPath);
 
                     // Show output
@@ -60,6 +72,7 @@ public partial class MainPage : ContentPage
             Debug.WriteLine($"Error capturing photo: {ex.Message}");
         }
     }
+
     private async void DEMO_Recognize_AsImage(object sender, EventArgs e)
     {
         // Select image (Not important)
@@ -183,6 +196,83 @@ public partial class MainPage : ContentPage
         resultLabel.Text = result.RecognisedText;
     }
 
- 
+    public static SKBitmap PreprocessImage(SKBitmap bitmap)
+    {
+        // Rescale the image (example: half the size)
+        SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
+
+        // Convert to grayscale
+        SKBitmap grayscaleBitmap = new(rescaledBitmap.Width, rescaledBitmap.Height);
+        using (var canvas = new SKCanvas(grayscaleBitmap))
+        {
+            var paint = new SKPaint
+            {
+                ColorFilter = SKColorFilter.CreateColorMatrix(new float[]
+                {
+                0.2126f, 0.7152f, 0.0722f, 0, 0,
+                0.2126f, 0.7152f, 0.0722f, 0, 0,
+                0.2126f, 0.7152f, 0.0722f, 0, 0,
+                0, 0, 0, 1, 0
+                })
+            };
+            canvas.DrawBitmap(rescaledBitmap, 0, 0, paint);
+        }
+
+        // Adjust contrast (example: increase contrast by 50%)
+        //var contrastFilter = SKImageFilter.CreateColorFilter(SKColorFilter.CreateContrastFilter(1.5f));
+        var skHighContrastConfig = new SKHighContrastConfig(grayscale: true, SKHighContrastConfigInvertStyle.NoInvert, 1.5f);
+        var contrastFilter = SKImageFilter.CreateColorFilter(SKColorFilter.CreateHighContrast(skHighContrastConfig));
+        SKBitmap contrastBitmap = new(grayscaleBitmap.Width, grayscaleBitmap.Height);
+        using (var canvas = new SKCanvas(contrastBitmap))
+        {
+            var paint = new SKPaint { ImageFilter = contrastFilter };
+            canvas.DrawBitmap(grayscaleBitmap, 0, 0, paint);
+        }
+
+        // Binarization using a simple threshold (example: threshold = 128)
+        SKBitmap binarizedBitmap = new(contrastBitmap.Width, contrastBitmap.Height);
+        for (int y = 0; y < contrastBitmap.Height; y++)
+        {
+            for (int x = 0; x < contrastBitmap.Width; x++)
+            {
+                var color = contrastBitmap.GetPixel(x, y);
+                var brightness = 0.2126f * color.Red + 0.7152f * color.Green + 0.0722f * color.Blue;
+                binarizedBitmap.SetPixel(x, y, brightness < 128 ? SKColors.Black : SKColors.White);
+            }
+        }
+
+        // Note: Denoising can be quite complex and might require specific algorithms or libraries,
+        // which are not straightforward to implement with SkiaSharp directly.
+        // It often involves filtering techniques or more advanced processing.
+
+        return binarizedBitmap;
+    }
+    public static SKBitmap ApplyMedianFilter(SKBitmap sourceBitmap, int kernelSize = 3)
+    {
+        SKBitmap resultBitmap = new(sourceBitmap.Width, sourceBitmap.Height);
+        int[] dx = { -1, 0, 1, -1, 0, 1, -1, 0, 1 };
+        int[] dy = { -1, -1, -1, 0, 0, 0, 1, 1, 1 };
+        for (int y = 0; y < sourceBitmap.Height; y++)
+        {
+            for (int x = 0; x < sourceBitmap.Width; x++)
+            {
+                List<byte> neighborPixels = new();
+                for (int i = 0; i < kernelSize * kernelSize; i++)
+                {
+                    int nx = x + dx[i];
+                    int ny = y + dy[i];
+                    if (nx >= 0 && ny >= 0 && nx < sourceBitmap.Width && ny < sourceBitmap.Height)
+                    {
+                        var color = sourceBitmap.GetPixel(nx, ny);
+                        neighborPixels.Add((byte)((color.Red + color.Green + color.Blue) / 3));
+                    }
+                }
+                neighborPixels.Sort();
+                byte medianValue = neighborPixels[neighborPixels.Count / 2];
+                resultBitmap.SetPixel(x, y, new SKColor(medianValue, medianValue, medianValue));
+            }
+        }
+        return resultBitmap;
+    }
 }
 

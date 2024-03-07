@@ -60,6 +60,7 @@
 	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="SkiaSharp" Version="2.88.7" />
 	</ItemGroup>
 	
 	<ItemGroup>
