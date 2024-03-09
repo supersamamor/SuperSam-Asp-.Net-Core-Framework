@@ -26,7 +26,7 @@ public static class MauiProgram
             files =>
             {    
                 //files.AddFile("metron.traineddata");
-                files.AddFile("letsgodigital.traineddata");
+                //files.AddFile("letsgodigital.traineddata");
                 files.AddFile("digital.traineddata");
                 //files.AddFile("eng.traineddata");
             });

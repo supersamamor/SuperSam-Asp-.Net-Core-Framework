@@ -91,16 +91,16 @@ public partial class MainPage : ContentPage
         {
             return;
         }
-        using var originalBitmap = SKBitmap.Decode(path);
-        var preprocessedBitmap = PreprocessImage(originalBitmap);
-        // Save the preprocessed image as a PNG
-        using (var image = SKImage.FromBitmap(preprocessedBitmap))
-        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
-        using (var fileStream = File.OpenWrite(path))
-        {
-            // Write the PNG data to the file
-            data.SaveTo(fileStream);
-        }
+        //using var originalBitmap = SKBitmap.Decode(path);
+        //var preprocessedBitmap = PreprocessImage(originalBitmap);
+        //// Save the preprocessed image as a PNG
+        //using (var image = SKImage.FromBitmap(preprocessedBitmap))
+        //using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+        //using (var fileStream = File.OpenWrite(path))
+        //{
+        //    // Write the PNG data to the file
+        //    data.SaveTo(fileStream);
+        //}
         // Recognize image 
         var result = await Tesseract.RecognizeTextAsync(path);
         DisplayPreprocessedImage(path);
