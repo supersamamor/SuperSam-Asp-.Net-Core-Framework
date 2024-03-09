@@ -79,7 +79,7 @@ tesseract 2.png stdout -l metron
 tesseract metron.analogwater.exp0.tif stdout -l metron
 
 ----------------------------------------7Segments
-1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 batch.nochop makebox
+1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 -l digital batch.nochop makebox
 
 2. tesseract digital.7segment.exp0.tif digital.7segment.exp0 box.train
 
