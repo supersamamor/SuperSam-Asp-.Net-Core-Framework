@@ -75,3 +75,55 @@ Move .traineddata file to tesseract programs tessdata directory
 Test
 tesseract 2.png stdout -l metron
 tesseract metron.analogwater.exp0.tif stdout -l metron
+
+----------------------------------------7Segments
+1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 -l letsgodigital batch.nochop makebox
+
+2. tesseract digital.7segment.exp0.tif digital.7segment.exp0 box.train
+
+3. unicharset_extractor digital.7segment.exp0.box
+
+4. echo "arial 0 0 1 0 0" > font_properties
+
+5. mftraining -F font_properties -U unicharset -O digital.unicharset digital.7segment.exp0.tr
+
+6. cntraining digital.7segment.exp0.tr
+
+7. Rename Files
+    rename shapetable digital.shapetable
+    rename inttemp digital.inttemp
+    rename pffmtable digital.pffmtable
+    rename normproto digital.normproto
+	
+8.  combine_tessdata digital.
+Move .traineddata file to tesseract programs tessdata directory
+
+Test
+tesseract 2.png stdout -l digital
+tesseract digital.7segment.exp0.tif stdout -l digital
+
+----------------------------------------Vie
+1. tesseract vie.arial.exp0.tif vie.arial.exp0 batch.nochop makebox
+
+2. tesseract vie.arial.exp0.tif vie.arial.exp0 box.train
+
+3. unicharset_extractor vie.arial.exp0.box
+
+4. echo "arial 0 0 1 0 0" > font_properties
+
+5. mftraining -F font_properties -U unicharset -O vie.unicharset vie.arial.exp0.tr
+
+6. cntraining vie.arial.exp0.tr
+
+7. Rename Files
+    rename shapetable vie.shapetable
+    rename inttemp vie.inttemp
+    rename pffmtable vie.pffmtable
+    rename normproto vie.normproto
+	
+8.  combine_tessdata vie.
+Move .traineddata file to tesseract programs tessdata directory
+
+Test
+tesseract 2.png stdout -l vie
+tesseract vie.arial.exp0.tif stdout -l vie
