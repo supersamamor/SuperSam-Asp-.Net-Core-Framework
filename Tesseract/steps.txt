@@ -3,7 +3,7 @@ https://groups.google.com/g/tesseract-ocr/c/dq9D6JpvPSs/m/8O_K84IAAwAJ
 https://groups.google.com/g/tesseract-ocr/c/uXzGSRgmdxU/m/lOexedpZuFoJ
 https://github.com/dlemstra/Magick.NET/blob/main/docs/Readme.md
 
-magick convert metron4.analogwater.exp0.tif -units PixelsPerInch -density 300 metron4.analogwater.exp0-new.tif
+magick convert metron5.analogwater.exp0.tif -units PixelsPerInch -density 300 metron4.analogwater.exp0.png
 
 
 Step 1: Make box files for images that we want to train
@@ -79,7 +79,7 @@ tesseract 2.png stdout -l metron
 tesseract metron.analogwater.exp0.tif stdout -l metron
 
 ----------------------------------------7Segments
-1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 -l letsgodigital batch.nochop makebox
+1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 batch.nochop makebox
 
 2. tesseract digital.7segment.exp0.tif digital.7segment.exp0 box.train
 
