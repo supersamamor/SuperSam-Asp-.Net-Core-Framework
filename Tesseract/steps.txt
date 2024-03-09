@@ -82,9 +82,15 @@ tesseract metron.analogwater.exp0.tif stdout -l metron
 1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 -l digital batch.nochop makebox
 
 2. tesseract digital.7segment.exp0.tif digital.7segment.exp0 box.train
+or tesseract digital.7segment.exp0.tif digital.7segment.exp0 --psm 6 lstm.train
+--create traindata_list file - dir /b /s *.lstmf > traindata_list.txt
+--extract lstm - combine_tessdata -u "C:\Program Files\Tesseract-OCR\tessdata\eng.traineddata" "C:\Output\eng."
 
 3. unicharset_extractor digital.7segment.exp0.box
-
+or 
+lstmtraining --model_output "digital_7segment_v1" --traineddata "C:\Program Files\Tesseract-OCR\tessdata\digital.traineddata" --train_listfile traindata_list.txt --max_iterations 4000
+lstmtraining --model_output digital_7segment_v1  --continue_from "C:\Output\eng.lstm" --traineddata "C:\Program Files\Tesseract-OCR\tessdata\eng.traineddata" --train_listfile traindata_list.txt --max_iterations 4000
+			 
 4. echo "metron 0 0 1 0 0" > font_properties
 
 5. mftraining -F font_properties -U unicharset -O digital.unicharset digital.7segment.exp0.tr
