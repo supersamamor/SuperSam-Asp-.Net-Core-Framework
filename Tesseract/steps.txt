@@ -3,6 +3,8 @@ https://groups.google.com/g/tesseract-ocr/c/dq9D6JpvPSs/m/8O_K84IAAwAJ
 https://groups.google.com/g/tesseract-ocr/c/uXzGSRgmdxU/m/lOexedpZuFoJ
 https://github.com/dlemstra/Magick.NET/blob/main/docs/Readme.md
 
+magick convert metron4.analogwater.exp0.tif -units PixelsPerInch -density 300 metron4.analogwater.exp0-new.tif
+
 
 Step 1: Make box files for images that we want to train
 Syntax: tesseract [langname].[fontname].[expN].[file-extension] [langname].[fontname].[expN] batch.nochop makebox
@@ -57,7 +59,7 @@ tesseract Test2.png stdout -l train
 
 3. unicharset_extractor metron.analogwater.exp0.box
 
-4. echo "arial 0 0 1 0 0" > font_properties
+4. echo "metron 0 0 1 0 0" > font_properties
 
 5. mftraining -F font_properties -U unicharset -O metron.unicharset metron.analogwater.exp0.tr
 
@@ -83,7 +85,7 @@ tesseract metron.analogwater.exp0.tif stdout -l metron
 
 3. unicharset_extractor digital.7segment.exp0.box
 
-4. echo "arial 0 0 1 0 0" > font_properties
+4. echo "metron 0 0 1 0 0" > font_properties
 
 5. mftraining -F font_properties -U unicharset -O digital.unicharset digital.7segment.exp0.tr
 
@@ -109,7 +111,7 @@ tesseract digital.7segment.exp0.tif stdout -l digital
 
 3. unicharset_extractor vie.arial.exp0.box
 
-4. echo "arial 0 0 1 0 0" > font_properties
+4. echo "metron 0 0 1 0 0" > font_properties
 
 5. mftraining -F font_properties -U unicharset -O vie.unicharset vie.arial.exp0.tr
 
