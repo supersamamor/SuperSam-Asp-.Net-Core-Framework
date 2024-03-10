@@ -83,6 +83,9 @@ tesseract metron.analogwater.exp0.tif stdout -l metron
 ----------------------------------------7Segments
 1. tesseract digital.7segment.exp0.tif digital.7segment.exp0 -l digital batch.nochop makebox
 
+magick convert sample-text4.png -units PixelsPerInch -density 300 sample-text4-.png
+
+
 2. tesseract digital.7segment.exp0.tif digital.7segment.exp0 box.train
 or tesseract digital.7segment.exp0.tif digital.7segment.exp0 --psm 6 lstm.train
 --create traindata_list file - dir /b /s *.lstmf > traindata_list.txt
