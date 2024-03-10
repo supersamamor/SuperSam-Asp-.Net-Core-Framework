@@ -219,7 +219,7 @@ public partial class MainPage : ContentPage
     public static SKBitmap PreprocessImage(SKBitmap bitmap)
     {
         // Rescale the image (example: half the size)
-        SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 1, bitmap.Height / 1), SKFilterQuality.High);
+        SKBitmap rescaledBitmap = bitmap.Resize(new SKImageInfo(bitmap.Width / 2, bitmap.Height / 2), SKFilterQuality.High);
 
         // Convert to grayscale
         SKBitmap grayscaleBitmap = new(rescaledBitmap.Width, rescaledBitmap.Height);

@@ -28,7 +28,7 @@ public static class MauiProgram
                 //files.AddFile("metron.traineddata");
                 //files.AddFile("letsgodigital.traineddata");
                 files.AddFile("digital.traineddata");
-                //files.AddFile("eng.traineddata");
+                files.AddFile("eng.traineddata");
             });
 
         builder.Services.AddSingleton<MainPage>();
