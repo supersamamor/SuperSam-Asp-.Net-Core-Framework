@@ -3,6 +3,8 @@ https://groups.google.com/g/tesseract-ocr/c/dq9D6JpvPSs/m/8O_K84IAAwAJ
 https://groups.google.com/g/tesseract-ocr/c/uXzGSRgmdxU/m/lOexedpZuFoJ
 https://github.com/dlemstra/Magick.NET/blob/main/docs/Readme.md
 
+https://www.youtube.com/watch?v=KE4xEzFGSU8&t=1s
+
 magick convert metron5.analogwater.exp0.tif -units PixelsPerInch -density 300 metron4.analogwater.exp0.png
 magick convert "C:\T\Tesseract\digitalfonts-traindata\7segments.pdf" -units PixelsPerInch -density 300 "C:\T\Tesseract\digitalfonts-traindata\7segments.png" 
 https://www.gimp.org/
@@ -96,7 +98,7 @@ or
 lstmtraining --model_output "digital_7segment_v1" --traineddata "C:\Program Files\Tesseract-OCR\tessdata\digital.traineddata" --train_listfile traindata_list.txt --max_iterations 4000
 lstmtraining --model_output digital_7segment_v1  --continue_from "C:\Output\eng.lstm" --traineddata "C:\Program Files\Tesseract-OCR\tessdata\eng.traineddata" --train_listfile traindata_list.txt --max_iterations 4000
 			 
-4. echo "metron 0 0 1 0 0" > font_properties
+4. echo "digital 0 0 1 0 0" > font_properties
 
 5. mftraining -F font_properties -U unicharset -O digital.unicharset digital.7segment.exp0.tr
 
