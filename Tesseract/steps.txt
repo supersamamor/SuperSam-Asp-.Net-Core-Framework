@@ -4,6 +4,8 @@ https://groups.google.com/g/tesseract-ocr/c/uXzGSRgmdxU/m/lOexedpZuFoJ
 https://github.com/dlemstra/Magick.NET/blob/main/docs/Readme.md
 
 magick convert metron5.analogwater.exp0.tif -units PixelsPerInch -density 300 metron4.analogwater.exp0.png
+magick convert "C:\T\Tesseract\digitalfonts-traindata\7segments.pdf" -units PixelsPerInch -density 300 "C:\T\Tesseract\digitalfonts-traindata\7segments.png" 
+https://www.gimp.org/
 
 
 Step 1: Make box files for images that we want to train
